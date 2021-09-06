@@ -52,7 +52,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseRepository\GenericRepository.cs" />
     <Compile Include="BaseRepository\MBKMContext.cs" />
+    <Compile Include="BaseRepository\UnitOfWork.cs" />
+    <Compile Include="Migrations\202109060805506_initdb.cs" />
+    <Compile Include="Migrations\202109060805506_initdb.designer.cs">
+      <DependentUpon>202109060805506_initdb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -60,10 +67,19 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\MBKM.BusinessLogic\MBKM.Common\MBKM.Common.csproj">
+      <Project>{DE29ECDA-5915-4DA5-AB3D-C39316D353F4}</Project>
+      <Name>MBKM.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MBKM.Entities\MBKM.Entities.csproj">
       <Project>{a47c1da8-998f-474a-9650-5ef1ca677589}</Project>
       <Name>MBKM.Entities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202109060805506_initdb.resx">
+      <DependentUpon>202109060805506_initdb.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -15,6 +15,9 @@ namespace MBKM.Entities.Models.MBKM
         public DateTime Waktu { get; set; }
         public int Kuota { get; set; }
         public string LinkMateri { get; set; }
+        public bool FlagOpen { get; set; }
+        public string OpenRegistration { get; set; }
+        public string CloseRegistration { get; set; }
 
     }
 }
