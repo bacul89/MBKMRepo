@@ -1,0 +1,137 @@
+﻿
+@{
+    ViewBag.Title = "SIMBKM";
+}
+
+
+<!-- Modal -->
+<div class="modal fade" id="loginAdmin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+    <div class="modal-dialog" role="document" style="max-width: 15%;">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: darkorange;">
+                <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+                    Login Admin
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </h5>
+            </div>
+            <div class="modal-body" >
+                <form action="#" method="post">
+                    <div class="form-group">
+                        <input type="text" name="usernameAdmin" id="usernameAdmin" placeholder="Username" class="form-control input-lg" />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="passwordAdmin" id="passwordAdmin" placeholder="Password" class="form-control input-lg" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Login" class="btn" style="background-color: darkorange; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="registrasi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document" style="max-width: 20%;">
+    <div class="modal-content">
+        <div class="modal-header" style="background-color: darkorange; ">
+            <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+                Registrasi Mahasiswa
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </h5>
+        </div>
+        <div class="modal-body">
+            <form action="#" method="post">
+                <div class="form-group">
+                    <input type="text" name="namaLengkap" id="namaLengkap" placeholder="Nama Lengkap" class="form-control input-lg" />
+                </div>
+                <div class="form-group">
+                    <input type="date" name="tanggalLahir" id="tanggalLahir" placeholder="Tanggal Lahir" class="form-control input-lg" />
+                </div>
+                <div class="form-group">
+                    <input type="password" name="passwordAdmin" id="passwordAdmin" placeholder="Password" class="form-control input-lg" />
+                </div>
+                <div class="form-group">
+                    <select name="jenisKelamin" id="jenisKelamin" class="form-control input-lg">
+                        <option>Pilih Jenis Kelamin</option>
+                        <option value="l">Laki - Laki</option>
+                        <option value="p">Perempuan</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" id="email" placeholder="Email" class="form-control input-lg" />
+                </div>
+                <div class="form-group">
+                    <select name="asalKampus" id="asalKampus" class="form-control input-lg" required>
+                        <option>Asal Kampus</option>
+                        <option value="uaj">UAJ</option>
+                        <option value="umn">UMN</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="usernameRegistrasi" id="usernameRegistrasi" placeholder="Username" class="form-control input-lg" />
+                </div>
+                <div class="form-group">
+                    <input type="password" name="passwordRegistrasi" id="passwordRegistrasi" placeholder="Password" class="form-control input-lg" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Login" class="btn" style="background-color: darkorange; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+<div style="padding: 5%;" class="row">
+    <div class="col-sm-7 col-md-7 col-lg-7">
+        <img style="max-width: 100%;" src="~/Asset/kampus-universitas-katolik-atmajaya-jakarta-_131002231109-118.jpg" />
+    </div>
+    <div class="col-sm-5 col-md-5 col-lg-5">
+        <div class="card" style="width: 100%;">
+            <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+                <h5 class="card-title" style="background-color: darkorange; padding: 15px; font-weight: bold; font-size: 30px; color: black;">Login</h5>
+
+                <div class="container" style="width: 100%;">
+
+                    <div style="font-size: 20px; padding: 30px 0px;">
+                        Untuk kamu yang sudah registrasi atau Mahasiswa Internal Universitas Katolik Atma Jaya dan ingin mengikuti program studi kampus merdeka, jadwal perkuliahan, dan lainnya, silahkan melakukan Login terlebih dahulu
+                    </div>
+
+                    <form action="#" method="post">
+                        <div class="form-group">
+                            <input type="text" name="username" id="username" placeholder="Username" class="form-control input-lg" />
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="password" id="password" placeholder="Password" class="form-control input-lg" />
+                        </div>
+                        <div style="float: right; font-size: 20px;">
+                            Login sebagai
+                            <a data-toggle="modal" data-target="#loginAdmin" style="color: darkorange;">
+                                Admin
+                            </a>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <input type="submit" value="Login" class="btn" style="background-color: darkorange; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
+                        </div>
+                    </form>
+                    <hr />
+                    <div style="font-size: 20px; padding: 30px 0px;">
+                        Untuk kamu yang belum melakukan regitrasi dan ingin mengikuti program kampus merdeka, silahkan melakukan
+                        <a data-toggle="modal" data-target="#registrasi" style="color: darkorange;">
+                            Registrasi 
+                        </a>
+                        terlebih dahulu
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
