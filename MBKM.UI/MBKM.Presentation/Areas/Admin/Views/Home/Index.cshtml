@@ -6,3 +6,59 @@
 
 <h2>Ini Home Admin</h2>
 
+
+    <div class="modal fade" id="registrasi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="max-width: 20%;">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: darkorange; ">
+                    <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+                        Registrasi Mahasiswa
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <form action="#" method="post">
+                        <div class="form-group">
+                            <input type="text" name="namaLengkap" id="namaLengkap" placeholder="Nama Lengkap" class="form-control input-lg" />
+                        </div>
+                        <div class="form-group">
+                            <input type="date" name="tanggalLahir" id="tanggalLahir" placeholder="Tanggal Lahir" class="form-control input-lg" />
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="passwordAdmin" id="passwordAdmin" placeholder="Password" class="form-control input-lg" />
+                        </div>
+                        <div class="form-group">
+                            <select name="jenisKelamin" id="jenisKelamin" class="form-control input-lg">
+                                <option>Pilih Jenis Kelamin</option>
+                                <option value="l">Laki - Laki</option>
+                                <option value="p">Perempuan</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" name="email" id="email" placeholder="Email" class="form-control input-lg" />
+                        </div>
+                        <div class="form-group">
+                            <select name="asalKampus" id="asalKampus" class="form-control input-lg" required>
+                                <option>Asal Kampus</option>
+                                <option value="uaj">UAJ</option>
+                                <option value="umn">UMN</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="usernameRegistrasi" id="usernameRegistrasi" placeholder="Username" class="form-control input-lg" />
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="passwordRegistrasi" id="passwordRegistrasi" placeholder="Password" class="form-control input-lg" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Login" class="btn" style="background-color: darkorange; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
