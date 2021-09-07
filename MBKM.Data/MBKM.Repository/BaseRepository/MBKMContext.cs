@@ -1,5 +1,6 @@
 ﻿using MBKM.Entities.Map;
 using MBKM.Entities.Map.MBKMMap;
+using MBKM.Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -24,7 +25,7 @@ namespace MBKM.Repository.BaseRepository
             string conn = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
             return conn;
         }
-
+        //public DbSet<Menu> Menus { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new MenuMap());
@@ -38,6 +39,8 @@ namespace MBKM.Repository.BaseRepository
             modelBuilder.Configurations.Add(new JadwalKuliahMahasiswaMap());
             modelBuilder.Configurations.Add(new NilaiMap());
             modelBuilder.Configurations.Add(new AbsensiMap());
+            modelBuilder.Configurations.Add(new AttachmentMap());
+            modelBuilder.Configurations.Add(new AttachmentPerjanjianKerjasamaMap());
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();

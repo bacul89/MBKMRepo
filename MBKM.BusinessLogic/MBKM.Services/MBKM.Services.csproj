@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="BaseServices\EntityService.cs" />
     <Compile Include="MBKMServices\AbsensiService.cs" />
+    <Compile Include="MBKMServices\AttachmentPerjanjianKerjasamaService.cs" />
     <Compile Include="MBKMServices\AttachmentService.cs" />
     <Compile Include="MBKMServices\JadwalKuliahMahasiswaService.cs" />
     <Compile Include="MBKMServices\JadwalKuliahService.cs" />

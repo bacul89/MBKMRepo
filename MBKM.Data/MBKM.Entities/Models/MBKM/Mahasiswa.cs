@@ -16,9 +16,11 @@ namespace MBKM.Entities.Models.MBKM
         public string Alamat { get; set; }
         public string Agama { get; set; }
         public string NoKTP { get; set; }
-        public string UserName { get; set; }
         public string Password { get; set; }
         public string Token { get; set; }
+        public string Semester { get; set; }
+        public string ProdiAsal { get; set; }
+        public string NIMAsal { get; set; }
         public string ReferenceNumber { get; set; }
         public bool isVerifikasi { get; set; }
         public virtual ICollection<Attachment> Attachments { get; set; }

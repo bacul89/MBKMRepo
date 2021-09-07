@@ -53,6 +53,8 @@
   <ItemGroup>
     <Compile Include="Basentities\BaseEntity.cs" />
     <Compile Include="Map\MBKMMap\AbsensiMap.cs" />
+    <Compile Include="Map\MBKMMap\AttachmentMap.cs" />
+    <Compile Include="Map\MBKMMap\AttachmentPerjanjianKerjasamaMap.cs" />
     <Compile Include="Map\MBKMMap\JadwalKuliahMahasiswaMap.cs" />
     <Compile Include="Map\MBKMMap\JadwalKuliahMap.cs" />
     <Compile Include="Map\MBKMMap\KRSMap.cs" />
@@ -67,6 +69,7 @@
     <Compile Include="Models\LogActivity.cs" />
     <Compile Include="Models\MBKM\Absensi.cs" />
     <Compile Include="Models\MBKM\Attachment.cs" />
+    <Compile Include="Models\MBKM\AttachmentPerjanjianKerjasama.cs" />
     <Compile Include="Models\MBKM\JadwalKuliah.cs" />
     <Compile Include="Models\MBKM\JadwalKuliahMahasiswa.cs" />
     <Compile Include="Models\MBKM\KRS.cs" />

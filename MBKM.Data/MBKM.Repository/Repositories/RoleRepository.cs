@@ -1,18 +1,13 @@
 ﻿using MBKM.Common.Interfaces.RepoInterfaces;
 using MBKM.Entities.Models;
 using MBKM.Repository.BaseRepository;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MBKM.Repository.Repositories
 {
     public class RoleRepository : GenericRepository<Role>, IRoleRepository
     {
-        public RoleRepository(MBKMContext _db) : base(_db)
+        public RoleRepository(DbContext _db) : base(_db)
         {
         }
     }

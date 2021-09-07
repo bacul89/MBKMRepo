@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MBKM.Presentation.App_Start;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,6 +13,7 @@ namespace MBKM.Presentation
     {
         protected void Application_Start()
         {
+            AutoFacConfig.ConfigureContainer();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

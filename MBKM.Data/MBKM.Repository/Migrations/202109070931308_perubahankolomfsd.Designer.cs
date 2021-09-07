@@ -7,13 +7,13 @@ namespace MBKM.Repository.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class initawaldb : IMigrationMetadata
+    public sealed partial class perubahankolomfsd : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(initawaldb));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(perubahankolomfsd));
         
         string IMigrationMetadata.Id
         {
-            get { return "202109070205570_initawaldb"; }
+            get { return "202109070931308_perubahankolomfsd"; }
         }
         
         string IMigrationMetadata.Source

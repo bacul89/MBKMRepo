@@ -55,13 +55,22 @@
     <Compile Include="BaseRepository\GenericRepository.cs" />
     <Compile Include="BaseRepository\MBKMContext.cs" />
     <Compile Include="BaseRepository\UnitOfWork.cs" />
-    <Compile Include="Migrations\202109070205570_initawaldb.cs" />
-    <Compile Include="Migrations\202109070205570_initawaldb.designer.cs">
-      <DependentUpon>202109070205570_initawaldb.cs</DependentUpon>
+    <Compile Include="Migrations\202109070250499_initdbnew.cs" />
+    <Compile Include="Migrations\202109070250499_initdbnew.designer.cs">
+      <DependentUpon>202109070250499_initdbnew.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202109070931308_perubahankolomfsd.cs" />
+    <Compile Include="Migrations\202109070931308_perubahankolomfsd.designer.cs">
+      <DependentUpon>202109070931308_perubahankolomfsd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202109070945237_rubahbesarlength.cs" />
+    <Compile Include="Migrations\202109070945237_rubahbesarlength.designer.cs">
+      <DependentUpon>202109070945237_rubahbesarlength.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\MBKMRepository\AbsensiRepository.cs" />
+    <Compile Include="Repositories\MBKMRepository\AttachmentPerjanjianKerjasamaRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\AttachmentRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\JadwalKuliahMahasiswaRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\JadwalKuliahRepository.cs" />
@@ -89,8 +98,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202109070205570_initawaldb.resx">
-      <DependentUpon>202109070205570_initawaldb.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202109070250499_initdbnew.resx">
+      <DependentUpon>202109070250499_initdbnew.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109070931308_perubahankolomfsd.resx">
+      <DependentUpon>202109070931308_perubahankolomfsd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109070945237_rubahbesarlength.resx">
+      <DependentUpon>202109070945237_rubahbesarlength.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
