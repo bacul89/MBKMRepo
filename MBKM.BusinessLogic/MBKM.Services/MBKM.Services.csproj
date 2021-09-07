@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DE29ECDA-5915-4DA5-AB3D-C39316D353F4}</ProjectGuid>
+    <ProjectGuid>{00101DF3-229E-4C07-975D-240D9605735A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MBKM.Common</RootNamespace>
-    <AssemblyName>MBKM.Common</AssemblyName>
+    <RootNamespace>MBKM.Services</RootNamespace>
+    <AssemblyName>MBKM.Services</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -41,31 +41,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\IEntityService.cs" />
-    <Compile Include="Interfaces\IGenericRepository.cs" />
-    <Compile Include="Interfaces\IUnitOfWork.cs" />
-    <Compile Include="Interfaces\RepoInterfaces\IMenuRepository.cs" />
-    <Compile Include="Interfaces\RepoInterfaces\IMenuRoleRepository.cs" />
-    <Compile Include="Interfaces\RepoInterfaces\IRoleRepository.cs" />
-    <Compile Include="Interfaces\RepoInterfaces\IUserRepository.cs" />
-    <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IAbsensiRepository.cs" />
-    <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IAttachmentRepository.cs" />
-    <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IJadwalKuliahMahasiswaRepository.cs" />
-    <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IJadwalKuliahRepository.cs" />
-    <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IKRSRepository.cs" />
-    <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IMahasiswaRepository.cs" />
-    <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\INilaiKuliahRepository.cs" />
-    <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IPerjanjianKerjasamaRepository.cs" />
+    <Compile Include="BaseServices\EntityService.cs" />
+    <Compile Include="MBKMServices\AbsensiService.cs" />
+    <Compile Include="MBKMServices\AttachmentService.cs" />
+    <Compile Include="MBKMServices\JadwalKuliahMahasiswaService.cs" />
+    <Compile Include="MBKMServices\JadwalKuliahService.cs" />
+    <Compile Include="MBKMServices\KRSService.cs" />
+    <Compile Include="MBKMServices\MahasiswaService.cs" />
+    <Compile Include="MBKMServices\NilaiKuliahService.cs" />
+    <Compile Include="MBKMServices\PerjanjianKerjasamaService.cs" />
+    <Compile Include="MenuRoleService.cs" />
+    <Compile Include="MenuService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\" />
+    <Compile Include="RoleService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MBKM.Data\MBKM.Entities\MBKM.Entities.csproj">
-      <Project>{a47c1da8-998f-474a-9650-5ef1ca677589}</Project>
+      <Project>{A47C1DA8-998F-474A-9650-5EF1CA677589}</Project>
       <Name>MBKM.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MBKM.Common\MBKM.Common.csproj">
+      <Project>{DE29ECDA-5915-4DA5-AB3D-C39316D353F4}</Project>
+      <Name>MBKM.Common</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

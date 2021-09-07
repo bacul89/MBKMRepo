@@ -55,12 +55,24 @@
     <Compile Include="BaseRepository\GenericRepository.cs" />
     <Compile Include="BaseRepository\MBKMContext.cs" />
     <Compile Include="BaseRepository\UnitOfWork.cs" />
-    <Compile Include="Migrations\202109060805506_initdb.cs" />
-    <Compile Include="Migrations\202109060805506_initdb.designer.cs">
-      <DependentUpon>202109060805506_initdb.cs</DependentUpon>
+    <Compile Include="Migrations\202109070205570_initawaldb.cs" />
+    <Compile Include="Migrations\202109070205570_initawaldb.designer.cs">
+      <DependentUpon>202109070205570_initawaldb.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\MBKMRepository\AbsensiRepository.cs" />
+    <Compile Include="Repositories\MBKMRepository\AttachmentRepository.cs" />
+    <Compile Include="Repositories\MBKMRepository\JadwalKuliahMahasiswaRepository.cs" />
+    <Compile Include="Repositories\MBKMRepository\JadwalKuliahRepository.cs" />
+    <Compile Include="Repositories\MBKMRepository\KRSRepository.cs" />
+    <Compile Include="Repositories\MBKMRepository\MahasiswaRepository.cs" />
+    <Compile Include="Repositories\MBKMRepository\NilaiKuliahRepository.cs" />
+    <Compile Include="Repositories\MBKMRepository\PerjanjianKerjasamaRepository.cs" />
+    <Compile Include="Repositories\MenuRepository.cs" />
+    <Compile Include="Repositories\MenuRoleRepository.cs" />
+    <Compile Include="Repositories\RoleRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -77,8 +89,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202109060805506_initdb.resx">
-      <DependentUpon>202109060805506_initdb.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202109070205570_initawaldb.resx">
+      <DependentUpon>202109070205570_initawaldb.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
