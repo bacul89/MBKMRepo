@@ -13,10 +13,5 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             return View();
         }
-
-        public ActionResult Home()
-        {
-            return View();
-        }
     }
 }
