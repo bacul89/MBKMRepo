@@ -67,6 +67,10 @@
     <Compile Include="Migrations\202109070945237_rubahbesarlength.designer.cs">
       <DependentUpon>202109070945237_rubahbesarlength.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202109080805538_perubahanmandatory.cs" />
+    <Compile Include="Migrations\202109080805538_perubahanmandatory.designer.cs">
+      <DependentUpon>202109080805538_perubahanmandatory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\MBKMRepository\AbsensiRepository.cs" />
@@ -106,6 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202109070945237_rubahbesarlength.resx">
       <DependentUpon>202109070945237_rubahbesarlength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109080805538_perubahanmandatory.resx">
+      <DependentUpon>202109080805538_perubahanmandatory.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

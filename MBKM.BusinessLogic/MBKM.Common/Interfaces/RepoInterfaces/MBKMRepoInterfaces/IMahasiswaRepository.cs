@@ -1,5 +1,6 @@
 ﻿using MBKM.Entities.Models;
 using MBKM.Entities.Models.MBKM;
+using MBKM.Entities.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,6 @@ namespace MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces
 {
     public interface IMahasiswaRepository : IGenericRepository<Mahasiswa>
     {
-
+        VMLogin getLoginInternal(string StudentID, string Password);
     }
 }
