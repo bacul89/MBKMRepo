@@ -26,5 +26,11 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             return View();
         }
+
+        public ActionResult PerjanjianKerjasama()
+        {
+            return View();
+        }
+
     }
 }

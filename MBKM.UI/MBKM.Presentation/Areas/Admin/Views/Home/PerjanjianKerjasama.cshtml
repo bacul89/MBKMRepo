@@ -1,0 +1,89 @@
+﻿
+@{ ViewBag.Title = "Perjanjian Kerjasama"; }
+
+<style>
+    body {
+        color: #C1BABA;
+    }
+</style>
+<script>
+    $(document).ready(function() {
+    $('#table1').DataTable();
+} );
+</script>
+<!-- Modal -->
+<div class="modal fade" id="form_registrasi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   
+</div>
+
+
+<div style="padding: 5%;" class="row">
+    <div class="col-sm-10 col-md-10 col-lg-10"></div>
+    <div class="col-sm-2 col-md-2 col-lg-2"> <button type="button" style=" color: #F3F2F2; background-color:darkorange">Logout</button></div>
+    <div class="col-sm-6 col-md-3 col-lg-3">
+        <button type="button" style=" color: #F3F2F2; background-color:darkorange">Manage Perjanjian</button>
+        <br />
+        <button type="button" style=" color: #F3F2F2; background-color:darkorange">Manage Data Master</button>
+    </div>
+    <div class="col-sm-6 col-md-9 col-lg-9">
+        <h3>DAFTAR PERJANJIAN KERJASAMA</h3>
+       <button type="button" class="btn btn-success">Tambah Perjanjian</button>
+        <div class="card" style="width: 100%;">
+            <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+                <table id="table1 " class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>No kerjasama</th>
+                            <th>Tanggal Kerjasama</th>
+                            <th>Tanggal Berakhir</th>
+                            <th>Nama Perguruan Tinggi</th>
+                            <th>Unit Fakultas</th>
+                            <th>Jenis Kerjasama</th>
+                            <th>Inputer</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>09/09/2021</td>
+                            <td>09/09/2029</td>
+                            <td>a</td>
+                            <td>a</td>
+                            <td>a</td>
+                            <td>a</td>
+                            <td><button type="button" class="fas fa-hands-helping" style=" color: #F3F2F2"> </button></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>2</td>
+                            <td>09/09/2021</td>
+                            <td>09/09/2029</td>
+                            <td>b</td>
+                            <td>b</td>
+                            <td>b</td>
+                            <td>b</td>
+                            <td>b</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>3</td>
+                            <td>09/09/2021</td>
+                            <td>09/09/2029</td>
+                            <td>b</td>
+                            <td>b</td>
+                            <td>b</td>
+                            <td>b</td>
+                            <td>b</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+
+
