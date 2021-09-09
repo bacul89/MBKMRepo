@@ -39,7 +39,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -168,7 +168,6 @@
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Portal\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
-    <Content Include="Areas\Portal\Views\Home\Home.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -218,6 +217,14 @@
     <ProjectReference Include="..\..\MBKM.BusinessLogic\MBKM.Common\MBKM.Common.csproj">
       <Project>{DE29ECDA-5915-4DA5-AB3D-C39316D353F4}</Project>
       <Name>MBKM.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MBKM.BusinessLogic\MBKM.Services\MBKM.Services.csproj">
+      <Project>{00101DF3-229E-4C07-975D-240D9605735A}</Project>
+      <Name>MBKM.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MBKM.Data\MBKM.Entities\MBKM.Entities.csproj">
+      <Project>{a47c1da8-998f-474a-9650-5ef1ca677589}</Project>
+      <Name>MBKM.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\MBKM.Data\MBKM.Repository\MBKM.Repository.csproj">
       <Project>{4416D464-A629-485B-BAC1-F27E55992234}</Project>

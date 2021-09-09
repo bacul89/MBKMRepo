@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace MBKM.Repository.Repositories.MBKMRepository
 {
-    public class KRSRepository : GenericRepository<KRS>, IKRSRepository
+    public class AttachmentPerjanjianKerjasamaRepository : GenericRepository<AttachmentPerjanjianKerjasama>, IAttachmentPerjanjianKerjasamaRepository
     {
-        public KRSRepository(DbContext _db) : base(_db)
+        public AttachmentPerjanjianKerjasamaRepository(DbContext _db) : base(_db)
         {
         }
     }

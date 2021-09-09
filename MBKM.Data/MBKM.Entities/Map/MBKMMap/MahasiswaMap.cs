@@ -22,10 +22,11 @@ namespace MBKM.Entities.Map.MBKMMap
             Property(t => t.Telepon).HasMaxLength(150).IsRequired();
             Property(t => t.TanggalLahir).IsRequired();
             Property(t => t.NoKTP).HasMaxLength(150).IsRequired();
-            Property(t => t.UserName).HasMaxLength(50).IsRequired();
             Property(t => t.Password).HasMaxLength(500).IsRequired();
             Property(t => t.Agama).HasMaxLength(150).IsRequired();
-
+            Property(t => t.NIMAsal).HasMaxLength(50).IsRequired();
+            Property(t => t.ProdiAsal).HasMaxLength(150).IsRequired();
+            Property(t => t.Semester).HasMaxLength(30).IsRequired();
         }
     }
 }

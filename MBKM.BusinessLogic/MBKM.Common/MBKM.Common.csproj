@@ -49,6 +49,7 @@
     <Compile Include="Interfaces\RepoInterfaces\IRoleRepository.cs" />
     <Compile Include="Interfaces\RepoInterfaces\IUserRepository.cs" />
     <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IAbsensiRepository.cs" />
+    <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IAttachmentPerjanjianKerjasamaRepository.cs" />
     <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IAttachmentRepository.cs" />
     <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IJadwalKuliahMahasiswaRepository.cs" />
     <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IJadwalKuliahRepository.cs" />

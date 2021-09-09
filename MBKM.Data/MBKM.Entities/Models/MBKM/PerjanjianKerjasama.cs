@@ -11,5 +11,7 @@ namespace MBKM.Entities.Models.MBKM
         public DateTime TanggalMulai { get; set; }
         public DateTime TanggalAkhir { get; set; }
         public string NamaUniversitas { get; set; }
+        public Int64 UniversitasID { get; set; }
+        public virtual ICollection<AttachmentPerjanjianKerjasama> AttachmentPerjanjianKerjasamas { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace MBKM.Repository.Repositories
 {
     public class MenuRepository : GenericRepository<Menu>, IMenuRepository
     {
-        public MenuRepository(MBKMContext _db) : base(_db)
+        public MenuRepository(DbContext _db) : base(_db)
         {
 
         }

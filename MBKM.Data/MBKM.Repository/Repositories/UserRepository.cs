@@ -12,7 +12,7 @@ namespace MBKM.Repository.Repositories
 {
     public class UserRepository : GenericRepository<Role>, IRoleRepository
     {
-        public UserRepository(MBKMContext _db) : base(_db)
+        public UserRepository(DbContext _db) : base(_db)
         {
         }
     }

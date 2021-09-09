@@ -12,9 +12,9 @@ namespace MBKM.Repository.BaseRepository
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
-        protected readonly MBKMContext db;
+        protected readonly DbContext db;
 
-        public GenericRepository(MBKMContext _db)
+        public GenericRepository(DbContext _db)
         {
             db = _db;
         }
