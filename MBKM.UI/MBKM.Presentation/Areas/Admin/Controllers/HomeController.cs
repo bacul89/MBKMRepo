@@ -18,8 +18,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         // GET: Admin/Home
         public ActionResult Index()
         {
-            IEnumerable<Menu> a = _menuService.GetAll().ToList();
-            Menu model = _menuService.Get(1);
+            //IEnumerable<Menu> a = _menuService.GetAll().ToList();
+            //Menu model = _menuService.Get(1);
             return View();
         }
         public ActionResult Home()
