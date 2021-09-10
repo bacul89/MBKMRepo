@@ -1,4 +1,5 @@
 ﻿using MBKM.Entities.Models;
+using MBKM.Entities.ViewModel;
 using MBKM.Services;
 using System;
 using System.Collections.Generic;
@@ -11,15 +12,19 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
     public class HomeController : Controller
     {
         private IMenuService _menuService;
-        public HomeController(IMenuService menuService)
+        private ILookupService _lookupService;
+        public HomeController(IMenuService menuService,
+            ILookupService lookupService)
         {
             _menuService = menuService;
+            _lookupService = lookupService;
         }
         // GET: Admin/Home
         public ActionResult Index()
         {
             //IEnumerable<Menu> a = _menuService.GetAll().ToList();
             //Menu model = _menuService.Get(1);
+            IEnumerable<VMLookup> listModel = _lookupService.getLookupByTipe("Gender");
             return View();
         }
         public ActionResult Home()

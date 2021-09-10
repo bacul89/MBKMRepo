@@ -1,6 +1,7 @@
 ﻿using MBKM.Common.Interfaces;
 using MBKM.Common.Interfaces.RepoInterfaces;
 using MBKM.Entities.Models;
+using MBKM.Entities.ViewModel;
 using MBKM.Services.BaseServices;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace MBKM.Services
 
     public interface ILookupService : IEntityService<Lookup>
     {
+        IEnumerable<VMLookup> getLookupByTipe(string tipe);
     }
 
     public class LookupService : EntityService<Lookup>, ILookupService
@@ -25,6 +27,11 @@ namespace MBKM.Services
         {
             _unitOfWork = unitOfWork;
             _lookupRepository = LookupRepository;
+        }
+
+        public IEnumerable<VMLookup> getLookupByTipe(string tipe)
+        {
+            return _lookupRepository.getLookupByTipe(tipe);
         }
     }
 }

@@ -26,6 +26,7 @@ namespace MBKM.Repository.BaseRepository
             return conn;
         }
         //public DbSet<Menu> Menus { get; set; }
+        public DbSet<Lookup> Lookups { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new MenuMap());
