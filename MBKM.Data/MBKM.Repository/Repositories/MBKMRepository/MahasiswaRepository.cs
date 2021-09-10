@@ -14,7 +14,6 @@ namespace MBKM.Repository.Repositories.MBKMRepository
         public MahasiswaRepository(DbContext _db) : base(_db)
         {
         }
-
         public VMLogin getLoginInternal(string StudentID, string Password)
         {
             using (var context = new MBKMContext())

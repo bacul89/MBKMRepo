@@ -1,4 +1,5 @@
-﻿using MBKM.Services.MBKMServices;
+﻿using MBKM.Entities.Models.MBKM;
+using MBKM.Services.MBKMServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,14 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             //var a = _mahasiswaService.getLoginInternal("11998000648", "126019");
             return View();
+        }
+        public ActionResult DataDiri()
+        {
+            return View();
+        }
+        public void registerExternal(Mahasiswa mahasiswa)
+        {
+            _mahasiswaService.Save(mahasiswa);
         }
     }
 }
