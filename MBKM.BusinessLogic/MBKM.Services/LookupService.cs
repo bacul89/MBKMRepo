@@ -10,9 +10,7 @@ using System.Threading.Tasks;
 
 namespace MBKM.Services
 {
-    class LookupService
-    {
-    }
+
     public interface ILookupService : IEntityService<Lookup>
     {
     }
