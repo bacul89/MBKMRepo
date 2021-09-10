@@ -26,6 +26,7 @@ namespace MBKM.Entities.Models.MBKM
         public string Token { get; set; }
         public string Semester { get; set; }
         public string ProdiAsal { get; set; }
+        public string Gender { get; set; }
         public string NIMAsal { get; set; }
         public string NIM { get; set; }
         [Required(ErrorMessage = "Tempat Lahir harus di isi")]

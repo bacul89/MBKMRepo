@@ -1,0 +1,252 @@
+﻿
+@{
+    Layout = "~/Areas/Portal/Views/shared/_LayoutHome.cshtml";
+    ViewBag.Title = "SIMBKM";
+}
+
+
+<!-- Modal -->
+<div class="modal fade" id="dataPendukung" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #FF8A04;">
+                <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+                    Login Admin
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <form action="#" method="post" class="form-horizontal">
+                    <div class="container" style="width: 100%;">
+                        <div class="form-group">
+                            <input type="text" name="usernameAdmin" id="usernameAdmin" placeholder="Username" class="form-control input-lg" />
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="passwordAdmin" id="passwordAdmin" placeholder="Password" class="form-control input-lg" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Login" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card center-block" style="background-color: white; width: 90%; margin-top: 50px; margin-bottom: 50px;">
+    <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+        <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; padding-left: 15px; font-weight: bold; font-size: 30px; color: black; ">
+            FORMULIR PENDAFTARAN DIRI DAN PENDUKUNG <br />
+            <p style="font-weight: normal; font-size: 18px; color: #c1baba;">Lengkapi formulir data diri agar dapat mendaftar mata kuliah MBKM yang diinginkan</p>
+        </h5>
+        <hr />
+        <div class="container" style="width: 100%; padding-bottom: 15px;">
+
+            <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+                <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">DATA DIRI</h5>
+
+                <div class="container" style="width: 100%;">
+                    <table class="table">
+                        <tr>
+                            <td style="width: 20%;">Nama Lengkap</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="namaLengkap" id="namaLengkap" class="form-control input-md" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Jenis Kelamin</td>
+                            <td>
+                                <input type="text" name="jenisKelamin" id="jenisKelamin" class="form-control input-md" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Tempat Lahir</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="tempatLahir" id="tempatLahir" class="form-control input-md" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Tanggal Lahir</td>
+                            <td>
+                                <input type="date" name="tanggalLahir" id="tanggalLahir" class="form-control input-md" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Kewarganegaraan</td>
+                            <td>
+                                <input type="text" name="kewarganegaraan" id="kewarganegaraan" class="form-control input-md" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">No. KTP</td>
+                            <td>
+                                <input type="text" name="noKtp" id="noKtp" class="form-control input-md" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+                <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">INFORMASI KONTAK</h5>
+
+                <div class="container" style="width: 100%;">
+                    <table class="table">
+                        <tr>
+                            <td style="width: 20%;">Alamat Email</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="email" name="email" id="email" class="form-control input-md" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">No. Handphone</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="noHP" id="noHP" placeholder="+62xxxxxxxxxxx" class="form-control input-md" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">No. Telepon</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="noTelp" id="noTelp" placeholder="+62xxxxxxxxxxx" class="form-control input-md" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Alamat Rumah</td>
+                            <td>
+                                <div class="form-group">
+                                    <textarea name="alamat" id="alamat" class="form-control" style="width: 100%;" rows="5"></textarea>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+                <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">
+                    KONTAK DARURAT
+                    <p style="font-weight: normal; font-size: 16px;">(Kontak yang akan dihubungi dalam kondisi darurat)</p>
+                </h5>
+
+                <div class="container" style="width: 100%;">
+                    <table class="table">
+                        <tr>
+                            <td style="width: 20%;">Nama</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="namaDarurat" id="namaDarurat" class="form-control input-md" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Hubungan</td>
+                            <td>
+                                <select name="hubungan" id="hubungan" class="form-control input-md">
+                                    <option value="L">Ayah</option>
+                                    <option value="P">Ibu</option>
+                                    <option value="P">Suami</option>
+                                    <option value="P">Istri</option>
+                                    <option value="P">Kerabat</option>
+                                    <option value="P">Teman</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">No. Handphone</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="noHPDarurat" id="noHPDarurat" placeholder="+62xxxxxxxxxxx" class="form-control input-md" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">No. Telepon</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="noTelpDarurat" id="noTelpDarurat" placeholder="+62xxxxxxxxxxx" class="form-control input-md" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Alamat Email</td>
+                            <td>
+                                <input type="email" name="emailDarurat" id="emailDarurat" class="form-control input-md" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Alamat Rumah</td>
+                            <td>
+                                <textarea name="alamatDarurat" id="alamatDarurat" class="form-control" style="width: 100%;" rows="5"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+                <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">
+                    INFORMASI AKADEMIK
+                </h5>
+
+                <div class="container" style="width: 100%;">
+                    <table class="table">
+                        <tr>
+                            <td style="width: 20%;">Universitas Asal</td>
+                            <td>
+                                <div class="form-group">
+                                    <select name="universitasAsal" id="universitasAsal" class="form-control input-md" required>
+                                        <option value="ubm">UBM</option>
+                                        <option value="umn">UMN</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Jenjang Studi</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="jenjangStudi" id="jenjangStudi" class="form-control input-md" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Program Studi</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="programStudi" id="programStudi" class="form-control input-md" />
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="width: 20%;">NIM Asal</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="nimAsal" id="nimAsal" class="form-control input-md" />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <button class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 16px;">EDIT</button>
+                <button class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: rgb(0, 166, 81); color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; " data-toggle="modal" data-target="#dataPendukung" data-backdrop="false">UPLOAD DATA PENDUKUNG</button>
+                <button class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 16px; ">SIMPAN</button>
+            </div>
+
+        </div>
+    </div>
+</div>

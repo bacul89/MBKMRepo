@@ -51,6 +51,7 @@
     <Compile Include="MBKMServices\MahasiswaService.cs" />
     <Compile Include="MBKMServices\NilaiKuliahService.cs" />
     <Compile Include="MBKMServices\PerjanjianKerjasamaService.cs" />
+    <Compile Include="MBKMServices\PortalService.cs" />
     <Compile Include="MenuRoleService.cs" />
     <Compile Include="MenuService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
