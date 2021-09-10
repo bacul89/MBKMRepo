@@ -52,6 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Basentities\BaseEntity.cs" />
+    <Compile Include="Map\EmailTemplateMap.cs" />
+    <Compile Include="Map\LookupMap.cs" />
     <Compile Include="Map\MBKMMap\AbsensiMap.cs" />
     <Compile Include="Map\MBKMMap\AttachmentMap.cs" />
     <Compile Include="Map\MBKMMap\AttachmentPerjanjianKerjasamaMap.cs" />
@@ -65,8 +67,10 @@
     <Compile Include="Map\MenuRoleMap.cs" />
     <Compile Include="Map\RoleMap.cs" />
     <Compile Include="Map\UserMap.cs" />
+    <Compile Include="Models\EmailTemplate.cs" />
     <Compile Include="Models\ErrorLog.cs" />
     <Compile Include="Models\LogActivity.cs" />
+    <Compile Include="Models\Lookup.cs" />
     <Compile Include="Models\MBKM\Absensi.cs" />
     <Compile Include="Models\MBKM\Attachment.cs" />
     <Compile Include="Models\MBKM\AttachmentPerjanjianKerjasama.cs" />

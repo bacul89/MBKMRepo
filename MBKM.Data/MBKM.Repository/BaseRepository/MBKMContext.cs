@@ -41,6 +41,8 @@ namespace MBKM.Repository.BaseRepository
             modelBuilder.Configurations.Add(new AbsensiMap());
             modelBuilder.Configurations.Add(new AttachmentMap());
             modelBuilder.Configurations.Add(new AttachmentPerjanjianKerjasamaMap());
+            modelBuilder.Configurations.Add(new EmailTemplateMap());
+            modelBuilder.Configurations.Add(new LookupMap());
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();

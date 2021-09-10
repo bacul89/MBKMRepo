@@ -19,7 +19,7 @@ namespace MBKM.Entities.Map.MBKMMap
             Property(t => t.NamaUniversitas).HasMaxLength(150);
             Property(t => t.Nama).HasMaxLength(250).IsRequired();
             Property(t => t.Email).HasMaxLength(250).IsRequired();
-            Property(t => t.Telepon).HasMaxLength(150).IsRequired();
+            Property(t => t.Telepon).HasMaxLength(50).IsRequired();
             Property(t => t.TanggalLahir).IsRequired();
             Property(t => t.NoKTP).HasMaxLength(150);
             Property(t => t.Password).HasMaxLength(500).IsRequired();
@@ -29,6 +29,16 @@ namespace MBKM.Entities.Map.MBKMMap
             Property(t => t.Semester).HasMaxLength(30);
             Property(t => t.NIM).HasMaxLength(50);
             Property(t => t.TempatLahir).HasMaxLength(150).IsRequired();
+            Property(t => t.NamaDarurat).HasMaxLength(250);
+            Property(t => t.HubunganDarurat).HasMaxLength(50);
+            Property(t => t.NoHp).HasMaxLength(50).IsRequired();
+            Property(t => t.NoHPDarurat).HasMaxLength(50);
+            Property(t => t.TeleponDarurat).HasMaxLength(50);
+            Property(t => t.EmailDarurat).HasMaxLength(250);
+            Property(t => t.AlamatDarurat).HasMaxLength(500);
+            Property(t => t.JenjangStudi).HasMaxLength(150);
+            Property(t => t.WargaNegara).HasMaxLength(10);
+            Property(t => t.Gender).HasMaxLength(10);
         }
     }
 }

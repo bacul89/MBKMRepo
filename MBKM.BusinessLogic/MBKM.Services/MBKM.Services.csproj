@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseServices\EntityService.cs" />
+    <Compile Include="EmailTemplateService.cs" />
+    <Compile Include="LookupService.cs" />
     <Compile Include="MBKMServices\AbsensiService.cs" />
     <Compile Include="MBKMServices\AttachmentPerjanjianKerjasamaService.cs" />
     <Compile Include="MBKMServices\AttachmentService.cs" />
