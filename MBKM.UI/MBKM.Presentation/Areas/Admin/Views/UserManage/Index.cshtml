@@ -4,5 +4,137 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
 }
 
-<h2>Index</h2>
+@section modal{
+    <div class="modal fade" id="TambahUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #FF8A04; ">
+                    <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+                        TAMBAH MASTER USER
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="nomorindukpegawai" class="col-sm-3 control-label">Nomor Induk Pegawai</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control input-pendaftaran" id="txtnomorindukpegawai" placeholder="Input Induk Pegawai">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inp_email" class="col-sm-3 control-label">Nama</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control input-pendaftaran" id="txtnama" placeholder="Input Nama">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inp_bodyEmail" class="col-sm-3 control-label">Alamat Email</label>
+                            <div class="col-sm-9">
+                                <input type="email" class="form-control input-pendaftaran" id="txtemail" placeholder="Input Alamat Email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="col-sm-3 control-label">Password</label>
+                            <div class="col-sm-9">
+                                <input type="password" class="form-control input-pendaftaran" id="txtpassword" placeholder="Input Password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inp_status" class="col-sm-3 control-label">Status</label>
+                            <div class="col-sm-9">
+                                <label class="radio-inline input-pendaftaran">
+                                    <input type="radio" name="inpStatus" id="inp_status" value="1"> Aktif
+                                </label>
+                                <label class="radio-inline input-pendaftaran">
+                                    <input type="radio" name="inpStatus" id="inp_status" value="0"> Tidak Aktif
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2 col-md-offset-10">
+                                <button type="submit" class="btn btn-warning">Simpan</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="container-fluid" style="margin-left:40px; margin-right:40px;margin-bottom:100px;">
+    <div class="card center-block" style="background-color: white; width: 100%; margin-top: 50px; margin-bottom: 50px;">
+        <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
+            <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
+                MANAGE User
+            </h4>
+            <hr />
+            <div class="container" style="width: 100%;">
+                <button class="btn btn-success" data-toggle="modal" onclick="$('.back-modal').show();" data-target="#TambahUser" data-backdrop="true"><i class="fas fa-plus-circle"></i> Tambah Template Email</button>
+                <br />
+                <br />
+                <table id="TableList" class="table row-border hover dt-responsive responsive" style="border-spacing: 0 15px; border:0">
+                    <thead class="text-center">
+                        <tr style="background-color: #f77f16; border:0">
+                            <th style="text-align:center">No.</th>
+                            <th style="text-align:center">Nomor Induk Pegawai</th>
+                            <th style="text-align:center">Nama</th>
+                            <th style="text-align:center">Alamat Email</th>
+                            <th style="text-align:center">Status</th>
+                            <th style="text-align:center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>1121212</td>
+                            <td>Drs Haziqul</td>
+                            <td>haziqulee@mail.com</td>
+                            <td>Aktif</td>
+                            <td>Create</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>1121212</td>
+                            <td>Drs Haziqul Botak</td>
+                            <td>haziqulee@mail.com</td>
+                            <td>Aktif</td>
+                            <td>Create</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var t = $('#TableList').DataTable({
+                "columnDefs": [{
+                    "searchable": false,
+                    "orderable": false,
+                    "paging": false,
+                    "targets": 0
+                }],
+                "order": [[1, 'asc']],
+                "createdRow": function (row, data, index) {
+                    $('td', row).css({
+                        'border': '1px solid coral',
+                    });
+                }
+            });
+
+            t.on('order.dt search.dt', function () {
+                t.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            }).draw();
+
+        });
+    </script>
+
+}

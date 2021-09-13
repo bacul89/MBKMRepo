@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MBKM.Repository.Repositories
 {
-    public class MenuRoleRepository : GenericRepository<Role>, IRoleRepository
+    public class MenuRoleRepository : GenericRepository<MenuRole>, IMenuRoleRepository
     {
         public MenuRoleRepository(DbContext _db) : base(_db)
         {

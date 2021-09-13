@@ -17,7 +17,7 @@ namespace MBKM.Services
     public class UserService : EntityService<User>, IUserService
     {
         IUnitOfWork _unitOfWork;
-        IMenuRepository _userRepository;
+        IUserRepository _userRepository;
 
         public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository)
             : base(unitOfWork, userRepository)

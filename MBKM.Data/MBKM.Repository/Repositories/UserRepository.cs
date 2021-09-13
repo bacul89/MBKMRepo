@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MBKM.Repository.Repositories
 {
-    public class UserRepository : GenericRepository<Role>, IRoleRepository
+    public class UserRepository : GenericRepository<User>, IUserRepository
     {
         public UserRepository(DbContext _db) : base(_db)
         {

@@ -135,6 +135,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminLoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\PerjanjianKerjasama\PerjanjianKerjasamaController.cs" />
     <Compile Include="Areas\Admin\Controllers\TemplateEmail\TemplateEmailController.cs" />
@@ -180,6 +181,9 @@
     <Content Include="Areas\Admin\Views\PerjanjianKerjasama\Index.cshtml" />
     <Content Include="Areas\Admin\Views\TemplateEmail\Index.cshtml" />
     <Content Include="Areas\Admin\Views\UserManage\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminLogin\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_LayoutLogin.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminLogin\Login.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -191,6 +195,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\ScriptMBKM.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
