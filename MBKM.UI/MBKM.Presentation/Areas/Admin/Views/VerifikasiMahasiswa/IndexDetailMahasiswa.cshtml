@@ -1,0 +1,267 @@
+﻿
+@{
+    ViewBag.Title = "IndexDetailMahasiswa";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
+}
+@model MBKM.Entities.Models.MBKM.Mahasiswa
+
+<div class="card center-block" style="background-color: white; width: 90%; margin-top: 50px; margin-bottom: 50px;">
+    <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+        <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
+            DETAIL DATA DIRI MAHASISWA
+        </h4>
+        <hr/>
+        <div class="container" style="width: 100%; padding-bottom: 15px;">
+            <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+                <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">DATA DIRI</h5>
+                <div class="container" style="width: 100%;">
+                    <table class="table">
+                        <tr>
+                            <td style="width: 20%;">Nama Lengkap</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="namaLengkap" value="@Model.Nama" id="namaLengkap" class="form-control input-md" disabled />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Jenis Kelamin</td>
+                            <td>
+                                <input type="text" name="jenisKelamin" value="@Model.Gender" id="jenisKelamin" class="form-control input-md" disabled />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Tempat Lahir</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="tempatLahir" value="@Model.TempatLahir" id="tempatLahir" class="form-control input-md" disabled />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Tanggal Lahir</td>
+                            <td>
+                                <input type="date" name="tanggalLahir" value="@Model.TanggalLahir" id="tanggalLahir" class="form-control input-md" disabled />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Kewarganegaraan</td>
+                            <td>
+                                <input type="text" name="kewarganegaraan" value="@Model.WargaNegara" id="kewarganegaraan" class="form-control input-md" disabled />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">No. KTP</td>
+                            <td>
+                                <input type="text" name="noKtp" id="noKtp" value="@Model.NoKTP" class="form-control input-md" disabled />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+                <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">INFORMASI KONTAK</h5>
+                <div class="container" style="width: 100%;">
+                    <table class="table">
+                        <tr>
+                            <td style="width: 20%;">Alamat Email</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="email" name="email" id="email" value="@Model.Email" class="form-control input-md" disabled />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">No. Handphone</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="noHP" id="noHP" value="@Model.NoHp" placeholder="+62xxxxxxxxxxx" class="form-control input-md" disabled />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">No. Telepon</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="noTelp" id="noTelp" value="@Model.Telepon" placeholder="+62xxxxxxxxxxx" class="form-control input-md" disabled />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Alamat Rumah</td>
+                            <td>
+                                <div class="form-group">
+                                    <textarea name="alamat" id="alamat" value="@Model.Alamat" class="form-control" style="width: 100%;" rows="5" disabled></textarea>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+                <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">
+                    KONTAK DARURAT
+                    <p style="font-weight: normal; font-size: 16px;">(Kontak yang akan dihubungi dalam kondisi darurat)</p>
+                </h5>
+                <div class="container" style="width: 100%;">
+                    <table class="table">
+                        <tr>
+                            <td style="width: 20%;">Nama</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="namaDarurat" id="namaDarurat" value="@Model.NamaDarurat" class="form-control input-md" disabled />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Hubungan</td>
+                            <td>
+                                <div class="form-group">
+                                    <input name="hubungan" id="hubungan" value="@Model.HubunganDarurat" class="form-control input-md" disabled>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">No. Handphone</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="noHPDarurat" id="noHPDarurat" value="@Model.NoHPDarurat" placeholder="+62xxxxxxxxxxx" class="form-control input-md" disabled />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">No. Telepon</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="noTelpDarurat" id="noTelpDarurat" value="@Model.TeleponDarurat" placeholder="+62xxxxxxxxxxx" class="form-control input-md" disabled />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Alamat Email</td>
+                            <td>
+                                <input type="email" name="emailDarurat" id="emailDarurat" value="@Model.EmailDarurat" class="form-control input-md" disabled />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Alamat Rumah</td>
+                            <td>
+                                <textarea name="alamatDarurat" id="alamatDarurat" value="@Model.AlamatDarurat" class="form-control" style="width: 100%;" rows="5" disabled></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+                <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">
+                    INFORMASI AKADEMIK
+                </h5>
+                <div class="container" style="width: 100%;">
+                    <table class="table">
+                        <tr>
+                            <td style="width: 20%;">Universitas Asal</td>
+                            <td>
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <input type="text" name="jenjangStudi" value="@Model.NamaUniversitas" id="jenjangStudi" class="form-control input-md" disabled />
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Jenjang Studi</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="jenjangStudi" value="@Model.JenjangStudi" id="jenjangStudi" class="form-control input-md" disabled />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Program Studi</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="programStudi" value="@Model.ProdiAsal" id="programStudi" class="form-control input-md" disabled />
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="width: 20%;">NIM Asal</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="nimAsal" id="nimAsal" value="@Model.NIMAsal" class="form-control input-md" disabled />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+            <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+                <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">
+                    INFORMASI AKADEMIK
+                </h5>
+                <div class="container" style="width: 100%;">
+                    <div class="card center-block" style="background-color: white; width: 100%; margin-top: 50px; margin-bottom: 50px;">
+                        <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
+                            <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">
+                                INFORMASI AKADEMIK
+                            </h5>
+                            <div class="container" style="width: 100%;">
+                                <table id="table-data-email-template" class="table row-border hover dt-responsive responsive" style="border-spacing: 0 15px; border:0">
+                                    <thead class="text-center">
+                                        <tr style="background-color: #FF8A04; border: 0 ">
+                                            <th style="text-align:center">No.</th>
+                                            <th style="text-align:center">Tipe File</th>
+                                            <th style="text-align:center">Nama File</th>
+                                            <th style="text-align:center">Download</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <hr/>
+            <div class="card center-block" style="background-color: white; width: 100%; margin-top: 50px; margin-bottom: 50px;">
+                <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
+                    <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
+                        MANAGE TEMPLATE EMAIL
+                    </h4>
+                    <hr />
+                    <div class="container" style="width: 100%;">
+                        <button class="btn btn-success" onclick="IndexCreateEmailTemplate()"><i class="fas fa-plus-circle"></i> Tambah Template Email</button>
+                        <br />
+                        <br />
+                        <table id="table-data-email-template" class="table row-border hover dt-responsive responsive" style="border-spacing: 0 15px; border:0">
+                            <thead class="text-center">
+                                <tr style="background-color: #FF8A04; border: 0 ">
+                                    <th style="text-align:center">No.</th>
+                                    <th style="text-align:center">Tipe Email</th>
+                                    <th style="text-align:center">Subject Email</th>
+                                    <th style="text-align:center">Body Email</th>
+                                    <th style="text-align:center">Status</th>
+                                    <th style="text-align:center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <button class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 16px;">EDIT</button>
+            <button class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: rgb(0, 166, 81); color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; " data-toggle="modal" data-target="#dataPendukung" data-backdrop="false">UPLOAD DATA PENDUKUNG</button>
+            <button class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 16px; ">SIMPAN</button>
+
+        </div>
+    </div>
+</div>
+
