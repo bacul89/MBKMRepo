@@ -44,6 +44,8 @@
     <Compile Include="Interfaces\IEntityService.cs" />
     <Compile Include="Interfaces\IGenericRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
+    <Compile Include="Interfaces\RepoInterfaces\IEmailTemplateRepository.cs" />
+    <Compile Include="Interfaces\RepoInterfaces\ILookupRepository.cs" />
     <Compile Include="Interfaces\RepoInterfaces\IMenuRepository.cs" />
     <Compile Include="Interfaces\RepoInterfaces\IMenuRoleRepository.cs" />
     <Compile Include="Interfaces\RepoInterfaces\IRoleRepository.cs" />

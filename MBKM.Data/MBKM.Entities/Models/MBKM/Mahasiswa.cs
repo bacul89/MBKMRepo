@@ -32,6 +32,15 @@ namespace MBKM.Entities.Models.MBKM
         [Required(ErrorMessage = "Tempat Lahir harus di isi")]
         public string TempatLahir { get; set; }
         public string ReferenceNumber { get; set; }
+        public string NamaDarurat { get; set; }
+        public string HubunganDarurat { get; set; }
+        public string NoHPDarurat { get; set; }
+        public string TeleponDarurat { get; set; }
+        public string EmailDarurat { get; set; }
+        public string AlamatDarurat { get; set; }
+        public string JenjangStudi { get; set; }
+        public string WargaNegara { get; set; }
+
         public bool isVerifikasi { get; set; }
         public virtual ICollection<Attachment> Attachments { get; set; }
         public virtual ICollection<KRS> KRs { get; set; }

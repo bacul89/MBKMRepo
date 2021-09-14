@@ -1,0 +1,193 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
+}
+
+<style>
+    table thead {
+        background-color: #FF8A04;
+    }
+
+    .middle {
+        line-height: 70px;
+    }
+
+    .icon {
+        color: #FF8A04;
+    }
+</style>
+
+<div class="container-fluid" style="margin-top:20px; margin-left:40px;margin-right:40px;margin-bottom:100px">
+    <div class="row justify-content-center">
+        <div class="col">
+            <div class="card center-block" style="background-color: white; width: 90%; margin-top: 50px; margin-bottom: 50px;">
+                <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+                    <h5 class="card-title" style="padding: 15px; font-weight: bold; color: black;">Daftar Perjanjian Kerja Sama</h5>
+                    <div class="container" style="width: 100%;">
+                        <button class="btn btn-success" data-toggle="modal" data-target="#TambahKerjasama" data-backdrop="false"><i class="fas fa-plus-circle"></i> Tambah Kerja Sama</button>
+                        <br />
+                        <br />
+                        <table id="TableList" class="table table-bordered hover dt-responsive display responsive"
+                               style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead class="text-center">
+                                <tr>
+                                    <th>No.</th>
+                                    <th>No. Kerjasama</th>
+                                    <th>Tanggal Kerjasama</th>
+                                    <th>Tanggal berakhir</th>
+                                    <th>Nama Perguruan Tinggi</th>
+                                    <th>Unit/Fakultas</th>
+                                    <th>Jenis Kerjasama</th>
+                                    <th>Inputer</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td>xxxx-xxxxx-xxxxx</td>
+                                    <td>09/09/2021</td>
+                                    <td>09/09/2021</td>
+                                    <td>universitas xyz</td>
+                                    <td>Fakultas Ilmu Komputer</td>
+                                    <td>Pertukaran</td>
+                                    <td>inputer</td>
+                                    <td>
+                                        <a href="#"> <i class="fas fa-edit icon"></i></a>
+                                        <a href="#"> <i class="fas fa-eye icon"></i></a>
+                                        <a href="#"><i class="fas fa-trash-alt icon"></i></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>xxxx-xxxxx-xxxxx</td>
+                                    <td>09/09/2021</td>
+                                    <td>09/09/2021</td>
+                                    <td>universitas xyz</td>
+                                    <td>Fakultas Ilmu Komputer</td>
+                                    <td>Pertukaran</td>
+                                    <td>inputer</td>
+                                    <td>
+                                        <a href="#"> <i class="fas fa-edit icon"></i></a>
+                                        <a href="#"> <i class="fas fa-eye icon"></i></a>
+                                        <a href="#"><i class="fas fa-trash-alt icon"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal Add Data-->
+<div class="modal fade" id="TambahKerjasama">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header" style="background-color: #FF8A04; ">
+                <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+                    Form Perjanjian Kerjasama
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </h5>
+            </div>
+            <form action="#" method="post" class="form-horizontal">
+                <div class="modal-body" style="overflow: auto;">
+                    <div class="form-group">
+                        <label for="no" class="col-md-4 col-form-label">No. Kerjasama</label>
+                        <div class="col-md-8">
+                            <input id="NoKerjasama" type="text" name="NoKerjasama" class="form-control" placeholder="No. Kerjasama">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="tanggalKerjasama" class="col-md-4 col-form-label">Tanggal Kerjasama</label>
+                        <div class="col-md-8">
+                            <input id="TanggalKerjasama" type="date" name="TanggalKerjasama" class="form-control" placeholder="Tanggal Kerjasama">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="tanggalBerakhir" class="col-md-4 col-form-label">Tanggal Berakhir</label>
+                        <div class="col-md-8">
+                            <input id="TanggalBerakhir" type="date" name="TanggalBerakhir" class="form-control" placeholder="Tanggal Berakhir">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="PtUniv" class="col-md-4 col-form-label">PT/ Universitas</label>
+                        <div class="col-md-8">
+                            <input id="PtUniv" type="text" name="PtUniv" class="form-control" placeholder="PT/ Universitas">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Fakultas" class="col-md-4 col-form-label">Nama Unit/Fakultas Kerjasama</label>
+                        <div class="col-md-8">
+                            <select name="Fakultas" id="Fakultas" class="form-control">
+                                <option value="" disabled selected>--Pilih Nama Unit/Fakultas--</option>
+                                <option value="a">Unit/Fakultas a</option>
+                                <option value="b">Unit/Fakultas b</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="pertukaran" class="col-md-4 col-form-label">Jenis Pertukaran</label>
+                        <div class="col-md-8">
+                            <select name="pertukaran" id="pertukaran" class="form-control">
+                                <option value="" disabled selected>--Pilih jenis Pertukaran--</option>
+                                <option value="a">Pertukaran a</option>
+                                <option value="b">Pertukaran b</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="kerjasama" class="col-md-4 col-form-label">Jenis Kerjasama</label>
+                        <div class="col-md-8">
+                            <select name="kerjasama" id="kerjasama" class="form-control">
+                                <option value="" disabled selected>--Pilih Jenis Kerjasama--</option>
+                                <option value="a">Kerjasama a</option>
+                                <option value="b">Kerjasama b</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputer" class="col-md-4 col-form-label">Inputer</label>
+                        <div class="col-md-8">
+                            <input id="inputer" type="text" name="inputer" class="form-control" value="inputer" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Upload" class="col-md-4 col-form-label">Upload Dokumen Pendukung</label>
+                        <div class="col-md-8">
+                            <input id="file" type="file" name="inputer" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" id="submitForm" class="btn btn-primary mb-2" style="background-color: #FF8A04; color: black; font-weight: bold; font-size: 20px; ">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            var t = $('#TableList').DataTable({
+                "columnDefs": [{
+                    "searchable": false,
+                    "orderable": false,
+                    "targets": 0
+                }],
+                "order": [[1, 'asc']]
+            });
+
+            t.on('order.dt search.dt', function () {
+                t.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            }).draw();
+        });
+    </script>
+}

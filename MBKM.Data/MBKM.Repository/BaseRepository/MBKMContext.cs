@@ -26,6 +26,7 @@ namespace MBKM.Repository.BaseRepository
             return conn;
         }
         //public DbSet<Menu> Menus { get; set; }
+        public DbSet<Lookup> Lookups { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new MenuMap());
@@ -41,6 +42,8 @@ namespace MBKM.Repository.BaseRepository
             modelBuilder.Configurations.Add(new AbsensiMap());
             modelBuilder.Configurations.Add(new AttachmentMap());
             modelBuilder.Configurations.Add(new AttachmentPerjanjianKerjasamaMap());
+            modelBuilder.Configurations.Add(new EmailTemplateMap());
+            modelBuilder.Configurations.Add(new LookupMap());
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();

@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.1/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+</head>
+<style>
+    <style >
+    body {
+        padding-top: 105px;
+    }
+
+    a:hover {
+        cursor: pointer;
+    }
+
+    input {
+        max-width: 100%;
+    }
+
+    select {
+        max-width: 100%;
+    }
+
+    .split {
+        height: 96%;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        overflow-x: hidden;
+        padding-top: 105px;
+    }
+    /* Control the left side */
+    .left {
+        left: 0;
+        width: 20%;
+    }
+    /* Control the right side */
+    .right {
+        right: 0;
+        width: 80%;
+        background-color: #c1baba;
+    }
+
+    li {
+        border: solid;
+        border-color: #FF8A04;
+        border-radius: 5px;
+        margin: 10px;
+        border-width: 1px;
+    }
+
+        li a {
+            color: #FF8A04;
+        }
+
+            li a:focus {
+                color: #FF8A04;
+            }
+
+            li a:hover {
+                color: #FF8A04;
+            }
+
+    textarea {
+        max-width: 100%;
+    }
+</style>
+<body>
+    <div class="body-content split right">
+        <nav>
+            <ul class="nav split left">
+                <li>
+                    <a href="@Url.Action("Index","PerjanjianKerjasama")" id="btn-1" data-toggle="collapse" aria-expanded="false">Manage Perjanjian Kerjasama</a>
+                </li>
+            </ul>
+        </nav>
+
+        @RenderBody()
+        <div class="navbar navbar-fixed-top" style="background-color: #FF8A04;">
+            <img src="~/Asset/Lambang_Unika_Atma_Jaya.png" style="max-height: 75px; margin: 15px 25px;" /><!-- Avatar -->
+            <div class="dropdown" style="float: right; margin: 27.5px; ">
+                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <img src="#" class="img-rounded" height="50" alt="" />
+                    <asd style="color: black; font-weight: bold; font-size: 16px;">Userabcsjdsih</asd>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <a href="@Url.Action("index", "home")">Logout</a>
+                    </li>
+                </ul>
+            </div>
+            <footer style="height: 3%; background-color: white; vertical-align: central; position: fixed; left: 0; bottom: 0; width: 100%; text-align: center; font-size: auto">
+                <p> &copy; Copyright 2021 Universitas Katolik Indonesia Atma Jaya - All Right Reserved</p>
+            </footer>
+        </div>
+    </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.js"></script>
+</body>
+</html>
