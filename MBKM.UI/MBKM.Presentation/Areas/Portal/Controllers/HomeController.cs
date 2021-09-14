@@ -21,12 +21,13 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             //var a = _mahasiswaService.getLoginInternal("11998000648", "126019");
             return View();
         }
-        public ActionResult DataDiri()
-        {
-            return View();
-        }
         public void registerExternal(Mahasiswa mahasiswa)
         {
+            mahasiswa.IsActive = true;
+            mahasiswa.IsDeleted = false;
+            mahasiswa.Telepon = mahasiswa.NoHp;
+            mahasiswa.CreatedDate = DateTime.Now;
+            mahasiswa.UpdatedDate = DateTime.Now;
             _mahasiswaService.Save(mahasiswa);
         }
     }
