@@ -135,9 +135,11 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminLoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\PerjanjianKerjasama\PerjanjianKerjasamaController.cs" />
     <Compile Include="Areas\Admin\Controllers\TemplateEmail\TemplateEmailController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserManageController.cs" />
     <Compile Include="Areas\Admin\Controllers\VerifikasiMahasiswaController.cs" />
     <Compile Include="Areas\Portal\Controllers\HomeController.cs" />
     <Compile Include="Areas\Portal\PortalAreaRegistration.cs" />
@@ -190,6 +192,9 @@
     <Content Include="Areas\Admin\Views\UserManage\_DetailUser.cshtml" />
     <Content Include="Areas\Admin\Views\VerifikasiMahasiswa\Index.cshtml" />
     <Content Include="Areas\Admin\Views\VerifikasiMahasiswa\IndexDetailMahasiswa.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminLogin\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminLogin\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\UserManage\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

@@ -80,8 +80,8 @@ $('#table-data-email-template').DataTable({
             "render": function (data, type, row, meta) {
                 return `<div class="row justify-content-center">
                             <div class="col" style="text-align:center">
-                                <a href="javascript:void(0)" style="color:black" onclick="EditUserTemplate('${data}')"> <i class="fas fa-edit coral" ></i></a>
-                                <a href="javascript:void(0)" style="color:black" onclick="DetailUserTemplate('${data}')"> <i class="fas fa-file-search coral"></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="IndexUpdateEmailTemplate('${data}')"> <i class="fas fa-edit coral" ></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="IndexViewEmailTemplate('${data}')"> <i class="fas fa-file-search coral"></i></a>
                                 <a href="javascript:void(0)" style="color:black" onclick="DeletedTemplateEmail('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
                             </div>
                         </div>`;
