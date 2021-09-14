@@ -12,5 +12,6 @@ namespace MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces
     public interface IMahasiswaRepository : IGenericRepository<Mahasiswa>
     {
         VMLogin getLoginInternal(string StudentID, string Password);
+        List<Mahasiswa> getMahasiswasNotYetVer(string Universitas, string Prodi);
     }
 }

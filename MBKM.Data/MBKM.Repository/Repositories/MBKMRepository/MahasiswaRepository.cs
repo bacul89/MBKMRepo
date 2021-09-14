@@ -3,6 +3,7 @@ using MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces;
 using MBKM.Entities.Models.MBKM;
 using MBKM.Entities.ViewModel;
 using MBKM.Repository.BaseRepository;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
@@ -24,6 +25,16 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 var result = context.Database
                     .SqlQuery<VMLogin>("GetLoginInternal @Password, @StudentID", PasswordParameter, studentIdParameter);
                 return result.FirstOrDefault();
+            }
+        }
+
+        public List<Mahasiswa> getMahasiswasNotYetVer(string Universitas, string Prodi)
+        {
+            using (var context = new MBKMContext())
+            {
+                var result = context.Mahasiswas.Where(x => x.isVerifikasi == false && x.NamaUniversitas == Universitas 
+                            && x.ProdiAsal == Prodi).ToList();
+                return result;
             }
         }
     }

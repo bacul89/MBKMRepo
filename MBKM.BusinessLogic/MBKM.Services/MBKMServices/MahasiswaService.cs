@@ -14,6 +14,7 @@ namespace MBKM.Services.MBKMServices
     public interface IMahasiswaService : IEntityService<Mahasiswa>
     {
         VMLogin getLoginInternal(string StudentID, string Password);
+        List<Mahasiswa> getMahasiswasNotYetVer(string Universitas, string Prodi);
     }
     public class MahasiswaService : EntityService<Mahasiswa>, IMahasiswaService
     {
@@ -31,6 +32,11 @@ namespace MBKM.Services.MBKMServices
         {
             VMLogin model = _mahasiswaRepository.getLoginInternal(StudentID, Password);
             return model;
+        }
+
+        public List<Mahasiswa> getMahasiswasNotYetVer(string Universitas, string Prodi)
+        {
+            return _mahasiswaRepository.getMahasiswasNotYetVer(Universitas, Prodi);
         }
     }
 }
