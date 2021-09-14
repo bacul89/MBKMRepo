@@ -3,6 +3,7 @@ using MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces;
 using MBKM.Entities.Models.MBKM;
 using MBKM.Entities.ViewModel;
 using MBKM.Repository.BaseRepository;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
@@ -37,5 +38,15 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return result;
             }
         }
+
+        //public int updateRangeVer(Int64[] listId)
+        //{
+        //    using (var context = new MBKMContext())
+        //    {
+        //        var model = context.Mahasiswas.Where(f => listId.Contains(f.ID)).ToList();
+        //        model.ForEach(a => a.isVerifikasi = true);
+        //        return context.SaveChanges();
+        //    }
+        //}
     }
 }

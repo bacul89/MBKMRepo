@@ -1,4 +1,6 @@
-﻿using MBKM.Services;
+﻿using MBKM.Common.Helpers;
+using MBKM.Entities.ViewModel;
+using MBKM.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,24 +21,33 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             return View();
         }
+        public ActionResult ModaladdUser()
+        {
+            return View("_AddUser");
+        }
+        public ActionResult ModalEditUser(int id)
+        {
+            var model = _userService.Get(id);
+            return View("_EditUser", model);
+        }
+        public ActionResult ModalDetailUser(int id)
+        {
+            var model = _userService.Get(id);
+            return View("_DetailUser", model);
+        }
 
         [HttpPost]
-        public ActionResult Get()
+        public JsonResult GetList(DataTableAjaxPostModel model)
         {
-            //var obj = _financeTangkiService.SearchFinanceTangki(requestModel.Start, requestModel.Length, TanggalDari, TanggalSampai, PICKeuanganId, ShiftId, TangkiId, CargoId);
-
-            //var data = obj.Item1.Select(fP => new
-            //{
-            //    Id = fP.Id,
-            //    Tanggal = fP.Tanggal,
-            //    Shift = fP.Shift.Description,
-            //    PICKeuangan = fP.PICKeuangan.Nama,
-            //    NomorTangki = fP.Tangki.Description,
-            //    NamaCargo = fP.Cargo.Description,
-            //    Quantity = fP.Qty,
-            //});
-            return Json(null);
-            //return Json(new DataTablesResponse(requestModel.Draw, data.ToList(), obj.Item3, obj.Item2), JsonRequestBehavior.AllowGet);
+            VMListUser vMListUser = _userService.getListUserGrid(model);
+            return Json(new
+            {
+                // this is what datatables wants sending back
+                draw = model.draw,
+                recordsTotal = vMListUser.TotalCount,
+                recordsFiltered = vMListUser.TotalFilterCount,
+                data = vMListUser.gridDatas
+            });
         }
 
     }

@@ -1,43 +1,16 @@
-﻿$(document).ready(function () {
-    var t = $('#TableList').DataTable({
-        "columnDefs": [{
-            "searchable": false,
-            "orderable": false,
-            "paging": false,
-            "targets": 0
-        }],
-        "order": [[1, 'asc']],
-        "createdRow": function (row, data, index) {
-            $('td', row).css({
-                'border': '1px solid coral',
-            });
-        }
-    });
-
-    t.on('order.dt search.dt', function () {
-        t.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
-            cell.innerHTML = i + 1;
-        });
-    }).draw();
-});
-
-function validationCustom() {
-    var isValid;
-    $(".input-data").each(function () {
-        var element = $(this);
-        if (element.val() == "") {
-            return isValid = false;
-        } else {
-            return isValid = true;
-        }
-    });
-    return isValid;
-}
-
-$('#table-data-email-template').DataTable({
-    ajax: {
-        url: '/Admin/TemplateEmail/GetDataEmailTemplate',
-        dataSrc: ''
+﻿var table = $('#TableList').DataTable({
+    "proccessing": true,
+    "serverSide": true,
+    "ajax": {
+        url: '/Admin/UserManage/GetList',
+        type: 'POST'
+    },
+    "language": {
+        "emptyTable": "No record found.", 
+        "processing":
+            '<i class="fa fa-spinner fa-spin fa-3x fa-fw" style="color:#2a2b2b;"></i><span class="sr-only">Loading...</span> ',
+        "search": "",
+        "searchPlaceholder": "Search..."
     },
     "columns": [
         {
@@ -47,24 +20,28 @@ $('#table-data-email-template').DataTable({
             }
         },
         {
-            "data": "TipeMail",
+            "title": "Nomor Induk Pegawai",
+            "data": "NoPegawai",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + data + '</div>';
             }
         },
         {
-            "data": "SubjectMail",
+            "title": "Nama Pegawai",
+            "data": "Nama",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + data + '</div>';
             }
         },
         {
-            "data": "BodyMail",
+            "title": "Alamat Email",
+            "data": "Email",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + data + '</div>';
             }
         },
         {
+            "title": "Status",
             "data": "IsActive",
             "render": function (data, type, row, meta) {
                 if (data) {
@@ -76,24 +53,24 @@ $('#table-data-email-template').DataTable({
             }
         },
         {
+            "title": "Action",
             "data": "ID",
             "render": function (data, type, row, meta) {
                 return `<div class="row justify-content-center">
                             <div class="col" style="text-align:center">
-                                <a href="javascript:void(0)" style="color:black" onclick="EditUserTemplate('${data}')"> <i class="fas fa-edit coral" ></i></a>
-                                <a href="javascript:void(0)" style="color:black" onclick="DetailUserTemplate('${data}')"> <i class="fas fa-file-search coral"></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="IndexUpdateEmailTemplate('${data}')"> <i class="fas fa-edit coral" ></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="IndexViewEmailTemplate('${data}')"> <i class="fas fa-file-search coral"></i></a>
                                 <a href="javascript:void(0)" style="color:black" onclick="DeletedTemplateEmail('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
                             </div>
                         </div>`;
             }
-        },
-
+        }
     ],
     "createdRow": function (row, data, index) {
         $('td', row).css({
             'border': '1px solid coral',
             'border-collapse': 'collapse',
-            'vertical-align' : 'center',
+            'vertical-align': 'center',
         });
     }
 });

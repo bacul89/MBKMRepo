@@ -15,6 +15,7 @@ namespace MBKM.Services.MBKMServices
     {
         VMLogin getLoginInternal(string StudentID, string Password);
         List<Mahasiswa> getMahasiswasNotYetVer(string Universitas, string Prodi);
+        //int updateRangeVer(Int64[] listId);
     }
     public class MahasiswaService : EntityService<Mahasiswa>, IMahasiswaService
     {
@@ -38,5 +39,10 @@ namespace MBKM.Services.MBKMServices
         {
             return _mahasiswaRepository.getMahasiswasNotYetVer(Universitas, Prodi);
         }
+
+        //public int updateRangeVer(long[] listId)
+        //{
+        //    return _mahasiswaRepository.updateRangeVer(listId);
+        //}
     }
 }
