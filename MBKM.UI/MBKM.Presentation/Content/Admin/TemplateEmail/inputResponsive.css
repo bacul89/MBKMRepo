@@ -7,3 +7,14 @@
     border-color: #f7ba74;
     box-shadow: 0 0 10px #f7ba74;
 }
+
+.coral {
+    color : coral;
+}
+.center{
+    align-content:center;
+    align-items:center;
+    vertical-align : unset;
+    align-self : center;
+    text-align:center
+}

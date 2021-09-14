@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace MBKM.Repository.Repositories
 {
-    public class EmailTemplateRepository : GenericRepository<Menu>, IMenuRepository
+    public class EmailTemplateRepository : GenericRepository<EmailTemplate>, IEmailTemplateRepository
     {
         public EmailTemplateRepository(DbContext _db) : base(_db)
         {

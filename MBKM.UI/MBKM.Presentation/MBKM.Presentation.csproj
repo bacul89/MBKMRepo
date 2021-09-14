@@ -164,6 +164,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\Admin\TemplateEmail\crud.js" />
+    <Content Include="Scripts\Admin\TemplateEmail\main.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Portal\Views\web.config" />
@@ -184,6 +186,9 @@
     <Content Include="Areas\Admin\Views\AdminLogin\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_LayoutLogin.cshtml" />
     <Content Include="Areas\Admin\Views\AdminLogin\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\TemplateEmail\ModalCreateEmailTemplate.cshtml" />
+    <Content Include="Areas\Admin\Views\TemplateEmail\ModalUpdateEmailTemplate.cshtml" />
+    <Content Include="Areas\Admin\Views\TemplateEmail\ModalDetailEmailTemplate.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
