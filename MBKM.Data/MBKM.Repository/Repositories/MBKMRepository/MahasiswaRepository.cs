@@ -54,9 +54,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
 
                 var result = context.Mahasiswas.Where(x => x.IsDeleted == false && x.isVerifikasi == false);
                 mListMahasiswa.TotalCount = result.Count();
-                mListMahasiswa.gridDatas = result.AsQueryable().Where(y => y.NamaUniversitas.Contains(SearchParam) ||
-                                        y.Email.Contains(SearchParam) || y.ProdiAsal.Contains(SearchParam) || y.NIMAsal.Contains(SearchParam)
-                                        || y.Nama.Contains(SearchParam) || y.JenjangStudi.Contains(SearchParam))
+                mListMahasiswa.gridDatas = result.AsQueryable()
                     .Select(z => new GridDataMahasiswa
                     {
                         ID = z.ID,

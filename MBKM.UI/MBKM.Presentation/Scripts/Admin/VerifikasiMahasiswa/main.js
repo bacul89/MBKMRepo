@@ -16,63 +16,63 @@
         {
             "data": null,
             "render": function (data, type, full, meta) {
-                return meta.row + 1;
+                return '<div class="center vertical-center" style="font-size: 0.8vw">' + (meta.row + 1) + '</div>';
             }
         },
         {
             "title": "Universitas Asal",
             "data": "Universitas",
             "render": function (data, type, row, meta) {
-                return '<div class="center" style="font-size: 0.8vw">' + data + '</div>';
+                return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
             "title": "Jenjang Studi",
             "data": "Jenjang",
             "render": function (data, type, row, meta) {
-                return '<div class="center" style="font-size: 0.8vw">' + data + '</div>';
+                return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
             "title": "Program Studi Asal",
             "data": "Prodi",
             "render": function (data, type, row, meta) {
-                return '<div class="center" style="font-size: 0.8vw">' + data + '</div>';
+                return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
             "title": "NIM Asal",
             "data": "NIM",
             "render": function (data, type, row, meta) {
-                return '<div class="center" style="font-size: 0.8vw">' + data + '</div>';
+                return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
             "title": "Nama Mahasiswa",
             "data": "Nama",
             "render": function (data, type, row, meta) {
-                return '<div class="center" style="font-size: 0.8vw">' + data + '</div>';
+                return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
             "title": "Jenis Kelamin",
             "data": "Gender",
             "render": function (data, type, row, meta) {
-                return '<div class="center" style="font-size: 0.8vw">' + data + '</div>';
+                return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
             "title": "Email",
             "data": "Email",
             "render": function (data, type, row, meta) {
-                return '<div class="center" style="font-size: 0.8vw">' + data + '</div>';
+                return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
             "title": "No. Hp",
             "data": "HP",
             "render": function (data, type, row, meta) {
-                return '<div class="center" style="font-size: 0.8vw">' + data + '</div>';
+                return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
@@ -80,9 +80,9 @@
             "data": "StatusVerifikasi",
             "render": function (data, type, row, meta) {
                 if (data) {
-                    return '<div class="center" style="font-size: 0.8vw">Aktif</div>';
+                    return '<div class="center vertical-center" style="font-size: 0.8vw">Aktif</div>';
                 } else {
-                    return '<div class="center" style="font-size: 0.8vw">Tidak Aktif</div>';
+                    return '<div class="center vertical-center" style="font-size: 0.8vw">Tidak Aktif</div>';
                 }
 
             }
@@ -91,9 +91,11 @@
             "title": "Action",
             "data": "ID",
             "render": function (data, type, row, meta) {
-                return `<a href="javascript:void()">
-                            <button type="button" onclick="IndexDetailVerifikasiMahasiswa('${data}')" class="btn btn-warning btn-sm" style="font-size: 0.5vw"><i class="fas fa-search"></i></button>
-                        </a>`;
+                return `<div class="center vertical-center" style="text-align:center; align-items:center">
+                            <a href="javascript:void()">
+                                <button type="button" onclick="IndexDetailVerifikasiMahasiswa('${data}')" class="btn btn-warning btn-sm" style="font-size: 0.5vw"><i class="fas fa-search"></i></button>
+                            </a>
+                        </div>`;
             }
         }
     ],
