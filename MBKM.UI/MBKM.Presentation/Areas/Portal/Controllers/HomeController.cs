@@ -34,6 +34,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     {
                         token = generator.Next(0, 1000000).ToString("D6");
                     }
+                    mahasiswa.Token = token;
                     mahasiswa.IsActive = false;
                     mahasiswa.IsDeleted = false;
                     mahasiswa.Telepon = mahasiswa.NoHp;
@@ -55,7 +56,16 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult VerifyPage(string token)
         {
-            
+            Mahasiswa mahasiswa = GetMahasiswaByToken(token);
+            if (mahasiswa != null)
+            {
+                mahasiswa.IsActive = true;
+                _mahasiswaService.Save(mahasiswa);
+                TempData["alertMessage"] = "Akun telah berhasil diaktivasi, silahkan login!";
+            } else
+            {
+                TempData["alertMessage"] = "Token invalid!";
+            }
             return RedirectToAction("Index", "Home");
         }
 
@@ -73,7 +83,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             GMailer mailer = new GMailer();
             mailer.ToEmail = email;
             mailer.Subject = "Verify your email";
-            mailer.Body = "Thanks for Registering your account.<br> please verify your email by clicking the link <br> <a href='http://localhost:10776" + url + "'>verify</a>";
+            mailer.Body = "Thanks for Registering your account.<br> please verify your email by clicking the link <br> <a href='http://localhost:10776" + url + "?token=" + token + "'>verify</a>";
             mailer.IsHtml = true;
             mailer.Send();
         }

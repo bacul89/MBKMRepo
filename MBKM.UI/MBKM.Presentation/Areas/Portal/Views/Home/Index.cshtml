@@ -158,6 +158,10 @@
 
 @section Scripts{
     <script>
+        var alertMessage = '@TempData["alertMessage"]';
+        if (alertMessage.length != 0) {
+            alert(alertMessage);
+        }
         function submitRegistrasi() {
             mahasiswa = new Object;
             mahasiswa.Nama = $("#nama").val();
