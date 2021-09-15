@@ -29,6 +29,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             return View();
         }
 
+        [HttpPost]
         public JsonResult GetAllMahasiswa(DataTableAjaxPostModel model)
         {
             var getAll = _mahasiswaService.getMahasiswasNotYetVer("ubm", "");
@@ -40,7 +41,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     recordsTotal = data.TotalCount,
                     recordsFiltered = data.TotalFilterCount,
                     data = data.gridDatas
-                }, JsonRequestBehavior.AllowGet
+                }
             );
         }
 

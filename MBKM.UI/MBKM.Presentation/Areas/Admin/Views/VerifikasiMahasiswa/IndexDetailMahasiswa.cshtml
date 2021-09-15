@@ -5,12 +5,17 @@
 }
 @model MBKM.Entities.Models.MBKM.Mahasiswa
 
+@section css{
+    <link rel="stylesheet" type="text/css" href="~/Content/Admin/inputResponsive.css">
+}
+
+
 <div class="card center-block" style="background-color: white; width: 90%; margin-top: 50px; margin-bottom: 50px;">
     <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
         <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
             DETAIL DATA DIRI MAHASISWA
         </h4>
-        <hr/>
+        <hr />
         <div class="container" style="width: 100%; padding-bottom: 15px;">
             <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
                 <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">DATA DIRI</h5>
@@ -228,8 +233,8 @@
                     </div>
                 </div>
             </div>
-            <br/>
-            <hr/>
+            <br />
+            <hr />
             <div class="card center-block" style="background-color: white; width: 100%; margin-top: 50px; margin-bottom: 50px;">
                 <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
                     VERIFIKASI BAA
@@ -238,27 +243,39 @@
                 <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
                     <div class="container" style="width: 100%;">
                         <form class="form-horizontal" style="margin-top:50px">
-                            
                             <div class="form-group">
-                                <label for="inp_tipeEmail" class="col-sm-3 control-label">Tipe Email</label>
+                                <label>Jenis Kelamin</label>
+                                <select name="Gender" id="gender" class="form-control input-lg">
+                                    <option value="L">Laki - Laki</option>
+                                    <option value="P">Perempuan</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="inp_email" class="col-sm-3 control-label">Biaya</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control input-pendaftaran" name="inp_tipeEmail" id="inp_tipeEmail" placeholder="Input Type Email">
+                                    <input type="email" class="form-control input-data" name="inp_email" id="inp_email" placeholder="Input Subject Email">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inp_email" class="col-sm-3 control-label">Subject Email</label>
-                                <div class="col-sm-5">
-                                    <input type="email" class="form-control input-pendaftaran"  name="inp_email" id="inp_email" placeholder="Input Subject Email">
+                                <label for="inp_status" class="col-sm-3 control-label">Status</label>
+                                <div class="col-sm-9">
+                                    <label class="radio-inline input-pendaftaran">
+                                        <input type="radio" name="inp_status" id="inp_status" value="1"> Terima
+                                    </label>
+                                    <label class="radio-inline input-pendaftaran">
+                                        <input type="radio" name="inp_status" id="inp_status" value="0"> Tolak
+                                    </label>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inp_bodyEmail" class="col-sm-3 control-label">Body Email</label>
-                                <div class="col-sm-5">
-                                    <textarea class="form-control input-pendaftaran summernote" name="inp_bodyEmail" rows="5" id="inp_bodyEmail" placeholder="Input Body Email"></textarea>
-                                </div>
+                                <label>Jenis Kelamin</label>
+                                <select name="Gender" id="gender" class="form-control input-lg">
+                                    <option value="L">Laki - Laki</option>
+                                    <option value="P">Perempuan</option>
+                                </select>
                             </div>
                             <div class="form-group">
-                                <div class="col-sm-2 col-md-offset-8">
+                                <div class="col-sm-2 col-md-offset-7">
                                     <button type="button" onclick="$('.modal').modal('hide')" class="btn btn-warning">Close</button>
                                 </div>
                             </div>
