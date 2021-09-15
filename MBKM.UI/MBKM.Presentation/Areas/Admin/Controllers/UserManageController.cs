@@ -1,4 +1,5 @@
 ﻿using MBKM.Common.Helpers;
+using MBKM.Entities.Models;
 using MBKM.Entities.ViewModel;
 using MBKM.Services;
 using System;
@@ -34,6 +35,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             var model = _userService.Get(id);
             return View("_DetailUser", model);
+        }
+
+        [HttpPost]
+        public ActionResult PostDataUser(User model)
+        {
+            _userService.Save(model);
+            return Json(model);
         }
 
         [HttpPost]
