@@ -15,7 +15,11 @@ namespace MBKM.Entities.Map.MBKMMap
         {
             ToTable("PerjanjianKerjasama");
             HasKey(t => t.ID).Property(t => t.ID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            Property(t => t.NamaUniversitas).HasMaxLength(150).IsRequired();
+            Property(t => t.NamaInstansi).HasMaxLength(150).IsRequired();
+            Property(t => t.NamaUnit).HasMaxLength(150).IsRequired();
+            Property(t => t.Instansi).HasMaxLength(50).IsRequired();
+            Property(t => t.JenisPertukaran).HasMaxLength(100).IsRequired();
+            Property(t => t.JenisKerjasama).HasMaxLength(100).IsRequired();
 
         }
     }

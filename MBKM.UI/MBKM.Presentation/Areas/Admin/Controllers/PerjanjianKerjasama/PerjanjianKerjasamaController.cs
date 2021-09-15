@@ -40,10 +40,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
             perjanjianKerjasama.TanggalMulai = perjanjianKerjasama.TanggalMulai;
             perjanjianKerjasama.IsDeleted = false;
             perjanjianKerjasama.IsActive = true;
-            perjanjianKerjasama.NamaUniversitas = perjanjianKerjasama.NamaUniversitas;
+            perjanjianKerjasama.NamaInstansi = perjanjianKerjasama.NamaInstansi;
             perjanjianKerjasama.UpdatedDate = DateTime.Now;
             perjanjianKerjasama.CreatedDate = DateTime.Now;
-            perjanjianKerjasama.UniversitasID = 0;
+            //perjanjianKerjasama.UniversitasID = 0;
             _perjanjianKerjasamaService.Save(perjanjianKerjasama);
         }
     }
