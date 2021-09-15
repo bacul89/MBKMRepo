@@ -109,5 +109,5 @@
 function IndexDetailVerifikasiMahasiswa(id) {
     var baseUrl = window.location.href;
     console.log(baseUrl);
-    window.location.href = baseUrl + "IndexDetailMahasiswa/" + id
+    window.location.href = baseUrl + "/IndexDetailMahasiswa/" + id
 }

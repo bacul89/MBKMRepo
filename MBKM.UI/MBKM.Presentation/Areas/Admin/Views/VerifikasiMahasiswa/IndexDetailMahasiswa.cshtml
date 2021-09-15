@@ -207,14 +207,11 @@
             </div>
             <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
                 <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">
-                    INFORMASI AKADEMIK
+                    DOKUMEN PENDUKUNG
                 </h5>
                 <div class="container" style="width: 100%;">
                     <div class="card center-block" style="background-color: white; width: 100%; margin-top: 50px; margin-bottom: 50px;">
-                        <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
-                            <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">
-                                INFORMASI AKADEMIK
-                            </h5>
+                        <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)">
                             <div class="container" style="width: 100%;">
                                 <table id="table-data-email-template" class="table row-border hover dt-responsive responsive" style="border-spacing: 0 15px; border:0">
                                     <thead class="text-center">
@@ -226,6 +223,12 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <tr style="border: 0 solid coral">
+                                            <th style="text-align:center">1</th>
+                                            <th style="text-align:center">LOREM</th>
+                                            <th style="text-align:center">lOREM</th>
+                                            <th style="text-align:center; color:coral"><i class="fas fa-file-download"></i></th>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -244,7 +247,7 @@
                     <div class="container" style="width: 100%;">
                         <form class="form-horizontal" style="margin-top:50px">
                             <div class="form-group">
-                                <label for="inp_noKerjaSama" class="col-sm-3 control-label">Jenis Kelamin</label>
+                                <label for="inp_noKerjaSama" class="col-sm-3 control-label">No. Kerjasama</label>
                                 <div class="col-sm-5">
                                     <select class="form-control input-data" name="inp_noKerjaSama" id="inp_noKerjaSama">
                                         <option value="" selected disabled>-- Pilih No. Kerjasama --</option>
@@ -254,24 +257,24 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inp_email" class="col-sm-3 control-label">Biaya</label>
+                                <label for="inp_biaya" class="col-sm-3 control-label">Biaya</label>
                                 <div class="col-sm-5">
-                                    <input type="email" class="form-control input-data" name="inp_email" id="inp_email" placeholder="Input Subject Email">
+                                    <input type="number" class="form-control input-data" name="inp_biaya" id="inp_biaya" placeholder="0">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inp_status" class="col-sm-3 control-label">Status</label>
+                                <label for="inp_verifikasi" class="col-sm-3 control-label">Verifikasi</label>
                                 <div class="col-sm-9">
                                     <label class="radio-inline input-pendaftaran">
-                                        <input type="radio" name="inp_status" id="inp_status" value="1"> Terima
+                                        <input type="radio" name="inp_verifikasi" id="inp_verifikasi" value="true"> Terima
                                     </label>
                                     <label class="radio-inline input-pendaftaran">
-                                        <input type="radio" name="inp_status" id="inp_status" value="0"> Tolak
+                                        <input type="radio" name="inp_verifikasi" id="inp_verifikasi" value="false"> Tolak
                                     </label>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inp_approval" class="col-sm-3 control-label">Jenis Kelamin</label>
+                                <label for="inp_approval" class="col-sm-3 control-label">Approval Ke </label>
                                 <div class="col-sm-5">
                                     <select class="form-control input-data" name="inp_approval" id="inp_approval">
                                         <option value="" selected disabled>-- Pilih Authority Approval --</option>
@@ -281,7 +284,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="inp_catatan" class="col-sm-3 control-label">Jenis Kelamin</label>
+                                <label for="inp_catatan" class="col-sm-3 control-label">Catatan</label>
                                 <div class="col-sm-5">
                                     <textarea class="form-control input-data" name="inp_catatan" rows="5" id="inp_catatan" placeholder="Masukkan Catatan Jika Ada"></textarea>
                                 </div>
