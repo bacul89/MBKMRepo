@@ -30,6 +30,7 @@ namespace MBKM.Repository.BaseRepository
         public DbSet<Lookup> Lookups { get; set; }
         public DbSet<Mahasiswa> Mahasiswas { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<PerjanjianKerjasama> PerjanjianKerjasamas { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new MenuMap());

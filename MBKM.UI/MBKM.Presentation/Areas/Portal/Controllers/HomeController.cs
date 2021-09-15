@@ -1,8 +1,10 @@
-﻿using MBKM.Entities.Models.MBKM;
+﻿using MBKM.Common.Helpers;
+using MBKM.Entities.Models.MBKM;
 using MBKM.Presentation.models;
 using MBKM.Services.MBKMServices;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -20,6 +22,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult Index()
         {
             //var a = _mahasiswaService.getLoginInternal("11998000648", "126019");
+            
+
+            SendEmail("ridhokurniawan8@gmail.com", "aaaaaaa");
             return View();
         }
         public JsonResult RegisterExternal(Mahasiswa mahasiswa)
@@ -70,12 +75,18 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public void SendEmail(string email, string token)
         {
             string url = this.Url.Action("VerifyPage", "Home", null);
-            GMailer mailer = new GMailer();
-            mailer.ToEmail = email;
-            mailer.Subject = "Verify your email";
-            mailer.Body = "Thanks for Registering your account.<br> please verify your email by clicking the link <br> <a href='http://localhost:10776" + url + "'>verify</a>";
-            mailer.IsHtml = true;
-            mailer.Send();
+            //GMailer mailer = new GMailer();
+            //mailer.ToEmail = email;
+            //mailer.Subject = "Verify your email";
+            //mailer.Body = "Thanks for Registering your account.<br> please verify your email by clicking the link <br> <a href='http://localhost:10776" + url + "'>verify</a>";
+            //mailer.IsHtml = true;
+            //mailer.Send();
+            List<string> mailDest = new List<string>();
+            mailDest.Add(email);
+            string Subject = "Verify your email";
+            string MailBody = "Thanks for Registering your account.<br> please verify your email by clicking the link <br> <a href='http://localhost:10776" + url + "'>verify</a>";
+            MailHelper oMailHelper = new MailHelper(ConfigurationManager.AppSettings["SMTPServer"], int.Parse(ConfigurationManager.AppSettings["SMTPPort"]));
+            oMailHelper.SendMail(Subject, MailBody, "sendercvonline@gmail.com", mailDest, null, null, true);
         }
     }
 }

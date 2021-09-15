@@ -16,7 +16,7 @@ namespace MBKM.Services.MBKMServices
     {
         VMLogin getLoginInternal(string StudentID, string Password);
         List<Mahasiswa> getMahasiswasNotYetVer(string Universitas, string Prodi);
-        VMListMahasiswa getMahasiswasNotYetVer(int Skip, int Length, string SearchParam, string SortBy, bool SortDir)
+        VMListMahasiswa getMahasiswasNotYetVer(DataTableAjaxPostModel model);
         //int updateRangeVer(Int64[] listId);
     }
     public class MahasiswaService : EntityService<Mahasiswa>, IMahasiswaService

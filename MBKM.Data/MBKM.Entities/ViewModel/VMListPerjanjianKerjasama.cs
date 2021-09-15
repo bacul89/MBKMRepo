@@ -19,9 +19,10 @@ namespace MBKM.Entities.ViewModel
         public DateTime TanggalMulai { get; set; }
         public DateTime TanggalAkhir { get; set; }
         public string Instansi { get; set; }
-        public string Nama { get; set; }
         public string NamaUnit { get; set; }
+        public string NamaInstansi { get; set; }
         public string JenisKerjasama { get; set; }
+        public string JenisPertukaran { get; set; }
         public string Inputer { get; set; }
     }
 }
