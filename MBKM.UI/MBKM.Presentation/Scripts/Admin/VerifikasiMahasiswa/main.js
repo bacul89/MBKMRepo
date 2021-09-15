@@ -23,56 +23,56 @@
             "title": "Universitas Asal",
             "data": "Universitas",
             "render": function (data, type, row, meta) {
-                return '<div class="center">' + data + '</div>';
+                return '<div class="center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
             "title": "Jenjang Studi",
             "data": "Jenjang",
             "render": function (data, type, row, meta) {
-                return '<div class="center">' + data + '</div>';
+                return '<div class="center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
             "title": "Program Studi Asal",
             "data": "Prodi",
             "render": function (data, type, row, meta) {
-                return '<div class="center">' + data + '</div>';
+                return '<div class="center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
             "title": "NIM Asal",
             "data": "NIM",
             "render": function (data, type, row, meta) {
-                return '<div class="center">' + data + '</div>';
+                return '<div class="center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
             "title": "Nama Mahasiswa",
             "data": "Nama",
             "render": function (data, type, row, meta) {
-                return '<div class="center">' + data + '</div>';
+                return '<div class="center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
             "title": "Jenis Kelamin",
             "data": "Gender",
             "render": function (data, type, row, meta) {
-                return '<div class="center">' + data + '</div>';
+                return '<div class="center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
             "title": "Email",
             "data": "Email",
             "render": function (data, type, row, meta) {
-                return '<div class="center">' + data + '</div>';
+                return '<div class="center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
             "title": "No. Hp",
             "data": "HP",
             "render": function (data, type, row, meta) {
-                return '<div class="center">' + data + '</div>';
+                return '<div class="center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
@@ -80,9 +80,9 @@
             "data": "StatusVerifikasi",
             "render": function (data, type, row, meta) {
                 if (data) {
-                    return '<div class="center">Aktif</div>';
+                    return '<div class="center" style="font-size: 0.8vw">Aktif</div>';
                 } else {
-                    return '<div class="center">Tidak Aktif</div>';
+                    return '<div class="center" style="font-size: 0.8vw">Tidak Aktif</div>';
                 }
 
             }
@@ -92,7 +92,7 @@
             "data": "ID",
             "render": function (data, type, row, meta) {
                 return `<a href="javascript:void()">
-                            <button type="button" class="btn btn-warning btn-sm"><i class="fas fa-search coral"></i></button>
+                            <button type="button" onclick="IndexDetailVerifikasiMahasiswa('${data}')" class="btn btn-warning btn-sm" style="font-size: 0.5vw"><i class="fas fa-search"></i></button>
                         </a>`;
             }
         }
@@ -103,5 +103,11 @@
             'border-collapse': 'collapse',
             'vertical-align': 'center',
         });
-    }
+    },
 });
+
+function IndexDetailVerifikasiMahasiswa(id) {
+    var baseUrl = window.location.href;
+    console.log(baseUrl);
+    window.location.href = baseUrl + "IndexDetailMahasiswa/" + id
+}
