@@ -1,4 +1,6 @@
-﻿using MBKM.Entities.Models.MBKM;
+﻿using MBKM.Common.Helpers;
+using MBKM.Entities.Models.MBKM;
+using MBKM.Entities.ViewModel;
 using MBKM.Services;
 using MBKM.Services.MBKMServices;
 using System;
@@ -27,10 +29,20 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             return View();
         }
 
-        public ActionResult GetAllMahasiswa()
+        [HttpPost]
+        public JsonResult GetAllMahasiswa(DataTableAjaxPostModel model)
         {
-            var data = _mahasiswaService.GetAll();
-            return Json(data, JsonRequestBehavior.AllowGet);
+            var getAll = _mahasiswaService.getMahasiswasNotYetVer("ubm", "");
+            VMListMahasiswa data = _mahasiswaService.getMahasiswasNotYetVer(model);
+            return Json(
+                new
+                {
+                    draw = model.draw,
+                    recordsTotal = data.TotalCount,
+                    recordsFiltered = data.TotalFilterCount,
+                    data = data.gridDatas
+                }
+            );
         }
 
         public ActionResult IndexDetailMahasiswa(int id)
