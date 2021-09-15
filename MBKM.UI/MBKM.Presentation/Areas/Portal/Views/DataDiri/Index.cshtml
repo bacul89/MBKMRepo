@@ -242,11 +242,38 @@
                     </table>
                 </div>
 
-                <button class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 16px;">EDIT</button>
-                <button class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: rgb(0, 166, 81); color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; " data-toggle="modal" data-target="#dataPendukung" data-backdrop="false">UPLOAD DATA PENDUKUNG</button>
-                <button class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 16px; ">SIMPAN</button>
+                <button id="edit" class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 16px;">EDIT</button>
+                <button id="upload" class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: rgb(0, 166, 81); color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; " data-toggle="modal" data-target="#dataPendukung" data-backdrop="false">UPLOAD DATA PENDUKUNG</button>
+                <button id="simpan" class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 16px; ">SIMPAN</button>
             </div>
 
         </div>
     </div>
 </div>
+
+@section Scripts{
+    <script>
+        $("#simpan").hide();
+        $("input").attr("disabled", true);
+        $("select").attr("disabled", true);
+        $("textarea").attr("disabled", true);
+
+        $("#edit").click(function () {
+            $("input").removeAttr("disabled");
+            $("select").removeAttr("disabled");
+            $("textarea").removeAttr("disabled");
+            $("#simpan").show();
+            $("#edit").hide();
+            $("#upload").hide();
+        });
+
+        $("#simpan").click(function () {
+            $("input").attr("disabled", true);
+            $("select").attr("disabled", true);
+            $("textarea").attr("disabled", true);
+            $("#simpan").hide();
+            $("#edit").show();
+            $("#upload").show();
+        });
+    </script>
+}
