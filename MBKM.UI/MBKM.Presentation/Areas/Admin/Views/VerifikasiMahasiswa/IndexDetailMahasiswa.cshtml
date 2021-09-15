@@ -244,11 +244,14 @@
                     <div class="container" style="width: 100%;">
                         <form class="form-horizontal" style="margin-top:50px">
                             <div class="form-group">
-                                <label>Jenis Kelamin</label>
-                                <select name="Gender" id="gender" class="form-control input-lg">
-                                    <option value="L">Laki - Laki</option>
-                                    <option value="P">Perempuan</option>
-                                </select>
+                                <label for="inp_noKerjaSama" class="col-sm-3 control-label">Jenis Kelamin</label>
+                                <div class="col-sm-5">
+                                    <select class="form-control input-data" name="inp_noKerjaSama" id="inp_noKerjaSama">
+                                        <option value="" selected disabled>-- Pilih No. Kerjasama --</option>
+                                        <option value="1">02116468421</option>
+                                        <option value="0">21658465165</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="inp_email" class="col-sm-3 control-label">Biaya</label>
@@ -268,11 +271,20 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Jenis Kelamin</label>
-                                <select name="Gender" id="gender" class="form-control input-lg">
-                                    <option value="L">Laki - Laki</option>
-                                    <option value="P">Perempuan</option>
-                                </select>
+                                <label for="inp_approval" class="col-sm-3 control-label">Jenis Kelamin</label>
+                                <div class="col-sm-5">
+                                    <select class="form-control input-data" name="inp_approval" id="inp_approval">
+                                        <option value="" selected disabled>-- Pilih Authority Approval --</option>
+                                        <option value="1">1</option>
+                                        <option value="0">2</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="inp_catatan" class="col-sm-3 control-label">Jenis Kelamin</label>
+                                <div class="col-sm-5">
+                                    <textarea class="form-control input-data" name="inp_catatan" rows="5" id="inp_catatan" placeholder="Masukkan Catatan Jika Ada"></textarea>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-2 col-md-offset-7">
