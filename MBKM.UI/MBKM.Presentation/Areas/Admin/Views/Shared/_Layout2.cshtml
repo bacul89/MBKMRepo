@@ -80,7 +80,10 @@
         <nav>
             <ul class="nav split left">
                 <li>
-                    <a href="@Url.Action("Index","PerjanjianKerjasama")" id="btn-1" data-toggle="collapse" aria-expanded="false">Manage Perjanjian Kerjasama</a>
+                    <a href="#" id="btn-1" data-toggle="collapse" data-target="#submenu1" aria-expanded="false"><i class="fas fa-hands-helping"></i> Manage Perjanjian Kerjasama</a>
+                    <ul class="nav collapse" id="submenu1" role="menu" aria-labelledby="btn-1">
+                        <li><a href="@Url.Action("Index","PerjanjianKerjasama")">Daftar Perjanjian Kerjasama</a></li>
+                    </ul>
                 </li>
             </ul>
         </nav>
@@ -90,8 +93,8 @@
             <img src="~/Asset/Lambang_Unika_Atma_Jaya.png" style="max-height: 75px; margin: 15px 25px;" /><!-- Avatar -->
             <div class="dropdown" style="float: right; margin: 27.5px; ">
                 <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="#" class="img-rounded" height="50" alt="" />
-                    <asd style="color: black; font-weight: bold; font-size: 16px;">Userabcsjdsih</asd>
+                    <img src="https://mdbootstrap.com/img/new/avatars/2.jpg" class="img-rounded" height="50" alt="" />
+                    <asd style="color: black; font-weight: bold; font-size: 16px;">Armanda Dimas</asd>
                 </a>
                 <ul class="dropdown-menu" role="menu">
                     <li>
