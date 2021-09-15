@@ -91,10 +91,20 @@ function PostCreate() {
                     focusConfirm: false,
                     confirmButtonText: 'OK'
                 })
-                window.location.href = "/Admin/TemplateEmail/index"
+                dataTable.ajax.reload(null, false);
+                $('.modal').modal('hide');
             },
             error: function (e) {
-                console.log(e);
+                Swal.fire({
+                    title: 'Oppss',
+                    icon: 'error',
+                    html: 'Coba Reload Page',
+                    showCloseButton: true,
+                    showCancelButton: false,
+                    focusConfirm: false,
+                    confirmButtonText: 'OK'
+                })
+                $('.modal').modal('hide');
             }
         })
     } else {
@@ -125,28 +135,30 @@ function PostUpdate() {
             Swal.fire({
                 title: 'Berhasil',
                 icon: 'success',
-                html: 'Template Email Berhasil Ditambahkan',
+                html: 'Template Email Berhasil Diubah',
                 showCloseButton: true,
                 showCancelButton: false,
                 focusConfirm: false,
                 confirmButtonText: 'OK'
             })
-/*            window.location.href = "/Admin/TemplateEmail/index"
-*/        },
+            dataTable.ajax.reload(null, false);
+            $('.modal').modal('hide');
+        },
         error: function (e) {
-            console.log(e);
+            Swal.fire({
+                title: 'Oppss',
+                icon: 'error',
+                html: 'Coba Reload Page',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText: 'OK'
+            })
+            $('.modal').modal('hide');
         }
     })
     
-    /*Swal.fire({
-        title: 'Oppss',
-        icon: 'warning',
-        html: 'Ada beberapa field yang belum kamu isikan',
-        showCloseButton: true,
-        showCancelButton: false,
-        focusConfirm: false,
-        confirmButtonText: 'OK'
-    })*/
+    
     
 }
 

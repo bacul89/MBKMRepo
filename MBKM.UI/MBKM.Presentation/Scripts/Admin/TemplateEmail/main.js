@@ -34,7 +34,7 @@ function validationCustom() {
     return isValid;
 }
 
-$('#table-data-email-template').DataTable({
+var dataTable = $('#table-data-email-template').DataTable({
     ajax: {
         url: '/Admin/TemplateEmail/GetDataEmailTemplate',
         dataSrc: ''
