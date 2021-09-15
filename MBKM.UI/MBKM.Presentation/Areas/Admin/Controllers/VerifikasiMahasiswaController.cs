@@ -32,7 +32,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult GetAllMahasiswa(DataTableAjaxPostModel model)
         {
-            var getAll = _mahasiswaService.getMahasiswasNotYetVer("ubm", "");
+            //var getAll = _mahasiswaService.getMahasiswasNotYetVer("ubm", "");
             VMListMahasiswa data = _mahasiswaService.getMahasiswasNotYetVer(model);
             return Json(
                 new

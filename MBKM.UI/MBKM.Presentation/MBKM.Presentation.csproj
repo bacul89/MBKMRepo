@@ -183,7 +183,6 @@
     <Content Include="Areas\Portal\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Portal\Views\Shared\_LayoutHome.cshtml" />
-    <Content Include="Areas\Portal\Views\Home\DataDiri.cshtml" />
     <Content Include="Areas\Admin\Views\Home\PerjanjianKerjasama.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout2.cshtml" />
     <Content Include="Areas\Admin\Views\PerjanjianKerjasama\Index.cshtml" />
