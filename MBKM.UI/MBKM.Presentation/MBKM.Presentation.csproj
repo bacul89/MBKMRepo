@@ -155,7 +155,7 @@
   <ItemGroup>
     <Content Include="Asset\kampus-universitas-katolik-atmajaya-jakarta-_131002231109-118.jpg" />
     <Content Include="Asset\Lambang_Unika_Atma_Jaya.png" />
-    <Content Include="Content\Admin\TemplateEmail\inputResponsive.css" />
+    <Content Include="Content\Admin\inputResponsive.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
