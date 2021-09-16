@@ -26,6 +26,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 // if we have an empty search then just order the results by Id ascending
                 SortBy = "ID";
                 SortDir = true;
+                SearchParam = "";
             }
             using (var context = new MBKMContext())
             {
@@ -51,6 +52,22 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 mListmodel.TotalFilterCount = mListmodel.gridDatas.Count();
                 return mListmodel;
             }
+        }
+
+        public List<VMLookupNoKerjasama> getNoKerjasama(int Skip, int Length, string Search)
+        {
+            using (var context = new MBKMContext())
+            {
+                var result = context.PerjanjianKerjasamas.Where(x => x.NoPerjanjian.Contains(Search)).
+                    Select(x => new VMLookupNoKerjasama
+                    {
+                        ID = x.ID,
+                        NoKerjasama = x.NoPerjanjian,
+                        NamaInstansi = x.NamaInstansi
+                    }).Skip(Skip).Take(Length).ToList();
+                return result;
+            }
+
         }
     }
 }

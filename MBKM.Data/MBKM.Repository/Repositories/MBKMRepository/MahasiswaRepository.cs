@@ -48,13 +48,18 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 // if we have an empty search then just order the results by Id ascending
                 SortBy = "ID";
                 SortDir = true;
+                SearchParam = "";
             }
             using (var context = new MBKMContext())
             {
 
                 var result = context.Mahasiswas.Where(x => x.IsDeleted == false && x.isVerifikasi == false);
                 mListMahasiswa.TotalCount = result.Count();
-                mListMahasiswa.gridDatas = result.AsQueryable()
+                mListMahasiswa.gridDatas = result
+                    .AsQueryable()
+                    .Where(y => y.NamaUniversitas.Contains(SearchParam) ||
+                                        y.Email.Contains(SearchParam) || y.ProdiAsal.Contains(SearchParam) || y.NIMAsal.Contains(SearchParam)
+                                        || y.Nama.Contains(SearchParam) || y.JenjangStudi.Contains(SearchParam))
                     .Select(z => new GridDataMahasiswa
                     {
                         ID = z.ID,
@@ -67,7 +72,10 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                         Prodi = z.ProdiAsal,
                         Jenjang = z.JenjangStudi,
                         StatusVerifikasi = z.isVerifikasi
-                    }).OrderBy(SortBy, SortDir).Skip(Skip).Take(Length).ToList();
+                    })
+                    .OrderBy(SortBy, SortDir)
+                    .Skip(Skip).Take(Length)
+                    .ToList();
                 mListMahasiswa.TotalFilterCount = mListMahasiswa.gridDatas.Count();
                 return mListMahasiswa;
             }
