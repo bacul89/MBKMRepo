@@ -323,6 +323,7 @@
     <Content Include="Scripts\Admin\UserManage\crud.js" />
     <Content Include="Scripts\Admin\UserManage\main.js" />
     <Content Include="Scripts\Admin\VerifikasiMahasiswa\main.js" />
+    <Content Include="Scripts\Admin\VerifikasiMahasiswa\main_detail.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Portal\Views\web.config" />

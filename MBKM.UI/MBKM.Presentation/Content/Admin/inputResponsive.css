@@ -20,7 +20,7 @@
 }
 
 .input-data {
-    border-color: #f7ba74;
+    border-color: #f7ba74 !important;
 }
 
 .input-data:focus {
@@ -42,4 +42,16 @@
 }
 .no-border{
     border : 0px !important;
+}
+
+.select2-container--default .select2-selection--single {
+    border-color: #f7ba74 !important;
+}
+.select2-container--default .select2-selection--single:focus {
+    outline: none !important;
+    border-color: #f7ba74;
+    box-shadow: 0 0 10px #f7ba74;
+}
+.hidden{
+    display:none
 }
