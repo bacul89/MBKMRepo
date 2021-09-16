@@ -34,7 +34,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
         {
             using (var context = new MBKMContext())
             {
-                var result = context.Mahasiswas.Where(x => x.isVerifikasi == false && x.NamaUniversitas == Universitas 
+                var result = context.Mahasiswas.Where(x => x.StatusVerifikasi == "DAFTAR" && x.NamaUniversitas == Universitas 
                             && x.ProdiAsal == Prodi).ToList();
                 return result;
             }
@@ -48,15 +48,20 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 // if we have an empty search then just order the results by Id ascending
                 SortBy = "ID";
                 SortDir = true;
+                SearchParam = "";
             }
             using (var context = new MBKMContext())
             {
 
-                var result = context.Mahasiswas.Where(x => x.IsDeleted == false && x.isVerifikasi == false);
+                var result = context.Mahasiswas.Where(x => x.IsDeleted == false && x.StatusVerifikasi == "DAFTAR");
                 mListMahasiswa.TotalCount = result.Count();
-                mListMahasiswa.gridDatas = result.AsQueryable().Where(y => y.NamaUniversitas.Contains(SearchParam) ||
+                mListMahasiswa.gridDatas = result
+                    .AsQueryable()
+                    .Where(y => y.NamaUniversitas.Contains(SearchParam) ||
                                         y.Email.Contains(SearchParam) || y.ProdiAsal.Contains(SearchParam) || y.NIMAsal.Contains(SearchParam)
                                         || y.Nama.Contains(SearchParam) || y.JenjangStudi.Contains(SearchParam))
+                    .OrderBy(SortBy, SortDir)
+                    .Skip(Skip).Take(Length)
                     .Select(z => new GridDataMahasiswa
                     {
                         ID = z.ID,
@@ -68,8 +73,9 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                         NIM = z.NIMAsal,
                         Prodi = z.ProdiAsal,
                         Jenjang = z.JenjangStudi,
-                        StatusVerifikasi = z.isVerifikasi
-                    }).OrderBy(SortBy, SortDir).Skip(Skip).Take(Length).ToList();
+                        StatusVerifikasi = z.StatusVerifikasi
+                    })                    
+                    .ToList();
                 mListMahasiswa.TotalFilterCount = mListMahasiswa.gridDatas.Count();
                 return mListMahasiswa;
             }

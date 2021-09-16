@@ -39,6 +39,10 @@ namespace MBKM.Entities.Map.MBKMMap
             Property(t => t.JenjangStudi).HasMaxLength(150);
             Property(t => t.WargaNegara).HasMaxLength(10);
             Property(t => t.Gender).HasMaxLength(10);
+            Property(t => t.StatusKerjasama).HasMaxLength(50);
+            Property(t => t.NoKerjasama).HasMaxLength(100);
+            Property(t => t.StatusVerifikasi).HasMaxLength(50);
+            Property(t => t.Approval).HasMaxLength(10);
         }
     }
 }

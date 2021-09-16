@@ -1,4 +1,5 @@
 ﻿using MBKM.Common.Helpers;
+using MBKM.Entities.Models;
 using MBKM.Entities.ViewModel;
 using MBKM.Services;
 using System;
@@ -12,9 +13,11 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
     public class UserManageController : Controller
     {
         private readonly IUserService _userService;
-        public UserManageController(IUserService userService)
+        private readonly IRoleService _roleService;
+        public UserManageController(IUserService userService, IRoleService roleService)
         {
             _userService = userService;
+            _roleService = roleService;
         }
         // GET: Admin/UserManage
         public ActionResult Index()
@@ -34,6 +37,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             var model = _userService.Get(id);
             return View("_DetailUser", model);
+        }
+
+        [HttpPost]
+        public ActionResult PostDataUser(User model)
+        {
+            _userService.Save(model);
+            return Json(model);
         }
 
         [HttpPost]

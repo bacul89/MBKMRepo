@@ -20,7 +20,7 @@ namespace MBKM.Entities.Map.MBKMMap
             Property(t => t.Instansi).HasMaxLength(50).IsRequired();
             Property(t => t.JenisPertukaran).HasMaxLength(100).IsRequired();
             Property(t => t.JenisKerjasama).HasMaxLength(100).IsRequired();
-
+            Property(t => t.NoPerjanjian).HasMaxLength(100).IsRequired();
         }
     }
 }

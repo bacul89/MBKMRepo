@@ -24,7 +24,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             //var a = _mahasiswaService.getLoginInternal("11998000648", "126019");
             
 
-            SendEmail("ridhokurniawan8@gmail.com", "aaaaaaa");
+            //SendEmail("ridhokurniawan8@gmail.com", "aaaaaaa");
             return View();
         }
         public JsonResult RegisterExternal(Mahasiswa mahasiswa)

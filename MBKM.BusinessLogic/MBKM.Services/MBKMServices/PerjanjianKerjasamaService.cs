@@ -15,6 +15,8 @@ namespace MBKM.Services.MBKMServices
     public interface IPerjanjianKerjasamaService : IEntityService<PerjanjianKerjasama>
     {
         VMListPerjanjianKerjasama getListPKGrid(DataTableAjaxPostModel model);
+        List<VMLookupNoKerjasama> getNoKerjasama(int Skip, int Length, string Search, string NamaInstansi);
+        List<VMLookupNoKerjasama> getNamaInstansi(int Skip, int Length, string Search);
     }
     public class PerjanjianKerjasamaService : EntityService<PerjanjianKerjasama>, IPerjanjianKerjasamaService
     {
@@ -44,6 +46,16 @@ namespace MBKM.Services.MBKMServices
             }
 
             return _perjanjianKerjasamaRepository.getListPerjanjianKerjasama(skip, take, searchBy, sortBy, sortDir);
+        }
+
+        public List<VMLookupNoKerjasama> getNamaInstansi(int Skip, int Length, string Search)
+        {
+            return _perjanjianKerjasamaRepository.getNamaInstansi(Skip, Length, Search);
+        }
+
+        public List<VMLookupNoKerjasama> getNoKerjasama(int Skip, int Length, string Search, string NamaInstansi)
+        {
+            return _perjanjianKerjasamaRepository.getNoKerjasama(Skip, Length, Search, NamaInstansi);
         }
     }
 }

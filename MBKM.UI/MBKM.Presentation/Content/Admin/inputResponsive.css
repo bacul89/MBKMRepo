@@ -1,0 +1,45 @@
+﻿.input-pendaftaran {
+    border-color: #f7ba74;
+}
+
+.input-pendaftaran:focus {
+    outline: none !important;
+    border-color: #f7ba74;
+    box-shadow: 0 0 10px #f7ba74;
+}
+
+.coral {
+    color : coral;
+}
+.center{
+    align-content:center;
+    align-items:center;
+    vertical-align : unset;
+    align-self : center;
+    text-align:center
+}
+
+.input-data {
+    border-color: #f7ba74;
+}
+
+.input-data:focus {
+    outline: none !important;
+    border-color: #f7ba74;
+    box-shadow: 0 0 10px #f7ba74;
+}
+
+.vertical-center-content{
+    margin-top:auto;
+    margin-bottom:auto
+}
+
+.zero-padding{
+    padding:10px 15px !important;
+}
+.vertical-center{
+    vertical-align : middle !important;
+}
+.no-border{
+    border : 0px !important;
+}

@@ -18,6 +18,16 @@ namespace MBKM.Repository.Repositories
         {
         }
 
+        public List<VMListProdi> getListProdi()
+        {
+            using (var context = new MBKMContext())
+            {
+                var result = context.Database
+                    .SqlQuery<VMListProdi>("GetLoginInternal");
+                return result.ToList();
+            }
+        }
+
         public IEnumerable<VMLookup> getLookupByTipe(string tipe)
         {
             using (var context = new MBKMContext())
