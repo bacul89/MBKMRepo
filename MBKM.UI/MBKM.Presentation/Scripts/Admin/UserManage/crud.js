@@ -54,11 +54,30 @@ function DetailUserTemplate(id) {
 
 var formInputUser = {}
 
+//function getValueOnForm() {
+//    dTemplateEmail.TipeMail = $('input[name=inp_tipeEmail]').val();
+//    dTemplateEmail.SubjectMail = $('input[name=inp_email]').val();
+//    dTemplateEmail.BodyMail = $('textarea[name=inp_bodyEmail]').val();
+//    dTemplateEmail.IsActive = $('input[name=inp_status]:checked').val();
+//}
 function getValueOnForm() {
-    dTemplateEmail.TipeMail = $('input[name=inp_tipeEmail]').val();
-    dTemplateEmail.SubjectMail = $('input[name=inp_email]').val();
-    dTemplateEmail.BodyMail = $('textarea[name=inp_bodyEmail]').val();
-    dTemplateEmail.IsActive = $('input[name=inp_status]:checked').val();
+    //model.NoPegawai = model.NoPegawai;
+            //model.UserName = model.UserName;
+            //model.Email = model.Email;
+            //model.Password = model.Password;
+            //model.RoleID = model.RoleID
+            //model.NamaProdi = model.NamaProdi;
+    formInputUser.NoPegawai = $('input[id=txtnomorindukpegawai]').val();
+    formInputUser.UserName = $('input[id=txtnama]').val();
+    formInputUser.Email = $('input[id=txtemail]').val();
+    formInputUser.Password = $('input[id=txtpassword]').val();
+    formInputUser.RoleID= $('#idRole').val();
+    formInputUser.IsActive = $('input[id=inp_status]').val();
+    //prodi unit belum
+    
+}
+function tesRole(){
+    console.log(formInputUser.RoleID = $('#idRole').val());
 }
 function PostCreate() {
     if (validationCustom()) {
@@ -67,7 +86,7 @@ function PostCreate() {
             url: base_url + '/Admin/UserManage/PostDataUser',
             type: 'post',
             datatype: 'json',
-            data: JSON.stringify(dTemplateEmail),
+            data: JSON.stringify(formInputUser),
             contentType: 'application/json',
             success: function (e) {
                 Swal.fire({
@@ -79,7 +98,7 @@ function PostCreate() {
                     focusConfirm: false,
                     confirmButtonText: 'OK'
                 })
-                window.location.href = "/Admin/TemplateEmail/index"
+                window.location.href = "/Admin/UserManage/index"
             },
             error: function (e) {
                 console.log(e);
