@@ -23,6 +23,6 @@ namespace MBKM.Entities.ViewModel
         public string Gender { get; set; }
         public string Email { get; set; }
         public string HP { get; set; }
-        public bool StatusVerifikasi { get; set; }
+        public string StatusVerifikasi { get; set; }
     }
 }

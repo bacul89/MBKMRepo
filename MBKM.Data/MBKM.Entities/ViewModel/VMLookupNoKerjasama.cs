@@ -11,5 +11,6 @@ namespace MBKM.Entities.ViewModel
         public Int64 ID { get; set; }
         public string NoKerjasama { get; set; }
         public string NamaInstansi { get; set; }
+        public int Biaya { get; set; }
     }
 }

@@ -54,17 +54,33 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             }
         }
 
-        public List<VMLookupNoKerjasama> getNoKerjasama(int Skip, int Length, string Search)
+        public List<VMLookupNoKerjasama> getNamaInstansi(int Skip, int Length, string Search)
         {
             using (var context = new MBKMContext())
             {
-                var result = context.PerjanjianKerjasamas.Where(x => x.NoPerjanjian.Contains(Search)).
-                    Select(x => new VMLookupNoKerjasama
+                var result = context.PerjanjianKerjasamas.Where(x => x.NoPerjanjian.Contains(Search))
+                    .Distinct()
+                    .Select(x => new VMLookupNoKerjasama
+                    {
+                        ID = x.ID,
+                        NamaInstansi = x.NamaInstansi
+                    }).Skip(Skip).Take(Length).ToList();
+                return result;
+            }
+        }
+
+        public List<VMLookupNoKerjasama> getNoKerjasama(int Skip, int Length, string Search, string NamaInstansi)
+        {
+            using (var context = new MBKMContext())
+            {
+                var result = context.PerjanjianKerjasamas.Where(x => x.NoPerjanjian.Contains(Search) && x.NamaInstansi == NamaInstansi)
+                    .Skip(Skip).Take(Length).Select(x => new VMLookupNoKerjasama
                     {
                         ID = x.ID,
                         NoKerjasama = x.NoPerjanjian,
-                        NamaInstansi = x.NamaInstansi
-                    }).Skip(Skip).Take(Length).ToList();
+                        NamaInstansi = x.NamaInstansi,
+                        Biaya = x.BiayaKuliah
+                    }).ToList();
                 return result;
             }
 

@@ -40,8 +40,12 @@ namespace MBKM.Entities.Models.MBKM
         public string AlamatDarurat { get; set; }
         public string JenjangStudi { get; set; }
         public string WargaNegara { get; set; }
-
-        public bool isVerifikasi { get; set; }
+        public string NoKerjasama { get; set; }
+        public int BiayaKuliah { get; set; } = 0;
+        public string StatusVerifikasi { get; set; }
+        public string Approval { get; set; }
+        public string Catatan { get; set; }
+        public string StatusKerjasama { get; set; }
         public virtual ICollection<Attachment> Attachments { get; set; }
         public virtual ICollection<KRS> KRs { get; set; }
     }
