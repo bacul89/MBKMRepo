@@ -13,9 +13,11 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
     public class UserManageController : Controller
     {
         private readonly IUserService _userService;
-        public UserManageController(IUserService userService)
+        private readonly IRoleService _roleService;
+        public UserManageController(IUserService userService, IRoleService roleService)
         {
             _userService = userService;
+            _roleService = roleService;
         }
         // GET: Admin/UserManage
         public ActionResult Index()

@@ -1,4 +1,5 @@
 ﻿using MBKM.Entities.Models;
+using MBKM.Entities.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace MBKM.Common.Interfaces.RepoInterfaces
 {
     public interface IRoleRepository : IGenericRepository<Role>
     {
-
+        List<VMLookup> getLookupRole();
     }
 }
