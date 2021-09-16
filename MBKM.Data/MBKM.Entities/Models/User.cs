@@ -17,5 +17,7 @@ namespace MBKM.Entities.Models
 
         public Int64 RoleID { get; set; }
         public virtual Role Roles { get; set; }
+        public string KodeProdi { get; set; }
+        public string NamaProdi { get; set; }
     }
 }

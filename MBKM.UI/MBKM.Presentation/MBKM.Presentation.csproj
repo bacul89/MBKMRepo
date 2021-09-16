@@ -146,6 +146,7 @@
     <Compile Include="Areas\Portal\PortalAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Helper\GMailer.cs" />
+    <Compile Include="Models\LoginVMAdmin.cs" />
     <Compile Include="Models\ServiceResponse.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -360,6 +361,7 @@
     <Content Include="Content\summernote\summernote-lite.min.js.map" />
     <Content Include="Content\summernote\summernote.js.map" />
     <Content Include="Content\summernote\summernote.min.js.map" />
+    <Content Include="Areas\Admin\Views\Shared\_LayoutLogin.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
