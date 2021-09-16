@@ -1,0 +1,60 @@
+﻿
+@{
+    Layout = null;
+}
+
+@model MBKM.Entities.Models.EmailTemplate
+
+<div class="modal-content data-content-modal" id="detail-email-template">
+    <div class="modal-header" style="background-color: #FF8A04; ">
+        <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+            DETAIL MASTER EMAIL TEMPLATE
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </h5>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="inp_tipeEmail" class="col-sm-3 control-label">Tipe Email</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control input-pendaftaran" value="@Model.TipeMail" name="inp_tipeEmail" id="inp_tipeEmail" placeholder="Input Type Email" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inp_email" class="col-sm-3 control-label">Subject Email</label>
+                <div class="col-sm-9">
+                    <input type="email" class="form-control input-pendaftaran" value="@Model.SubjectMail" name="inp_email" id="inp_email" placeholder="Input Subject Email" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inp_bodyEmail" class="col-sm-3 control-label">Body Email</label>
+                <div class="col-sm-9">
+                    <textarea class="form-control input-pendaftaran summernote" name="inp_bodyEmail" rows="5" id="inp_bodyEmail" placeholder="Input Body Email" disabled>@Model.BodyMail</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inp_status" class="col-sm-3 control-label">Status</label>
+                <div class="col-sm-9">
+                    @{
+                        if (Model.IsActive)
+                        {
+                            <input type="email" class="form-control input-pendaftaran" value="Aktif" name="inp_email" id="inp_email" placeholder="Input Subject Email" disabled>
+                        }
+                        else
+                        {
+                            <input type="email" class="form-control input-pendaftaran" value="Tidak Aktif" name="inp_email" id="inp_email" placeholder="Input Subject Email" disabled>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 col-md-offset-10">
+                    <button type="button" onclick="$('.modal').modal('hide')" class="btn btn-warning">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

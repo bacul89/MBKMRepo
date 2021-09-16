@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
+}
+
+@section modal{
+    <div class="modal fade" id="TambahUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" id="modal-inner">
+
+        </div>
+    </div>
+}
+<div class="container-fluid" style="margin-left:40px; margin-right:40px;margin-bottom:100px;">
+    <div class="card center-block" style="background-color: white; width: 100%; margin-top: 50px; margin-bottom: 50px;">
+        <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
+            <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
+                MANAGE User
+            </h4>
+            <hr />
+            <div class="container" style="width: 100%;">
+                <button class="btn btn-success" data-toggle="modal" onclick="AddUserTemplate()" data-target="#TambahUser" data-backdrop="true"><i class="fas fa-plus-circle"></i> Tambah Template Email</button>
+                <br />
+                <br />
+                <table id="TableList" class="table row-border hover dt-responsive responsive" style="border-spacing: 0 15px; border:0">
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/Admin/UserManage/main.js"></script>
+    <script src="~/Scripts/Admin/UserManage/crud.js"></script>
+
+}

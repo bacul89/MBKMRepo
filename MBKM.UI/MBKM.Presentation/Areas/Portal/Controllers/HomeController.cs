@@ -1,8 +1,10 @@
-﻿using MBKM.Entities.Models.MBKM;
+﻿using MBKM.Common.Helpers;
+using MBKM.Entities.Models.MBKM;
 using MBKM.Presentation.models;
 using MBKM.Services.MBKMServices;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -20,6 +22,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult Index()
         {
             //var a = _mahasiswaService.getLoginInternal("11998000648", "126019");
+            
+
+            SendEmail("ridhokurniawan8@gmail.com", "aaaaaaa");
             return View();
         }
         public JsonResult RegisterExternal(Mahasiswa mahasiswa)

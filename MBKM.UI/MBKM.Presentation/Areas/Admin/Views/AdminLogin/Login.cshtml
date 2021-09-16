@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutLogin.cshtml";
+}
+    <section id="loginForm">
+
+        @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="container" style="width: 100%;">
+                <div class="form-group">
+                    <input type="text" name="usernameAdmin" id="usernameAdmin" placeholder="Username" class="form-control input-lg" />
+                </div>
+                <div class="form-group">
+                    <input type="password" name="passwordAdmin" id="passwordAdmin" placeholder="Password" class="form-control input-lg" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Login" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
+                </div>
+            </div>
+
+        }
+    </section>
+

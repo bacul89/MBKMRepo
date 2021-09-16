@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,6 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\DataTableAjaxPostModel.cs" />
+    <Compile Include="Helpers\MailHelper.cs" />
     <Compile Include="Interfaces\IEntityService.cs" />
     <Compile Include="Interfaces\IGenericRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
@@ -61,9 +64,7 @@
     <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IPerjanjianKerjasamaRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\MBKM.Data\MBKM.Entities\MBKM.Entities.csproj">
       <Project>{a47c1da8-998f-474a-9650-5ef1ca677589}</Project>

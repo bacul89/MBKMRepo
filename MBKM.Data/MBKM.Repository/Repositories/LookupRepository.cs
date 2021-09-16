@@ -31,14 +31,5 @@ namespace MBKM.Repository.Repositories
                 return listmodel.ToList();
             }
         }
-
-        public IEnumerable<Lookup> getLookupByTipeIe(string tipe)
-        {
-            using (var context = new MBKMContext())
-            {
-                var listmodel = context.Lookups.Where(x => x.Tipe == tipe).ToList();
-                return listmodel;
-            }
-        }
     }
 }

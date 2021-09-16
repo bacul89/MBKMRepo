@@ -10,8 +10,12 @@ namespace MBKM.Entities.Models.MBKM
         public string NoPerjanjian { get; set; }
         public DateTime TanggalMulai { get; set; }
         public DateTime TanggalAkhir { get; set; }
-        public string NamaUniversitas { get; set; }
-        public Int64 UniversitasID { get; set; }
+        public string NamaInstansi { get; set; }
+        public string Instansi { get; set; }
+        public string NamaUnit { get; set; }
+        public string JenisPertukaran { get; set; }
+        public string JenisKerjasama { get; set; }
+
         public virtual ICollection<AttachmentPerjanjianKerjasama> AttachmentPerjanjianKerjasamas { get; set; }
     }
 }
