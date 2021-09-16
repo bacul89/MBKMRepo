@@ -15,6 +15,7 @@ namespace MBKM.Entities.Models.MBKM
         public string NamaUnit { get; set; }
         public string JenisPertukaran { get; set; }
         public string JenisKerjasama { get; set; }
+        public int BiayaKuliah { get; set; } = 0;
 
         public virtual ICollection<AttachmentPerjanjianKerjasama> AttachmentPerjanjianKerjasamas { get; set; }
     }

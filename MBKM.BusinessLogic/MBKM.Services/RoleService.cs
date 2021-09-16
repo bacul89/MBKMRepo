@@ -1,6 +1,7 @@
 ﻿using MBKM.Common.Interfaces;
 using MBKM.Common.Interfaces.RepoInterfaces;
 using MBKM.Entities.Models;
+using MBKM.Entities.ViewModel;
 using MBKM.Services.BaseServices;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace MBKM.Services
 {
     public interface IRoleService : IEntityService<Role>
     {
+        List<VMLookup> getLookupRole();
     }
 
     public class RoleService : EntityService<Role>, IRoleService
@@ -24,6 +26,11 @@ namespace MBKM.Services
         {
             _unitOfWork = unitOfWork;
             _RoleRepository = RoleRepository;
+        }
+
+        public List<VMLookup> getLookupRole()
+        {
+            return _RoleRepository.getLookupRole();
         }
     }
 }

@@ -11,6 +11,7 @@ namespace MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces
     public interface IPerjanjianKerjasamaRepository : IGenericRepository<PerjanjianKerjasama>
     {
         VMListPerjanjianKerjasama getListPerjanjianKerjasama(int Skip, int Length, string SearchParam, string SortBy, bool SortDir);
-        List<VMLookupNoKerjasama> getNoKerjasama(int Skip, int Length,string Search);
+        List<VMLookupNoKerjasama> getNoKerjasama(int Skip, int Length,string Search, string NamaInstansi);
+        List<VMLookupNoKerjasama> getNamaInstansi(int Skip, int Length, string Search);
     }
 }

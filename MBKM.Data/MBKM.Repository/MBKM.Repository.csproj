@@ -82,6 +82,10 @@
     <Compile Include="Migrations\202109150448420_perubahntablePK.designer.cs">
       <DependentUpon>202109150448420_perubahntablePK.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202109160532352_addkolommhspk.cs" />
+    <Compile Include="Migrations\202109160532352_addkolommhspk.designer.cs">
+      <DependentUpon>202109160532352_addkolommhspk.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EmailTemplateRepository.cs" />
@@ -132,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202109150448420_perubahntablePK.resx">
       <DependentUpon>202109150448420_perubahntablePK.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109160532352_addkolommhspk.resx">
+      <DependentUpon>202109160532352_addkolommhspk.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

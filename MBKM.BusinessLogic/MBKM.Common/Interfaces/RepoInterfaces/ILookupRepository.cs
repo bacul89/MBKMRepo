@@ -11,5 +11,6 @@ namespace MBKM.Common.Interfaces.RepoInterfaces
     public interface ILookupRepository : IGenericRepository<Lookup>
     {
         IEnumerable<VMLookup> getLookupByTipe(string tipe);
+        List<VMListProdi> getListProdi();
     }
 }
