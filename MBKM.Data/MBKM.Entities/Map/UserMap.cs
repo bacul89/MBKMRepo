@@ -22,7 +22,10 @@ namespace MBKM.Entities.Map
             Property(t => t.Alamat).HasMaxLength(500);
             Property(t => t.NoTelp).HasMaxLength(50).IsRequired();
             Property(t => t.Token).HasMaxLength(500);
-            
+            Property(t => t.KodeProdi).HasMaxLength(50);
+            Property(t => t.NamaProdi).HasMaxLength(150);
+
+
         }
     }
 }
