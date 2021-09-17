@@ -38,9 +38,9 @@
 
 <div class="card center-block" style="background-color: white; width: 90%; margin-top: 50px; margin-bottom: 50px;">
     <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
-        <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; padding-left: 15px; font-weight: bold; font-size: 30px; color: black; ">
+        <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; padding-left: 15px; font-weight: bold; font-size: 20px; color: black; ">
             FORMULIR PENDAFTARAN DIRI DAN PENDUKUNG <br />
-            <p style="font-weight: normal; font-size: 18px; color: #c1baba;">Lengkapi formulir data diri agar dapat mendaftar mata kuliah MBKM yang diinginkan</p>
+            <p style="font-weight: normal; font-size: 15px; color: #c1baba;">Lengkapi formulir data diri agar dapat mendaftar mata kuliah MBKM yang diinginkan</p>
         </h5>
         <hr />
         <div class="container" style="width: 100%; padding-bottom: 15px;">
@@ -253,6 +253,7 @@
 
 @section Scripts{
     <script>
+        $("#upload").hide();
         $("#simpan").hide();
         $("input").attr("disabled", true);
         $("select").attr("disabled", true);
@@ -263,8 +264,8 @@
             $("select").removeAttr("disabled");
             $("textarea").removeAttr("disabled");
             $("#simpan").show();
+            $("#upload").show();
             $("#edit").hide();
-            $("#upload").hide();
         });
 
         $("#simpan").click(function () {
@@ -272,8 +273,8 @@
             $("select").attr("disabled", true);
             $("textarea").attr("disabled", true);
             $("#simpan").hide();
+            $("#upload").hide();
             $("#edit").show();
-            $("#upload").show();
         });
     </script>
 }

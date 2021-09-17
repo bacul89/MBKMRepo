@@ -18,8 +18,12 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         // GET: Portal/Home
         public ActionResult Index()
         {
-            //var a = _mahasiswaService.getLoginInternal("11998000648", "126019");
-            return View();
+            bool isLogin = (bool)Session["isLogin"] ;
+            if (isLogin)
+            {
+                return View();
+            }
+            return RedirectToAction("Index", "Home");
         }
     }
 }
