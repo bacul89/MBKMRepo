@@ -27,17 +27,6 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         // GET: Portal/Home
         public ActionResult Index()
         {
-            try
-            {
-                bool isLogin = (bool)Session["isLogin"];
-                if (isLogin)
-                {
-                    return RedirectToAction("Index", "DataDiri");
-                }
-            }
-            catch (Exception)
-            {
-            }
             return View();
         }
         public JsonResult RegisterExternal(Mahasiswa mahasiswa)
@@ -58,6 +47,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     mahasiswa.Telepon = mahasiswa.NoHp;
                     mahasiswa.CreatedDate = DateTime.Now;
                     mahasiswa.UpdatedDate = DateTime.Now;
+                    mahasiswa.StatusVerifikasi = "DAFTAR";
                     _mahasiswaService.Save(mahasiswa);
                     SendEmail(mahasiswa.Email, token);
                     return Json(new ServiceResponse { status = 200, message = "Pendaftaran mahasiswa berhasil, tolong cek email dan konfirmasi akunmu!" });
@@ -79,6 +69,10 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public JsonResult GetNoKerjasama(int Skip, int Length, string Search, string NamaInstansi)
         {
             return Json(_perjanjianKerjasamaService.getNoKerjasama(Skip, Length, Search, NamaInstansi), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult getLookupByTipe(string tipe)
+        {
+            return Json(_lookupService.getLookupByTipe(tipe), JsonRequestBehavior.AllowGet);
         }
         public ActionResult VerifyPage(string token)
         {
@@ -125,6 +119,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                         mahasiswa.Gender = a.Gender;
                         mahasiswa.ProdiAsal = a.Prodi;
                         mahasiswa.NIM = a.NIM;
+                        mahasiswa.StatusVerifikasi = "AKTIF";
 
                         _mahasiswaService.Save(mahasiswa);
                     }
@@ -165,11 +160,6 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             return _mahasiswaService.Find(m => m.NIM == nim).FirstOrDefault();
         }
-        public IEnumerable<VMLookup> getLookupByTipe(string tipe)
-        {
-            return _lookupService.getLookupByTipe(tipe);
-        }
-
         public void SendEmail(string email, string token)
         {
             string url = this.Url.Action("VerifyPage", "Home", null);

@@ -1,4 +1,5 @@
 ﻿using MBKM.Entities.Models.MBKM;
+using MBKM.Presentation.models;
 using MBKM.Services.MBKMServices;
 using System;
 using System.Collections.Generic;
@@ -15,15 +16,31 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             _mahasiswaService = mahasiswaService;
         }
-        // GET: Portal/Home
         public ActionResult Index()
         {
-            bool isLogin = (bool)Session["isLogin"] ;
-            if (isLogin)
+            return View();
+        }
+        public JsonResult GetDataMahasiswa(Mahasiswa mahasiswa)
+        {
+            string email = Session["email"] as string;
+            return Json(GetMahasiswaByEmail(email), JsonRequestBehavior.AllowGet);
+        }
+        public Mahasiswa GetMahasiswaByEmail(string email)
+        {
+            return _mahasiswaService.Find(m => m.Email == email).FirstOrDefault();
+        }
+        public JsonResult UpdateDataDiri(Mahasiswa mahasiswa)
+        {
+            try
             {
-                return View();
+                mahasiswa.UpdatedDate = DateTime.Now;
+                _mahasiswaService.Save(mahasiswa);
+                return Json(new ServiceResponse { status = 200, message = "Data diri berhasil diupdate!" });
             }
-            return RedirectToAction("Index", "Home");
+            catch (Exception e)
+            {
+                return Json(new ServiceResponse { status = 500, message = e.Message });
+            }
         }
     }
 }
