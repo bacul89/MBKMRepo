@@ -7,6 +7,7 @@
 
 @section css{
     <link rel="stylesheet" type="text/css" href="~/Content/Admin/inputResponsive.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 }
 
 
@@ -25,40 +26,40 @@
                             <td style="width: 20%;">Nama Lengkap</td>
                             <td>
                                 <div class="form-group">
-                                    <input type="text" name="namaLengkap" value="@Model.Nama" id="namaLengkap" class="form-control input-md" disabled />
+                                    <input type="text" name="namaLengkap" value="@Model.Nama" id="namaLengkap" class="form-control input-md input-data" disabled />
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td style="width: 20%;">Jenis Kelamin</td>
                             <td>
-                                <input type="text" name="jenisKelamin" value="@Model.Gender" id="jenisKelamin" class="form-control input-md" disabled />
+                                <input type="text" name="jenisKelamin" value="@Model.Gender" id="jenisKelamin" class="form-control input-md input-data" disabled />
                             </td>
                         </tr>
                         <tr>
                             <td style="width: 20%;">Tempat Lahir</td>
                             <td>
                                 <div class="form-group">
-                                    <input type="text" name="tempatLahir" value="@Model.TempatLahir" id="tempatLahir" class="form-control input-md" disabled />
+                                    <input type="text" name="tempatLahir" value="@Model.TempatLahir" id="tempatLahir" class="form-control input-md input-data" disabled />
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td style="width: 20%;">Tanggal Lahir</td>
                             <td>
-                                <input type="date" name="tanggalLahir" value="@Model.TanggalLahir" id="tanggalLahir" class="form-control input-md" disabled />
+                                <input type="date" name="tanggalLahir" value="@Model.TanggalLahir" id="tanggalLahir" class="form-control input-md input-data" disabled />
                             </td>
                         </tr>
                         <tr>
                             <td style="width: 20%;">Kewarganegaraan</td>
                             <td>
-                                <input type="text" name="kewarganegaraan" value="@Model.WargaNegara" id="kewarganegaraan" class="form-control input-md" disabled />
+                                <input type="text" name="kewarganegaraan" value="@Model.WargaNegara" id="kewarganegaraan" class="form-control input-md input-data" disabled />
                             </td>
                         </tr>
                         <tr>
                             <td style="width: 20%;">No. KTP</td>
                             <td>
-                                <input type="text" name="noKtp" id="noKtp" value="@Model.NoKTP" class="form-control input-md" disabled />
+                                <input type="text" name="noKtp" id="noKtp" value="@Model.NoKTP" class="form-control input-md input-data" disabled />
                             </td>
                         </tr>
                     </table>
@@ -73,7 +74,7 @@
                             <td style="width: 20%;">Alamat Email</td>
                             <td>
                                 <div class="form-group">
-                                    <input type="email" name="email" id="email" value="@Model.Email" class="form-control input-md" disabled />
+                                    <input type="email" name="email" id="email" value="@Model.Email" class="form-control input-md input-data" disabled />
                                 </div>
                             </td>
                         </tr>
@@ -81,7 +82,7 @@
                             <td style="width: 20%;">No. Handphone</td>
                             <td>
                                 <div class="form-group">
-                                    <input type="text" name="noHP" id="noHP" value="@Model.NoHp" placeholder="+62xxxxxxxxxxx" class="form-control input-md" disabled />
+                                    <input type="text" name="noHP" id="noHP" value="@Model.NoHp" placeholder="+62xxxxxxxxxxx" class="form-control input-md input-data" disabled />
                                 </div>
                             </td>
                         </tr>
@@ -89,7 +90,7 @@
                             <td style="width: 20%;">No. Telepon</td>
                             <td>
                                 <div class="form-group">
-                                    <input type="text" name="noTelp" id="noTelp" value="@Model.Telepon" placeholder="+62xxxxxxxxxxx" class="form-control input-md" disabled />
+                                    <input type="text" name="noTelp" id="noTelp" value="@Model.Telepon" placeholder="+62xxxxxxxxxxx" class="form-control input-md input-data" disabled />
                                 </div>
                             </td>
                         </tr>
@@ -97,7 +98,7 @@
                             <td style="width: 20%;">Alamat Rumah</td>
                             <td>
                                 <div class="form-group">
-                                    <textarea name="alamat" id="alamat" value="@Model.Alamat" class="form-control" style="width: 100%;" rows="5" disabled></textarea>
+                                    <textarea name="alamat" id="alamat" value="@Model.Alamat" class="form-control input-data" style="width: 100%;" rows="5" disabled></textarea>
                                 </div>
                             </td>
                         </tr>
@@ -116,7 +117,7 @@
                             <td style="width: 20%;">Nama</td>
                             <td>
                                 <div class="form-group">
-                                    <input type="text" name="namaDarurat" id="namaDarurat" value="@Model.NamaDarurat" class="form-control input-md" disabled />
+                                    <input type="text" name="namaDarurat" id="namaDarurat" value="@Model.NamaDarurat" class="form-control input-md input-data" disabled />
                                 </div>
                             </td>
                         </tr>
@@ -124,7 +125,7 @@
                             <td style="width: 20%;">Hubungan</td>
                             <td>
                                 <div class="form-group">
-                                    <input name="hubungan" id="hubungan" value="@Model.HubunganDarurat" class="form-control input-md" disabled>
+                                    <input name="hubungan" id="hubungan" value="@Model.HubunganDarurat" class="form-control input-md input-data" disabled>
                                 </div>
                             </td>
                         </tr>
@@ -132,7 +133,7 @@
                             <td style="width: 20%;">No. Handphone</td>
                             <td>
                                 <div class="form-group">
-                                    <input type="text" name="noHPDarurat" id="noHPDarurat" value="@Model.NoHPDarurat" placeholder="+62xxxxxxxxxxx" class="form-control input-md" disabled />
+                                    <input type="text" name="noHPDarurat" id="noHPDarurat" value="@Model.NoHPDarurat" placeholder="+62xxxxxxxxxxx" class="form-control input-md input-data" disabled />
                                 </div>
                             </td>
                         </tr>
@@ -140,20 +141,20 @@
                             <td style="width: 20%;">No. Telepon</td>
                             <td>
                                 <div class="form-group">
-                                    <input type="text" name="noTelpDarurat" id="noTelpDarurat" value="@Model.TeleponDarurat" placeholder="+62xxxxxxxxxxx" class="form-control input-md" disabled />
+                                    <input type="text" name="noTelpDarurat" id="noTelpDarurat" value="@Model.TeleponDarurat" placeholder="+62xxxxxxxxxxx" class="form-control input-md input-data" disabled />
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td style="width: 20%;">Alamat Email</td>
                             <td>
-                                <input type="email" name="emailDarurat" id="emailDarurat" value="@Model.EmailDarurat" class="form-control input-md" disabled />
+                                <input type="email" name="emailDarurat" id="emailDarurat" value="@Model.EmailDarurat" class="form-control input-md input-data" disabled />
                             </td>
                         </tr>
                         <tr>
                             <td style="width: 20%;">Alamat Rumah</td>
                             <td>
-                                <textarea name="alamatDarurat" id="alamatDarurat" value="@Model.AlamatDarurat" class="form-control" style="width: 100%;" rows="5" disabled></textarea>
+                                <textarea name="alamatDarurat" id="alamatDarurat" value="@Model.AlamatDarurat" class="form-control input-data" style="width: 100%;" rows="5" disabled></textarea>
                             </td>
                         </tr>
                     </table>
@@ -171,7 +172,7 @@
                             <td>
                                 <div class="form-group">
                                     <div class="form-group">
-                                        <input type="text" name="jenjangStudi" value="@Model.NamaUniversitas" id="jenjangStudi" class="form-control input-md" disabled />
+                                        <input type="text" name="jenjangStudi" value="@Model.NamaUniversitas" id="jenjangStudi" class="form-control input-md input-data" disabled />
                                     </div>
                                 </div>
                             </td>
@@ -180,7 +181,7 @@
                             <td style="width: 20%;">Jenjang Studi</td>
                             <td>
                                 <div class="form-group">
-                                    <input type="text" name="jenjangStudi" value="@Model.JenjangStudi" id="jenjangStudi" class="form-control input-md" disabled />
+                                    <input type="text" name="jenjangStudi" value="@Model.JenjangStudi" id="jenjangStudi" class="form-control input-md input-data" disabled />
                                 </div>
                             </td>
                         </tr>
@@ -188,7 +189,7 @@
                             <td style="width: 20%;">Program Studi</td>
                             <td>
                                 <div class="form-group">
-                                    <input type="text" name="programStudi" value="@Model.ProdiAsal" id="programStudi" class="form-control input-md" disabled />
+                                    <input type="text" name="programStudi" value="@Model.ProdiAsal" id="programStudi" class="form-control input-md input-data" disabled />
                                 </div>
                             </td>
                         </tr>
@@ -197,7 +198,7 @@
                             <td style="width: 20%;">NIM Asal</td>
                             <td>
                                 <div class="form-group">
-                                    <input type="text" name="nimAsal" id="nimAsal" value="@Model.NIMAsal" class="form-control input-md" disabled />
+                                    <input type="text" name="nimAsal" id="nimAsal" value="@Model.NIMAsal" class="form-control input-md input-data" disabled />
                                 </div>
                             </td>
                         </tr>
@@ -209,7 +210,7 @@
                 <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">
                     DOKUMEN PENDUKUNG
                 </h5>
-                <div class="container" style="width: 100%;">
+                <div class="container" style="width: 70%;">
                     <div class="card center-block" style="background-color: white; width: 100%; margin-top: 50px; margin-bottom: 50px;">
                         <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)">
                             <div class="container" style="width: 100%;">
@@ -245,12 +246,23 @@
                 <hr />
                 <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
                     <div class="container" style="width: 100%;">
-                        <form class="form-horizontal" style="margin-top:50px">
+                        <form class="form-horizontal" style="margin-top:50px; margin-left:20px">
+                            <div class="form-group">
+                                <label for="inp_statusKerjaSama" class="col-sm-3 control-label">Status Kerjasama</label>
+                                <div class="col-sm-7">
+                                    <select class="form-control input-data" name="inp_statusKerjaSama" id="inp_statusKerjaSama">
+                                        <option value="" selected disabled>-- Pilih Status Kerjasama --</option>
+                                        <option value="1">Ada Kerjasama</option>
+                                        <option value="2">Tidak Ada Kerjasama</option>
+                                        <option value="3">Kerja Sama Dalam Proses</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="inp_noKerjaSama" class="col-sm-3 control-label">No. Kerjasama</label>
-                                <div class="col-sm-5">
-                                    <select class="form-control input-data" name="inp_noKerjaSama" id="inp_noKerjaSama">
-                                        <option value="" selected disabled>-- Pilih No. Kerjasama --</option>
+                                <div class="col-sm-7 input-data">
+                                    <select class="form-control input-data js-example-basic-single" name="inp_noKerjaSama" id="inp_noKerjaSama" disabled>
+                                        <option selected disabled>-- Pilih No. Kerjasama --</option>
                                         <option value="1">02116468421</option>
                                         <option value="0">21658465165</option>
                                     </select>
@@ -258,13 +270,13 @@
                             </div>
                             <div class="form-group">
                                 <label for="inp_biaya" class="col-sm-3 control-label">Biaya</label>
-                                <div class="col-sm-5">
-                                    <input type="number" class="form-control input-data" name="inp_biaya" id="inp_biaya" placeholder="0">
+                                <div class="col-sm-7">
+                                    <input type="number" class="form-control input-data" name="inp_biaya" id="inp_biaya" placeholder="0" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inp_verifikasi" class="col-sm-3 control-label">Verifikasi</label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-7">
                                     <label class="radio-inline input-pendaftaran">
                                         <input type="radio" name="inp_verifikasi" id="inp_verifikasi" value="true"> Terima
                                     </label>
@@ -275,22 +287,24 @@
                             </div>
                             <div class="form-group">
                                 <label for="inp_approval" class="col-sm-3 control-label">Approval Ke </label>
-                                <div class="col-sm-5">
+                                <div class="col-sm-7">
                                     <select class="form-control input-data" name="inp_approval" id="inp_approval">
                                         <option value="" selected disabled>-- Pilih Authority Approval --</option>
-                                        <option value="1">1</option>
-                                        <option value="0">2</option>
+                                        <option value="1">Kepala Program Studi</option>
+                                        <option value="0">Wakil Rektor 1</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="inp_catatan" class="col-sm-3 control-label">Catatan</label>
-                                <div class="col-sm-5">
+                                <div class="col-sm-7">
                                     <textarea class="form-control input-data" name="inp_catatan" rows="5" id="inp_catatan" placeholder="Masukkan Catatan Jika Ada"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="col-sm-2 col-md-offset-7">
+                                <div class="col-sm-3 col-sm-offset-7" style="padding-left:50px">
+                                    <button type="button" id="updateVerifikasiButton" class="btn btn-danger hidden">Update</button>
+                                    <button type="button" id="editVerifikasiButton" onclick="IndexEditVerifikasi()" class="btn btn-danger">Edit</button>
                                     <button type="button" class="btn btn-warning">Submit</button>
                                 </div>
                             </div>
@@ -302,3 +316,15 @@
     </div>
 </div>
 
+@section scripts{
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2({
+                placeholder: "Select a state",
+            });
+        });
+    </script>
+    <script src="~/Scripts/Admin/VerifikasiMahasiswa/main_detail.js" type="text/javascript"></script>
+
+}
