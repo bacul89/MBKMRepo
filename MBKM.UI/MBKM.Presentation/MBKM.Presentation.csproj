@@ -137,6 +137,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminLoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MasterLookupController.cs" />
     <Compile Include="Areas\Admin\Controllers\PerjanjianKerjasama\PerjanjianKerjasamaController.cs" />
     <Compile Include="Areas\Admin\Controllers\TemplateEmail\TemplateEmailController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserManageController.cs" />
@@ -319,6 +320,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\Admin\MasterLookup\crud.js" />
+    <Content Include="Scripts\Admin\MasterLookup\main.js" />
     <Content Include="Scripts\Admin\TemplateEmail\crud.js" />
     <Content Include="Scripts\Admin\TemplateEmail\main.js" />
     <Content Include="Scripts\Admin\UserManage\crud.js" />
@@ -363,6 +366,10 @@
     <Content Include="Content\summernote\summernote.js.map" />
     <Content Include="Content\summernote\summernote.min.js.map" />
     <Content Include="Areas\Admin\Views\Shared\_LayoutLogin.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterLookup\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterLookup\ModalCreateMasterLookup.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterLookup\ModalUpdateMasterLookup.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterLookup\ModalDetailMasterLookup.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

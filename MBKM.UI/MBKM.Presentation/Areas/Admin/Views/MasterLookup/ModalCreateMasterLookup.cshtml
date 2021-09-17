@@ -1,0 +1,53 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div class="modal-content data-content-modal" id="created-master-lookup">
+    <div class="modal-header" style="background-color: #FF8A04; ">
+        <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+            TAMBAH MASTER LOOKUP
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </h5>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="inp_tipeEmail" class="col-sm-3 control-label">Tipe Lookup</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control input-pendaftaran input-data" name="inp_tipe" id="inp_tipe" placeholder="Input Type Lookup">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inp_email" class="col-sm-3 control-label">Nama Lookup</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control input-pendaftaran input-data" name="inp_nama" id="inp_nama" placeholder="Input Nama Lookup">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inp_bodyEmail" class="col-sm-3 control-label">Nilai</label>
+                <div class="col-sm-9">
+                    <input type="number" class="form-control input-pendaftaran input-data" name="inp_nilai" id="inp_nilai" placeholder="Input Nilai">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inp_status" class="col-sm-3 control-label">Status</label>
+                <div class="col-sm-9">
+                    <label class="radio-inline input-pendaftaran">
+                        <input type="radio" name="inp_status" id="inp_status" value="true"> Aktif
+                    </label>
+                    <label class="radio-inline input-pendaftaran">
+                        <input type="radio" name="inp_status" id="inp_status" value="false"> Tidak Aktif
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 col-md-offset-10">
+                    <button type="button" onclick="PostCreate()" class="btn btn-warning">Simpan</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
