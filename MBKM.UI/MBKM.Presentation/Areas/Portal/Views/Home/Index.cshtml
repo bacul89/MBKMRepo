@@ -83,10 +83,39 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Universitas Asal</label>
-                            <select name="NamaUniversitas" id="namaUniversitas" class="form-control input-lg" required>
-                                <option value="ubm">UBM</option>
-                                <option value="umn">UMN</option>
+                            <label>Memiliki Kerjasama?</label>
+                            <select id="kerjasama" class="form-control input-lg" required>
+                                <option value="y">Ya</option>
+                                <option value="t">Tidak</option>
+                            </select>
+                        </div>
+                        <div id="univAsal">
+                            <div class='form-group'>
+                                <label>Universitas Asal</label>
+                                <select name='NamaUniversitas' id='namaUniversitas' class='form-control input-lg' required>
+                                </select>
+                            </div>
+                            <div id="noKS">
+                                <div class='form-group'>
+                                    <label>No. Kerjasama</label>
+                                    <select name='noKerjasama' id='noKerjasama' class='form-control input-lg' required>
+                                        <option>-- Pilih Nomor Kerjasama --</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Program Studi Universitas Asal</label>
+                            <input type="text" name="prodiAsal" id="prodiAsal" placeholder="Program Studi" class="form-control input-lg" />
+                        </div>
+                        <div class="form-group">
+                            <label>Nomor Induk Mahasiswa Asal</label>
+                            <input type="text" name="nimAsal" id="nimAsal" placeholder="NIM" class="form-control input-lg" />
+                        </div>
+                        <div class='form-group'>
+                            <label>Tahun Semester</label>
+                            <select name='tahunSemester' id='tahunSemester' class='form-control input-lg' required>
+                                <option>-- Pilih Tahun Semester --</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -126,7 +155,7 @@
                         Untuk kamu yang sudah registrasi atau Mahasiswa Internal Universitas Katolik Atma Jaya dan ingin mengikuti program studi kampus merdeka, jadwal perkuliahan, dan lainnya, silahkan melakukan Login terlebih dahulu
                     </div>
 
-                    <form action="@Url.Action("index","datadiri")" method="post">
+                    <form action="@Url.Action("login","home")" method="post">
                         <div class="form-group">
                             <input type="text" name="username" id="username" placeholder="Username" class="form-control input-lg" />
                         </div>
@@ -158,9 +187,32 @@
 
 @section Scripts{
     <script>
-        var alertMessage = '@TempData["alertMessage"]';
-        if (alertMessage.length != 0) {
-            alert(alertMessage);
+        $(document).ready(function () {
+            var alertMessage = '@TempData["alertMessage"]';
+            if (alertMessage.length != 0) {
+                alert(alertMessage);
+            }
+            loadNamaUniversitas();
+            namaUnivOnChange();
+        });
+
+        $("#kerjasama").change(function () {
+            if ($("#kerjasama").val() == "y") {
+                $("#univAsal").html("<div class= 'form-group'><label>Universitas Asal</label><select name='NamaUniversitas' id='namaUniversitas' class='form-control input-lg' required></select></div><div id='noKS'><div class='form-group'><label>No. Kerjasama</label><select name='noKerjasama' id='noKerjasama' class='form-control input-lg' required><option>-- Pilih Nomor Kerjasama --</option></select></div></div>");
+                loadNamaUniversitas();
+                namaUnivOnChange();
+            } else {
+                $("#univAsal").html("<div class= 'form-group'><label>Universitas Asal</label><input type='text' name='NamaUniversitas' id='NamaUniversitas' placeholder='Nama Universitas' class='form-control input-lg' /></div>");
+            }
+        });
+
+        function namaUnivOnChange() {
+            $("#namaUniversitas").change(function () {
+                if ($("#kerjasama").val() == "y") {
+                    $("#noKS").html("<div class='form-group'><label>No. Kerjasama</label><select name='noKerjasama' id='noKerjasama' class='form-control input-lg' required></select></div>");
+                    loadNoKerjasama();
+                }
+            });
         }
         function submitRegistrasi() {
             mahasiswa = new Object;
@@ -168,7 +220,16 @@
             mahasiswa.TempatLahir = $("#tempatLahir").val();
             mahasiswa.TanggalLahir = $("#tanggalLahir").val();
             mahasiswa.Gender = $("#gender").val();
-            mahasiswa.NamaUniversitas = $("#namaUniversitas").val();
+            if ($("#kerjasama").val() == "y") {
+                mahasiswa.BiayaKuliah = $("#namaUniversitas").find(':selected').data('biaya');
+                mahasiswa.NoKerjasama = $("#namaUniversitas").val();
+                mahasiswa.NamaUniversitas = $("#namaUniversitas").find(':selected').data('nama');
+            } else {
+                mahasiswa.NamaUniversitas = $("#namaUniversitas").val();
+            }
+            mahasiswa.ProdiAsal = $("#prodiAsal").val();
+            mahasiswa.NIMAsal = $("#nimAsal").val();
+            mahasiswa.Semester = $("#tahunSemester").val();
             mahasiswa.NoHp = $("#noHp").val();
             mahasiswa.Email = $("#emailRegistrasi").val();
             mahasiswa.Password = $("#passwordRegistrasi").val();
@@ -178,6 +239,38 @@
                 data: mahasiswa
             }).then(function (response) {
                 alert(response.message);
+            });
+        }
+        function loadNamaUniversitas() {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetNamaInstansi", "Home")?Skip=" + 0 + "&Length=" + 10000 + "&Search="
+            }).then(function (response) {
+                $("#namaUniversitas").append("<option>-- Pilih Universitas --</option>");
+                for (var i = 0; i < response.length; i++) {
+                    $("#namaUniversitas").append("<option value='" + response[i].NoKerjasama + "' data-biaya='" + response[i].Biaya + "' data-nama='" + response[i].NamaInstansi + "' >" + response[i].NamaInstansi + "</option>");
+                }
+            });
+        }
+        function loadNoKerjasama() {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetNoKerjasama", "Home")?Skip=" + 0 + "&Length=" + 10000 + "&Search=" + "&NamaInstansi=" + $("#namaUniversitas").find(':selected').data('nama')
+            }).then(function (response) {
+                $("#noKerjasama").append("<option>-- Pilih Nomor Kerjasama --</option>");
+                for (var i = 0; i < response.length; i++) {
+                    $("#noKerjasama").append("<option value='" + response[i].NoKerjasama + "'>" + response[i].NoKerjasama + "</option>");
+                }
+            });
+        }
+        function loadTahunSemester() {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("getLookupByTipe", "Home")?Tipe=TahunSemester"
+            }).then(function (response) {
+                for (var i = 0; i < response.length; i++) {
+                    $("#tahunSemester").append("<option value='" + response[i].NoKerjasama + "'>" + response[i].NoKerjasama + "</option>");
+                }
             });
         }
     </script>

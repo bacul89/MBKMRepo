@@ -253,6 +253,7 @@
 
 @section Scripts{
     <script>
+        $("#upload").hide();
         $("#simpan").hide();
         $("input").attr("disabled", true);
         $("select").attr("disabled", true);
@@ -263,8 +264,8 @@
             $("select").removeAttr("disabled");
             $("textarea").removeAttr("disabled");
             $("#simpan").show();
+            $("#upload").show();
             $("#edit").hide();
-            $("#upload").hide();
         });
 
         $("#simpan").click(function () {
@@ -272,8 +273,8 @@
             $("select").attr("disabled", true);
             $("textarea").attr("disabled", true);
             $("#simpan").hide();
+            $("#upload").hide();
             $("#edit").show();
-            $("#upload").show();
         });
     </script>
 }
