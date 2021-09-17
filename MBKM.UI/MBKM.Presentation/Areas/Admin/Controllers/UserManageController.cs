@@ -38,6 +38,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             IEnumerable<VMListProdi> listProdi = _lookupService.getListProdi();
             ViewBag.listProdi = new SelectList(listProdi, "IDProdi", "NamaProdi");
 
+            IEnumerable<VMListProdi> listNProdi = _lookupService.getListProdi();
+            ViewBag.listNProdi = new SelectList(listNProdi, "NamaProdi", "IDProdi");
+
 
             Debug.WriteLine("akses index");
             return View("_AddUser");
@@ -56,13 +59,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult PostDataUser(User model)
         {
-            //model.NoPegawai = model.NoPegawai;
-            //model.UserName = model.UserName;
-            //model.Email = model.Email;
-            //model.Password = model.Password;
-            //model.RoleID = model.RoleID
-            //model.NamaProdi = model.NamaProdi;
+          
             model.NoTelp = "123";
+            //model.Password = HashPasswordService.HashPassword(model.Password);
             model.CreatedDate = DateTime.Now;
             model.UpdatedDate = DateTime.Now;
             model.IsDeleted = false;

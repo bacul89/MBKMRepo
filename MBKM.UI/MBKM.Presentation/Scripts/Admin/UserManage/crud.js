@@ -52,38 +52,21 @@ function DetailUserTemplate(id) {
 
 }
 
-var formInputUser = {}
-
-//function getValueOnForm() {
-//    dTemplateEmail.TipeMail = $('input[name=inp_tipeEmail]').val();
-//    dTemplateEmail.SubjectMail = $('input[name=inp_email]').val();
-//    dTemplateEmail.BodyMail = $('textarea[name=inp_bodyEmail]').val();
-//    dTemplateEmail.IsActive = $('input[name=inp_status]:checked').val();
-//}
-function getValueOnForm() {
-    //model.NoPegawai = model.NoPegawai;
-            //model.UserName = model.UserName;
-            //model.Email = model.Email;
-            //model.Password = model.Password;
-            //model.RoleID = model.RoleID
-            //model.NamaProdi = model.NamaProdi;
+function PostCreate2() {
+    //getValueOnForm();
+    var formInputUser = new Object();
+    var namaProdi = document.getElementById("idProdi");
+    var selectedProdi = namaProdi.options[namaProdi.selectedIndex].text;
     formInputUser.NoPegawai = $('input[id=txtnomorindukpegawai]').val();
     formInputUser.UserName = $('input[id=txtnama]').val();
     formInputUser.Email = $('input[id=txtemail]').val();
     formInputUser.Password = $('input[id=txtpassword]').val();
-    formInputUser.RoleID= $('#idRole').val();
-    formInputUser.KodeProdi= $('#idProdi').val();
-    formInputUser.NamaProdi = $('#idProdi').val();
+    formInputUser.RoleID = $('#idRole').val();
+    formInputUser.KodeProdi = $('#idProdi').val();
+    //formInputUser.NamaProdi = $('#idProdi').val();
+    formInputUser.NamaProdi = selectedProdi;
     formInputUser.IsActive = $('input[id=inp_status]:checked').val();
-    //prodi unit belum
-    
-}
-function tesRole(){
-    getValueOnForm();
-    console.log(formInputUser);
-}
-function PostCreate2() {
-    getValueOnForm();
+
     if (validationCustom2()) {
         var base_url = window.location.origin;
         $.ajax({

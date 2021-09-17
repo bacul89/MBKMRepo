@@ -18,6 +18,10 @@ namespace MBKM.Entities.ViewModel
         public string NoPegawai { get; set; }
         public string Nama { get; set; }
         public string Email { get; set; }
+        public string Password { get; set; }
+        public string RoleID { get; set; }
+        public string KodeProdi { get; set; }
+        public string NamaProdi { get; set; }
         public bool Status { get; set; }
     }
 }
