@@ -14,42 +14,42 @@
     },
     "columns": [
         {
-            "title": "No",
+            //"title": "No",
             "data": null,
             "render": function (data, type, full, meta) {
                 return meta.row + 1;
             }
         },
         {
-            "title": "Nomor Induk Pegawai",
+            //"title": "Nomor Induk Pegawai",
             "data": "NoPegawai",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + data + '</div>';
             }
         },
         {
-            "title": "Nama",
+            //"title": "Nama",
             "data": "Nama",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + data + '</div>';
             }
         },
         {
-            "title": "Password",
+            //"title": "Password",
             "data": "Password",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + data + '</div>';
             }
         },
         {
-            "title": "Jabatan",
+            //"title": "Jabatan",
             "data": "RoleID",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + data + '</div>';
             }
         },
         {
-            "title": "Program Studi/Unit",
+            //"title": "Program Studi/Unit",
             "data": "NamaProdi",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + data + '</div>';
@@ -78,3 +78,15 @@
         });
     }
 });
+function validationCustom2() {
+    var isValid;
+    $(".input-data").each(function () {
+        var element = $(this);
+        if (element.val() == "") {
+            return isValid = false;
+        } else {
+            return isValid = true;
+        }
+    });
+    return isValid;
+}

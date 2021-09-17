@@ -72,15 +72,19 @@ function getValueOnForm() {
     formInputUser.Email = $('input[id=txtemail]').val();
     formInputUser.Password = $('input[id=txtpassword]').val();
     formInputUser.RoleID= $('#idRole').val();
-    formInputUser.IsActive = $('input[id=inp_status]').val();
+    formInputUser.KodeProdi= $('#idProdi').val();
+    formInputUser.NamaProdi = $('#idProdi').val();
+    formInputUser.IsActive = $('input[id=inp_status]:checked').val();
     //prodi unit belum
     
 }
 function tesRole(){
-    console.log(formInputUser.RoleID = $('#idRole').val());
+    getValueOnForm();
+    console.log(formInputUser);
 }
-function PostCreate() {
-    if (validationCustom()) {
+function PostCreate2() {
+    getValueOnForm();
+    if (validationCustom2()) {
         var base_url = window.location.origin;
         $.ajax({
             url: base_url + '/Admin/UserManage/PostDataUser',
@@ -92,16 +96,26 @@ function PostCreate() {
                 Swal.fire({
                     title: 'Berhasil',
                     icon: 'success',
-                    html: 'Template Email Berhasil Ditambahkan',
+                    html: 'User Baru Berhasil Ditambahkan',
                     showCloseButton: true,
                     showCancelButton: false,
                     focusConfirm: false,
                     confirmButtonText: 'OK'
                 })
-                window.location.href = "/Admin/UserManage/index"
+                dataTable.ajax.reload(null, false);
+                $('.modal').modal('hide');
             },
             error: function (e) {
-                console.log(e);
+                Swal.fire({
+                    title: 'Oppss',
+                    icon: 'error',
+                    html: 'Coba Reload Page',
+                    showCloseButton: true,
+                    showCancelButton: false,
+                    focusConfirm: false,
+                    confirmButtonText: 'OK'
+                })
+                $('.modal').modal('hide');
             }
         })
     } else {
