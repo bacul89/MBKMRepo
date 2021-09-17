@@ -1,5 +1,6 @@
 ﻿@model MBKM.Entities.ViewModel.VMLookup
 
+
 @{
     ViewBag.Title = "Index";
     Layout = null;
@@ -17,25 +18,25 @@
     <div class="modal-body">
         <form class="form-horizontal" id="frmSave">
             <div class="form-group" id="frmAddUser">
-                <label for="nomorindukpegawai" class="col-sm-3 control-label">Nomor Induk Pegawai</label>
+                <label for="txtnomorindukpegawai" class="col-sm-3 control-label">Nomor Induk Pegawai</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control input-pendaftaran" id="txtnomorindukpegawai" placeholder="Input Induk Pegawai">
+                    <input type="text" class="form-control input-pendaftaran" id="txtnomorindukpegawai" name="txtnomorindukpegawai" placeholder="Input Induk Pegawai">
                 </div>
             </div>
             <div class="form-group">
-                <label for="inp_email" class="col-sm-3 control-label">Nama</label>
+                <label for="txtnama" class="col-sm-3 control-label">Nama</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control input-pendaftaran" id="txtnama" placeholder="Input Nama">
+                    <input type="text" class="form-control input-pendaftaran" id="txtnama" name="txtnama" placeholder="Input Nama">
                 </div>
             </div>
             <div class="form-group">
-                <label for="inp_bodyEmail" class="col-sm-3 control-label">Alamat Email</label>
+                <label for="txtemail" class="col-sm-3 control-label">Alamat Email</label>
                 <div class="col-sm-9">
-                    <input type="email" class="form-control input-pendaftaran" id="txtemail" placeholder="Input Alamat Email">
+                    <input type="email" class="form-control input-pendaftaran" id="txtemail" name="txtemail" placeholder="Input Alamat Email">
                 </div>
             </div>
             <div class="form-group">
-                <label for="password" class="col-sm-3 control-label">Password</label>
+                <label for="txtpassword" class="col-sm-3 control-label">Password</label>
                 <div class="col-sm-9">
                     <input type="password" class="form-control input-pendaftaran" id="txtpassword" placeholder="Input Password">
                 </div>
@@ -43,33 +44,22 @@
             <div class="form-group row">
                 @if (ViewBag.listJabatan != null)
                 {
-                    <label for="Jabatan" class="col-sm-3 control-label">Jabatan</label>
+                    <label for="IdRole" class="col-sm-3 control-label">Jabatan</label>
                     <div class="col-sm-9">
-                        @Html.DropDownListFor(model => model.Nilai, ViewBag.listJabatan as SelectList, "--Pilih Jabatan--", new { @class = "form-control input-pendaftaran",@id = "idRole" })
+                        @Html.DropDownListFor(model => model.Nilai, ViewBag.listJabatan as SelectList, "--Pilih Jabatan--", new { @class = "form-control input-pendaftaran", @id = "idRole", @name= "idRole" })
                     </div>
                 }
             </div>
-            @*<div class="form-group row">
+            <div class="form-group row">
                 @if (ViewBag.listProdi != null)
                 {
-                    <label for="Prodi" class="col-sm-3 control-label">Prodi</label>
-                    <div class="col-md-8">
-                        @Html.DropDownListFor(model => model.Nilai, ViewBag.listProdi as SelectList, "--Pilih Prodi--", new { @class = "form-control prodi" })
+                    <label for="idProdi" class="col-sm-3 control-label">Prodi</label>
+                    <div class="col-sm-9">
+                       @* @Html.DropDownList("IDProdiAndNamaProdi", ViewBag.listProdi as SelectList, "First Option", new { name = "Name", id = "id" })*@
+                        @Html.DropDownListFor(model => model.Nama, ViewBag.listProdi as SelectList, "--Pilih Prodi--", new { @class = "form-control input-pendaftaran",@id = "idProdi", @name = "idProdi" })
                     </div>
                 }
-            </div>*@
-              <div class="form-group">
-              
-                <label for="prodiUnit" class="col-sm-3 control-label">Program Studi/Unit</label>
-                    <div class="col-sm-9">
-                    <select name="prodiUnit" id="prodiUnit" class="form-control input-pendaftaran" required>
-                        <option>Program Studi/Unit</option>
-                        <option value="uaj">UAJ</option>
-                        <option value="umn">UMN</option>
-                    </select>
-                    
-                </div>
-             </div>
+            </div>
             <div class="form-group">
                 <label for="inp_status" class="col-sm-3 control-label">Status</label>
                 <div class="col-sm-9">
@@ -83,7 +73,7 @@
             </div>
             <div class="form-group">
                 <div class="col-sm-2 col-md-offset-10">
-                    <button type="submit"onclick="tesRole()" class="btn btn-warning">Simpan</button>
+                    <button type="submit" onclick="PostCreate2()" class="btn btn-warning">Simpan</button>
                 </div>
             </div>
         </form>

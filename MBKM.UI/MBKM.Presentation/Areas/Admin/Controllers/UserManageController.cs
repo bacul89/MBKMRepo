@@ -35,8 +35,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             IEnumerable<VMLookup> listJabatan = _roleService.getLookupRole();
             ViewBag.listJabatan = new SelectList(listJabatan, "Nilai", "Nama");
 
-            //List<VMListProdi> listProdi = _lookupService.getListProdi();
-            //ViewBag.listProdi = new SelectList(listProdi);
+            IEnumerable<VMListProdi> listProdi = _lookupService.getListProdi();
+            ViewBag.listProdi = new SelectList(listProdi, "IDProdi", "NamaProdi");
+
 
             Debug.WriteLine("akses index");
             return View("_AddUser");
@@ -61,6 +62,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             //model.Password = model.Password;
             //model.RoleID = model.RoleID
             //model.NamaProdi = model.NamaProdi;
+            model.NoTelp = "123";
+            model.CreatedDate = DateTime.Now;
+            model.UpdatedDate = DateTime.Now;
+            model.IsDeleted = false;
 
             _userService.Save(model);
             return Json(model);
