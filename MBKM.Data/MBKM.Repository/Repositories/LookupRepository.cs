@@ -23,7 +23,7 @@ namespace MBKM.Repository.Repositories
             using (var context = new MBKMContext())
             {
                 var result = context.Database
-                    .SqlQuery<VMListProdi>("GetLoginInternal");
+                    .SqlQuery<VMListProdi>("GetListProdi");
                 return result.ToList();
             }
         }
