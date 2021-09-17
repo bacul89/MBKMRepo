@@ -22,7 +22,7 @@ namespace MBKM.Repository.Repositories
                     x => new VMLookup
                     {
                         Nama = x.RoleName,
-                        Nilai = x.Code
+                        Nilai = x.ID.ToString()
                     });
                 return listmodel.ToList();
             }
