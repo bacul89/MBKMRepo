@@ -1,4 +1,4 @@
-﻿@model MBKM.Entities.ViewModel.VMLookup
+﻿
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
@@ -17,198 +17,36 @@
         color: #FF8A04;
     }
 </style>
+@section modal{
+    <div class="modal fade" id="TambahKerjasama" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" id="modal-inner">
 
+        </div>
+    </div>
+}
 <div class="container-fluid" style="margin-left:40px; margin-right:40px;margin-bottom:100px;">
-    <div class="card center-block" style="background-color: white; width: 100%; margin-top: 50px; margin-bottom: 50px;">
+    <div class="card center-block" style="background-color: white; width: 102%; margin-top: 50px; margin-bottom: 50px;">
         <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
             <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
                 DAFTAR PERJANJIAN KERJASAMA
             </h4>
             <hr />
             <div class="container" style="width: 100%;">
-                <button class="btn btn-success" data-toggle="modal" data-target="#TambahKerjasama" data-backdrop="false"><i class="fas fa-plus-circle"></i> Tambah Kerjasama</button>
+                <button class="btn btn-success" onclick="IndexCreateKerjasama()"><i class="fas fa-plus-circle"></i> Tambah Kerjasama</button>
                 <br />
                 <br />
-                <table id="TableList" class="table table-bordered hover dt-responsive display responsive"
+                <table id="TableList" class="table table-bordered hover dt-responsive display responsive nowrap"
                        style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                    <thead class="text-center">
-                        <tr>
-                            <th>No.</th>
-                            <th>No. Kerjasama</th>
-                            <th>Tanggal Kerjasama</th>
-                            <th>Tanggal berakhir</th>
-                            <th>Nama Perguruan Tinggi</th>
-                            <th>Unit/Fakultas</th>
-                            <th>Jenis Kerjasama</th>
-                            <th>Inputer</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td></td>
-                            <td>xxxx-xxxxx-xxxxx</td>
-                            <td>09/09/2021</td>
-                            <td>09/09/2021</td>
-                            <td>universitas xyz</td>
-                            <td>Fakultas Ilmu Komputer</td>
-                            <td>Pertukaran</td>
-                            <td>inputer</td>
-                            <td>
-                                <a href="#"> <i class="fas fa-edit icon"></i></a>
-                                <a href="#"> <i class="fas fa-eye icon"></i></a>
-                                <a href="#"><i class="fas fa-trash-alt icon"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td>xxxx-xxxxx-xxxxx</td>
-                            <td>09/09/2021</td>
-                            <td>09/09/2021</td>
-                            <td>universitas xyz</td>
-                            <td>Fakultas Ilmu Komputer</td>
-                            <td>Pertukaran</td>
-                            <td>inputer</td>
-                            <td>
-                                <a href="#"> <i class="fas fa-edit icon"></i></a>
-                                <a href="#"> <i class="fas fa-eye icon"></i></a>
-                                <a href="#"><i class="fas fa-trash-alt icon"></i></a>
-                            </td>
-                        </tr>
-                    </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
-<!--Modal Add Data-->
-<div class="modal fade" id="TambahKerjasama">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header" style="background-color: #FF8A04; ">
-                <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
-                    Form Perjanjian Kerjasama
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </h5>
-            </div>
-            <form>
-                <div class="modal-body" style="overflow: auto;">
-                    <div class="form-group row">
-                        <label for="no" class="col-md-4 col-form-label">No. Kerjasama</label>
-                        <div class="col-md-8">
-                            <input id="NoPerjanjian" type="text" name="NoPerjanjian" class="form-control" placeholder="Input No. Kerjasama">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="tanggalKerjasama" class="col-md-4 col-form-label">Tanggal Kerjasama</label>
-                        <div class="col-md-8">
-                            <input id="TanggalMulai" type="date" name="TanggalMulai" class="form-control" placeholder="dd/mm/yyyy">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="tanggalBerakhir" class="col-md-4 col-form-label">Tanggal Berakhir</label>
-                        <div class="col-md-8">
-                            <input id="TanggalAkhir" type="date" name="TanggalAkhir" class="form-control" placeholder="dd/mm/yyyy">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="Instansi" class="col-md-4 col-form-label">Instansi</label>
-                        <div class="col-md-8">
-                            <select name="instansi" id="instansi" class="form-control">
-                                <option value="" disabled selected>--Pilih Perusahaan/Universitas--</option>
-                                <option value="Perusahaan">Perusahaan</option>
-                                <option value="Universitas">Universitas</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="Namainstansi" class="col-md-4 col-form-label">Nama</label>
-                        <div class="col-md-8">
-                            <input id="NamaUniversitas" type="text" name="NamaUniversitas" class="form-control" placeholder="Input Nama Perusahaan/Universitas">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="Namaunit" class="col-md-4 col-form-label">Nama Unit/Program Studi</label>
-                        <div class="col-md-8">
-                            <input id="Namaunit" type="text" name="Namaunit" class="form-control" placeholder="Input nama Unit/Program Studi">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        @if (ViewBag.listModel != null)
-                        {
-                            <label for="pertukaran" class="col-md-4 col-form-label">Jenis Pertukaran</label>
-                            <div class="col-md-8">
-                                @Html.DropDownListFor(model => model.Nilai, ViewBag.listModel as SelectList, "--Pilih Pertukaran--", new { @class="form-control pertukaran"})
-                            </div>
-                         }
-                    </div>
-                    
-                    <div class="form-group row">
-                        @if (ViewBag.listModel != null)
-                        {
-                            <label for="kerjasama" class="col-md-4 col-form-label">Jenis Kerjasama</label>
-                            <div class="col-md-8">
-                                @Html.DropDownListFor(model => model.Nilai, ViewBag.listKerjasama as SelectList, "--Pilih kerjasama--", new { @class = "form-control kerjasama" })
-                            </div>
-                        }
-                    </div>
-                    <div class="form-group row">
-                        <label for="inputer" class="col-md-4 col-form-label">Inputer</label>
-                        <div class="col-md-8">
-                            <input id="inputer" type="text" name="inputer" class="form-control" value="inputer" disabled>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="Upload" class="col-md-4 col-form-label">Upload Dokumen Pendukung</label>
-                        <div class="col-md-8">
-                            <input id="file" type="file" name="inputer" class="form-control">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <input onclick="submitPerjanjian()" type="submit" value="Simpan" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 @section scripts{
-    <script>
-        $(document).ready(function () {
-            var t = $('#TableList').DataTable({
-                "columnDefs": [{
-                    "searchable": false,
-                    "orderable": false,
-                    "targets": 0
-                }],
-                "order": [[1, 'asc']]
-            });
-
-            t.on('order.dt search.dt', function () {
-                t.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
-                    cell.innerHTML = i + 1;
-                });
-            }).draw();
-
-        });
-
-        function submitPerjanjian() {
-            perjanjian = new Object;
-            perjanjian.NoPerjanjian = $("#NoPerjanjian").val();
-            perjanjian.TanggalAkhir = $("#TanggalAkhir").val();
-            perjanjian.TanggalMulai = $("#TanggalMulai").val();
-            perjanjian.NamaUniversitas = $("#NamaUniversitas").val();
-            $.ajax({
-                type: "POST",
-                url: "@Url.Action("savePerjanjian","PerjanjianKerjasama")",
-                data: perjanjian,
-                success: function (response) {
-                    console.log("coba insert")
-                }
-            });
-        }
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/moment-with-locales.min.js"></script>
+    <script src="~/Scripts/Admin/PerjanjianKerjasama/main.js">
+    </script>
+    <script src="~/Scripts/Admin/PerjanjianKerjasama/crud.js">
     </script>
 }
