@@ -52,7 +52,7 @@
             //"title": "Program Studi/Unit",
             "data": "NamaProdi",
             "render": function (data, type, row, meta) {
-                return '<div class="center">' + data + '</div>';
+                return '<div class="center">' + row.NamaProdi + '(' + row.KodeProdi + ')' + '</div>';
             }
         },
       
