@@ -1,0 +1,80 @@
+﻿
+@{
+    Layout = null;
+}
+@model MBKM.Entities.Models.MBKM.PerjanjianKerjasama
+
+<div class="modal-content data-content-modal" id="detail-Kerjasama">
+    <div class="modal-header" style="background-color: #FF8A04; ">
+        <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+            DETAIL PERJANJIAN KERJASAMA
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </h5>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal">
+            <div class="form-group row">
+                <label for="no" class="col-md-4 col-form-label">No. Kerjasama</label>
+                <div class="col-md-8">
+                    <input id="NoPerjanjian" type="text" name="NoPerjanjian" class="form-control" value="@Model.NoPerjanjian" disabled>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="tanggalKerjasama" class="col-md-4 col-form-label">Tanggal Kerjasama</label>
+                <div class="col-md-8">
+                    <input id="TanggalMulai" type="text" name="TanggalMulai" class="form-control" value="@Model.TanggalMulai" disabled>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="tanggalBerakhir" class="col-md-4 col-form-label">Tanggal Berakhir</label>
+                <div class="col-md-8">
+                    <input id="TanggalAkhir" type="text" name="TanggalAkhir" class="form-control" value="@Model.TanggalAkhir" disabled>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="Instansi" class="col-md-4 col-form-label">Instansi</label>
+                <div class="col-md-8">
+                    <input id="TanggalAkhir" type="text" name="TanggalAkhir" class="form-control" value="@Model.Instansi" disabled>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="Namainstansi" class="col-md-4 col-form-label">Nama</label>
+                <div class="col-md-8">
+                    <input id="NamaUniversitas" type="text" name="NamaUniversitas" class="form-control" value="@Model.NamaInstansi" disabled>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="Namaunit" class="col-md-4 col-form-label">Nama Unit/Program Studi</label>
+                <div class="col-md-8">
+                    <input id="Namaunit" type="text" name="Namaunit" class="form-control" value="@Model.NamaUnit" disabled>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="Namaunit" class="col-md-4 col-form-label">Jenis Pertukaran</label>
+                <div class="col-md-8">
+                    <input id="Namaunit" type="text" name="Namaunit" class="form-control" value="@Model.JenisPertukaran" disabled>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="Namaunit" class="col-md-4 col-form-label">Jenis Kerjasama</label>
+                <div class="col-md-8">
+                    <input id="Namaunit" type="text" name="Namaunit" class="form-control" value="@Model.JenisKerjasama" disabled>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="biaya" class="col-md-4 col-form-label">Biaya</label>
+                <div class="col-md-8">
+                    <input id="biaya" name="biaya" class="form-control" value="@Model.BiayaKuliah" disabled>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputer" class="col-md-4 col-form-label">Inputer</label>
+                <div class="col-md-8">
+                    <input id="inputer" type="text" name="inputer" class="form-control" value="@Model.CreatedBy" disabled>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
