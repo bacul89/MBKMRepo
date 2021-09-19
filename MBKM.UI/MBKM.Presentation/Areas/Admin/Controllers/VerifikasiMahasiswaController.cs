@@ -15,11 +15,15 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
     {
         private IMahasiswaService _mahasiswaService;
         private IEmailTemplateService _emailTemplateService;
+        private ILookupService _lookupService;
+        private IPerjanjianKerjasamaService _perjanjianKerjasama;
 
-        public VerifikasiMahasiswaController(IMahasiswaService mahasiswaService, IEmailTemplateService emailTemplateService)
+        public VerifikasiMahasiswaController(IMahasiswaService mahasiswaService, IEmailTemplateService emailTemplateService, ILookupService lookupService, IPerjanjianKerjasamaService perjanjianKerjasama)
         {
             _mahasiswaService = mahasiswaService;
             _emailTemplateService = emailTemplateService;
+            _lookupService = lookupService;
+            _perjanjianKerjasama = perjanjianKerjasama;
         }
 
 
@@ -47,8 +51,58 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
         public ActionResult IndexDetailMahasiswa(int id)
         {
+            var ApproverRole = _lookupService.getLookupByTipe("ApproverRole");
+            ViewData["Approver"] = ApproverRole;
             var data = _mahasiswaService.Get(id);
             return View(data);
+        }
+
+        [HttpPost]
+        public JsonResult GetAllLookUp()
+        {
+            var data = _mahasiswaService.Get(2);
+            return Json(data);
+        }
+
+        [HttpPost]
+        public JsonResult PostDataUpdate(Mahasiswa _mahasiswa)
+        {
+            var data = _mahasiswaService.Get(_mahasiswa.ID);
+
+            data.Approval = _mahasiswa.Approval;
+            data.BiayaKuliah = _mahasiswa.BiayaKuliah;
+            data.Catatan = _mahasiswa.Catatan;
+            data.NoKerjasama = _mahasiswa.NoKerjasama;
+            data.StatusKerjasama = _mahasiswa.StatusKerjasama;
+            data.StatusVerifikasi = _mahasiswa.StatusVerifikasi;
+
+            _mahasiswaService.Save(data);
+            return Json(data);
+        }
+
+        [HttpPost]
+        public JsonResult GetAllNoKerjasama(string search, string instansi)
+        {
+           
+            var final = _perjanjianKerjasama.getNoKerjasama(0,5, search, instansi);
+            List<object> data = new List<object>();
+            foreach (var p in final)
+            {
+                var q = new{
+                    id = p.ID,
+                    text = p.NoKerjasama
+                };
+                data.Add(q);
+            }
+
+            return Json(data);
+        }
+
+        [HttpPost]
+        public JsonResult GetDataBiaya(int id)
+        {
+            var data = _perjanjianKerjasama.Get(id);
+            return Json(data);
         }
     }
 }
