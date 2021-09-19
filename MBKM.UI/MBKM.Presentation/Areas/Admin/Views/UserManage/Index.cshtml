@@ -25,7 +25,8 @@
             </h4>
             <hr />
             <div class="container" style="width: 100%;">
-                <button class="btn btn-success" data-toggle="modal" onclick="AddUserTemplate()" data-target="#TambahUser" data-backdrop="true"><i class="fas fa-plus-circle"></i> TAMBAH USER</button>
+                @*<button class="btn btn-success" data-toggle="modal" onclick="AddUserTemplate()" data-target="#TambahUser" data-backdrop="true"><i class="fas fa-plus-circle"></i> TAMBAH USER</button>*@
+                <button class="btn btn-success" onclick="AddUserTemplate()"><i class="fas fa-plus-circle"></i> TAMBAH USER</button>
                 <br />
                 <br />
                 <table id="TableList" class="table row-border hover dt-responsive responsive" style="border-spacing: 0 15px; border:0">
@@ -52,5 +53,4 @@
     <script src="~/Content/summernote/summernote.min.js"></script>
     <script src="~/Scripts/Admin/UserManage/main.js"></script>
     <script src="~/Scripts/Admin/UserManage/crud.js"></script>
-
 }

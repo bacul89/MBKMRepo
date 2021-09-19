@@ -34,7 +34,7 @@ namespace MBKM.Repository.Repositories
                 var result = context.Users.Where(x => x.IsDeleted == false);
                 mListUser.TotalCount = result.Count();
                 mListUser.gridDatas = result.AsQueryable().Where(y => y.UserName.Contains(SearchParam) || y.NoPegawai.Contains(SearchParam) || 
-                y.Password.Contains(SearchParam))
+                y.Password.Contains(SearchParam) || y.Email.Contains(SearchParam) || y.Roles.RoleName.Contains(SearchParam) || y.NamaProdi.Contains(SearchParam))
                     .Select(z => new GridData
                     {
                         ID = z.ID,
@@ -44,7 +44,7 @@ namespace MBKM.Repository.Repositories
                         //KodeProdi = Convert.ToDouble(z.KodeProdi),
                         KodeProdi = z.KodeProdi,
                         NamaProdi = z.NamaProdi,
-                        RoleID = z.RoleID.ToString(),
+                        RoleID = z.Roles.RoleName,
                         NoPegawai = z.NoPegawai,
                         Status = z.IsActive
                     }).OrderBy(SortBy, SortDir).Skip(Skip).Take(Length).ToList();
