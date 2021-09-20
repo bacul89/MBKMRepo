@@ -161,6 +161,11 @@
     <Content Include="Asset\kampus-universitas-katolik-atmajaya-jakarta-_131002231109-118.jpg" />
     <Content Include="Asset\Lambang_Unika_Atma_Jaya.png" />
     <Content Include="Content\Admin\inputResponsive.css" />
+    <Content Include="Content\autonumeric\autoNumeric-2.0-BETA.htm" />
+    <Content Include="Content\autonumeric\autoNumeric-2.0-BETA.js" />
+    <Content Include="Content\autonumeric\autoNumeric.js" />
+    <Content Include="Content\autonumeric\index.html" />
+    <Content Include="Content\autonumeric\license.txt" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -328,6 +333,7 @@
     <Content Include="Scripts\Admin\TemplateEmail\main.js" />
     <Content Include="Scripts\Admin\UserManage\crud.js" />
     <Content Include="Scripts\Admin\UserManage\main.js" />
+    <Content Include="Scripts\Admin\VerifikasiMahasiswa\crud_detail.js" />
     <Content Include="Scripts\Admin\VerifikasiMahasiswa\main.js" />
     <Content Include="Scripts\Admin\VerifikasiMahasiswa\main_detail.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -374,6 +380,11 @@
     <Content Include="Areas\Admin\Views\MasterLookup\ModalCreateMasterLookup.cshtml" />
     <Content Include="Areas\Admin\Views\MasterLookup\ModalUpdateMasterLookup.cshtml" />
     <Content Include="Areas\Admin\Views\MasterLookup\ModalDetailMasterLookup.cshtml" />
+    <Content Include="Content\autonumeric\autoNumeric-2.0-BETA change log.md" />
+    <Content Include="Content\autonumeric\autoNumeric.jquery.json" />
+    <Content Include="Content\autonumeric\bower.json" />
+    <Content Include="Content\autonumeric\change log.md" />
+    <Content Include="Content\autonumeric\readme.md" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
