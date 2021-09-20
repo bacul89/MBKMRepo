@@ -139,6 +139,7 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\MasterLookupController.cs" />
     <Compile Include="Areas\Admin\Controllers\PerjanjianKerjasama\PerjanjianKerjasamaController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RegisMhsByAdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\TemplateEmail\TemplateEmailController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserManageController.cs" />
     <Compile Include="Areas\Admin\Controllers\VerifikasiMahasiswaController.cs" />
@@ -387,6 +388,7 @@
     <Content Include="Content\autonumeric\bower.json" />
     <Content Include="Content\autonumeric\change log.md" />
     <Content Include="Content\autonumeric\readme.md" />
+    <Content Include="Areas\Admin\Views\RegisMhsByAdmin\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

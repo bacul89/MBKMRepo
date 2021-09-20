@@ -1,0 +1,363 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
+}
+
+
+
+<div id="hiddenField">
+    <input type="hidden" id="id" />
+</div>
+
+<div class="card center-block" style="background-color: white; width: 90%; margin-top: 50px; margin-bottom: 50px;">
+    <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+        <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; padding-left: 15px; font-weight: bold; font-size: 20px; color: black; ">
+            FORMULIR PENDAFTARAN DIRI DAN PENDUKUNG <br />
+            <p style="font-weight: normal; font-size: 15px; color: #c1baba;">Lengkapi formulir data diri agar dapat mendaftar mata kuliah MBKM yang diinginkan</p>
+        </h5>
+        <hr />
+        <div class="container" style="width: 100%; padding-bottom: 15px;">
+
+            <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+                <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">DATA DIRI</h5>
+
+                <div class="container" style="width: 100%;">
+                    <table class="table">
+                        <tr>
+                            <td style="width: 20%;">Nama Lengkap</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="namaLengkap" id="namaLengkap" class="form-control input-md" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Jenis Kelamin</td>
+                            <td>
+                                <select name="Gender" id="gender" class="form-control input-md">
+                                    <option>-- Pilih Jenis Kelamin --</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Tempat Lahir</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="tempatLahir" id="tempatLahir" class="form-control input-md" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Tanggal Lahir</td>
+                            <td>
+                                <input type="date" name="tanggalLahir" id="tanggalLahir" class="form-control input-md" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Kewarganegaraan</td>
+                            <td>
+                                <select name="kewarganegaraan" id="kewarganegaraan" class="form-control input-md">
+                                    <option>-- Pilih Kewarganegaraan --</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">No. KTP</td>
+                            <td>
+                                <input type="text" name="noKtp" id="noKtp" class="form-control input-md" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+                <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">INFORMASI KONTAK</h5>
+
+                <div class="container" style="width: 100%;">
+                    <table class="table">
+                        <tr>
+                            <td style="width: 20%;">Alamat Email</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="email" name="email" id="email" class="form-control input-md" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">No. Handphone</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="noHP" id="noHP" placeholder="+62xxxxxxxxxxx" class="form-control input-md" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">No. Telepon</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="noTelp" id="noTelp" placeholder="+62xxxxxxxxxxx" class="form-control input-md" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Alamat Rumah</td>
+                            <td>
+                                <div class="form-group">
+                                    <textarea name="alamat" id="alamat" class="form-control" style="width: 100%;" rows="5"></textarea>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+                <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">
+                    KONTAK DARURAT
+                    <p style="font-weight: normal; font-size: 16px;">(Kontak yang akan dihubungi dalam kondisi darurat)</p>
+                </h5>
+
+                <div class="container" style="width: 100%;">
+                    <table class="table">
+                        <tr>
+                            <td style="width: 20%;">Nama</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="namaDarurat" id="namaDarurat" class="form-control input-md" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Hubungan</td>
+                            <td>
+                                <select name="hubungan" id="hubungan" class="form-control input-md">
+                                    <option>-- Pilih Hubungan --</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">No. Handphone</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="noHPDarurat" id="noHPDarurat" placeholder="+62xxxxxxxxxxx" class="form-control input-md" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">No. Telepon</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="noTelpDarurat" id="noTelpDarurat" placeholder="+62xxxxxxxxxxx" class="form-control input-md" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Alamat Email</td>
+                            <td>
+                                <input type="email" name="emailDarurat" id="emailDarurat" class="form-control input-md" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Alamat Rumah</td>
+                            <td>
+                                <textarea name="alamatDarurat" id="alamatDarurat" class="form-control" style="width: 100%;" rows="5"></textarea>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+                <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">
+                    INFORMASI AKADEMIK
+                </h5>
+
+                <div class="container" style="width: 100%;">
+                    <table class="table">
+                        <tr>
+                            <td style="width: 20%;">Universitas Asal</td>
+                            <td>
+                                <div class="form-group" id="univAsal">
+                                    <select name="universitasAsal" id="universitasAsal" class="form-control input-md" required>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Jenjang Studi</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="jenjangStudi" id="jenjangStudi" class="form-control input-md" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Program Studi</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="programStudi" id="programStudi" class="form-control input-md" />
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="width: 20%;">NIM Asal</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="nimAsal" id="nimAsal" class="form-control input-md" />
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <button id="edit" class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 16px;">EDIT</button>
+                <button id="simpan" class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 16px; ">SIMPAN</button>
+                
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @*<script>
+        $(document).ready(function () {
+            $("#upload").hide();
+            $("#simpan").hide();
+            $("input").attr("disabled", true);
+            $("select").attr("disabled", true);
+            $("textarea").attr("disabled", true);
+            loadNamaUniversitas();
+            loadFromLookup("WargaNegara", "kewarganegaraan");
+            loadFromLookup("KontakDarurat", "hubungan");
+            loadFromLookup("Gender", "gender");
+            getDataMahasiswa();
+        });
+        $("#edit").click(function () {
+            $("input").removeAttr("disabled");
+            $("select").removeAttr("disabled");
+            $("textarea").removeAttr("disabled");
+            $("#simpan").show();
+            $("#upload").show();
+            $("#edit").hide();
+        });
+        $("#simpan").click(function () {
+            $("input").attr("disabled", true);
+            $("select").attr("disabled", true);
+            $("textarea").attr("disabled", true);
+            $("#simpan").hide();
+            $("#upload").hide();
+            $("#edit").show();
+
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetDataMahasiswa", "DataDiri")"
+            }).then(function (mahasiswa) {
+                mahasiswa.Nama = $("#namaLengkap").val();
+                mahasiswa.Gender = $("#gender").val();
+                mahasiswa.TempatLahir = $("#tempatLahir").val();
+                mahasiswa.TanggalLahir = $("#tanggalLahir").val();
+                mahasiswa.WargaNegara = $("#kewarganegaraan").val();
+                mahasiswa.NoKTP = $("#noKtp").val();
+                mahasiswa.Email = $("#email").val();
+                mahasiswa.NoHp = $("#noHP").val();
+                mahasiswa.Telepon = $("#noTelp").val();
+                mahasiswa.Alamat = $("#alamat").val();
+                mahasiswa.NamaDarurat = $("#namaDarurat").val();
+                mahasiswa.HubunganDarurat = $("#hubungan").val();
+                mahasiswa.NoHPDarurat = $("#noHPDarurat").val();
+                mahasiswa.TeleponDarurat = $("#noTelpDarurat").val();
+                mahasiswa.AlamatDarurat = $("#alamatDarurat").val();
+
+                if (mahasiswa.NoKerjasama != null) {
+                    mahasiswa.BiayaKuliah = $("#universitasAsal").find(':selected').data('biaya');
+                    mahasiswa.NoKerjasama = $("#universitasAsal").val();
+                    mahasiswa.NamaUniversitas = $("#universitasAsal").find(':selected').data('nama');
+                } else {
+                    mahasiswa.NamaUniversitas = $("#universitasAsal").val();
+                }
+
+                mahasiswa.JenjangStudi = $("#jenjangStudi").val();
+                mahasiswa.ProdiAsal = $("#programStudi").val();
+                mahasiswa.NIMAsal = $("#nimAsal").val();
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("UpdateDataDiri", "DataDiri")",
+                    data: mahasiswa
+                }).then(function (response) {
+                    alert(response.message);
+                });
+            });
+        });
+
+        function getDataMahasiswa() {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetDataMahasiswa", "DataDiri")"
+            }).then(function (response) {
+                $("#id").val(response.ID);
+                $("#namaLengkap").val(response.Nama);
+                setTimeout(function () {
+                    $("#gender").val(response.Gender);
+                }, 1500);
+                $("#tempatLahir").val(response.TempatLahir);
+                $("#tanggalLahir").val(response.TanggalLahir);
+                setTimeout(function () {
+                    if (response.WargaNegara != null) {
+                        $("#kewarganegaraan").val(response.WargaNegara);
+                    }
+                }, 1500);
+                $("#noKtp").val(response.NoKTP);
+                $("#email").val(response.Email);
+                $("#noHP").val(response.NoHp);
+                $("#noTelp").val(response.Telepon);
+                $("#alamat").val(response.Alamat);
+                $("#namaDarurat").val(response.NamaDarurat);
+                setTimeout(function () {
+                    if (response.HubunganDarurat != null) {
+                        $("#hubungan").val(response.HubunganDarurat);
+                    }
+                }, 1500);
+                $("#noHPDarurat").val(response.NoHPDarurat);
+                $("#noTelpDarurat").val(response.TeleponDarurat);
+                $("#alamatDarurat").val(response.AlamatDarurat);
+                if (response.NoKerjasama == null) {
+                    $("#univAsal").html('<input type="text" name="universitasAsal" id="universitasAsal" class="form-control input-md" required disabled />');
+                    $("#universitasAsal").val(response.NamaUniversitas);
+                } else if (response.NamaUniversitas != null) {
+                    setTimeout(function () {
+                        $("#universitasAsal").val(response.NamaUniversitas);
+                    }, 1500);
+                }
+                $("#jenjangStudi").val(response.JenjangStudi);
+                $("#programStudi").val(response.ProdiAsal);
+                $("#nimAsal").val(response.NIMAsal);
+            });
+        }
+        function loadNamaUniversitas() {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetNamaInstansi", "Home")?Skip=" + 0 + "&Length=" + 10000 + "&Search="
+            }).then(function (response) {
+                $("#universitasAsal").append("<option>-- Pilih Universitas --</option>");
+                for (var i = 0; i < response.length; i++) {
+                    $("#universitasAsal").append("<option value='" + response[i].NoKerjasama + "' data-biaya='" + response[i].Biaya + "' data-nama='" + response[i].NamaInstansi + "' >" + response[i].NamaInstansi + "</option>");
+                }
+            });
+        }
+        function loadFromLookup(tipe, id) {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("getLookupByTipe", "Home")?Tipe=" + tipe
+            }).then(function (response) {
+                for (var i = 0; i < response.length; i++) {
+                    $("#" + id).append("<option value='" + response[i].Nilai + "'>" + response[i].Nama + "</option>");
+                }
+            });
+        }
+    </script>*@
+}
+
