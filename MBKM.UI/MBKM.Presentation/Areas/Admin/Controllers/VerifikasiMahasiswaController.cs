@@ -52,7 +52,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult IndexDetailMahasiswa(int id)
         {
             var ApproverRole = _lookupService.getLookupByTipe("ApproverRole");
+            var StatusKerjasama = _lookupService.getLookupByTipe("StatusKerjasama");
             ViewData["Approver"] = ApproverRole;
+            ViewData["StatusKerjasama"] = StatusKerjasama;
             var data = _mahasiswaService.Get(id);
             return View(data);
         }
@@ -81,10 +83,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetAllNoKerjasama(string search, string instansi)
+        public JsonResult GetAllNoKerjasama(int length, int skip, string search, string instansi)
         {
            
-            var final = _perjanjianKerjasama.getNoKerjasama(0,5, search, instansi);
+            var final = _perjanjianKerjasama.getNoKerjasama(skip,length, search, instansi);
             List<object> data = new List<object>();
             foreach (var p in final)
             {

@@ -72,6 +72,7 @@ function IndexViewEmailTemplate(id) {
 }
 
 function PostCreate() {
+    dTemplateEmail = {}
     getValueOnForm();
     if (validationCustom()) {
         var base_url = window.location.origin;
@@ -121,6 +122,7 @@ function PostCreate() {
 }
 
 function PostUpdate() {
+    dTemplateEmail = {}
     getValueOnForm();
     dTemplateEmail.ID = $('#id_emailTemplate').val();
     console.log(dTemplateEmail);

@@ -74,7 +74,8 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             using (var context = new MBKMContext())
             {
                 var result = context.PerjanjianKerjasamas.Where(x => x.NoPerjanjian.Contains(Search) && x.NamaInstansi == NamaInstansi)
-                    .Take(Length).Select(x => new VMLookupNoKerjasama
+                    .OrderBy(x => x.ID)
+                    .Skip(Skip).Take(Length).Select(x => new VMLookupNoKerjasama
                     {
                         ID = x.ID,
                         NoKerjasama = x.NoPerjanjian,
