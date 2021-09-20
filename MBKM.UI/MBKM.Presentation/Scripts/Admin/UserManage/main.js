@@ -49,10 +49,19 @@
         },
         {
             //"title": "Jabatan",
+            "data": "RoleName",
+            "render": function (data, type, row, meta) {
+                return '<div class="center">' + data + '</div>';
+            }
+        },
+        {
+            //"title": "Jabatan",
             "data": "RoleID",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + data + '</div>';
             }
+            
+            
         },
         {
             //"title": "Program Studi/Unit",
@@ -70,11 +79,14 @@
                             <div class="col" style="text-align:center">
                                 <a href="javascript:void(0)" style="color:black" onclick="EditUserTemplate('${data}')"> <i class="fas fa-edit coral" ></i></a>
                                 <a href="javascript:void(0)" style="color:black" onclick="DetailUserTemplate('${data}')"> <i class="fas fa-file-search coral"></i></a>
-                                <a href="javascript:void(0)" style="color:black" onclick="DeletedTemplateEmail('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
+                                <a type="button"  id="btnDel"> <i class="fas fa-trash-alt coral"></i> </button >
+                                
+                                
                             </div>
-                        </div>`;
+                        </div>`;//<a href="javascript:void(0)" style="color:black" onclick="DeleteUserGetID('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
             }
-        }
+        },
+
     ],
     "createdRow": function (row, data, index) {
         $('td', row).css({
@@ -82,7 +94,12 @@
             'border-collapse': 'collapse',
             'vertical-align': 'center',
         });
-    }
+    
+    },
+    'columnDefs': [
+        //hide the second & fourth column
+        { 'visible': false, 'targets': [5] }
+    ]
 });
 function validationCustom2() {
     var isValid;
@@ -96,3 +113,55 @@ function validationCustom2() {
     });
     return isValid;
 }
+$("#TableList").on('click', '#btnDel', function () {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var data = $("#TableList").DataTable().row($(this).parents('tr')).data();
+            console.log(data); 
+            
+            var base_url = window.location.origin;
+            $.ajax({
+                url: base_url + '/Admin/UserManage/PostDeleteUser',
+                type: 'post',
+                datatype: 'json',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                success: function (e) {
+                    Swal.fire({
+                        title: 'Berhasil',
+                        icon: 'success',
+                        html: 'Data User Berhasil Dihapus',
+                        showCloseButton: true,
+                        showCancelButton: false,
+                        focusConfirm: false,
+                        confirmButtonText: 'OK'
+                    })
+                    tableUser.ajax.reload(null, false);
+                   
+                },
+                error: function (e) {
+                    Swal.fire({
+                        title: 'Oppss',
+                        icon: 'error',
+                        html: 'Coba Reload Page',
+                        showCloseButton: true,
+                        showCancelButton: false,
+                        focusConfirm: false,
+                        confirmButtonText: 'OK'
+                    })
+                  
+                }
+            })
+           
+                }
+            })
+        })
+

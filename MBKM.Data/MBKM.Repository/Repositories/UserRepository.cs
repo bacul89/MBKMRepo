@@ -44,7 +44,8 @@ namespace MBKM.Repository.Repositories
                         //KodeProdi = Convert.ToDouble(z.KodeProdi),
                         KodeProdi = z.KodeProdi,
                         NamaProdi = z.NamaProdi,
-                        RoleID = z.Roles.RoleName,
+                        RoleID = z.RoleID,
+                        RoleName = z.Roles.RoleName,
                         NoPegawai = z.NoPegawai,
                         Status = z.IsActive
                     }).OrderBy(SortBy, SortDir).Skip(Skip).Take(Length).ToList();

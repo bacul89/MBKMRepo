@@ -122,7 +122,7 @@ function PostUpdateUser() {
     var formInputUser = new Object();
     var namaProdi = document.getElementById("idProdi");
     var selectedProdi = namaProdi.options[namaProdi.selectedIndex].text;
-    var namaProdi = selectedProdi.substring(selectedProdi.indexOf('-') + 1);
+    var namaProdis = selectedProdi.substring(selectedProdi.indexOf('-') + 1);
     formInputUser.NoPegawai = $('input[id=txtnomorindukpegawai]').val();
     formInputUser.UserName = $('input[id=txtnama]').val();
     formInputUser.Email = $('input[id=txtemail]').val();
@@ -130,7 +130,7 @@ function PostUpdateUser() {
     formInputUser.RoleID = $('#idRole').val();
     formInputUser.KodeProdi = $('#idProdi').val();
     //formInputUser.NamaProdi = $('#idProdi').val();
-    formInputUser.NamaProdi = namaProdi;
+    formInputUser.NamaProdi = namaProdis;
     var cekAktif = $('input[id=inp_status]:checked').val();
     if (cekAktif == 1) {
         formInputUser.IsActive = "true";
@@ -171,7 +171,4 @@ function PostUpdateUser() {
             $('.modal').modal('hide');
         }
     })
-
-
-
 }
