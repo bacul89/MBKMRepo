@@ -20,6 +20,7 @@ namespace MBKM.Entities.ViewModel
         public string Email { get; set; }
         public string Password { get; set; }
         public string RoleID { get; set; }
+        public string RoleName { get; set; }
         public string KodeProdi { get; set; }
         public string NamaProdi { get; set; }
         public bool Status { get; set; }
