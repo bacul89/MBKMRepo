@@ -71,7 +71,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
             var data = _perjanjianKerjasamaService.Get(id);
             return View(data);
         }
-        public void SavePerjanjian(MBKM.Entities.Models.MBKM.PerjanjianKerjasama perjanjianKerjasama)
+        public void SavePerjanjian(HttpPostedFileBase[] file, MBKM.Entities.Models.MBKM.PerjanjianKerjasama perjanjianKerjasama)
         {
             perjanjianKerjasama.NoPerjanjian = perjanjianKerjasama.NoPerjanjian;
             perjanjianKerjasama.TanggalMulai = perjanjianKerjasama.TanggalMulai;
@@ -89,7 +89,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
             perjanjianKerjasama.BiayaKuliah = perjanjianKerjasama.BiayaKuliah;
             perjanjianKerjasama.Instansi = perjanjianKerjasama.Instansi;
             //perjanjianKerjasama.UniversitasID = 0;
-            _perjanjianKerjasamaService.Save(perjanjianKerjasama);
+            //_perjanjianKerjasamaService.Save(perjanjianKerjasama);
         }
 
         /*Modal Update*/

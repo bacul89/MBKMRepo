@@ -31,22 +31,42 @@ function IndexCreateKerjasama() {
     }
 }
 function SubmitPerjanjian() {
-    perjanjian = new Object;
-    perjanjian.NoPerjanjian = $("#NoPerjanjian").val();
-    perjanjian.TanggalAkhir = $("#TanggalAkhir").val();
-    perjanjian.TanggalMulai = $("#TanggalMulai").val();
-    perjanjian.CreatedBy = $("#inputer").val();
-    perjanjian.UpdatedBy = $("#inputer").val();
-    perjanjian.NamaInstansi = $("#NamaUniversitas").val();
-    perjanjian.NamaUnit = $("#Namaunit").val();
-    perjanjian.JenisPertukaran = $(".pertukaran").val();
-    perjanjian.JenisKerjasama = $(".kerjasama").val();
-    perjanjian.BiayaKuliah = $("#biaya").val();
-    perjanjian.Instansi = $("#instansi").val();
+    //perjanjian = new Object;
+    //perjanjian.NoPerjanjian = $("#NoPerjanjian").val();
+    //perjanjian.TanggalAkhir = $("#TanggalAkhir").val();
+    //perjanjian.TanggalMulai = $("#TanggalMulai").val();
+    //perjanjian.CreatedBy = $("#inputer").val();
+    //perjanjian.UpdatedBy = $("#inputer").val();
+    //perjanjian.NamaInstansi = $("#NamaUniversitas").val();
+    //perjanjian.NamaUnit = $("#Namaunit").val();
+    //perjanjian.JenisPertukaran = $(".pertukaran").val();
+    //perjanjian.JenisKerjasama = $(".kerjasama").val();
+    //perjanjian.BiayaKuliah = $("#biaya").val();
+    //perjanjian.Instansi = $("#instansi").val();
+    debugger;
+    var data = new FormData();
+    //var files1 = $("#file").get(0).files;
+    var fileInput = document.getElementById('file');
+    //Iterating through each files selected in fileInput  
+    for (i = 0; i < fileInput.files.length; i++) {
+
+        var sfilename = fileInput.files[i].name;
+        data.append("file", fileInput.files[i]);
+
+    }  
+
+    //if (files1.length > 0) {
+    //    data.append("file", files1[0]);
+
+    //}
+    console.log(data);
     $.ajax({
         type: "POST",
         url: "/Admin/PerjanjianKerjasama/SavePerjanjian",
-        data: perjanjian,
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: data,
         success: function (response) {
             console.log("coba insert")
         }
