@@ -14,6 +14,7 @@
     },
     "columns": [
         {
+            "title": "No",
             "data": null,
             "render": function (data, type, full, meta) {
                 return meta.row + 1;
@@ -27,31 +28,34 @@
             }
         },
         {
-            "title": "Nama Pegawai",
+            "title": "Nama",
             "data": "Nama",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + data + '</div>';
             }
         },
         {
-            "title": "Alamat Email",
-            "data": "Email",
+            "title": "Password",
+            "data": "Password",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + data + '</div>';
             }
         },
         {
-            "title": "Status",
-            "data": "IsActive",
+            "title": "Jabatan",
+            "data": "RoleID",
             "render": function (data, type, row, meta) {
-                if (data) {
-                    return '<div class="center">Aktif</div>';
-                } else {
-                    return '<div class="center">Tidak Aktif</div>';
-                }
-
+                return '<div class="center">' + data + '</div>';
             }
         },
+        {
+            "title": "Program Studi/Unit",
+            "data": "NamaProdi",
+            "render": function (data, type, row, meta) {
+                return '<div class="center">' + data + '</div>';
+            }
+        },
+      
         {
             "title": "Action",
             "data": "ID",

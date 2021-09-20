@@ -66,7 +66,6 @@
                             <td style="width: 20%;">Jenis Kelamin</td>
                             <td>
                                 <select name="Gender" id="gender" class="form-control input-md">
-                                    <option>-- Pilih Jenis Kelamin --</option>
                                 </select>
                             </td>
                         </tr>
@@ -88,7 +87,6 @@
                             <td style="width: 20%;">Kewarganegaraan</td>
                             <td>
                                 <select name="kewarganegaraan" id="kewarganegaraan" class="form-control input-md">
-                                    <option>-- Pilih Kewarganegaraan --</option>
                                 </select>
                             </td>
                         </tr>
@@ -163,7 +161,6 @@
                             <td style="width: 20%;">Hubungan</td>
                             <td>
                                 <select name="hubungan" id="hubungan" class="form-control input-md">
-                                    <option>-- Pilih Hubungan --</option>
                                 </select>
                             </td>
                         </tr>
@@ -258,12 +255,12 @@
             $("#upload").hide();
             $("#simpan").hide();
             $("input").attr("disabled", true);
-            $("select").attr("disabled", true);
+            //$("select").attr("disabled", true);
             $("textarea").attr("disabled", true);
             loadNamaUniversitas();
-            loadFromLookup("WargaNegara", "kewarganegaraan");
-            loadFromLookup("KontakDarurat", "hubungan");
-            loadFromLookup("Gender", "gender");
+            loadFromLookup("WargaNegara", "kewarganegaraan", "Kewarganegaraan");
+            loadFromLookup("KontakDarurat", "hubungan", "Hubungan");
+            loadFromLookup("Gender", "gender", "Jenis Kelamin");
             getDataMahasiswa();
         });
         $("#edit").click(function () {
@@ -303,9 +300,9 @@
                 mahasiswa.AlamatDarurat = $("#alamatDarurat").val();
 
                 if (mahasiswa.NoKerjasama != null) {
-                    mahasiswa.BiayaKuliah = $("#universitasAsal").find(':selected').data('biaya');
-                    mahasiswa.NoKerjasama = $("#universitasAsal").val();
-                    mahasiswa.NamaUniversitas = $("#universitasAsal").find(':selected').data('nama');
+                    mahasiswa.BiayaKuliah = $('#universitasAsal').select2('data')[0].biaya;
+                    mahasiswa.NamaUniversitas = $('#universitasAsal').select2('data')[0].nama;
+                    mahasiswa.NoKerjasama = $('#universitasAsal').select2('data')[0].value;
                 } else {
                     mahasiswa.NamaUniversitas = $("#universitasAsal").val();
                 }
@@ -331,7 +328,11 @@
                 $("#id").val(response.ID);
                 $("#namaLengkap").val(response.Nama);
                 setTimeout(function () {
-                    $("#gender").val(response.Gender);
+                    console.log(response.Gender);
+                    //$("select[name=gender]").val(response.Gender);  
+                    $('#select2-gender-container').textContent = "Peremepuan";
+                    gender = $("#select2-gender-container");
+                    gender.textContent = "Peremepuan";
                 }, 1500);
                 $("#tempatLahir").val(response.TempatLahir);
                 $("#tanggalLahir").val(response.TanggalLahir);
@@ -368,23 +369,54 @@
             });
         }
         function loadNamaUniversitas() {
-            $.ajax({
-                type: "GET",
-                url: "@Url.Action("GetNamaInstansi", "Home")?Skip=" + 0 + "&Length=" + 10000 + "&Search="
-            }).then(function (response) {
-                $("#universitasAsal").append("<option>-- Pilih Universitas --</option>");
-                for (var i = 0; i < response.length; i++) {
-                    $("#universitasAsal").append("<option value='" + response[i].NoKerjasama + "' data-biaya='" + response[i].Biaya + "' data-nama='" + response[i].NamaInstansi + "' >" + response[i].NamaInstansi + "</option>");
+            $("#universitasAsal").select2({
+                placeholder: "-- Pilih Universitas --",
+                width: "100%",
+                ajax: {
+                    url: "@Url.Action("GetNamaInstansi", "Home")",
+                    dataType: 'json',
+                    method: "POST",
+                    delay: 250,
+                    cache: false,
+                    data: function (params) {
+                        return {
+                            Length: "10",
+                            Search: params.term || "",
+                            Skip: params.page - 1 || 0,
+                        };
+                    },
+                    processResults: function (data, params) {
+                        var page = params.page || 1;
+                        return {
+                            results: $.map(data, function (item) { return { id: item.NoKerjasama, value: item.NoKerjasama, biaya: item.Biaya, nama: item.NamaInstansi, text: item.NamaInstansi } }),
+                            pagination: {
+                                more: (page * 10) <= data.length
+                            }
+                        };
+                    },
                 }
             });
         }
-        function loadFromLookup(tipe, id) {
-            $.ajax({
-                type: "GET",
-                url: "@Url.Action("getLookupByTipe", "Home")?Tipe=" + tipe
-            }).then(function (response) {
-                for (var i = 0; i < response.length; i++) {
-                    $("#" + id).append("<option value='" + response[i].Nilai + "'>" + response[i].Nama + "</option>");
+        function loadFromLookup(tipe, id, nama) {
+            $("#" + id).select2({
+                placeholder: "-- Pilih " + nama + " --",
+                width: "100%",
+                ajax: {
+                    url: "@Url.Action("getLookupByTipe", "Home")",
+                    dataType: 'json',
+                    method: "POST",
+                    delay: 250,
+                    cache: false,
+                    data: function (params) {
+                        return {
+                            Tipe: tipe
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: $.map(data, function (item) { return { id: item.Nilai, value: item.Nilai, text: item.Nama } })
+                        };
+                    },
                 }
             });
         }

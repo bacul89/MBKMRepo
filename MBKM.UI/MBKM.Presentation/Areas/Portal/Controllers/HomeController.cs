@@ -88,60 +88,59 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
-        public ActionResult Login(string username, string password)
+        public ActionResult LoginInternal(string username, string password)
         {
-            if (!username.Contains("@"))
+            var a = _mahasiswaService.getLoginInternal(username, password);
+            if (a == null)
             {
-                var a = _mahasiswaService.getLoginInternal(username, password);
-                if (a == null)
-                {
-                    TempData["alertMessage"] = "Username atau password anda salah!";
-                    return RedirectToAction("Index", "Home");
+                TempData["alertMessage"] = "Username atau password anda salah!";
+                return RedirectToAction("Index", "Home");
 
-                } else
-                {
-                    Mahasiswa mahasiswa = new Mahasiswa();
-                    if (GetMahasiswaByNim(a.NIM) == null)
-                    {
-                        mahasiswa.Nama = a.Nama;
-                        mahasiswa.Email = a.Email;
-                        mahasiswa.NoHp = a.Phone;
-                        mahasiswa.Telepon = a.Phone;
-                        mahasiswa.Alamat = a.Alamat;
-                        mahasiswa.Agama = a.Agama;
-                        mahasiswa.Password = a.PasswordData;
-                        mahasiswa.CreatedDate = DateTime.Now;
-                        mahasiswa.UpdatedDate = DateTime.Now;
-                        mahasiswa.IsActive = true;
-                        mahasiswa.IsDeleted = false;
-                        mahasiswa.TanggalLahir = a.TanggalLahir;
-                        mahasiswa.TempatLahir = "Jakarta";
-                        mahasiswa.Gender = a.Gender;
-                        mahasiswa.ProdiAsal = a.Prodi;
-                        mahasiswa.NIM = a.NIM;
-                        mahasiswa.StatusVerifikasi = "AKTIF";
-
-                        _mahasiswaService.Save(mahasiswa);
-                    }
-                    PopulateSession(true, mahasiswa.Email, mahasiswa.Nama);
-                    return RedirectToAction("Index", "DataDiri");
-                }
-            } else
+            }
+            else
             {
-                Mahasiswa res = _mahasiswaService.Find(m => m.Email == username && m.Password == password).FirstOrDefault();
-                if (res == null)
+                Mahasiswa mahasiswa = new Mahasiswa();
+                if (GetMahasiswaByNim(a.NIM) == null)
                 {
-                    TempData["alertMessage"] = "Username atau password anda salah!";
-                    return RedirectToAction("Index", "Home");
+                    mahasiswa.Nama = a.Nama;
+                    mahasiswa.Email = a.Email;
+                    mahasiswa.NoHp = a.Phone;
+                    mahasiswa.Telepon = a.Phone;
+                    mahasiswa.Alamat = a.Alamat;
+                    mahasiswa.Agama = a.Agama;
+                    mahasiswa.Password = a.PasswordData;
+                    mahasiswa.CreatedDate = DateTime.Now;
+                    mahasiswa.UpdatedDate = DateTime.Now;
+                    mahasiswa.IsActive = true;
+                    mahasiswa.IsDeleted = false;
+                    mahasiswa.TanggalLahir = a.TanggalLahir;
+                    mahasiswa.TempatLahir = "Jakarta";
+                    mahasiswa.Gender = a.Gender;
+                    mahasiswa.ProdiAsal = a.Prodi;
+                    mahasiswa.NIM = a.NIM;
+                    mahasiswa.StatusVerifikasi = "AKTIF";
+
+                    _mahasiswaService.Save(mahasiswa);
                 }
-                else if (!res.IsActive)
-                {
-                    TempData["alertMessage"] = "Silahkan aktivasi akun anda terlebih dahulu!";
-                    return RedirectToAction("Index", "Home");
-                }
-                PopulateSession(true, res.Email, res.Nama);
+                PopulateSession(true, mahasiswa.Email, mahasiswa.Nama);
                 return RedirectToAction("Index", "DataDiri");
             }
+        }
+        public ActionResult LoginExternal(string username, string password)
+        {
+            Mahasiswa res = _mahasiswaService.Find(m => m.Email == username && m.Password == password).FirstOrDefault();
+            if (res == null)
+            {
+                TempData["alertMessage"] = "Username atau password anda salah!";
+                return RedirectToAction("Index", "Home");
+            }
+            else if (!res.IsActive)
+            {
+                TempData["alertMessage"] = "Silahkan aktivasi akun anda terlebih dahulu!";
+                return RedirectToAction("Index", "Home");
+            }
+            PopulateSession(true, res.Email, res.Nama);
+            return RedirectToAction("Index", "DataDiri");
         }
         public ActionResult Logout()
         {

@@ -68,18 +68,11 @@
                         <div class="form-group">
                             <label>Jenis Kelamin</label>
                             <select name="Gender" id="gender" class="form-control input-lg">
-                                <option value="L">Laki - Laki</option>
-                                <option value="P">Perempuan</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Agama</label>
                             <select name="agama" id="agama" class="form-control input-lg" required>
-                                <option value="Islam">Islam</option>
-                                <option value="Kristen">Kristen</option>
-                                <option value="Katholik">Katholik</option>
-                                <option value="Buddha">Buddha</option>
-                                <option value="Hindu">Hindu</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -155,7 +148,14 @@
                         Untuk kamu yang sudah registrasi atau Mahasiswa Internal Universitas Katolik Atma Jaya dan ingin mengikuti program studi kampus merdeka, jadwal perkuliahan, dan lainnya, silahkan melakukan Login terlebih dahulu
                     </div>
 
-                    <form action="@Url.Action("login","home")" method="post">
+
+                    <div class="form-group">
+                        <select id="jenisMhs" class="form-control input-lg" required>
+                            <option value="y">UAJ</option>
+                            <option value="t">Non-UAJ</option>
+                        </select>
+                    </div>
+                    <form action="@Url.Action("LoginInternal", "Home")" id="loginForm" method="post">
                         <div class="form-group">
                             <input type="text" name="username" id="username" placeholder="Username" class="form-control input-lg" />
                         </div>
@@ -169,10 +169,9 @@
                             </a>
                         </div>
                         <br />
-                        <div class="form-group">
-                            <input type="submit" value="Login" class="btn" style="background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
-                        </div>
+                        <input type="submit" value="Login" class="btn" style="background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
                     </form>
+
                     <hr />
                     <div style="font-size: 20px; padding: 30px 0px;">
                         Untuk kamu yang belum melakukan registrasi dan ingin mengikuti program kampus merdeka, silahkan melakukan
@@ -193,8 +192,24 @@
                 alert(alertMessage);
             }
             loadNamaUniversitas();
+            loadNoKerjasama();
             namaUnivOnChange();
-            loadFromLookup("TahunSemester", "tahunSemester");
+            $("#kerjasama").select2({
+                width: "100%"
+            });
+            $("#jenisMhs").select2({
+                width: "100%"
+            });
+            $("#jenisMhs").change(function () {
+                if ($("#jenisMhs").val() == "y") {
+                    $("#loginForm").attr("action", "@Url.Action("LoginInternal", "Home")");
+                } else {
+                    $("#loginForm").attr("action", "@Url.Action("LoginExternal", "Home")");
+                }
+            });
+            loadFromLookup("TahunSemester", "tahunSemester", "Tahun Semester");
+            loadFromLookup("Agama", "agama", "Agama");
+            loadFromLookup("Gender", "gender", "Gender");
         });
 
         $("#kerjasama").change(function () {
@@ -208,12 +223,12 @@
         });
 
         function namaUnivOnChange() {
-            $("#namaUniversitas").change(function () {
-                if ($("#kerjasama").val() == "y") {
+            if ($("#kerjasama").val() == "y") {
+                $("#namaUniversitas").change(function () {
                     $("#noKS").html("<div class='form-group'><label>No. Kerjasama</label><select name='noKerjasama' id='noKerjasama' class='form-control input-lg' required></select></div>");
                     loadNoKerjasama();
-                }
-            });
+                });
+            }
         }
         function submitRegistrasi() {
             mahasiswa = new Object;
@@ -221,10 +236,11 @@
             mahasiswa.TempatLahir = $("#tempatLahir").val();
             mahasiswa.TanggalLahir = $("#tanggalLahir").val();
             mahasiswa.Gender = $("#gender").val();
+            mahasiswa.Agama = $("#agama").val();
             if ($("#kerjasama").val() == "y") {
-                mahasiswa.BiayaKuliah = $("#namaUniversitas").find(':selected').data('biaya');
-                mahasiswa.NoKerjasama = $("#namaUniversitas").val();
-                mahasiswa.NamaUniversitas = $("#namaUniversitas").find(':selected').data('nama');
+                mahasiswa.BiayaKuliah = $('#namaUniversitas').select2('data')[0].biaya;
+                mahasiswa.NamaUniversitas = $('#namaUniversitas').select2('data')[0].nama;
+                mahasiswa.NoKerjasama = $('#noKerjasama').select2('data')[0].value;
             } else {
                 mahasiswa.NamaUniversitas = $("#namaUniversitas").val();
             }
@@ -243,34 +259,85 @@
             });
         }
         function loadNamaUniversitas() {
-            $.ajax({
-                type: "GET",
-                url: "@Url.Action("GetNamaInstansi", "Home")?Skip=" + 0 + "&Length=" + 10000 + "&Search="
-            }).then(function (response) {
-                $("#namaUniversitas").append("<option>-- Pilih Universitas --</option>");
-                for (var i = 0; i < response.length; i++) {
-                    $("#namaUniversitas").append("<option value='" + response[i].NoKerjasama + "' data-biaya='" + response[i].Biaya + "' data-nama='" + response[i].NamaInstansi + "' >" + response[i].NamaInstansi + "</option>");
+            $("#namaUniversitas").select2({
+                placeholder: "-- Pilih Universitas --",
+                width: "100%",
+                ajax: {
+                    url: "@Url.Action("GetNamaInstansi", "Home")",
+                    dataType: 'json',
+                    method: "POST",
+                    delay: 250,
+                    cache: false,
+                    data: function (params) {
+                        return {
+                            Length: "10",
+                            Search: params.term || "",
+                            Skip: params.page - 1 || 0,
+                        };
+                    },
+                    processResults: function (data, params) {
+                        var page = params.page || 1;
+                        return {
+                            results: $.map(data, function (item) { return { id: item.NoKerjasama, value: item.NoKerjasama, biaya: item.Biaya, nama: item.NamaInstansi, text: item.NamaInstansi } }),
+                            pagination: {
+                                more: (page * 10) <= data.length
+                            }
+                        };
+                    },
                 }
             });
         }
         function loadNoKerjasama() {
-            $.ajax({
-                type: "GET",
-                url: "@Url.Action("GetNoKerjasama", "Home")?Skip=" + 0 + "&Length=" + 10000 + "&Search=" + "&NamaInstansi=" + $("#namaUniversitas").find(':selected').data('nama')
-            }).then(function (response) {
-                $("#noKerjasama").append("<option>-- Pilih Nomor Kerjasama --</option>");
-                for (var i = 0; i < response.length; i++) {
-                    $("#noKerjasama").append("<option value='" + response[i].NoKerjasama + "'>" + response[i].NoKerjasama + "</option>");
+            $("#noKerjasama").select2({
+                placeholder: "-- Pilih Nomor Kerjasama --",
+                width: "100%",
+                ajax: {
+                    url: "@Url.Action("GetNoKerjasama", "Home")",
+                    dataType: 'json',
+                    method: "POST",
+                    delay: 250,
+                    cache: false,
+                    data: function (params) {
+                        return {
+                            Length: "10",
+                            Search: params.term || "",
+                            Skip: params.page - 1 || 0,
+                            NamaInstansi: $('#namaUniversitas').select2('data')[0].nama
+                        };
+                    },
+                    processResults: function (data, params) {
+                        var page = params.page || 1;
+                        return {
+                            results: $.map(data, function (item) { return { id: item.NoKerjasama, value: item.NoKerjasama, text: item.NoKerjasama } }),
+                            pagination: {
+                                more: (page * 10) <= data.length
+                            }
+                        };
+                    },
                 }
             });
         }
-        function loadFromLookup(tipe, id) {
-            $.ajax({
-                type: "GET",
-                url: "@Url.Action("getLookupByTipe", "Home")?Tipe=" + tipe
-            }).then(function (response) {
-                for (var i = 0; i < response.length; i++) {
-                    $("#" + id).append("<option value='" + response[i].Nilai + "'>" + response[i].Nama + "</option>");
+        function loadFromLookup(tipe, id, nama) {
+
+            $("#" + id).select2({
+                placeholder: "-- Pilih " + nama + " --",
+                width: "100%",
+                ajax: {
+                    url: "@Url.Action("getLookupByTipe", "Home")",
+                    dataType: 'json',
+                    method: "POST",
+                    delay: 250,
+                    cache: false,
+                    data: function (params) {
+                        return {
+                            Tipe: tipe
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: $.map(data, function (item) { return { id: item.Nilai, value: item.Nilai, text: item.Nama } })
+                        };
+                    },
                 }
             });
         }
