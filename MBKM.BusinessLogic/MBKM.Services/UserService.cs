@@ -49,7 +49,8 @@ namespace MBKM.Services
                 sortBy = model.columns[model.order[0].column].data;
                 sortDir = model.order[0].dir.ToLower() == "asc";
             }
-
+            if (sortBy == null)
+                sortBy = "ID";
             return _userRepository.getListUserGrid(skip, take, searchBy, sortBy, sortDir);
         }
     }

@@ -35,35 +35,70 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             IEnumerable<VMLookup> listJabatan = _roleService.getLookupRole();
             ViewBag.listJabatan = new SelectList(listJabatan, "Nilai", "Nama");
 
-            //List<VMListProdi> listProdi = _lookupService.getListProdi();
-            //ViewBag.listProdi = new SelectList(listProdi);
+            IEnumerable<VMListProdi> listProdi = _lookupService.getListProdi();
+            ViewBag.listProdi = new SelectList(listProdi, "IDProdi", "NamaProdi");
+
+            IEnumerable<VMListProdi> listNProdi = _lookupService.getListProdi();
+            ViewBag.listNProdi = new SelectList(listNProdi, "NamaProdi", "IDProdi");
+
 
             Debug.WriteLine("akses index");
             return View("_AddUser");
         }
         public ActionResult ModalEditUser(int id)
         {
+            IEnumerable<VMLookup> listJabatan = _roleService.getLookupRole();
+            ViewBag.listJabatan = new SelectList(listJabatan, "Nilai", "Nama");
+            IEnumerable<VMListProdi> listProdi = _lookupService.getListProdi();
+            ViewBag.listProdi = new SelectList(listProdi, "IDProdi", "NamaProdi");
+
             var model = _userService.Get(id);
             return View("_EditUser", model);
         }
         public ActionResult ModalDetailUser(int id)
         {
+            IEnumerable<VMListProdi> listProdi = _lookupService.getListProdi();
+            ViewBag.listProdi = new SelectList(listProdi, "IDProdi", "NamaProdi");
             var model = _userService.Get(id);
+
             return View("_DetailUser", model);
         }
 
         [HttpPost]
         public ActionResult PostDataUser(User model)
         {
-            //model.NoPegawai = model.NoPegawai;
-            //model.UserName = model.UserName;
-            //model.Email = model.Email;
-            //model.Password = model.Password;
-            //model.RoleID = model.RoleID
-            //model.NamaProdi = model.NamaProdi;
+          
+            model.NoTelp = "123";
+            //model.Password = HashPasswordService.HashPassword(model.Password);
+            model.CreatedDate = DateTime.Now;
+            model.UpdatedDate = DateTime.Now;
+            model.IsDeleted = false;
+            model.IsActive = model.IsActive;
 
             _userService.Save(model);
             return Json(model);
+        }
+
+        //edit user
+        [HttpPost]
+        public ActionResult PostUpdateDataUser(User model)
+        {
+            User data = _userService.Get(model.ID);
+            data.NoPegawai = model.NoPegawai;
+            data.UserName = model.UserName;
+            data.Email = model.Email;
+            data.NoTelp = data.NoTelp;
+            data.Password = model.Password;
+            data.RoleID = model.RoleID;
+            //data.Password = HashPasswordService.HashPassword(model.Password);
+            data.CreatedDate = data.CreatedDate;
+            data.UpdatedDate = DateTime.Now;
+            data.IsActive = model.IsActive;
+            data.KodeProdi = model.KodeProdi;
+            data.NamaProdi = model.NamaProdi;
+            _userService.Save(data);
+
+            return Json(data);
         }
 
         [HttpPost]

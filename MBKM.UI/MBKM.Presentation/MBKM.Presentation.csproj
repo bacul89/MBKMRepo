@@ -137,6 +137,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminLoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MasterLookupController.cs" />
     <Compile Include="Areas\Admin\Controllers\PerjanjianKerjasama\PerjanjianKerjasamaController.cs" />
     <Compile Include="Areas\Admin\Controllers\TemplateEmail\TemplateEmailController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserManageController.cs" />
@@ -324,6 +325,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\Admin\MasterLookup\crud.js" />
+    <Content Include="Scripts\Admin\MasterLookup\main.js" />
+    <Content Include="Scripts\Admin\PerjanjianKerjasama\crud.js" />
+    <Content Include="Scripts\Admin\PerjanjianKerjasama\main.js" />
     <Content Include="Scripts\Admin\TemplateEmail\crud.js" />
     <Content Include="Scripts\Admin\TemplateEmail\main.js" />
     <Content Include="Scripts\Admin\UserManage\crud.js" />
@@ -368,7 +373,13 @@
     <Content Include="Content\summernote\summernote-lite.min.js.map" />
     <Content Include="Content\summernote\summernote.js.map" />
     <Content Include="Content\summernote\summernote.min.js.map" />
-    <Content Include="Areas\Admin\Views\Shared\_LayoutLogin.cshtml" />
+    <Content Include="Areas\Admin\Views\PerjanjianKerjasama\ModalCreatePerjanjianKerjasama.cshtml" />
+    <Content Include="Areas\Admin\Views\PerjanjianKerjasama\ModalDetailKerjasama.cshtml" />
+    <Content Include="Areas\Admin\Views\PerjanjianKerjasama\ModalUpdateKerjasama.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterLookup\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterLookup\ModalCreateMasterLookup.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterLookup\ModalUpdateMasterLookup.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterLookup\ModalDetailMasterLookup.cshtml" />
     <Content Include="Content\autonumeric\autoNumeric-2.0-BETA change log.md" />
     <Content Include="Content\autonumeric\autoNumeric.jquery.json" />
     <Content Include="Content\autonumeric\bower.json" />
@@ -385,6 +396,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\sweetalert2.all.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">

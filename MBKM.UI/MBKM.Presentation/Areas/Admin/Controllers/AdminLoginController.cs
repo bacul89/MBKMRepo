@@ -30,32 +30,33 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginVMAdmin model)
         {
-            return RedirectToAction("Index", "Home");
-            //if (ModelState.IsValid)
-            //{
-            //    MBKM.Entities.Models.User modeldata = _userService.Find(x => x.UserName == model.Username).FirstOrDefault();
-            //    if (modeldata != null)
-            //    {
-            //        if (model.Password == modeldata.Password)
-            //        {
-            //            Session["UserID"] = modeldata.ID.ToString();
-            //            Session["UserName"] = modeldata.UserName.ToString();
-            //            Session["NoPegawai"] = modeldata.NoPegawai.ToString();
-            //            Session["Email"] = modeldata.Email.ToString();
-                        
-                        
-            //        }
-            //        else
-            //        {
-            //            ModelState.AddModelError("", "Invalid Password.");
-            //        }
-            //    }
-            //    else
-            //    {
-            //        ModelState.AddModelError("", "Username Not Found");
-            //    }
-            //}
-            //return View(model);
+            //return RedirectToAction("Index", "Home");
+            if (ModelState.IsValid)
+            {
+                MBKM.Entities.Models.User modeldata = _userService.Find(x => x.UserName == model.Username).FirstOrDefault();
+                if (modeldata != null)
+                {
+                    if (HashPasswordService.ValidatePassword(model.Password, modeldata.Password))
+                    {
+
+                        Session["UserID"] = modeldata.ID.ToString();
+                        Session["UserName"] = modeldata.UserName.ToString();
+                        Session["NoPegawai"] = modeldata.NoPegawai.ToString();
+                        Session["Email"] = modeldata.Email.ToString();
+
+
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Invalid Password.");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Username Not Found");
+                }
+            }
+            return View(model);
         }
     }
 }

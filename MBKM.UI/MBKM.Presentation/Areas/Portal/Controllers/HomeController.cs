@@ -1,6 +1,8 @@
 ﻿using MBKM.Common.Helpers;
 using MBKM.Entities.Models.MBKM;
+using MBKM.Entities.ViewModel;
 using MBKM.Presentation.models;
+using MBKM.Services;
 using MBKM.Services.MBKMServices;
 using System;
 using System.Collections.Generic;
@@ -14,17 +16,17 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
     public class HomeController : Controller
     {
         private IMahasiswaService _mahasiswaService;
-        public HomeController(IMahasiswaService mahasiswaService)
+        private IPerjanjianKerjasamaService _perjanjianKerjasamaService;
+        private ILookupService _lookupService;
+        public HomeController(IMahasiswaService mahasiswaService, IPerjanjianKerjasamaService perjanjianKerjasamaService, ILookupService lookupService)
         {
             _mahasiswaService = mahasiswaService;
+            _perjanjianKerjasamaService = perjanjianKerjasamaService;
+            _lookupService = lookupService;
         }
         // GET: Portal/Home
         public ActionResult Index()
         {
-            //var a = _mahasiswaService.getLoginInternal("11998000648", "126019");
-            
-
-            //SendEmail("ridhokurniawan8@gmail.com", "aaaaaaa");
             return View();
         }
         public JsonResult RegisterExternal(Mahasiswa mahasiswa)
@@ -39,11 +41,13 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     {
                         token = generator.Next(0, 1000000).ToString("D6");
                     }
+                    mahasiswa.Token = token;
                     mahasiswa.IsActive = false;
                     mahasiswa.IsDeleted = false;
                     mahasiswa.Telepon = mahasiswa.NoHp;
                     mahasiswa.CreatedDate = DateTime.Now;
                     mahasiswa.UpdatedDate = DateTime.Now;
+                    mahasiswa.StatusVerifikasi = "DAFTAR";
                     _mahasiswaService.Save(mahasiswa);
                     SendEmail(mahasiswa.Email, token);
                     return Json(new ServiceResponse { status = 200, message = "Pendaftaran mahasiswa berhasil, tolong cek email dan konfirmasi akunmu!" });
@@ -58,12 +62,92 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 return Json(new ServiceResponse { status = 500, message = e.Message });
             }
         }
+        public JsonResult GetNamaInstansi(int Skip, int Length, string Search)
+        {
+            return Json(_perjanjianKerjasamaService.getNamaInstansi(Skip, Length, Search), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetNoKerjasama(int Skip, int Length, string Search, string NamaInstansi)
+        {
+            return Json(_perjanjianKerjasamaService.getNoKerjasama(Skip, Length, Search, NamaInstansi), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult getLookupByTipe(string tipe)
+        {
+            return Json(_lookupService.getLookupByTipe(tipe), JsonRequestBehavior.AllowGet);
+        }
         public ActionResult VerifyPage(string token)
         {
-            
+            Mahasiswa mahasiswa = GetMahasiswaByToken(token);
+            if (mahasiswa != null)
+            {
+                mahasiswa.IsActive = true;
+                _mahasiswaService.Save(mahasiswa);
+                TempData["alertMessage"] = "Akun telah berhasil diaktivasi, silahkan login!";
+            } else
+            {
+                TempData["alertMessage"] = "Token invalid!";
+            }
             return RedirectToAction("Index", "Home");
         }
+        public ActionResult Login(string username, string password)
+        {
+            if (!username.Contains("@"))
+            {
+                var a = _mahasiswaService.getLoginInternal(username, password);
+                if (a == null)
+                {
+                    TempData["alertMessage"] = "Username atau password anda salah!";
+                    return RedirectToAction("Index", "Home");
 
+                } else
+                {
+                    Mahasiswa mahasiswa = new Mahasiswa();
+                    if (GetMahasiswaByNim(a.NIM) == null)
+                    {
+                        mahasiswa.Nama = a.Nama;
+                        mahasiswa.Email = a.Email;
+                        mahasiswa.NoHp = a.Phone;
+                        mahasiswa.Telepon = a.Phone;
+                        mahasiswa.Alamat = a.Alamat;
+                        mahasiswa.Agama = a.Agama;
+                        mahasiswa.Password = a.PasswordData;
+                        mahasiswa.CreatedDate = DateTime.Now;
+                        mahasiswa.UpdatedDate = DateTime.Now;
+                        mahasiswa.IsActive = true;
+                        mahasiswa.IsDeleted = false;
+                        mahasiswa.TanggalLahir = a.TanggalLahir;
+                        mahasiswa.TempatLahir = "Jakarta";
+                        mahasiswa.Gender = a.Gender;
+                        mahasiswa.ProdiAsal = a.Prodi;
+                        mahasiswa.NIM = a.NIM;
+                        mahasiswa.StatusVerifikasi = "AKTIF";
+
+                        _mahasiswaService.Save(mahasiswa);
+                    }
+                    PopulateSession(true, mahasiswa.Email, mahasiswa.Nama);
+                    return RedirectToAction("Index", "DataDiri");
+                }
+            } else
+            {
+                Mahasiswa res = _mahasiswaService.Find(m => m.Email == username && m.Password == password).FirstOrDefault();
+                if (res == null)
+                {
+                    TempData["alertMessage"] = "Username atau password anda salah!";
+                    return RedirectToAction("Index", "Home");
+                }
+                else if (!res.IsActive)
+                {
+                    TempData["alertMessage"] = "Silahkan aktivasi akun anda terlebih dahulu!";
+                    return RedirectToAction("Index", "Home");
+                }
+                PopulateSession(true, res.Email, res.Nama);
+                return RedirectToAction("Index", "DataDiri");
+            }
+        }
+        public ActionResult Logout()
+        {
+            PopulateSession(false, null, null);
+            return RedirectToAction("Index", "Home");
+        }
         public Mahasiswa GetMahasiswaByEmail(string email)
         {
             return _mahasiswaService.Find(m => m.Email == email).FirstOrDefault();
@@ -72,21 +156,25 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             return _mahasiswaService.Find(m => m.Token == token).FirstOrDefault();
         }
+        public Mahasiswa GetMahasiswaByNim(string nim)
+        {
+            return _mahasiswaService.Find(m => m.NIM == nim).FirstOrDefault();
+        }
         public void SendEmail(string email, string token)
         {
             string url = this.Url.Action("VerifyPage", "Home", null);
-            //GMailer mailer = new GMailer();
-            //mailer.ToEmail = email;
-            //mailer.Subject = "Verify your email";
-            //mailer.Body = "Thanks for Registering your account.<br> please verify your email by clicking the link <br> <a href='http://localhost:10776" + url + "'>verify</a>";
-            //mailer.IsHtml = true;
-            //mailer.Send();
-            List<string> mailDest = new List<string>();
-            mailDest.Add(email);
-            string Subject = "Verify your email";
-            string MailBody = "Thanks for Registering your account.<br> please verify your email by clicking the link <br> <a href='http://localhost:10776" + url + "'>verify</a>";
-            MailHelper oMailHelper = new MailHelper(ConfigurationManager.AppSettings["SMTPServer"], int.Parse(ConfigurationManager.AppSettings["SMTPPort"]));
-            oMailHelper.SendMail(Subject, MailBody, "sendercvonline@gmail.com", mailDest, null, null, true);
+            GMailer mailer = new GMailer();
+            mailer.ToEmail = email;
+            mailer.Subject = "Verify your email";
+            mailer.Body = "Thanks for Registering your account.<br> please verify your email by clicking the link <br> <a href='http://localhost:10776" + url + "?token=" + token + "'>verify</a>";
+            mailer.IsHtml = true;
+            mailer.Send();
+        }
+        public void PopulateSession(bool isLogin, string email, string nama)
+        {
+            Session["isLogin"] = isLogin;
+            Session["email"] = email;
+            Session["nama"] = nama;
         }
     }
 }

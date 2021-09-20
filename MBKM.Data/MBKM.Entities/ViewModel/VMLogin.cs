@@ -12,7 +12,7 @@ namespace MBKM.Entities.ViewModel
         public string Nama { get; set; }
         public string Email { get; set; }
         public string Alamat { get; set; }
-        public string TanggalLahir { get; set; }
+        public DateTime TanggalLahir { get; set; }
         public string Gender { get; set; }
         public string Prodi { get; set; }
         public string Agama { get; set; }
