@@ -52,6 +52,12 @@ function convertMilisecondToDate(value) {
 
 }
 
+/*
+function loadDatatable() {
+
+}
+*/
+
 var dataTable = $('#table-data-master-lookup').DataTable({
     ajax: {
         url: '/Admin/MasterLookup/GetDataMasterLookup',
@@ -133,10 +139,28 @@ var dataTable = $('#table-data-master-lookup').DataTable({
 
     ],
     "createdRow": function (row, data, index) {
+
         $('td', row).css({
             'border': '1px solid coral',
             'border-collapse': 'collapse',
             'vertical-align': 'center',
         });
+
+
     }
 });
+
+
+/*setTimeout(function () {
+
+    var table = $("#table-data-master-lookup")[0].outerHTML;
+    console.log(table);
+    $("<div id='table-data-master-lookup_overflow' style='overflow-x: scroll; width:100%'></div>").insertBefore("#table-data-master-lookup");
+    $('#table-data-master-lookup').remove();
+
+    setTimeout(function () {
+        $("#table-data-master-lookup_overflow").append(table);
+    }, 2000);
+
+}, 3000);
+*/

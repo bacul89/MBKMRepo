@@ -1,0 +1,41 @@
+﻿body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333333;
+    background-color: #fff;
+}
+
+/*-- Navabar --*/
+.navbar.navbar-fixed-top {
+    position: fixed !important;
+    background-color: #FF8A04;
+    right: 0;
+    left: 0;
+    width: auto;
+    display: block !important;
+    padding: 0px;
+    top: 0px !important;
+}
+
+/*--Datatable--*/
+.table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+table.dataTable.no-footer{
+    border:none;
+}
+/*--Datatable--*/
+
+
+/*-- Navabar --*/
+
+/*-- Sidebar --*/
+
+/*-- Sidebar --*/
+
