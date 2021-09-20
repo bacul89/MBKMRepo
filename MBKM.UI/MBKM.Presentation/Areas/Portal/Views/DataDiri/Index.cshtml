@@ -255,8 +255,14 @@
             $("#upload").hide();
             $("#simpan").hide();
             $("input").attr("disabled", true);
-            //$("select").attr("disabled", true);
+            $("select").attr("disabled", true);
             $("textarea").attr("disabled", true);
+            try {
+                if ("@HttpContext.Current.Session["nama"].ToString()" != "DAFTAR") {
+                    $("#edit").hide();
+                }
+            } catch (e) {
+            }
             loadNamaUniversitas();
             loadFromLookup("WargaNegara", "kewarganegaraan", "Kewarganegaraan");
             loadFromLookup("KontakDarurat", "hubungan", "Hubungan");
@@ -272,12 +278,6 @@
             $("#edit").hide();
         });
         $("#simpan").click(function () {
-            $("input").attr("disabled", true);
-            $("select").attr("disabled", true);
-            $("textarea").attr("disabled", true);
-            $("#simpan").hide();
-            $("#upload").hide();
-            $("#edit").show();
 
             $.ajax({
                 type: "GET",
@@ -297,6 +297,7 @@
                 mahasiswa.HubunganDarurat = $("#hubungan").val();
                 mahasiswa.NoHPDarurat = $("#noHPDarurat").val();
                 mahasiswa.TeleponDarurat = $("#noTelpDarurat").val();
+                mahasiswa.EmailDarurat = $("#emailDarurat").val();
                 mahasiswa.AlamatDarurat = $("#alamatDarurat").val();
 
                 if (mahasiswa.NoKerjasama != null) {
@@ -315,6 +316,13 @@
                     url: "@Url.Action("UpdateDataDiri", "DataDiri")",
                     data: mahasiswa
                 }).then(function (response) {
+                    if (response.status == 200) {
+                        $("input").attr("disabled", true);
+                        $("select").attr("disabled", true);
+                        $("textarea").attr("disabled", true);
+                        $("#simpan").hide();
+                        $("#upload").hide();
+                    }
                     alert(response.message);
                 });
             });
@@ -327,31 +335,24 @@
             }).then(function (response) {
                 $("#id").val(response.ID);
                 $("#namaLengkap").val(response.Nama);
-                setTimeout(function () {
-                    console.log(response.Gender);
-                    //$("select[name=gender]").val(response.Gender);  
-                    $('#select2-gender-container').textContent = "Peremepuan";
-                    gender = $("#select2-gender-container");
-                    gender.textContent = "Peremepuan";
-                }, 1500);
+                if (response.Gender != null) {
+                    setLookupValue("Gender", response.Gender, "gender");
+                }
                 $("#tempatLahir").val(response.TempatLahir);
                 $("#tanggalLahir").val(response.TanggalLahir);
-                setTimeout(function () {
-                    if (response.WargaNegara != null) {
-                        $("#kewarganegaraan").val(response.WargaNegara);
-                    }
-                }, 1500);
+                if (response.WargaNegara != null) {
+                    setLookupValue("WargaNegara", response.WargaNegara, "kewarganegaraan");
+                }
                 $("#noKtp").val(response.NoKTP);
                 $("#email").val(response.Email);
                 $("#noHP").val(response.NoHp);
                 $("#noTelp").val(response.Telepon);
+                $("#emailDarurat").val(response.EmailDarurat);
                 $("#alamat").val(response.Alamat);
                 $("#namaDarurat").val(response.NamaDarurat);
-                setTimeout(function () {
-                    if (response.HubunganDarurat != null) {
-                        $("#hubungan").val(response.HubunganDarurat);
-                    }
-                }, 1500);
+                if (response.HubunganDarurat != null) {
+                    setLookupValue("KontakDarurat", response.HubunganDarurat, "hubungan");
+                }
                 $("#noHPDarurat").val(response.NoHPDarurat);
                 $("#noTelpDarurat").val(response.TeleponDarurat);
                 $("#alamatDarurat").val(response.AlamatDarurat);
@@ -359,9 +360,7 @@
                     $("#univAsal").html('<input type="text" name="universitasAsal" id="universitasAsal" class="form-control input-md" required disabled />');
                     $("#universitasAsal").val(response.NamaUniversitas);
                 } else if (response.NamaUniversitas != null) {
-                    setTimeout(function () {
-                        $("#universitasAsal").val(response.NamaUniversitas);
-                    }, 1500);
+                    $("#universitasAsal").val(response.NamaUniversitas);
                 }
                 $("#jenjangStudi").val(response.JenjangStudi);
                 $("#programStudi").val(response.ProdiAsal);
@@ -418,6 +417,15 @@
                         };
                     },
                 }
+            });
+        }
+        function setLookupValue(tipe, value, id) {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("getLookupByValue", "DataDiri")?tipe=" + tipe + "&value=" + value
+            }).then(function (response) {
+                var option = $("<option selected='selected'></option>").val(response.Nilai).text(response.Nama);
+                $("#" + id).append(option).trigger('change');
             });
         }
     </script>
