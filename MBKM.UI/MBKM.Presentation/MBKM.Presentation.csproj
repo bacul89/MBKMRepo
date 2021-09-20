@@ -146,7 +146,9 @@
     <Compile Include="Areas\Portal\Controllers\HomeController.cs" />
     <Compile Include="Areas\Portal\PortalAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\UnAuthorizedController.cs" />
     <Compile Include="Helper\GMailer.cs" />
+    <Compile Include="Helper\MBKMAuthorize.cs" />
     <Compile Include="Models\LoginVMAdmin.cs" />
     <Compile Include="Models\ServiceResponse.cs" />
     <Compile Include="Global.asax.cs">
@@ -413,6 +415,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\UnAuthorized\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
