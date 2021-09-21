@@ -1,14 +1,22 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "SIMBKM";
     Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
 }
 
+@section css{
+    <link rel="stylesheet" type="text/css" href="~/Content/Admin/inputResponsive.css">
+    @Scripts.Render("~/bundles/jquery")
+    <link href="~/Content/summernote/summernote.min.css" rel="stylesheet" />
+    <script src="~/Scripts/sweetalert2.all.min.js"></script>
 
+}
 
 <div id="hiddenField">
     <input type="hidden" id="id" />
 </div>
+
+
 
 <div class="card center-block" style="background-color: white; width: 90%; margin-top: 50px; margin-bottom: 50px;">
     <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
@@ -23,127 +31,113 @@
             @*<h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">DATA DIRI</h5>*@
 
             <div class="container" style="width: 100%;">
-                <table class="table">
-                    <tr>
-                        <td style="width: 20%;">Nama Lengkap</td>
-                        <td>
-                            <div class="form-group">
-                                <input type="text" name="namaLengkap" id="namaLengkap" class="form-control input-md" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 20%;">Tempat Lahir</td>
-                        <td>
-                            <div class="form-group">
-                                <input type="text" name="tempatLahir" id="tempatLahir" class="form-control input-md" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 20%;">Tanggal Lahir</td>
-                        <td>
-                            <input type="date" name="tanggalLahir" id="tanggalLahir" class="form-control input-md" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 20%;">Jenis Kelamin</td>
-                        <td>
-                            <select name="Gender" id="gender" class="form-control input-md">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="nama" class="col-sm-3 control-label">Nama Lengkap</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="Nama" id="nama" placeholder="Nama Lengkap" class="form-control " style="border: 1px solid #f7ba74" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="TempatLahir" class="col-sm-3 control-label">Tanggal Lahir</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="TempatLahir" id="tempatLahir" placeholder="Tempat Lahir" class="form-control" style="border: 1px solid #f7ba74" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="TanggalLahir" class="col-sm-3 control-label">Tanggal Lahir</label>
+                        <div class="col-sm-9">
+                            <input type="date" name="TanggalLahir" id="tanggalLahir" placeholder="Tanggal Lahir" class="form-control" style="border: 1px solid #f7ba74" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="agama" class="col-sm-3 control-label">Jenis Kelamin</label>
+                        <div class="col-sm-9">
 
-                                <option value="L">Laki - Laki</option>
-                                <option value="P">Perempuan</option>
+                            <select name="Gender" id="gender" class="form-control input-pendaftaran">
                             </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 20%;">Agama</td>
-                        <td>
-                            <select name="agama" id="agama" class="form-control input-md" required>
-                                <option value="Islam">Islam</option>
-                                <option value="Kristen">Kristen</option>
-                                <option value="Katholik">Katholik</option>
-                                <option value="Buddha">Buddha</option>
-                                <option value="Hindu">Hindu</option>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="agama" class="col-sm-3 control-label">Agama</label>
+                        <div class="col-sm-9">
+                            <select name="agama" id="agama" class="form-control input-pendaftaran" required>
                             </select>
-                        </td>
-                    </tr>
-                   
-                    <tr>
-                        <td style="width: 20%;">Memiliki Kerjasama?</td>
-                        <td>
-                            <select name="kerjasama" id="kerjasama" class="form-control input-md">
-                                <option>-- Pilih Opsi --</option>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="NamaUniversitas" class="col-sm-3 control-label">Memiliki Kerja Sama?</label>
+                        <div class="col-sm-9">
+                            <select id="kerjasama" class="form-control input-pendaftaran" required>
                                 <option value="y">Ya</option>
                                 <option value="t">Tidak</option>
                             </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 20%;">Universitas Asal</td>
-                        <td>
-                            <div class="form-group" id="univAsal">
-                                <select name="NamaUniversitas" id="namaUniversitas" class="form-control input-md" required>
+                        </div>
+                    </div>
+                    <div id="univAsal">
+                        <div class='form-group'>
+                            <label for="namaUniversitas" class="col-sm-3 control-label">Universitas Asal</label>
+                            <div class="col-sm-9">
+                                <select name='NamaUniversitas' id='namaUniversitas' class='form-control input-pendaftaran' required>
                                 </select>
                             </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 20%;">No. Kerjasama</td>
-                        <td>
-                            <div class="form-group" id="noKS">
-                                <select name="noKerjasama" id="noKerjasama" class="form-control input-md" required>
-                                </select>
+                        </div>
+                        <div id="noKS">
+                            <div class='form-group'>
+                                <label for="noKerjasama" class="col-sm-3 control-label">No. Kerjasama</label>
+                                <div class="col-sm-9">
+                                    <select name='noKerjasama' id='noKerjasama' class='form-control input-pendaftaran' required>
+                                        <option>-- Pilih Nomor Kerjasama --</option>
+                                    </select>
+                                </div>
                             </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 20%;">Program Studi Universitas Asal</td>
-                        <td>
-                            <input type="text" name="prodiAsal" id="prodiAsal" class="form-control input-md" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 20%;">Nomor Induk Mahasiswa Asal</td>
-                        <td>
-                            <input type="text" name="nimAsal" id="nimAsal" class="form-control input-md" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 20%;">Tahun Semester</td>
-                        <td>
-                            <div class="form-group" id="thnSemester">
-                                <select name="tahunSemester" id="tahunSemester" class="form-control input-md" required>
-                                </select>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 20%;">No. Handphone</td>
-                        <td>
-                            <div class="form-group">
-                                <input type="text" name="noHp" id="noHp" placeholder="+62xxxxxxxxxxx" class="form-control input-md" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 20%;">Alamat Email</td>
-                        <td>
-                            <div class="form-group">
-                                <input type="email" name="email" id="emailRegistrasi" class="form-control input-md" />
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 20%;">Password</td>
-                        <td>
-                            <div class="form-group">
-                                <input type="password" name="password" id="passwordRegistrasi" class="form-control input-md" />
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-                <button id="edit" class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 16px;">Registrasi</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="prodiAsal" class="col-sm-3 control-label">Program Studi Asal</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="prodiAsal" id="prodiAsal" placeholder="Program Studi" class="form-control input-pendaftaran" style="border: 1px solid #f7ba74" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="nimAsal" class="col-sm-3 control-label">Nomor Induk Mahasiswa Asal</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="nimAsal" id="nimAsal" placeholder="NIM" class="form-control" style="border: 1px solid #f7ba74" />
+                        </div>
+                    </div>
+                    <div class='form-group'>
+                        <label for="tahunSemester" class="col-sm-3 control-label">Tahun Semester</label>
+                        <div class="col-sm-9">
+                            <select name='tahunSemester' id='tahunSemester' class='form-control input-pendaftaran' required>
+                                <option>-- Pilih Tahun Semester --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="noHp" class="col-sm-3 control-label">No Handphone</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="NoHp" id="noHp" placeholder="+62xxxxxxxxxxx" class="form-control" style="border: 1px solid #f7ba74" />
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="emailRegistrasi" class="col-sm-3 control-label">Email</label>
+                        <div class="col-sm-9">
+                            <input type="Email" name="Email" id="emailRegistrasi" placeholder="someone@somewhere.com" class="form-control" style="border: 1px solid #f7ba74" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Password" class="col-sm-3 control-label">Password</label>
+                        <div class="col-sm-9">
+                            <input type="password" name="Password" id="passwordRegistrasi" placeholder="●●●●●●●●" class="form-control" style="border: 1px solid #f7ba74" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input onclick="submitRegistrasi()" type="submit" value="Registrasi" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
+                    </div>
+                    @*<button id="edit" class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 16px;">Registrasi</button>*@
+                </form>
             </div>
         </div>
 
@@ -159,99 +153,187 @@
 
 @section Scripts{
     <script>
-          
-            $(document).ready(function () {
-                var alertMessage = '@TempData["alertMessage"]';
-                if (alertMessage.length != 0) {
-                    alert(alertMessage);
+        $(document).ready(function () {
+            var alertMessage = '@TempData["alertMessage"]';
+            if (alertMessage.length != 0) {
+                alert(alertMessage);
+            }
+            loadNamaUniversitas();
+            loadNoKerjasama();
+            namaUnivOnChange();
+            $("#kerjasama").select2({
+                width: "100%"
+            });
+            $("#jenisMhs").select2({
+                width: "100%"
+            });
+            $("#jenisMhs").change(function () {
+                if ($("#jenisMhs").val() == "y") {
+                    $("#loginForm").attr("action", "@Url.Action("LoginInternal", "Home")");
+                } else {
+                    $("#loginForm").attr("action", "@Url.Action("LoginExternal", "Home")");
                 }
+            });
+            loadFromLookup("TahunSemester", "tahunSemester", "Tahun Semester");
+            loadFromLookup("Agama", "agama", "Agama");
+            loadFromLookup("Gender", "gender", "Gender");
+        });
+
+        $("#kerjasama").change(function () {
+            if ($("#kerjasama").val() == "y") {
+                $("#univAsal").html("<td  style='width: 20 %;'>Universitas Asal</td><td><div class='form-group'><select name='NamaUniversitas' id='namaUniversitas' class='form-control input-md' required></select></div></div><div id='noKS'><div class='form-group'><select name='noKerjasama' id='noKerjasama' class='form-control input-md' required><option>-- Pilih Nomor Kerjasama --</option></select></div>");
+                $("#univAsal").html(`
+<div class='form-group'>
+                            <label for="NamaUniversitas" class="col-sm-3 control-label">Universitas Asal</label>
+                            <div class="col-sm-9">
+                                <select name='NamaUniversitas' id='namaUniversitas' class='form-control input-pendaftaran' required>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="noKS">
+                            <div class='form-group'>
+                                <label for="noKerjasama" class="col-sm-3 control-label">No. Kerjasama</label>
+                                <div class="col-sm-9">
+                                    <select name='noKerjasama' id='noKerjasama' class='form-control input-pendaftaran' required>
+                                        <option>-- Pilih Nomor Kerjasama --</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>`);
                 loadNamaUniversitas();
                 namaUnivOnChange();
-                loadFromLookup("TahunSemester", "tahunSemester");
-            });
+            } else {
+                $("#univAsal").html(`
+                <div class='form-group'>
+                    <label for="NamaUniversitas" class="col-sm-3 control-label">Universitas Asal</label>
+                    <div class="col-sm-9">
+                        <input type='text' name='NamaUniversitas' id='NamaUniversitas' placeholder='Nama Universitas' class='form-control input-pendaftaran' />
+                    </div>
+                </div>`);
+                // $("#univAsal").html("<td  style='width: 20 %;'>Universitas Asal</td><td><div class='form-group'><input type='text' name='NamaUniversitas' id='NamaUniversitas' placeholder='Nama Universitas' class='form-control input-md' /></div></div>");
+            }
+        });
 
-            $("#kerjasama").change(function () {
-                if ($("#kerjasama").val() == "y") {
-                    $("#univAsal").html(`<select name="NamaUniversitas" id="namaUniversitas" class="form-control input-md" required>
-            </select>
-    <div id='noKS'><div class='form-group'><label>No. Kerjasama</label>
-    <select name='noKerjasama' id='noKerjasama' class='form-control input-lg' required><option>-- Pilih Nomor Kerjasama --</option>
-    </select></div></div>`);
-                    loadNamaUniversitas();
-                    namaUnivOnChange();
-                } else {
-                    $("#univAsal").html("<div class= 'form-group'><label>Universitas Asal</label><input type='text' name='NamaUniversitas' id='NamaUniversitas' placeholder='Nama Universitas' class='form-control input-lg' /></div>");
-                }
-            });
-
-            function namaUnivOnChange() {
+        function namaUnivOnChange() {
+            if ($("#kerjasama").val() == "y") {
                 $("#namaUniversitas").change(function () {
-                    if ($("#kerjasama").val() == "y") {
-                        $("#noKS").html("<div class='form-group'><label>No. Kerjasama</label><select name='noKerjasama' id='noKerjasama' class='form-control input-lg' required></select></div>");
-                        loadNoKerjasama();
-                    }
+                    $("#noKS").html("<div class='form-group'><select name='noKerjasama' id='noKerjasama' class='form-control input-md' required><option>-- Pilih Nomor Kerjasama --</option></select></div>");
+                    loadNoKerjasama();
                 });
             }
-            function submitRegistrasi() {
-                mahasiswa = new Object;
-                mahasiswa.Nama = $("#nama").val();
-                mahasiswa.TempatLahir = $("#tempatLahir").val();
-                mahasiswa.TanggalLahir = $("#tanggalLahir").val();
-                mahasiswa.Gender = $("#gender").val();
-                if ($("#kerjasama").val() == "y") {
-                    mahasiswa.BiayaKuliah = $("#namaUniversitas").find(':selected').data('biaya');
-                    mahasiswa.NoKerjasama = $("#namaUniversitas").val();
-                    mahasiswa.NamaUniversitas = $("#namaUniversitas").find(':selected').data('nama');
-                } else {
-                    mahasiswa.NamaUniversitas = $("#namaUniversitas").val();
+        }
+        function submitRegistrasi() {
+            mahasiswa = new Object;
+            mahasiswa.Nama = $("#nama").val();
+            mahasiswa.TempatLahir = $("#tempatLahir").val();
+            mahasiswa.TanggalLahir = $("#tanggalLahir").val();
+            mahasiswa.Gender = $("#gender").val();
+            mahasiswa.Agama = $("#agama").val();
+            if ($("#kerjasama").val() == "y") {
+                mahasiswa.BiayaKuliah = $('#namaUniversitas').select2('data')[0].biaya;
+                mahasiswa.NamaUniversitas = $('#namaUniversitas').select2('data')[0].nama;
+                mahasiswa.NoKerjasama = $('#noKerjasama').select2('data')[0].value;
+            } else {
+                mahasiswa.NamaUniversitas = $("#namaUniversitas").val();
+            }
+            mahasiswa.ProdiAsal = $("#prodiAsal").val();
+            mahasiswa.NIMAsal = $("#nimAsal").val();
+            mahasiswa.Semester = $("#tahunSemester").val();
+            mahasiswa.NoHp = $("#noHp").val();
+            mahasiswa.Email = $("#emailRegistrasi").val();
+            mahasiswa.Password = $("#passwordRegistrasi").val();
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("registerExternal", "Home")",
+                data: mahasiswa
+            }).then(function (response) {
+                alert(response.message);
+            });
+        }
+        function loadNamaUniversitas() {
+            $("#namaUniversitas").select2({
+                placeholder: "-- Pilih Universitas --",
+                width: "100%",
+                ajax: {
+                    url: "@Url.Action("GetNamaInstansi", "Home")",
+                    dataType: 'json',
+                    method: "POST",
+                    delay: 250,
+                    cache: false,
+                    data: function (params) {
+                        return {
+                            Length: "10",
+                            Search: params.term || "",
+                            Skip: params.page - 1 || 0,
+                        };
+                    },
+                    processResults: function (data, params) {
+                        var page = params.page || 1;
+                        return {
+                            results: $.map(data, function (item) { return { id: item.NoKerjasama, value: item.NoKerjasama, biaya: item.Biaya, nama: item.NamaInstansi, text: item.NamaInstansi } }),
+                            pagination: {
+                                more: (page * 10) <= data.length
+                            }
+                        };
+                    },
                 }
-                mahasiswa.ProdiAsal = $("#prodiAsal").val();
-                mahasiswa.NIMAsal = $("#nimAsal").val();
-                mahasiswa.Semester = $("#tahunSemester").val();
-                mahasiswa.NoHp = $("#noHp").val();
-                mahasiswa.Email = $("#emailRegistrasi").val();
-                mahasiswa.Password = $("#passwordRegistrasi").val();
-                $.ajax({
-                    type: "POST",
-                    url: "@Url.Action("registerExternal", "Home")",
-                    data: mahasiswa
-                }).then(function (response) {
-                    alert(response.message);
-                });
-            }
-            function loadNamaUniversitas() {
-                $.ajax({
-                    type: "GET",
-                    url: "@Url.Action("GetNamaInstansi", "RegisMhsByAdmin")?Skip=" + 0 + "&Length=" + 10000 + "&Search="
-                }).then(function (response) {
-                    $("#namaUniversitas").append("<option>-- Pilih Universitas --</option>");
-                    for (var i = 0; i < response.length; i++) {
-                        $("#namaUniversitas").append("<option value='" + response[i].NoKerjasama + "' data-biaya='" + response[i].Biaya + "' data-nama='" + response[i].NamaInstansi + "' >" + response[i].NamaInstansi + "</option>");
-                    }
-                });
-            }
-            function loadNoKerjasama() {
-                $.ajax({
-                    type: "GET",
-                    url: "@Url.Action("GetNoKerjasama", "Home")?Skip=" + 0 + "&Length=" + 10000 + "&Search=" + "&NamaInstansi=" + $("#namaUniversitas").find(':selected').data('nama')
-                }).then(function (response) {
-                    $("#noKerjasama").append("<option>-- Pilih Nomor Kerjasama --</option>");
-                    for (var i = 0; i < response.length; i++) {
-                        $("#noKerjasama").append("<option value='" + response[i].NoKerjasama + "'>" + response[i].NoKerjasama + "</option>");
-                    }
-                });
-            }
-            function loadFromLookup(tipe, id) {
-                $.ajax({
-                    type: "GET",
-                    url: "@Url.Action("getLookupByTipe", "Home")?Tipe=" + tipe
-                }).then(function (response) {
-                    for (var i = 0; i < response.length; i++) {
-                        $("#" + id).append("<option value='" + response[i].Nilai + "'>" + response[i].Nama + "</option>");
-                    }
-                });
-            }
-        </script>
-      
+            });
+        }
+        function loadNoKerjasama() {
+            $("#noKerjasama").select2({
+                placeholder: "-- Pilih Nomor Kerjasama --",
+                width: "100%",
+                ajax: {
+                    url: "@Url.Action("GetNoKerjasama", "Home")",
+                    dataType: 'json',
+                    method: "POST",
+                    delay: 250,
+                    cache: false,
+                    data: function (params) {
+                        return {
+                            Length: "10",
+                            Search: params.term || "",
+                            Skip: params.page - 1 || 0,
+                            NamaInstansi: $('#namaUniversitas').select2('data')[0].nama
+                        };
+                    },
+                    processResults: function (data, params) {
+                        var page = params.page || 1;
+                        return {
+                            results: $.map(data, function (item) { return { id: item.NoKerjasama, value: item.NoKerjasama, text: item.NoKerjasama } }),
+                            pagination: {
+                                more: (page * 10) <= data.length
+                            }
+                        };
+                    },
+                }
+            });
+        }
+        function loadFromLookup(tipe, id, nama) {
+
+            $("#" + id).select2({
+                placeholder: "-- Pilih " + nama + " --",
+                width: "100%",
+                ajax: {
+                    url: "@Url.Action("getLookupByTipe", "Home")",
+                    dataType: 'json',
+                    method: "POST",
+                    delay: 250,
+                    cache: false,
+                    data: function (params) {
+                        return {
+                            Tipe: tipe
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: $.map(data, function (item) { return { id: item.Nilai, value: item.Nilai, text: item.Nama } })
+                        };
+                    },
+                }
+            });
+        }
+    </script>
+
 }
 
