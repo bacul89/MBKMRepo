@@ -122,7 +122,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
 
                     _mahasiswaService.Save(mahasiswa);
                 }
-                PopulateSession(true, mahasiswa.Email, mahasiswa.Nama);
+                PopulateSession(true, mahasiswa.Email, mahasiswa.Nama, mahasiswa.StatusVerifikasi);
                 return RedirectToAction("Index", "DataDiri");
             }
         }
@@ -139,12 +139,12 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 TempData["alertMessage"] = "Silahkan aktivasi akun anda terlebih dahulu!";
                 return RedirectToAction("Index", "Home");
             }
-            PopulateSession(true, res.Email, res.Nama);
+            PopulateSession(true, res.Email, res.Nama, res.StatusVerifikasi);
             return RedirectToAction("Index", "DataDiri");
         }
         public ActionResult Logout()
         {
-            PopulateSession(false, null, null);
+            PopulateSession(false, null, null, null);
             return RedirectToAction("Index", "Home");
         }
         public Mahasiswa GetMahasiswaByEmail(string email)
@@ -169,11 +169,12 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             mailer.IsHtml = true;
             mailer.Send();
         }
-        public void PopulateSession(bool isLogin, string email, string nama)
+        public void PopulateSession(bool isLogin, string email, string nama, string status)
         {
             Session["isLogin"] = isLogin;
             Session["email"] = email;
             Session["nama"] = nama;
+            Session["status"] = status;
         }
     }
 }
