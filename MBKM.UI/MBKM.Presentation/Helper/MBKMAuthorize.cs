@@ -58,7 +58,7 @@ namespace MBKM.Presentation.Helper
         private bool IsUserAuthenticated(AuthorizationContext filterContext)
         {
 
-            bool result = false;
+            bool result = true;
             string controller = filterContext.RequestContext.RouteData.Values["controller"].ToString();
             string action = filterContext.RequestContext.RouteData.Values["action"].ToString();
             var area = filterContext.RequestContext.RouteData.DataTokens["area"];
