@@ -48,6 +48,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     mahasiswa.CreatedDate = DateTime.Now;
                     mahasiswa.UpdatedDate = DateTime.Now;
                     mahasiswa.StatusVerifikasi = "DAFTAR";
+                    mahasiswa.Password = HashPasswordService.HashPassword(mahasiswa.Password);
                     _mahasiswaService.Save(mahasiswa);
                     SendEmail(mahasiswa.Email, token);
                     return Json(new ServiceResponse { status = 200, message = "Pendaftaran mahasiswa berhasil, tolong cek email dan konfirmasi akunmu!" });
@@ -128,8 +129,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult LoginExternal(string username, string password)
         {
-            Mahasiswa res = _mahasiswaService.Find(m => m.Email == username && m.Password == password).FirstOrDefault();
-            if (res == null)
+            Mahasiswa res = _mahasiswaService.Find(m => m.Email == username).FirstOrDefault();
+            if (res == null || !HashPasswordService.ValidatePassword(password, res.Password))
             {
                 TempData["alertMessage"] = "Username atau password anda salah!";
                 return RedirectToAction("Index", "Home");
@@ -138,7 +139,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             {
                 TempData["alertMessage"] = "Silahkan aktivasi akun anda terlebih dahulu!";
                 return RedirectToAction("Index", "Home");
-            }
+            } 
             PopulateSession(true, res.Email, res.Nama, res.StatusVerifikasi);
             return RedirectToAction("Index", "DataDiri");
         }
@@ -175,6 +176,10 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             Session["email"] = email;
             Session["nama"] = nama;
             Session["status"] = status;
+        }
+        public string hp(string password)
+        {
+            return HashPasswordService.HashPassword(password);
         }
     }
 }

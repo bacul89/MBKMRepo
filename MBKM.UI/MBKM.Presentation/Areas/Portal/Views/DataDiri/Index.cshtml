@@ -4,33 +4,125 @@
     ViewBag.Title = "SIMBKM";
 }
 
+<style>
+    .files input {
+        outline: 2px dashed #92b0b3;
+        outline-offset: -10px;
+        -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
+        transition: outline-offset .15s ease-in-out, background-color .15s linear;
+        padding: 120px 0px 85px 35%;
+        text-align: center !important;
+        margin: 0;
+        width: 100% !important;
+    }
+
+        .files input:focus {
+            outline: 2px dashed #92b0b3;
+            outline-offset: -10px;
+            -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
+            transition: outline-offset .15s ease-in-out, background-color .15s linear;
+            border: 1px solid #92b0b3;
+        }
+
+    .files {
+        position: relative
+    }
+
+        .files:after {
+            pointer-events: none;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 50px;
+            right: 0;
+            height: 56px;
+            content: "";
+            background-image: url(https://image.flaticon.com/icons/png/128/109/109612.png);
+            display: block;
+            margin: 0 auto;
+            background-size: 100%;
+            background-repeat: no-repeat;
+        }
+
+    .color input {
+        background-color: #f1f1f1;
+    }
+
+    .files:before {
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        pointer-events: none;
+        width: 100%;
+        right: 0;
+        height: 57px;
+        content: " or drag it here. ";
+        display: block;
+        margin: 0 auto;
+        color: #2ea591;
+        font-weight: 600;
+        text-transform: capitalize;
+        text-align: center;
+    }
+</style>
 
 <!-- Modal -->
 <div class="modal fade" id="dataPendukung" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" role="document" style="width: 70%;">
         <div class="modal-content">
             <div class="modal-header" style="background-color: #FF8A04;">
-                <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
-                    Login Admin
+                <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black; text-align: center">
+                    UPLOAD DOKUMEN PENDUKUNG
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </h5>
             </div>
             <div class="modal-body">
-                <form action="#" method="post" class="form-horizontal">
-                    <div class="container" style="width: 100%;">
-                        <div class="form-group">
-                            <input type="text" name="usernameAdmin" id="usernameAdmin" placeholder="Username" class="form-control input-lg" />
-                        </div>
-                        <div class="form-group">
-                            <input type="password" name="passwordAdmin" id="passwordAdmin" placeholder="Password" class="form-control input-lg" />
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Login" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
-                        </div>
-                    </div>
-                </form>
+                <div class="container" style="width: 100%;">
+                    <table class="table">
+                        <tr>
+                            <td style="width: 20%; vertical-align: middle; text-align:center; height: 100%;"><span>Upload Foto Diri</span></td>
+                            <td>
+                                <div class="form-group files">
+                                    <input type="file" class="form-control" id="fotoDiri" name="fotoDiri" multiple="">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%; vertical-align: middle; text-align:center; height: 100%;"><span>Upload Foto KTP</span></td>
+                            <td>
+                                <div class="form-group files">
+                                    <input type="file" class="form-control" id="fotoKTP" name="fotoKTP" multiple="">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%; vertical-align: middle; text-align:center; height: 100%;"><span>Upload Foto KIM</span></td>
+                            <td>
+                                <div class="form-group files">
+                                    <input type="file" class="form-control" id="fotoKIM" name="fotoKIM" multiple="">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%; vertical-align: middle; text-align:center; height: 100%;"><span>Upload Transkrip Nilai</span></td>
+                            <td>
+                                <div class="form-group files">
+                                    <input type="file" class="form-control" id="transkripNilai" name="transkripNilai" multiple="">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%; vertical-align: middle; text-align:center; height: 100%;"><span>Upload Surat Keterangan</span></td>
+                            <td>
+                                <div class="form-group files">
+                                    <input type="file" class="form-control" id="suratKeterangan" name="suratKeterangan" multiple="">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -252,13 +344,14 @@
 @section Scripts{
     <script>
         $(document).ready(function () {
+            //$('.file-upload').file_upload();
             $("#upload").hide();
             $("#simpan").hide();
             $("input").attr("disabled", true);
             $("select").attr("disabled", true);
             $("textarea").attr("disabled", true);
             try {
-                if ("@HttpContext.Current.Session["nama"].ToString()" != "DAFTAR") {
+                if ("@HttpContext.Current.Session["status"].ToString()" != "DAFTAR") {
                     $("#edit").hide();
                 }
             } catch (e) {
