@@ -50,8 +50,8 @@ var tableUser = $('#TableList').DataTable({
         },
         {
             //"title": "Password",
-            "data": "Password",
-            "name": "Password",
+            "data": "Email",
+            "name": "Email",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + data + '</div>';
             }

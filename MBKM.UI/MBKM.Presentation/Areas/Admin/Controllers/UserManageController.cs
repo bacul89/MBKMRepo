@@ -76,7 +76,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     if(GetUserByNip(model.NoPegawai)==null)
                     {
                         model.NoTelp = "123";
-                        //model.Password = HashPasswordService.HashPassword(model.Password);
+                        model.Password = HashPasswordService.HashPassword(model.Password);
                         model.CreatedDate = DateTime.Now;
                         model.UpdatedDate = DateTime.Now;
                         model.IsDeleted = false;
