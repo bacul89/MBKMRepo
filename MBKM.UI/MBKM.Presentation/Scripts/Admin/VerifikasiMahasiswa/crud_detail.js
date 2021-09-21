@@ -45,6 +45,7 @@ function ValidationStatusApproval() {
 }
 
 function PostDataUpdate() {
+    $.LoadingOverlay("show");
     if (ValidationStatusApproval()) {
         getValueOnForm();
         var url = window.location.href;
@@ -57,6 +58,7 @@ function PostDataUpdate() {
             data: JSON.stringify(dataVerifikasi),
             contentType: 'application/json',
             success: function (e) {
+                $.LoadingOverlay("hide");
                 Swal.fire({
                     title: 'Berhasil',
                     icon: 'success',
@@ -69,6 +71,7 @@ function PostDataUpdate() {
                 window.location.href = '/Admin/VerifikasiMahasiswa/'
             },
             error: function (e) {
+                $.LoadingOverlay("hide");
                 Swal.fire({
                     title: 'Oppss',
                     icon: 'error',
@@ -81,6 +84,7 @@ function PostDataUpdate() {
             }
         })
     } else {
+        $.LoadingOverlay("hide");
         Swal.fire({
             title: 'Oppss',
             icon: 'warning',
