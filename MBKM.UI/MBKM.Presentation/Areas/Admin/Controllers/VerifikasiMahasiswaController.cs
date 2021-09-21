@@ -17,14 +17,18 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private IEmailTemplateService _emailTemplateService;
         private ILookupService _lookupService;
         private IPerjanjianKerjasamaService _perjanjianKerjasama;
+        private IAttachmentService _attachmentService;
 
-        public VerifikasiMahasiswaController(IMahasiswaService mahasiswaService, IEmailTemplateService emailTemplateService, ILookupService lookupService, IPerjanjianKerjasamaService perjanjianKerjasama)
+        public VerifikasiMahasiswaController(IMahasiswaService mahasiswaService, IEmailTemplateService emailTemplateService, ILookupService lookupService, IPerjanjianKerjasamaService perjanjianKerjasama, IAttachmentService attachmentService)
         {
             _mahasiswaService = mahasiswaService;
             _emailTemplateService = emailTemplateService;
             _lookupService = lookupService;
             _perjanjianKerjasama = perjanjianKerjasama;
+            _attachmentService = attachmentService;
         }
+
+
 
 
         // GET: Admin/VerifikasiMahasiswa
@@ -60,9 +64,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetAllLookUp()
+        public JsonResult GetAllAttachment(int id)
         {
-            var data = _mahasiswaService.Get(2);
+            var data = _mahasiswaService.Get(id).Attachments.Select(x => new Attachment { 
+                FileName = x.FileName,
+                FileType = x.FileType,
+                ID = x.ID
+            });
             return Json(data);
         }
 
@@ -113,13 +121,15 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             return Json(data);
         }
 
-        public ActionResult DownloadFile()
+        public ActionResult DownloadFile(int id)
         {
-            string fullName = Server.MapPath("~/Scripts/Admin/VerifikasiMahasiswa/crud_detail.js");
+            var data = _attachmentService.Get(id);
+            string path = "~/Upload/";
+            string fullName = Server.MapPath( path + data.FileName);
 
             byte[] fileBytes = GetFile(fullName);
             return File(
-                fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, "~/Scripts/Admin/VerifikasiMahasiswa/crud_detail.js");
+                fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet,data.mahasiswas.NIM + data.mahasiswas.Nama + data.FileName);
         }
 
         byte[] GetFile(string s)
