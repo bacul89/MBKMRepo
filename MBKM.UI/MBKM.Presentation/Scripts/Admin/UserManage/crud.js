@@ -183,7 +183,7 @@ function PostUpdateUser() {
         type: 'post',
         datatype: 'json',
         data: JSON.stringify(formInputUser),
-        contentType: 'application/json'
+        contentType: 'application/json',
     }).then(function (response) {
         if (response.status == 400) {
             Swal.fire({
