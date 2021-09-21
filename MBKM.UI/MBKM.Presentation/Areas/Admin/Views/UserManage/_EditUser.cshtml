@@ -19,25 +19,25 @@
             <div class="form-group">
                 <label for="nomorindukpegawai" class="col-sm-3 control-label">Nomor Induk Pegawai</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control input-pendaftaran" value="@Model.NoPegawai" id="txtnomorindukpegawai" placeholder="Input Induk Pegawai">
+                    <input type="text" class="form-control input-pendaftaran asd" value="@Model.NoPegawai" id="txtnomorindukpegawai" placeholder="Input Induk Pegawai">
                 </div>
             </div>
             <div class="form-group">
                 <label for="inp_email" class="col-sm-3 control-label">Nama</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control input-pendaftaran" value="@Model.UserName" id="txtnama" placeholder="Input Nama">
+                    <input type="text" class="form-control input-pendaftaran asd" value="@Model.UserName" id="txtnama" placeholder="Input Nama">
                 </div>
             </div>
             <div class="form-group">
                 <label for="inp_bodyEmail" class="col-sm-3 control-label">Alamat Email</label>
                 <div class="col-sm-9">
-                    <input type="email" class="form-control input-pendaftaran" value="@Model.Email" id="txtemail" placeholder="Input Alamat Email">
+                    <input type="email" class="form-control input-pendaftaran asd" value="@Model.Email" id="txtemail" placeholder="Input Alamat Email">
                 </div>
             </div>
             <div class="form-group">
                 <label for="password" class="col-sm-3 control-label">Password</label>
                 <div class="col-sm-9">
-                    <input type="password" class="form-control input-pendaftaran" value="@Model.Password" id="txtpassword" placeholder="Input Password">
+                    <input type="password" class="form-control input-pendaftaran asd" value="@Model.Password" id="txtpassword" placeholder="Input Password">
                 </div>
             </div>
             <div class="form-group row">
@@ -45,7 +45,7 @@
                 {
                     <label for="IdRole" class="col-sm-3 control-label">Jabatan</label>
                     <div class="col-sm-9">
-                        @Html.DropDownListFor(model => model.RoleID, ViewBag.listJabatan as SelectList, new { @class = "form-control input-pendaftaran input-data", @id = "idRole", @name = "idRole" })
+                        @Html.DropDownListFor(model => model.RoleID, ViewBag.listJabatan as SelectList, new { @class = "form-control input-pendaftaran asd", @id = "idRole", @name = "idRole" })
                     </div>
                 }
             </div>
@@ -55,7 +55,7 @@
                     <label for="idProdi" class="col-sm-3 control-label">Prodi</label>
                     <div class="col-sm-9">
                         @* @Html.DropDownList("IDProdiAndNamaProdi", ViewBag.listProdi as SelectList, "First Option", new { name = "Name", id = "id" })*@
-                        @Html.DropDownListFor(model => model.KodeProdi, ViewBag.listProdi as SelectList, "--Pilih Prodi/unit--", new { @class = "form-control input-pendaftaran input-data", @id = "idProdi", @name = "idProdi" })
+                        @Html.DropDownListFor(model => model.KodeProdi, ViewBag.listProdi as SelectList, "--Pilih Prodi/unit--", new { @class = "form-control input-pendaftaran asd", @id = "idProdi", @name = "idProdi" })
                     </div>
                 }
             </div>

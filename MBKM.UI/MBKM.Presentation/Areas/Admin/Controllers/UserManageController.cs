@@ -1,6 +1,7 @@
 ﻿using MBKM.Common.Helpers;
 using MBKM.Entities.Models;
 using MBKM.Entities.ViewModel;
+using MBKM.Presentation.models;
 using MBKM.Services;
 using System;
 using System.Collections.Generic;
@@ -67,38 +68,141 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult PostDataUser(User model)
         {
-          
-            model.NoTelp = "123";
-            //model.Password = HashPasswordService.HashPassword(model.Password);
-            model.CreatedDate = DateTime.Now;
-            model.UpdatedDate = DateTime.Now;
-            model.IsDeleted = false;
-            model.IsActive = model.IsActive;
 
-            _userService.Save(model);
-            return Json(model);
+            try
+            {
+                if(GetUserByEmail(model.Email)==null)
+                {
+                    if(GetUserByNip(model.NoPegawai)==null)
+                    {
+                        model.NoTelp = "123";
+                        //model.Password = HashPasswordService.HashPassword(model.Password);
+                        model.CreatedDate = DateTime.Now;
+                        model.UpdatedDate = DateTime.Now;
+                        model.IsDeleted = false;
+                        model.IsActive = model.IsActive;
+
+                        _userService.Save(model);
+                        return Json(new ServiceResponse { status = 200, message = "Pendaftaran mahasiswa berhasil, tolong cek email dan konfirmasi akunmu!" });
+                    }
+                    else { return Json(new ServiceResponse { status = 400, message = "NIP sudah terdaftar!" }); }
+
+                }
+                else { return Json(new ServiceResponse { status = 400, message = "Email sudah digunakan!" }); }
+                
+            }
+            catch (Exception e)
+            {
+                return Json(new ServiceResponse { status = 500, message = e.Message });
+            }
+            
         }
 
         //edit user
         [HttpPost]
         public ActionResult PostUpdateDataUser(User model)
         {
-            User data = _userService.Get(model.ID);
-            data.NoPegawai = model.NoPegawai;
-            data.UserName = model.UserName;
-            data.Email = model.Email;
-            data.NoTelp = data.NoTelp;
-            data.Password = model.Password;
-            data.RoleID = model.RoleID;
-            //data.Password = HashPasswordService.HashPassword(model.Password);
-            data.CreatedDate = data.CreatedDate;
-            data.UpdatedDate = DateTime.Now;
-            data.IsActive = model.IsActive;
-            data.KodeProdi = model.KodeProdi;
-            data.NamaProdi = model.NamaProdi;
-            _userService.Save(data);
+            try
+            {
+                User data = _userService.Get(model.ID);
+                if (GetUserByEmail(model.Email) == null)
+                {
+                    if (GetUserByNip(model.NoPegawai) == null)
+                    {
+                       
+                        data.NoPegawai = model.NoPegawai;
+                        data.UserName = model.UserName;
+                        data.Email = model.Email;
+                        data.NoTelp = data.NoTelp;
+                        data.Password = model.Password;
+                        data.RoleID = model.RoleID;
+                        //data.Password = HashPasswordService.HashPassword(model.Password);
+                        data.CreatedDate = data.CreatedDate;
+                        data.UpdatedDate = DateTime.Now;
+                        data.IsActive = model.IsActive;
+                        data.KodeProdi = model.KodeProdi;
+                        data.NamaProdi = model.NamaProdi;
+                        _userService.Save(data);
+                        //return Json(data);
+                        return Json(new ServiceResponse { status = 200, message = "Pendaftaran mahasiswa berhasil, tolong cek email dan konfirmasi akunmu!" });
 
-            return Json(data);
+                    }
+                    else
+                    {
+                        if (data.NoPegawai == model.NoPegawai && GetUserByEmail(model.Email) == null)
+                        {
+                            data.NoPegawai = model.NoPegawai;
+                            data.UserName = model.UserName;
+                            data.Email = model.Email;
+                            data.NoTelp = data.NoTelp;
+                            data.Password = model.Password;
+                            data.RoleID = model.RoleID;
+                            //data.Password = HashPasswordService.HashPassword(model.Password);
+                            data.CreatedDate = data.CreatedDate;
+                            data.UpdatedDate = DateTime.Now;
+                            data.IsActive = model.IsActive;
+                            data.KodeProdi = model.KodeProdi;
+                            data.NamaProdi = model.NamaProdi;
+                            _userService.Save(data);
+                            return Json(new ServiceResponse { status = 200, message = "Pendaftaran mahasiswa berhasil, tolong cek email dan konfirmasi akunmu!" }); ;
+                        }
+                    }
+                    
+                        return Json(new ServiceResponse { status = 400, message = "NIP sudah terdaftar!" }); 
+                    
+
+
+                }
+                else {
+                    if (data.Email==model.Email && GetUserByNip(model.NoPegawai) == null)
+                    {
+                        data.NoPegawai = model.NoPegawai;
+                        data.UserName = model.UserName;
+                        data.Email = model.Email;
+                        data.NoTelp = data.NoTelp;
+                        data.Password = model.Password;
+                        data.RoleID = model.RoleID;
+                        //data.Password = HashPasswordService.HashPassword(model.Password);
+                        data.CreatedDate = data.CreatedDate;
+                        data.UpdatedDate = DateTime.Now;
+                        data.IsActive = model.IsActive;
+                        data.KodeProdi = model.KodeProdi;
+                        data.NamaProdi = model.NamaProdi;
+                        _userService.Save(data);
+                        return Json(new ServiceResponse { status = 200, message = "Pendaftaran mahasiswa berhasil, tolong cek email dan konfirmasi akunmu!" });
+
+                    }
+                    else if(data.Email == model.Email && data.NoPegawai == model.NoPegawai)
+                    {
+                        data.NoPegawai = model.NoPegawai;
+                        data.UserName = model.UserName;
+                        data.Email = model.Email;
+                        data.NoTelp = data.NoTelp;
+                        data.Password = model.Password;
+                        data.RoleID = model.RoleID;
+                        //data.Password = HashPasswordService.HashPassword(model.Password);
+                        data.CreatedDate = data.CreatedDate;
+                        data.UpdatedDate = DateTime.Now;
+                        data.IsActive = model.IsActive;
+                        data.KodeProdi = model.KodeProdi;
+                        data.NamaProdi = model.NamaProdi;
+                        _userService.Save(data);
+                        return Json(new ServiceResponse { status = 200, message = "Pendaftaran mahasiswa berhasil, tolong cek email dan konfirmasi akunmu!" });
+
+                    }
+
+
+                    return Json(new ServiceResponse { status = 400, message = "Email sudah digunakan!" }); 
+                }
+
+
+                
+            }
+            catch (Exception e)
+            {
+                return Json(new ServiceResponse { status = 500, message = e.Message });
+            }
+            
         }
         //delete
       
@@ -139,6 +243,14 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 recordsFiltered = vMListUser.TotalFilterCount,
                 data = vMListUser.gridDatas
             });
+        }
+        public User GetUserByEmail(string email)
+        {
+            return _userService.Find(m => m.Email == email && m.IsDeleted==false).FirstOrDefault();
+        }
+        public User GetUserByNip(string nip)
+        {
+            return _userService.Find(m => m.NoPegawai == nip && m.IsDeleted == false).FirstOrDefault();
         }
 
     }

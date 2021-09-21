@@ -1,12 +1,18 @@
-﻿var tableUser = $('#TableList').DataTable({
+﻿
+
+var tableUser = $('#TableList').DataTable({
     "columnDefs": [{
         "searchable": false,
         "orderable": false,
-        "targets": 0
+        "paging": false,
+        "targets": 0,
+         "visible": false, 'targets': [5] 
     }],
-    "order": [[1, 'asc']],
+    //"order": [[1, 'asc']],
     "proccessing": true,
     "serverSide": true,
+    "order": [[1, 'asc']],
+    //"aaSorting": [[0, "asc"]],
     "ajax": {
         url: '/Admin/UserManage/GetList',
         type: 'POST'
@@ -15,8 +21,8 @@
         "emptyTable": "No record found.",
         "processing":
             '<i class="fa fa-spinner fa-spin fa-3x fa-fw" style="color:#2a2b2b;"></i><span class="sr-only">Loading...</span> ',
-        "search": "",
-        "searchPlaceholder": "Search..."
+        "search": "Search:",
+        "searchPlaceholder": ""
     },
     "columns": [
         {
@@ -29,6 +35,7 @@
         {
             //"title": "Nomor Induk Pegawai",
             "data": "NoPegawai",
+            "name": "NoPegawai",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + data + '</div>';
             }
@@ -36,6 +43,7 @@
         {
             //"title": "Nama",
             "data": "Nama",
+            "name": "Nama",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + data + '</div>';
             }
@@ -43,6 +51,7 @@
         {
             //"title": "Password",
             "data": "Password",
+            "name": "Password",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + data + '</div>';
             }
@@ -50,6 +59,7 @@
         {
             //"title": "Jabatan",
             "data": "RoleName",
+            "name": "RoleName",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + data + '</div>';
             }
@@ -57,6 +67,7 @@
         {
             //"title": "Jabatan",
             "data": "RoleID",
+            "name": "RoleID",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + data + '</div>';
             }
@@ -66,6 +77,7 @@
         {
             //"title": "Program Studi/Unit",
             "data": "NamaProdi",
+            "name": "NamaProdi",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + row.NamaProdi + '(' + row.KodeProdi + ')' + '</div>';
             }
@@ -95,15 +107,27 @@
             'vertical-align': 'center',
         });
     
-    },
-    'columnDefs': [
-        //hide the second & fourth column
-        { 'visible': false, 'targets': [5] }
-    ]
+    }//,
+    //'columnDefs': [
+    //    //hide the second & fourth column
+    //    { 'visible': false, 'targets': [5] }
+    //]
 });
 function validationCustom2() {
     var isValid;
     $(".input-data").each(function () {
+        var element = $(this);
+        if (element.val() == "") {
+            return isValid = false;
+        } else {
+            return isValid = true;
+        }
+    });
+    return isValid;
+}
+function validationCustomEditUser() {
+    var isValid;
+    $(".asd").each(function () {
         var element = $(this);
         if (element.val() == "") {
             return isValid = false;
