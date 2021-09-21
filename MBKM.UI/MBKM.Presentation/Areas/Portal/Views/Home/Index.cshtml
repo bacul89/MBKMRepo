@@ -8,36 +8,6 @@
         color: #C1BABA;
     }
 </style>
-<!-- Modal -->
-<div class="modal fade" id="loginAdmin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color: #FF8A04;">
-                <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
-                    Login Admin
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </h5>
-            </div>
-            <div class="modal-body">
-                <form action="@Url.Action("Login","AdminLogin")" method="post" class="form-horizontal">
-                    <div class="container" style="width: 100%;">
-                        <div class="form-group">
-                            <input type="text" name="Username" id="usernameAdmin" placeholder="Username" class="form-control input-lg" />
-                        </div>
-                        <div class="form-group">
-                            <input type="password" name="Password" id="passwordAdmin" placeholder="Password" class="form-control input-lg" />
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Login" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="modal fade" id="registrasi" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -163,7 +133,7 @@
                         </div>
                         <div style="float: right; font-size: 20px;">
                             Login sebagai
-                            <a data-toggle="modal" data-target="#loginAdmin" style="color: #FF8A04;">
+                            <a href="@Url.Action("Login", "AdminLogin", new { Area = "Admin" })" style="color: #FF8A04;">
                                 Admin
                             </a>
                         </div>

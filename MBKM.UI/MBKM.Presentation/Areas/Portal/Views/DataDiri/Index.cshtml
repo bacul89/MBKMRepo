@@ -80,48 +80,50 @@
             </div>
             <div class="modal-body">
                 <div class="container" style="width: 100%;">
-                    <table class="table">
-                        <tr>
-                            <td style="width: 20%; vertical-align: middle; text-align:center; height: 100%;"><span>Upload Foto Diri</span></td>
-                            <td>
-                                <div class="form-group files">
-                                    <input type="file" class="form-control" id="fotoDiri" name="fotoDiri" multiple="">
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 20%; vertical-align: middle; text-align:center; height: 100%;"><span>Upload Foto KTP</span></td>
-                            <td>
-                                <div class="form-group files">
-                                    <input type="file" class="form-control" id="fotoKTP" name="fotoKTP" multiple="">
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 20%; vertical-align: middle; text-align:center; height: 100%;"><span>Upload Foto KIM</span></td>
-                            <td>
-                                <div class="form-group files">
-                                    <input type="file" class="form-control" id="fotoKIM" name="fotoKIM" multiple="">
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 20%; vertical-align: middle; text-align:center; height: 100%;"><span>Upload Transkrip Nilai</span></td>
-                            <td>
-                                <div class="form-group files">
-                                    <input type="file" class="form-control" id="transkripNilai" name="transkripNilai" multiple="">
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="width: 20%; vertical-align: middle; text-align:center; height: 100%;"><span>Upload Surat Keterangan</span></td>
-                            <td>
-                                <div class="form-group files">
-                                    <input type="file" class="form-control" id="suratKeterangan" name="suratKeterangan" multiple="">
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
+                    <form class="form-horizontal" enctype="multipart/form-data" id="filePendukung">
+                        <table class="table">
+                            <tr>
+                                <td style="width: 20%; vertical-align: middle; text-align:center; height: 100%;"><span>Upload Foto Diri</span></td>
+                                <td>
+                                    <div class="form-group files">
+                                        <input type="file" class="form-control" id="fotoDiri" name="fotoDiri" multiple="">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 20%; vertical-align: middle; text-align:center; height: 100%;"><span>Upload Foto KTP</span></td>
+                                <td>
+                                    <div class="form-group files">
+                                        <input type="file" class="form-control" id="fotoKTP" name="fotoKTP" multiple="">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 20%; vertical-align: middle; text-align:center; height: 100%;"><span>Upload Foto KIM</span></td>
+                                <td>
+                                    <div class="form-group files">
+                                        <input type="file" class="form-control" id="fotoKIM" name="fotoKIM" multiple="">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 20%; vertical-align: middle; text-align:center; height: 100%;"><span>Upload Transkrip Nilai</span></td>
+                                <td>
+                                    <div class="form-group files">
+                                        <input type="file" class="form-control" id="transkripNilai" name="transkripNilai" multiple="">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 20%; vertical-align: middle; text-align:center; height: 100%;"><span>Upload Surat Keterangan</span></td>
+                                <td>
+                                    <div class="form-group files">
+                                        <input type="file" class="form-control" id="suratKeterangan" name="suratKeterangan" multiple="">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
                 </div>
             </div>
         </div>
@@ -371,43 +373,55 @@
             $("#edit").hide();
         });
         $("#simpan").click(function () {
-
             $.ajax({
                 type: "GET",
                 url: "@Url.Action("GetDataMahasiswa", "DataDiri")"
             }).then(function (mahasiswa) {
-                mahasiswa.Nama = $("#namaLengkap").val();
-                mahasiswa.Gender = $("#gender").val();
-                mahasiswa.TempatLahir = $("#tempatLahir").val();
-                mahasiswa.TanggalLahir = $("#tanggalLahir").val();
-                mahasiswa.WargaNegara = $("#kewarganegaraan").val();
-                mahasiswa.NoKTP = $("#noKtp").val();
-                mahasiswa.Email = $("#email").val();
-                mahasiswa.NoHp = $("#noHP").val();
-                mahasiswa.Telepon = $("#noTelp").val();
-                mahasiswa.Alamat = $("#alamat").val();
-                mahasiswa.NamaDarurat = $("#namaDarurat").val();
-                mahasiswa.HubunganDarurat = $("#hubungan").val();
-                mahasiswa.NoHPDarurat = $("#noHPDarurat").val();
-                mahasiswa.TeleponDarurat = $("#noTelpDarurat").val();
-                mahasiswa.EmailDarurat = $("#emailDarurat").val();
-                mahasiswa.AlamatDarurat = $("#alamatDarurat").val();
+                console.log(mahasiswa.ID);
+                var data = new FormData($('#filePendukung')[0]);
+                data.append("ID", $("#id").val());
+                data.append("Nama", $("#namaLengkap").val());
+                data.append("Gender", $("#gender").val());
+
+                data.append("TempatLahir", $("#tempatLahir").val());
+                data.append("TanggalLahir", $("#tanggalLahir").val());
+                data.append("WargaNegara", $("#kewarganegaraan").val());
+                data.append("NoKTP", $("#noKtp").val());
+                data.append("Email", $("#email").val());
+                data.append("NoHp", $("#noHP").val());
+                data.append("Telepon", $("#noTelp").val());
+                data.append("Alamat", $("#alamat").val());
+                data.append("NamaDarurat", $("#namaDarurat").val());
+                data.append("HubunganDarurat", $("#hubungan").val());
+                data.append("NoHPDarurat", $("#noHPDarurat").val());
+                data.append("TeleponDarurat", $("#noTelpDarurat").val());
+                data.append("EmailDarurat", $("#emailDarurat").val());
+                data.append("AlamatDarurat", $("#alamatDarurat").val());
 
                 if (mahasiswa.NoKerjasama != null) {
-                    mahasiswa.BiayaKuliah = $('#universitasAsal').select2('data')[0].biaya;
-                    mahasiswa.NamaUniversitas = $('#universitasAsal').select2('data')[0].nama;
-                    mahasiswa.NoKerjasama = $('#universitasAsal').select2('data')[0].value;
+                    data.append("BiayaKuliah", $('#universitasAsal').select2('data')[0].biaya);
+                    data.append("NamaUniversitas", $('#universitasAsal').select2('data')[0].nama);
+                    data.append("NoKerjasama", $('#universitasAsal').select2('data')[0].value);
                 } else {
-                    mahasiswa.NamaUniversitas = $("#universitasAsal").val();
+                    data.append("NamaUniversitas", $("#universitasAsal").val());
                 }
 
-                mahasiswa.JenjangStudi = $("#jenjangStudi").val();
-                mahasiswa.ProdiAsal = $("#programStudi").val();
-                mahasiswa.NIMAsal = $("#nimAsal").val();
+                data.append("JenjangStudi", $("#jenjangStudi").val());
+                data.append("ProdiAsal", $("#programStudi").val());
+                data.append("NIMAsal", $("#nimAsal").val());
+
+                //data.append("fotoDiri", fotoDiri);
+                //data.append("fotoKTP", fotoKTP);
+                //data.append("fotoKIM", fotoKIM);
+                //data.append("transkripNilai", transkripNilai);
+                //data.append("suratKeterangan", suratKeterangan);
                 $.ajax({
                     type: "POST",
                     url: "@Url.Action("UpdateDataDiri", "DataDiri")",
-                    data: mahasiswa
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: data
                 }).then(function (response) {
                     if (response.status == 200) {
                         $("input").attr("disabled", true);
