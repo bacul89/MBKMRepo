@@ -160,6 +160,7 @@
   <ItemGroup>
     <Content Include="Asset\kampus-universitas-katolik-atmajaya-jakarta-_131002231109-118.jpg" />
     <Content Include="Asset\Lambang_Unika_Atma_Jaya.png" />
+    <Content Include="Content\Admin\AdminCostumeBS4.css" />
     <Content Include="Content\Admin\inputResponsive.css" />
     <Content Include="Content\autonumeric\autoNumeric-2.0-BETA.htm" />
     <Content Include="Content\autonumeric\autoNumeric-2.0-BETA.js" />
@@ -419,6 +420,7 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\EmailTemplate\" />
     <Folder Include="Areas\Portal\Data\" />
+    <Folder Include="Upload\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
