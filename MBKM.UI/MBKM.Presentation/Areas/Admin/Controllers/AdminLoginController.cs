@@ -33,7 +33,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             //return RedirectToAction("Index", "Home");
             if (ModelState.IsValid)
             {
-                MBKM.Entities.Models.User modeldata = _userService.Find(x => x.NoPegawai == model.Username).FirstOrDefault();
+                MBKM.Entities.Models.User modeldata = _userService.Find(x => x.NoPegawai == model.Username && x.IsDeleted==false).FirstOrDefault();
                 if (modeldata != null)
                 {
                     if (HashPasswordService.ValidatePassword(model.Password, modeldata.Password))

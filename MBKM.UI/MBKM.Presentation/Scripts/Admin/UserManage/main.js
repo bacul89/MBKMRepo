@@ -6,7 +6,7 @@ var tableUser = $('#TableList').DataTable({
         "orderable": false,
         "paging": false,
         "targets": 0,
-         "visible": false, 'targets': [5] 
+         "visible": false, 'targets': [4,6] 
     }],
     //"order": [[1, 'asc']],
     "proccessing": true,
@@ -49,9 +49,17 @@ var tableUser = $('#TableList').DataTable({
             }
         },
         {
-            //"title": "Password",
+            //"title": "Email",
             "data": "Email",
             "name": "Email",
+            "render": function (data, type, row, meta) {
+                return '<div class="center">' + data + '</div>';
+            }
+        },
+        {
+            //"title": "Password",
+            "data": "Password",
+            "name": "Password",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + data + '</div>';
             }
