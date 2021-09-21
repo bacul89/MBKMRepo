@@ -72,6 +72,7 @@ function IndexViewMasterLookup(id) {
 }
 
 function PostCreate() {
+    dMasterLookup = {}
     getValueOnForm();
 
     console.log(dMasterLookup);
@@ -123,6 +124,7 @@ function PostCreate() {
 }
 
 function PostUpdate() {
+    dMasterLookup = {}
     getValueOnForm();
     dMasterLookup.ID = $('#id_MasterLookup').val();
     console.log(dMasterLookup);
