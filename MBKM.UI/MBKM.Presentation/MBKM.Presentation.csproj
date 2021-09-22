@@ -143,6 +143,7 @@
     <Compile Include="Areas\Admin\Controllers\VerifikasiMahasiswaController.cs" />
     <Compile Include="Areas\Portal\Controllers\DataDiriController.cs" />
     <Compile Include="Areas\Portal\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Portal\Controllers\NimDigitalController.cs" />
     <Compile Include="Areas\Portal\PortalAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UnAuthorizedController.cs" />
@@ -390,6 +391,7 @@
     <Content Include="Content\autonumeric\change log.md" />
     <Content Include="Content\autonumeric\readme.md" />
     <Content Include="Areas\Admin\Views\RegisMhsByAdmin\Index.cshtml" />
+    <Content Include="Areas\Portal\Views\NimDigital\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
