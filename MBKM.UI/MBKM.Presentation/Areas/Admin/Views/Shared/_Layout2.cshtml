@@ -7,6 +7,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <link rel="stylesheet" type="text/css" href="~/Content/Admin/AdminCostumeBS4.css">
+    <link href="~/Content/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.1/css/jquery.dataTables.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     @RenderSection("css", required: false)
@@ -97,6 +98,7 @@
                         <li><a href="@Url.Action("Index","UserManage")">Manage Login User</a></li>
                         <li><a href="@Url.Action("Index","MasterLookup")">Manage Master Lookup</a></li>
                         <li><a href="@Url.Action("Index","TemplateEmail")">Manage Template Email</a></li>
+                        <li><a href="@Url.Action("Index","RegisMhsByAdmin")">Registrasi Mahasiswa MBKM</a></li>
                     </ul>
                 </li>
             </ul>
@@ -124,6 +126,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/select2.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.js"></script>
     @RenderSection("scripts", required: false)
 </body>

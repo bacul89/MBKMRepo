@@ -79,12 +79,14 @@ function PostCreate2() {
             type: 'post',
             datatype: 'json',
             data: JSON.stringify(formInputUser),
+            //contentType: 'application/json'
             contentType: 'application/json',
-            success: function (e) {
+        }).then(function (response) {
+            if (response.status == 400) {
                 Swal.fire({
-                    title: 'Berhasil',
-                    icon: 'success',
-                    html: 'User Baru Berhasil Ditambahkan',
+                    title: 'Gagal!',
+                    icon: 'error',
+                    html: 'EMAIL atau NIP telah terdaftar!',
                     showCloseButton: true,
                     showCancelButton: false,
                     focusConfirm: false,
@@ -92,33 +94,141 @@ function PostCreate2() {
                 })
                 tableUser.ajax.reload(null, false);
                 $('.modal').modal('hide');
-            },
-            error: function (e) {
+                //$('#TambahUser')[0].reset();
+            }
+            else
+                if (response.status == 200) {
+                    Swal.fire({
+                        title: 'Berhasil',
+                        icon: 'success',
+                        html: 'User Baru Berhasil Ditambahkan',
+                        showCloseButton: true,
+                        showCancelButton: false,
+                        focusConfirm: false,
+                        confirmButtonText: 'OK'
+                    })
+                    tableUser.ajax.reload(null, false);
+                    $('.modal').modal('hide');
+                    //$('#TambahUser')[0].reset();
+
+                }
+
+            //response=0;
+            //alert(response.message);
+        });
+        //        success: function (e) {
+        //            Swal.fire({
+        //                title: 'Berhasil',
+        //                icon: 'success',
+        //                html: 'User Baru Berhasil Ditambahkan',
+        //                showCloseButton: true,
+        //                showCancelButton: false,
+        //                focusConfirm: false,
+        //                confirmButtonText: 'OK'
+        //            })
+        //            tableUser.ajax.reload(null, false);
+        //            $('.modal').modal('hide');
+        //        },
+        //        error: function (e) {
+        //            Swal.fire({
+        //                title: 'Oppss',
+        //                icon: 'error',
+        //                html: 'Coba Reload Page',
+        //                showCloseButton: true,
+        //                showCancelButton: false,
+        //                focusConfirm: false,
+        //                confirmButtonText: 'OK'
+        //            })
+        //            $('.modal').modal('hide');
+        //        }
+        //    })
+    }
+         else {
+            Swal.fire({
+                title: 'Oppss',
+                icon: 'warning',
+                html: 'Ada beberapa field yang belum kamu isikan',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText: 'OK'
+            })
+        }
+}
+
+function PostUpdateUser() {
+    var formInputUser = new Object();
+    var namaProdi = document.getElementById("idProdi");
+    var selectedProdi = namaProdi.options[namaProdi.selectedIndex].text;
+    var namaProdis = selectedProdi.substring(selectedProdi.indexOf('-') + 1);
+    formInputUser.NoPegawai = $('input[id=txtnomorindukpegawai]').val();
+    formInputUser.UserName = $('input[id=txtnama]').val();
+    formInputUser.Email = $('input[id=txtemail]').val();
+    formInputUser.Password = $('input[id=txtpassword]').val();
+    formInputUser.RoleID = $('#idRole').val();
+    formInputUser.KodeProdi = $('#idProdi').val();
+    //formInputUser.NamaProdi = $('#idProdi').val();
+    formInputUser.NamaProdi = namaProdis;
+    var cekAktif = $('input[id=inp_status]:checked').val();
+    if (cekAktif == 1) {
+        formInputUser.IsActive = "true";
+    }
+    else { formInputUser.IsActive = "false"; }
+    formInputUser.ID = $('#id_userTemplate').val();
+    console.log(formInputUser);
+    if (validationCustomEditUser()) {
+    var base_url = window.location.origin;
+    $.ajax({
+        url: base_url + '/Admin/UserManage/PostUpdateDataUser',
+        type: 'post',
+        datatype: 'json',
+        data: JSON.stringify(formInputUser),
+        contentType: 'application/json',
+    }).then(function (response) {
+        if (response.status == 400) {
+            Swal.fire({
+                title: 'Gagal!',
+                icon: 'error',
+                html: 'EMAIL atau NIP telah terdaftar!',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText: 'OK'
+            })
+            tableUser.ajax.reload(null, false);
+            $('.modal').modal('hide');
+        }
+        else
+            if (response.status == 200) {
                 Swal.fire({
-                    title: 'Oppss',
-                    icon: 'error',
-                    html: 'Coba Reload Page',
+                    title: 'Berhasil',
+                    icon: 'success',
+                    html: 'User Baru Berhasil Diedit',
                     showCloseButton: true,
                     showCancelButton: false,
                     focusConfirm: false,
                     confirmButtonText: 'OK'
                 })
+                tableUser.ajax.reload(null, false);
                 $('.modal').modal('hide');
+
             }
-        })
-    } else {
-        Swal.fire({
-            title: 'Oppss',
-            icon: 'warning',
-            html: 'Ada beberapa field yang belum kamu isikan',
-            showCloseButton: true,
-            showCancelButton: false,
-            focusConfirm: false,
-            confirmButtonText: 'OK'
-        })
-    }
+    });
+    
 }
-function PostUpdateUser() {
+         else {
+    Swal.fire({
+        title: 'Oppss',
+        icon: 'warning',
+        html: 'Ada beberapa field yang belum kamu isikan',
+        showCloseButton: true,
+        showCancelButton: false,
+        focusConfirm: false,
+        confirmButtonText: 'OK'
+    })
+}
+}
+/*function PostUpdateUser() {
     var formInputUser = new Object();
     var namaProdi = document.getElementById("idProdi");
     var selectedProdi = namaProdi.options[namaProdi.selectedIndex].text;
@@ -171,4 +281,4 @@ function PostUpdateUser() {
             $('.modal').modal('hide');
         }
     })
-}
+}*/
