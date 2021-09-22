@@ -148,11 +148,12 @@
     <Compile Include="Controllers\UnAuthorizedController.cs" />
     <Compile Include="Helper\GMailer.cs" />
     <Compile Include="Helper\MBKMAuthorize.cs" />
-    <Compile Include="Models\LoginVMAdmin.cs" />
-    <Compile Include="Models\ServiceResponse.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\FilePendukung.cs" />
+    <Compile Include="Models\LoginVMAdmin.cs" />
+    <Compile Include="Models\ServiceResponse.cs" />
     <Compile Include="Modules\EFModule.cs" />
     <Compile Include="Modules\RepositoryModule.cs" />
     <Compile Include="Modules\ServiceModule.cs" />
