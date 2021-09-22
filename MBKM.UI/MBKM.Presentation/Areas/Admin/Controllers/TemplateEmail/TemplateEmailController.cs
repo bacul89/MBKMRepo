@@ -74,5 +74,17 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.TemplateEmail
             var data = _emailTemplateService.Get(id);
             return View(data);
         }
+
+        [HttpPost]
+        public ActionResult PostDeleteEmailTemplate(int id)
+        {
+            EmailTemplate data = _emailTemplateService.Get(id);
+            data.IsDeleted = true;
+
+            _emailTemplateService.Save(data);
+
+            return Json(data);
+        }
+
     }
 }

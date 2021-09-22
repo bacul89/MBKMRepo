@@ -67,12 +67,12 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                         ID = z.ID,
                         Email = z.Email,
                         Nama = z.Nama,
-                        Universitas = z.NamaUniversitas,
+                        NamaUniversitas = z.NamaUniversitas,
                         Gender = z.Gender,
-                        HP = z.NoHp,
-                        NIM = z.NIMAsal,
-                        Prodi = z.ProdiAsal,
-                        Jenjang = z.JenjangStudi,
+                        NoHp = z.NoHp,
+                        NIMAsal = z.NIMAsal,
+                        ProdiAsal = z.ProdiAsal,
+                        JenjangStudi = z.JenjangStudi,
                         StatusVerifikasi = z.StatusVerifikasi
                     })                    
                     .ToList();

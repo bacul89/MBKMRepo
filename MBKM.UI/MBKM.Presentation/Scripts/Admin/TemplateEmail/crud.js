@@ -207,5 +207,52 @@ function PostUpdate() {
     }) 
 }
 
+function DeleteDataTemplate(idt) {
+    swal.fire({
+        title: "Apakah anda yakin?",
+        type: "warning",
+        icon: "warning", 
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, delete it!",
+        closeOnConfirm: false
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.LoadingOverlay("show");
+            $.ajax({
+                url: '/Admin/TemplateEmail/PostDeleteEmailTemplate/',
+                type: 'post',
+                data: {
+                    id: idt
+                },
+                datatype: 'json',
+                success: function (e) {
+                    $.LoadingOverlay("hide");
+                    Swal.fire({
+                        title: 'Berhasil',
+                        icon: 'success',
+                        html: 'Data Berhasil Terhapus',
+                        showCloseButton: true,
+                        showCancelButton: false,
+                        focusConfirm: false,
+                        confirmButtonText: 'OK'
+                    })
+                    dataTable.ajax.reload(null, false);
+                }, error: function (e) {
+                    $.LoadingOverlay("hide");
+                    Swal.fire({
+                        title: 'Oppss',
+                        icon: 'error',
+                        html: 'Coba Reload Page',
+                        showCloseButton: true,
+                        showCancelButton: false,
+                        focusConfirm: false,
+                        confirmButtonText: 'OK'
+                    })
+                }
+            })
+        }
+    })
+}
 
 
