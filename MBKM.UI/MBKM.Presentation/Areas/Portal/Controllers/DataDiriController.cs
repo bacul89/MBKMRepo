@@ -21,11 +21,21 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult Index()
         {
+            var mahasiswa = _mahasiswaService.Get(32).Attachments.Select(x => new Attachment
+            {
+                FileName = x.FileName,
+                FileExt = x.FileExt,
+                FileType = x.FileType,
+                FileSze = x.FileSze,
+                ID = x.ID
+                
+            });
             return View();
         }
         public JsonResult GetDataMahasiswa(Mahasiswa mahasiswa)
         {
             string email = Session["email"] as string;
+
             return Json(GetMahasiswaByEmail(email), JsonRequestBehavior.AllowGet);
         }
         public JsonResult getLookupByValue(string tipe, string value)

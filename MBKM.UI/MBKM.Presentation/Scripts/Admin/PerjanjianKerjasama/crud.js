@@ -47,6 +47,7 @@ function SubmitPerjanjian() {
         data: data,
         success: function (response) {
             console.log("coba insert")
+            console.log(response);
         }
     });
 }
