@@ -88,7 +88,7 @@ function PostCreate() {
                 Swal.fire({
                     title: 'Berhasil',
                     icon: 'success',
-                    html: 'Template Email Berhasil Ditambahkan',
+                    html: 'Master Lookup Berhasil Ditambahkan',
                     showCloseButton: true,
                     showCancelButton: false,
                     focusConfirm: false,
@@ -139,7 +139,7 @@ function PostUpdate() {
             Swal.fire({
                 title: 'Berhasil',
                 icon: 'success',
-                html: 'Template Email Berhasil Diubah',
+                html: 'Master Lookup Berhasil Diubah',
                 showCloseButton: true,
                 showCancelButton: false,
                 focusConfirm: false,
@@ -169,8 +169,8 @@ function PostUpdate() {
 function DeletedMasterLookup(idLookup) {
 
     Swal.fire({
-        title: "Are you sure?",
-        text: "You will not be able to recover this imaginary file!",
+        title: "Apakah anda yakin?",
+        text: "warning",
         type: "warning",
         showCancelButton: true,
         confirmButtonColor: "#DD6B55",
@@ -184,10 +184,26 @@ function DeletedMasterLookup(idLookup) {
             ,
             dataType: "json",
             success: function () {
-                Swal.fire("Done!", "It was succesfully deleted!", "success");
+                Swal.fire({
+                    title: 'Berhasil',
+                    icon: 'success',
+                    html: 'Data Berhasil Terhapus',
+                    showCloseButton: true,
+                    showCancelButton: false,
+                    focusConfirm: false,
+                    confirmButtonText: 'OK'
+                })
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                Swal.fire("Error deleting!", "Please try again", "error");
+                Swal.fire({
+                    title: 'Oppss',
+                    icon: 'error',
+                    html: 'Coba Reload Page',
+                    showCloseButton: true,
+                    showCancelButton: false,
+                    focusConfirm: false,
+                    confirmButtonText: 'OK'
+                })
             }
         });
     })
