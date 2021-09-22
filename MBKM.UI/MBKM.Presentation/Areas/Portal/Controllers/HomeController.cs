@@ -119,6 +119,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     mahasiswa.Gender = a.Gender;
                     mahasiswa.ProdiAsal = a.Prodi;
                     mahasiswa.NIM = a.NIM;
+                    mahasiswa.NIMAsal = a.NIM;
                     mahasiswa.StatusVerifikasi = "AKTIF";
 
                     _mahasiswaService.Save(mahasiswa);
