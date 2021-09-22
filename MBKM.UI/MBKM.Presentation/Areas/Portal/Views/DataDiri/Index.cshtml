@@ -399,9 +399,15 @@
                 data.append("AlamatDarurat", $("#alamatDarurat").val());
 
                 if (mahasiswa.NoKerjasama != null) {
-                    data.append("BiayaKuliah", $('#universitasAsal').select2('data')[0].biaya);
-                    data.append("NamaUniversitas", $('#universitasAsal').select2('data')[0].nama);
-                    data.append("NoKerjasama", $('#universitasAsal').select2('data')[0].value);
+                    if ($('#universitasAsal').select2('data')[0].biaya != null) {
+                        data.append("BiayaKuliah", $('#universitasAsal').select2('data')[0].biaya);
+                        data.append("NamaUniversitas", $('#universitasAsal').select2('data')[0].nama);
+                        data.append("NoKerjasama", $('#universitasAsal').select2('data')[0].value);
+                    } else {
+                        data.append("BiayaKuliah", $('#universitasAsal').find(':selected').attr('data-biaya'));
+                        data.append("NamaUniversitas", $('#universitasAsal').find(':selected').attr('data-nama'));
+                        data.append("NoKerjasama", $('#universitasAsal').val());
+                    }
                 } else {
                     data.append("NamaUniversitas", $("#universitasAsal").val());
                 }
@@ -446,7 +452,8 @@
                     setLookupValue("Gender", response.Gender, "gender");
                 }
                 $("#tempatLahir").val(response.TempatLahir);
-                $("#tanggalLahir").val(response.TanggalLahir);
+                response.TanggalLahir = new Date(response.TanggalLahir)
+                $("#tanggalLahir").val(response.TanggalLahir.getFullYear() + "-" + appendZero(response.TanggalLahir.getMonth(), 2) + "-" + appendZero(response.TanggalLahir.getDate(), 2));
                 if (response.WargaNegara != null) {
                     setLookupValue("WargaNegara", response.WargaNegara, "kewarganegaraan");
                 }
@@ -466,8 +473,8 @@
                 if (response.NoKerjasama == null) {
                     $("#univAsal").html('<input type="text" name="universitasAsal" id="universitasAsal" class="form-control input-md" required disabled />');
                     $("#universitasAsal").val(response.NamaUniversitas);
-                } else if (response.NamaUniversitas != null) {
-                    $("#universitasAsal").val(response.NamaUniversitas);
+                } else {
+                    setUniversitas(response.NoKerjasama);
                 }
                 $("#jenjangStudi").val(response.JenjangStudi);
                 $("#programStudi").val(response.ProdiAsal);
@@ -534,6 +541,22 @@
                 var option = $("<option selected='selected'></option>").val(response.Nilai).text(response.Nama);
                 $("#" + id).append(option).trigger('change');
             });
+        }
+        function setUniversitas(noPerjanjian) {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetPerjanjianKerjasama", "DataDiri")?noPerjanjian=" + noPerjanjian
+            }).then(function (response) {
+                var option = $("<option selected='selected'></option>").val(response.NoPerjanjian).text(response.NamaInstansi).attr('data-biaya', response.BiayaKuliah).attr('data-nama', response.NamaInstansi);
+                $("#universitasAsal").append(option).trigger('change');
+            });
+        }
+        function appendZero(string, length) {
+            string += "";
+            while (string.length < length) {
+                string = "0" + string;
+            }
+            return string;
         }
     </script>
 }
