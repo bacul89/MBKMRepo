@@ -17,14 +17,18 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private IEmailTemplateService _emailTemplateService;
         private ILookupService _lookupService;
         private IPerjanjianKerjasamaService _perjanjianKerjasama;
+        private IAttachmentService _attachmentService;
 
-        public VerifikasiMahasiswaController(IMahasiswaService mahasiswaService, IEmailTemplateService emailTemplateService, ILookupService lookupService, IPerjanjianKerjasamaService perjanjianKerjasama)
+        public VerifikasiMahasiswaController(IMahasiswaService mahasiswaService, IEmailTemplateService emailTemplateService, ILookupService lookupService, IPerjanjianKerjasamaService perjanjianKerjasama, IAttachmentService attachmentService)
         {
             _mahasiswaService = mahasiswaService;
             _emailTemplateService = emailTemplateService;
             _lookupService = lookupService;
             _perjanjianKerjasama = perjanjianKerjasama;
+            _attachmentService = attachmentService;
         }
+
+
 
 
         // GET: Admin/VerifikasiMahasiswa
@@ -60,9 +64,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetAllLookUp()
+        public JsonResult GetAllAttachment(int id)
         {
-            var data = _mahasiswaService.Get(2);
+            var data = _mahasiswaService.Get(id).Attachments.Select(x => new Attachment { 
+                FileName = x.FileName,
+                FileType = x.FileType,
+                ID = x.ID
+            });
             return Json(data);
         }
 
@@ -77,7 +85,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             data.NoKerjasama = _mahasiswa.NoKerjasama;
             data.StatusKerjasama = _mahasiswa.StatusKerjasama;
             data.StatusVerifikasi = _mahasiswa.StatusVerifikasi;
-
+            if(_mahasiswa.StatusVerifikasi == "AKTIF")
+            {
+                SendEmail(data.Email, "VerifikasiAktif");
+            }else if(_mahasiswa.StatusVerifikasi == "DITOLAK")
+            {
+                SendEmail(data.Email, "VerifikasiDitolak");
+            }
             _mahasiswaService.Save(data);
             return Json(data);
         }
@@ -105,6 +119,47 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             var data = _perjanjianKerjasama.Get(id);
             return Json(data);
+        }
+
+        public ActionResult DownloadFile(int id)
+        {
+            var data = _attachmentService.Get(id);
+            string path = "~/Upload/";
+            string fullName = Server.MapPath( path + data.FileName);
+
+            byte[] fileBytes = GetFile(fullName);
+            return File(
+                fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet,data.mahasiswas.NIM + data.mahasiswas.Nama + data.FileName);
+        }
+
+        byte[] GetFile(string s)
+        {
+            System.IO.FileStream fs = System.IO.File.OpenRead(s);
+            byte[] data = new byte[fs.Length];
+            int br = fs.Read(data, 0, data.Length);
+            if (br != fs.Length)
+                throw new System.IO.IOException(s);
+            return data;
+        }
+
+        public void SendEmail(string email, string status)
+        {
+            GMailer mailer = new GMailer();
+            if(status == "VerifikasiAktif")
+            {
+                var data = _emailTemplateService.Find(x => x.TipeMail == "VerifikasiAktif").First();
+                mailer.Subject = data.SubjectMail;
+                mailer.Body = data.BodyMail;
+
+            }else if(status == "VerifikasiDitolak")
+            {
+                var data = _emailTemplateService.Find(x => x.TipeMail == "VerifikasiDitolak").First();
+                mailer.Subject = data.SubjectMail;
+                mailer.Body = data.BodyMail;
+            }
+            mailer.ToEmail = email;
+            mailer.IsHtml = true;
+            mailer.Send();
         }
     }
 }

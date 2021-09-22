@@ -1,4 +1,5 @@
 ﻿using MBKM.Entities.Basentities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -46,7 +47,9 @@ namespace MBKM.Entities.Models.MBKM
         public string Approval { get; set; }
         public string Catatan { get; set; }
         public string StatusKerjasama { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Attachment> Attachments { get; set; }
+        [JsonIgnore]
         public virtual ICollection<KRS> KRs { get; set; }
     }
 }

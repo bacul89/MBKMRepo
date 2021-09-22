@@ -53,12 +53,12 @@ namespace MBKM.Services.MBKMServices
             if (model.order != null)
             {
                 // in this example we just default sort on the 1st column
-                sortBy = model.columns[model.order[0].column].data;
+                sortBy = model.columns[model.order[0].column].data ;
                 sortDir = model.order[0].dir.ToLower() == "asc";
             }
             if (sortBy == null)
                 sortBy = "ID";
-
+            sortBy = sortBy + " " + model.order[0].dir.ToUpper();
             return _mahasiswaRepository.getMahasiswasNotYetVer(skip, take, searchBy, sortBy, sortDir);
         }
 

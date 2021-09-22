@@ -10,10 +10,18 @@
             "targets": 0
         }],
         "order": [[1, 'asc']],
+        "columnDefs": [{ "orderable": false, "targets": 9 }],
         "createdRow": function (row, data, index) {
-            $('td', row).css({
-                'border': '1px solid coral',
-            });
+/*            console.log(data);
+            if (data.IsDeleted == false) {
+*//*                $('td:eq(0)', row).html(meta.row + 1);*//*
+                var info = this.fnPagingInfo();
+                var page = info.iPage;
+                var length = info.iLength;
+            }
+*/
+
+
         }
     });
 
@@ -139,14 +147,27 @@ var dataTable = $('#table-data-master-lookup').DataTable({
 
     ],
     "createdRow": function (row, data, index) {
+        console.log(row);
 
         $('td', row).css({
-            'border': '1px solid coral',
+            'font-size': '0.8vw',
+            'border-top': '1px solid coral',
+            'border-bottom': '1px solid coral',
+            'border-left': 'none',
+            'border-right': 'none',
             'border-collapse': 'collapse',
             'vertical-align': 'center',
+            'background': '#fff'
         });
 
-
+        $('td:eq(0)', row).css({
+            'border-left': '1px solid coral',
+            'border-right': 'none'
+        });
+        $('td:eq(9)', row).css({
+            'border-left': 'none',
+            'border-right': '1px solid coral'
+        });
     }
 });
 

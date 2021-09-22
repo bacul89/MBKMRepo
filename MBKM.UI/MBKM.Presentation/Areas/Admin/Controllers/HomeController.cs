@@ -26,7 +26,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             //IEnumerable<Menu> a = _menuService.GetAll().ToList();
             //Menu model = _menuService.Get(1);
-            IEnumerable<VMLookup> listModel = _lookupService.getLookupByTipe("Gender");
+            //IEnumerable<VMLookup> listModel = _lookupService.getLookupByTipe("Gender");
             return View();
         }
         public ActionResult Home()

@@ -9,6 +9,8 @@ using System.Web;
 using System.Web.Mvc;
 using MBKM.Entities.Models.MBKM;
 using MBKM.Common.Helpers;
+using System.IO;
+using MBKM.Presentation.models;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
 {
@@ -27,10 +29,6 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
         // GET: Admin/PerjanjianKerjasama
         public ActionResult Index()
         {
-            //IEnumerable<VMLookup> listModel = _lookupService.getLookupByTipe("JenisPertukaran");
-            //ViewBag.listModel = new SelectList(listModel, "Nilai", "Nama");
-            //IEnumerable<VMLookup> listKerjasama = _lookupService.getLookupByTipe("JenisKerjasama");
-            //ViewBag.listKerjasama = new SelectList(listKerjasama, "Nilai", "Nama");
             Debug.WriteLine("akses index");
             return View();
         }
@@ -51,10 +49,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
         /*View Modal Created*/
         public ActionResult ModalCreatePerjanjianKerjasama()
         {
-            IEnumerable<VMLookup> listModel = _lookupService.getLookupByTipe("JenisPertukaran");
-            ViewBag.listModel = new SelectList(listModel, "Nilai", "Nama");
-            IEnumerable<VMLookup> listKerjasama = _lookupService.getLookupByTipe("JenisKerjasama");
-            ViewBag.listKerjasama = new SelectList(listKerjasama, "Nama", "Nama");
+            var listPerjanjian = _lookupService.getLookupByTipe("JenisPertukaran");
+            ViewData["listPerjanjian"] = listPerjanjian;
+            var listKerjasama = _lookupService.getLookupByTipe("JenisKerjasama");
+            ViewData["listKerjasama"] = listKerjasama;
             return View("ModalCreatePerjanjianKerjasama");
         }
         /*Post Modal Created*/
@@ -71,34 +69,73 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
             var data = _perjanjianKerjasamaService.Get(id);
             return View(data);
         }
-        public void SavePerjanjian(HttpPostedFileBase[] file, MBKM.Entities.Models.MBKM.PerjanjianKerjasama perjanjianKerjasama)
+
+        public JsonResult SavePerjanjian(HttpPostedFileBase[] file, MBKM.Entities.Models.MBKM.PerjanjianKerjasama perjanjianKerjasama)
         {
-            perjanjianKerjasama.NoPerjanjian = perjanjianKerjasama.NoPerjanjian;
-            perjanjianKerjasama.TanggalMulai = perjanjianKerjasama.TanggalMulai;
-            perjanjianKerjasama.TanggalAkhir = perjanjianKerjasama.TanggalAkhir;
-            perjanjianKerjasama.CreatedBy = perjanjianKerjasama.CreatedBy;
-            perjanjianKerjasama.CreatedDate = DateTime.Now;
-            perjanjianKerjasama.UpdatedBy = perjanjianKerjasama.UpdatedBy;
-            perjanjianKerjasama.UpdatedDate = perjanjianKerjasama.UpdatedDate;
-            perjanjianKerjasama.IsActive = true;
-            perjanjianKerjasama.IsDeleted = false;
-            perjanjianKerjasama.NamaInstansi = perjanjianKerjasama.NamaInstansi;
-            perjanjianKerjasama.NamaUnit = perjanjianKerjasama.NamaUnit;
-            perjanjianKerjasama.JenisPertukaran = perjanjianKerjasama.JenisPertukaran;
-            perjanjianKerjasama.JenisKerjasama = perjanjianKerjasama.JenisKerjasama;
-            perjanjianKerjasama.BiayaKuliah = perjanjianKerjasama.BiayaKuliah;
-            perjanjianKerjasama.Instansi = perjanjianKerjasama.Instansi;
-            //perjanjianKerjasama.UniversitasID = 0;
-            //_perjanjianKerjasamaService.Save(perjanjianKerjasama);
+            try
+            {
+
+
+                if (ModelState.IsValid)
+                {
+                    List<AttachmentPerjanjianKerjasama> attachments = new List<AttachmentPerjanjianKerjasama>();
+                    for (int i = 0; i < file.Length; i++)
+                    {
+                        var files = file[i];
+                        if (files != null && files.ContentLength > 0)
+                        {
+                            var fileName = Path.GetFileName(files.FileName);
+                            AttachmentPerjanjianKerjasama attch = new AttachmentPerjanjianKerjasama()
+                            {
+                                FileName = fileName,
+                                FileExt = Path.GetExtension(fileName),
+                                FileSze = files.ContentLength,
+                                IsActive = true,
+                                IsDeleted = false
+                            };
+                            attachments.Add(attch);
+                            var path = Path.Combine(Server.MapPath("~/Upload/"), attch.FileName + attch.FileExt);
+                            files.SaveAs(path);
+                        }
+                    }
+                    perjanjianKerjasama.AttachmentPerjanjianKerjasamas = attachments;
+                    perjanjianKerjasama.NoPerjanjian = perjanjianKerjasama.NoPerjanjian;
+                    perjanjianKerjasama.TanggalMulai = perjanjianKerjasama.TanggalMulai;
+                    perjanjianKerjasama.TanggalAkhir = perjanjianKerjasama.TanggalAkhir;
+                    perjanjianKerjasama.CreatedBy = perjanjianKerjasama.CreatedBy;
+                    perjanjianKerjasama.CreatedDate = DateTime.Now;
+                    perjanjianKerjasama.UpdatedBy = perjanjianKerjasama.UpdatedBy;
+                    perjanjianKerjasama.UpdatedDate = perjanjianKerjasama.UpdatedDate;
+                    perjanjianKerjasama.IsActive = true;
+                    perjanjianKerjasama.IsDeleted = false;
+                    perjanjianKerjasama.NamaInstansi = perjanjianKerjasama.NamaInstansi;
+                    perjanjianKerjasama.NamaUnit = perjanjianKerjasama.NamaUnit;
+                    perjanjianKerjasama.JenisPertukaran = perjanjianKerjasama.JenisPertukaran;
+                    perjanjianKerjasama.JenisKerjasama = perjanjianKerjasama.JenisKerjasama;
+                    perjanjianKerjasama.BiayaKuliah = perjanjianKerjasama.BiayaKuliah;
+                    perjanjianKerjasama.Instansi = perjanjianKerjasama.Instansi;
+                    //perjanjianKerjasama.UniversitasID = 0;
+                    _perjanjianKerjasamaService.Save(perjanjianKerjasama);
+                    return Json(new ServiceResponse { status = 200, message = "Data diri berhasil diupdate!" });
+                }
+                return Json(new ServiceResponse { status = 500, message = "Not Valid Model" });
+            }
+            catch (Exception e)
+            {
+                return Json(new ServiceResponse { status = 500, message = e.Message });
+            }
+            //return Json(new ServiceResponse { status = 500, message = e.Message });
         }
+
 
         /*Modal Update*/
         public ActionResult ModalUpdateKerjasama(int id)
         {
-            IEnumerable<VMLookup> listModel = _lookupService.getLookupByTipe("JenisPertukaran");
-            ViewBag.listModel = new SelectList(listModel, "Nilai", "Nama");
-            IEnumerable<VMLookup> listKerjasama = _lookupService.getLookupByTipe("JenisKerjasama");
-            ViewBag.listKerjasama = new SelectList(listKerjasama, "Nama", "Nama");
+
+            var listPerjanjian = _lookupService.getLookupByTipe("JenisPertukaran");
+            ViewData["listPerjanjian"] = listPerjanjian;
+            var listKerjasama = _lookupService.getLookupByTipe("JenisKerjasama");
+            ViewData["listKerjasama"] = listKerjasama;
             var data = _perjanjianKerjasamaService.Get(id);
             return View(data);
         }

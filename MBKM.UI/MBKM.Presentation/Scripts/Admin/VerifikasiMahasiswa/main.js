@@ -1,5 +1,5 @@
 ﻿var table = $('#table-data-verifikasi-mahasiswa').DataTable({
-    "proccessing": true,
+    "processing": true,
     "serverSide": true,
     "ajax": {
         url: '/Admin/VerifikasiMahasiswa/GetAllMahasiswa',
@@ -7,8 +7,7 @@
     },
     "language": {
         "emptyTable": "No record found.",
-        "processing":
-            '<i class="fa fa-spinner fa-spin fa-3x fa-fw" style="color:#2a2b2b;"></i><span class="sr-only">Loading...</span> ',
+        "processing": '<div style="padding-top:30px;"><i class="fa fa-spinner fa-spin fa-3x fa-fw" ></i><span class="sr-only" style="color:#2a2b2b;">Loading...</span></div> ',
         "search": "",
         "searchPlaceholder": "Search..."
     },
@@ -21,28 +20,28 @@
         },
         {
             "title": "Universitas Asal",
-            "data": "Universitas",
+            "data": "NamaUniversitas",
             "render": function (data, type, row, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
             "title": "Jenjang Studi",
-            "data": "Jenjang",
+            "data": "JenjangStudi",
             "render": function (data, type, row, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
             "title": "Program Studi Asal",
-            "data": "Prodi",
+            "data": "ProdiAsal",
             "render": function (data, type, row, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
             "title": "NIM Asal",
-            "data": "NIM",
+            "data": "NIMAsal",
             "render": function (data, type, row, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
@@ -70,7 +69,7 @@
         },
         {
             "title": "No. Hp",
-            "data": "HP",
+            "data": "NoHp",
             "render": function (data, type, row, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }

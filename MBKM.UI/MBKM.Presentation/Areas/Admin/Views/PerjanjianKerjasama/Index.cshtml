@@ -4,19 +4,27 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
 }
 
-<style>
-    table thead {
-        background-color: #FF8A04;
-    }
 
-    .middle {
-        line-height: 70px;
-    }
+@section css{
 
-    .icon {
-        color: #FF8A04;
-    }
-</style>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="~/Content/Admin/AdminCostumeBS4.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/Admin/inputResponsive.css">
+    @Scripts.Render("~/bundles/jquery")
+    <style>
+        table thead {
+            background-color: #FF8A04;
+        }
+
+        .middle {
+            line-height: 70px;
+        }
+
+        .icon {
+            color: #FF8A04;
+        }
+    </style>
+}
 @section modal{
     <div class="modal fade" id="TambahKerjasama" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document" id="modal-inner">
@@ -35,7 +43,7 @@
                 <button class="btn btn-success" onclick="IndexCreateKerjasama()"><i class="fas fa-plus-circle"></i> Tambah Kerjasama</button>
                 <br />
                 <br />
-                <table id="TableList" class="table table-bordered hover dt-responsive display responsive nowrap"
+                <table id="TableList" class="table table-bordered table-striped table-hover js-basic-example dataTable table-responsive display nowrap"
                        style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                 </table>
             </div>

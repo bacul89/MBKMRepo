@@ -1,8 +1,7 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
-@model MBKM.Entities.ViewModel.VMLookup
+
 
 <div class="modal-content data-content-modal" id="created-Kerjasama">
     <div class="modal-header" style="background-color: #FF8A04; ">
@@ -14,29 +13,29 @@
         </h5>
     </div>
     <div class="modal-body">
-        <form class="form-horizontal" enctype="multipart/form-data">
+        <form class="form-horizontal" enctype= multipart/form-data id="createPerjanjian">
             <div class="form-group row">
                 <label for="no" class="col-md-4 col-form-label">No. Kerjasama</label>
                 <div class="col-md-8">
-                    <input id="NoPerjanjian" type="text" name="NoPerjanjian" class="form-control" placeholder="Input No. Kerjasama">
+                    <input id="NoPerjanjian" type="text" name="NoPerjanjian" class="form-control" placeholder="Input No. Kerjasama" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="tanggalKerjasama" class="col-md-4 col-form-label">Tanggal Kerjasama</label>
                 <div class="col-md-8">
-                    <input id="TanggalMulai" type="date" name="TanggalMulai" class="form-control" placeholder="dd/mm/yyyy">
+                    <input id="TanggalMulai" type="date" name="TanggalMulai" class="form-control" placeholder="dd/mm/yyyy" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="tanggalBerakhir" class="col-md-4 col-form-label">Tanggal Berakhir</label>
                 <div class="col-md-8">
-                    <input id="TanggalAkhir" type="date" name="TanggalAkhir" class="form-control" placeholder="dd/mm/yyyy">
+                    <input id="TanggalAkhir" type="date" name="TanggalAkhir" class="form-control" placeholder="dd/mm/yyyy" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="Instansi" class="col-md-4 col-form-label">Instansi</label>
                 <div class="col-md-8">
-                    <select name="instansi" id="instansi" class="form-control">
+                    <select name="Instansi" id="instansi" class="form-control" required>
                         <option value="" disabled selected>--Pilih Perusahaan/Universitas--</option>
                         <option value="Perusahaan">Perusahaan</option>
                         <option value="Universitas">Universitas</option>
@@ -46,53 +45,63 @@
             <div class="form-group row">
                 <label for="Namainstansi" class="col-md-4 col-form-label">Nama</label>
                 <div class="col-md-8">
-                    <input id="NamaUniversitas" type="text" name="NamaUniversitas" class="form-control" placeholder="Input Nama Perusahaan/Universitas">
+                    <input id="NamaUniversitas" type="text" name="NamaInstansi" class="form-control" placeholder="Input Nama Perusahaan/Universitas" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="Namaunit" class="col-md-4 col-form-label">Nama Unit/Program Studi</label>
                 <div class="col-md-8">
-                    <input id="Namaunit" type="text" name="Namaunit" class="form-control" placeholder="Input nama Unit/Program Studi">
+                    <input id="Namaunit" type="text" name="Namaunit" class="form-control" placeholder="Input nama Unit/Program Studi" required>
                 </div>
             </div>
             <div class="form-group row">
-                @if (ViewBag.listModel != null)
-                {
-                    <label for="pertukaran" class="col-md-4 col-form-label">Jenis Pertukaran</label>
-                    <div class="col-md-8">
-                        @Html.DropDownListFor(model => model.Nilai, ViewBag.listModel as SelectList, "--Pilih Pertukaran--", new { @class = "form-control pertukaran" })
-                    </div>
-                }
+                <label for="pertukaran" class="col-md-4 col-form-label">Jenis Pertukaran</label>
+                <div class="col-md-8">
+                    <select name="JenisPertukaran" id="JenisPertukaran" class="form-control" required>
+                        <option value="" disabled selected>--Pilih Jenis Pertukaran--</option>
+                        @{
+                            foreach (var data in ViewData["listPerjanjian"] as IEnumerable<MBKM.Entities.ViewModel.VMLookup>)
+                            {
+                                <option value="@data.Nilai">@data.Nama</option>
+                            }
+                        }
+                    </select>
+                </div>
             </div>
             <div class="form-group row">
-                @if (ViewBag.listModel != null)
-                {
-                    <label for="kerjasama" class="col-md-4 col-form-label">Jenis Kerjasama</label>
-                    <div class="col-md-8">
-                        @Html.DropDownListFor(model => model.Nama, ViewBag.listKerjasama as SelectList, "--Pilih kerjasama--", new { @class = "form-control kerjasama" })
-                    </div>
-                }
+                <label for="pertukaran" class="col-md-4 col-form-label">Jenis Kerjasama</label>
+                <div class="col-md-8">
+                    <select name="JenisKerjasama" id="JenisKerjasama" class="form-control" required>
+                        <option value="" disabled selected>--Pilih Jenis Kerjasama--</option>
+                        @{
+                            foreach (var data in ViewData["listKerjasama"] as IEnumerable<MBKM.Entities.ViewModel.VMLookup>)
+                            {
+                                <option value="@data.Nilai">@data.Nama</option>
+                            }
+                        }
+                    </select>
+                </div>
             </div>
             <div class="form-group row">
                 <label for="biaya" class="col-md-4 col-form-label">Biaya</label>
                 <div class="col-md-8">
-                    <input id="biaya" type="number" name="biaya" class="form-control" placeholder="0">
+                    <input id="biaya" type="number" name="BiayaKuliah" class="form-control" value="0" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputer" class="col-md-4 col-form-label">Inputer</label>
                 <div class="col-md-8">
-                    <input id="inputer" type="text" name="inputer" class="form-control" value="inputer" disabled>
+                    <input id="inputer" type="text" name="CreatedBy" class="form-control" value="inputer" disabled>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="Upload" class="col-md-4 col-form-label">Upload Dokumen Pendukung</label>
                 <div class="col-md-8">
-                    <input id="file" type="file" name="file" multiple class="form-control">
+                    <input id="file" type="file" name="inputer" class="form-control" multiple="multiple" accept=".pdf,.doc,.docx,.xlsx">
                 </div>
             </div>
             <div class="modal-footer">
-                <input onclick="SubmitPerjanjian()" type="submit" value="Simpan" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
+                <input onclick="SubmitPerjanjian()" type="button" value="Simpan" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
             </div>
         </form>
     </div>

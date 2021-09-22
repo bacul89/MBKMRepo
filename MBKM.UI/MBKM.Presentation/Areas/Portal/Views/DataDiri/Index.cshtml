@@ -4,33 +4,127 @@
     ViewBag.Title = "SIMBKM";
 }
 
+<style>
+    .files input {
+        outline: 2px dashed #92b0b3;
+        outline-offset: -10px;
+        -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
+        transition: outline-offset .15s ease-in-out, background-color .15s linear;
+        padding: 120px 0px 85px 35%;
+        text-align: center !important;
+        margin: 0;
+        width: 100% !important;
+    }
+
+        .files input:focus {
+            outline: 2px dashed #92b0b3;
+            outline-offset: -10px;
+            -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
+            transition: outline-offset .15s ease-in-out, background-color .15s linear;
+            border: 1px solid #92b0b3;
+        }
+
+    .files {
+        position: relative
+    }
+
+        .files:after {
+            pointer-events: none;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 50px;
+            right: 0;
+            height: 56px;
+            content: "";
+            background-image: url(https://image.flaticon.com/icons/png/128/109/109612.png);
+            display: block;
+            margin: 0 auto;
+            background-size: 100%;
+            background-repeat: no-repeat;
+        }
+
+    .color input {
+        background-color: #f1f1f1;
+    }
+
+    .files:before {
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        pointer-events: none;
+        width: 100%;
+        right: 0;
+        height: 57px;
+        content: " or drag it here. ";
+        display: block;
+        margin: 0 auto;
+        color: #2ea591;
+        font-weight: 600;
+        text-transform: capitalize;
+        text-align: center;
+    }
+</style>
 
 <!-- Modal -->
 <div class="modal fade" id="dataPendukung" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" role="document" style="width: 70%;">
         <div class="modal-content">
             <div class="modal-header" style="background-color: #FF8A04;">
-                <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
-                    Login Admin
+                <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black; text-align: center">
+                    UPLOAD DOKUMEN PENDUKUNG
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </h5>
             </div>
             <div class="modal-body">
-                <form action="#" method="post" class="form-horizontal">
-                    <div class="container" style="width: 100%;">
-                        <div class="form-group">
-                            <input type="text" name="usernameAdmin" id="usernameAdmin" placeholder="Username" class="form-control input-lg" />
-                        </div>
-                        <div class="form-group">
-                            <input type="password" name="passwordAdmin" id="passwordAdmin" placeholder="Password" class="form-control input-lg" />
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Login" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
-                        </div>
-                    </div>
-                </form>
+                <div class="container" style="width: 100%;">
+                    <form class="form-horizontal" enctype="multipart/form-data" id="filePendukung">
+                        <table class="table">
+                            <tr>
+                                <td style="width: 20%; vertical-align: middle; text-align:center; height: 100%;"><span>Upload Foto Diri</span></td>
+                                <td>
+                                    <div class="form-group files">
+                                        <input type="file" class="form-control" id="fotoDiri" name="fotoDiri" multiple="">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 20%; vertical-align: middle; text-align:center; height: 100%;"><span>Upload Foto KTP</span></td>
+                                <td>
+                                    <div class="form-group files">
+                                        <input type="file" class="form-control" id="fotoKTP" name="fotoKTP" multiple="">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 20%; vertical-align: middle; text-align:center; height: 100%;"><span>Upload Foto KIM</span></td>
+                                <td>
+                                    <div class="form-group files">
+                                        <input type="file" class="form-control" id="fotoKIM" name="fotoKIM" multiple="">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 20%; vertical-align: middle; text-align:center; height: 100%;"><span>Upload Transkrip Nilai</span></td>
+                                <td>
+                                    <div class="form-group files">
+                                        <input type="file" class="form-control" id="transkripNilai" name="transkripNilai" multiple="">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 20%; vertical-align: middle; text-align:center; height: 100%;"><span>Upload Surat Keterangan</span></td>
+                                <td>
+                                    <div class="form-group files">
+                                        <input type="file" class="form-control" id="suratKeterangan" name="suratKeterangan" multiple="">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -252,13 +346,14 @@
 @section Scripts{
     <script>
         $(document).ready(function () {
+            //$('.file-upload').file_upload();
             $("#upload").hide();
             $("#simpan").hide();
             $("input").attr("disabled", true);
             $("select").attr("disabled", true);
             $("textarea").attr("disabled", true);
             try {
-                if ("@HttpContext.Current.Session["nama"].ToString()" != "DAFTAR") {
+                if ("@HttpContext.Current.Session["status"].ToString()" != "DAFTAR") {
                     $("#edit").hide();
                 }
             } catch (e) {
@@ -278,43 +373,61 @@
             $("#edit").hide();
         });
         $("#simpan").click(function () {
-
             $.ajax({
                 type: "GET",
                 url: "@Url.Action("GetDataMahasiswa", "DataDiri")"
             }).then(function (mahasiswa) {
-                mahasiswa.Nama = $("#namaLengkap").val();
-                mahasiswa.Gender = $("#gender").val();
-                mahasiswa.TempatLahir = $("#tempatLahir").val();
-                mahasiswa.TanggalLahir = $("#tanggalLahir").val();
-                mahasiswa.WargaNegara = $("#kewarganegaraan").val();
-                mahasiswa.NoKTP = $("#noKtp").val();
-                mahasiswa.Email = $("#email").val();
-                mahasiswa.NoHp = $("#noHP").val();
-                mahasiswa.Telepon = $("#noTelp").val();
-                mahasiswa.Alamat = $("#alamat").val();
-                mahasiswa.NamaDarurat = $("#namaDarurat").val();
-                mahasiswa.HubunganDarurat = $("#hubungan").val();
-                mahasiswa.NoHPDarurat = $("#noHPDarurat").val();
-                mahasiswa.TeleponDarurat = $("#noTelpDarurat").val();
-                mahasiswa.EmailDarurat = $("#emailDarurat").val();
-                mahasiswa.AlamatDarurat = $("#alamatDarurat").val();
+                console.log(mahasiswa.ID);
+                var data = new FormData($('#filePendukung')[0]);
+                data.append("ID", $("#id").val());
+                data.append("Nama", $("#namaLengkap").val());
+                data.append("Gender", $("#gender").val());
+
+                data.append("TempatLahir", $("#tempatLahir").val());
+                data.append("TanggalLahir", $("#tanggalLahir").val());
+                data.append("WargaNegara", $("#kewarganegaraan").val());
+                data.append("NoKTP", $("#noKtp").val());
+                data.append("Email", $("#email").val());
+                data.append("NoHp", $("#noHP").val());
+                data.append("Telepon", $("#noTelp").val());
+                data.append("Alamat", $("#alamat").val());
+                data.append("NamaDarurat", $("#namaDarurat").val());
+                data.append("HubunganDarurat", $("#hubungan").val());
+                data.append("NoHPDarurat", $("#noHPDarurat").val());
+                data.append("TeleponDarurat", $("#noTelpDarurat").val());
+                data.append("EmailDarurat", $("#emailDarurat").val());
+                data.append("AlamatDarurat", $("#alamatDarurat").val());
 
                 if (mahasiswa.NoKerjasama != null) {
-                    mahasiswa.BiayaKuliah = $('#universitasAsal').select2('data')[0].biaya;
-                    mahasiswa.NamaUniversitas = $('#universitasAsal').select2('data')[0].nama;
-                    mahasiswa.NoKerjasama = $('#universitasAsal').select2('data')[0].value;
+                    if ($('#universitasAsal').select2('data')[0].biaya != null) {
+                        data.append("BiayaKuliah", $('#universitasAsal').select2('data')[0].biaya);
+                        data.append("NamaUniversitas", $('#universitasAsal').select2('data')[0].nama);
+                        data.append("NoKerjasama", $('#universitasAsal').select2('data')[0].value);
+                    } else {
+                        data.append("BiayaKuliah", $('#universitasAsal').find(':selected').attr('data-biaya'));
+                        data.append("NamaUniversitas", $('#universitasAsal').find(':selected').attr('data-nama'));
+                        data.append("NoKerjasama", $('#universitasAsal').val());
+                    }
                 } else {
-                    mahasiswa.NamaUniversitas = $("#universitasAsal").val();
+                    data.append("NamaUniversitas", $("#universitasAsal").val());
                 }
 
-                mahasiswa.JenjangStudi = $("#jenjangStudi").val();
-                mahasiswa.ProdiAsal = $("#programStudi").val();
-                mahasiswa.NIMAsal = $("#nimAsal").val();
+                data.append("JenjangStudi", $("#jenjangStudi").val());
+                data.append("ProdiAsal", $("#programStudi").val());
+                data.append("NIMAsal", $("#nimAsal").val());
+
+                //data.append("fotoDiri", fotoDiri);
+                //data.append("fotoKTP", fotoKTP);
+                //data.append("fotoKIM", fotoKIM);
+                //data.append("transkripNilai", transkripNilai);
+                //data.append("suratKeterangan", suratKeterangan);
                 $.ajax({
                     type: "POST",
                     url: "@Url.Action("UpdateDataDiri", "DataDiri")",
-                    data: mahasiswa
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    data: data
                 }).then(function (response) {
                     if (response.status == 200) {
                         $("input").attr("disabled", true);
@@ -339,7 +452,8 @@
                     setLookupValue("Gender", response.Gender, "gender");
                 }
                 $("#tempatLahir").val(response.TempatLahir);
-                $("#tanggalLahir").val(response.TanggalLahir);
+                response.TanggalLahir = new Date(response.TanggalLahir)
+                $("#tanggalLahir").val(response.TanggalLahir.getFullYear() + "-" + appendZero(response.TanggalLahir.getMonth(), 2) + "-" + appendZero(response.TanggalLahir.getDate(), 2));
                 if (response.WargaNegara != null) {
                     setLookupValue("WargaNegara", response.WargaNegara, "kewarganegaraan");
                 }
@@ -359,8 +473,8 @@
                 if (response.NoKerjasama == null) {
                     $("#univAsal").html('<input type="text" name="universitasAsal" id="universitasAsal" class="form-control input-md" required disabled />');
                     $("#universitasAsal").val(response.NamaUniversitas);
-                } else if (response.NamaUniversitas != null) {
-                    $("#universitasAsal").val(response.NamaUniversitas);
+                } else {
+                    setUniversitas(response.NoKerjasama);
                 }
                 $("#jenjangStudi").val(response.JenjangStudi);
                 $("#programStudi").val(response.ProdiAsal);
@@ -427,6 +541,22 @@
                 var option = $("<option selected='selected'></option>").val(response.Nilai).text(response.Nama);
                 $("#" + id).append(option).trigger('change');
             });
+        }
+        function setUniversitas(noPerjanjian) {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetPerjanjianKerjasama", "DataDiri")?noPerjanjian=" + noPerjanjian
+            }).then(function (response) {
+                var option = $("<option selected='selected'></option>").val(response.NoPerjanjian).text(response.NamaInstansi).attr('data-biaya', response.BiayaKuliah).attr('data-nama', response.NamaInstansi);
+                $("#universitasAsal").append(option).trigger('change');
+            });
+        }
+        function appendZero(string, length) {
+            string += "";
+            while (string.length < length) {
+                string = "0" + string;
+            }
+            return string;
         }
     </script>
 }
