@@ -20,28 +20,28 @@
         },
         {
             "title": "Universitas Asal",
-            "data": "Universitas",
+            "data": "NamaUniversitas",
             "render": function (data, type, row, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
             "title": "Jenjang Studi",
-            "data": "Jenjang",
+            "data": "JenjangStudi",
             "render": function (data, type, row, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
             "title": "Program Studi Asal",
-            "data": "Prodi",
+            "data": "ProdiAsal",
             "render": function (data, type, row, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
             "title": "NIM Asal",
-            "data": "NIM",
+            "data": "NIMAsal",
             "render": function (data, type, row, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
@@ -69,7 +69,7 @@
         },
         {
             "title": "No. Hp",
-            "data": "HP",
+            "data": "NoHp",
             "render": function (data, type, row, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
