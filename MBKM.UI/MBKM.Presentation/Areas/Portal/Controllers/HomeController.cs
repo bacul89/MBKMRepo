@@ -29,7 +29,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             return View();
         }
-        public JsonResult RegisterExternal(Mahasiswa mahasiswa)
+        public ActionResult RegisterExternal(Mahasiswa mahasiswa)
         {
             try
             {
@@ -63,15 +63,15 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 return Json(new ServiceResponse { status = 500, message = e.Message });
             }
         }
-        public JsonResult GetNamaInstansi(int Skip, int Length, string Search)
+        public ActionResult GetNamaInstansi(int Skip, int Length, string Search)
         {
             return Json(_perjanjianKerjasamaService.getNamaInstansi(Skip, Length, Search), JsonRequestBehavior.AllowGet);
         }
-        public JsonResult GetNoKerjasama(int Skip, int Length, string Search, string NamaInstansi)
+        public ActionResult GetNoKerjasama(int Skip, int Length, string Search, string NamaInstansi)
         {
             return Json(_perjanjianKerjasamaService.getNoKerjasama(Skip, Length, Search, NamaInstansi), JsonRequestBehavior.AllowGet);
         }
-        public JsonResult getLookupByTipe(string tipe)
+        public ActionResult getLookupByTipe(string tipe)
         {
             return Json(_lookupService.getLookupByTipe(tipe), JsonRequestBehavior.AllowGet);
         }

@@ -3,6 +3,7 @@ using MBKM.Presentation.models;
 using MBKM.Presentation.Models;
 using MBKM.Services;
 using MBKM.Services.MBKMServices;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,38 +18,35 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         private IMahasiswaService _mahasiswaService;
         private ILookupService _lookupService;
         private IAttachmentService _attachmentService;
-        public DataDiriController(IMahasiswaService mahasiswaService, ILookupService lookupService, IAttachmentService attachmentService)
+        private IPerjanjianKerjasamaService _perjanjianKerjasamaService;
+        public DataDiriController(IMahasiswaService mahasiswaService, ILookupService lookupService, IAttachmentService attachmentService, IPerjanjianKerjasamaService perjanjianKerjasamaService)
         {
             _mahasiswaService = mahasiswaService;
             _lookupService = lookupService;
             _attachmentService = attachmentService;
+            _perjanjianKerjasamaService = perjanjianKerjasamaService;
         }
         public ActionResult Index()
         {
-            var mahasiswa = _mahasiswaService.Get(32).Attachments.Select(x => new Attachment
-            {
-                FileName = x.FileName,
-                FileExt = x.FileExt,
-                FileType = x.FileType,
-                FileSze = x.FileSze,
-                ID = x.ID
-                
-            });
             return View();
         }
-        public JsonResult GetDataMahasiswa(Mahasiswa mahasiswa)
+        public ActionResult GetDataMahasiswa()
         {
             string email = Session["email"] as string;
-
-            return Json(GetMahasiswaByEmail(email), JsonRequestBehavior.AllowGet);
+            var result = GetMahasiswaByEmail(email);
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" }; 
         }
-        public JsonResult getLookupByValue(string tipe, string value)
+        public ActionResult getLookupByValue(string tipe, string value)
         {
             return Json(_lookupService.Find(l => l.Nilai == value && l.Tipe == tipe).FirstOrDefault(), JsonRequestBehavior.AllowGet); ;
         }
         public Mahasiswa GetMahasiswaByEmail(string email)
         {
             return _mahasiswaService.Find(m => m.Email == email).FirstOrDefault();
+        }
+        public ActionResult GetPerjanjianKerjasama(string noPerjanjian)
+        {
+            return new ContentResult { Content = JsonConvert.SerializeObject(_perjanjianKerjasamaService.Find(pk => pk.NoPerjanjian == noPerjanjian).FirstOrDefault()), ContentType = "application/json" }; 
         }
         public List<Attachment> UploadFilePendukung(FilePendukung filePendukung, Int64 id)
         {
@@ -128,7 +126,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
 
             return result;
         }
-        public JsonResult UpdateDataDiri(Mahasiswa mahasiswa, FilePendukung filePendukung)
+        public ActionResult UpdateDataDiri(Mahasiswa mahasiswa, FilePendukung filePendukung)
         {
             try
             {

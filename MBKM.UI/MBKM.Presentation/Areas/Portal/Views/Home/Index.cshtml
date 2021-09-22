@@ -33,7 +33,7 @@
                         </div>
                         <div class="form-group">
                             <label>Tanggal Lahir</label>
-                            <input type="date" name="TanggalLahir" id="tanggalLahir" placeholder="Tanggal Lahir" class="form-control input-lg" />
+                            <input type="date" name="TanggalLahir" id="tanggalLahir" placeholder="Tanggal Lahir" class="form-control input-lg" value="2000-01-01" />
                         </div>
                         <div class="form-group">
                             <label>Jenis Kelamin</label>
@@ -211,7 +211,7 @@
                 mahasiswa.NamaUniversitas = $('#namaUniversitas').select2('data')[0].nama;
                 mahasiswa.NoKerjasama = $('#noKerjasama').select2('data')[0].value;
             } else {
-                mahasiswa.NamaUniversitas = $("#namaUniversitas").val();
+                mahasiswa.NamaUniversitas = $("#NamaUniversitas").val();
             }
             mahasiswa.ProdiAsal = $("#prodiAsal").val();
             mahasiswa.NIMAsal = $("#nimAsal").val();
