@@ -1,5 +1,5 @@
 ﻿var table = $('#table-data-verifikasi-mahasiswa').DataTable({
-    "proccessing": true,
+    "processing": true,
     "serverSide": true,
     "ajax": {
         url: '/Admin/VerifikasiMahasiswa/GetAllMahasiswa',
@@ -7,8 +7,7 @@
     },
     "language": {
         "emptyTable": "No record found.",
-        "processing":
-            '<i class="fa fa-spinner fa-spin fa-3x fa-fw" style="color:#2a2b2b;"></i><span class="sr-only">Loading...</span> ',
+        "processing": '<div style="padding-top:30px;"><i class="fa fa-spinner fa-spin fa-3x fa-fw" ></i><span class="sr-only" style="color:#2a2b2b;">Loading...</span></div> ',
         "search": "",
         "searchPlaceholder": "Search..."
     },

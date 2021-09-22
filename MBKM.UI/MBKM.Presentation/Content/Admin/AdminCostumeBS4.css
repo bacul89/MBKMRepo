@@ -19,6 +19,19 @@
 table.dataTable.no-footer{
     border:none;
 }
+.dataTables_wrapper .dataTables_processing {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    width: 30%;
+    height: 40px;
+    margin-left: -20%;
+    margin-top: -25px;
+    padding-top: 20px;
+    text-align: center;
+    font-size: 1.2em;
+    background: none;
+}
 
 thead tr {
     background-color: #FF8A04;

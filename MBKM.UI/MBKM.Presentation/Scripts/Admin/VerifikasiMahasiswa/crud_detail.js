@@ -96,3 +96,42 @@ function PostDataUpdate() {
         })
     }
 }
+
+
+function DownloadAttachment(dataID) {
+    $.LoadingOverlay("show");
+    $.ajax({
+        url: '/Admin/VerifikasiMahasiswa/DownloadFile',
+        type: 'get',
+        datatype: 'json',
+        data: {
+            id : dataID
+        },
+        contentType: 'application/json',
+        success: function (e) {
+            $.LoadingOverlay("hide");
+            Swal.fire({
+                title: 'Berhasil',
+                icon: 'success',
+                html: 'Mahasiswa Berhasil Terverifikasi',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText: 'OK'
+            })
+            window.location.href = '/Admin/VerifikasiMahasiswa/'
+        },
+        error: function (e) {
+            $.LoadingOverlay("hide");
+            Swal.fire({
+                title: 'Oppss',
+                icon: 'error',
+                html: 'Coba Reload Page',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText: 'OK'
+            })
+        }
+    })
+}
