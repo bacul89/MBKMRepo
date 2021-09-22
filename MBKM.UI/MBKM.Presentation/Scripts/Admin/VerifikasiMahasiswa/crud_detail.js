@@ -36,40 +36,63 @@ function getValueOnForm() {
     dataVerifikasi.Catatan = $('textarea[name=inp_catatan]').val();
 }
 
+function ValidationStatusApproval() {
+    if (!$("input[name=inp_verifikasi]:checked").val()) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
 function PostDataUpdate() {
-    getValueOnForm();
-    var url = window.location.href;
-    dataVerifikasi.ID = url.substring(url.lastIndexOf('/') + 1);
-    console.log(dataVerifikasi);
-    $.ajax({
-        url: '/Admin/VerifikasiMahasiswa/PostDataUpdate',
-        type: 'post',
-        datatype: 'json',
-        data: JSON.stringify(dataVerifikasi),
-        contentType: 'application/json',
-        success: function (e) {
-            Swal.fire({
-                title: 'Berhasil',
-                icon: 'success',
-                html: 'Template Email Berhasil Ditambahkan',
-                showCloseButton: true,
-                showCancelButton: false,
-                focusConfirm: false,
-                confirmButtonText: 'OK'
-            })
-            $('.modal').modal('hide');
-        },
-        error: function (e) {
-            Swal.fire({
-                title: 'Oppss',
-                icon: 'error',
-                html: 'Coba Reload Page',
-                showCloseButton: true,
-                showCancelButton: false,
-                focusConfirm: false,
-                confirmButtonText: 'OK'
-            })
-            $('.modal').modal('hide');
-        }
-    })
+    $.LoadingOverlay("show");
+    if (ValidationStatusApproval()) {
+        getValueOnForm();
+        var url = window.location.href;
+        dataVerifikasi.ID = url.substring(url.lastIndexOf('/') + 1);
+        console.log(dataVerifikasi);
+        $.ajax({
+            url: '/Admin/VerifikasiMahasiswa/PostDataUpdate',
+            type: 'post',
+            datatype: 'json',
+            data: JSON.stringify(dataVerifikasi),
+            contentType: 'application/json',
+            success: function (e) {
+                $.LoadingOverlay("hide");
+                Swal.fire({
+                    title: 'Berhasil',
+                    icon: 'success',
+                    html: 'Mahasiswa Berhasil Terverifikasi',
+                    showCloseButton: true,
+                    showCancelButton: false,
+                    focusConfirm: false,
+                    confirmButtonText: 'OK'
+                })
+                window.location.href = '/Admin/VerifikasiMahasiswa/'
+            },
+            error: function (e) {
+                $.LoadingOverlay("hide");
+                Swal.fire({
+                    title: 'Oppss',
+                    icon: 'error',
+                    html: 'Coba Reload Page',
+                    showCloseButton: true,
+                    showCancelButton: false,
+                    focusConfirm: false,
+                    confirmButtonText: 'OK'
+                })
+            }
+        })
+    } else {
+        $.LoadingOverlay("hide");
+        Swal.fire({
+            title: 'Oppss',
+            icon: 'warning',
+            html: 'Masukkan Status Verifikasi !',
+            showCloseButton: true,
+            showCancelButton: false,
+            focusConfirm: false,
+            confirmButtonText: 'OK'
+        })
+    }
 }

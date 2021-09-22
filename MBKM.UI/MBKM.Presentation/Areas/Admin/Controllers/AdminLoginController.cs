@@ -39,12 +39,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     if (HashPasswordService.ValidatePassword(model.Password, modeldata.Password))
                     {
 
-                        Session["UserID"] = modeldata.ID.ToString();
-                        Session["UserName"] = modeldata.UserName.ToString();
-                        Session["NoPegawai"] = modeldata.NoPegawai.ToString();
-                        Session["Email"] = modeldata.Email.ToString();
-
-
+                        Session["userid"] = modeldata.ID.ToString();
+                        Session["username"] = modeldata.UserName.ToString();
+                        Session["nopegawai"] = modeldata.NoPegawai.ToString();
+                        Session["email"] = modeldata.Email.ToString();
                     }
                     else
                     {

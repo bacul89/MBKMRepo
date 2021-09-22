@@ -52,7 +52,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult IndexDetailMahasiswa(int id)
         {
             var ApproverRole = _lookupService.getLookupByTipe("ApproverRole");
+            var StatusKerjasama = _lookupService.getLookupByTipe("StatusKerjasama");
             ViewData["Approver"] = ApproverRole;
+            ViewData["StatusKerjasama"] = StatusKerjasama;
             var data = _mahasiswaService.Get(id);
             return View(data);
         }
@@ -75,16 +77,22 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             data.NoKerjasama = _mahasiswa.NoKerjasama;
             data.StatusKerjasama = _mahasiswa.StatusKerjasama;
             data.StatusVerifikasi = _mahasiswa.StatusVerifikasi;
-
+            if(_mahasiswa.StatusVerifikasi == "AKTIF")
+            {
+                SendEmail(data.Email, "VerifikasiAktif");
+            }else if(_mahasiswa.StatusVerifikasi == "DITOLAK")
+            {
+                SendEmail(data.Email, "VerifikasiDitolak");
+            }
             _mahasiswaService.Save(data);
             return Json(data);
         }
 
         [HttpPost]
-        public JsonResult GetAllNoKerjasama(string search, string instansi)
+        public JsonResult GetAllNoKerjasama(int length, int skip, string search, string instansi)
         {
            
-            var final = _perjanjianKerjasama.getNoKerjasama(0,5, search, instansi);
+            var final = _perjanjianKerjasama.getNoKerjasama(skip,length, search, instansi);
             List<object> data = new List<object>();
             foreach (var p in final)
             {
@@ -103,6 +111,45 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             var data = _perjanjianKerjasama.Get(id);
             return Json(data);
+        }
+
+        public ActionResult DownloadFile()
+        {
+            string fullName = Server.MapPath("~/Scripts/Admin/VerifikasiMahasiswa/crud_detail.js");
+
+            byte[] fileBytes = GetFile(fullName);
+            return File(
+                fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, "~/Scripts/Admin/VerifikasiMahasiswa/crud_detail.js");
+        }
+
+        byte[] GetFile(string s)
+        {
+            System.IO.FileStream fs = System.IO.File.OpenRead(s);
+            byte[] data = new byte[fs.Length];
+            int br = fs.Read(data, 0, data.Length);
+            if (br != fs.Length)
+                throw new System.IO.IOException(s);
+            return data;
+        }
+
+        public void SendEmail(string email, string status)
+        {
+            GMailer mailer = new GMailer();
+            if(status == "VerifikasiAktif")
+            {
+                var data = _emailTemplateService.Find(x => x.TipeMail == "VerifikasiAktif").First();
+                mailer.Subject = data.SubjectMail;
+                mailer.Body = data.BodyMail;
+
+            }else if(status == "VerifikasiDitolak")
+            {
+                var data = _emailTemplateService.Find(x => x.TipeMail == "VerifikasiDitolak").First();
+                mailer.Subject = data.SubjectMail;
+                mailer.Body = data.BodyMail;
+            }
+            mailer.ToEmail = email;
+            mailer.IsHtml = true;
+            mailer.Send();
         }
     }
 }

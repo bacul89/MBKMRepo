@@ -1,43 +1,13 @@
 ﻿
 @{
-    Layout = "~/Areas/Portal/Views/shared/_LayoutHome.cshtml";
-    ViewBag.Title = "SIMBKM";
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
 }
 
 
-<!-- Modal -->
-<div class="modal fade" id="dataPendukung" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color: #FF8A04;">
-                <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
-                    Login Admin
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </h5>
-            </div>
-            <div class="modal-body">
-                <form action="#" method="post" class="form-horizontal">
-                    <div class="container" style="width: 100%;">
-                        <div class="form-group">
-                            <input type="text" name="usernameAdmin" id="usernameAdmin" placeholder="Username" class="form-control input-lg" />
-                        </div>
-                        <div class="form-group">
-                            <input type="password" name="passwordAdmin" id="passwordAdmin" placeholder="Password" class="form-control input-lg" />
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Login" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div id="hiddenField">
-    <input type="hidden" id="id"/>
+    <input type="hidden" id="id" />
 </div>
 
 <div class="card center-block" style="background-color: white; width: 90%; margin-top: 50px; margin-bottom: 50px;">
@@ -66,6 +36,7 @@
                             <td style="width: 20%;">Jenis Kelamin</td>
                             <td>
                                 <select name="Gender" id="gender" class="form-control input-md">
+                                    <option>-- Pilih Jenis Kelamin --</option>
                                 </select>
                             </td>
                         </tr>
@@ -87,6 +58,7 @@
                             <td style="width: 20%;">Kewarganegaraan</td>
                             <td>
                                 <select name="kewarganegaraan" id="kewarganegaraan" class="form-control input-md">
+                                    <option>-- Pilih Kewarganegaraan --</option>
                                 </select>
                             </td>
                         </tr>
@@ -161,6 +133,7 @@
                             <td style="width: 20%;">Hubungan</td>
                             <td>
                                 <select name="hubungan" id="hubungan" class="form-control input-md">
+                                    <option>-- Pilih Hubungan --</option>
                                 </select>
                             </td>
                         </tr>
@@ -242,7 +215,7 @@
 
                 <button id="edit" class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 16px;">EDIT</button>
                 <button id="simpan" class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 16px; ">SIMPAN</button>
-                <button id="upload" class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: rgb(0, 166, 81); color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; " data-toggle="modal" data-target="#dataPendukung" data-backdrop="false">UPLOAD DATA PENDUKUNG</button>
+                
             </div>
 
         </div>
@@ -250,23 +223,17 @@
 </div>
 
 @section Scripts{
-    <script>
+    @*<script>
         $(document).ready(function () {
             $("#upload").hide();
             $("#simpan").hide();
             $("input").attr("disabled", true);
             $("select").attr("disabled", true);
             $("textarea").attr("disabled", true);
-            try {
-                if ("@HttpContext.Current.Session["nama"].ToString()" != "DAFTAR") {
-                    $("#edit").hide();
-                }
-            } catch (e) {
-            }
             loadNamaUniversitas();
-            loadFromLookup("WargaNegara", "kewarganegaraan", "Kewarganegaraan");
-            loadFromLookup("KontakDarurat", "hubungan", "Hubungan");
-            loadFromLookup("Gender", "gender", "Jenis Kelamin");
+            loadFromLookup("WargaNegara", "kewarganegaraan");
+            loadFromLookup("KontakDarurat", "hubungan");
+            loadFromLookup("Gender", "gender");
             getDataMahasiswa();
         });
         $("#edit").click(function () {
@@ -278,6 +245,12 @@
             $("#edit").hide();
         });
         $("#simpan").click(function () {
+            $("input").attr("disabled", true);
+            $("select").attr("disabled", true);
+            $("textarea").attr("disabled", true);
+            $("#simpan").hide();
+            $("#upload").hide();
+            $("#edit").show();
 
             $.ajax({
                 type: "GET",
@@ -297,13 +270,12 @@
                 mahasiswa.HubunganDarurat = $("#hubungan").val();
                 mahasiswa.NoHPDarurat = $("#noHPDarurat").val();
                 mahasiswa.TeleponDarurat = $("#noTelpDarurat").val();
-                mahasiswa.EmailDarurat = $("#emailDarurat").val();
                 mahasiswa.AlamatDarurat = $("#alamatDarurat").val();
 
                 if (mahasiswa.NoKerjasama != null) {
-                    mahasiswa.BiayaKuliah = $('#universitasAsal').select2('data')[0].biaya;
-                    mahasiswa.NamaUniversitas = $('#universitasAsal').select2('data')[0].nama;
-                    mahasiswa.NoKerjasama = $('#universitasAsal').select2('data')[0].value;
+                    mahasiswa.BiayaKuliah = $("#universitasAsal").find(':selected').data('biaya');
+                    mahasiswa.NoKerjasama = $("#universitasAsal").val();
+                    mahasiswa.NamaUniversitas = $("#universitasAsal").find(':selected').data('nama');
                 } else {
                     mahasiswa.NamaUniversitas = $("#universitasAsal").val();
                 }
@@ -316,13 +288,6 @@
                     url: "@Url.Action("UpdateDataDiri", "DataDiri")",
                     data: mahasiswa
                 }).then(function (response) {
-                    if (response.status == 200) {
-                        $("input").attr("disabled", true);
-                        $("select").attr("disabled", true);
-                        $("textarea").attr("disabled", true);
-                        $("#simpan").hide();
-                        $("#upload").hide();
-                    }
                     alert(response.message);
                 });
             });
@@ -335,24 +300,27 @@
             }).then(function (response) {
                 $("#id").val(response.ID);
                 $("#namaLengkap").val(response.Nama);
-                if (response.Gender != null) {
-                    setLookupValue("Gender", response.Gender, "gender");
-                }
+                setTimeout(function () {
+                    $("#gender").val(response.Gender);
+                }, 1500);
                 $("#tempatLahir").val(response.TempatLahir);
                 $("#tanggalLahir").val(response.TanggalLahir);
-                if (response.WargaNegara != null) {
-                    setLookupValue("WargaNegara", response.WargaNegara, "kewarganegaraan");
-                }
+                setTimeout(function () {
+                    if (response.WargaNegara != null) {
+                        $("#kewarganegaraan").val(response.WargaNegara);
+                    }
+                }, 1500);
                 $("#noKtp").val(response.NoKTP);
                 $("#email").val(response.Email);
                 $("#noHP").val(response.NoHp);
                 $("#noTelp").val(response.Telepon);
-                $("#emailDarurat").val(response.EmailDarurat);
                 $("#alamat").val(response.Alamat);
                 $("#namaDarurat").val(response.NamaDarurat);
-                if (response.HubunganDarurat != null) {
-                    setLookupValue("KontakDarurat", response.HubunganDarurat, "hubungan");
-                }
+                setTimeout(function () {
+                    if (response.HubunganDarurat != null) {
+                        $("#hubungan").val(response.HubunganDarurat);
+                    }
+                }, 1500);
                 $("#noHPDarurat").val(response.NoHPDarurat);
                 $("#noTelpDarurat").val(response.TeleponDarurat);
                 $("#alamatDarurat").val(response.AlamatDarurat);
@@ -360,7 +328,9 @@
                     $("#univAsal").html('<input type="text" name="universitasAsal" id="universitasAsal" class="form-control input-md" required disabled />');
                     $("#universitasAsal").val(response.NamaUniversitas);
                 } else if (response.NamaUniversitas != null) {
-                    $("#universitasAsal").val(response.NamaUniversitas);
+                    setTimeout(function () {
+                        $("#universitasAsal").val(response.NamaUniversitas);
+                    }, 1500);
                 }
                 $("#jenjangStudi").val(response.JenjangStudi);
                 $("#programStudi").val(response.ProdiAsal);
@@ -368,65 +338,26 @@
             });
         }
         function loadNamaUniversitas() {
-            $("#universitasAsal").select2({
-                placeholder: "-- Pilih Universitas --",
-                width: "100%",
-                ajax: {
-                    url: "@Url.Action("GetNamaInstansi", "Home")",
-                    dataType: 'json',
-                    method: "POST",
-                    delay: 250,
-                    cache: false,
-                    data: function (params) {
-                        return {
-                            Length: "10",
-                            Search: params.term || "",
-                            Skip: params.page - 1 || 0,
-                        };
-                    },
-                    processResults: function (data, params) {
-                        var page = params.page || 1;
-                        return {
-                            results: $.map(data, function (item) { return { id: item.NoKerjasama, value: item.NoKerjasama, biaya: item.Biaya, nama: item.NamaInstansi, text: item.NamaInstansi } }),
-                            pagination: {
-                                more: (page * 10) <= data.length
-                            }
-                        };
-                    },
-                }
-            });
-        }
-        function loadFromLookup(tipe, id, nama) {
-            $("#" + id).select2({
-                placeholder: "-- Pilih " + nama + " --",
-                width: "100%",
-                ajax: {
-                    url: "@Url.Action("getLookupByTipe", "Home")",
-                    dataType: 'json',
-                    method: "POST",
-                    delay: 250,
-                    cache: false,
-                    data: function (params) {
-                        return {
-                            Tipe: tipe
-                        };
-                    },
-                    processResults: function (data, params) {
-                        return {
-                            results: $.map(data, function (item) { return { id: item.Nilai, value: item.Nilai, text: item.Nama } })
-                        };
-                    },
-                }
-            });
-        }
-        function setLookupValue(tipe, value, id) {
             $.ajax({
                 type: "GET",
-                url: "@Url.Action("getLookupByValue", "DataDiri")?tipe=" + tipe + "&value=" + value
+                url: "@Url.Action("GetNamaInstansi", "Home")?Skip=" + 0 + "&Length=" + 10000 + "&Search="
             }).then(function (response) {
-                var option = $("<option selected='selected'></option>").val(response.Nilai).text(response.Nama);
-                $("#" + id).append(option).trigger('change');
+                $("#universitasAsal").append("<option>-- Pilih Universitas --</option>");
+                for (var i = 0; i < response.length; i++) {
+                    $("#universitasAsal").append("<option value='" + response[i].NoKerjasama + "' data-biaya='" + response[i].Biaya + "' data-nama='" + response[i].NamaInstansi + "' >" + response[i].NamaInstansi + "</option>");
+                }
             });
         }
-    </script>
+        function loadFromLookup(tipe, id) {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("getLookupByTipe", "Home")?Tipe=" + tipe
+            }).then(function (response) {
+                for (var i = 0; i < response.length; i++) {
+                    $("#" + id).append("<option value='" + response[i].Nilai + "'>" + response[i].Nama + "</option>");
+                }
+            });
+        }
+    </script>*@
 }
+

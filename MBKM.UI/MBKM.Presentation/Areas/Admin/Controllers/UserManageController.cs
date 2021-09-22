@@ -100,6 +100,32 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
             return Json(data);
         }
+        //delete
+      
+        [HttpPost]
+        public ActionResult PostDeleteUser(User user)
+        {
+            User data = _userService.Get(user.ID);
+            data.NoPegawai = data.NoPegawai;
+            data.UserName = data.UserName;
+            data.Email = data.Email;
+            data.NoTelp = data.NoTelp;
+            data.Password = data.Password;
+            data.RoleID = data.RoleID;
+            //data.Password = HashPasswordService.HashPassword(model.Password);
+            data.CreatedDate = data.CreatedDate;
+            data.UpdatedDate = data.UpdatedDate;
+            data.IsActive = data.IsActive;
+            data.KodeProdi = data.KodeProdi;
+            data.NamaProdi = data.NamaProdi;
+
+            data.IsDeleted = true;
+
+            //var model = _userService.Get(id);
+            _userService.Save(data);
+            return Json(data);
+        }
+
 
         [HttpPost]
         public JsonResult GetList(DataTableAjaxPostModel model)

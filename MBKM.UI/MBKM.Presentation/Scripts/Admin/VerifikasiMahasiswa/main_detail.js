@@ -1,19 +1,18 @@
-﻿
-$(document).ready(function () {
+﻿$(document).ready(function () {
     $('.js-example-basic-single').select2({
-        placeholder: "Select a state",
+        placeholder: "Masukkan No. Kerjasama",
         "proccessing": true,
         "serverSide": true,
         ajax: {
-            url: 'http://localhost:10776/Admin/VerifikasiMahasiswa/GetAllNoKerjasama',
+            url: '/Admin/VerifikasiMahasiswa/GetAllNoKerjasama',
             type: 'post',
             dataType: 'json',
             data: function (params) {
                 return {
                     search: params.term,
-                    instansi : "Universitas Diponegoro",
-                    length: 5,
-                    skip: 1
+                    instansi: $('#namaUniversitas').val(),
+                    length: params.length || 10,
+                    skip: params.skip || 0
                 };
             },
             processResults: function (data, page) {
@@ -30,6 +29,5 @@ function IndexEditVerifikasi() {
     $('#inp_noKerjaSama').prop('disabled', false);
     $('#inp_biaya').prop('disabled', false);
     $('#editVerifikasiButton').addClass("hidden");
-    $('#updateVerifikasiButton').removeClass("hidden");
 }
 
