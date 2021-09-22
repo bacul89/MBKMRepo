@@ -5,6 +5,7 @@ using MBKM.Services;
 using MBKM.Services.MBKMServices;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -124,12 +125,12 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult DownloadFile(int id)
         {
             var data = _attachmentService.Get(id);
-            string path = "~/Upload/";
-            string fullName = Server.MapPath( path + data.FileName);
+            string path = ConfigurationManager.AppSettings["PathAttachmentMahasiswa"].ToString();
+            string fullName = Server.MapPath( path + "/"+ data.mahasiswas.ID + "/" + data.FileName);
 
             byte[] fileBytes = GetFile(fullName);
             return File(
-                fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet,data.mahasiswas.NIM + data.mahasiswas.Nama + data.FileName);
+                fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet,data.mahasiswas.NIMAsal + "_" + data.mahasiswas.Nama + "_" + data.FileName);
         }
 
         byte[] GetFile(string s)
