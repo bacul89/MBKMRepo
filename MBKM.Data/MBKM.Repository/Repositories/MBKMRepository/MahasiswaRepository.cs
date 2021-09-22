@@ -46,8 +46,8 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             if (String.IsNullOrEmpty(SearchParam))
             {
                 // if we have an empty search then just order the results by Id ascending
-                SortBy = "ID";
-                SortDir = true;
+                //SortBy = "ID";
+                //SortDir = true;
                 SearchParam = "";
             }
             using (var context = new MBKMContext())
