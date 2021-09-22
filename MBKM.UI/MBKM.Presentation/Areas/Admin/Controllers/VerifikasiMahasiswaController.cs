@@ -6,12 +6,14 @@ using MBKM.Services.MBKMServices;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using MBKM.Presentation.Helper;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
+    [MBKMAuthorize]
     public class VerifikasiMahasiswaController : Controller
     {
         private IMahasiswaService _mahasiswaService;
@@ -33,6 +35,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
 
         // GET: Admin/VerifikasiMahasiswa
+        
         public ActionResult Index()
         {
             return View();
