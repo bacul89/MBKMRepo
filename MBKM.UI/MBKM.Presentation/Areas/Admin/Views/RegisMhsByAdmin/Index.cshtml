@@ -134,7 +134,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <input onclick="submitRegistrasi()" type="submit" value="Registrasi" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
+                        <input onclick="submitRegistrasi()" type="button" value="Registrasi" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
                     </div>
                     @*<button id="edit" class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 16px;">Registrasi</button>*@
                 </form>
@@ -217,7 +217,14 @@
         function namaUnivOnChange() {
             if ($("#kerjasama").val() == "y") {
                 $("#namaUniversitas").change(function () {
-                    $("#noKS").html("<div class='form-group'><select name='noKerjasama' id='noKerjasama' class='form-control input-md' required><option>-- Pilih Nomor Kerjasama --</option></select></div>");
+                    $("#noKS").html(`<div class='form-group'>
+                                <label for="noKerjasama" class="col-sm-3 control-label">No. Kerjasama</label>
+                                <div class="col-sm-9">
+                                    <select name='noKerjasama' id='noKerjasama' class='form-control input-pendaftaran' required>
+                                        <option>-- Pilih Nomor Kerjasama --</option>
+                                    </select>
+                                </div>
+                            </div>`);
                     loadNoKerjasama();
                 });
             }
@@ -242,9 +249,10 @@
             mahasiswa.NoHp = $("#noHp").val();
             mahasiswa.Email = $("#emailRegistrasi").val();
             mahasiswa.Password = $("#passwordRegistrasi").val();
+            console.log(mahasiswa);
             $.ajax({
                 type: "POST",
-                url: "@Url.Action("registerExternal", "Home")",
+                url: "@Url.Action("registerExternal", "RegisMhsByAdmin")",
                 data: mahasiswa
             }).then(function (response) {
                 alert(response.message);
@@ -255,7 +263,7 @@
                 placeholder: "-- Pilih Universitas --",
                 width: "100%",
                 ajax: {
-                    url: "@Url.Action("GetNamaInstansi", "Home")",
+                    url: "@Url.Action("GetNamaInstansi", "RegisMhsByAdmin")",
                     dataType: 'json',
                     method: "POST",
                     delay: 250,
@@ -284,7 +292,7 @@
                 placeholder: "-- Pilih Nomor Kerjasama --",
                 width: "100%",
                 ajax: {
-                    url: "@Url.Action("GetNoKerjasama", "Home")",
+                    url: "@Url.Action("GetNoKerjasama", "RegisMhsByAdmin")",
                     dataType: 'json',
                     method: "POST",
                     delay: 250,
@@ -315,7 +323,7 @@
                 placeholder: "-- Pilih " + nama + " --",
                 width: "100%",
                 ajax: {
-                    url: "@Url.Action("getLookupByTipe", "Home")",
+                    url: "@Url.Action("getLookupByTipe", "RegisMhsByAdmin")",
                     dataType: 'json',
                     method: "POST",
                     delay: 250,
