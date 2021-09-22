@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
+    
     public class AdminLoginController : Controller
     {
         private readonly IUserService _userService;
@@ -30,7 +31,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginVMAdmin model)
         {
-            //return RedirectToAction("Index", "Home");
+            
             if (ModelState.IsValid)
             {
                 MBKM.Entities.Models.User modeldata = _userService.Find(x => x.NoPegawai == model.Username && x.IsDeleted==false).FirstOrDefault();
@@ -40,9 +41,12 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     {
 
                         Session["userid"] = modeldata.ID.ToString();
-                        Session["username"] = modeldata.UserName.ToString();
+                        Session["username"] = modeldata.UserName;
                         Session["nopegawai"] = modeldata.NoPegawai.ToString();
-                        Session["email"] = modeldata.Email.ToString();
+                        Session["email"] = modeldata.Email;
+                        Session["RoleName"] = modeldata.Roles.RoleName;
+                        Session["RoleID"] = modeldata.RoleID.ToString();
+                        return RedirectToAction("Index", "Home");
                     }
                     else
                     {
@@ -55,6 +59,14 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 }
             }
             return View(model);
+        }
+        public ActionResult Logout()
+        {
+            Session["userid"] = null;
+            Session["username"] = null;
+            Session["nopegawai"] = null;
+            Session["email"] = null;
+            return RedirectToAction("Login", "AdminLogin");
         }
     }
 }

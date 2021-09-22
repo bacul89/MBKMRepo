@@ -110,11 +110,11 @@
             <div class="dropdown" style="float: right; margin: 27.5px; ">
                 <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     <img src="https://mdbootstrap.com/img/new/avatars/2.jpg" class="img-rounded" height="50" alt="" />
-                    <asd style="color: black; font-weight: bold; font-size: 16px;">Armanda Dimas</asd>
+                    <asd style="color: black; font-weight: bold; font-size: 16px;">@HttpContext.Current.Session["username"].ToString()</asd>
                 </a>
                 <ul class="dropdown-menu" role="menu">
                     <li>
-                        <a href="@Url.Action("index", "home")">Logout</a>
+                        <a href="@Url.Action("Logout", "AdminLogin")">Logout</a>
                     </li>
                 </ul>
             </div>

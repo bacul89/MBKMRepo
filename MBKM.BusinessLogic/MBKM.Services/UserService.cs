@@ -51,6 +51,7 @@ namespace MBKM.Services
             }
             if (sortBy == null)
                 sortBy = "ID";
+            sortBy = sortBy + " " + model.order[0].dir.ToUpper();
             return _userRepository.getListUserGrid(skip, take, searchBy, sortBy, sortDir);
         }
     }

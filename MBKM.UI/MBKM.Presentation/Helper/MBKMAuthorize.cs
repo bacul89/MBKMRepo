@@ -8,65 +8,88 @@ using System.Web.Routing;
 
 namespace MBKM.Presentation.Helper
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-    public class MBKMAuthorize : AuthorizeAttribute
+    public class MBKMAuthorize : ActionFilterAttribute
     {
-        private const string IS_AUTHORIZED = "isAuthorized";
-
-        public string RedirectUrl = "/UnAuthorized";
-        protected override bool AuthorizeCore(System.Web.HttpContextBase httpContext)
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            bool isAuthorized = base.AuthorizeCore(httpContext);
-
-            httpContext.Items.Add(IS_AUTHORIZED, isAuthorized);
-
-            return isAuthorized;
-        }
-
-        public override void OnAuthorization(AuthorizationContext filterContext)
-        {
-            base.OnAuthorization(filterContext);
-
-            var isAuthorized = filterContext.HttpContext.Items[IS_AUTHORIZED] != null
-                ? Convert.ToBoolean(filterContext.HttpContext.Items[IS_AUTHORIZED])
-                : false;
 
             string area = filterContext.RequestContext.RouteData.DataTokens["area"].ToString();
 
-
-            if (filterContext.HttpContext.Session["email"] == null)
+            if (area.ToLower() == "admin")
             {
-                if (area.ToLower() == "admin")
+                if (filterContext.HttpContext.Session["nopegawai"] == null)
                 {
                     filterContext.Result = new RedirectResult("~/Admin/Adminlogin/Login");
                     return;
                 }
-                else
+            }
+            else
+            {
+                if (filterContext.HttpContext.Session["nama"] == null)
                 {
                     filterContext.Result = new RedirectResult("~/Portal/Home");
                     return;
                 }
             }
-            if (!IsUserAuthenticated(filterContext))
-            {
-                //ErrorLogging errLog = new ErrorLogging();
-                //errLog.WriteLog(filterContext.Controller.ToString(), filterContext.ToString());
-                filterContext.RequestContext.HttpContext.Response.Redirect(RedirectUrl);
-            }
         }
+        //private const string IS_AUTHORIZED = "isAuthorized";
 
-        private bool IsUserAuthenticated(AuthorizationContext filterContext)
-        {
+        //public string RedirectUrl = "/UnAuthorized";
+        //protected override bool AuthorizeCore(System.Web.HttpContextBase httpContext)
+        //{
+        //    bool isAuthorized = base.AuthorizeCore(httpContext);
 
-            bool result = true;
-            string controller = filterContext.RequestContext.RouteData.Values["controller"].ToString();
-            string action = filterContext.RequestContext.RouteData.Values["action"].ToString();
-            var area = filterContext.RequestContext.RouteData.DataTokens["area"];
-            string Url = "/" + controller;
-            if (area != null)
-                Url = "/" + area.ToString() + Url;
+        //    httpContext.Items.Add(IS_AUTHORIZED, isAuthorized);
 
-            return result;
-        }
+        //    return isAuthorized;
+        //}
+
+        //public override void OnAuthorization(AuthorizationContext filterContext)
+        //{
+        //    base.OnAuthorization(filterContext);
+
+        //    //var isAuthorized = filterContext.HttpContext.Items[IS_AUTHORIZED] != null
+        //    //    ? Convert.ToBoolean(filterContext.HttpContext.Items[IS_AUTHORIZED])
+        //    //    : false;
+
+        //    string area = filterContext.RequestContext.RouteData.DataTokens["area"].ToString();
+
+        //    if (area.ToLower() == "admin")
+        //    {
+        //        if (filterContext.HttpContext.Session["nopegawai"] == null)
+        //        {
+        //            filterContext.Result = new RedirectResult("~/Admin/Adminlogin/Login");
+        //            return;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        if (filterContext.HttpContext.Session["email"] == null)
+        //        {
+        //            filterContext.Result = new RedirectResult("~/Portal/Home");
+        //            return;
+        //        }
+        //    }
+        //    if (!IsUserAuthenticated(filterContext))
+        //    {
+        //        //ErrorLogging errLog = new ErrorLogging();
+        //        //errLog.WriteLog(filterContext.Controller.ToString(), filterContext.ToString());
+        //        filterContext.RequestContext.HttpContext.Response.Redirect(RedirectUrl);
+        //    }
+        //}
+
+        //private bool IsUserAuthenticated(AuthorizationContext filterContext)
+        //{
+
+        //    bool result = true;
+        //    string controller = filterContext.RequestContext.RouteData.Values["controller"].ToString();
+        //    string action = filterContext.RequestContext.RouteData.Values["action"].ToString();
+        //    var area = filterContext.RequestContext.RouteData.DataTokens["area"];
+        //    string Url = "/" + controller;
+        //    if (area != null)
+        //        Url = "/" + area.ToString() + Url;
+
+        //    return result;
+        //}
     }
 }
