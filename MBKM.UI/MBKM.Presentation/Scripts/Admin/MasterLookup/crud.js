@@ -17,7 +17,7 @@ function IndexCreateMasterLookup() {
             type: 'get',
             datatype: 'html',
             success: function (e) {
-                console.log(e);
+                /*console.log(e);*/
                 if ($('.data-content-modal').length) {
                     $('.data-content-modal').remove();
                 }
@@ -39,7 +39,7 @@ function IndexUpdateMasterLookup(id) {
         type: 'get',
         datatype: 'html',
         success: function (e) {
-            console.log(e);
+            /*console.log(e);*/
             if ($('.data-content-modal').length) {
                 $('.data-content-modal').remove();
             }
@@ -60,7 +60,7 @@ function IndexViewMasterLookup(id) {
         type: 'get',
         datatype: 'html',
         success: function (e) {
-            console.log(e);
+            /*console.log(e);*/
             if ($('.data-content-modal').length) {
                 $('.data-content-modal').remove();
             }
@@ -75,7 +75,7 @@ function PostCreate() {
     dMasterLookup = {}
     getValueOnForm();
 
-    console.log(dMasterLookup);
+    /*console.log(dMasterLookup);*/
     if (validationCustom()) {
         var base_url = window.location.origin;
         $.ajax({
@@ -127,7 +127,7 @@ function PostUpdate() {
     dMasterLookup = {}
     getValueOnForm();
     dMasterLookup.ID = $('#id_MasterLookup').val();
-    console.log(dMasterLookup);
+   /* console.log(dMasterLookup);*/
     var base_url = window.location.origin;
     $.ajax({
         url: base_url + '/Admin/MasterLookup/PostUpdateMasterLookup',
@@ -162,33 +162,34 @@ function PostUpdate() {
         }
     })
 
-    function DeletedMasterLookup(value) {
-        swal({
-            title: "Are you sure?",
-            text: "You will not be able to recover this imaginary file!",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, delete it!",
-            closeOnConfirm: false
-        }, function (isConfirm) {
-            if (!isConfirm) return;
-            $.ajax({
-                url: "scriptDelete.php",
-                type: "POST",
-                data: {
-                    id: 5
-                },
-                dataType: "html",
-                success: function () {
-                    swal("Done!", "It was succesfully deleted!", "success");
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    swal("Error deleting!", "Please try again", "error");
-                }
-            });
-        });
-    }
+
 
 }
 
+function DeletedMasterLookup(idLookup) {
+
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You will not be able to recover this imaginary file!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, delete it!",
+        closeOnConfirm: false
+    }).then((result) => {
+        $.ajax({
+            url:'/Admin/MasterLookup/PostDeleteMasterLookup',
+            type: "POST",
+            data: { id: idLookup}
+            ,
+            dataType: "json",
+            success: function () {
+                Swal.fire("Done!", "It was succesfully deleted!", "success");
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                Swal.fire("Error deleting!", "Please try again", "error");
+            }
+        });
+    })
+
+}

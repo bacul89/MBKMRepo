@@ -31,8 +31,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
         public ActionResult GetDataMasterLookup()
         {
-
-            var data = _lookupService.GetAll();
+            var data = _lookupService.Find(x => x.IsDeleted == false);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
@@ -74,10 +73,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult PostDeleteMasterLookup(Lookup lookup)
+        public ActionResult PostDeleteMasterLookup(int id)
         {
-            Lookup data = _lookupService.Get(lookup.ID);
-            data.IsDeleted = lookup.IsDeleted;
+            var data = _lookupService.Get(id);
+            data.IsDeleted = true;
 
             _lookupService.Save(data);
             return Json(data);
