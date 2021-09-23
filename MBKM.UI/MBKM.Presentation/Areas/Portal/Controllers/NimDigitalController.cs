@@ -26,6 +26,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
 
             Session["nama"] = "Hallo";
+            Session["username"] = "smitty werben man jensen";
             Session["email"] = "pangestianin@gmail.com";
             return View();
         }
