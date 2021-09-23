@@ -1,28 +1,73 @@
 ﻿@model MBKM.Presentation.Models.LoginVMAdmin
 @{
     ViewBag.Title = "Login";
-    Layout = "~/Areas/Admin/Views/Shared/_LayoutLogin.cshtml";
 }
-<section id="loginForm">
+@*<section id="loginForm">
 
-    @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
-    {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="container" style="width: 100%;">
-            <div class="form-group">
-                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", maxlength = "150", placeholder="Username" } })
-                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+        @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="container" style="width: 100%;">
+                <div class="form-group">
+                    @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control", maxlength = "150", placeholder = "Username" } })
+                    @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", maxlength = "150", placeholder = "Password", type = "password" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Login" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 18px; font-weight: bold; font-size: 18px;" />
+                </div>
             </div>
-            <div class="form-group">
-                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", maxlength = "150", placeholder="Password", type="password" } })
-                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Login" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 18px; font-weight: bold; font-size: 18px;" />
+
+        }
+    </section>*@
+@{
+    ViewBag.Title = "Login Admin";
+}
+
+<style>
+    body {
+        color: #C1BABA;
+    }
+</style>
+
+<div style="padding: 5%;" class="row">
+    <div class="col-sm-7 col-md-7 col-lg-7">
+        <img style="max-width: 100%;" src="~/Asset/kampus-universitas-katolik-atmajaya-jakarta-_131002231109-118.jpg" />
+    </div>
+    <div class="col-sm-5 col-md-5 col-lg-5">
+        <div class="card" style="width: 100%; background-color: #00FFFF; ">
+            <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+                <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 30px; color: black;">LOGIN ADMIN/STAFF</h5>
+                <div class="container" style="width: 100%; color: black;">
+                    @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="container" style="width: 100%;">
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control input-md", maxlength = "150", placeholder = "No Pegawai" } })
+                                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control input-md", maxlength = "150", placeholder = "Password", type = "password" } })
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            </div>
+                            <br />
+                            <input type="submit" value="Login" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 18px; font-weight: bold; font-size: 18px;" />
+
+                        </div>
+
+                    }
+                    <hr />
+                    <div style="font-size: 20px; padding: 30px 0px;">
+                        Untuk Admin/Staff yang belum terdaftar atau tidak bisa login ke dalam aplikasi silahkan kontak Administrator
+                    </div>
+                </div>
             </div>
         </div>
-
-    }
-</section>
-
+    </div>
+</div>

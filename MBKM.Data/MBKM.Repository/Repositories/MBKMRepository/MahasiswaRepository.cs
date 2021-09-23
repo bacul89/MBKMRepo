@@ -60,21 +60,21 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                     .Where(y => y.NamaUniversitas.Contains(SearchParam) ||
                                         y.Email.Contains(SearchParam) || y.ProdiAsal.Contains(SearchParam) || y.NIMAsal.Contains(SearchParam)
                                         || y.Nama.Contains(SearchParam) || y.JenjangStudi.Contains(SearchParam))
-                    .OrderBy(SortBy, SortDir)
+                    .OrderBy(SortBy, SortDir); 
+                mListMahasiswa.gridDatas = gridfilter.Skip(Skip).Take(Length)
                     .Select(z => new GridDataMahasiswa
                     {
                         ID = z.ID,
                         Email = z.Email,
                         Nama = z.Nama,
                         NamaUniversitas = z.NamaUniversitas,
-                        Gender = z.Gender,
+                        Gender = context.Lookups.Where(x => x.Tipe == "Gender" && x.Nilai == z.Gender).Select(x => x.Nama).FirstOrDefault(),
                         NoHp = z.NoHp,
                         NIMAsal = z.NIMAsal,
                         ProdiAsal = z.ProdiAsal,
                         JenjangStudi = z.JenjangStudi,
                         StatusVerifikasi = z.StatusVerifikasi
-                    }); 
-                mListMahasiswa.gridDatas = gridfilter.Skip(Skip).Take(Length).ToList();
+                    }).ToList();
                 mListMahasiswa.TotalFilterCount = gridfilter.Count();
                 return mListMahasiswa;
             }
