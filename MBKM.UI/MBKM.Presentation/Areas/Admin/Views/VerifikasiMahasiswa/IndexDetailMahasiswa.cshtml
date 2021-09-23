@@ -34,7 +34,7 @@
                         <tr>
                             <td style="width: 20%;">Jenis Kelamin</td>
                             <td>
-                                <input type="text" name="jenisKelamin" value="@Model.Gender" id="jenisKelamin" class="form-control input-md input-data" disabled />
+                                <input type="text" name="jenisKelamin" value="@{if(Model.Gender == "P"){<text>Perempuan</text>}else{<text>Laki - Laki</text>}}" id="jenisKelamin" class="form-control input-md input-data" disabled />
                             </td>
                         </tr>
                         <tr>

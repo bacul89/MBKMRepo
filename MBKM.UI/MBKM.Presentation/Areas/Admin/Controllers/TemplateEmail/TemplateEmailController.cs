@@ -44,6 +44,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.TemplateEmail
         [HttpPost]
         public ActionResult PostDataEmailTemplate(EmailTemplate email)
         {
+            email.CreatedBy = HttpContext.Session["nopegawai"].ToString();
+            email.CreatedDate = DateTime.Now;
             _emailTemplateService.Save(email);
             return Json(email);
         }
@@ -63,7 +65,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.TemplateEmail
             data.SubjectMail = emailTemplate.SubjectMail;
             data.BodyMail = emailTemplate.BodyMail;
             data.IsActive = emailTemplate.IsActive;
-
+            data.UpdatedBy = HttpContext.Session["nopegawai"].ToString();
+            data.UpdatedDate = DateTime.Now;
             _emailTemplateService.Save(data);
 
             return Json(data);

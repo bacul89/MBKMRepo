@@ -10,6 +10,7 @@ using MBKM.Presentation.Helper;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MBKM.Presentation.models;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
@@ -89,15 +90,18 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             data.NoKerjasama = _mahasiswa.NoKerjasama;
             data.StatusKerjasama = _mahasiswa.StatusKerjasama;
             data.StatusVerifikasi = _mahasiswa.StatusVerifikasi;
-            if(_mahasiswa.StatusVerifikasi == "AKTIF")
+            data.UpdatedBy = HttpContext.Session["nopegawai"].ToString();
+            data.UpdatedDate = DateTime.Now;
+            if (_mahasiswa.StatusVerifikasi == "AKTIF")
             {
                 SendEmail(data.Email, "VerifikasiAktif");
-            }else if(_mahasiswa.StatusVerifikasi == "DITOLAK")
+            }
+            else if (_mahasiswa.StatusVerifikasi == "DITOLAK")
             {
                 SendEmail(data.Email, "VerifikasiDitolak");
             }
             _mahasiswaService.Save(data);
-            return Json(data);
+            return Json(new ServiceResponse { status = 200, message = "Done" });
         }
 
         [HttpPost]
