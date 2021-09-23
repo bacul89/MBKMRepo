@@ -335,6 +335,7 @@
     <Content Include="Scripts\Admin\MasterLookup\main.js" />
     <Content Include="Scripts\Admin\PerjanjianKerjasama\crud.js" />
     <Content Include="Scripts\Admin\PerjanjianKerjasama\main.js" />
+    <Content Include="Scripts\Admin\PerjanjianKerjasama\main_detail.js" />
     <Content Include="Scripts\Admin\TemplateEmail\crud.js" />
     <Content Include="Scripts\Admin\TemplateEmail\main.js" />
     <Content Include="Scripts\Admin\UserManage\crud.js" />
@@ -424,7 +425,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\UnAuthorized\Index.cshtml" />
-    <Content Include="Upload\Coba dokumen - Copy - Copy.docx.docx" />
+    <Content Include="Upload\Karyawan %28menggantikan data Dosen%29.xlsx.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
