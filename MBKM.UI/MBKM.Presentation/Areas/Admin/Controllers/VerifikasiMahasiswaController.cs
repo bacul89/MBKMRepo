@@ -90,7 +90,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             data.NoKerjasama = _mahasiswa.NoKerjasama;
             data.StatusKerjasama = _mahasiswa.StatusKerjasama;
             data.StatusVerifikasi = _mahasiswa.StatusVerifikasi;
-            data.UpdatedBy = HttpContext.Session["nopegawai"].ToString();
+            data.UpdatedBy = HttpContext.Session["username"].ToString();
             data.UpdatedDate = DateTime.Now;
             if (_mahasiswa.StatusVerifikasi == "AKTIF")
             {
