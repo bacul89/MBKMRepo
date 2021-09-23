@@ -15,8 +15,8 @@
         </h5>
     </div>
     <div class="modal-body">
-        <form class="form-horizontal">
-            <input type="text" id="idKerjasama" value="@Model.ID" hidden />
+        <form class="form-horizontal" enctype= multipart/form-data id="UpdatePerjanjian">
+            <input type="text" id="idKerjasama" value="@Model.ID" />
             <div class="form-group row">
                 <label for="no" class="col-md-4 col-form-label">No. Kerjasama</label>
                 <div class="col-md-8">
@@ -48,13 +48,13 @@
             <div class="form-group row">
                 <label for="Namainstansi" class="col-md-4 col-form-label">Nama</label>
                 <div class="col-md-8">
-                    <input id="NamaUniversitas" type="text" name="NamaUniversitas" class="form-control" value="@Model.NamaInstansi">
+                    <input id="NamaUniversitas" type="text" name="NamaInstansi" class="form-control" value="@Model.NamaInstansi">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="Namaunit" class="col-md-4 col-form-label">Nama Unit/Program Studi</label>
                 <div class="col-md-8">
-                    <input id="Namaunit" type="text" name="Namaunit" class="form-control" value="@Model.NamaUnit">
+                    <input id="Namaunit" type="text" name="NamaUnit" class="form-control" value="@Model.NamaUnit">
                 </div>
             </div>
             <div class="form-group row">
@@ -94,12 +94,38 @@
             <div class="form-group row">
                 <label for="biaya" class="col-md-4 col-form-label">Biaya</label>
                 <div class="col-md-8">
-                    <input id="biaya" name="biaya" class="form-control" value="@Model.BiayaKuliah">
+                    <input id="biaya" name="BiayaKuliah" class="form-control" value="@Model.BiayaKuliah">
                 </div>
             </div>
-            <div class="modal-footer">
-                <input onclick="UpdatePerjanjian()" type="submit" value="Simpan" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
+            <div class="form-group row">
+                <label for="Upload" class="col-md-4 col-form-label">Upload Dokumen Pendukung</label>
+                <div class="col-md-8">
+                    <input id="file" type="file" name="inputer" class="form-control input-data" multiple="multiple" accept=".pdf,.doc,.docx,.xlsx">
+                </div>
             </div>
+            <div class="form-group row">
+                <label for="Upload" class="col-md-4 col-form-label"> </label>
+                <div class="col-md-8">
+                    <table id="table-data-attachment" class="table row-border hover dt-responsive responsive" width="50%">
+                        <thead>
+                            <tr>
+                                <th>File</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewData["listFile"] as IEnumerable<MBKM.Entities.Models.MBKM.AttachmentPerjanjianKerjasama>)
+                            {
+                                <tr>
+                                    <td>@item.FileName</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+        <div class="modal-footer">
+         <input onclick="UpdatePerjanjian()" type="submit" value="Simpan" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
+        </div>
         </form>
     </div>
 </div>
