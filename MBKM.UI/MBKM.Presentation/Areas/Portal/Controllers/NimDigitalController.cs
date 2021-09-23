@@ -49,14 +49,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult GetNim()
         {
 
-            /*var data = _mahasiswaService.Find(x => x.Email == email).FirstOrDefault();*/
-            /*var data = _mahasiswaService.Find(m => m.Email == email).First();*/
-            /*var data = _mahasiswaService.GetAll();*/
             string email = Session["email"] as string;
 
-            Console.WriteLine(email);
             var ma = _mahasiswaService.Find(x => x.Email == email).First();
-            /*string files = ;*/
             var attachment = _attachmentService.Find(x => x.MahasiswaID == ma.ID && x.FileType == "FotoDiri").First();
             var photoprofile = "Upload/"+ ma.ID+"/"+attachment.FileName;
             return Json(new {
