@@ -61,7 +61,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             {
                 TempData["alertMessage"] = "Token invalid!";
             }
-            return RedirectToAction("Index", "RegisMhsByAdmin");
+            return RedirectToAction("Index", "Home",new { area = "Portal" });
         }
         public void SendEmail(string email, string token)
         {
@@ -92,6 +92,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     mahasiswa.CreatedDate = DateTime.Now;
                     mahasiswa.UpdatedDate = DateTime.Now;
                     mahasiswa.StatusVerifikasi = "DAFTAR";
+                    mahasiswa.Password = HashPasswordService.HashPassword(mahasiswa.Password);
                     mahasiswa.CreatedBy = "Admin";
                     _mahasiswaService.Save(mahasiswa);
                     SendEmail(mahasiswa.Email, token);
