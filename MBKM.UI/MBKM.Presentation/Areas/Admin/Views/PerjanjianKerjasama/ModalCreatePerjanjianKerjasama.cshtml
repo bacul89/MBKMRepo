@@ -91,7 +91,7 @@
             <div class="form-group row">
                 <label for="inputer" class="col-md-4 col-form-label">Inputer</label>
                 <div class="col-md-8">
-                    <input id="inputer" type="text" name="CreatedBy" class="form-control input-data" value="inputer" disabled>
+                    <input id="inputer" type="text" name="CreatedBy" class="form-control input-data" value="@HttpContext.Current.Session["username"].ToString()" disabled>
                 </div>
             </div>
             <div class="form-group row">

@@ -89,6 +89,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\VMListMahasiswa.cs" />
+    <Compile Include="ViewModel\VMListMenuRole.cs" />
     <Compile Include="ViewModel\VMListPerjanjianKerjasama.cs" />
     <Compile Include="ViewModel\VMListProdi.cs" />
     <Compile Include="ViewModel\VMListUser.cs" />
