@@ -7,10 +7,12 @@ using MBKM.Entities.Models;
 using MBKM.Repository.Repositories;
 using MBKM.Services;
 using MBKM.Services.MBKMServices;
+using MBKM.Presentation.Helper;
 
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
+    [MBKMAuthorize]
     public class MasterLookupController : Controller
     {
         
@@ -44,8 +46,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult PostDataMasterLookup(Lookup lookup)
         {
-            Console.WriteLine("Test");
-            Console.WriteLine(lookup);
+            /*            Console.WriteLine("Test");
+                        Console.WriteLine(lookup);*/
+            lookup.CreatedBy = Session["username"] as string;
+            lookup.UpdatedBy = Session["username"] as string;
             _lookupService.Save(lookup);
             return Json(lookup);
         }
@@ -66,6 +70,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             data.Nama = lookup.Nama;
             data.Nilai = lookup.Nilai;
             data.IsActive = lookup.IsActive;
+            data.UpdatedBy = Session["username"] as string;
+
+
 
             _lookupService.Save(data);
 
@@ -77,6 +84,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             var data = _lookupService.Get(id);
             data.IsDeleted = true;
+            data.UpdatedBy = Session["username"] as string;
 
             _lookupService.Save(data);
             return Json(data);

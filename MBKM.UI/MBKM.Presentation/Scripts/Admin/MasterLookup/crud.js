@@ -23,11 +23,6 @@ function IndexCreateMasterLookup() {
                 }
                 $('#modal-inner').append(e);
                 $('.modal').modal('show');
-                $('.summernote').summernote({
-                    placeholder: 'Input Body Email',
-                    height: 300, // set editor height  
-                    minHeight: null, // set minimum height of editor  
-                });
             }
         })
     }
@@ -45,11 +40,6 @@ function IndexUpdateMasterLookup(id) {
             }
             $('#modal-inner').append(e);
             $('.modal').modal('show');
-            $('.summernote').summernote({
-                placeholder: 'Input Body Email',
-                height: 300, // set editor height  
-                minHeight: null, // set minimum height of editor  
-            });
         }
     })
 }
@@ -193,6 +183,7 @@ function DeletedMasterLookup(idLookup) {
                     focusConfirm: false,
                     confirmButtonText: 'OK'
                 })
+                dataTable.ajax.reload(null, false);
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 Swal.fire({
