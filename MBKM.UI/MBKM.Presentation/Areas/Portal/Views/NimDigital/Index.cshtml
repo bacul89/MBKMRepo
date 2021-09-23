@@ -4,5 +4,84 @@
     Layout = "~/Areas/Portal/Views/Shared/_LayoutHome.cshtml";
 }
 
-<h2>Nomor Induk Mahasiswa Digital</h2>
 
+<div class="container-fluid" style="margin-bottom:100px;">
+    <div class="card center-block" style="background-color: white; width: 100%; margin-top: 30px; margin-bottom: 50px;">
+        <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
+            <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
+                KARTU INDUK MAHASISWA DIGITAL<br />
+                <small class="kim-discribe">
+                     NIM hanya berlaku pada saat mengikuti program Merdeka Belajar Kampus Merdeka di Universitas Atma Jaya
+                </small>
+            </h4>
+            <span></span>
+            <hr />
+            <div class="container" style="width: 100%;">
+
+                <div class="card-kim col-md-12 paddingZero">
+                    <div class="row-head col-md-12  paddingZero">
+                        <div class="col-md-3 paddingZero">
+                            <img class="kim-logo" src="~/Asset/Lambang_Atma_Jaya.png" />
+                        </div>
+                        <div class="col-md-9 rh-text right"><b>PROGRAM MERDEKA BELAJAR KAMPUS MERDEKA</b></div>
+                    </div>
+                    <div class="row-content col-md-12 paddingZero">
+                        <div class="col-md-9">
+                            <div id="NIM">Test</div>
+                            <div id="nama"></div>
+                            <div id="universitas"></div>
+                            <div id="prodi"></div>
+                        </div>
+                        <div class="col-md-3 paddingZero">
+                            <img id="photoprofile" class="right" />
+                        </div>
+                    </div>
+                </div>
+                <style>
+                    .paddingZero{
+                        padding: 0px!important;
+                    }
+                    .kim-discribe{
+                        font-size:14px;
+                    }
+                    .kim-logo {
+                        width: 10rem;
+                    }
+                    .card-kim {
+                        width: 10rem;
+                        border: 2px solid #ff8a04;
+                        border-radius: 5px;
+                        width: 500px;
+                        padding: 2rem !important;
+                    }
+                    .row-head {
+                        display: inline-flex;
+                        width: 100%;
+                        position: relative;
+                    }
+
+                    .rh-text {
+                        position: absolute;
+                        background: none !important;
+                        top: -5px;
+                        text-align: right;
+                        padding: 0px;
+                    }
+
+                    .row-content {
+                        display: inline-flex;
+                        width: 100%;
+                    }
+                    img#photoprofile {
+                        width: 50px;
+                        height: 67px;
+                    }
+                </style>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/Portal/NimDigital/main.js"></script>
+}

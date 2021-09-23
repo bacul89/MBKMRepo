@@ -48,8 +48,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             /*            Console.WriteLine("Test");
                         Console.WriteLine(lookup);*/
-            lookup.CreatedBy = Session["username"] as string;
-            lookup.UpdatedBy = Session["username"] as string;
+            lookup.CreatedBy = Session["nopegawai"] as string;
+            lookup.UpdatedBy = Session["nopegawai"] as string;
             _lookupService.Save(lookup);
             return Json(lookup);
         }
@@ -70,7 +70,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             data.Nama = lookup.Nama;
             data.Nilai = lookup.Nilai;
             data.IsActive = lookup.IsActive;
-            data.UpdatedBy = Session["username"] as string;
+            data.UpdatedBy = Session["nopegawai"] as string;
 
 
 
@@ -84,7 +84,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             var data = _lookupService.Get(id);
             data.IsDeleted = true;
-            data.UpdatedBy = Session["username"] as string;
+            data.UpdatedBy = Session["nopegawai"] as string;
 
             _lookupService.Save(data);
             return Json(data);

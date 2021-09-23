@@ -25,9 +25,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult Index()
         {
 
-            Session["nama"] = "Hallo";
-            Session["username"] = "smitty werben man jensen";
-            Session["email"] = "pangestianin@gmail.com";
+            Session["nama"] = "smitty werben man jensen";
+            Session["email"] = "armandadimas@live.com";
             return View();
         }
 
@@ -59,12 +58,12 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var ma = _mahasiswaService.Find(x => x.Email == email).First();
             /*string files = ;*/
             var attachment = _attachmentService.Find(x => x.MahasiswaID == ma.ID && x.FileType == "FotoDiri").First();
-
+            var photoprofile = "Upload/"+ ma.ID+"/"+attachment.FileName;
             return Json(new {
                 Nama = ma.Nama,
                 NIM = ma.NIM,
                 Prodi = ma.ProdiAsal,
-                PhotoProfile = attachment.FileName,
+                PhotoProfile = photoprofile,
                 NamaUniversitas = ma.NamaUniversitas
             }, JsonRequestBehavior.AllowGet);
 
