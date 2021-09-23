@@ -46,11 +46,51 @@ function SubmitPerjanjian() {
         processData: false,
         data: data,
         success: function (response) {
-            console.log("coba insert")
-            console.log(response);
+            Swal.fire({
+                title: 'Berhasil',
+                icon: 'success',
+                html: 'Data Berhasil Ditambahkan',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText: 'OK'
+            })
+            table.ajax.reload(null, false),
+                $('.modal').modal('hide');
+        },
+        error: function (response) {
+            Swal.fire({
+                title: 'Oppss',
+                icon: 'error',
+                html: 'Coba Reload Page',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText: 'OK'
+            })
+            $('.modal').modal('hide');
         }
     });
 }
+//function SubmitPerjanjian() {
+//    var data = new FormData($('#createPerjanjian')[0]);
+//    var fileInput = document.getElementById('file');
+//    for (i = 0; i < fileInput.files.length; i++) {
+//        var sfilename = fileInput.files[i].name;
+//        data.append("file", fileInput.files[i]);
+//    }
+
+//    $.ajax({
+//        url: base_url + '/Admin/PerjanjianKerjasama/SavePerjanjian',
+//        type: 'post',
+//        dataType: 'json',
+//        data: JSON.stringify(data),
+//        contentType: 'application/json',
+//        success: function (e) {
+//            console.log("cek")
+//        }
+//    });
+//}
 function IndexViewKerjasama(id) {
     $.ajax({
         url: '/Admin/PerjanjianKerjasama/ModalDetailKerjasama/' + id,
@@ -86,18 +126,46 @@ function UpdateKerjasama(id) {
 }
 
 function UpdatePerjanjian() {
-    getValueOnForm();
-    input.ID = $("#idKerjasama").val();
-    console.log(input);
-    var base_url = window.location.origin;
+    var data = new FormData($('#UpdatePerjanjian')[0]);
+    var fileInput = document.getElementById('file');
+    for (i = 0; i < fileInput.files.length; i++) {
+        var sfilename = fileInput.files[i].name;
+        data.append("file", fileInput.files[i]);
+    }
+    data.append("ID", $("#idKerjasama").val())
     $.ajax({
-        url: base_url + '/Admin/PerjanjianKerjasama/UpdateKerjasama',
-        type: 'post',
-        datatype: 'json',
-        data: JSON.stringify(input),
-        contentType: 'application/json',
+        type: "POST",
+        url: "/Admin/PerjanjianKerjasama/UpdateKerjasama",
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: data,
         success: function (e) {
-            console.log("berhasil")
+            console.log("coba isi")
+            Swal.fire({
+                title: 'Berhasil',
+                icon: 'success',
+                html: 'Data Berhasil Diubah',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText: 'OK'
+            })
+            tableUser.ajax.reload(null, false);
+            $('.modal').modal('hide');
+        },
+        error: function (e) {
+            console.log("coba lagi")
+            Swal.fire({
+                title: 'Oppss',
+                icon: 'error',
+                html: 'Coba Reload Page',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText: 'OK'
+            })
+            $('.modal').modal('hide');
         }
     })
 }
