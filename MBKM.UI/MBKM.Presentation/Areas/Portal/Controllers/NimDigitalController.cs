@@ -24,27 +24,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
 
         public ActionResult Index()
         {
-
-            Session["nama"] = "smitty werben man jensen";
-            Session["email"] = "armandadimas@live.com";
+/*            Session["nama"] = "smitty werben man jensen";
+            Session["email"] = "armandadimas@live.com";*/
             return View();
         }
 
-
-        /*        public JsonResult RunSession(Mahasiswa mahasiswa)
-                {
-                    *//*String text = "Hello";
-                    return View();
-                    string emailText = "abiyogakhusus@gmail.com";
-                    Session["email"] = emailText;*//*
-                    string email = Session["email"] as string;
-                    return Json(GetMahasiswaByEmail(email), JsonRequestBehavior.AllowGet);
-
-
-
-
-                }
-        */
 
         public ActionResult GetNim()
         {
