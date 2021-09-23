@@ -24,7 +24,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             _perjanjianKerjasamaService = perjanjianKerjasamaService;
             _lookupService = lookupService;
         }
-        // GET: Portal/Home
+        // GET: Portal/Home 
         public ActionResult Index()
         {
             return View();
@@ -163,11 +163,12 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public void SendEmail(string email, string token)
         {
+            string domain = ConfigurationManager.AppSettings["Domain"];
             string url = this.Url.Action("VerifyPage", "Home", null);
             GMailer mailer = new GMailer();
             mailer.ToEmail = email;
             mailer.Subject = "Verify your email";
-            mailer.Body = "Thanks for Registering your account.<br> please verify your email by clicking the link <br> <a href='http://localhost:10776" + url + "?token=" + token + "'>verify</a>";
+            mailer.Body = "Thanks for Registering your account.<br> please verify your email by clicking the link <br> <a href='" + domain + url + "?token=" + token + "'>verify</a>";
             mailer.IsHtml = true;
             mailer.Send();
         }
