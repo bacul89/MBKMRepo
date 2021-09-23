@@ -24,47 +24,25 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
 
         public ActionResult Index()
         {
-
-            Session["nama"] = "Hallo";
-            Session["username"] = "smitty werben man jensen";
-            Session["email"] = "pangestianin@gmail.com";
+/*            Session["nama"] = "smitty werben man jensen";
+            Session["email"] = "armandadimas@live.com";*/
             return View();
         }
 
 
-        /*        public JsonResult RunSession(Mahasiswa mahasiswa)
-                {
-                    *//*String text = "Hello";
-                    return View();
-                    string emailText = "abiyogakhusus@gmail.com";
-                    Session["email"] = emailText;*//*
-                    string email = Session["email"] as string;
-                    return Json(GetMahasiswaByEmail(email), JsonRequestBehavior.AllowGet);
-
-
-
-
-                }
-        */
-
         public ActionResult GetNim()
         {
 
-            /*var data = _mahasiswaService.Find(x => x.Email == email).FirstOrDefault();*/
-            /*var data = _mahasiswaService.Find(m => m.Email == email).First();*/
-            /*var data = _mahasiswaService.GetAll();*/
             string email = Session["email"] as string;
 
-            Console.WriteLine(email);
             var ma = _mahasiswaService.Find(x => x.Email == email).First();
-            /*string files = ;*/
             var attachment = _attachmentService.Find(x => x.MahasiswaID == ma.ID && x.FileType == "FotoDiri").First();
-
+            var photoprofile = "Upload/"+ ma.ID+"/"+attachment.FileName;
             return Json(new {
                 Nama = ma.Nama,
                 NIM = ma.NIM,
                 Prodi = ma.ProdiAsal,
-                PhotoProfile = attachment.FileName,
+                PhotoProfile = photoprofile,
                 NamaUniversitas = ma.NamaUniversitas
             }, JsonRequestBehavior.AllowGet);
 
