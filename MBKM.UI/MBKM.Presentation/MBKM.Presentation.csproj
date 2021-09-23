@@ -394,6 +394,8 @@
     <Content Include="Content\autonumeric\readme.md" />
     <Content Include="Areas\Admin\Views\RegisMhsByAdmin\Index.cshtml" />
     <Content Include="Areas\Portal\Views\NimDigital\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
