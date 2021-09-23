@@ -34,7 +34,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
         {
             using (var context = new MBKMContext())
             {
-                var result = context.Mahasiswas.Where(x => x.StatusVerifikasi == "DAFTAR" && x.NamaUniversitas == Universitas 
+                var result = context.Mahasiswas.Where(x => x.StatusVerifikasi == "MENUNGGU VERIFIKASI" && x.NamaUniversitas == Universitas 
                             && x.ProdiAsal == Prodi).ToList();
                 return result;
             }
@@ -53,15 +53,14 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             using (var context = new MBKMContext())
             {
 
-                var result = context.Mahasiswas.Where(x => x.IsDeleted == false && x.StatusVerifikasi == "DAFTAR");
+                var result = context.Mahasiswas.Where(x => x.IsDeleted == false && x.StatusVerifikasi == "MENUNGGU VERIFIKASI");
                 mListMahasiswa.TotalCount = result.Count();
-                mListMahasiswa.gridDatas = result
+                var gridfilter = result
                     .AsQueryable()
                     .Where(y => y.NamaUniversitas.Contains(SearchParam) ||
                                         y.Email.Contains(SearchParam) || y.ProdiAsal.Contains(SearchParam) || y.NIMAsal.Contains(SearchParam)
                                         || y.Nama.Contains(SearchParam) || y.JenjangStudi.Contains(SearchParam))
                     .OrderBy(SortBy, SortDir)
-                    .Skip(Skip).Take(Length)
                     .Select(z => new GridDataMahasiswa
                     {
                         ID = z.ID,
@@ -74,9 +73,9 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                         ProdiAsal = z.ProdiAsal,
                         JenjangStudi = z.JenjangStudi,
                         StatusVerifikasi = z.StatusVerifikasi
-                    })                    
-                    .ToList();
-                mListMahasiswa.TotalFilterCount = mListMahasiswa.gridDatas.Count();
+                    }); 
+                mListMahasiswa.gridDatas = gridfilter.Skip(Skip).Take(Length).ToList();
+                mListMahasiswa.TotalFilterCount = gridfilter.Count();
                 return mListMahasiswa;
             }
         }

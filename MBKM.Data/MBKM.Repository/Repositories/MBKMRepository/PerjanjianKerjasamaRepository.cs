@@ -33,7 +33,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
 
                 var result = context.PerjanjianKerjasamas.Where(x => x.IsDeleted == false);
                 mListmodel.TotalCount = result.Count();
-                mListmodel.gridDatas = result.AsQueryable().Where(y => y.NamaInstansi.Contains(SearchParam) ||
+                var gridfilter = result.AsQueryable().Where(y => y.NamaInstansi.Contains(SearchParam) ||
                                         y.JenisKerjasama.Contains(SearchParam) || y.JenisPertukaran.Contains(SearchParam) || y.NamaUnit.Contains(SearchParam)
                                         || y.NamaInstansi.Contains(SearchParam) || y.NoPerjanjian.Contains(SearchParam))
                     .Select(z => new GridDataPerjanjian
@@ -48,8 +48,9 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                         Inputer = z.CreatedBy,
                         TanggalAkhir = z.TanggalAkhir,
                         TanggalMulai = z.TanggalMulai
-                    }).OrderBy(SortBy, SortDir).Skip(Skip).Take(Length).ToList();
-                mListmodel.TotalFilterCount = mListmodel.gridDatas.Count();
+                    }).OrderBy(SortBy, SortDir);
+                mListmodel.gridDatas = gridfilter.Skip(Skip).Take(Length).ToList();
+                mListmodel.TotalFilterCount = gridfilter.Count();
                 return mListmodel;
             }
         }
