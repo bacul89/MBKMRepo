@@ -105,25 +105,15 @@
         });
     },
 });
-
-$(document).ready(function () {
-    var t = $('#table-data-attachment').DataTable({
-        "columnDefs": [{
-        "searchable": false,
-        "orderable": false,
-        "targets": 0
-        }],
-        "order": [
-        [5, 'desc']
-        ]
-        });
-
-    t.on('order.dt search.dt', function () {
-        t.column(0, {
-            search: 'applied',
-            order: 'applied'
-        }).nodes().each(function (cell, i) {
-            cell.innerHTML = i + 1;
-        });
-    }).draw();
-});
+function validationCustom2() {
+    var isValid;
+    $(".input-data").each(function () {
+        var element = $(this);
+        if (element.val() == "") {
+            return isValid = false;
+        } else {
+            return isValid = true;
+        }
+    });
+    return isValid;
+}
