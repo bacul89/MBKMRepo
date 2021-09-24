@@ -106,11 +106,15 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
                     }
                     perjanjianKerjasama.AttachmentPerjanjianKerjasamas = attachments;
                     perjanjianKerjasama.IsActive = true;
+                    perjanjianKerjasama.CreatedBy = Session["username"] as string;
+                    perjanjianKerjasama.UpdatedBy = Session["username"] as string;
                     _perjanjianKerjasamaService.Save(perjanjianKerjasama);
 
                 }
                 else
                 {
+                    perjanjianKerjasama.CreatedBy = Session["username"] as string;
+                    perjanjianKerjasama.UpdatedBy = Session["username"] as string;
                     perjanjianKerjasama.IsActive = true;
                     _perjanjianKerjasamaService.Save(perjanjianKerjasama);
                 }
@@ -172,7 +176,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
                     data.TanggalAkhir = perjanjianKerjasama.TanggalAkhir;
                     //perjanjianKerjasama.CreatedBy = perjanjianKerjasama.CreatedBy;
                     data.CreatedDate = DateTime.Now;
-                    data.UpdatedBy = perjanjianKerjasama.UpdatedBy;
+                    data.UpdatedBy = Session["username"] as string;
                     data.UpdatedDate = perjanjianKerjasama.UpdatedDate;
                     data.IsActive = true;
                     data.IsDeleted = false;
@@ -191,7 +195,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
                     data.TanggalAkhir = perjanjianKerjasama.TanggalAkhir;
                     //perjanjianKerjasama.CreatedBy = perjanjianKerjasama.CreatedBy;
                     data.CreatedDate = DateTime.Now;
-                    data.UpdatedBy = perjanjianKerjasama.UpdatedBy;
+                    data.UpdatedBy = Session["username"] as string;
                     data.UpdatedDate = perjanjianKerjasama.UpdatedDate;
                     data.IsActive = true;
                     data.IsDeleted = false;

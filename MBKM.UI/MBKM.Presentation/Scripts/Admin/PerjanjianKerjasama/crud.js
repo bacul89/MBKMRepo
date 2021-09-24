@@ -169,3 +169,23 @@ function UpdatePerjanjian() {
         }
     })
 }
+
+$('#file').on('change', function () {
+    for (var i = 0; i < $(this).get(0).files.length; ++i) {
+        var file1 = $(this).get(0).files[i].size;
+        if (file1) {
+            var file_size = $(this).get(0).files[i].size;
+            if (file_size > 1000000) {
+                $('#error-message').html("File upload size is larger than 1MB");
+                $('#error-message').css("display", "block");
+                $('#error-message').css("color", "red");
+                $('#error-message').val("gagal");
+                var coba = $('#error-message').val();
+                console.log(coba);
+            } else {
+                $('#error-message').css("display", "none");
+                $('#error-message').val("ada isi");
+            }
+        }
+    }
+});
