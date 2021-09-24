@@ -6,6 +6,7 @@ using MBKM.Services.MBKMServices;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -76,6 +77,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public void UploadAttachment(Int64 id, HttpPostedFileBase file, string tipe)
         {
+            string folder = ConfigurationManager.AppSettings["PathAttachmentMahasiswa"];
             Attachment attachment = new Attachment();
             attachment.CreatedDate = DateTime.Now;
             attachment.UpdatedDate = DateTime.Now;
@@ -87,7 +89,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             attachment.FileExt = Path.GetExtension(file.FileName);
             attachment.FileSze = file.ContentLength;
 
-            var path = Path.Combine(Server.MapPath("~/Upload/" + id + "/"), id + tipe + attachment.FileExt);
+            var path = Path.Combine(Server.MapPath(folder + id + "/"), id + tipe + attachment.FileExt);
             file.SaveAs(path);
 
             _attachmentService.Save(attachment);
