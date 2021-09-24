@@ -17,25 +17,25 @@
             <div class="form-group row">
                 <label for="no" class="col-md-4 col-form-label">No. Kerjasama</label>
                 <div class="col-md-8">
-                    <input id="NoPerjanjian" type="text" name="NoPerjanjian" class="form-control" placeholder="Input No. Kerjasama" required>
+                    <input id="NoPerjanjian" type="text" name="NoPerjanjian" class="form-control input-data" placeholder="Input No. Kerjasama" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="tanggalKerjasama" class="col-md-4 col-form-label">Tanggal Kerjasama</label>
                 <div class="col-md-8">
-                    <input id="TanggalMulai" type="date" name="TanggalMulai" class="form-control" placeholder="dd/mm/yyyy" required>
+                    <input id="TanggalMulai" type="date" name="TanggalMulai" class="form-control input-data" placeholder="dd/mm/yyyy" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="tanggalBerakhir" class="col-md-4 col-form-label">Tanggal Berakhir</label>
                 <div class="col-md-8">
-                    <input id="TanggalAkhir" type="date" name="TanggalAkhir" class="form-control" placeholder="dd/mm/yyyy" required>
+                    <input id="TanggalAkhir" type="date" name="TanggalAkhir" class="form-control input-data" placeholder="dd/mm/yyyy" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="Instansi" class="col-md-4 col-form-label">Instansi</label>
                 <div class="col-md-8">
-                    <select name="Instansi" id="instansi" class="form-control" required>
+                    <select name="Instansi" id="instansi" class="form-control input-data" required>
                         <option value="" disabled selected>--Pilih Perusahaan/Universitas--</option>
                         <option value="Perusahaan">Perusahaan</option>
                         <option value="Universitas">Universitas</option>
@@ -45,19 +45,19 @@
             <div class="form-group row">
                 <label for="Namainstansi" class="col-md-4 col-form-label">Nama</label>
                 <div class="col-md-8">
-                    <input id="NamaUniversitas" type="text" name="NamaInstansi" class="form-control" placeholder="Input Nama Perusahaan/Universitas" required>
+                    <input id="NamaUniversitas" type="text" name="NamaInstansi" class="form-control input-data" placeholder="Input Nama Perusahaan/Universitas" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="Namaunit" class="col-md-4 col-form-label">Nama Unit/Program Studi</label>
                 <div class="col-md-8">
-                    <input id="Namaunit" type="text" name="Namaunit" class="form-control" placeholder="Input nama Unit/Program Studi" required>
+                    <input id="Namaunit" type="text" name="Namaunit" class="form-control input-data" placeholder="Input nama Unit/Program Studi" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="pertukaran" class="col-md-4 col-form-label">Jenis Pertukaran</label>
                 <div class="col-md-8">
-                    <select name="JenisPertukaran" id="JenisPertukaran" class="form-control" required>
+                    <select name="JenisPertukaran" id="JenisPertukaran" class="form-control input-data" required>
                         <option value="" disabled selected>--Pilih Jenis Pertukaran--</option>
                         @{
                             foreach (var data in ViewData["listPerjanjian"] as IEnumerable<MBKM.Entities.ViewModel.VMLookup>)
@@ -71,7 +71,7 @@
             <div class="form-group row">
                 <label for="pertukaran" class="col-md-4 col-form-label">Jenis Kerjasama</label>
                 <div class="col-md-8">
-                    <select name="JenisKerjasama" id="JenisKerjasama" class="form-control" required>
+                    <select name="JenisKerjasama" id="JenisKerjasama" class="form-control input-data" required>
                         <option value="" disabled selected>--Pilih Jenis Kerjasama--</option>
                         @{
                             foreach (var data in ViewData["listKerjasama"] as IEnumerable<MBKM.Entities.ViewModel.VMLookup>)
@@ -85,23 +85,24 @@
             <div class="form-group row">
                 <label for="biaya" class="col-md-4 col-form-label">Biaya</label>
                 <div class="col-md-8">
-                    <input id="biaya" type="number" name="BiayaKuliah" class="form-control" value="0" required>
+                    <input id="biaya" type="number" name="BiayaKuliah" class="form-control input-data" value="0" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="inputer" class="col-md-4 col-form-label">Inputer</label>
                 <div class="col-md-8">
-                    <input id="inputer" type="text" name="CreatedBy" class="form-control" value="inputer" disabled>
+                    <input id="inputer" type="text" name="CreatedBy" class="form-control input-data" value="inputer" disabled>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="Upload" class="col-md-4 col-form-label">Upload Dokumen Pendukung</label>
                 <div class="col-md-8">
-                    <input id="file" type="file" name="inputer" class="form-control" multiple="multiple" accept=".pdf,.doc,.docx,.xlsx">
+                    <input id="file" type="file" name="inputer" class="form-control input-data" multiple="multiple" accept=".pdf,.doc,.docx,.xlsx">
                 </div>
             </div>
             <div class="modal-footer">
-                <input onclick="SubmitPerjanjian()" type="button" value="Simpan" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
+                @*<input onclick="SubmitPerjanjian()" type="submit" value="Simpan" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />*@
+                <button onclick="SubmitPerjanjian()" class="btn" id="btnSubmit" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;">Simpan</button>
             </div>
         </form>
     </div>

@@ -87,7 +87,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             attachment.FileExt = Path.GetExtension(file.FileName);
             attachment.FileSze = file.ContentLength;
 
-            var path = Path.Combine(Server.MapPath("~/Upload/" + id + "/"), id + "_SuratKeterangan" + attachment.FileExt);
+            var path = Path.Combine(Server.MapPath("~/Upload/" + id + "/"), id + tipe + attachment.FileExt);
             file.SaveAs(path);
 
             _attachmentService.Save(attachment);

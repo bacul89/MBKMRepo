@@ -10,7 +10,6 @@ using System.Web.Mvc;
 using MBKM.Entities.Models.MBKM;
 using MBKM.Common.Helpers;
 using System.IO;
-using MBKM.Presentation.models;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
 {
@@ -19,12 +18,14 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
         private IMenuService _menuService;
         private ILookupService _lookupService;
         private IPerjanjianKerjasamaService _perjanjianKerjasamaService;
+        private IAttachmentPerjanjianKerjasamaService _attachmentPerjanjianKerjasamaService;
         public PerjanjianKerjasamaController(IMenuService menuService,
-            ILookupService lookupService, IPerjanjianKerjasamaService perjanjianKerjasamaService)
+            ILookupService lookupService, IPerjanjianKerjasamaService perjanjianKerjasamaService, IAttachmentPerjanjianKerjasamaService attachmentPerjanjianKerjasamaService)
         {
             _menuService = menuService;
             _lookupService = lookupService;
             _perjanjianKerjasamaService = perjanjianKerjasamaService;
+            _attachmentPerjanjianKerjasamaService = attachmentPerjanjianKerjasamaService;
         }
         // GET: Admin/PerjanjianKerjasama
         public ActionResult Index()
@@ -67,16 +68,21 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
         public ActionResult ModalDetailKerjasama(int id)
         {
             var data = _perjanjianKerjasamaService.Get(id);
+            var file = _perjanjianKerjasamaService.Get(id).AttachmentPerjanjianKerjasamas.Select(x =>
+            new AttachmentPerjanjianKerjasama
+            {
+                FileName = x.FileName,
+                ID = x.ID
+            });
+            ViewData["listFile"] = file;
             return View(data);
         }
-
-        public JsonResult SavePerjanjian(HttpPostedFileBase[] file, MBKM.Entities.Models.MBKM.PerjanjianKerjasama perjanjianKerjasama)
+        [HttpPost]
+        public ActionResult SavePerjanjian(HttpPostedFileBase[] file, MBKM.Entities.Models.MBKM.PerjanjianKerjasama perjanjianKerjasama)
         {
-            try
+            if (ModelState.IsValid)
             {
-
-
-                if (ModelState.IsValid)
+                if (file != null)
                 {
                     List<AttachmentPerjanjianKerjasama> attachments = new List<AttachmentPerjanjianKerjasama>();
                     for (int i = 0; i < file.Length; i++)
@@ -94,37 +100,23 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
                                 IsDeleted = false
                             };
                             attachments.Add(attch);
-                            var path = Path.Combine(Server.MapPath("~/Upload/"), attch.FileName + attch.FileExt);
+                            var path = Path.Combine(Server.MapPath("~/Upload/"), attch.FileName);
                             files.SaveAs(path);
                         }
                     }
                     perjanjianKerjasama.AttachmentPerjanjianKerjasamas = attachments;
-                    perjanjianKerjasama.NoPerjanjian = perjanjianKerjasama.NoPerjanjian;
-                    perjanjianKerjasama.TanggalMulai = perjanjianKerjasama.TanggalMulai;
-                    perjanjianKerjasama.TanggalAkhir = perjanjianKerjasama.TanggalAkhir;
-                    perjanjianKerjasama.CreatedBy = perjanjianKerjasama.CreatedBy;
-                    perjanjianKerjasama.CreatedDate = DateTime.Now;
-                    perjanjianKerjasama.UpdatedBy = perjanjianKerjasama.UpdatedBy;
-                    perjanjianKerjasama.UpdatedDate = perjanjianKerjasama.UpdatedDate;
                     perjanjianKerjasama.IsActive = true;
-                    perjanjianKerjasama.IsDeleted = false;
-                    perjanjianKerjasama.NamaInstansi = perjanjianKerjasama.NamaInstansi;
-                    perjanjianKerjasama.NamaUnit = perjanjianKerjasama.NamaUnit;
-                    perjanjianKerjasama.JenisPertukaran = perjanjianKerjasama.JenisPertukaran;
-                    perjanjianKerjasama.JenisKerjasama = perjanjianKerjasama.JenisKerjasama;
-                    perjanjianKerjasama.BiayaKuliah = perjanjianKerjasama.BiayaKuliah;
-                    perjanjianKerjasama.Instansi = perjanjianKerjasama.Instansi;
-                    //perjanjianKerjasama.UniversitasID = 0;
                     _perjanjianKerjasamaService.Save(perjanjianKerjasama);
-                    return Json(new ServiceResponse { status = 200, message = "Data diri berhasil diupdate!" });
+
                 }
-                return Json(new ServiceResponse { status = 500, message = "Not Valid Model" });
+                else
+                {
+                    perjanjianKerjasama.IsActive = true;
+                    _perjanjianKerjasamaService.Save(perjanjianKerjasama);
+                }
             }
-            catch (Exception e)
-            {
-                return Json(new ServiceResponse { status = 500, message = e.Message });
-            }
-            //return Json(new ServiceResponse { status = 500, message = e.Message });
+            return Json(perjanjianKerjasama);
+                 
         }
 
 
@@ -137,32 +129,104 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
             var listKerjasama = _lookupService.getLookupByTipe("JenisKerjasama");
             ViewData["listKerjasama"] = listKerjasama;
             var data = _perjanjianKerjasamaService.Get(id);
+            var file = _perjanjianKerjasamaService.Get(id).AttachmentPerjanjianKerjasamas.Select(x =>
+            new AttachmentPerjanjianKerjasama
+            {
+                FileName = x.FileName,
+                ID = x.ID
+            });
+            ViewData["listFile"] = file;
             return View(data);
         }
         [HttpPost]
-        public ActionResult UpdateKerjasama(MBKM.Entities.Models.MBKM.PerjanjianKerjasama perjanjianKerjasama)
+        public ActionResult UpdateKerjasama(HttpPostedFileBase[] file,MBKM.Entities.Models.MBKM.PerjanjianKerjasama perjanjianKerjasama)
         {
             MBKM.Entities.Models.MBKM.PerjanjianKerjasama data = _perjanjianKerjasamaService.Get(perjanjianKerjasama.ID);
-            data.NoPerjanjian = perjanjianKerjasama.NoPerjanjian;
-            data.TanggalMulai = perjanjianKerjasama.TanggalMulai;
-            data.TanggalAkhir = perjanjianKerjasama.TanggalAkhir;
-            //perjanjianKerjasama.CreatedBy = perjanjianKerjasama.CreatedBy;
-            data.CreatedDate = DateTime.Now;
-            data.UpdatedBy = perjanjianKerjasama.UpdatedBy;
-            data.UpdatedDate = perjanjianKerjasama.UpdatedDate;
-            data.IsActive = true;
-            data.IsDeleted = false;
-            data.NamaInstansi = perjanjianKerjasama.NamaInstansi;
-            data.NamaUnit = perjanjianKerjasama.NamaUnit;
-            data.JenisPertukaran = perjanjianKerjasama.JenisPertukaran;
-            data.JenisKerjasama = perjanjianKerjasama.JenisKerjasama;
-            data.BiayaKuliah = perjanjianKerjasama.BiayaKuliah;
-            data.Instansi = perjanjianKerjasama.Instansi;
-            //perjanjianKerjasama.UniversitasID = 0;
-            _perjanjianKerjasamaService.Save(data);
-
+            if (ModelState.IsValid) 
+            {
+                if (file != null)
+                {
+                    List<AttachmentPerjanjianKerjasama> attachments = new List<AttachmentPerjanjianKerjasama>();
+                    for (int i = 0; i < file.Length; i++)
+                    {
+                        var files = file[i];
+                        if (files != null && files.ContentLength > 0)
+                        {
+                            var fileName = Path.GetFileName(files.FileName);
+                            AttachmentPerjanjianKerjasama attch = new AttachmentPerjanjianKerjasama()
+                            {
+                                FileName = fileName,
+                                FileExt = Path.GetExtension(fileName),
+                                FileSze = files.ContentLength,
+                                IsActive = true,
+                                IsDeleted = false
+                            };
+                            attachments.Add(attch);
+                            var path = Path.Combine(Server.MapPath("~/Upload/"), attch.FileName);
+                            files.SaveAs(path);
+                        }
+                    }
+                    data.AttachmentPerjanjianKerjasamas = attachments;
+                    data.NoPerjanjian = perjanjianKerjasama.NoPerjanjian;
+                    data.TanggalMulai = perjanjianKerjasama.TanggalMulai;
+                    data.TanggalAkhir = perjanjianKerjasama.TanggalAkhir;
+                    //perjanjianKerjasama.CreatedBy = perjanjianKerjasama.CreatedBy;
+                    data.CreatedDate = DateTime.Now;
+                    data.UpdatedBy = perjanjianKerjasama.UpdatedBy;
+                    data.UpdatedDate = perjanjianKerjasama.UpdatedDate;
+                    data.IsActive = true;
+                    data.IsDeleted = false;
+                    data.NamaInstansi = perjanjianKerjasama.NamaInstansi;
+                    data.NamaUnit = perjanjianKerjasama.NamaUnit;
+                    data.JenisPertukaran = perjanjianKerjasama.JenisPertukaran;
+                    data.JenisKerjasama = perjanjianKerjasama.JenisKerjasama;
+                    data.BiayaKuliah = perjanjianKerjasama.BiayaKuliah;
+                    data.Instansi = perjanjianKerjasama.Instansi;
+                    data.IsActive = true;
+                    _perjanjianKerjasamaService.Save(data);
+                }
+                else {
+                    data.NoPerjanjian = perjanjianKerjasama.NoPerjanjian;
+                    data.TanggalMulai = perjanjianKerjasama.TanggalMulai;
+                    data.TanggalAkhir = perjanjianKerjasama.TanggalAkhir;
+                    //perjanjianKerjasama.CreatedBy = perjanjianKerjasama.CreatedBy;
+                    data.CreatedDate = DateTime.Now;
+                    data.UpdatedBy = perjanjianKerjasama.UpdatedBy;
+                    data.UpdatedDate = perjanjianKerjasama.UpdatedDate;
+                    data.IsActive = true;
+                    data.IsDeleted = false;
+                    data.NamaInstansi = perjanjianKerjasama.NamaInstansi;
+                    data.NamaUnit = perjanjianKerjasama.NamaUnit;
+                    data.JenisPertukaran = perjanjianKerjasama.JenisPertukaran;
+                    data.JenisKerjasama = perjanjianKerjasama.JenisKerjasama;
+                    data.BiayaKuliah = perjanjianKerjasama.BiayaKuliah;
+                    data.Instansi = perjanjianKerjasama.Instansi;
+                    //perjanjianKerjasama.UniversitasID = 0;
+                    _perjanjianKerjasamaService.Save(data);
+                }
+            }
             return Json(data);
 
+        }
+
+        public ActionResult DownloadFile(int id)
+        {
+            var data = _attachmentPerjanjianKerjasamaService.Get(id);
+            string path = "~/Upload/";
+            string fullName = Server.MapPath(path + data.FileName);
+
+            byte[] fileBytes = GetFile(fullName);
+            return File(
+                fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, data.FileName);
+        }
+        byte[] GetFile(string s)
+        {
+            System.IO.FileStream fs = System.IO.File.OpenRead(s);
+            byte[] data = new byte[fs.Length];
+            int br = fs.Read(data, 0, data.Length);
+            if (br != fs.Length)
+                throw new System.IO.IOException(s);
+            return data;
         }
     }
 }
