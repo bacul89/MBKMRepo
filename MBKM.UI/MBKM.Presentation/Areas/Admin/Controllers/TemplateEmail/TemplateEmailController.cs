@@ -44,6 +44,17 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.TemplateEmail
         [HttpPost]
         public ActionResult PostDataEmailTemplate(EmailTemplate email)
         {
+            /*checkdataAktif*/
+            if (email.IsActive)
+            {
+                var data = _emailTemplateService.Find(x => x.TipeMail == email.TipeMail && x.IsActive == true).ToList();
+                foreach(var d in data)
+                {
+                    d.IsActive = false;
+                    _emailTemplateService.Save(d);
+                }
+            }
+
             email.CreatedBy = HttpContext.Session["username"].ToString();
             email.CreatedDate = DateTime.Now;
             _emailTemplateService.Save(email);
@@ -60,6 +71,15 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.TemplateEmail
         [HttpPost]
         public ActionResult PostUpdateEmailTemplate(EmailTemplate emailTemplate)
         {
+            if (emailTemplate.IsActive)
+            {
+                var data2 = _emailTemplateService.Find(x => x.TipeMail == emailTemplate.TipeMail && x.IsActive == true).ToList();
+                foreach (var d in data2)
+                {
+                    d.IsActive = false;
+                    _emailTemplateService.Save(d);
+                }
+            }
             EmailTemplate data = _emailTemplateService.Get(emailTemplate.ID);
             data.TipeMail = emailTemplate.TipeMail;
             data.SubjectMail = emailTemplate.SubjectMail;
@@ -68,6 +88,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.TemplateEmail
             data.UpdatedBy = HttpContext.Session["username"].ToString();
             data.UpdatedDate = DateTime.Now;
             _emailTemplateService.Save(data);
+
 
             return Json(data);
         }

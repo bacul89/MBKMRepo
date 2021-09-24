@@ -155,13 +155,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             GMailer mailer = new GMailer();
             if(status == "VerifikasiAktif")
             {
-                var data = _emailTemplateService.Find(x => x.TipeMail == "VerifikasiAktif").First();
+                var data = _emailTemplateService.Find(x => x.TipeMail == "VerifikasiAktif" && x.IsActive == true).First();
                 mailer.Subject = data.SubjectMail;
                 mailer.Body = data.BodyMail;
 
             }else if(status == "VerifikasiDitolak")
             {
-                var data = _emailTemplateService.Find(x => x.TipeMail == "VerifikasiDitolak").First();
+                var data = _emailTemplateService.Find(x => x.TipeMail == "VerifikasiDitolak" && x.IsActive == true).First();
                 mailer.Subject = data.SubjectMail;
                 mailer.Body = data.BodyMail;
             }
