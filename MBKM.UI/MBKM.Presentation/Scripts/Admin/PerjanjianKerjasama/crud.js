@@ -104,7 +104,6 @@ function SubmitPerjanjian() {
             processData: false,
             data: data,
             success: function (response) {
-                location.reload();
                 Swal.fire({
                     title: 'Oppss',
                     icon: 'error',
@@ -118,7 +117,6 @@ function SubmitPerjanjian() {
                     $('.modal').modal('hide');
             },
             error: function (response) {
-                location.reload();
                 Swal.fire({
                     title: 'Berhasil',
                     icon: 'success',
