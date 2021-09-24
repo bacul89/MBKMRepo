@@ -4,6 +4,7 @@ using MBKM.Services;
 using MBKM.Services.MBKMServices;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -61,15 +62,17 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             {
                 TempData["alertMessage"] = "Token invalid!";
             }
-            return RedirectToAction("Index", "RegisMhsByAdmin");
+            return RedirectToAction("Index", "Home",new { area = "Portal" });
         }
         public void SendEmail(string email, string token)
         {
+            string domain = ConfigurationManager.AppSettings["Domain"];
             string url = this.Url.Action("VerifyPage", "RegisMhsByAdmin", null);
             GMailer mailer = new GMailer();
             mailer.ToEmail = email;
             mailer.Subject = "Verify your email";
-            mailer.Body = "Thanks for Registering your account.<br> please verify your email by clicking the link <br> <a href='http://localhost:10776" + url + "?token=" + token + "'>verify</a>";
+            mailer.Body = "Thanks for Registering your account.<br> please verify your email by clicking the link <br> <a href='" + domain + url + "?token=" + token + "'>verify</a>";
+            //mailer.Body = "Thanks for Registering your account.<br> please verify your email by clicking the link <br> <a href='http://localhost:10776" + url + "?token=" + token + "'>verify</a>";
             mailer.IsHtml = true;
             mailer.Send();
         }
@@ -92,6 +95,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     mahasiswa.CreatedDate = DateTime.Now;
                     mahasiswa.UpdatedDate = DateTime.Now;
                     mahasiswa.StatusVerifikasi = "DAFTAR";
+                    mahasiswa.Password = HashPasswordService.HashPassword(mahasiswa.Password);
                     mahasiswa.CreatedBy = "Admin";
                     _mahasiswaService.Save(mahasiswa);
                     SendEmail(mahasiswa.Email, token);
