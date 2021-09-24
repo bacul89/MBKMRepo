@@ -109,12 +109,18 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.TemplateEmail
         [HttpPost]
         public ActionResult PostDeleteEmailTemplate(int id)
         {
+
             EmailTemplate data = _emailTemplateService.Get(id);
-            data.IsDeleted = true;
-
-            _emailTemplateService.Save(data);
-
-            return Json(data);
+            if (data.IsActive)
+            {
+                return Json(new ServiceResponse { status = 500, message = "Template Masih Aktif Digunakan" });
+            }
+            else
+            {
+                data.IsDeleted = true;
+                _emailTemplateService.Save(data);
+                return Json(new ServiceResponse { status = 200, message = "Done" });
+            }
         }
 
     }
