@@ -395,6 +395,7 @@
     <Content Include="Content\autonumeric\readme.md" />
     <Content Include="Areas\Admin\Views\RegisMhsByAdmin\Index.cshtml" />
     <Content Include="Areas\Portal\Views\NimDigital\Index.cshtml" />
+    <Content Include="Areas\Portal\Views\TrackingStatusPendaftaran\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -432,7 +433,6 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\EmailTemplate\" />
     <Folder Include="Areas\Portal\Data\" />
-    <Folder Include="Areas\Portal\Views\TrackingStatusPendaftaran\" />
     <Folder Include="Upload\32\" />
   </ItemGroup>
   <ItemGroup>
