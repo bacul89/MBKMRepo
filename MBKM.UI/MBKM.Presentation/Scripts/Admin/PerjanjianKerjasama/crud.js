@@ -38,39 +38,48 @@ function SubmitPerjanjian() {
         var sfilename = fileInput.files[i].name;
         data.append("file", fileInput.files[i]);
     }
-    $.ajax({
-        type: "POST",
-        url: "/Admin/PerjanjianKerjasama/SavePerjanjian",
-        cache: false,
-        contentType: false,
-        processData: false,
-        data: data,
-        success: function (response) {
-            Swal.fire({
-                title: 'Berhasil',
-                icon: 'success',
-                html: 'Data Berhasil Ditambahkan',
-                showCloseButton: true,
-                showCancelButton: false,
-                focusConfirm: false,
-                confirmButtonText: 'OK'
-            })
-            table.ajax.reload(null, false),
-                $('.modal').modal('hide');
-        },
-        error: function (response) {
-            Swal.fire({
-                title: 'Oppss',
-                icon: 'error',
-                html: 'Coba Reload Page',
-                showCloseButton: true,
-                showCancelButton: false,
-                focusConfirm: false,
-                confirmButtonText: 'OK'
-            })
-            $('.modal').modal('hide');
-        }
-    });
+    if (fileInput.size < 1042157) {
+        $.ajax({
+            type: "POST",
+            url: "/Admin/PerjanjianKerjasama/SavePerjanjian",
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: data,
+            success: function (response) {
+                location.reload();
+                Swal.fire({
+                    title: 'Berhasil',
+                    icon: 'success',
+                    html: 'Data Berhasil Ditambahkan',
+                    showCloseButton: true,
+                    showCancelButton: false,
+                    focusConfirm: false,
+                    confirmButtonText: 'OK'
+                })
+                table.ajax.reload(null, false),
+                    $('.modal').modal('hide');
+            },
+            error: function (response) {
+                location.reload();
+                Swal.fire({
+                    title: 'Oppss',
+                    icon: 'error',
+                    html: 'Coba Reload Page',
+                    showCloseButton: true,
+                    showCancelButton: false,
+                    focusConfirm: false,
+                    confirmButtonText: 'OK'
+                })
+                table.ajax.reload(null, false),
+                    $('.modal').modal('hide');
+            }
+
+        })
+    } else {
+        alert("File Upload Lebih dari 1MB");
+        location.reload();
+    }
 }
 //function SubmitPerjanjian() {
 //    var data = new FormData($('#createPerjanjian')[0]);
@@ -170,22 +179,12 @@ function UpdatePerjanjian() {
     })
 }
 
-$('#file').on('change', function () {
-    for (var i = 0; i < $(this).get(0).files.length; ++i) {
-        var file1 = $(this).get(0).files[i].size;
-        if (file1) {
-            var file_size = $(this).get(0).files[i].size;
-            if (file_size > 1000000) {
-                $('#error-message').html("File upload size is larger than 1MB");
-                $('#error-message').css("display", "block");
-                $('#error-message').css("color", "red");
-                $('#error-message').val("gagal");
-                var coba = $('#error-message').val();
-                console.log(coba);
-            } else {
-                $('#error-message').css("display", "none");
-                $('#error-message').val("ada isi");
-            }
-        }
+function showFileSize() {
+    let file = document.getElementById("file").files[0];
+    if (file) {
+        alert(file.size + " in bytes");
+        location.reload();
+    } else {
+        alert("select a file... duh");
     }
-});
+}
