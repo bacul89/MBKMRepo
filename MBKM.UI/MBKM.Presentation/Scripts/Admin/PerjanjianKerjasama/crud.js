@@ -30,6 +30,63 @@ function IndexCreateKerjasama() {
         })
     }
 }
+//function SubmitPerjanjian() {
+//    var data = new FormData($('#createPerjanjian')[0]);
+//    var fileInput = document.getElementById('file');
+//    for (i = 0; i < fileInput.files.length; i++) {
+//        var sfilename = fileInput.files[i].name;
+//        data.append("file", fileInput.files[i]);
+//    }
+//    if (validationCustom2()) {
+//        var base_url = window.location.origin;
+//        $.ajax({
+//            url: base_url + "/Admin/PerjanjianKerjasama/SavePerjanjian",
+//            type: 'post',
+//            datatype: 'json',
+//            data: JSON.stringify(data),
+//            //contentType: 'application/json'
+//            contentType: 'application/json',
+//        }).then(function (response) {
+//            if (response.status == 400) {
+//                Swal.fire({
+//                    title: 'Gagal!',
+//                    icon: 'error',
+//                    html: 'EMAIL atau NIP telah terdaftar!',
+//                    showCloseButton: true,
+//                    showCancelButton: false,
+//                    focusConfirm: false,
+//                    confirmButtonText: 'OK'
+//                })
+//                tableUser.ajax.reload(null, false);
+//                $('.modal').modal('hide');
+//            } else
+//                if (response.status == 200) {
+//                    Swal.fire({
+//                        title: 'Berhasil',
+//                        icon: 'success',
+//                        html: 'User Baru Berhasil Ditambahkan',
+//                        showCloseButton: true,
+//                        showCancelButton: false,
+//                        focusConfirm: false,
+//                        confirmButtonText: 'OK'
+//                    })
+//                    tableUser.ajax.reload(null, false);
+//                    $('.modal').modal('hide');
+//                }
+//        });
+//    } else {
+//        Swal.fire({
+//            title: 'Oppss',
+//            icon: 'warning',
+//            html: 'Ada beberapa field yang belum kamu isikan',
+//            showCloseButton: true,
+//            showCancelButton: false,
+//            focusConfirm: false,
+//            confirmButtonText: 'OK'
+//        })
+//    }
+//}
+
 
 function SubmitPerjanjian() {
     var data = new FormData($('#createPerjanjian')[0]);
@@ -49,9 +106,9 @@ function SubmitPerjanjian() {
             success: function (response) {
                 location.reload();
                 Swal.fire({
-                    title: 'Berhasil',
-                    icon: 'success',
-                    html: 'Data Berhasil Ditambahkan',
+                    title: 'Oppss',
+                    icon: 'error',
+                    html: 'Coba Reload Page',
                     showCloseButton: true,
                     showCancelButton: false,
                     focusConfirm: false,
@@ -63,9 +120,9 @@ function SubmitPerjanjian() {
             error: function (response) {
                 location.reload();
                 Swal.fire({
-                    title: 'Oppss',
-                    icon: 'error',
-                    html: 'Coba Reload Page',
+                    title: 'Berhasil',
+                    icon: 'success',
+                    html: 'Data Berhasil Ditambahkan',
                     showCloseButton: true,
                     showCancelButton: false,
                     focusConfirm: false,

@@ -10,9 +10,11 @@ using System.Web.Mvc;
 using MBKM.Entities.Models.MBKM;
 using MBKM.Common.Helpers;
 using System.IO;
+using MBKM.Presentation.Helper;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
 {
+    [MBKMAuthorize]
     public class PerjanjianKerjasamaController : Controller
     {
         private IMenuService _menuService;
