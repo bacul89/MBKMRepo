@@ -6,6 +6,10 @@
     background-color: #fff;
 }
 
+small.describe {
+    font-size: 14px;
+}
+
 
 /*--Datatable--*/
 .table-responsive {

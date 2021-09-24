@@ -1,0 +1,78 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div class="modal-content data-content-modal" id="created-master-maping-cpl">
+    <div class="modal-header" style="background-color: #FF8A04; ">
+        <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+            TAMBAH MASTER LOOKUP
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </h5>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal">
+
+            <div class="form-group">
+                <label for="inp_tipeEmail" class="col-sm-3 control-label">Kode Mata Kuliah</label>
+                <div class="col-sm-9">
+                    <select class="form-control input-pendaftaran input-data" name="inp_kode_mata_kuliah" id="inp_kode_mata_kuliah" placeholder="Pilih Kode Mata Kuliah">
+                        <option value="value">-</option>
+                        <option value="value">text</option>
+                    </select>
+                    <!--<input type="text">-->
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inp_tipeEmail" class="col-sm-3 control-label">Mata Kuliah</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control input-pendaftaran input-data" name="inp_mata_kuliah" id="inp_mata_kuliah" placeholder="Pilih Mata Kuliah" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inp_email" class="col-sm-3 control-label">Kelompok</label>
+                <div class="col-sm-9">
+                    <select class="form-control input-pendaftaran input-data" name="inp_kelompok" id="inp_kelompok" placeholder="Pilih Kelompok">
+                        <option value="value">-</option>
+                        <option value="value">text</option>
+                    </select>
+                    <!--<input type="text" >-->
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inp_bodyEmail" class="col-sm-3 control-label">Kode Capian Pembelajaran</label>
+                <div class="col-sm-9">
+                    <select class="form-control input-pendaftaran input-data" name="inp_kode_capaian_pembelajaran" id="inp_kode_capaian_pembelajaran" placeholder="Pilih Kode Capian Pembelajaran">
+                        <option value="value">-</option>
+                        <option value="value">text</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inp_bodyEmail" class="col-sm-3 control-label">Capaian Pembelajaran</label>
+                <div class="col-sm-9">
+                    <textarea type="text" class="form-control input-pendaftaran input-data" name="inp_nilai" id="inp_nilai" placeholder="Keterangan"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inp_status" class="col-sm-3 control-label">Status</label>
+                <div class="col-sm-9">
+                    <label class="radio-inline input-pendaftaran">
+                        <input type="radio" name="inp_status" id="inp_status" value="true"> Aktif
+                    </label>
+                    <label class="radio-inline input-pendaftaran">
+                        <input type="radio" name="inp_status" id="inp_status" value="false"> Tidak Aktif
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 col-md-offset-10">
+                    <button type="button" onclick="PostCreate()" class="btn btn-warning">Simpan</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
