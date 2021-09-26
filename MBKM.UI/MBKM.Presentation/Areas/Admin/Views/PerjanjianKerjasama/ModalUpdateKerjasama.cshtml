@@ -26,20 +26,20 @@
             <div class="form-group row">
                 <label for="tanggalKerjasama" class="col-md-4 col-form-label">Tanggal Kerjasama</label>
                 <div class="col-md-8">
-                    <input id="TanggalMulai" type="date" name="TanggalMulai" class="form-control" required>
+                    @Html.TextBox("tanggalMulai", Model.TanggalMulai, "{0:yyyy-MM-dd}", new { @style = "width:100%", type = "date" })
                 </div>
             </div>
             <div class="form-group row">
                 <label for="tanggalBerakhir" class="col-md-4 col-form-label">Tanggal Berakhir</label>
                 <div class="col-md-8">
-                    <input id="TanggalAkhir" type="date" name="TanggalAkhir" class="form-control" required>
+                    @Html.TextBox("tanggalAKhir", Model.TanggalAkhir, "{0:yyyy-MM-dd}", new { @style = "width:100%", type = "date" })
                 </div>
             </div>
             <div class="form-group row">
                 <label for="Instansi" class="col-md-4 col-form-label">Instansi</label>
                 <div class="col-md-8">
-                    <select name="instansi" id="instansi" class="form-control" required>
-                        <option value="" disabled selected>--Pilih Perusahaan/Universitas--</option>
+                    <select name="Instansi" id="instansi" class="form-control" required>
+                        <option value="@Model.Instansi" selected>@Model.Instansi</option>
                         <option value="Perusahaan">Perusahaan</option>
                         <option value="Universitas">Universitas</option>
                     </select>
@@ -61,7 +61,7 @@
                 <label for="pertukaran" class="col-md-4 col-form-label">Jenis Pertukaran</label>
                 <div class="col-md-8">
                     <select name="JenisPertukaran" id="JenisPertukaran" class="form-control" required>
-                        <option value="" disabled selected>--Pilih Jenis Pertukaran--</option>
+                        <option value="@Model.JenisPertukaran" selected>@Model.JenisPertukaran</option>
                         @{
                             foreach (var data in ViewData["listPerjanjian"] as IEnumerable<MBKM.Entities.ViewModel.VMLookup>)
                             {
@@ -75,7 +75,7 @@
                 <label for="pertukaran" class="col-md-4 col-form-label">Jenis Kerjasama</label>
                 <div class="col-md-8">
                     <select name="JenisKerjasama" id="JenisKerjasama" class="form-control" required>
-                        <option value="" disabled selected>--Pilih Jenis Kerjasama--</option>
+                        <option value="@Model.JenisKerjasama" selected>@Model.JenisKerjasama</option>
                         @{
                             foreach (var data in ViewData["listKerjasama"] as IEnumerable<MBKM.Entities.ViewModel.VMLookup>)
                             {
