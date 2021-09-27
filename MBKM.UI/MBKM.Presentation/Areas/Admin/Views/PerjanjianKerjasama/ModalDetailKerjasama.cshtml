@@ -15,6 +15,7 @@
     </div>
     <div class="modal-body">
         <form class="form-horizontal">
+            <input type="text" id="idKerjasama" value="@Model.ID" hidden />
             <div class="form-group row">
                 <label for="no" class="col-md-4 col-form-label">No. Kerjasama</label>
                 <div class="col-md-8">
@@ -52,13 +53,17 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="Namaunit" class="col-md-4 col-form-label">Jenis Pertukaran</label>
+                <label for="Namaunit" class="col-md-4 col-form-label">
+                    Jenis Program MBKM
+                </label>
                 <div class="col-md-8">
                     <input id="Namaunit" type="text" name="Namaunit" class="form-control" value="@Model.JenisPertukaran" disabled>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="Namaunit" class="col-md-4 col-form-label">Jenis Kerjasama</label>
+                <label for="Namaunit" class="col-md-4 col-form-label">
+                    Jenis Kegiatan MBKM
+                </label>
                 <div class="col-md-8">
                     <input id="Namaunit" type="text" name="Namaunit" class="form-control" value="@Model.JenisKerjasama" disabled>
                 </div>
@@ -75,6 +80,28 @@
                     <input id="inputer" type="text" name="inputer" class="form-control" value="@Model.CreatedBy" disabled>
                 </div>
             </div>
+            <div class="form-group row">
+                <label for="inputer" class="col-md-4 col-form-label">File Pendukung</label>
+                <div class="col-md-8">
+                    <table id="table-data-attachment" class="table row-border hover dt-responsive responsive" width="50%">
+                        <thead>
+                            <tr>
+                                <th>File</th>
+                                <th>Download</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in ViewData["listFile"] as IEnumerable<MBKM.Entities.Models.MBKM.AttachmentPerjanjianKerjasama>)
+                            {
+                                <tr>
+                                    <td>@item.FileName</td>
+                                    <td><a href="/Admin/PerjanjianKerjasama/DownloadFile/@item.ID" style="color:coral"> <i class="fas fa-file-download"></i></a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
         </form>
     </div>
 </div>

@@ -10,6 +10,9 @@ using MBKM.Presentation.Helper;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MBKM.Presentation.models;
+using MBKM.Entities.Models;
+using Newtonsoft.Json;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
@@ -61,8 +64,11 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             var ApproverRole = _lookupService.getLookupByTipe("ApproverRole");
             var StatusKerjasama = _lookupService.getLookupByTipe("StatusKerjasama");
+
             ViewData["Approver"] = ApproverRole;
             ViewData["StatusKerjasama"] = StatusKerjasama;
+            ViewBag.terima = StatusVerifikasi.Terima;
+            ViewBag.tolak = StatusVerifikasi.Tolak;
             var data = _mahasiswaService.Get(id);
             return View(data);
         }
@@ -89,15 +95,18 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             data.NoKerjasama = _mahasiswa.NoKerjasama;
             data.StatusKerjasama = _mahasiswa.StatusKerjasama;
             data.StatusVerifikasi = _mahasiswa.StatusVerifikasi;
-            if(_mahasiswa.StatusVerifikasi == "AKTIF")
+            data.UpdatedBy = HttpContext.Session["username"].ToString();
+            data.UpdatedDate = DateTime.Now;
+            if (_mahasiswa.StatusVerifikasi == "AKTIF")
             {
                 SendEmail(data.Email, "VerifikasiAktif");
-            }else if(_mahasiswa.StatusVerifikasi == "DITOLAK")
+            }
+            else if (_mahasiswa.StatusVerifikasi == "DITOLAK")
             {
                 SendEmail(data.Email, "VerifikasiDitolak");
             }
             _mahasiswaService.Save(data);
-            return Json(data);
+            return Json(new ServiceResponse { status = 200, message = "Done" });
         }
 
         [HttpPost]
@@ -151,13 +160,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             GMailer mailer = new GMailer();
             if(status == "VerifikasiAktif")
             {
-                var data = _emailTemplateService.Find(x => x.TipeMail == "VerifikasiAktif").First();
+                var data = _emailTemplateService.Find(x => x.TipeMail == "VerifikasiAktif" && x.IsActive == true).First();
                 mailer.Subject = data.SubjectMail;
                 mailer.Body = data.BodyMail;
 
             }else if(status == "VerifikasiDitolak")
             {
-                var data = _emailTemplateService.Find(x => x.TipeMail == "VerifikasiDitolak").First();
+                var data = _emailTemplateService.Find(x => x.TipeMail == "VerifikasiDitolak" && x.IsActive == true).First();
                 mailer.Subject = data.SubjectMail;
                 mailer.Body = data.BodyMail;
             }

@@ -8,6 +8,13 @@ function getValueOnForm() {
     dMasterLookup.IsActive = $('input[name=inp_status]:checked').val();
 }
 
+function clearValueOnForm() {
+    $('input[name=inp_tipe]').val('');
+    $('input[name=inp_nama]').val('');
+    $('input[name=inp_nilai]').val('');
+    $('input[name=inp_status]').prop('checked', false);
+}
+
 function IndexCreateMasterLookup() {
     if ($('#created-master-lookup').length) {
         $('#TambahMasterLookUp').modal('show');
@@ -23,11 +30,6 @@ function IndexCreateMasterLookup() {
                 }
                 $('#modal-inner').append(e);
                 $('.modal').modal('show');
-                $('.summernote').summernote({
-                    placeholder: 'Input Body Email',
-                    height: 300, // set editor height  
-                    minHeight: null, // set minimum height of editor  
-                });
             }
         })
     }
@@ -45,11 +47,6 @@ function IndexUpdateMasterLookup(id) {
             }
             $('#modal-inner').append(e);
             $('.modal').modal('show');
-            $('.summernote').summernote({
-                placeholder: 'Input Body Email',
-                height: 300, // set editor height  
-                minHeight: null, // set minimum height of editor  
-            });
         }
     })
 }
@@ -96,6 +93,7 @@ function PostCreate() {
                 })
                 dataTable.ajax.reload(null, false);
                 $('.modal').modal('hide');
+                clearValueOnForm();
             },
             error: function (e) {
                 Swal.fire({
@@ -193,6 +191,7 @@ function DeletedMasterLookup(idLookup) {
                     focusConfirm: false,
                     confirmButtonText: 'OK'
                 })
+                dataTable.ajax.reload(null, false);
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 Swal.fire({

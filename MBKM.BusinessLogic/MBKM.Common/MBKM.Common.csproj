@@ -56,10 +56,12 @@
     <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IAbsensiRepository.cs" />
     <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IAttachmentPerjanjianKerjasamaRepository.cs" />
     <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IAttachmentRepository.cs" />
+    <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\ICPLMataKuliahRepository.cs" />
     <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IJadwalKuliahMahasiswaRepository.cs" />
     <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IJadwalKuliahRepository.cs" />
     <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IKRSRepository.cs" />
     <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IMahasiswaRepository.cs" />
+    <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IMasterCapaianPembelajaranRepository.cs" />
     <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\INilaiKuliahRepository.cs" />
     <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IPerjanjianKerjasamaRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

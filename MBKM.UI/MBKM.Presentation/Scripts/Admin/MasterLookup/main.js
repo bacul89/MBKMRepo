@@ -10,7 +10,7 @@
             "targets": 0
         }],
         "order": [[1, 'asc']],
-        "columnDefs": [{ "orderable": false, "targets": 9 }],
+        "columnDefs": [{ "orderable": false, "targets": 6 }],
         "createdRow": function (row, data, index) {
 /*            console.log(data);
             if (data.IsDeleted == false) {

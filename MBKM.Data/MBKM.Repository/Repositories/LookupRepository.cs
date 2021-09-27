@@ -32,7 +32,7 @@ namespace MBKM.Repository.Repositories
         {
             using (var context = new MBKMContext())
             {
-                var listmodel = context.Lookups.Where(x => x.Tipe == tipe).Select(
+                var listmodel = context.Lookups.Where(x => x.Tipe == tipe && x.IsActive && !x.IsDeleted).Select(
                     x => new VMLookup
                     {
                         Nama = x.Nama,

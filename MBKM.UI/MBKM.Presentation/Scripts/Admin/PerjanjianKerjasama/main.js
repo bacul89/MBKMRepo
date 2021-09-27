@@ -105,3 +105,15 @@
         });
     },
 });
+function validationCustom2() {
+    var isValid;
+    $(".input-data").each(function () {
+        var element = $(this);
+        if (element.val() == "") {
+            return isValid = false;
+        } else {
+            return isValid = true;
+        }
+    });
+    return isValid;
+}

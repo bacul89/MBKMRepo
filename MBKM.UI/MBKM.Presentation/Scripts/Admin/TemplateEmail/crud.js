@@ -179,17 +179,29 @@ function PostUpdate() {
         contentType: 'application/json',
         success: function (e) {
             $.LoadingOverlay("hide");
-            Swal.fire({
-                title: 'Berhasil',
-                icon: 'success',
-                html: 'Template Email Berhasil Diubah',
-                showCloseButton: true,
-                showCancelButton: false,
-                focusConfirm: false,
-                confirmButtonText: 'OK'
-            })
-            dataTable.ajax.reload(null, false);
-            $('.modal').modal('hide');
+            if (e.status == 500) {
+                Swal.fire({
+                    title: 'Oppss',
+                    icon: 'error',
+                    html: e.message,
+                    showCloseButton: true,
+                    showCancelButton: false,
+                    focusConfirm: false,
+                    confirmButtonText: 'OK'
+                })
+            } else {
+                Swal.fire({
+                    title: 'Berhasil',
+                    icon: 'success',
+                    html: 'Template Email Berhasil Diubah',
+                    showCloseButton: true,
+                    showCancelButton: false,
+                    focusConfirm: false,
+                    confirmButtonText: 'OK'
+                })
+                dataTable.ajax.reload(null, false);
+                $('.modal').modal('hide');
+            }
         },
         error: function (e) {
             $.LoadingOverlay("hide");
@@ -228,16 +240,28 @@ function DeleteDataTemplate(idt) {
                 datatype: 'json',
                 success: function (e) {
                     $.LoadingOverlay("hide");
-                    Swal.fire({
-                        title: 'Berhasil',
-                        icon: 'success',
-                        html: 'Data Berhasil Terhapus',
-                        showCloseButton: true,
-                        showCancelButton: false,
-                        focusConfirm: false,
-                        confirmButtonText: 'OK'
-                    })
-                    dataTable.ajax.reload(null, false);
+                    if (e.status == 500) {
+                        Swal.fire({
+                            title: 'Oppss',
+                            icon: 'error',
+                            html: e.message,
+                            showCloseButton: true,
+                            showCancelButton: false,
+                            focusConfirm: false,
+                            confirmButtonText: 'OK'
+                        })
+                    } else {
+                        Swal.fire({
+                            title: 'Berhasil',
+                            icon: 'success',
+                            html: 'Template Email Berhasil Diubah',
+                            showCloseButton: true,
+                            showCancelButton: false,
+                            focusConfirm: false,
+                            confirmButtonText: 'OK'
+                        })
+                        dataTable.ajax.reload(null, false);
+                    }
                 }, error: function (e) {
                     $.LoadingOverlay("hide");
                     Swal.fire({
