@@ -81,6 +81,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             if (mahasiswa != null)
             {
                 mahasiswa.IsActive = true;
+                mahasiswa.Token = null;
                 _mahasiswaService.Save(mahasiswa);
                 TempData["alertMessage"] = "Akun telah berhasil diaktivasi, silahkan login!";
             } else

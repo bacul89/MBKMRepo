@@ -227,6 +227,9 @@
                 data: mahasiswa
             }).then(function (response) {
                 alert(response.message);
+                if (response.status == 200) {
+                    location.reload();
+                }
             });
         }
         function loadNamaUniversitas() {
