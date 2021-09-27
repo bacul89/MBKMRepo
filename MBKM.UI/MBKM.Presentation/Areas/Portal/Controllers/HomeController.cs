@@ -81,6 +81,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             if (mahasiswa != null)
             {
                 mahasiswa.IsActive = true;
+                mahasiswa.Token = null;
                 _mahasiswaService.Save(mahasiswa);
                 TempData["alertMessage"] = "Akun telah berhasil diaktivasi, silahkan login!";
             } else
@@ -151,15 +152,15 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public Mahasiswa GetMahasiswaByEmail(string email)
         {
-            return _mahasiswaService.Find(m => m.Email == email).FirstOrDefault();
+            return _mahasiswaService.Find(m => m.Email == email && !m.IsDeleted).FirstOrDefault();
         }
         public Mahasiswa GetMahasiswaByToken(string token)
         {
-            return _mahasiswaService.Find(m => m.Token == token).FirstOrDefault();
+            return _mahasiswaService.Find(m => m.Token == token && !m.IsDeleted).FirstOrDefault();
         }
         public Mahasiswa GetMahasiswaByNim(string nim)
         {
-            return _mahasiswaService.Find(m => m.NIM == nim).FirstOrDefault();
+            return _mahasiswaService.Find(m => m.NIM == nim && !m.IsDeleted).FirstOrDefault();
         }
         public void SendEmail(string email, string token)
         {
