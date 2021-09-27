@@ -8,6 +8,13 @@ function getValueOnForm() {
     dMasterLookup.IsActive = $('input[name=inp_status]:checked').val();
 }
 
+function clearValueOnForm() {
+    $('input[name=inp_tipe]').val('');
+    $('input[name=inp_nama]').val('');
+    $('input[name=inp_nilai]').val('');
+    $('input[name=inp_status]').prop('checked', false);
+}
+
 function IndexCreateMasterLookup() {
     if ($('#created-master-lookup').length) {
         $('#TambahMasterLookUp').modal('show');
@@ -86,6 +93,7 @@ function PostCreate() {
                 })
                 dataTable.ajax.reload(null, false);
                 $('.modal').modal('hide');
+                clearValueOnForm();
             },
             error: function (e) {
                 Swal.fire({
