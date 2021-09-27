@@ -2,7 +2,6 @@
     Layout = null;
 }
 
-
 <div class="modal-content data-content-modal" id="created-Kerjasama">
     <div class="modal-header" style="background-color: #FF8A04; ">
         <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
@@ -13,7 +12,7 @@
         </h5>
     </div>
     <div class="modal-body">
-        <form class="form-horizontal" enctype= multipart/form-data id="createPerjanjian">
+        <form class="form-horizontal" enctype=multipart/form-data id="createPerjanjian">
             <div class="form-group row">
                 <label for="no" class="col-md-4 col-form-label">No. Kerjasama</label>
                 <div class="col-md-8">
@@ -98,7 +97,7 @@
                 <label for="Upload" class="col-md-4 col-form-label">Upload Dokumen Pendukung</label>
                 <div class="col-md-8">
                     <input id="file" type="file" name="inputer" class="form-control input-data" multiple="multiple" accept=".pdf,.doc,.docx,.xlsx">
-                    <span id="error-message" class="validation-error-label"></span>
+                    <span id="error-message">Ukuran File Kurang dari 2MB</span>
                 </div>
             </div>
             <div class="modal-footer">

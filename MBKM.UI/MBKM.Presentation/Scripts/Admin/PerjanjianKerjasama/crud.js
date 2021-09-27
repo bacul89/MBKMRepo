@@ -95,8 +95,7 @@ function SubmitPerjanjian() {
         var sfilename = fileInput.files[i].name;
         data.append("file", fileInput.files[i]);
     }
-    if (fileInput.size < 1042157) {
-        $.ajax({
+     $.ajax({
             type: "POST",
             url: "/Admin/PerjanjianKerjasama/SavePerjanjian",
             cache: false,
@@ -107,7 +106,7 @@ function SubmitPerjanjian() {
                 Swal.fire({
                     title: 'Oppss',
                     icon: 'error',
-                    html: 'Coba Reload Page',
+                    html: 'Data Gagal Ditambahkan',
                     showCloseButton: true,
                     showCancelButton: false,
                     focusConfirm: false,
@@ -131,10 +130,6 @@ function SubmitPerjanjian() {
             }
 
         })
-    } else {
-        alert("File Upload Lebih dari 1MB");
-        location.reload();
-    }
 }
 //function SubmitPerjanjian() {
 //    var data = new FormData($('#createPerjanjian')[0]);
