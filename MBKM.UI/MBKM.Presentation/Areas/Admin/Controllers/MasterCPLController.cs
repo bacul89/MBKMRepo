@@ -25,9 +25,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             //IEnumerable<VMListProdi> listNProdi = _lookupService.getListProdi();
             //ViewBag.listNProdi = new SelectList(listNProdi, "NamaProdi", "IDProdi");
 
-            return RedirectToAction("Index", "Home", new { area = "Portal" });
+            //return RedirectToAction("Index", "Home", new { area = "Portal" });
             //Debug.WriteLine("akses index");
-            //return View("ModalCreateCPL");
+            return View("ModalCreateCPL");
         }
     }
 }
