@@ -1,7 +1,5 @@
 ﻿$(document).ready(function () {
     var t = $('#TableList').DataTable({
-
-        //"scrollY": 200,
         "scrollX": true,
         "columnDefs": [{
             "searchable": false,
@@ -10,17 +8,8 @@
             "targets": 0
         }],
         "order": [[1, 'asc']],
-        "columnDefs": [{ "orderable": false, "targets": 6 }],
+        "columnDefs": [{ "orderable": false, "targets": 9 }],
         "createdRow": function (row, data, index) {
-/*            console.log(data);
-            if (data.IsDeleted == false) {
-*//*                $('td:eq(0)', row).html(meta.row + 1);*//*
-                var info = this.fnPagingInfo();
-                var page = info.iPage;
-                var length = info.iLength;
-            }
-*/
-
 
         }
     });
@@ -30,8 +19,6 @@
             cell.innerHTML = i + 1;
         });
     }).draw();
-
-    //$("#table-data-master-lookup_wrapper").css({ overflow: "auto" });
 });
 
 function validationCustom() {
@@ -49,26 +36,17 @@ function validationCustom() {
 
 function convertMilisecondToDate(value) {
     var num = parseInt(value.match(/\d+/), 10)
-    // console.log(value);
 
-   // var time = value; // get your number
-    var date = new Date(num); // create Date object
-    // var date = new Date(1324339200000);
-    // console.log(date.toString());
-   var result = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()
+    var date = new Date(num); 
+    var result = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()
     return result;
 
 }
 
-/*
-function loadDatatable() {
 
-}
-*/
-
-var dataTable = $('#table-data-master-lookup').DataTable({
+var dataTable = $('#table-data-master-mapping-cpl').DataTable({
     ajax: {
-        url: '/Admin/MasterLookup/GetDataMasterLookup',
+        url: '/Admin/MasterMapingCpl/GetDataMasterMapingCpl',
         dataSrc: ''
     },
 
@@ -80,42 +58,42 @@ var dataTable = $('#table-data-master-lookup').DataTable({
             }
         },
         {
-            "data": "Tipe",
+            "data": "arr",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + data + '</div>';
             }
         },
         {
-            "data": "Nama",
+            "data": "brr",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + data + '</div>';
             }
         },
         {
-            "data": "Nilai",
+            "data": "crr",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + data + '</div>';
             }
         },
         {
-            "data": "CreatedDate",
-            "render": function (data, type, row, meta) {
-                return '<div class="center">' + convertMilisecondToDate(data)   + '</div>';
-            }
-        },
-        {
-            "data": "CreatedBy",
+            "data": "drr",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + data + '</div>';
             }
         },
         {
-            "data": "UpdatedDate",
+            "data": "err",
+            "render": function (data, type, row, meta) {
+                return '<div class="center">' + data + '</div>';
+            }
+        },
+/*        {
+            "data": "f",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + convertMilisecondToDate(data) + '</div>';
             }
-        },
-        {
+        },*/
+/*        {
             "data": "UpdatedBy",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + data + '</div>';
@@ -131,15 +109,15 @@ var dataTable = $('#table-data-master-lookup').DataTable({
                 }
 
             }
-        },
+        },*/
         {
             "data": "ID",
             "render": function (data, type, row, meta) {
                 return `<div class="row justify-content-center">
                             <div class="col" style="text-align:center">
-                                <a href="javascript:void(0)" style="color:black" onclick="IndexUpdateMasterLookup('${data}')"> <i class="fas fa-edit coral" ></i></a>
-                                <a href="javascript:void(0)" style="color:black" onclick="IndexViewMasterLookup('${data}')"> <i class="fas fa-file-search coral"></i></a>
-                                <a href="javascript:void(0)" style="color:black" onclick="DeletedMasterLookup('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="IndexUpdateMasterMapingCpl('${data}')"> <i class="fas fa-edit coral" ></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="IndexViewMasterMapingCpl('${data}')"> <i class="fas fa-file-search coral"></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="DeletedMasterMapingCpl('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
                             </div>
                         </div>`;
             }
@@ -147,10 +125,8 @@ var dataTable = $('#table-data-master-lookup').DataTable({
 
     ],
     "createdRow": function (row, data, index) {
-        console.log(row);
-
         $('td', row).css({
-            'font-size': '0.8vw',
+            'font-size': '1vw',
             'border-top': '1px solid coral',
             'border-bottom': '1px solid coral',
             'border-left': 'none',
@@ -164,24 +140,9 @@ var dataTable = $('#table-data-master-lookup').DataTable({
             'border-left': '1px solid coral',
             'border-right': 'none'
         });
-        $('td:eq(9)', row).css({
+        $('td:eq(6)', row).css({
             'border-left': 'none',
             'border-right': '1px solid coral'
         });
     }
 });
-
-
-/*setTimeout(function () {
-
-    var table = $("#table-data-master-lookup")[0].outerHTML;
-    console.log(table);
-    $("<div id='table-data-master-lookup_overflow' style='overflow-x: scroll; width:100%'></div>").insertBefore("#table-data-master-lookup");
-    $('#table-data-master-lookup').remove();
-
-    setTimeout(function () {
-        $("#table-data-master-lookup_overflow").append(table);
-    }, 2000);
-
-}, 3000);
-*/

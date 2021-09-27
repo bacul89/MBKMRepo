@@ -1,26 +1,19 @@
 ﻿
-var dMasterLookup = {}
+var dMasterMapingCpl = {}
 
 function getValueOnForm() {
-    dMasterLookup.Tipe = $('input[name=inp_tipe]').val();
-    dMasterLookup.Nama = $('input[name=inp_nama]').val();
-    dMasterLookup.Nilai = $('input[name=inp_nilai]').val();
-    dMasterLookup.IsActive = $('input[name=inp_status]:checked').val();
+    dMasterMapingCpl.Tipe = $('input[name=inp_tipe]').val();
+    dMasterMapingCpl.Nama = $('input[name=inp_nama]').val();
+    dMasterMapingCpl.Nilai = $('input[name=inp_nilai]').val();
+    dMasterMapingCpl.IsActive = $('input[name=inp_status]:checked').val();
 }
 
-function clearValueOnForm() {
-    $('input[name=inp_tipe]').val('');
-    $('input[name=inp_nama]').val('');
-    $('input[name=inp_nilai]').val('');
-    $('input[name=inp_status]').prop('checked', false);
-}
-
-function IndexCreateMasterLookup() {
-    if ($('#created-master-lookup').length) {
-        $('#TambahMasterLookUp').modal('show');
+function IndexCreateMasterMapingCpl() {
+    if ($('#created-master-maping-cpl').length) {
+        $('#TambahMasterMapingCPL').modal('show');
     } else {
         $.ajax({
-            url: '/Admin/MasterLookup/ModalCreateMasterLookup',
+            url: '/Admin/MasterMapingCpl/ModalCreateMasterMapingCpl',
             type: 'get',
             datatype: 'html',
             success: function (e) {
@@ -35,9 +28,9 @@ function IndexCreateMasterLookup() {
     }
 }
 
-function IndexUpdateMasterLookup(id) {
+function IndexUpdateMasterMapingCpl(id) {
     $.ajax({
-        url: '/Admin/MasterLookup/ModalUpdateMasterLookup/' + id,
+        url: '/Admin/MasterMapingCpl/ModalUpdateMasterMapingCpl/' + id,
         type: 'get',
         datatype: 'html',
         success: function (e) {
@@ -51,9 +44,9 @@ function IndexUpdateMasterLookup(id) {
     })
 }
 
-function IndexViewMasterLookup(id) {
+function IndexViewMasterMapingCpl(id) {
     $.ajax({
-        url: '/Admin/MasterLookup/ModalDetailMasterLookup/' + id,
+        url: '/Admin/MasterMapingCpl/ModalDetailMasterMapingCpl/' + id,
         type: 'get',
         datatype: 'html',
         success: function (e) {
@@ -69,17 +62,17 @@ function IndexViewMasterLookup(id) {
 }
 
 function PostCreate() {
-    dMasterLookup = {}
+    dMasterMapingCpl = {}
     getValueOnForm();
 
-    /*console.log(dMasterLookup);*/
+    /*console.log(dMasterMapingCpl);*/
     if (validationCustom()) {
         var base_url = window.location.origin;
         $.ajax({
-            url: base_url + '/Admin/MasterLookup/PostDataMasterLookup',
+            url: base_url + '/Admin/MasterMapingCpl/PostDataMasterMapingCpl',
             type: 'post',
             datatype: 'json',
-            data: JSON.stringify(dMasterLookup),
+            data: JSON.stringify(dMasterMapingCpl),
             contentType: 'application/json',
             success: function (e) {
                 Swal.fire({
@@ -93,7 +86,6 @@ function PostCreate() {
                 })
                 dataTable.ajax.reload(null, false);
                 $('.modal').modal('hide');
-                clearValueOnForm();
             },
             error: function (e) {
                 Swal.fire({
@@ -122,16 +114,15 @@ function PostCreate() {
 }
 
 function PostUpdate() {
-    dMasterLookup = {}
+    dMasterMapingCpl = {}
     getValueOnForm();
-    dMasterLookup.ID = $('#id_MasterLookup').val();
-   /* console.log(dMasterLookup);*/
+    dMasterMapingCpl.ID = $('#id_MasterMapingCpl').val();
     var base_url = window.location.origin;
     $.ajax({
-        url: base_url + '/Admin/MasterLookup/PostUpdateMasterLookup',
+        url: base_url + '/Admin/MasterMapingCpl/PostUpdateMasterMapingCpl',
         type: 'post',
         datatype: 'json',
-        data: JSON.stringify(dMasterLookup),
+        data: JSON.stringify(dMasterMapingCpl),
         contentType: 'application/json',
         success: function (e) {
             Swal.fire({
@@ -164,7 +155,7 @@ function PostUpdate() {
 
 }
 
-function DeletedMasterLookup(idLookup) {
+function DeletedMasterMapingCpl(idLookup) {
 
     Swal.fire({
         title: "Apakah anda yakin?",
@@ -176,9 +167,9 @@ function DeletedMasterLookup(idLookup) {
         closeOnConfirm: false
     }).then((result) => {
         $.ajax({
-            url:'/Admin/MasterLookup/PostDeleteMasterLookup',
+            url: '/Admin/MasterMapingCpl/PostDeleteMasterMapingCpl',
             type: "POST",
-            data: { id: idLookup}
+            data: { id: idLookup }
             ,
             dataType: "json",
             success: function () {

@@ -24,8 +24,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
 
         public ActionResult Index()
         {
-/*            Session["nama"] = "smitty werben man jensen";
-            Session["email"] = "armandadimas@live.com";*/
+            Session["nama"] = "smitty werben man jensen";
+            Session["email"] = "armandadimas@live.com";
             return View();
         }
 
