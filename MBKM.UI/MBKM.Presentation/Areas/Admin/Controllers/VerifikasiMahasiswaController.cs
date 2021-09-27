@@ -62,8 +62,11 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             var ApproverRole = _lookupService.getLookupByTipe("ApproverRole");
             var StatusKerjasama = _lookupService.getLookupByTipe("StatusKerjasama");
+            var StatusVerifikasiDAA = _lookupService.getLookupByTipe("VerifikasiMahasiswaDAA");
             ViewData["Approver"] = ApproverRole;
             ViewData["StatusKerjasama"] = StatusKerjasama;
+            ViewData["StatusVerifikasiDAA"] = StatusVerifikasiDAA;
+
             var data = _mahasiswaService.Get(id);
             return View(data);
         }
