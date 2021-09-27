@@ -95,8 +95,7 @@ function SubmitPerjanjian() {
         var sfilename = fileInput.files[i].name;
         data.append("file", fileInput.files[i]);
     }
-    if (fileInput.size < 1042157) {
-        $.ajax({
+     $.ajax({
             type: "POST",
             url: "/Admin/PerjanjianKerjasama/SavePerjanjian",
             cache: false,
@@ -107,7 +106,7 @@ function SubmitPerjanjian() {
                 Swal.fire({
                     title: 'Oppss',
                     icon: 'error',
-                    html: 'Coba Reload Page',
+                    html: 'Data Gagal Ditambahkan, Periksa Field dan Ukuran File',
                     showCloseButton: true,
                     showCancelButton: false,
                     focusConfirm: false,
@@ -128,13 +127,10 @@ function SubmitPerjanjian() {
                 })
                 table.ajax.reload(null, false),
                     $('.modal').modal('hide');
+                location.reload();
             }
 
         })
-    } else {
-        alert("File Upload Lebih dari 1MB");
-        location.reload();
-    }
 }
 //function SubmitPerjanjian() {
 //    var data = new FormData($('#createPerjanjian')[0]);
@@ -206,32 +202,32 @@ function UpdatePerjanjian() {
         contentType: false,
         processData: false,
         data: data,
-        success: function (e) {
-            console.log("coba isi")
-            Swal.fire({
-                title: 'Berhasil',
-                icon: 'success',
-                html: 'Data Berhasil Diubah',
-                showCloseButton: true,
-                showCancelButton: false,
-                focusConfirm: false,
-                confirmButtonText: 'OK'
-            })
-            tableUser.ajax.reload(null, false);
-            $('.modal').modal('hide');
-        },
-        error: function (e) {
-            console.log("coba lagi")
+        success: function (response) {
             Swal.fire({
                 title: 'Oppss',
                 icon: 'error',
-                html: 'Coba Reload Page',
+                html: 'Data Gagal Diupdate',
                 showCloseButton: true,
                 showCancelButton: false,
                 focusConfirm: false,
                 confirmButtonText: 'OK'
             })
-            $('.modal').modal('hide');
+            table.ajax.reload(null, false),
+                $('.modal').modal('hide');
+        },
+        error: function (response) {
+            Swal.fire({
+                title: 'Berhasil',
+                icon: 'success',
+                html: 'Data Berhasil Diupdate',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText: 'OK'
+            })
+            table.ajax.reload(null, false),
+                $('.modal').modal('hide');
+            location.reload();
         }
     })
 }

@@ -12,7 +12,8 @@
     //"aaSorting": [[0, "asc"]],
     "ajax": {
         url: '/Admin/MenuRole/GetDataMenuRole',
-        type: 'POST'
+        type: 'POST',
+        dataSrc: 'data'
     },
     "language": {
         "emptyTable": "No record found.",
@@ -49,6 +50,22 @@
             //"title": "Jabatan",
             "data": "IsCreate",
             "name": "IsCreate",
+            "render": function (data, type, row, meta) {
+                return '<div class="center">' + data + '</div>';
+            }
+        },
+        {
+            //"title": "Jabatan",
+            "data": "IsUpdate",
+            "name": "IsUpdate",
+            "render": function (data, type, row, meta) {
+                return '<div class="center">' + data + '</div>';
+            }
+        },
+        {
+            //"title": "Jabatan",
+            "data": "IsView",
+            "name": "IsView",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + data + '</div>';
             }
