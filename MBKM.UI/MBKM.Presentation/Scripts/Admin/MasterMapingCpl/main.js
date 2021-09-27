@@ -7,8 +7,8 @@
             "paging": false,
             "targets": 0
         }],
-        "order": [[1, 'asc']],
-        "columnDefs": [{ "orderable": false, "targets": 9 }],
+        "order": [[2, 'asc']],
+        "columnDefs": [{ "orderable": false, "targets": 1 }],
         "createdRow": function (row, data, index) {
 
         }
@@ -51,6 +51,18 @@ var dataTable = $('#table-data-master-mapping-cpl').DataTable({
     },
 
     "columns": [
+        {
+            "data": "ID",
+            "render": function (data, type, row, meta) {
+                return `<div class="row justify-content-center">
+                            <div class="col" style="text-align:center">
+                                <a href="javascript:void(0)" style="color:black" onclick="IndexUpdateMasterMapingCpl('${data}')"> <i class="fas fa-edit coral" ></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="IndexViewMasterMapingCpl('${data}')"> <i class="fas fa-file-search coral"></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="DeletedMasterMapingCpl('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
+                            </div>
+                        </div>`;
+            }
+        },
         {
             "data": null,
             "render": function (data, type, full, meta) {
@@ -110,18 +122,7 @@ var dataTable = $('#table-data-master-mapping-cpl').DataTable({
 
             }
         },*/
-        {
-            "data": "ID",
-            "render": function (data, type, row, meta) {
-                return `<div class="row justify-content-center">
-                            <div class="col" style="text-align:center">
-                                <a href="javascript:void(0)" style="color:black" onclick="IndexUpdateMasterMapingCpl('${data}')"> <i class="fas fa-edit coral" ></i></a>
-                                <a href="javascript:void(0)" style="color:black" onclick="IndexViewMasterMapingCpl('${data}')"> <i class="fas fa-file-search coral"></i></a>
-                                <a href="javascript:void(0)" style="color:black" onclick="DeletedMasterMapingCpl('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
-                            </div>
-                        </div>`;
-            }
-        },
+
 
     ],
     "createdRow": function (row, data, index) {
