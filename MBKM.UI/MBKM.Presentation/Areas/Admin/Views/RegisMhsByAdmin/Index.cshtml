@@ -230,6 +230,9 @@
             }
         }
         function submitRegistrasi() {
+            if (isEmpty("nama", "Nama lengkap") || isEmpty("tempatLahir", "Tempat lahir") || isEmpty("tanggalLahir", "Tanggal lahir") || isEmpty("noHp", "No. handphone") || isEmpty("emailRegistrasi", "Email") || isEmpty("passwordRegistrasi", "Password")) {
+                return;
+            }
             mahasiswa = new Object;
             mahasiswa.Nama = $("#nama").val();
             mahasiswa.TempatLahir = $("#tempatLahir").val();
@@ -340,6 +343,14 @@
                     },
                 }
             });
+        }
+        function isEmpty(id, nama) {
+            if (!$("#" + id).val()) {
+                alert(nama + ' tidak boleh kosong!');
+                $("#" + id).focus();
+                return true;
+            }
+            return false;
         }
     </script>
 
