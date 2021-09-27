@@ -155,6 +155,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\StatusVerifikasi.cs" />
     <Compile Include="Models\FilePendukung.cs" />
     <Compile Include="Models\LoginVMAdmin.cs" />
     <Compile Include="Models\ServiceResponse.cs" />
