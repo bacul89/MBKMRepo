@@ -353,7 +353,7 @@
             $("select").attr("disabled", true);
             $("textarea").attr("disabled", true);
             try {
-                if ("@HttpContext.Current.Session["status"].ToString()" != "DAFTAR") {
+                if ("@ViewData["status"].ToString()" != "DAFTAR") {
                     $("#edit").hide();
                 }
             } catch (e) {

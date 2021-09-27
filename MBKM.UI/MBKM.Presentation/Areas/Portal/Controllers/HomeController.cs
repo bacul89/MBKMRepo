@@ -24,7 +24,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             _perjanjianKerjasamaService = perjanjianKerjasamaService;
             _lookupService = lookupService;
         }
-        // GET: Portal/Home
+        // GET: Portal/Home 
         public ActionResult Index()
         {
             return View();
@@ -124,7 +124,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
 
                     _mahasiswaService.Save(mahasiswa);
                 }
-                PopulateSession(true, mahasiswa.Email, mahasiswa.Nama, mahasiswa.StatusVerifikasi);
+                PopulateSession(true, mahasiswa.Email, mahasiswa.Nama);
                 return RedirectToAction("Index", "DataDiri");
             }
         }
@@ -141,12 +141,12 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 TempData["alertMessage"] = "Silahkan aktivasi akun anda terlebih dahulu!";
                 return RedirectToAction("Index", "Home");
             } 
-            PopulateSession(true, res.Email, res.Nama, res.StatusVerifikasi);
+            PopulateSession(true, res.Email, res.Nama);
             return RedirectToAction("Index", "DataDiri");
         }
         public ActionResult Logout()
         {
-            PopulateSession(false, null, null, null);
+            PopulateSession(false, null, null);
             return RedirectToAction("Index", "Home");
         }
         public Mahasiswa GetMahasiswaByEmail(string email)
@@ -163,20 +163,20 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public void SendEmail(string email, string token)
         {
+            string domain = ConfigurationManager.AppSettings["Domain"];
             string url = this.Url.Action("VerifyPage", "Home", null);
             GMailer mailer = new GMailer();
             mailer.ToEmail = email;
             mailer.Subject = "Verify your email";
-            mailer.Body = "Thanks for Registering your account.<br> please verify your email by clicking the link <br> <a href='http://localhost:10776" + url + "?token=" + token + "'>verify</a>";
+            mailer.Body = "Thanks for Registering your account.<br> please verify your email by clicking the link <br> <a href='" + domain + url + "?token=" + token + "'>verify</a>";
             mailer.IsHtml = true;
             mailer.Send();
         }
-        public void PopulateSession(bool isLogin, string email, string nama, string status)
+        public void PopulateSession(bool isLogin, string email, string nama)
         {
             Session["isLogin"] = isLogin;
             Session["email"] = email;
             Session["nama"] = nama;
-            Session["status"] = status;
         }
         public string hp(string password)
         {

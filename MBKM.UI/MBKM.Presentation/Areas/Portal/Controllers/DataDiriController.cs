@@ -6,6 +6,7 @@ using MBKM.Services.MBKMServices;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -28,6 +29,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult Index()
         {
+            string email = Session["email"] as string;
+            Mahasiswa mahasiswa = GetMahasiswaByEmail(email);
+            ViewData["status"] = mahasiswa.StatusVerifikasi;
             return View();
         }
         public ActionResult GetDataMahasiswa()
@@ -48,83 +52,47 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             return new ContentResult { Content = JsonConvert.SerializeObject(_perjanjianKerjasamaService.Find(pk => pk.NoPerjanjian == noPerjanjian).FirstOrDefault()), ContentType = "application/json" }; 
         }
-        public List<Attachment> UploadFilePendukung(FilePendukung filePendukung, Int64 id)
+        public void UploadFilePendukung(FilePendukung filePendukung, Int64 id)
         {
-            List<Attachment> result = new List<Attachment>();
+            if (filePendukung.fotoDiri != null)
+            {
+                UploadAttachment(id, filePendukung.fotoDiri, "FotoDiri");
+            }
+            if (filePendukung.fotoKTP != null)
+            {
+                UploadAttachment(id, filePendukung.fotoKTP, "KTP");
+            }
+            if (filePendukung.fotoKIM != null)
+            {
+                UploadAttachment(id, filePendukung.fotoKIM, "FotoKIM");
+            }
+            if (filePendukung.transkripNilai != null)
+            {
+                UploadAttachment(id, filePendukung.transkripNilai, "TranskripNilai");
+            }
+            if (filePendukung.suratKeterangan != null)
+            {
+                UploadAttachment(id, filePendukung.suratKeterangan, "SuratKeterangan");
+            }
+        }
+        public void UploadAttachment(Int64 id, HttpPostedFileBase file, string tipe)
+        {
+            string folder = ConfigurationManager.AppSettings["PathAttachmentMahasiswa"];
             Attachment attachment = new Attachment();
             attachment.CreatedDate = DateTime.Now;
             attachment.UpdatedDate = DateTime.Now;
             attachment.IsActive = true;
             attachment.IsDeleted = false;
             attachment.MahasiswaID = id;
+            attachment.FileType = tipe;
+            attachment.FileName = id + "_" + tipe + Path.GetExtension(file.FileName);
+            attachment.FileExt = Path.GetExtension(file.FileName);
+            attachment.FileSze = file.ContentLength;
 
-            if (filePendukung.fotoDiri != null)
-            {
-                attachment.FileType = "FotoDiri";
-                attachment.FileName = id + "_FotoDiri" + Path.GetExtension(filePendukung.fotoDiri.FileName);
-                attachment.FileExt = Path.GetExtension(filePendukung.fotoDiri.FileName);
-                attachment.FileSze = filePendukung.fotoDiri.ContentLength;
+            var path = Path.Combine(Server.MapPath(folder + id + "/"), id + "_" + tipe + attachment.FileExt);
+            file.SaveAs(path);
 
-                var path = Path.Combine(Server.MapPath("~/Upload/" + id + "/"), id + "_FotoDiri" + attachment.FileExt);
-                bool exists = Directory.Exists(Server.MapPath("~/Upload/" + id));
-
-                if (!exists)
-                    Directory.CreateDirectory(Server.MapPath("~/Upload/" + id));
-                filePendukung.fotoDiri.SaveAs(path);
-
-                result.Add(attachment);
-            }
-            if (filePendukung.fotoKTP != null)
-            {
-                attachment.FileType = "KTP";
-                attachment.FileName = id + "_KTP" + Path.GetExtension(filePendukung.fotoKTP.FileName);
-                attachment.FileExt = Path.GetExtension(filePendukung.fotoKTP.FileName);
-                attachment.FileSze = filePendukung.fotoKTP.ContentLength;
-
-                var path = Path.Combine(Server.MapPath("~/Upload/" + id + "/"), id + "_KTP" + attachment.FileExt);
-                filePendukung.fotoKTP.SaveAs(path);
-
-
-                result.Add(attachment);
-            }
-            if (filePendukung.fotoKIM != null)
-            {
-                attachment.FileType = "FotoKIM";
-                attachment.FileName = id + "_FotoKIM" + Path.GetExtension(filePendukung.fotoKIM.FileName);
-                attachment.FileExt = Path.GetExtension(filePendukung.fotoKIM.FileName);
-                attachment.FileSze = filePendukung.fotoKIM.ContentLength;
-
-                var path = Path.Combine(Server.MapPath("~/Upload/" + id + "/"), id + "_FotoKIM" + attachment.FileExt);
-                filePendukung.fotoKIM.SaveAs(path);
-
-                result.Add(attachment);
-            }
-            if (filePendukung.transkripNilai != null)
-            {
-                attachment.FileType = "TranskripNilai";
-                attachment.FileName = id + "_TranskripNilai" + Path.GetExtension(filePendukung.transkripNilai.FileName);
-                attachment.FileExt = Path.GetExtension(filePendukung.transkripNilai.FileName);
-                attachment.FileSze = filePendukung.transkripNilai.ContentLength;
-
-                var path = Path.Combine(Server.MapPath("~/Upload/" + id + "/"), id + "_TranskripNilai" + attachment.FileExt);
-                filePendukung.transkripNilai.SaveAs(path);
-
-                result.Add(attachment);
-            }
-            if (filePendukung.suratKeterangan != null)
-            {
-                attachment.FileType = "SuratKeterangan";
-                attachment.FileName = id + "_SuratKeterangan" + Path.GetExtension(filePendukung.suratKeterangan.FileName);
-                attachment.FileExt = Path.GetExtension(filePendukung.suratKeterangan.FileName);
-                attachment.FileSze = filePendukung.suratKeterangan.ContentLength;
-
-                var path = Path.Combine(Server.MapPath("~/Upload/" + id + "/"), id + "_SuratKeterangan" + attachment.FileExt);
-                filePendukung.suratKeterangan.SaveAs(path);
-
-                result.Add(attachment);
-            }
-
-            return result;
+            _attachmentService.Save(attachment);
         }
         public ActionResult UpdateDataDiri(Mahasiswa mahasiswa, FilePendukung filePendukung)
         {
@@ -153,12 +121,10 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 res.JenjangStudi = mahasiswa.JenjangStudi;
                 res.ProdiAsal = mahasiswa.ProdiAsal;
                 res.NIMAsal = mahasiswa.NIMAsal;
-
-                res.Attachments = UploadFilePendukung(filePendukung, res.ID);
                 res.StatusVerifikasi = "MENUNGGU VERIFIKASI";
                 res.UpdatedDate = DateTime.Now;
+                UploadFilePendukung(filePendukung, res.ID);
                 _mahasiswaService.Save(res);
-                Session["status"] = "MENUNGGU VERIFIKASI";
                 return Json(new ServiceResponse { status = 200, message = "Data diri berhasil diupdate!" });
             }
             catch (Exception e)
