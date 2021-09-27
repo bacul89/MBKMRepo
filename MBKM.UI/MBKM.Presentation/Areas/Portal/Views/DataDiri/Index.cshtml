@@ -309,9 +309,7 @@
                         <tr>
                             <td style="width: 20%;">Jenjang Studi</td>
                             <td>
-                                <div class="form-group">
-                                    <input type="text" name="jenjangStudi" id="jenjangStudi" class="form-control input-md" />
-                                </div>
+                                <select name="jenjangStudi" id="jenjangStudi" class="form-control input-md" required></select>
                             </td>
                         </tr>
                         <tr>
@@ -362,6 +360,7 @@
             loadFromLookup("WargaNegara", "kewarganegaraan", "Kewarganegaraan");
             loadFromLookup("KontakDarurat", "hubungan", "Hubungan");
             loadFromLookup("Gender", "gender", "Jenis Kelamin");
+            loadFromLookup("JenjangStudi", "jenjangStudi", "Jenjang Studi");
             getDataMahasiswa();
         });
         $("#edit").click(function () {
@@ -476,7 +475,10 @@
                 } else {
                     setUniversitas(response.NoKerjasama);
                 }
-                $("#jenjangStudi").val(response.JenjangStudi);
+                if (response.JenjangStudi != null) {
+                    setLookupValue("JenjangStudi", response.JenjangStudi, "jenjangStudi");
+                    $("#jenjangStudi").val(response.JenjangStudi);
+                }
                 $("#programStudi").val(response.ProdiAsal);
                 $("#nimAsal").val(response.NIMAsal);
             });
