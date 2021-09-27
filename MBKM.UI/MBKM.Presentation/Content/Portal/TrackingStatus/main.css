@@ -1,0 +1,12 @@
+﻿.line {
+    position: relative;
+}
+
+.line:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    border-right: 1px solid #cfc7c0;
+    top: 10%;
+    bottom: 10%;
+}

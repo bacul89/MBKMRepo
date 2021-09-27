@@ -11,6 +11,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MBKM.Presentation.models;
+using MBKM.Entities.Models;
+using Newtonsoft.Json;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
@@ -62,8 +64,11 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             var ApproverRole = _lookupService.getLookupByTipe("ApproverRole");
             var StatusKerjasama = _lookupService.getLookupByTipe("StatusKerjasama");
+
             ViewData["Approver"] = ApproverRole;
             ViewData["StatusKerjasama"] = StatusKerjasama;
+            ViewBag.terima = StatusVerifikasi.Terima;
+            ViewBag.tolak = StatusVerifikasi.Tolak;
             var data = _mahasiswaService.Get(id);
             return View(data);
         }

@@ -78,12 +78,7 @@
             "title": "Status Verifikasi",
             "data": "StatusVerifikasi",
             "render": function (data, type, row, meta) {
-                if (data) {
-                    return '<div class="center vertical-center" style="font-size: 0.8vw">Aktif</div>';
-                } else {
-                    return '<div class="center vertical-center" style="font-size: 0.8vw">Tidak Aktif</div>';
-                }
-
+                return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
