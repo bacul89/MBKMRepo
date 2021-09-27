@@ -149,6 +149,7 @@
     <Compile Include="Areas\Portal\PortalAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UnAuthorizedController.cs" />
+    <Compile Include="Helper\StatusVerifikasi.cs" />
     <Compile Include="Helper\GMailer.cs" />
     <Compile Include="Helper\MBKMAuthorize.cs" />
     <Compile Include="Global.asax.cs">
@@ -176,6 +177,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Portal\TrackingStatus\main.css" />
     <Content Include="Scripts\Admin\MenuRole\main.js" />
     <Content Include="Scripts\loading\loadingoverlay.min.js" />
     <Content Include="Content\summernote\lang\summernote-ar-AR.js" />
@@ -397,8 +399,7 @@
     <Content Include="Content\autonumeric\readme.md" />
     <Content Include="Areas\Admin\Views\RegisMhsByAdmin\Index.cshtml" />
     <Content Include="Areas\Portal\Views\NimDigital\Index.cshtml" />
-
-	<Content Include="Areas\Portal\Views\TrackingStatusPendaftaran\Index.cshtml" />
+    <Content Include="Areas\Portal\Views\TrackingStatusPendaftaran\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
