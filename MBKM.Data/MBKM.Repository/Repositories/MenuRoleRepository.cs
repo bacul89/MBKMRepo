@@ -44,8 +44,7 @@ namespace MBKM.Repository.Repositories
                         IsDelete = z.IsDelete,
                         IsUpdate = z.IsUpdate,
                         IsView = z.IsView
-                    }).OrderBy(SortBy, SortDir);
-                mListMenuRole.gridDatas = gridfilter.Skip(Skip).Take(Length).ToList();
+                    }).ToList();
                 mListMenuRole.TotalFilterCount = gridfilter.Count();
                 return mListMenuRole;
             }
