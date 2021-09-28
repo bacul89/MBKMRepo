@@ -8,7 +8,11 @@
     <link rel="stylesheet" type="text/css" href="~/Content/Admin/inputResponsive.css">
     @Scripts.Render("~/bundles/jquery")
     <link href="~/Content/summernote/summernote.min.css" rel="stylesheet" />
+
     <script src="~/Scripts/sweetalert2.all.min.js"></script>
+
+    <link href="http://code.jquery.com/ui/1.9.2/themes/smoothness/jquery-ui.css" rel="stylesheet" />
+
 
 }
 
@@ -33,19 +37,19 @@
                 <div class="container" style="width: 100%;">
                     <form class="form-horizontal">
                         <div class="form-group">
-                            <label for="nama" class="col-sm-3 control-label">Nama Lengkap</label>
+                            <label for="nama" class="col-sm-3 control-label">Nama Lengkap<h style="color: red;"> *</h></label>
                             <div class="col-sm-9">
-                                <input type="text" name="Nama" id="nama" placeholder="Nama Lengkap" class="form-control " style="border: 1px solid #f7ba74" />
+                                <input type="text" name="nama" id="nama" placeholder="Nama Lengkap" class="form-control " style="border: 1px solid #f7ba74" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="TempatLahir" class="col-sm-3 control-label">Tanggal Lahir</label>
+                            <label for="TempatLahir" class="col-sm-3 control-label">Tempat Lahir<h style="color: red;"> *</h></label>
                             <div class="col-sm-9">
                                 <input type="text" name="TempatLahir" id="tempatLahir" placeholder="Tempat Lahir" class="form-control" style="border: 1px solid #f7ba74" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="TanggalLahir" class="col-sm-3 control-label">Tanggal Lahir</label>
+                            <label for="TanggalLahir" class="col-sm-3 control-label">Tanggal Lahir<h style="color: red;"> *</h></label>
                             <div class="col-sm-9">
                                 <input type="date" name="TanggalLahir" id="tanggalLahir" placeholder="Tanggal Lahir" class="form-control" style="border: 1px solid #f7ba74" />
                             </div>
@@ -115,20 +119,20 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="noHp" class="col-sm-3 control-label">No Handphone</label>
+                            <label for="noHp" class="col-sm-3 control-label">No Handphone<h style="color: red;"> *</h></label>
                             <div class="col-sm-9">
                                 <input type="text" name="NoHp" id="noHp" placeholder="+62xxxxxxxxxxx" class="form-control" style="border: 1px solid #f7ba74" />
 
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="emailRegistrasi" class="col-sm-3 control-label">Email</label>
+                            <label for="emailRegistrasi" class="col-sm-3 control-label">Email<h style="color: red;"> *</h></label>
                             <div class="col-sm-9">
                                 <input type="Email" name="Email" id="emailRegistrasi" placeholder="someone@somewhere.com" class="form-control" style="border: 1px solid #f7ba74" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="Password" class="col-sm-3 control-label">Password</label>
+                            <label for="Password" class="col-sm-3 control-label">Password<h style="color: red;"> *</h></label>
                             <div class="col-sm-9">
                                 <input type="password" name="Password" id="passwordRegistrasi" placeholder="●●●●●●●●" class="form-control" style="border: 1px solid #f7ba74" />
                             </div>
@@ -139,26 +143,35 @@
                         @*<button id="edit" class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 16px;">Registrasi</button>*@
                     </form>
                 </div>
-                </div>
             </div>
-
-
-
-
-
         </div>
+
+
+
+
 
     </div>
 
-    @*</div>*@
+</div>
 
-    @section Scripts{
-        <script>
+@*</div>*@
+
+@section Scripts{
+    <script>
+
         $(document).ready(function () {
             var alertMessage = '@TempData["alertMessage"]';
             if (alertMessage.length != 0) {
                 alert(alertMessage);
             }
+            //$(function () {
+            //    $("#tanggalLahir").datepicker({ maxDate: new Date() });
+            //});
+            var now = new Date(),
+                // minimum date the user can choose, in this case now and in the future
+                minDate = now.toISOString().substring(0, 10);
+
+            $('#tanggalLahir').prop('max', minDate);
             loadNamaUniversitas();
             loadNoKerjasama();
             namaUnivOnChange();
@@ -260,6 +273,9 @@
                 data: mahasiswa
             }).then(function (response) {
                 alert(response.message);
+                if (response.status == 200) {
+                    location.reload();
+                }
             });
         }
         function loadNamaUniversitas() {
@@ -352,8 +368,14 @@
                 return true;
             }
             return false;
-        }
-        </script>
+            }
+            function clearValueOnForm() {
+                $('input[name=nama]').val('');
+                $('input[name=inp_nama]').val('');
+                $('input[name=inp_nilai]').val('');
+                $('input[name=inp_status]').prop('checked', false);
+            }
+    </script>
 
-    }
+}
 
