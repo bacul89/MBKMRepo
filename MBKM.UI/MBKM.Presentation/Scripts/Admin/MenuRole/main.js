@@ -3,8 +3,7 @@
         "searchable": false,
         "orderable": false,
         "paging": false,
-        "targets": 0,
-        "visible": false, 'targets': [4, 6]
+        "targets": 0
     }],
     "proccessing": true,
     "serverSide": true,
@@ -69,7 +68,38 @@
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + data + '</div>';
             }
-        }
+        },
+        {
+            //"title": "Jabatan",
+            "data": "IsDelete",
+            "name": "IsDelete",
+            "render": function (data, type, row, meta) {
+                return '<div class="center">' + data + '</div>';
+            }
+        },
+        {
+            "data": "Status",
+            "name": "Status",
+            "render": function (data, type, row, meta) {
+                if (data === true) {
+                    return '<div class="center">Aktif</div>';
+                } else {
+                    return '<div class="center">Tidak Aktif</div>';
+                }
+
+            }
+        },{
+            "data": "ID",
+            "render": function (data, type, row, meta) {
+                return `<div class="row justify-content-center">
+                            <div class="col" style="text-align:center">
+                                <a href="javascript:void(0)" style="color:black" onclick="IndexUpdateEmailTemplate('${data}')"> <i class="fas fa-edit coral" ></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="IndexViewEmailTemplate('${data}')"> <i class="fas fa-file-search coral"></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="DeleteDataTemplate('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
+                            </div>
+                        </div>`;
+            }
+        },
     ],
     "createdRow": function (row, data, index) {
         $('td', row).css({
