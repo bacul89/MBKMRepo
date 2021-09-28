@@ -14,6 +14,19 @@
     },
     "columns": [
         {
+            "title": "Action",
+            "data": "ID",
+            "render": function (data, type, row, meta) {
+                return `<div class="row justify-content-center">
+                            <div class="col" style="text-align:center">
+                                <a href="javascript:void(0)" style="color:black" onclick="UpdateKerjasama('${data}')"> <i class="fas fa-edit coral" ></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="IndexViewKerjasama('${data}')"> <i class="fas fa-file-search coral"></i></a>
+                            </div>
+                        </div>`;
+            }
+        },
+        {
+            "title":"No",
             "data": null,
             "render": function (data, type, full, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + (meta.row + 1) + '</div>';
@@ -82,18 +95,6 @@
             "data": "Inputer",
             "render": function (data, type, row, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
-            }
-        },
-        {
-            "title": "Action",
-            "data": "ID",
-            "render": function (data, type, row, meta) {
-                return `<div class="row justify-content-center">
-                            <div class="col" style="text-align:center">
-                                <a href="javascript:void(0)" style="color:black" onclick="UpdateKerjasama('${data}')"> <i class="fas fa-edit coral" ></i></a>
-                                <a href="javascript:void(0)" style="color:black" onclick="IndexViewKerjasama('${data}')"> <i class="fas fa-file-search coral"></i></a>
-                            </div>
-                        </div>`;
             }
         }
     ],
