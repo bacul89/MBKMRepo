@@ -23,7 +23,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             return View();
         }
+
         //get data table
+        [HttpPost]
         public ActionResult GetDataMenuRole(DataTableAjaxPostModel model)
         {
             VMListMenuRole vMListMenuRole = _menuRoleService.getListMRGrid(model);

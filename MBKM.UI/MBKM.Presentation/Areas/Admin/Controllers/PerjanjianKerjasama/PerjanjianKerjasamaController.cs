@@ -11,6 +11,7 @@ using MBKM.Entities.Models.MBKM;
 using MBKM.Common.Helpers;
 using System.IO;
 using MBKM.Presentation.Helper;
+using MBKM.Repository.BaseRepository;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
 {
@@ -69,7 +70,11 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
         /*Modal Detail*/
         public ActionResult ModalDetailKerjasama(int id)
         {
+            var context = new MBKMContext();
             var data = _perjanjianKerjasamaService.Get(id);
+            var j = _perjanjianKerjasamaService.Get(id);
+            var jk = context.Lookups.Where(x => x.Tipe == "JenisKerjasama" && x.Nilai == j.JenisKerjasama).Select(x => x.Nama).FirstOrDefault();
+            ViewData["jenisKerjasm"] = jk;
             var file = _perjanjianKerjasamaService.Get(id).AttachmentPerjanjianKerjasamas.Select(x =>
             new AttachmentPerjanjianKerjasama
             {
@@ -134,11 +139,14 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
         /*Modal Update*/
         public ActionResult ModalUpdateKerjasama(int id)
         {
-
+            var context = new MBKMContext();
             var listPerjanjian = _lookupService.getLookupByTipe("JenisPertukaran");
             ViewData["listPerjanjian"] = listPerjanjian;
             var listKerjasama = _lookupService.getLookupByTipe("JenisKerjasama");
             ViewData["listKerjasama"] = listKerjasama;
+            var j = _perjanjianKerjasamaService.Get(id);
+            var jk = context.Lookups.Where(x => x.Tipe == "JenisKerjasama" && x.Nilai == j.JenisKerjasama).Select(x => x.Nama).FirstOrDefault();
+            ViewData["jenisKerjasm"] = jk;
             var data = _perjanjianKerjasamaService.Get(id);
             var file = _perjanjianKerjasamaService.Get(id).AttachmentPerjanjianKerjasamas.Select(x =>
             new AttachmentPerjanjianKerjasama
