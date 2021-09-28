@@ -1,5 +1,6 @@
 ﻿using MBKM.Common.Helpers;
 using MBKM.Entities.ViewModel;
+using MBKM.Presentation.Helper;
 using MBKM.Services;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
+    [MBKMAuthorize]
     public class MenuRoleController : Controller
     {
         private Services.IMenuRoleService _menuRoleService;

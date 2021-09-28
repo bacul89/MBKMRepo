@@ -155,6 +155,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\StatusVerifikasi.cs" />
     <Compile Include="Models\FilePendukung.cs" />
     <Compile Include="Models\LoginVMAdmin.cs" />
     <Compile Include="Models\ServiceResponse.cs" />
@@ -407,6 +408,7 @@
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
+    <Content Include="Areas\Portal\Views\TrackingStatusPendaftaran\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -423,6 +425,13 @@
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\sweetalert2.all.min.js" />
+    <Content Include="Upload\31\31_FotoDiri.png" />
+    <Content Include="Upload\31\31_FotoKIM.png" />
+    <Content Include="Upload\31\31_KTP.png" />
+    <Content Include="Upload\31\31_SuratKeterangan.png" />
+    <Content Include="Upload\31\31_TranskripNilai.png" />
+    <Content Include="Upload\32\32_FotoDiri.png" />
+    <Content Include="Upload\34\34_FotoDiri.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -439,14 +448,13 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\UnAuthorized\Index.cshtml" />
     <Content Include="Upload\Karyawan %28menggantikan data Dosen%29.xlsx.xlsx" />
+    <Content Include="Upload\32\coba.pdf" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\EmailTemplate\" />
     <Folder Include="Areas\Portal\Data\" />
-    <Folder Include="Areas\Portal\Views\TrackingStatusPendaftaran\" />
-    <Folder Include="Upload\32\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

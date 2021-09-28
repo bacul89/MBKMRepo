@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "IndexDetailMahasiswa";
+    ViewBag.Title = "Index Detail Mahasiswa";
     Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
 }
 @model MBKM.Entities.Models.MBKM.Mahasiswa
@@ -280,10 +280,10 @@
                                 <label for="inp_verifikasi" class="col-sm-3 control-label">Verifikasi</label>
                                 <div class="col-sm-7">
                                     <label class="radio-inline input-pendaftaran">
-                                        <input type="radio" name="inp_verifikasi" id="inp_verifikasi" value="AKTIF"> Terima
+                                        <input type="radio" name="inp_verifikasi" id="inp_verifikasi" value="@ViewBag.terima"> Terima
                                     </label>
                                     <label class="radio-inline input-pendaftaran">
-                                        <input type="radio" name="inp_verifikasi" id="inp_verifikasi" value="DITOLAK"> Tolak
+                                        <input type="radio" name="inp_verifikasi" id="inp_verifikasi" value="@ViewBag.tolak"> Tolak
                                     </label>
                                 </div>
                             </div>

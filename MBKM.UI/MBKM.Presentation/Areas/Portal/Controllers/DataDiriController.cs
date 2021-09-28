@@ -90,8 +90,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             attachment.FileSze = file.ContentLength;
 
             var path = Path.Combine(Server.MapPath(folder + id + "/"), id + "_" + tipe + attachment.FileExt);
+            if (!Directory.Exists(Server.MapPath(folder + id + "/")))
+            {
+                Directory.CreateDirectory(Server.MapPath(folder + id + "/"));
+            }
             file.SaveAs(path);
-
             _attachmentService.Save(attachment);
         }
         public ActionResult UpdateDataDiri(Mahasiswa mahasiswa, FilePendukung filePendukung)

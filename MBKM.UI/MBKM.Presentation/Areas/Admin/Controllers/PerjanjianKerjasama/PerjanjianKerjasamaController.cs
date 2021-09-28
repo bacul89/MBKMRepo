@@ -10,9 +10,11 @@ using System.Web.Mvc;
 using MBKM.Entities.Models.MBKM;
 using MBKM.Common.Helpers;
 using System.IO;
+using MBKM.Presentation.Helper;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
 {
+    [MBKMAuthorize]
     public class PerjanjianKerjasamaController : Controller
     {
         private IMenuService _menuService;
@@ -88,7 +90,11 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
                     for (int i = 0; i < file.Length; i++)
                     {
                         var files = file[i];
-                        if (files != null && files.ContentLength > 0)
+                        if (files != null && files.ContentLength > 2154227) {
+                            ViewBag.Message = String.Format("File yang terupload lebih dari 2MB");
+
+                        }
+                        else if (files != null && files.ContentLength < 2154227)
                         {
                             var fileName = Path.GetFileName(files.FileName);
                             AttachmentPerjanjianKerjasama attch = new AttachmentPerjanjianKerjasama()
@@ -102,14 +108,15 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
                             attachments.Add(attch);
                             var path = Path.Combine(Server.MapPath("~/Upload/"), attch.FileName);
                             files.SaveAs(path);
+                            perjanjianKerjasama.AttachmentPerjanjianKerjasamas = attachments;
+                            perjanjianKerjasama.IsActive = true;
+                            perjanjianKerjasama.CreatedBy = Session["username"] as string;
+                            perjanjianKerjasama.UpdatedBy = Session["username"] as string;
+                            _perjanjianKerjasamaService.Save(perjanjianKerjasama);
                         }
+                        
                     }
-                    perjanjianKerjasama.AttachmentPerjanjianKerjasamas = attachments;
-                    perjanjianKerjasama.IsActive = true;
-                    perjanjianKerjasama.CreatedBy = Session["username"] as string;
-                    perjanjianKerjasama.UpdatedBy = Session["username"] as string;
-                    _perjanjianKerjasamaService.Save(perjanjianKerjasama);
-
+                    
                 }
                 else
                 {
