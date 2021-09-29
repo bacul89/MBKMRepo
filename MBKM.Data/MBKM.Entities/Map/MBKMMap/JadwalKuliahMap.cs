@@ -18,10 +18,23 @@ namespace MBKM.Entities.Map.MBKMMap
             Property(t => t.DosenID).IsRequired();
             Property(t => t.NamaDosen).HasMaxLength(150).IsRequired();
             Property(t => t.KodeMataKuliah).HasMaxLength(50).IsRequired();
+            Property(t => t.MataKuliahID).IsRequired();
+            Property(t => t.NamaMataKuliah).IsRequired();
             Property(t => t.Hari).HasMaxLength(15).IsRequired();
-            Property(t => t.Waktu).IsRequired();
-            Property(t => t.Kuota).IsRequired();
-            Property(t => t.LinkMateri).HasMaxLength(250).IsRequired();
+            Property(t => t.STRM).IsRequired();
+            Property(t => t.FakultasID).IsRequired();
+            Property(t => t.NamaFakultas).HasMaxLength(250).IsRequired();
+            Property(t => t.ProdiID).IsRequired();
+            Property(t => t.NamaProdi).HasMaxLength(250).IsRequired();
+            Property(t => t.JenjangStudi).HasMaxLength(150).IsRequired();
+            Property(t => t.Lokasi).HasMaxLength(250).IsRequired();
+            Property(t => t.SKS).HasMaxLength(50).IsRequired();
+            Property(t => t.ClassSection).HasMaxLength(150).IsRequired();
+            Property(t => t.JamMasuk).HasMaxLength(10).IsRequired();
+            Property(t => t.JamSelesai).HasMaxLength(10).IsRequired();
+            Property(t => t.TglAwalKuliah).IsRequired();
+            Property(t => t.TglAkhirKuliah).IsRequired();
+            Property(t => t.RuangKelas).HasMaxLength(150).IsRequired();
         }
     }
 }

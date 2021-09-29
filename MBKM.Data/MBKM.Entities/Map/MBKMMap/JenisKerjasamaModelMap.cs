@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace MBKM.Entities.Map.MBKMMap
 {
-    public class CPLMatakuliahMap : EntityTypeConfiguration<CPLMatakuliah>
+    public class JenisKerjasamaModelMap : EntityTypeConfiguration<JenisKerjasamaModel>
     {
-        public CPLMatakuliahMap()
+        public JenisKerjasamaModelMap()
         {
-            ToTable("CPLMatakuliah");
+            ToTable("JenisKerjasama");
             HasKey(t => t.ID).Property(t => t.ID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            Property(t => t.IDMataKUliah).IsRequired();
-            Property(t => t.KodeMataKuliah).HasMaxLength(50).IsRequired();
-            Property(t => t.NamaMataKuliah).HasMaxLength(350).IsRequired();
+            Property(t => t.JenisKerjasama).HasMaxLength(150).IsRequired();
+            Property(t => t.JenisPertukaran).HasMaxLength(150).IsRequired();
+
         }
     }
 }

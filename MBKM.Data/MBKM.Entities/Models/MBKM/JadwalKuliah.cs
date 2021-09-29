@@ -9,15 +9,26 @@ namespace MBKM.Entities.Models.MBKM
     {
         public Int64 DosenID { get; set; }
         public string NamaDosen { get; set; }
-        public Int64 MataKuliah { get; set; }
+        public string MataKuliahID { get; set; }
         public string KodeMataKuliah { get; set; }
+        public string NamaMataKuliah { get; set; }
         public string Hari { get; set; }
-        public DateTime Waktu { get; set; }
-        public int Kuota { get; set; }
-        public string LinkMateri { get; set; }
+        public string JamMasuk { get; set; }
+        public string JamSelesai { get; set; }
+        public DateTime TglAwalKuliah { get; set; }
+        public DateTime TglAkhirKuliah { get; set; }
+        public string RuangKelas { get; set; }
+        public string Lokasi { get; set; }
+        public int STRM { get; set; }
+        public string SKS { get; set; }
+        public string ClassSection { get; set; }
+        public string JenjangStudi { get; set; }
         public bool FlagOpen { get; set; }
-        public string OpenRegistration { get; set; }
-        public string CloseRegistration { get; set; }
+        public Int64 FakultasID { get; set; }
+        public string NamaFakultas { get; set; }
+        public Int64 ProdiID { get; set; }
+        public string NamaProdi { get; set; }
+        public virtual ICollection<PendaftaranMataKuliah> PendaftaranMataKuliahs { get; set; }
 
     }
 }
