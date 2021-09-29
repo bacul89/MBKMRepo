@@ -46,8 +46,10 @@ namespace MBKM.Common.Helpers
         #endregion
 
         #region Constructors
-        public MailHelper(string SMTPServer, int SMTPPort)
+        public MailHelper()
         {
+            string SMTPServer = ConfigurationManager.AppSettings["SMTPServer"] as string;
+            int SMTPPort = Convert.ToInt32(ConfigurationManager.AppSettings["SMTPPort"]);
             this._sSMTPServer = SMTPServer;
             this._iSMTPPort = SMTPPort;
         }
