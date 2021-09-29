@@ -79,7 +79,7 @@
                 </label>
                 <div class="col-md-8">
                     <select name="JenisKerjasama" id="JenisKerjasama" class="form-control" required>
-                        <option value="@Model.JenisKerjasama" selected>@Model.JenisKerjasama</option>
+                        <option value="@Model.JenisKerjasama" selected>@ViewData["jenisKerjasm"]</option>
                         @{
                             foreach (var data in ViewData["listKerjasama"] as IEnumerable<MBKM.Entities.ViewModel.VMLookup>)
                             {

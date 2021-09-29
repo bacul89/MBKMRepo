@@ -1,4 +1,5 @@
 ﻿using MBKM.Entities.Models.MBKM;
+using MBKM.Presentation.Helper;
 using MBKM.Presentation.models;
 using MBKM.Services;
 using MBKM.Services.MBKMServices;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
+    [MBKMAuthorize]
     public class RegisMhsByAdminController : Controller
     {
         // GET: Admin/RegisMhsByAdmin

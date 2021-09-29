@@ -6,7 +6,7 @@ var tableUser = $('#TableList').DataTable({
         "orderable": false,
         "paging": false,
         "targets": 0,
-         "visible": false, 'targets': [4,6] 
+         "visible": false, 'targets': [5,7] 
     }],
     //"order": [[1, 'asc']],
     "proccessing": true,
@@ -26,10 +26,25 @@ var tableUser = $('#TableList').DataTable({
     },
     "columns": [
         {
+            "title": "Action",
+            "data": "ID",
+            "render": function (data, type, row, meta) {
+                return `<div class="row justify-content-center">
+                            <div class="col" style="text-align:center">
+                                <a href="javascript:void(0)" style="color:black" onclick="EditUserTemplate('${data}')"> <i class="fas fa-edit coral" ></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="DetailUserTemplate('${data}')"> <i class="fas fa-file-search coral"></i></a>
+                                <a type="button"  id="btnDel"> <i class="fas fa-trash-alt coral"></i> </button >
+                                
+                                
+                            </div>
+                        </div>`;//<a href="javascript:void(0)" style="color:black" onclick="DeleteUserGetID('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
+            }
+        },
+        {
             //"title": "No",
             "data": null,
             "render": function (data, type, full, meta) {
-                return meta.row + 1;
+                return '<div class="center vertical-center">' + (meta.row + 1) + '</div>';
             }
         },
         {
@@ -91,21 +106,7 @@ var tableUser = $('#TableList').DataTable({
             }
         },
 
-        {
-            "title": "Action",
-            "data": "ID",
-            "render": function (data, type, row, meta) {
-                return `<div class="row justify-content-center">
-                            <div class="col" style="text-align:center">
-                                <a href="javascript:void(0)" style="color:black" onclick="EditUserTemplate('${data}')"> <i class="fas fa-edit coral" ></i></a>
-                                <a href="javascript:void(0)" style="color:black" onclick="DetailUserTemplate('${data}')"> <i class="fas fa-file-search coral"></i></a>
-                                <a type="button"  id="btnDel"> <i class="fas fa-trash-alt coral"></i> </button >
-                                
-                                
-                            </div>
-                        </div>`;//<a href="javascript:void(0)" style="color:black" onclick="DeleteUserGetID('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
-            }
-        },
+        
 
     ],
     "createdRow": function (row, data, index) {

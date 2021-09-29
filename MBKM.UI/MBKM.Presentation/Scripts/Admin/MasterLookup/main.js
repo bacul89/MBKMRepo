@@ -7,10 +7,10 @@
             "searchable": false,
             "orderable": false,
             "paging": false,
-            "targets": 0
+            "targets": 'no-sort',
         }],
-        "order": [[1, 'asc']],
-        "columnDefs": [{ "orderable": false, "targets": 6 }],
+        "order": [[3, 'asc']],
+        /*"columnDefs": [{ "orderable": false, "targets": 1 }],*/
         "createdRow": function (row, data, index) {
 /*            console.log(data);
             if (data.IsDeleted == false) {
@@ -74,6 +74,18 @@ var dataTable = $('#table-data-master-lookup').DataTable({
 
     "columns": [
         {
+            "data": "ID",
+            "render": function (data, type, row, meta) {
+                return `<div class="row justify-content-center">
+                            <div class="col" style="text-align:center">
+                                <a href="javascript:void(0)" style="color:black" onclick="IndexUpdateMasterLookup('${data}')"> <i class="fas fa-edit coral" ></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="IndexViewMasterLookup('${data}')"> <i class="fas fa-file-search coral"></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="DeletedMasterLookup('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
+                            </div>
+                        </div>`;
+            }
+        },
+        {
             "data": null,
             "render": function (data, type, full, meta) {
                 return meta.row + 1;
@@ -132,22 +144,9 @@ var dataTable = $('#table-data-master-lookup').DataTable({
 
             }
         },
-        {
-            "data": "ID",
-            "render": function (data, type, row, meta) {
-                return `<div class="row justify-content-center">
-                            <div class="col" style="text-align:center">
-                                <a href="javascript:void(0)" style="color:black" onclick="IndexUpdateMasterLookup('${data}')"> <i class="fas fa-edit coral" ></i></a>
-                                <a href="javascript:void(0)" style="color:black" onclick="IndexViewMasterLookup('${data}')"> <i class="fas fa-file-search coral"></i></a>
-                                <a href="javascript:void(0)" style="color:black" onclick="DeletedMasterLookup('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
-                            </div>
-                        </div>`;
-            }
-        },
-
     ],
     "createdRow": function (row, data, index) {
-        console.log(row);
+        /*console.log(row);*/
 
         $('td', row).css({
             'font-size': '0.8vw',

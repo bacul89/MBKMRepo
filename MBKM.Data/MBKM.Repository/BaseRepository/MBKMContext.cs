@@ -50,6 +50,12 @@ namespace MBKM.Repository.BaseRepository
             modelBuilder.Configurations.Add(new AttachmentPerjanjianKerjasamaMap());
             modelBuilder.Configurations.Add(new EmailTemplateMap());
             modelBuilder.Configurations.Add(new LookupMap());
+            modelBuilder.Configurations.Add(new MasterCapaianPembelajaranMap());
+            modelBuilder.Configurations.Add(new CPLMatakuliahMap());
+            modelBuilder.Configurations.Add(new JenisKerjasamaModelMap());
+            modelBuilder.Configurations.Add(new PendaftaranMataKuliahMap());
+            modelBuilder.Configurations.Add(new InformasiPertukaranMap());
+            modelBuilder.Configurations.Add(new ApprovalPendaftaranMap());
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();

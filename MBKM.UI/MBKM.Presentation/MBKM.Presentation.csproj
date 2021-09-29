@@ -134,8 +134,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminLoginController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ApprovalPendaftaranMatakuliahController.cs" />
+ 	<Compile Include="Areas\Admin\Controllers\DaftarSeluruhMahasiswaController.cs" />
+	<Compile Include="Areas\Admin\Controllers\ApprovalPendaftaranMatakuliahController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MasterCPLController.cs" />
     <Compile Include="Areas\Admin\Controllers\MasterLookupController.cs" />
     <Compile Include="Areas\Admin\Controllers\MasterMapingCplController.cs" />
     <Compile Include="Areas\Admin\Controllers\MenuRoleController.cs" />
@@ -180,7 +182,10 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Scripts\Admin\ApprovalPendaftaranMakul\main.js" />
+	<Content Include="Scripts\Admin\DaftarSeluruhMhs\main.js" />
+	<Content Include="Scripts\Admin\ApprovalPendaftaranMakul\main.js" />
+	<Content Include="Scripts\Admin\MasterCPL\crud.js" />
+    <Content Include="Scripts\Admin\MasterCPL\main.js" />
     <Content Include="Scripts\Admin\MasterMapingCpl\crud.js" />
     <Content Include="Scripts\Admin\MasterMapingCpl\main.js" />
     <Content Include="Scripts\Admin\MenuRole\main.js" />
@@ -404,6 +409,9 @@
     <Content Include="Content\autonumeric\readme.md" />
     <Content Include="Areas\Admin\Views\RegisMhsByAdmin\Index.cshtml" />
     <Content Include="Areas\Portal\Views\NimDigital\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\DaftarSeluruhMahasiswa\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterCPL\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterCPL\ModalCreateCPL.cshtml" />
     <Content Include="Areas\Admin\Views\MasterMapingCpl\Index.cshtml" />
     <Content Include="Areas\Admin\Views\MasterMapingCpl\ModalCreateMasterMapingCpl.cshtml" />
     <Content Include="Areas\Admin\Views\MasterMapingCpl\ModalDetailMasterMapingCpl.cshtml" />

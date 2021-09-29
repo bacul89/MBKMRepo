@@ -1,6 +1,7 @@
 ﻿using MBKM.Common.Helpers;
 using MBKM.Entities.Models;
 using MBKM.Entities.ViewModel;
+using MBKM.Presentation.Helper;
 using MBKM.Presentation.models;
 using MBKM.Services;
 using System;
@@ -12,6 +13,7 @@ using System.Web.Mvc;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
+    [MBKMAuthorize]
     public class UserManageController : Controller
     {
         private readonly IUserService _userService;

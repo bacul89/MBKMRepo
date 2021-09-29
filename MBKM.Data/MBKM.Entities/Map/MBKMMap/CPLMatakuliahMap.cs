@@ -15,6 +15,7 @@ namespace MBKM.Entities.Map.MBKMMap
         {
             ToTable("CPLMatakuliah");
             HasKey(t => t.ID).Property(t => t.ID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            Property(t => t.IDMataKUliah).IsRequired();
             Property(t => t.KodeMataKuliah).HasMaxLength(50).IsRequired();
             Property(t => t.NamaMataKuliah).HasMaxLength(350).IsRequired();
         }

@@ -17,6 +17,10 @@ namespace MBKM.Entities.Map.MBKMMap
             HasKey(t => t.ID).Property(t => t.ID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(t => t.Kelompok).HasMaxLength(50).IsRequired();
             Property(t => t.Kode).HasMaxLength(20).IsRequired();
+            Property(t => t.FakultasID).HasMaxLength(30).IsRequired();
+            Property(t => t.NamaFakultas).HasMaxLength(150).IsRequired();
+            Property(t => t.ProdiID).HasMaxLength(30).IsRequired();
+            Property(t => t.NamaProdi).HasMaxLength(20).IsRequired();
         }
     }
 }
