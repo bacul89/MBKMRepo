@@ -134,6 +134,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminLoginController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ApprovalPendaftaranMatakuliahController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\MasterLookupController.cs" />
     <Compile Include="Areas\Admin\Controllers\MasterMapingCplController.cs" />
@@ -179,6 +180,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Scripts\Admin\ApprovalPendaftaranMakul\main.js" />
     <Content Include="Scripts\Admin\MasterMapingCpl\crud.js" />
     <Content Include="Scripts\Admin\MasterMapingCpl\main.js" />
     <Content Include="Scripts\Admin\MenuRole\main.js" />
@@ -407,6 +409,8 @@
     <Content Include="Areas\Admin\Views\MasterMapingCpl\ModalDetailMasterMapingCpl.cshtml" />
     <Content Include="Areas\Admin\Views\MasterMapingCpl\ModalUpdateMasterMapingCpl.cshtml" />
     <Content Include="Areas\Portal\Views\DetailCPL\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ApprovalPendaftaranMatakuliah\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ApprovalPendaftaranMatakuliah\DetailCPL.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />

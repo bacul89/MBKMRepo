@@ -1,0 +1,259 @@
+﻿
+@{
+    ViewBag.Title = "Detail CPL";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
+}
+
+@section css{
+    <link rel="stylesheet" type="text/css" href="~/Content/Admin/inputResponsive.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/Admin/AdminCostumeBS4.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/Portal/TrackingStatus/main.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.1/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+}
+@section modal{
+    <div class="modal fade" id="DetailTrackingStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document" id="modal-inner">
+            <div class="modal-content data-content-modal" id="created-email-template">
+                <div class="modal-header" style="background-color: #FF8A04; ">
+                    <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+                        TAMBAH MASTER EMAIL TEMPLATE
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </h5>
+                </div>
+                <div class="modal-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="container-fluid" style="margin-bottom:100px;">
+    <div class="card center-block" style="background-color: white; width: 100%; margin-top: 30px; margin-bottom: 50px;">
+        <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
+            <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
+                TRACKING STATUS PENDAFTARAN MATA KULIAH
+            </h4>
+            <hr />
+            <div class="container-fluid">
+                <div class="container" style="width: 100%; padding-bottom: 15px;">
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-sm-3 text-right">
+                                <h4>Nomor Induk Mahasiswa &nbsp:</h4>
+                            </div>
+                            <div class="col-sm-8">
+                                <h4>128379218467326846325842</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 text-right">
+                                <h4>Nama Mahasiswa &nbsp:</h4>
+                            </div>
+                            <div class="col-sm-8">
+                                <h4>ARTI PANGESTU</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 text-right">
+                                <h4>Program Studi Asal &nbsp:</h4>
+                            </div>
+                            <div class="col-sm-8">
+                                <h4>MANAGEMENT AKUNTANSI</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 text-right">
+                                <h4>Universitas Asal &nbsp:</h4>
+                            </div>
+                            <div class="col-sm-8">
+                                <h4>UNIVERSITAS ISLAM INDONESIA</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 text-right">
+                                <h4>Semester &nbsp:</h4>
+                            </div>
+                            <div class="col-sm-8">
+                                <h4>VIII</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 text-right">
+                                <h4>Jenis Program MBKM &nbsp:</h4>
+                            </div>
+                            <div class="col-sm-8">
+                                <h4>Pertukaran</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 text-right">
+                                <h4>Jenis Kegiatan MBKM &nbsp:</h4>
+                            </div>
+                            <div class="col-sm-8">
+                                <h4>EKSTERNAL</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 text-right">
+                                <h4>No. Kerjasama &nbsp:</h4>
+                            </div>
+                            <div class="col-sm-8">
+                                <h4>987987-9879-879879</h4>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-3 text-right">
+                                <h4>Kesenjangan  &nbsp</h4>
+                            </div>
+                            <div class="col-sm-5">
+                                <textarea class="form-control input-data summernote" name="inp_kesenjangan" rows="3" id="inp_kesenjangan" placeholder="Masukkan Kesenjangan"></textarea>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-3 text-right">
+                                <h4>Hasil  &nbsp</h4>
+                            </div>
+                            <div class="col-sm-5"> 
+                                <input type="text" name="inp_hasil" id="inp_hasil" class="form-control input-md input-data" required/>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-3 text-right">
+                                <h4>Konversi  &nbsp</h4>
+                            </div>
+                            <div class="col-sm-5">
+                                <select name="inp_konversi" id="inp_konversi" class="form-control input-data" required>
+                                    <option value="" selected disabled>-- Masukkan Konversi --</option>
+                                    <option value="Transkrip Nilai" selected>Transkrip Nilai</option>
+                                    <option value="SKPI" selected>SKPI</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-3 text-right">
+                                <h4>Catatan  &nbsp</h4>
+                            </div>
+                            <div class="col-sm-5">
+                                <textarea class="form-control input-data" name="inp_catatan" rows="3" id="inp_catatan" placeholder="Masukkan Catatan"></textarea>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-3 text-right">
+                                <h4>Dosen Pembimbing  &nbsp</h4>
+                            </div>
+                            <div class="col-sm-5">
+                                <select name="inp_dosenPembimbing" id="inp_dosenPembimbing" class="form-control input-data" required>
+                                    <option value="" selected disabled>Kojiro Yoga</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-6" style="padding-left:50px">
+                                <button type="button" id="editVerifikasiButton" onclick="IndexEditVerifikasi()" class="btn btn-danger">REJECT</button>
+                                <button type="button" onclick="PostDataUpdate()" class="btn btn-warning">ACCEPT</button>
+                            </div>
+                        </div>
+                        <br />
+                    </form>
+                    <br />
+                    <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
+                        <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">DETAIL CAPAIAN PEMBELAJARAN PROGRAM STUDI ASAL</h5>
+                        <form class="form-horizontal">
+                            <div class="row">
+                                <div class="col-sm-3 text-right">
+                                    <h4>Kode Mata Kuliah &nbsp :</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>987987-9879-879879</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3 text-right">
+                                    <h4>Nama Mata Kuliah &nbsp :</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>Management Business and Management Politict</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3 text-right">
+                                    <h4>Capaian Pembelajaran &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="row" style="padding-bottom:10px">
+                                        <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">
+                                            <h4>Management Business and Management Politict</h4>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">
+                                            <h4>Management Business and Management Politict</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                        </form>
+                    </div>
+                    <br />
+                    <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
+                        <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">DETAIL CAPAIAN PEMBELAJARAN PROGRAM STUDI YANG DITUJU</h5>
+                        <form class="form-horizontal">
+                            <div class="row">
+                                <div class="col-sm-3 text-right">
+                                    <h4>Kode Mata Kuliah &nbsp :</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>987987-9879-879879</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3 text-right">
+                                    <h4>Nama Mata Kuliah &nbsp :</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>Management Business and Management Politict</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3 text-right">
+                                    <h4>Capaian Pembelajaran &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="row" style="padding-bottom:10px">
+                                        <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">
+                                            <h4>Management Business and Management Politict</h4>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">
+                                            <h4>Management Business and Management Politict</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.js"></script>
+    <script src="~/Scripts/Portal/TrackingStatus/main.js"></script>
+}
+
+
+
