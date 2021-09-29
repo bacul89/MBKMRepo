@@ -23,6 +23,18 @@
     },
     "columns": [
         {
+            "data": "ID",
+            "render": function (data, type, row, meta) {
+                return `<div class="row justify-content-center">
+                            <div class="col" style="text-align:center">
+                                <a href="javascript:void(0)" style="color:black" onclick="IndexUpdateEmailTemplate('${data}')"> <i class="fas fa-edit coral" ></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="DetailMenuRole('${data}')"> <i class="fas fa-file-search coral"></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="DeletedMenuRole('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
+                            </div>
+                        </div>`;
+            }
+        },
+        {
             //"title": "No",
             "data": null,
             "render": function (data, type, full, meta) {
@@ -88,17 +100,6 @@
                 }
 
             }
-        },{
-            "data": "ID",
-            "render": function (data, type, row, meta) {
-                return `<div class="row justify-content-center">
-                            <div class="col" style="text-align:center">
-                                <a href="javascript:void(0)" style="color:black" onclick="IndexUpdateEmailTemplate('${data}')"> <i class="fas fa-edit coral" ></i></a>
-                                <a href="javascript:void(0)" style="color:black" onclick="IndexViewEmailTemplate('${data}')"> <i class="fas fa-file-search coral"></i></a>
-                                <a href="javascript:void(0)" style="color:black" onclick="DeleteDataTemplate('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
-                            </div>
-                        </div>`;
-            }
         },
     ],
     "createdRow": function (row, data, index) {
@@ -115,3 +116,15 @@
     //]
 
 });
+function validationCustom() {
+    var isValid;
+    $(".input-data").each(function () {
+        var element = $(this);
+        if (element.val() == "") {
+            return isValid = false;
+        } else {
+            return isValid = true;
+        }
+    });
+    return isValid;
+}

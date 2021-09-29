@@ -1,0 +1,105 @@
+﻿
+@{
+    Layout = null;
+}
+@model MBKM.Entities.Models.MenuRole
+<div class="modal-content data-content-modal" id="detail-MenuRole">
+    <div class="modal-header" style="background-color: #FF8A04; ">
+        <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+            DETAIL MENU ROLE
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </h5>
+    </div>
+    <div class="modal-body">
+        <input type="text" id="idKerjasama" value="@Model.ID" hidden/>
+        <div class="form-group row">
+            <label for="no" class="col-md-4 col-form-label">Menu Role</label>
+            <div class="col-md-8">
+                <input id="MenuRole" type="text" name="MenuRole" class="form-control" value="@Model.Menus.MenuName" disabled>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="no" class="col-md-4 col-form-label">Role</label>
+            <div class="col-md-8">
+                <input id="Role" type="text" name="Role" class="form-control" value="@Model.Roles.RoleName" disabled>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="no" class="col-md-4 col-form-label">Status</label>
+            <div class="col-md-8">
+                @{
+                    if (Model.IsActive)
+                    {
+                        <input id="Role" type="text" name="Role" class="form-control" value="Aktif" disabled>
+                    }
+                    else
+                    {
+                        <input id="Role" type="text" name="Role" class="form-control" value="Tidak Aktif" disabled>
+                    }
+                }
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="no" class="col-md-4 col-form-label">Flag Create</label>
+            <div class="col-md-8">
+                @{
+                    if (Model.IsCreate)
+                    {
+                        <input id="Role" type="text" name="Role" class="form-control" value="True" disabled>
+                    }
+                    else
+                    {
+                        <input id="Role" type="text" name="Role" class="form-control" value="False" disabled>
+                    }
+                }
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="no" class="col-md-4 col-form-label">Flag Edit</label>
+            <div class="col-md-8">
+                @{
+                    if (Model.IsUpdate)
+                    {
+                        <input id="Role" type="text" name="Role" class="form-control" value="True" disabled>
+                    }
+                    else
+                    {
+                        <input id="Role" type="text" name="Role" class="form-control" value="False" disabled>
+                    }
+                }
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="no" class="col-md-4 col-form-label">Flag View</label>
+            <div class="col-md-8">
+                @{
+                    if (Model.IsView)
+                    {
+                        <input id="Role" type="text" name="Role" class="form-control" value="True" disabled>
+                    }
+                    else
+                    {
+                        <input id="Role" type="text" name="Role" class="form-control" value="False" disabled>
+                    }
+                }
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="no" class="col-md-4 col-form-label">Flag Delete</label>
+            <div class="col-md-8">
+                @{
+                    if (Model.IsDelete)
+                    {
+                        <input id="Role" type="text" name="Role" class="form-control" value="True" disabled>
+                    }
+                    else
+                    {
+                        <input id="Role" type="text" name="Role" class="form-control" value="False" disabled>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>

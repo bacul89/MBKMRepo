@@ -180,6 +180,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Scripts\Admin\MasterMapingCpl\crud.js" />
     <Content Include="Scripts\Admin\MasterMapingCpl\main.js" />
+    <Content Include="Scripts\Admin\MenuRole\crud.js" />
     <Content Include="Scripts\Admin\MenuRole\main.js" />
     <Content Include="Scripts\loading\loadingoverlay.min.js" />
     <Content Include="Content\summernote\lang\summernote-ar-AR.js" />
@@ -405,6 +406,8 @@
     <Content Include="Areas\Admin\Views\MasterMapingCpl\ModalCreateMasterMapingCpl.cshtml" />
     <Content Include="Areas\Admin\Views\MasterMapingCpl\ModalDetailMasterMapingCpl.cshtml" />
     <Content Include="Areas\Admin\Views\MasterMapingCpl\ModalUpdateMasterMapingCpl.cshtml" />
+    <Content Include="Areas\Admin\Views\MenuRole\AddMenuRole.cshtml" />
+    <Content Include="Areas\Admin\Views\MenuRole\DetailMenuRole.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
