@@ -16,30 +16,30 @@
     </div>
     <div class="modal-body">
         <form class="form-horizontal" enctype= multipart/form-data id="UpdatePerjanjian">
-            <input type="text" id="idKerjasama" value="@Model.ID" />
+            <input type="text" id="idKerjasama" value="@Model.ID" hidden />
             <div class="form-group row">
                 <label for="no" class="col-md-4 col-form-label">No. Kerjasama</label>
                 <div class="col-md-8">
-                    <input id="NoPerjanjian" type="text" name="NoPerjanjian" class="form-control" value="@Model.NoPerjanjian">
+                    <input id="NoPerjanjian" type="text" name="NoPerjanjian" class="form-control" value="@Model.NoPerjanjian" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="tanggalKerjasama" class="col-md-4 col-form-label">Tanggal Kerjasama</label>
                 <div class="col-md-8">
-                    <input id="TanggalMulai" type="date" name="TanggalMulai" class="form-control">
+                    @Html.TextBox("tanggalMulai", Model.TanggalMulai, "{0:yyyy-MM-dd}", new { @style = "width:100%", type = "date" })
                 </div>
             </div>
             <div class="form-group row">
                 <label for="tanggalBerakhir" class="col-md-4 col-form-label">Tanggal Berakhir</label>
                 <div class="col-md-8">
-                    <input id="TanggalAkhir" type="date" name="TanggalAkhir" class="form-control">
+                    @Html.TextBox("tanggalAKhir", Model.TanggalAkhir, "{0:yyyy-MM-dd}", new { @style = "width:100%", type = "date" })
                 </div>
             </div>
             <div class="form-group row">
                 <label for="Instansi" class="col-md-4 col-form-label">Instansi</label>
                 <div class="col-md-8">
-                    <select name="instansi" id="instansi" class="form-control">
-                        <option value="" disabled selected>--Pilih Perusahaan/Universitas--</option>
+                    <select name="Instansi" id="instansi" class="form-control" required>
+                        <option value="@Model.Instansi" selected>@Model.Instansi</option>
                         <option value="Perusahaan">Perusahaan</option>
                         <option value="Universitas">Universitas</option>
                     </select>
@@ -48,20 +48,22 @@
             <div class="form-group row">
                 <label for="Namainstansi" class="col-md-4 col-form-label">Nama</label>
                 <div class="col-md-8">
-                    <input id="NamaUniversitas" type="text" name="NamaInstansi" class="form-control" value="@Model.NamaInstansi">
+                    <input id="NamaUniversitas" type="text" name="NamaInstansi" class="form-control" value="@Model.NamaInstansi" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="Namaunit" class="col-md-4 col-form-label">Nama Unit/Program Studi</label>
                 <div class="col-md-8">
-                    <input id="Namaunit" type="text" name="NamaUnit" class="form-control" value="@Model.NamaUnit">
+                    <input id="Namaunit" type="text" name="NamaUnit" class="form-control" value="@Model.NamaUnit" required>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="pertukaran" class="col-md-4 col-form-label">Jenis Pertukaran</label>
+                <label for="pertukaran" class="col-md-4 col-form-label">
+                    Jenis Program MBKM
+                </label>
                 <div class="col-md-8">
-                    <select name="JenisPertukaran" id="JenisPertukaran" class="form-control">
-                        <option value="" disabled selected>--Pilih Jenis Pertukaran--</option>
+                    <select name="JenisPertukaran" id="JenisPertukaran" class="form-control" required>
+                        <option value="@Model.JenisPertukaran" selected>@Model.JenisPertukaran</option>
                         @{
                             foreach (var data in ViewData["listPerjanjian"] as IEnumerable<MBKM.Entities.ViewModel.VMLookup>)
                             {
@@ -72,10 +74,12 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="pertukaran" class="col-md-4 col-form-label">Jenis Kerjasama</label>
+                <label for="pertukaran" class="col-md-4 col-form-label">
+                    Jenis Kegiatan MBKM
+                </label>
                 <div class="col-md-8">
-                    <select name="JenisKerjasama" id="JenisKerjasama" class="form-control">
-                        <option value="" disabled selected>--Pilih Jenis Kerjasama--</option>
+                    <select name="JenisKerjasama" id="JenisKerjasama" class="form-control" required>
+                        <option value="@Model.JenisKerjasama" selected>@Model.JenisKerjasama</option>
                         @{
                             foreach (var data in ViewData["listKerjasama"] as IEnumerable<MBKM.Entities.ViewModel.VMLookup>)
                             {
@@ -88,13 +92,13 @@
             <div class="form-group row">
                 <label for="inputer" class="col-md-4 col-form-label">Inputer</label>
                 <div class="col-md-8">
-                    <input id="inputer" type="text" name="inputer" class="form-control" value="inputer" disabled>
+                    <input id="inputer" type="text" name="UpdatedBy" class="form-control" value="@Model.CreatedBy" disabled>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="biaya" class="col-md-4 col-form-label">Biaya</label>
                 <div class="col-md-8">
-                    <input id="biaya" name="BiayaKuliah" class="form-control" value="@Model.BiayaKuliah">
+                    <input id="biaya" name="BiayaKuliah" class="form-control" value="@Model.BiayaKuliah" data-a-sign="Rp. " data-a-dec="," data-a-sep="." required>
                 </div>
             </div>
             <div class="form-group row">

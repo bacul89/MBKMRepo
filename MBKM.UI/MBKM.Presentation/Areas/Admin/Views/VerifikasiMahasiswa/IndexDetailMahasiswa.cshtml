@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "IndexDetailMahasiswa";
+    ViewBag.Title = "Index Detail Mahasiswa";
     Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
 }
 @model MBKM.Entities.Models.MBKM.Mahasiswa
@@ -34,7 +34,7 @@
                         <tr>
                             <td style="width: 20%;">Jenis Kelamin</td>
                             <td>
-                                <input type="text" name="jenisKelamin" value="@Model.Gender" id="jenisKelamin" class="form-control input-md input-data" disabled />
+                                <input type="text" name="jenisKelamin" value="@{if(Model.Gender == "P"){<text>Perempuan</text>}else{<text>Laki - Laki</text>}}" id="jenisKelamin" class="form-control input-md input-data" disabled />
                             </td>
                         </tr>
                         <tr>
@@ -280,10 +280,10 @@
                                 <label for="inp_verifikasi" class="col-sm-3 control-label">Verifikasi</label>
                                 <div class="col-sm-7">
                                     <label class="radio-inline input-pendaftaran">
-                                        <input type="radio" name="inp_verifikasi" id="inp_verifikasi" value="AKTIF"> Terima
+                                        <input type="radio" name="inp_verifikasi" id="inp_verifikasi" value="@ViewBag.terima"> Terima
                                     </label>
                                     <label class="radio-inline input-pendaftaran">
-                                        <input type="radio" name="inp_verifikasi" id="inp_verifikasi" value="DITOLAK"> Tolak
+                                        <input type="radio" name="inp_verifikasi" id="inp_verifikasi" value="@ViewBag.tolak"> Tolak
                                     </label>
                                 </div>
                             </div>

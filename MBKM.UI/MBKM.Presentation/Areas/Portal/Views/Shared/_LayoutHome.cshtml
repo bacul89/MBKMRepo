@@ -8,6 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
+    @RenderSection("css", required: false)
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -68,6 +69,7 @@
     }
 </style>
 <body>
+    @RenderSection("modal", required: false)
     <div class="body-content split right">
         <nav>
             <ul class="nav split left">
@@ -104,5 +106,6 @@
         @Scripts.Render("~/bundles/bootstrap")
         <script src="~/Scripts/select2.min.js"></script>
         @RenderSection("scripts", required: false)
+    </div>
 </body>
 </html>

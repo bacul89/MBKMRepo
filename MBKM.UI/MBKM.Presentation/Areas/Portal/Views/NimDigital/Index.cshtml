@@ -3,6 +3,121 @@
     ViewBag.Title = "Nomor Induk Mahasiswa Digital";
     Layout = "~/Areas/Portal/Views/Shared/_LayoutHome.cshtml";
 }
+<style>
+    .kim-content {
+        overflow-x: auto;
+    }
 
-<h2>Nomor Induk Mahasiswa Digital</h2>
+    div#NIM {
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 33px;
+    }
 
+    #photoprofile {
+        position: absolute;
+        right: 0;
+    }
+
+    div#nama {
+        font-size: 22px;
+        font-weight: 600;
+        line-height: 36px;
+    }
+
+    div#universitas, div#prodi {
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 26px;
+    }
+
+    .paddingZero {
+        padding: 0px !important;
+    }
+
+    .kim-discribe {
+        font-size: 14px;
+    }
+
+    .kim-logo {
+        width: 10rem;
+        display: inline-grid;
+        margin-bottom: 10px;
+    }
+
+    .card-kim {
+        border: 3px solid #ff8a04;
+        border-radius: 5px;
+        width: 500px;
+        display: inline-grid;
+        padding: 3rem !important;
+        box-shadow: 3px 3px #a2a0a0;
+        margin: 5vh 5vh 18vh 5vh;
+    }
+
+    .row-head {
+        display: inline-flex;
+        width: 100%;
+        position: relative;
+    }
+
+    .rh-text {
+        position: absolute;
+        background: none !important;
+        text-align: right;
+        padding: 0px;
+        top: -10px;
+        right: -5px;
+    }
+
+    .row-content {
+        display: inline-flex;
+        width: 100%;
+    }
+
+    img#photoprofile {
+        width: 96px;
+        height: 111px;
+    }
+</style>
+
+<div id="kim-content" class="container-fluid" style="margin-bottom:100px; padding:0 10px">
+    <div class="card center-block" style="background-color: white; width: 100%; margin-top: 30px; margin-bottom: 50px;">
+        <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
+            <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
+                KARTU INDUK MAHASISWA DIGITAL<br />
+                <small class="kim-discribe">
+                    NIM hanya berlaku pada saat mengikuti program Merdeka Belajar Kampus Merdeka di Universitas Atma Jaya
+                </small>
+            </h4>
+            <span></span>
+            <hr />
+            <div class="container kim-content" style="width: 100%;">
+
+                <div class="card-kim col-md-12 paddingZero">
+                    <div class="row-head col-md-12  paddingZero">
+                        <div class="col-md-3 paddingZero">
+                            <img class="kim-logo" src="~/Asset/Lambang_Atma_Jaya.png" />
+                        </div>
+                        <div class="col-md-9 rh-text right"><b>PROGRAM MERDEKA BELAJAR KAMPUS MERDEKA</b></div>
+                    </div>
+                    <div class="row-content col-md-12 paddingZero">
+                        <div class="col-md-9 paddingZero">
+                            <div id="NIM"><i>Loading...</i></div>
+                            <div id="nama"><i>Loading...</i></div>
+                            <div id="universitas"><i>Loading...</i></div>
+                            <div id="prodi"><i>Loading...</i></div>
+                        </div>
+                        <div class=" paddingZero">
+                            <img id="photoprofile" class="right" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/Portal/NimDigital/main.js"></script>
+}

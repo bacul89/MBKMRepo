@@ -97,10 +97,12 @@
     <Compile Include="Repositories\MBKMRepository\AbsensiRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\AttachmentPerjanjianKerjasamaRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\AttachmentRepository.cs" />
+    <Compile Include="Repositories\MBKMRepository\CPLMatakuliahRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\JadwalKuliahMahasiswaRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\JadwalKuliahRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\KRSRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\MahasiswaRepository.cs" />
+    <Compile Include="Repositories\MBKMRepository\MasterCapaianPembelajaranRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\NilaiKuliahRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\PerjanjianKerjasamaRepository.cs" />
     <Compile Include="Repositories\MenuRepository.cs" />

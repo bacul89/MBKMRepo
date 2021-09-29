@@ -33,23 +33,25 @@ namespace MBKM.Repository.Repositories.MBKMRepository
 
                 var result = context.PerjanjianKerjasamas.Where(x => x.IsDeleted == false);
                 mListmodel.TotalCount = result.Count();
-                mListmodel.gridDatas = result.AsQueryable().Where(y => y.NamaInstansi.Contains(SearchParam) ||
+                var gridfilter = result.AsQueryable().Where(y => y.NamaInstansi.Contains(SearchParam) ||
                                         y.JenisKerjasama.Contains(SearchParam) || y.JenisPertukaran.Contains(SearchParam) || y.NamaUnit.Contains(SearchParam)
                                         || y.NamaInstansi.Contains(SearchParam) || y.NoPerjanjian.Contains(SearchParam))
+                    .OrderBy(SortBy, SortDir);                    
+                mListmodel.gridDatas = gridfilter.Skip(Skip).Take(Length)
                     .Select(z => new GridDataPerjanjian
                     {
                         ID = z.ID,
                         Instansi = z.Instansi,
                         NamaUnit = z.NamaUnit,
                         NamaInstansi = z.NamaInstansi,
-                        JenisKerjasama = z.JenisKerjasama,
+                        JenisKerjasama = context.Lookups.Where(x => x.Tipe== "JenisKerjasama" && x.Nilai == z.JenisKerjasama).Select(x => x.Nama).FirstOrDefault(),
                         JenisPertukaran = z.JenisPertukaran,
                         NoKerjasama = z.NoPerjanjian,
                         Inputer = z.CreatedBy,
                         TanggalAkhir = z.TanggalAkhir,
                         TanggalMulai = z.TanggalMulai
-                    }).OrderBy(SortBy, SortDir).Skip(Skip).Take(Length).ToList();
-                mListmodel.TotalFilterCount = mListmodel.gridDatas.Count();
+                    }).ToList();
+                mListmodel.TotalFilterCount = gridfilter.Count();
                 return mListmodel;
             }
         }

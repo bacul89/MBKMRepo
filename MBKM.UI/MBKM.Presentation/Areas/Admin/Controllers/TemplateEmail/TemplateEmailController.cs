@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using MBKM.Presentation.Helper;
 using System.Web.Mvc;
+using MBKM.Presentation.models;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers.TemplateEmail
 {
@@ -44,6 +45,19 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.TemplateEmail
         [HttpPost]
         public ActionResult PostDataEmailTemplate(EmailTemplate email)
         {
+            /*checkdataAktif*/
+            if (email.IsActive)
+            {
+                var data = _emailTemplateService.Find(x => x.TipeMail == email.TipeMail && x.IsActive == true).ToList();
+                foreach(var d in data)
+                {
+                    d.IsActive = false;
+                    _emailTemplateService.Save(d);
+                }
+            }
+
+            email.CreatedBy = HttpContext.Session["username"].ToString();
+            email.CreatedDate = DateTime.Now;
             _emailTemplateService.Save(email);
             return Json(email);
         }
@@ -58,15 +72,30 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.TemplateEmail
         [HttpPost]
         public ActionResult PostUpdateEmailTemplate(EmailTemplate emailTemplate)
         {
-            EmailTemplate data = _emailTemplateService.Get(emailTemplate.ID);
-            data.TipeMail = emailTemplate.TipeMail;
-            data.SubjectMail = emailTemplate.SubjectMail;
-            data.BodyMail = emailTemplate.BodyMail;
-            data.IsActive = emailTemplate.IsActive;
+            if (emailTemplate.IsActive)
+            {
+                var data2 = _emailTemplateService.Find(x => x.TipeMail == emailTemplate.TipeMail && x.IsActive == true).ToList();
+                foreach (var d in data2)
+                {
+                    d.IsActive = false;
+                    _emailTemplateService.Save(d);
+                }
+                EmailTemplate data = _emailTemplateService.Get(emailTemplate.ID);
+                data.TipeMail = emailTemplate.TipeMail;
+                data.SubjectMail = emailTemplate.SubjectMail;
+                data.BodyMail = emailTemplate.BodyMail;
+                data.IsActive = emailTemplate.IsActive;
+                data.UpdatedBy = HttpContext.Session["username"].ToString();
+                data.UpdatedDate = DateTime.Now;
+                _emailTemplateService.Save(data);
 
-            _emailTemplateService.Save(data);
 
-            return Json(data);
+                return Json(new ServiceResponse { status = 200, message = "Done" });
+            }
+            else
+            {
+                return Json(new ServiceResponse { status = 500, message = "Salah Satu Template Harus Aktif" });
+            }
         }
 
 
@@ -80,12 +109,18 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.TemplateEmail
         [HttpPost]
         public ActionResult PostDeleteEmailTemplate(int id)
         {
+
             EmailTemplate data = _emailTemplateService.Get(id);
-            data.IsDeleted = true;
-
-            _emailTemplateService.Save(data);
-
-            return Json(data);
+            if (data.IsActive)
+            {
+                return Json(new ServiceResponse { status = 500, message = "Template Masih Aktif Digunakan" });
+            }
+            else
+            {
+                data.IsDeleted = true;
+                _emailTemplateService.Save(data);
+                return Json(new ServiceResponse { status = 200, message = "Done" });
+            }
         }
 
     }

@@ -6,6 +6,10 @@
     background-color: #fff;
 }
 
+small.describe {
+    font-size: 14px;
+}
+
 
 /*--Datatable--*/
 .table-responsive {
@@ -41,8 +45,10 @@ thead tr {
 .table-spacing {
     border-spacing: 0px 0.5rem!important;
 }
-
-
+.body-content {
+    padding-right: 0px!important;
+    padding-left: 0px!important;
+}
 
 /*--Datatable--*/
 

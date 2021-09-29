@@ -136,6 +136,8 @@
     <Compile Include="Areas\Admin\Controllers\AdminLoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\MasterLookupController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MasterMapingCplController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MenuRoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\PerjanjianKerjasama\PerjanjianKerjasamaController.cs" />
     <Compile Include="Areas\Admin\Controllers\RegisMhsByAdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\TemplateEmail\TemplateEmailController.cs" />
@@ -144,6 +146,7 @@
     <Compile Include="Areas\Portal\Controllers\DataDiriController.cs" />
     <Compile Include="Areas\Portal\Controllers\HomeController.cs" />
     <Compile Include="Areas\Portal\Controllers\NimDigitalController.cs" />
+    <Compile Include="Areas\Portal\Controllers\TrackingStatusPendaftaranController.cs" />
     <Compile Include="Areas\Portal\PortalAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UnAuthorizedController.cs" />
@@ -152,6 +155,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\StatusVerifikasi.cs" />
     <Compile Include="Models\FilePendukung.cs" />
     <Compile Include="Models\LoginVMAdmin.cs" />
     <Compile Include="Models\ServiceResponse.cs" />
@@ -174,6 +178,9 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Scripts\Admin\MasterMapingCpl\crud.js" />
+    <Content Include="Scripts\Admin\MasterMapingCpl\main.js" />
+    <Content Include="Scripts\Admin\MenuRole\main.js" />
     <Content Include="Scripts\loading\loadingoverlay.min.js" />
     <Content Include="Content\summernote\lang\summernote-ar-AR.js" />
     <Content Include="Content\summernote\lang\summernote-ar-AR.min.js" />
@@ -394,6 +401,14 @@
     <Content Include="Content\autonumeric\readme.md" />
     <Content Include="Areas\Admin\Views\RegisMhsByAdmin\Index.cshtml" />
     <Content Include="Areas\Portal\Views\NimDigital\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterMapingCpl\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterMapingCpl\ModalCreateMasterMapingCpl.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterMapingCpl\ModalDetailMasterMapingCpl.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterMapingCpl\ModalUpdateMasterMapingCpl.cshtml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
+    <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
+    <Content Include="Areas\Portal\Views\TrackingStatusPendaftaran\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -405,10 +420,18 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\Portal\NimDigital\main.js" />
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\sweetalert2.all.min.js" />
+    <Content Include="Upload\31\31_FotoDiri.png" />
+    <Content Include="Upload\31\31_FotoKIM.png" />
+    <Content Include="Upload\31\31_KTP.png" />
+    <Content Include="Upload\31\31_SuratKeterangan.png" />
+    <Content Include="Upload\31\31_TranskripNilai.png" />
+    <Content Include="Upload\32\32_FotoDiri.png" />
+    <Content Include="Upload\34\34_FotoDiri.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -425,13 +448,13 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\UnAuthorized\Index.cshtml" />
     <Content Include="Upload\Karyawan %28menggantikan data Dosen%29.xlsx.xlsx" />
+    <Content Include="Upload\32\coba.pdf" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\EmailTemplate\" />
     <Folder Include="Areas\Portal\Data\" />
-    <Folder Include="Upload\32\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
