@@ -144,6 +144,7 @@
     <Compile Include="Areas\Admin\Controllers\UserManageController.cs" />
     <Compile Include="Areas\Admin\Controllers\VerifikasiMahasiswaController.cs" />
     <Compile Include="Areas\Portal\Controllers\DataDiriController.cs" />
+    <Compile Include="Areas\Portal\Controllers\DetailCPLController.cs" />
     <Compile Include="Areas\Portal\Controllers\HomeController.cs" />
     <Compile Include="Areas\Portal\Controllers\NimDigitalController.cs" />
     <Compile Include="Areas\Portal\Controllers\TrackingStatusPendaftaranController.cs" />
@@ -405,6 +406,7 @@
     <Content Include="Areas\Admin\Views\MasterMapingCpl\ModalCreateMasterMapingCpl.cshtml" />
     <Content Include="Areas\Admin\Views\MasterMapingCpl\ModalDetailMasterMapingCpl.cshtml" />
     <Content Include="Areas\Admin\Views\MasterMapingCpl\ModalUpdateMasterMapingCpl.cshtml" />
+    <Content Include="Areas\Portal\Views\DetailCPL\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
