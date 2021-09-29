@@ -59,16 +59,39 @@ function PostDataUpdate() {
             contentType: 'application/json',
             success: function (e) {
                 $.LoadingOverlay("hide");
-                Swal.fire({
-                    title: 'Berhasil',
-                    icon: 'success',
-                    html: 'Mahasiswa Berhasil Terverifikasi',
-                    showCloseButton: true,
-                    showCancelButton: false,
-                    focusConfirm: false,
-                    confirmButtonText: 'OK'
-                })
-                window.location.href = '/Admin/VerifikasiMahasiswa/'
+                if (e.status == 200) {
+                    Swal.fire({
+                        title: 'Berhasil',
+                        icon: 'success',
+                        html: 'Mahasiswa Berhasil Terverifikasi',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '/Admin/VerifikasiMahasiswa/'
+                        }
+                    })
+                } else if (e.status == 300) {
+                    Swal.fire({
+                        title: 'Oppss',
+                        icon: 'error',
+                        html: e.message,
+                        showCloseButton: true,
+                        showCancelButton: false,
+                        focusConfirm: false,
+                        confirmButtonText: 'OK'
+                    })
+                } else if (e.status == 500) {
+                    Swal.fire({
+                        title: 'Oppss',
+                        icon: 'error',
+                        html: e.message,
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '/Admin/VerifikasiMahasiswa/'
+                        }
+                    })
+                }
             },
             error: function (e) {
                 $.LoadingOverlay("hide");

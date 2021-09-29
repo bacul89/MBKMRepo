@@ -13,6 +13,7 @@ using System.Web.Mvc;
 using MBKM.Presentation.models;
 using MBKM.Entities.Models;
 using Newtonsoft.Json;
+using System.Data.Entity.Validation;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
@@ -97,15 +98,37 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             data.StatusVerifikasi = _mahasiswa.StatusVerifikasi;
             data.UpdatedBy = HttpContext.Session["username"].ToString();
             data.UpdatedDate = DateTime.Now;
-            if (_mahasiswa.StatusVerifikasi == "AKTIF")
+            try
             {
-                SendEmail(data.Email, "VerifikasiAktif");
+                // Your code...
+                // Could also be before try if you know the exception occurs in SaveChanges
+
+                _mahasiswaService.Save(data);
             }
-            else if (_mahasiswa.StatusVerifikasi == "DITOLAK")
+            catch (DbEntityValidationException e)
             {
-                SendEmail(data.Email, "VerifikasiDitolak");
+                return Json(new ServiceResponse { status = 300, message = "Terjadi Kesalahan saat Melakukan Save Data" });
+
             }
-            _mahasiswaService.Save(data);
+
+            try
+            {
+                if (_mahasiswa.StatusVerifikasi == "AKTIF")
+                {
+                    SendEmail(data.Email, "VerifikasiAktif");
+                }
+                else if (_mahasiswa.StatusVerifikasi == "DITOLAK")
+                {
+                    SendEmail(data.Email, "VerifikasiDitolak");
+                }
+
+            }catch(Exception e)
+            {
+                return Json(new ServiceResponse { status = 500, message = "Terjadi Kesalahan Dalam Melakukan Pengiriman Email Verifikasi" });
+            }
+            /*            _mahasiswaService.Save(data);*//**/
+
+
             return Json(new ServiceResponse { status = 200, message = "Done" });
         }
 
