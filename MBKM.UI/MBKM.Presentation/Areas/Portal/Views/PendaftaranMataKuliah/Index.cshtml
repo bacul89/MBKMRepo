@@ -1,0 +1,99 @@
+﻿
+@{
+    Layout = "~/Areas/Portal/Views/shared/_LayoutHome.cshtml";
+    ViewBag.Title = "SIMBKM";
+}
+<div class="card center-block" style="background-color: white; margin-bottom: 15px;">
+    <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+        <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; padding-left: 15px; font-weight: bold; font-size: 20px; color: black; ">
+            PENDAFTARAN MATA KULIAH <br />
+        </h5>
+        <hr />
+        <div class="container" style="width: 100%; padding-bottom: 15px;">
+            <table class="table" style="width: auto;">
+                <tr>
+                    <td style="text-align: right">Fakultas</td>
+                    <td style="width: 400px;">
+                        <select name="fakultas" id="fakultas" class="form-control input-md"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right">Program Studi</td>
+                    <td style="width: 400px;">
+                        <select name="prodi" id="prodi" class="form-control input-md"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right">Lokasi</td>
+                    <td style="width: 400px;">
+                        <select name="lokasi" id="lokasi" class="form-control input-md"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right">Tahun Semester</td>
+                    <td style="width: 400px;">
+                        <input type="text" name="tahunSemester" id="tahunSemester" class="form-control input-md" value="ODD Semester 2021/2022" disabled></input>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+
+        $(document).ready(function () {
+            loadFakultas();
+            $("#prodi").select2({});
+            $("#lokasi").select2({});
+        });
+
+        function loadFakultas() {
+            $("#fakultas").select2({
+                placeholder: "-- Pilih Fakultas --",
+                width: "100%",
+                ajax: {
+                    url: "@Url.Action("GetFakultas", "PendaftaranMataKuliah")",
+                    dataType: 'json',
+                    method: "POST",
+                    delay: 250,
+                    cache: false,
+                    data: function (params) {
+                        return {
+                            Search: params.term || ""
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+                        };
+                    },
+                }
+            });
+            $("#fakultas").change(function () {
+                $("#prodi").select2({
+                    placeholder: "-- Pilih Program Studi --",
+                    width: "100%",
+                    ajax: {
+                        url: "@Url.Action("GetProdiByFakultas", "PendaftaranMataKuliah")",
+                        dataType: 'json',
+                        method: "POST",
+                        delay: 250,
+                        cache: false,
+                        data: function (params) {
+                            return {
+                                Search: params.term || "",
+                                IDFakultas: $('#fakultas').val()
+                            };
+                        },
+                        processResults: function (data, params) {
+                            return {
+                                results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+                            };
+                        },
+                    }
+                });
+            });
+        }
+    </script>
+}
