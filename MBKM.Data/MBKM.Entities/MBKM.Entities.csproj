@@ -101,9 +101,11 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\VMListMahasiswa.cs" />
+    <Compile Include="ViewModel\VMListMenu.cs" />
     <Compile Include="ViewModel\VMListMenuRole.cs" />
     <Compile Include="ViewModel\VMListPerjanjianKerjasama.cs" />
     <Compile Include="ViewModel\VMListProdi.cs" />
+    <Compile Include="ViewModel\VMListRole.cs" />
     <Compile Include="ViewModel\VMListUser.cs" />
     <Compile Include="ViewModel\VMLogin.cs" />
     <Compile Include="ViewModel\VMLookup.cs" />

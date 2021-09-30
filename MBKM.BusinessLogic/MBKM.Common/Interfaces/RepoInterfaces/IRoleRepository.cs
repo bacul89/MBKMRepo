@@ -11,5 +11,6 @@ namespace MBKM.Common.Interfaces.RepoInterfaces
     public interface IRoleRepository : IGenericRepository<Role>
     {
         List<VMLookup> getLookupRole();
+        VMListRole getRole(int skip, int take, string searchBy, string sortBy, bool sortDir);
     }
 }
