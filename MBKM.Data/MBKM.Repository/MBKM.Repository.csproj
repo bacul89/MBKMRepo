@@ -94,6 +94,10 @@
     <Compile Include="Migrations\202109290716366_addtblclmsprint2.designer.cs">
       <DependentUpon>202109290716366_addtblclmsprint2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202109300334147_tambahkolomdaftarkuliasp2.cs" />
+    <Compile Include="Migrations\202109300334147_tambahkolomdaftarkuliasp2.designer.cs">
+      <DependentUpon>202109300334147_tambahkolomdaftarkuliasp2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EmailTemplateRepository.cs" />
@@ -159,6 +163,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202109290716366_addtblclmsprint2.resx">
       <DependentUpon>202109290716366_addtblclmsprint2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109300334147_tambahkolomdaftarkuliasp2.resx">
+      <DependentUpon>202109300334147_tambahkolomdaftarkuliasp2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
