@@ -71,7 +71,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             MailHelper emailHelper = new MailHelper();
             string domain = ConfigurationManager.AppSettings["Domain"];
-            string url = this.Url.Action("VerifyPage", "RegisMhsByAdmin", null);
+            string url = this.Url.Action("VerifyPage", "Home", new { area = "Portal" });
+            //string url = this.Url.Action("VerifyPage", "RegisMhsByAdmin", null);
             //GMailer mailer = new GMailer();
             //mailer.ToEmail = email;
             //mailer.Subject = "Verify your email";
