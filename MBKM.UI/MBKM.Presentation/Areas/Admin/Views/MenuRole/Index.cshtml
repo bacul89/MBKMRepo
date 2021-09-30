@@ -27,22 +27,29 @@
         }
     </style>
 }
+@section modal{
+    <div class="modal fade" id="TambahMenuRole" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" id="modal-inner">
 
-<div class="container-fluid" style="margin-bottom:100px;">
-    <div class="card center-block" style="background-color: white; width: 100%; margin-top: 30px; margin-bottom: 50px;">
-        <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
+        </div>
+    </div>
+}
+<div class="container-fluid" style="padding: 0px;">
+    <div class="card center-block" style="background-color: white; width: 100%; padding: 0px">
+        <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral; padding: 0px">
             <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
                 MANAGE MENU ROLE
             </h4>
             <hr />
             <div class="container" style="width: 100%;">
-                <button class="btn btn-success"><i class="fas fa-plus-circle"></i> Tambah Menu Role</button>
+                <button class="btn btn-success" onclick="AddMenuRole()"><i class="fas fa-plus-circle"></i> Tambah Menu Role</button>
                 <br />
                 <br />
                 <table id="table-data-menuRole" class="table table-bordered table-striped table-hover js-basic-example dataTable table-responsive display nowrap"
                        style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                     <thead>
                         <tr>
+                            <th>Action</th>
                             <th>No</th>
                             <th>Menu</th>
                             <th>Role</th>
@@ -51,7 +58,6 @@
                             <th>Flag View</th>
                             <th>Flag Delete</th>
                             <th>Status</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                 </table>
@@ -61,4 +67,5 @@
 </div>
 @section scripts{
     <script src="~/Scripts/Admin/MenuRole/main.js"></script>
-    }
+    <script src="~/Scripts/Admin/MenuRole/crud.js"></script>
+}

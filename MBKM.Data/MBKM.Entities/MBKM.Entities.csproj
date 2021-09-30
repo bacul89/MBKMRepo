@@ -108,6 +108,7 @@
     <Compile Include="ViewModel\VMLogin.cs" />
     <Compile Include="ViewModel\VMLookup.cs" />
     <Compile Include="ViewModel\VMLookupNoKerjasama.cs" />
+    <Compile Include="ViewModel\VMMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
