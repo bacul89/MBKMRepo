@@ -16,11 +16,13 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
     public class PendaftaranMataKuliahController : Controller
     {
         private IPendaftaranMataKuliahService _pmkService;
+        private IJadwalKuliahService _jkService;
         private IMahasiswaService _mahasiswaService;
-        public PendaftaranMataKuliahController(IPendaftaranMataKuliahService pmkService, IMahasiswaService mahasiswaService)
+        public PendaftaranMataKuliahController(IPendaftaranMataKuliahService pmkService, IMahasiswaService mahasiswaService, IJadwalKuliahService jkService)
         {
             _pmkService = pmkService;
             _mahasiswaService = mahasiswaService;
+            _jkService = jkService;
         }
         public ActionResult Index()
         {
@@ -31,6 +33,10 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             string email = Session["email"] as string;
             var result = GetMahasiswaByEmail(email);
             return Json(_pmkService.GetFakultas(result.JenjangStudi, search), JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetMataKuliahByProdi(int idProdi)
+        {
+            return Json(_jkService.Find(jk => jk.ProdiID == idProdi).ToList(), JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetProdiByFakultas(string idFakultas, string search)
         {

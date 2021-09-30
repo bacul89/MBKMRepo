@@ -3,7 +3,73 @@
     Layout = "~/Areas/Portal/Views/shared/_LayoutHome.cshtml";
     ViewBag.Title = "SIMBKM";
 }
-<div class="card center-block" style="background-color: white; margin-bottom: 15px;">
+
+<style>
+
+    .coral {
+        color: coral;
+    }
+
+    .center {
+        align-content: center;
+        align-items: center;
+        vertical-align: unset;
+        align-self: center;
+        text-align: center
+    }
+    .zero-padding {
+        padding: 10px 15px !important;
+    }
+
+    .vertical-center {
+        vertical-align: middle !important;
+    }
+
+    .no-border {
+        border: 0px !important;
+    }
+    .table-responsive {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+
+    table.dataTable.no-footer {
+        border: none;
+    }
+
+    .dataTables_wrapper .dataTables_processing {
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        width: 30%;
+        height: 40px;
+        margin-left: -20%;
+        margin-top: -25px;
+        padding-top: 20px;
+        text-align: center;
+        font-size: 1.2em;
+        background: none;
+    }
+
+    thead tr {
+        background-color: #FF8A04;
+        border: 0;
+    }
+
+    .table-spacing {
+        border-spacing: 0px 0.5rem !important;
+    }
+
+    .body-content {
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+    }
+</style>
+
+<div class="card center-block" style="background-color: white; margin: 15px;">
     <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
         <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; padding-left: 15px; font-weight: bold; font-size: 20px; color: black; ">
             PENDAFTARAN MATA KULIAH <br />
@@ -42,30 +108,31 @@
                 </tr>
             </table>
             <hr />
-            <table id="hasilPencarian" class="table table-bordered table-spacing js-basic-example dataTable table-responsive display nowrap">
-                <thead>
-                    <tr>
-                        <th class="zero-padding no-border vertical-center sorting">Action</th>
-                        <th class="zero-padding no-border vertical-center sorting">No.</th>
-                        <th class="zero-padding no-border vertical-center sorting">Tipe Lookup</th>
-                        <th class="zero-padding no-border vertical-center sorting">Name Lookup</th>
-                        <th class="zero-padding no-border vertical-center sorting">Nilai</th>
-                        <th class="zero-padding no-border vertical-center sorting">Tanggal Buat</th>
-                        <th class="zero-padding no-border vertical-center sorting">Dibuat Oleh</th>
-                        <th class="zero-padding no-border vertical-center sorting">Tanggal Ubah</th>
-                        <th class="zero-padding no-border vertical-center sorting">Diubah Oleh</th>
-                        <th class="zero-padding no-border vertical-center sorting">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+            <div id="table-data-master-lookup-overflow">
+                <table id="hasilPencarian" class="table table-bordered table-spacing js-basic-example dataTable table-responsive display nowrap">
+                    <thead>
+                        <tr>
+                            <th class="zero-padding no-border vertical-center sorting">Registrasi</th>
+                            <th class="zero-padding no-border vertical-center sorting">No.</th>
+                            <th class="zero-padding no-border vertical-center sorting">Kode Matakuliah</th>
+                            <th class="zero-padding no-border vertical-center sorting">Nama Matakuliah</th>
+                            <th class="zero-padding no-border vertical-center sorting">SKS</th>
+                            <th class="zero-padding no-border vertical-center sorting">Seksi</th>
+                            <th class="zero-padding no-border vertical-center sorting">Hari</th>
+                            <th class="zero-padding no-border vertical-center sorting">Waktu</th>
+                            <th class="zero-padding no-border vertical-center sorting">Nama Dosen</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
 @section Scripts{
     <script>
-
+        var datatable = null;
         $(document).ready(function () {
             loadFakultas();
             $("#prodi").select2({
@@ -74,21 +141,23 @@
             $("#lokasi").select2({
                 placeholder: "-- Pilih Lokasi --"
             });
-            var dataTable = $('#hasilPencarian').DataTable({
+            datatable = $('#hasilPencarian').DataTable({
+            });
+        });
+        $('#cari').click(function () {
+            datatable.destroy();
+            datatable = $('#hasilPencarian').DataTable({
                 ajax: {
-                    url: '',
+                    url: '@Url.Action("GetMataKuliahByProdi","PendaftaranMataKuliah")?idProdi=' + $('#prodi').val(),
                     dataSrc: ''
                 },
-
                 "columns": [
                     {
                         "data": "ID",
                         "render": function (data, type, row, meta) {
                             return `<div class="row justify-content-center">
                             <div class="col" style="text-align:center">
-                                <a href="javascript:void(0)" style="color:black" onclick="IndexUpdateMasterLookup('${data}')"> <i class="fas fa-edit coral" ></i></a>
-                                <a href="javascript:void(0)" style="color:black" onclick="IndexViewMasterLookup('${data}')"> <i class="fas fa-file-search coral"></i></a>
-                                <a href="javascript:void(0)" style="color:black" onclick="DeletedMasterLookup('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="javascript:alert('${data}')"> tes</i></a>
                             </div>
                         </div>`;
                         }
@@ -100,85 +169,62 @@
                         }
                     },
                     {
-                        "data": "Tipe",
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
+                        "data": null,
+                        "render": function (data, type, full, meta) {
+                            return meta.row + 1;
                         }
                     },
                     {
-                        "data": "Nama",
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
+                        "data": null,
+                        "render": function (data, type, full, meta) {
+                            return meta.row + 1;
                         }
                     },
                     {
-                        "data": "Nilai",
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
+                        "data": null,
+                        "render": function (data, type, full, meta) {
+                            return meta.row + 1;
                         }
                     },
                     {
-                        "data": "CreatedDate",
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + convertMilisecondToDate(data) + '</div>';
+                        "data": null,
+                        "render": function (data, type, full, meta) {
+                            return meta.row + 1;
                         }
                     },
                     {
-                        "data": "CreatedBy",
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
+                        "data": null,
+                        "render": function (data, type, full, meta) {
+                            return meta.row + 1;
                         }
                     },
                     {
-                        "data": "UpdatedDate",
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + convertMilisecondToDate(data) + '</div>';
+                        "data": null,
+                        "render": function (data, type, full, meta) {
+                            return meta.row + 1;
                         }
                     },
                     {
-                        "data": "UpdatedBy",
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
+                        "data": null,
+                        "render": function (data, type, full, meta) {
+                            return meta.row + 1;
                         }
-                    },
-                    {
-                        "data": "IsActive",
-                        "render": function (data, type, row, meta) {
-                            if (data) {
-                                return '<div class="center">Aktif</div>';
-                            } else {
-                                return '<div class="center">Tidak Aktif</div>';
-                            }
-
-                        }
-                    },
-                ],
-                "createdRow": function (row, data, index) {
-                    /*console.log(row);*/
-
-                    $('td', row).css({
-                        'font-size': '0.8vw',
-                        'border-top': '1px solid coral',
-                        'border-bottom': '1px solid coral',
-                        'border-left': 'none',
-                        'border-right': 'none',
-                        'border-collapse': 'collapse',
-                        'vertical-align': 'center',
-                        'background': '#fff'
-                    });
-
-                    $('td:eq(0)', row).css({
-                        'border-left': '1px solid coral',
-                        'border-right': 'none'
-                    });
-                    $('td:eq(9)', row).css({
-                        'border-left': 'none',
-                        'border-right': '1px solid coral'
-                    });
-                }
+                    }
+                ]
             });
         });
+        function convertMilisecondToDate(value) {
+            var num = parseInt(value.match(/\d+/), 10)
+            // console.log(value);
 
+            // var time = value; // get your number
+            var date = new Date(num); // create Date object
+            // var date = new Date(1324339200000);
+            // console.log(date.toString());
+            var result = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()
+            return result;
+
+        }
         function loadFakultas() {
             $("#fakultas").select2({
                 placeholder: "-- Pilih Fakultas --",
