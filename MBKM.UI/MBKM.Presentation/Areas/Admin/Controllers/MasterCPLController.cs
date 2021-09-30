@@ -54,8 +54,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             IEnumerable<VMListProdi> listProdi = _lookupService.getListProdi();
             ViewBag.listProdi = new SelectList(listProdi, "IDProdi", "NamaProdi");
 
-            IEnumerable<VMListProdi> listNProdi = _lookupService.getListProdi();
-            ViewBag.listNProdi = new SelectList(listNProdi, "NamaProdi", "IDProdi");
+
             return View("ModalCreateCPL");
         }
         public ActionResult ModalDetailMasterCpl()
