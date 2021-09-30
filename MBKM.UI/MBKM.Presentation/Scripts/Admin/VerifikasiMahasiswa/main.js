@@ -13,6 +13,17 @@
     },
     "columns": [
         {
+            "title": "Action",
+            "data": "ID",
+            "render": function (data, type, row, meta) {
+                return `<div class="center vertical-center" style="text-align:center; align-items:center">
+                            <a href="javascript:void()">
+                                <button type="button" onclick="IndexDetailVerifikasiMahasiswa('${data}')" class="btn btn-warning btn-sm" style="font-size: 0.5vw"><i class="fas fa-search"></i></button>
+                            </a>
+                        </div>`;
+            }
+        },
+        {
             "data": null,
             "render": function (data, type, full, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + (meta.row + 1) + '</div>';
@@ -81,17 +92,6 @@
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
-        {
-            "title": "Action",
-            "data": "ID",
-            "render": function (data, type, row, meta) {
-                return `<div class="center vertical-center" style="text-align:center; align-items:center">
-                            <a href="javascript:void()">
-                                <button type="button" onclick="IndexDetailVerifikasiMahasiswa('${data}')" class="btn btn-warning btn-sm" style="font-size: 0.5vw"><i class="fas fa-search"></i></button>
-                            </a>
-                        </div>`;
-            }
-        }
     ],
     "createdRow": function (row, data, index) {
         $('td', row).css({

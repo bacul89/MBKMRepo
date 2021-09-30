@@ -94,6 +94,8 @@ function PostCreate2() {
                 })
                 tableUser.ajax.reload(null, false);
                 $('.modal').modal('hide');
+                $('#txtnomorindukpegawai').val('');
+                $('#txtemail').val('');
                 //$('#TambahUser')[0].reset();
             }
             else
@@ -109,6 +111,7 @@ function PostCreate2() {
                     })
                     tableUser.ajax.reload(null, false);
                     $('.modal').modal('hide');
+                    $("#frmSave").trigger("reset");
                     //$('#TambahUser')[0].reset();
 
                 }
@@ -211,6 +214,7 @@ function PostUpdateUser() {
                 })
                 tableUser.ajax.reload(null, false);
                 $('.modal').modal('hide');
+                
 
             }
     });

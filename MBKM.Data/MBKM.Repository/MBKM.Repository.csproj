@@ -90,20 +90,28 @@
     <Compile Include="Migrations\202109161014244_tambahnkolomuser.designer.cs">
       <DependentUpon>202109161014244_tambahnkolomuser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202109290716366_addtblclmsprint2.cs" />
+    <Compile Include="Migrations\202109290716366_addtblclmsprint2.designer.cs">
+      <DependentUpon>202109290716366_addtblclmsprint2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EmailTemplateRepository.cs" />
     <Compile Include="Repositories\LookupRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\AbsensiRepository.cs" />
+    <Compile Include="Repositories\MBKMRepository\ApprovalPendaftaranRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\AttachmentPerjanjianKerjasamaRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\AttachmentRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\CPLMatakuliahRepository.cs" />
+    <Compile Include="Repositories\MBKMRepository\InformasiPertukaranRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\JadwalKuliahMahasiswaRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\JadwalKuliahRepository.cs" />
+    <Compile Include="Repositories\MBKMRepository\JenisKerjasamaModelRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\KRSRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\MahasiswaRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\MasterCapaianPembelajaranRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\NilaiKuliahRepository.cs" />
+    <Compile Include="Repositories\MBKMRepository\PendaftaranMataKuliahRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\PerjanjianKerjasamaRepository.cs" />
     <Compile Include="Repositories\MenuRepository.cs" />
     <Compile Include="Repositories\MenuRoleRepository.cs" />
@@ -148,6 +156,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202109161014244_tambahnkolomuser.resx">
       <DependentUpon>202109161014244_tambahnkolomuser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202109290716366_addtblclmsprint2.resx">
+      <DependentUpon>202109290716366_addtblclmsprint2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

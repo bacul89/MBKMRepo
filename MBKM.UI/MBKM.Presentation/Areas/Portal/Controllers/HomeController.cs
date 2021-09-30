@@ -50,8 +50,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     mahasiswa.StatusVerifikasi = "DAFTAR";
                     mahasiswa.Password = HashPasswordService.HashPassword(mahasiswa.Password);
                     _mahasiswaService.Save(mahasiswa);
-                    SendEmail(mahasiswa.Email, token);
-                    return Json(new ServiceResponse { status = 200, message = "Pendaftaran mahasiswa berhasil, tolong cek email dan konfirmasi akunmu!" });
+                    if (SendEmail(mahasiswa.Email, token))
+                    {
+                        return Json(new ServiceResponse { status = 200, message = "Pendaftaran mahasiswa berhasil, tolong cek email dan konfirmasi akunmu!" });
+                    } 
+                    return Json(new ServiceResponse { status = 500, message = "Email tidak terkirim!" });
                 }
                 else
                 {
@@ -162,16 +165,16 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             return _mahasiswaService.Find(m => m.NIM == nim && !m.IsDeleted).FirstOrDefault();
         }
-        public void SendEmail(string email, string token)
+        public bool SendEmail(string email, string token)
         {
+            MailHelper emailHelper = new MailHelper();
             string domain = ConfigurationManager.AppSettings["Domain"];
             string url = this.Url.Action("VerifyPage", "Home", null);
-            GMailer mailer = new GMailer();
-            mailer.ToEmail = email;
-            mailer.Subject = "Verify your email";
-            mailer.Body = "Thanks for Registering your account.<br> please verify your email by clicking the link <br> <a href='" + domain + url + "?token=" + token + "'>verify</a>";
-            mailer.IsHtml = true;
-            mailer.Send();
+            string subject = "Verify your email";
+            string body = "Thanks for Registering your account.<br> please verify your email by clicking the link <br> <a href='" + domain + url + "?token=" + token + "'>verify</a>";
+            List<string> tos = new List<string>();
+            tos.Add(email);
+            return emailHelper.SendMail(subject, body, ConfigurationManager.AppSettings["EmailFrom"], tos, null, null, true);
         }
         public void PopulateSession(bool isLogin, string email, string nama)
         {

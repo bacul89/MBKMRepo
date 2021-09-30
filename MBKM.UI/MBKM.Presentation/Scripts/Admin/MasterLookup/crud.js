@@ -36,33 +36,61 @@ function IndexCreateMasterLookup() {
 }
 
 function IndexUpdateMasterLookup(id) {
+    $.LoadingOverlay("show");
     $.ajax({
         url: '/Admin/MasterLookup/ModalUpdateMasterLookup/' + id,
         type: 'get',
         datatype: 'html',
         success: function (e) {
+            $.LoadingOverlay("hide");
             /*console.log(e);*/
             if ($('.data-content-modal').length) {
                 $('.data-content-modal').remove();
             }
             $('#modal-inner').append(e);
             $('.modal').modal('show');
+        }, error: function (e) {
+            $.LoadingOverlay("hide");
+            Swal.fire({
+                title: 'Oppss',
+                icon: 'error',
+                html: 'Coba Reload Page',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText: 'OK'
+            })
+            $('.modal').modal('hide');
         }
     })
 }
 
 function IndexViewMasterLookup(id) {
+    $.LoadingOverlay("show");
     $.ajax({
         url: '/Admin/MasterLookup/ModalDetailMasterLookup/' + id,
         type: 'get',
         datatype: 'html',
         success: function (e) {
+            $.LoadingOverlay("hide");
             /*console.log(e);*/
             if ($('.data-content-modal').length) {
                 $('.data-content-modal').remove();
             }
             $('#modal-inner').append(e);
             $('.modal').modal('show');
+        }, error: function (e) {
+            $.LoadingOverlay("hide");
+            Swal.fire({
+                title: 'Oppss',
+                icon: 'error',
+                html: 'Coba Reload Page',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText: 'OK'
+            })
+            $('.modal').modal('hide');
         }
     })
 
@@ -125,7 +153,7 @@ function PostUpdate() {
     dMasterLookup = {}
     getValueOnForm();
     dMasterLookup.ID = $('#id_MasterLookup').val();
-   /* console.log(dMasterLookup);*/
+    /* console.log(dMasterLookup);*/
     var base_url = window.location.origin;
     $.ajax({
         url: base_url + '/Admin/MasterLookup/PostUpdateMasterLookup',
@@ -176,9 +204,9 @@ function DeletedMasterLookup(idLookup) {
         closeOnConfirm: false
     }).then((result) => {
         $.ajax({
-            url:'/Admin/MasterLookup/PostDeleteMasterLookup',
+            url: '/Admin/MasterLookup/PostDeleteMasterLookup',
             type: "POST",
-            data: { id: idLookup}
+            data: { id: idLookup }
             ,
             dataType: "json",
             success: function () {

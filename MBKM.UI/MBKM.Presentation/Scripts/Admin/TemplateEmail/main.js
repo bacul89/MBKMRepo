@@ -41,9 +41,21 @@ var dataTable = $('#table-data-email-template').DataTable({
     },
     "columns": [
         {
+            "data": "ID",
+            "render": function (data, type, row, meta) {
+                return `<div class="row justify-content-center">
+                            <div class="col" style="text-align:center">
+                                <a href="javascript:void(0)" style="color:black" onclick="IndexUpdateEmailTemplate('${data}')"> <i class="fas fa-edit coral" ></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="IndexViewEmailTemplate('${data}')"> <i class="fas fa-file-search coral"></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="DeleteDataTemplate('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
+                            </div>
+                        </div>`;
+            }
+        },
+        {
             "data": null,
             "render": function (data, type, full, meta) {
-                return meta.row + 1;
+                return '<div class="center">' + (meta.row + 1) + '</div>';
             }
         },
         {
@@ -75,19 +87,6 @@ var dataTable = $('#table-data-email-template').DataTable({
 
             }
         },
-        {
-            "data": "ID",
-            "render": function (data, type, row, meta) {
-                return `<div class="row justify-content-center">
-                            <div class="col" style="text-align:center">
-                                <a href="javascript:void(0)" style="color:black" onclick="IndexUpdateEmailTemplate('${data}')"> <i class="fas fa-edit coral" ></i></a>
-                                <a href="javascript:void(0)" style="color:black" onclick="IndexViewEmailTemplate('${data}')"> <i class="fas fa-file-search coral"></i></a>
-                                <a href="javascript:void(0)" style="color:black" onclick="DeleteDataTemplate('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
-                            </div>
-                        </div>`;
-            }
-        },
-
     ],
     "createdRow": function (row, data, index) {
         $('td', row).css({
