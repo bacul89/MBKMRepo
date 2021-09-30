@@ -5,9 +5,10 @@
 }
 @section css{
     <link rel="stylesheet" type="text/css" href="~/Content/Admin/inputResponsive.css">
-    <link rel="stylesheet" type="text/css" href="~/Content/Admin/AdminCostumeBS4.css">
+
     @Scripts.Render("~/bundles/jquery")
-    <link href="~/Content/summernote/summernote.min.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/jquery")
+
     <script src="~/Scripts/sweetalert2.all.min.js"></script>
 
 }
@@ -19,28 +20,28 @@
     </div>
 }
 @*<div class="container-fluid" style="margin-left:40px; margin-right:40px;margin-bottom:100px;">*@
-<div class="container-fluid" style="margin-bottom:100px;">
-    <div class="card center-block" style="background-color: white; width: 100%; margin-top: 50px; margin-bottom: 50px; ">
+<div class="container-fluid" style="padding: 0px">
+    <div class="card center-block" style="background-color: white; width: 100%">
         <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
             <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
                 MANAGE CAPAIAN PEMBELAJARAN
             </h4>
             <hr />
             @*<div class="container" style="width: 100%;">*@
-            <div class="container" style="width: 100%;over">
+            <div class="container" style="width: 100%">
                 @*<button class="btn btn-success" data-toggle="modal" onclick="AddUserTemplate()" data-target="#TambahUser" data-backdrop="true"><i class="fas fa-plus-circle"></i> TAMBAH USER</button>*@
                 <button class="btn btn-success" onclick="AddCPLTemplate()"><i class="fas fa-plus-circle"></i> TAMBAH CPL</button>
                 <br />
                 <br />
                 @*<table id="TableList" class="table row-border hover dt-responsive responsive" style="border-spacing: 0 15px; border:0">*@
-                <table id="TableList" class="table table-bordered table-striped table-hover js-basic-example dataTable table-responsive display nowrap">
+                <table id="TableList" class="table table-bordered table-striped hover dt-responsive responsive">
                     <thead class="text-center">
                         <tr style="background-color: #FF8A04; border: 0 ">
+                            <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Action</th>
                             <th class="zero-padding no-border vertical-center sorting" style="text-align:center">No.</th>
                             <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Kode</th>
                             <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Kelompok</th>
                             <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Capaian Pembelajaran</th>
-                            <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,8 +53,9 @@
 </div>
 
 @section scripts{
-    <script src="~/Content/summernote/summernote.min.js"></script>
+    
     <script src="~/Scripts/Admin/MasterCPL/main.js"></script>
     <script src="~/Scripts/Admin/MasterCPL/crud.js"></script>
+    <script src="~/Scripts/loading/loadingoverlay.min.js"></script>
 }
 
