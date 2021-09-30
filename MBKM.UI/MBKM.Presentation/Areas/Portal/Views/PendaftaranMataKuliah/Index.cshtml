@@ -1,0 +1,300 @@
+﻿
+@{
+    Layout = "~/Areas/Portal/Views/shared/_LayoutHome.cshtml";
+    ViewBag.Title = "SIMBKM";
+}
+
+<style>
+
+    .coral {
+        color: coral;
+    }
+
+    .center {
+        align-content: center;
+        align-items: center;
+        vertical-align: unset;
+        align-self: center;
+        text-align: center
+    }
+    .zero-padding {
+        padding: 10px 15px !important;
+    }
+
+    .vertical-center {
+        vertical-align: middle !important;
+    }
+
+    .no-border {
+        border: 0px !important;
+    }
+    .table-responsive {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+
+    table.dataTable.no-footer {
+        border: none;
+    }
+
+    .dataTables_wrapper .dataTables_processing {
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        width: 30%;
+        height: 40px;
+        margin-left: -20%;
+        margin-top: -25px;
+        padding-top: 20px;
+        text-align: center;
+        font-size: 1.2em;
+        background: none;
+    }
+
+    thead tr {
+        background-color: #FF8A04;
+        border: 0;
+    }
+
+    .table-spacing {
+        border-spacing: 0px 0.5rem !important;
+    }
+
+    .body-content {
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+    }
+</style>
+
+<div class="card center-block" style="background-color: white; margin: 15px;">
+    <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+        <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; padding-left: 15px; font-weight: bold; font-size: 20px; color: black; ">
+            PENDAFTARAN MATA KULIAH <br />
+        </h5>
+        <hr />
+        <div class="container" style="width: 100%; padding-bottom: 15px;">
+            <table class="table" style="width: auto;">
+                <tr>
+                    <td style="text-align: right">Fakultas</td>
+                    <td style="width: 400px;">
+                        <select name="fakultas" id="fakultas" class="form-control input-md"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right">Program Studi</td>
+                    <td style="width: 400px;">
+                        <select name="prodi" id="prodi" class="form-control input-md"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right">Lokasi</td>
+                    <td style="width: 400px;">
+                        <select name="lokasi" id="lokasi" class="form-control input-md"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right">Tahun Semester</td>
+                    <td style="width: 400px;">
+                        <input type="text" name="tahunSemester" id="tahunSemester" class="form-control input-md" value="ODD Semester 2021/2022" disabled></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button id="cari" name="cari" class="btn" style="float: right; background-color: #FF8A04; color: white; padding: 2px 30px; font-weight: bold; font-size: 16px;">Cari</button>
+                    </td>
+                </tr>
+            </table>
+            <hr />
+            <div id="table-data-master-lookup-overflow">
+                <table id="hasilPencarian" class="table table-bordered table-spacing js-basic-example dataTable table-responsive display nowrap">
+                    <thead>
+                        <tr>
+                            <th class="zero-padding no-border vertical-center sorting">Registrasi</th>
+                            <th class="zero-padding no-border vertical-center sorting">No.</th>
+                            <th class="zero-padding no-border vertical-center sorting">Kode Matakuliah</th>
+                            <th class="zero-padding no-border vertical-center sorting">Nama Matakuliah</th>
+                            <th class="zero-padding no-border vertical-center sorting">SKS</th>
+                            <th class="zero-padding no-border vertical-center sorting">Seksi</th>
+                            <th class="zero-padding no-border vertical-center sorting">Hari</th>
+                            <th class="zero-padding no-border vertical-center sorting">Waktu</th>
+                            <th class="zero-padding no-border vertical-center sorting">Nama Dosen</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        var datatable = null;
+        $(document).ready(function () {
+            loadFakultas();
+            $("#prodi").select2({
+                placeholder: "-- Pilih Program Studi --"
+            });
+            $("#lokasi").select2({
+                placeholder: "-- Pilih Lokasi --"
+            });
+            datatable = $('#hasilPencarian').DataTable({
+            });
+        });
+        $('#cari').click(function () {
+            datatable.destroy();
+            datatable = $('#hasilPencarian').DataTable({
+                ajax: {
+                    url: '@Url.Action("GetMataKuliahByProdi","PendaftaranMataKuliah")?idProdi=' + $('#prodi').val(),
+                    dataSrc: ''
+                },
+                "columns": [
+                    {
+                        "data": "ID",
+                        "render": function (data, type, row, meta) {
+                            return `<div class="row justify-content-center">
+                            <div class="col" style="text-align:center">
+                                <a href="javascript:void(0)" style="color:black" onclick="javascript:alert('${data}')"> tes</i></a>
+                            </div>
+                        </div>`;
+                        }
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, full, meta) {
+                            return meta.row + 1;
+                        }
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, full, meta) {
+                            return meta.row + 1;
+                        }
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, full, meta) {
+                            return meta.row + 1;
+                        }
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, full, meta) {
+                            return meta.row + 1;
+                        }
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, full, meta) {
+                            return meta.row + 1;
+                        }
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, full, meta) {
+                            return meta.row + 1;
+                        }
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, full, meta) {
+                            return meta.row + 1;
+                        }
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, full, meta) {
+                            return meta.row + 1;
+                        }
+                    }
+                ]
+            });
+        });
+        function convertMilisecondToDate(value) {
+            var num = parseInt(value.match(/\d+/), 10)
+            // console.log(value);
+
+            // var time = value; // get your number
+            var date = new Date(num); // create Date object
+            // var date = new Date(1324339200000);
+            // console.log(date.toString());
+            var result = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()
+            return result;
+
+        }
+        function loadFakultas() {
+            $("#fakultas").select2({
+                placeholder: "-- Pilih Fakultas --",
+                width: "100%",
+                ajax: {
+                    url: "@Url.Action("GetFakultas", "PendaftaranMataKuliah")",
+                    dataType: 'json',
+                    method: "POST",
+                    delay: 250,
+                    cache: false,
+                    data: function (params) {
+                        return {
+                            Search: params.term || ""
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+                        };
+                    },
+                }
+            });
+            $("#fakultas").change(function () {
+                $("#prodi").select2({
+                    placeholder: "-- Pilih Program Studi --",
+                    width: "100%",
+                    ajax: {
+                        url: "@Url.Action("GetProdiByFakultas", "PendaftaranMataKuliah")",
+                        dataType: 'json',
+                        method: "POST",
+                        delay: 250,
+                        cache: false,
+                        data: function (params) {
+                            return {
+                                Search: params.term || "",
+                                IDFakultas: $('#fakultas').val()
+                            };
+                        },
+                        processResults: function (data, params) {
+                            return {
+                                results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+                            };
+                        },
+                    }
+                });
+                $("#prodi").change(function () {
+                    $("#lokasi").select2({
+                        placeholder: "-- Pilih Lokasi --",
+                        width: "100%",
+                        ajax: {
+                            url: "@Url.Action("GetLokasiByProdi", "PendaftaranMataKuliah")",
+                            dataType: 'json',
+                            method: "POST",
+                            delay: 250,
+                            cache: false,
+                            data: function (params) {
+                                return {
+                                    Search: params.term || "",
+                                    IDProdi: $('#prodi').val()
+                                };
+                            },
+                            processResults: function (data, params) {
+                                return {
+                                    results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Kampus } })
+                                };
+                            },
+                        }
+                    });
+                });
+            });
+        }
+    </script>
+}
