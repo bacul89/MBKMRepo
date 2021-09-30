@@ -3,19 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MBKM.Services;
+using MBKM.Services.MBKMServices;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
-    public class MasterMapingCplController : Controller
+    public class MasterMapingCapaianPembelajaranController : Controller
     {
 
-/*        public string arr { get; set; }
-        public string brr { get; set; }
-        public string crr { get; set; }
-        public string drr { get; set; }
-        public string err { get; set; }*/
 
-        // GET: Admin/MasterMapingCpl
+        private Services.MBKMServices.IMasterCapaianPembelajaranService _masterCapaianPembelajaranService;
+
+        public MasterMapingCapaianPembelajaranController(IMasterCapaianPembelajaranService masterCapaianPembelajaranService)
+        {
+            _masterCapaianPembelajaranService = masterCapaianPembelajaranService;
+        }
+
+        /*        public string arr { get; set; }
+                public string brr { get; set; }
+                public string crr { get; set; }
+                public string drr { get; set; }
+                public string err { get; set; }*/
+
+        // GET: Admin/MasterMapingCapaianPembelajaran
         public ActionResult Index()
         {
             Session["username"] = "Smitty Werben Jeger Man Jensen";
@@ -45,7 +55,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
 
 
-        public ActionResult GetDataMasterMapingCpl()
+        public ActionResult GetDataMasterMapingCapaianPembelajaran()
         {
             var jsonString = "[{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"2\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"3\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"4\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"5\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"6\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"7\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"}]";
             List<MyJsonObject> myJsonObjects = Newtonsoft.Json.JsonConvert.DeserializeObject<List<MyJsonObject>>(jsonString);
@@ -55,13 +65,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
 
         /*Modal Created*/
-        public ActionResult ModalCreateMasterMapingCpl()
+        public ActionResult ModalCreateMasterMapingCapaianPembelajaran()
         {
-            return View("ModalCreateMasterMapingCpl");
+            return View("ModalCreateMasterMapingCapaianPembelajaran");
         }
 
 /*        [HttpPost]
-        public ActionResult PostDataMasterMapingCpl()
+        public ActionResult PostDataMasterMapingCapaianPembelajaran()
         {
             lookup.CreatedBy = Session["username"] as string;
             lookup.UpdatedBy = Session["username"] as string;
@@ -70,7 +80,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }*/
 
         /*Modal Update*/
-        public ActionResult ModalUpdateMasterMapingCpl(int id)
+        public ActionResult ModalUpdateMasterMapingCapaianPembelajaran(int id)
         {
             /*  var data = "";
                       if (id != null)
@@ -88,7 +98,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
 
 /*        [HttpPost]
-        public ActionResult PostUpdateMasterMapingCpl(Lookup lookup)
+        public ActionResult PostUpdateMasterMapingCapaianPembelajaran(Lookup lookup)
         {
 
             Lookup data = _lookupService.Get(lookup.ID);
@@ -106,7 +116,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }*/
 
 /*        [HttpPost]
-        public ActionResult PostDeleteMasterMapingCpl(int id)
+        public ActionResult PostDeleteMasterMapingCapaianPembelajaran(int id)
         {
             var data = _lookupService.Get(id);
             data.IsDeleted = true;
@@ -119,7 +129,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
 
         /*Modal Detail*/
-        public ActionResult ModalDetailMasterMapingCpl()
+        public ActionResult ModalDetailMasterMapingCapaianPembelajaran()
         {
             
             return View();

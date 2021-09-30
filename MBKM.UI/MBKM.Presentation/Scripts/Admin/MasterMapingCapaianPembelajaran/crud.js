@@ -1,19 +1,19 @@
 ﻿
-var dMasterMapingCpl = {}
+var dMasterMapingCapaianPembelajaran = {}
 
 function getValueOnForm() {
-    dMasterMapingCpl.Tipe = $('input[name=inp_tipe]').val();
-    dMasterMapingCpl.Nama = $('input[name=inp_nama]').val();
-    dMasterMapingCpl.Nilai = $('input[name=inp_nilai]').val();
-    dMasterMapingCpl.IsActive = $('input[name=inp_status]:checked').val();
+    dMasterMapingCapaianPembelajaran.Tipe = $('input[name=inp_tipe]').val();
+    dMasterMapingCapaianPembelajaran.Nama = $('input[name=inp_nama]').val();
+    dMasterMapingCapaianPembelajaran.Nilai = $('input[name=inp_nilai]').val();
+    dMasterMapingCapaianPembelajaran.IsActive = $('input[name=inp_status]:checked').val();
 }
 
-function IndexCreateMasterMapingCpl() {
+function IndexCreateMasterMapingCapaianPembelajaran() {
     if ($('#created-master-maping-cpl').length) {
-        $('#TambahMasterMapingCPL').modal('show');
+        $('#TambahMasterMapingCapaianPembelajaran').modal('show');
     } else {
         $.ajax({
-            url: '/Admin/MasterMapingCpl/ModalCreateMasterMapingCpl',
+            url: '/Admin/MasterMapingCapaianPembelajaran/ModalCreateMasterMapingCapaianPembelajaran',
             type: 'get',
             datatype: 'html',
             success: function (e) {
@@ -28,10 +28,10 @@ function IndexCreateMasterMapingCpl() {
     }
 }
 
-function IndexUpdateMasterMapingCpl(id) {
+function IndexUpdateMasterMapingCapaianPembelajaran(id) {
     $.LoadingOverlay("show");
     $.ajax({
-        url: '/Admin/MasterMapingCpl/ModalUpdateMasterMapingCpl/' + id,
+        url: '/Admin/MasterMapingCapaianPembelajaran/ModalUpdateMasterMapingCapaianPembelajaran/' + id,
         type: 'get',
         datatype: 'html',
         success: function (e) {
@@ -58,10 +58,10 @@ function IndexUpdateMasterMapingCpl(id) {
     })
 }
 
-function IndexViewMasterMapingCpl(id) {
+function IndexViewMasterMapingCapaianPembelajaran(id) {
     $.LoadingOverlay("show");
     $.ajax({
-        url: '/Admin/MasterMapingCpl/ModalDetailMasterMapingCpl/' + id,
+        url: '/Admin/MasterMapingCapaianPembelajaran/ModalDetailMasterMapingCapaianPembelajaran/' + id,
         type: 'get',
         datatype: 'html',
         success: function (e) {
@@ -90,17 +90,17 @@ function IndexViewMasterMapingCpl(id) {
 }
 
 function PostCreate() {
-    dMasterMapingCpl = {}
+    dMasterMapingCapaianPembelajaran = {}
     getValueOnForm();
 
-    /*console.log(dMasterMapingCpl);*/
+    /*console.log(dMasterMapingCapaianPembelajaran);*/
     if (validationCustom()) {
         var base_url = window.location.origin;
         $.ajax({
-            url: base_url + '/Admin/MasterMapingCpl/PostDataMasterMapingCpl',
+            url: base_url + '/Admin/MasterMapingCapaianPembelajaran/PostDataMasterMapingCapaianPembelajaran',
             type: 'post',
             datatype: 'json',
-            data: JSON.stringify(dMasterMapingCpl),
+            data: JSON.stringify(dMasterMapingCapaianPembelajaran),
             contentType: 'application/json',
             success: function (e) {
                 Swal.fire({
@@ -142,15 +142,15 @@ function PostCreate() {
 }
 
 function PostUpdate() {
-    dMasterMapingCpl = {}
+    dMasterMapingCapaianPembelajaran = {}
     getValueOnForm();
-    dMasterMapingCpl.ID = $('#id_MasterMapingCpl').val();
+    dMasterMapingCapaianPembelajaran.ID = $('#id_MasterMapingCapaianPembelajaran').val();
     var base_url = window.location.origin;
     $.ajax({
-        url: base_url + '/Admin/MasterMapingCpl/PostUpdateMasterMapingCpl',
+        url: base_url + '/Admin/MasterMapingCapaianPembelajaran/PostUpdateMasterMapingCapaianPembelajaran',
         type: 'post',
         datatype: 'json',
-        data: JSON.stringify(dMasterMapingCpl),
+        data: JSON.stringify(dMasterMapingCapaianPembelajaran),
         contentType: 'application/json',
         success: function (e) {
             Swal.fire({
@@ -183,7 +183,7 @@ function PostUpdate() {
 
 }
 
-function DeletedMasterMapingCpl(idLookup) {
+function DeletedMasterMapingCapaianPembelajaran(idLookup) {
 
     Swal.fire({
         title: "Apakah anda yakin?",
@@ -195,7 +195,7 @@ function DeletedMasterMapingCpl(idLookup) {
         closeOnConfirm: false
     }).then((result) => {
         $.ajax({
-            url: '/Admin/MasterMapingCpl/PostDeleteMasterMapingCpl',
+            url: '/Admin/MasterMapingCapaianPembelajaran/PostDeleteMasterMapingCapaianPembelajaran',
             type: "POST",
             data: { id: idLookup }
             ,

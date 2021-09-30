@@ -46,7 +46,7 @@ function convertMilisecondToDate(value) {
 
 var dataTable = $('#table-data-master-mapping-cpl').DataTable({
     ajax: {
-        url: '/Admin/MasterMapingCpl/GetDataMasterMapingCpl',
+        url: '/Admin/MasterMapingCapaianPembelajaran/GetDataMasterMapingCapaianPembelajaran',
         dataSrc: ''
     },
 
@@ -56,9 +56,9 @@ var dataTable = $('#table-data-master-mapping-cpl').DataTable({
             "render": function (data, type, row, meta) {
                 return `<div class="row justify-content-center">
                             <div class="col" style="text-align:center">
-                                <a href="javascript:void(0)" style="color:black" onclick="IndexUpdateMasterMapingCpl('${data}')"> <i class="fas fa-edit coral" ></i></a>
-                                <a href="javascript:void(0)" style="color:black" onclick="IndexViewMasterMapingCpl('${data}')"> <i class="fas fa-file-search coral"></i></a>
-                                <a href="javascript:void(0)" style="color:black" onclick="DeletedMasterMapingCpl('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="IndexUpdateMasterMapingCapaianPembelajaran('${data}')"> <i class="fas fa-edit coral" ></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="IndexViewMasterMapingCapaianPembelajaran('${data}')"> <i class="fas fa-file-search coral"></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="DeletedMasterMapingCapaianPembelajaran('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
                             </div>
                         </div>`;
             }
