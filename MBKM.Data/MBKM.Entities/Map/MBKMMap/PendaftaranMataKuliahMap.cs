@@ -32,7 +32,7 @@ namespace MBKM.Entities.Map.MBKMMap
                 x.MapRightKey("CPLMKID");
                 x.ToTable("CPLMKPendaftaran");
             });
-           
+            Property(t => t.StatusPendaftaran).HasMaxLength(50).IsRequired();
         }
     }
 }

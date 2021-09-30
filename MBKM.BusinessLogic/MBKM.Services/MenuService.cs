@@ -1,6 +1,7 @@
 ﻿using MBKM.Common.Interfaces;
 using MBKM.Common.Interfaces.RepoInterfaces;
 using MBKM.Entities.Models;
+using MBKM.Entities.ViewModel;
 using MBKM.Services.BaseServices;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace MBKM.Services
 {
     public interface IMenuService : IEntityService<Menu>
     {
+        List<VMMenu> getListMenu();
     }
 
     public class MenuService : EntityService<Menu>, IMenuService
@@ -24,6 +26,10 @@ namespace MBKM.Services
         {
             _unitOfWork = unitOfWork;
             _MenuRepository = MenuRepository;
+        }
+        public List<VMMenu> getListMenu()
+        {
+            return _MenuRepository.getListMenu();
         }
     }
 }

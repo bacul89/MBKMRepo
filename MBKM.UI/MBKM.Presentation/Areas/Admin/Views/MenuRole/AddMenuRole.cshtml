@@ -1,0 +1,86 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div class="modal-content data-content-modal" id="created-MenuRole">
+    <div class="modal-header" style="background-color: #FF8A04; ">
+        <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+            TAMBAH MENU ROLE
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </h5>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" id="frmSave">
+            <div class="form-group" id="frmAddUser">
+                <label for="MenuRole" class="col-sm-3 control-label">Menu Role</label>
+                <div class="col-sm-9">
+                    <select name="MenuID" id="MenuName" class="form-control input-data" required>
+                        <option value="" disabled selected>--Pilih Menu Role--</option>
+                        @{
+                            foreach (var data in ViewData["listMenu"] as IEnumerable<MBKM.Entities.ViewModel.VMMenu>)
+                            {
+                                <option value="@data.Nilai">@data.Nama</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="MenuRole" class="col-sm-3 control-label">Role</label>
+                <div class="col-sm-9">
+                    <select name="RoleID" id="MenuName" class="form-control input-data" required>
+                        <option value="" disabled selected>--Pilih Role--</option>
+                        @{
+                            foreach (var data in ViewData["listRole"] as IEnumerable<MBKM.Entities.ViewModel.VMLookup>)
+                            {
+                                <option value="@data.Nilai">@data.Nama</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inp_status" class="col-sm-3 control-label">Status</label>
+                <div class="col-sm-9">
+                    <label class="radio-inline input-pendaftaran">
+                        <input type="radio" name="inpStatus" id="inp_status" value="1"> Aktif
+                    </label>
+                    <label class="radio-inline input-pendaftaran">
+                        <input type="radio" name="inpStatus" id="inp_status" value="0"> Tidak Aktif
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="Action" class="col-sm-3 control-label">Action</label>
+                <div class="col-sm-3">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="IsCreate" value="1">
+                        <label class="form-check-label" for="inlineCheckbox1">Create</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="IsView" value="1">
+                        <label class="form-check-label" for="inlineCheckbox1">View</label>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="IsUpdate" value="1">
+                        <label class="form-check-label" for="inlineCheckbox1">Edit</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" name="IsDelete" value="1">
+                        <label class="form-check-label" for="inlineCheckbox1">Delete</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 col-md-offset-10">
+                    <button type="button" onclick="PostCreate2()" class="btn btn-warning">Simpan</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

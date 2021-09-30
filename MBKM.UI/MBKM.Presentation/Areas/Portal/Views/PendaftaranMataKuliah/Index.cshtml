@@ -35,6 +35,30 @@
                         <input type="text" name="tahunSemester" id="tahunSemester" class="form-control input-md" value="ODD Semester 2021/2022" disabled></input>
                     </td>
                 </tr>
+                <tr>
+                    <td colspan="2">
+                        <button id="cari" name="cari" class="btn" style="float: right; background-color: #FF8A04; color: white; padding: 2px 30px; font-weight: bold; font-size: 16px;">Cari</button>
+                    </td>
+                </tr>
+            </table>
+            <hr />
+            <table id="hasilPencarian" class="table table-bordered table-spacing js-basic-example dataTable table-responsive display nowrap">
+                <thead>
+                    <tr>
+                        <th class="zero-padding no-border vertical-center sorting">Action</th>
+                        <th class="zero-padding no-border vertical-center sorting">No.</th>
+                        <th class="zero-padding no-border vertical-center sorting">Tipe Lookup</th>
+                        <th class="zero-padding no-border vertical-center sorting">Name Lookup</th>
+                        <th class="zero-padding no-border vertical-center sorting">Nilai</th>
+                        <th class="zero-padding no-border vertical-center sorting">Tanggal Buat</th>
+                        <th class="zero-padding no-border vertical-center sorting">Dibuat Oleh</th>
+                        <th class="zero-padding no-border vertical-center sorting">Tanggal Ubah</th>
+                        <th class="zero-padding no-border vertical-center sorting">Diubah Oleh</th>
+                        <th class="zero-padding no-border vertical-center sorting">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
             </table>
         </div>
     </div>
@@ -44,8 +68,115 @@
 
         $(document).ready(function () {
             loadFakultas();
-            $("#prodi").select2({});
-            $("#lokasi").select2({});
+            $("#prodi").select2({
+                placeholder: "-- Pilih Program Studi --"
+            });
+            $("#lokasi").select2({
+                placeholder: "-- Pilih Lokasi --"
+            });
+            var dataTable = $('#hasilPencarian').DataTable({
+                ajax: {
+                    url: '',
+                    dataSrc: ''
+                },
+
+                "columns": [
+                    {
+                        "data": "ID",
+                        "render": function (data, type, row, meta) {
+                            return `<div class="row justify-content-center">
+                            <div class="col" style="text-align:center">
+                                <a href="javascript:void(0)" style="color:black" onclick="IndexUpdateMasterLookup('${data}')"> <i class="fas fa-edit coral" ></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="IndexViewMasterLookup('${data}')"> <i class="fas fa-file-search coral"></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="DeletedMasterLookup('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
+                            </div>
+                        </div>`;
+                        }
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, full, meta) {
+                            return meta.row + 1;
+                        }
+                    },
+                    {
+                        "data": "Tipe",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "Nama",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "Nilai",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "CreatedDate",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + convertMilisecondToDate(data) + '</div>';
+                        }
+                    },
+                    {
+                        "data": "CreatedBy",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "UpdatedDate",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + convertMilisecondToDate(data) + '</div>';
+                        }
+                    },
+                    {
+                        "data": "UpdatedBy",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "IsActive",
+                        "render": function (data, type, row, meta) {
+                            if (data) {
+                                return '<div class="center">Aktif</div>';
+                            } else {
+                                return '<div class="center">Tidak Aktif</div>';
+                            }
+
+                        }
+                    },
+                ],
+                "createdRow": function (row, data, index) {
+                    /*console.log(row);*/
+
+                    $('td', row).css({
+                        'font-size': '0.8vw',
+                        'border-top': '1px solid coral',
+                        'border-bottom': '1px solid coral',
+                        'border-left': 'none',
+                        'border-right': 'none',
+                        'border-collapse': 'collapse',
+                        'vertical-align': 'center',
+                        'background': '#fff'
+                    });
+
+                    $('td:eq(0)', row).css({
+                        'border-left': '1px solid coral',
+                        'border-right': 'none'
+                    });
+                    $('td:eq(9)', row).css({
+                        'border-left': 'none',
+                        'border-right': '1px solid coral'
+                    });
+                }
+            });
         });
 
         function loadFakultas() {
@@ -92,6 +223,30 @@
                             };
                         },
                     }
+                });
+                $("#prodi").change(function () {
+                    $("#lokasi").select2({
+                        placeholder: "-- Pilih Lokasi --",
+                        width: "100%",
+                        ajax: {
+                            url: "@Url.Action("GetLokasiByProdi", "PendaftaranMataKuliah")",
+                            dataType: 'json',
+                            method: "POST",
+                            delay: 250,
+                            cache: false,
+                            data: function (params) {
+                                return {
+                                    Search: params.term || "",
+                                    IDProdi: $('#prodi').val()
+                                };
+                            },
+                            processResults: function (data, params) {
+                                return {
+                                    results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Kampus } })
+                                };
+                            },
+                        }
+                    });
                 });
             });
         }

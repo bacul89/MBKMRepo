@@ -180,22 +180,21 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
         public void SendEmail(string email, string status)
         {
-            GMailer mailer = new GMailer();
+            MailHelper emailHelper = new MailHelper();
             if(status == "VerifikasiAktif")
             {
                 var data = _emailTemplateService.Find(x => x.TipeMail == "VerifikasiAktif" && x.IsActive == true).First();
-                mailer.Subject = data.SubjectMail;
-                mailer.Body = data.BodyMail;
-
-            }else if(status == "VerifikasiDitolak")
+                List<string> tos = new List<string>();
+                tos.Add(email);
+                emailHelper.SendMail(data.SubjectMail, data.BodyMail, ConfigurationManager.AppSettings["EmailFrom"], tos, null, null, true);
+            }
+            else if(status == "VerifikasiDitolak")
             {
                 var data = _emailTemplateService.Find(x => x.TipeMail == "VerifikasiDitolak" && x.IsActive == true).First();
-                mailer.Subject = data.SubjectMail;
-                mailer.Body = data.BodyMail;
+                List<string> tos = new List<string>();
+                tos.Add(email);
+                emailHelper.SendMail(data.SubjectMail, data.BodyMail, ConfigurationManager.AppSettings["EmailFrom"], tos, null, null, true);
             }
-            mailer.ToEmail = email;
-            mailer.IsHtml = true;
-            mailer.Send();
         }
     }
 }

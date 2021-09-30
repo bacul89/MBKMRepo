@@ -42,7 +42,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             string email = Session["email"] as string;
             var result = GetMahasiswaByEmail(email);
-            return Json(_pmkService.GetProdiByFakultas(result.JenjangStudi, idProdi, search), JsonRequestBehavior.AllowGet);
+            return Json(_pmkService.GetLokasiByProdi(result.JenjangStudi, idProdi, search), JsonRequestBehavior.AllowGet);
         }
         public Mahasiswa GetMahasiswaByEmail(string email)
         {

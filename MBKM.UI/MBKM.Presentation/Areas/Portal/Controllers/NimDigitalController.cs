@@ -7,9 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MBKM.Presentation.Helper;
 
 namespace MBKM.Presentation.Areas.Portal.Controllers
 {
+    [MBKMAuthorize]
     public class NimDigitalController : Controller
     {
 
@@ -24,8 +26,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
 
         public ActionResult Index()
         {
-            Session["nama"] = "smitty werben man jensen";
-            Session["email"] = "armandadimas@live.com";
+/*            Session["nama"] = "smitty werben man jensen";
+            Session["email"] = "armandadimas@live.com";*/
             return View();
         }
 
@@ -36,8 +38,17 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             string email = Session["email"] as string;
 
             var ma = _mahasiswaService.Find(x => x.Email == email).First();
-            var attachment = _attachmentService.Find(x => x.MahasiswaID == ma.ID && x.FileType == "FotoDiri").First();
-            var photoprofile = "Upload/"+ ma.ID+"/"+attachment.FileName;
+            var photoprofile = "none";
+            try
+            {
+                var attachment = _attachmentService.Find(x => x.MahasiswaID == ma.ID && x.FileType == "FotoDiri").First();
+                photoprofile = "Upload/" + ma.ID + "/" + attachment.FileName;
+            }
+            catch (Exception ex)
+            {
+                photoprofile = "Asset/default-photo-profile.png";
+            }
+            
             return Json(new {
                 Nama = ma.Nama,
                 NIM = ma.NIM,

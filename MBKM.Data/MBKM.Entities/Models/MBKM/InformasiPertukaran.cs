@@ -17,6 +17,6 @@ namespace MBKM.Entities.Models.MBKM
         public string NoKerjasama { get; set; }
         [JsonIgnore]
         public virtual Mahasiswa Mahasiswas { get; set; }
-        public virtual ICollection<PendaftaranMataKuliah> PendaftaranMataKuliahs { get; set; }
+        //public virtual ICollection<PendaftaranMataKuliah> PendaftaranMataKuliahs { get; set; }
     }
 }

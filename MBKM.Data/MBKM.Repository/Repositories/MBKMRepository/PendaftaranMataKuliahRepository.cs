@@ -36,8 +36,8 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 var idFakultasParam = new SqlParameter("@IdFakultas", idFakultas);
                 var searchParam = new SqlParameter("@Search", search);
                 var result = context.Database
-                    .SqlQuery<VMProdi>("GetProdiByFakultas @IdFakultas, @JenjangStudi, @Search", idFakultasParam, jenjangStudiParam, searchParam).ToList();
-                return result;
+                    .SqlQuery<VMProdi>("GetProdiByFakultas @JenjangStudi, @IdFakultas, @Search", jenjangStudiParam, idFakultasParam, searchParam).ToList();
+                 return result;
             }
         }
         public IEnumerable<VMProdi> GetLokasiByProdi(string jenjangStudi, string idProdi, string search)
@@ -48,7 +48,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 var idProdiParam = new SqlParameter("@IdProdi", idProdi);
                 var searchParam = new SqlParameter("@Search", search);
                 var result = context.Database
-                    .SqlQuery<VMProdi>("GetLokasiByProdi @IdProdi, @JenjangStudi, @Search", idProdiParam, jenjangStudiParam, searchParam).ToList();
+                    .SqlQuery<VMProdi>("GetLokasiByProdi @JenjangStudi, @IdProdi, @Search", jenjangStudiParam, idProdiParam, searchParam).ToList();
                 return result;
             }
         }
