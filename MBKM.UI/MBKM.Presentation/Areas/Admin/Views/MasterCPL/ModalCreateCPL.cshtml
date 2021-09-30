@@ -1,4 +1,4 @@
-﻿
+﻿@model MBKM.Entities.ViewModel.VMLookup
 @{
     ViewBag.Title = "ModalCreateCPL";
     Layout = null;
@@ -15,15 +15,17 @@
     </div>
     <div class="modal-body">
         <form class="form-horizontal" id="frmSave">
-            <div class="form-group">
-                <label for="prodi" class="col-sm-3 control-label">Program Studi</label>
-                <div class="col-sm-9">
-                    <select class="form-control input-pendaftaran input-data" id="txtProdi" name="txtProdi" placeholder="Pilih Program Studi">
-                        <option value="value">-</option>
-                        <option value="value">text</option>
-                    </select>
-                </div>
+            <div class="form-group row">
+                @if (ViewBag.listProdi != null)
+                {
+                    <label for="txtProdi" class="col-sm-3 control-label">Program Studi</label>
+                    <div class="col-sm-9">
+                       
+                        @Html.DropDownListFor(model => model.Nama, ViewBag.listProdi as SelectList, "--Pilih Prodi/unit--", new { @class = "form-control input-pendaftaran input-data", @id = "txtProdi", @name = "txtProdi" })
+                    </div>
+                }
             </div>
+            
             <div class="form-group">
                 <label for="txtKelompok" class="col-sm-3 control-label">Kelompok</label>
                 <div class="col-sm-9">

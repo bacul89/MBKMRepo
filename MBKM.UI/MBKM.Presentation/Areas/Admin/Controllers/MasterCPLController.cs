@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MBKM.Entities.ViewModel;
+using MBKM.Services;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -9,6 +11,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 {
     public class MasterCPLController : Controller
     {
+        private ILookupService _lookupService;
+
+        public MasterCPLController(ILookupService lookupService)
+        {
+            _lookupService = lookupService;
+        }
+
         // GET: Admin/MasterCPL
         public ActionResult Index()
         {
@@ -42,6 +51,11 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
         public ActionResult ModaladdCPL()
         {
+            IEnumerable<VMListProdi> listProdi = _lookupService.getListProdi();
+            ViewBag.listProdi = new SelectList(listProdi, "IDProdi", "NamaProdi");
+
+            IEnumerable<VMListProdi> listNProdi = _lookupService.getListProdi();
+            ViewBag.listNProdi = new SelectList(listNProdi, "NamaProdi", "IDProdi");
             return View("ModalCreateCPL");
         }
         public ActionResult ModalDetailMasterCpl()
