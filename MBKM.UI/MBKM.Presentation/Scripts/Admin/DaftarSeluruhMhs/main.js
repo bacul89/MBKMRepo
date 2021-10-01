@@ -13,7 +13,7 @@
     "order": [[2, 'asc']],
     //"aaSorting": [[0, "asc"]],
     "ajax": {
-        url: '/Admin/DaftarSeluruhMahasiswa/GetDataMasterMapingCpl',
+        url: '/Admin/DaftarSeluruhMahasiswa/GetDataMHS',
         dataSrc: ''
     },
     "language": {
@@ -31,7 +31,7 @@
                 return `<div class="row justify-content-center">
                             <div class="col" style="text-align:center">
                                 
-                                <a href="javascript:void(0)" style="color:black" onclick="DetailUserTemplate('${data}')"> <i class="fas fa-file-search coral"></i></a>
+                                 <a href="javascript:void(0)" style="color:black" onclick="DetailMhs('${data}')"> <i class="fas fa-file-search coral"></i></a>
                                 
                                 
                                 

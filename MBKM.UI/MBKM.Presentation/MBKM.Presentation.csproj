@@ -184,6 +184,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Scripts\Admin\DaftarSeluruhMhs\main.js" />
     <Content Include="Scripts\Admin\ApprovalPendaftaranMakul\main.js" />
+    <Content Include="Scripts\Admin\DaftarSeluruhMhs\main_detail.js" />
     <Content Include="Scripts\Admin\MasterCPL\crud.js" />
     <Content Include="Scripts\Admin\MasterCPL\main.js" />
     <Content Include="Scripts\Admin\MasterMapingCpl\crud.js" />
@@ -424,6 +425,7 @@
     <Content Include="Areas\Admin\Views\MenuRole\DetailMenuRole.cshtml" />
     <Content Include="Areas\Admin\Views\MasterCPL\ModalDetailMasterCpl.cshtml" />
     <Content Include="Areas\Admin\Views\MasterCPL\ModalUpdateMasterCpl.cshtml" />
+    <Content Include="Areas\Admin\Views\DaftarSeluruhMahasiswa\ModalDetailMhs.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
