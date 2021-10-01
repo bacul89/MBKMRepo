@@ -1,13 +1,10 @@
-﻿@model MBKM.Entities.ViewModel.VMLookup
-@{
-    ViewBag.Title = "ModalCreateCPL";
+﻿@{
     Layout = null;
 }
-
-<div class="modal-content data-content-modal" id="created-cpl-template">
+<div class="modal-content data-content-modal" id="update-cpl-template">
     <div class="modal-header" style="background-color: #FF8A04; ">
         <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
-            TAMBAH CAPAIAN BELAJAR
+            EDIT CAPAIAN BELAJAR
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -15,21 +12,19 @@
     </div>
     <div class="modal-body">
         <form class="form-horizontal" id="frmSave">
-            <div class="form-group row">
-                @if (ViewBag.listProdi != null)
-                {
-                    <label for="txtProdi" class="col-sm-3 control-label">Program Studi</label>
-                    <div class="col-sm-9">
-                       
-                        @Html.DropDownListFor(model => model.Nama, ViewBag.listProdi as SelectList, "--Pilih Prodi/unit--", new { @class = "form-control input-pendaftaran input-data", @id = "txtProdi", @name = "txtProdi" })
-                    </div>
-                }
+            <div class="form-group">
+                <label for="prodi" class="col-sm-3 control-label">Program Studi</label>
+                <div class="col-sm-9">
+                    <select class="form-control input-pendaftaran input-data" id="txtProdi" name="txtProdi" placeholder="Pilih Program Studi" disabled>
+                        <option value="value">-</option>
+                        <option value="value">text</option>
+                    </select>
+                </div>
             </div>
-            
             <div class="form-group">
                 <label for="txtKelompok" class="col-sm-3 control-label">Kelompok</label>
                 <div class="col-sm-9">
-                    <select class="form-control input-pendaftaran input-data" id="txtKelompok" name="txtKelompok" placeholder="Pilih Kelompok">
+                    <select class="form-control input-pendaftaran input-data" id="txtKelompok" name="txtKelompok" placeholder="Pilih Kelompok" disabled>
                         <option value="value">-</option>
                         <option value="value">text</option>
                     </select>
@@ -38,14 +33,14 @@
             <div class="form-group">
                 <label for="txtKodeCPL" class="col-sm-3 control-label">Kode CPL</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control input-pendaftaran input-data" id="txtKodeCPL" name="txtKodeCPL" placeholder="Input Kode CPL">
+                    <input type="text" class="form-control input-pendaftaran input-data" id="txtKodeCPL" name="txtKodeCPL" placeholder="Input Kode CPL" disabled>
                 </div>
             </div>
             <div class="form-group">
                 <label for="txtCPL" class="col-sm-3 control-label">Capaian Pembelajaran</label>
                 <div class="col-sm-9">
                     @*<input type="text" class="form-control input-pendaftaran input-data" id="txtCPL" name="txtCPL" placeholder="Input Deskripsi Capaian Pembelajaran">*@
-                    <textarea class="form-control input-pendaftaran summernote input-data" name="txtCPL" rows="5" id="txtCPL" placeholder="Input Deskripsi Capaian Pembelajaran"></textarea>
+                    <textarea class="form-control input-pendaftaran summernote input-data" name="txtCPL" rows="5" id="txtCPL" placeholder="Input Deskripsi Capaian Pembelajaran" disabled></textarea>
 
                 </div>
             </div>
@@ -54,16 +49,16 @@
                 <label for="inp_status" class="col-sm-3 control-label">Status</label>
                 <div class="col-sm-9">
                     <label class="radio-inline input-pendaftaran">
-                        <input type="radio" name="inpStatus" id="inp_status" value="1"> Aktif
+                        <input type="radio" name="inpStatus" id="inp_status" value="1" disabled> Aktif
                     </label>
                     <label class="radio-inline input-pendaftaran">
-                        <input type="radio" name="inpStatus" id="inp_status" value="0"> Tidak Aktif
+                        <input type="radio" name="inpStatus" id="inp_status" value="0" disabled> Tidak Aktif
                     </label>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-2 col-md-offset-10">
-                    <button type="button" onclick="" class="btn btn-warning">SIMPAN</button>
+                    <button class="btn btn-success" onclick="">SIMPAN</button>
                 </div>
             </div>
         </form>

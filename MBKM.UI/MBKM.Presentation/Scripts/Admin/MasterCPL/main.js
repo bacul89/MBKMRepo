@@ -4,16 +4,17 @@
         "orderable": false,
         "paging": false,
         "targets": 0,
-        "visible": false, 'targets': [4, 6]
+        //"visible": false, 'targets': [4, 6]
     }],
     //"order": [[1, 'asc']],
-    "proccessing": true,
-    "serverSide": true,
-    "order": [[1, 'asc']],
+    //"proccessing": true,
+    //"serverSide": true,
+    "order": [[2, 'asc']],
     //"aaSorting": [[0, "asc"]],
     "ajax": {
-        url: '/Admin/DaftarSeluruhMahasiswa/GetList',
-        type: 'POST'
+        url: '/Admin/MasterCPL/GetDataMasterCpl',
+        dataSrc: ''
+        //type: 'POST'
     },
     "language": {
         "emptyTable": "No record found.",
@@ -24,6 +25,23 @@
     },
     "columns": [
         {
+            "title": "Action",
+            "data": "ID",
+            "render": function (data, type, row, meta) {
+                return `<div class="row justify-content-center">
+                            <div class="col" style="text-align:center">
+                                
+                               <a href="javascript:void(0)" style="color:black" onclick="UpdateMasterCPL('${data}')"> <i class="fas fa-edit coral" ></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="DetailMasterCPL('${data}')"> <i class="fas fa-file-search coral"></i></a>
+                                <a type="button"  id="btnDel"> <i class="fas fa-trash-alt coral"></i> </button >
+                                
+                                
+                                
+                            </div>
+                        </div>`;//<a href="javascript:void(0)" style="color:black" onclick="DeleteUserGetID('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
+            }
+        },
+        {
             //"title": "No",
             "data": null,
             "render": function (data, type, full, meta) {
@@ -32,7 +50,7 @@
         },
         {
             //"title": "Nomor Induk Pegawai",
-            "data": "Kodes",
+            "data": "Kode",
             "name": "Kode",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + data + '</div>';
@@ -56,23 +74,7 @@
         },
        
 
-        {
-            "title": "Action",
-            "data": "ID",
-            "render": function (data, type, row, meta) {
-                return `<div class="row justify-content-center">
-                            <div class="col" style="text-align:center">
-                                
-                               <a href="javascript:void(0)" style="color:black" onclick="EditUserTemplate('${data}')"> <i class="fas fa-edit coral" ></i></a>
-                                <a href="javascript:void(0)" style="color:black" onclick="DetailUserTemplate('${data}')"> <i class="fas fa-file-search coral"></i></a>
-                                <a type="button"  id="btnDel"> <i class="fas fa-trash-alt coral"></i> </button >
-                                
-                                
-                                
-                            </div>
-                        </div>`;//<a href="javascript:void(0)" style="color:black" onclick="DeleteUserGetID('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
-            }
-        },
+        
 
     ],
     "createdRow": function (row, data, index) {
