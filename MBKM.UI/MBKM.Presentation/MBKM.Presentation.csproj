@@ -140,9 +140,11 @@
     <Compile Include="Areas\Admin\Controllers\MasterCPLController.cs" />
     <Compile Include="Areas\Admin\Controllers\MasterLookupController.cs" />
     <Compile Include="Areas\Admin\Controllers\MasterMapingCapaianPembelajaranController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MenuController.cs" />
     <Compile Include="Areas\Admin\Controllers\MenuRoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\PerjanjianKerjasama\PerjanjianKerjasamaController.cs" />
     <Compile Include="Areas\Admin\Controllers\RegisMhsByAdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\TemplateEmail\TemplateEmailController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserManageController.cs" />
     <Compile Include="Areas\Admin\Controllers\VerifikasiMahasiswaController.cs" />
@@ -191,6 +193,10 @@
     <Content Include="Scripts\Admin\MasterMapingCapaianPembelajaran\main.js" />
     <Content Include="Scripts\Admin\MenuRole\crud.js" />
     <Content Include="Scripts\Admin\MenuRole\main.js" />
+    <Content Include="Scripts\Admin\Menu\crud.js" />
+    <Content Include="Scripts\Admin\Menu\main.js" />
+    <Content Include="Scripts\Admin\Role\crud.js" />
+    <Content Include="Scripts\Admin\Role\main.js" />
     <Content Include="Scripts\loading\loadingoverlay.min.js" />
     <Content Include="Content\summernote\lang\summernote-ar-AR.js" />
     <Content Include="Content\summernote\lang\summernote-ar-AR.min.js" />
@@ -416,8 +422,6 @@
     <Content Include="Areas\Admin\Views\MasterCPL\ModalCreateCPL.cshtml" />
     <Content Include="Areas\Admin\Views\MasterMapingCapaianPembelajaran\Index.cshtml" />
     <Content Include="Areas\Portal\Views\DetailCPL\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\ApprovalPendaftaranMatakuliah\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\ApprovalPendaftaranMatakuliah\DetailCPL.cshtml" />
     <Content Include="Areas\Admin\Views\MenuRole\AddMenuRole.cshtml" />
     <Content Include="Areas\Admin\Views\MenuRole\DetailMenuRole.cshtml" />
     <Content Include="Areas\Admin\Views\MasterCPL\ModalDetailMasterCpl.cshtml" />
@@ -426,6 +430,14 @@
     <Content Include="Areas\Admin\Views\MasterMapingCapaianPembelajaran\ModalUpdateMasterMapingCapaianPembelajaran.cshtml" />
     <Content Include="Areas\Admin\Views\MasterMapingCapaianPembelajaran\ModalDetailMasterMapingCapaianPembelajaran.cshtml" />
     <Content Include="Areas\Portal\Views\PendaftaranMataKuliah\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\ModalCreateRole.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\ModalDetailRole.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\ModalUpdateRole.cshtml" />
+    <Content Include="Areas\Admin\Views\Menu\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Menu\ModalCreateMenu.cshtml" />
+    <Content Include="Areas\Admin\Views\Menu\ModalDetailMenu.cshtml" />
+    <Content Include="Areas\Admin\Views\Menu\ModalUpdateMenu.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
