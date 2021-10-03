@@ -2,6 +2,7 @@
 using MBKM.Entities.Models;
 using MBKM.Entities.ViewModel;
 using MBKM.Presentation.Helper;
+using MBKM.Repository.BaseRepository;
 using MBKM.Services;
 using System;
 using System.Collections.Generic;
@@ -55,17 +56,28 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ViewData["listMenu"] = listMenu;
             return View("AddMenuRole");
         }
+        [HttpPost]
+        public ActionResult PostDataMenuRole(MenuRole menuRole)
+        {
+            /*            Console.WriteLine("Test");
+                        Console.WriteLine(lookup);*/
+            menuRole.CreatedBy = Session["username"] as string;
+            menuRole.UpdatedBy = Session["username"] as string;
+            _menuRoleService.Save(menuRole);
+            return Json(menuRole);
+        }
         public ActionResult ModalDetailMenuRole(int id)
         {
             var model = _menuRoleService.Get(id);
 
             return View("DetailMenuRole",model);
         }
-        //delete
-
+        /*Delete*/
         [HttpPost]
         public ActionResult PostDeleteMenuRole(int id)
         {
+            var context = new MBKMContext();
+            context.Configuration.ProxyCreationEnabled = false;
             var data = _menuRoleService.Get(id);
             data.IsDeleted = true;
             data.UpdatedBy = Session["username"] as string;

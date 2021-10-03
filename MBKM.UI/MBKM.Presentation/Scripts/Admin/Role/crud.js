@@ -74,7 +74,7 @@ function PostCreate() {
                     focusConfirm: false,
                     confirmButtonText: 'OK'
                 })
-                dataTable.ajax.reload(null, false);
+                tableMenuRole.ajax.reload(null, false);
                 $('.modal').modal('hide');
                 clearValueOnForm();
             },
@@ -125,7 +125,7 @@ function PostUpdate() {
                 focusConfirm: false,
                 confirmButtonText: 'OK'
             })
-            dataTable.ajax.reload(null, false);
+            tableMenuRole.ajax.reload(null, false);
             $('.modal').modal('hide');
         },
         error: function (e) {
@@ -201,7 +201,7 @@ function DeletedMenuRole(id) {
                     focusConfirm: false,
                     confirmButtonText: 'OK'
                 })
-                dataTable.ajax.reload(null, false);
+                tableMenuRole.ajax.reload(null, false);
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 Swal.fire({

@@ -46,9 +46,10 @@ function PostCreate() {
                     focusConfirm: false,
                     confirmButtonText: 'OK'
                 })
-                dataTable.ajax.reload(null, false);
+                location.reload();
+                tableMenu.ajax.reload(null, false);
                 $('.modal').modal('hide');
-                clearValueOnForm();
+                
             },
             error: function (e) {
                 Swal.fire({
@@ -130,7 +131,7 @@ function DeletedMenu(id) {
                     focusConfirm: false,
                     confirmButtonText: 'OK'
                 })
-                dataTable.ajax.reload(null, false);
+                tableMenu.ajax.reload(null, false);
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 Swal.fire({
@@ -196,7 +197,7 @@ function PostUpdate() {
                 focusConfirm: false,
                 confirmButtonText: 'OK'
             })
-            dataTable.ajax.reload(null, false);
+            tableMenu.ajax.reload(null, false);
             $('.modal').modal('hide');
         },
         error: function (e) {
