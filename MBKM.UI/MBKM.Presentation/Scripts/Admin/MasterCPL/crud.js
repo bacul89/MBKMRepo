@@ -1,4 +1,89 @@
-﻿function AddCPLTemplate() {
+﻿$(document).ready(function () {
+    loadFakultas();
+    $("#prodi").select2({
+        dropdownParent: $("#TambahCPL"),
+        placeholder: "-- Pilih Program Studi --"
+    });
+    $("#lokasi").select2({
+        dropdownParent: $("#TambahCPL"),
+        placeholder: "-- Pilih Lokasi --"
+    });
+});
+function loadFakultas() {
+    $("#fakultas").select2({
+        dropdownParent: $("#TambahCPL"),
+        placeholder: "-- Pilih Fakultas --",
+        width: "100%",
+        ajax: {
+            url: '/Admin/MasterCPL/GetFakultas',
+            dataType: 'json',
+            method: "POST",
+            delay: 250,
+            cache: false,
+            data: function (params) {
+                return {
+                    Search: params.term || ""
+                };
+            },
+            processResults: function (data, params) {
+                return {
+                    results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+                };
+            },
+        }
+    });
+    $("#fakultas").change(function () {
+        $("#prodi").select2({
+            dropdownParent: $("#TambahCPL"),
+            placeholder: "-- Pilih Program Studi --",
+            width: "100%",
+            ajax: {
+                url: '/Admin/MasterCPL/GetProdiByFakultas',
+                dataType: 'json',
+                method: "POST",
+                delay: 250,
+                cache: false,
+                data: function (params) {
+                    return {
+                        Search: params.term || "",
+                        IDFakultas: $('#fakultas').val()
+                    };
+                },
+                processResults: function (data, params) {
+                    return {
+                        results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+                    };
+                },
+            }
+        });
+        $("#prodi").change(function () {
+            $("#lokasi").select2({
+                dropdownParent: $("#TambahCPL"),
+                placeholder: "-- Pilih Lokasi --",
+                width: "100%",
+                ajax: {
+                    url: '/Admin/MasterCPL/GetLokasiByProdi',
+                    dataType: 'json',
+                    method: "POST",
+                    delay: 250,
+                    cache: false,
+                    data: function (params) {
+                        return {
+                            Search: params.term || "",
+                            IDProdi: $('#prodi').val()
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Kampus } })
+                        };
+                    },
+                }
+            });
+        });
+    });
+}
+function AddCPLTemplate() {
     if ($('#created-cpl-template').length) {
         $('#TambahCPL').modal('show');
     } else {
@@ -59,7 +144,7 @@ function DetailMasterCPL(id) {
                 $('.data-content-modal').remove();
             }
             $('#modal-inner').append(e);
-            $('.modal').modal('show');
+            $('#detail-cpl-template').modal('show');
         }, error: function (e) {
             $.LoadingOverlay("hide");
             Swal.fire({
