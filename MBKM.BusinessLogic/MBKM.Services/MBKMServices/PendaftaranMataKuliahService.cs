@@ -1,6 +1,7 @@
 ﻿using MBKM.Common.Interfaces;
 using MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces;
 using MBKM.Entities.Models.MBKM;
+using MBKM.Entities.ViewModel;
 using MBKM.Services.BaseServices;
 using System;
 using System.Collections.Generic;
@@ -12,17 +13,33 @@ namespace MBKM.Services.MBKMServices
 {
     public interface IPendaftaranMataKuliahService : IEntityService<PendaftaranMataKuliah>
     {
+        IEnumerable<VMFakultas> GetFakultas(string jenjangStudi, string search);
+        IEnumerable<VMProdi> GetProdiByFakultas(string jenjangStudi, string idFakultas, string search);
+        IEnumerable<VMProdi> GetLokasiByProdi(string jenjangStudi, string idProdi, string search);
     }
     public class PendaftaranMataKuliahService : EntityService<PendaftaranMataKuliah>, IPendaftaranMataKuliahService
     {
         IUnitOfWork _unitOfWork;
-        IPendaftaranMataKuliahRepository _pendaftaranRepository;
+        IPendaftaranMataKuliahRepository _pmkRepository;
 
-        public PendaftaranMataKuliahService(IUnitOfWork unitOfWork, IPendaftaranMataKuliahRepository PendaftaranRepository)
-            : base(unitOfWork, PendaftaranRepository)
+        public PendaftaranMataKuliahService(IUnitOfWork unitOfWork, IPendaftaranMataKuliahRepository PMKRepository)
+            : base(unitOfWork, PMKRepository)
         {
             _unitOfWork = unitOfWork;
-            _pendaftaranRepository = PendaftaranRepository;
+            _pmkRepository = PMKRepository;
+        }
+
+        public IEnumerable<VMFakultas> GetFakultas(string jenjangStudi, string search)
+        {
+            return _pmkRepository.GetFakultas(jenjangStudi, search);
+        }
+        public IEnumerable<VMProdi> GetProdiByFakultas(string jenjangStudi, string idFakultas, string search)
+        {
+            return _pmkRepository.GetProdiByFakultas(jenjangStudi, idFakultas, search);
+        }
+        public IEnumerable<VMProdi> GetLokasiByProdi(string jenjangStudi, string idProdi, string search)
+        {
+            return _pmkRepository.GetLokasiByProdi(jenjangStudi, idProdi, search);
         }
     }
 }

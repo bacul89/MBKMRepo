@@ -139,7 +139,7 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\MasterCPLController.cs" />
     <Compile Include="Areas\Admin\Controllers\MasterLookupController.cs" />
-    <Compile Include="Areas\Admin\Controllers\MasterMapingCplController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MasterMapingCapaianPembelajaranController.cs" />
     <Compile Include="Areas\Admin\Controllers\MenuRoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\PerjanjianKerjasama\PerjanjianKerjasamaController.cs" />
     <Compile Include="Areas\Admin\Controllers\RegisMhsByAdminController.cs" />
@@ -148,6 +148,7 @@
     <Compile Include="Areas\Admin\Controllers\VerifikasiMahasiswaController.cs" />
     <Compile Include="Areas\Portal\Controllers\DataDiriController.cs" />
     <Compile Include="Areas\Portal\Controllers\DetailCPLController.cs" />
+    <Compile Include="Areas\Portal\Controllers\PendaftaranMataKuliahController.cs" />
     <Compile Include="Areas\Portal\Controllers\HomeController.cs" />
     <Compile Include="Areas\Portal\Controllers\NimDigitalController.cs" />
     <Compile Include="Areas\Portal\Controllers\TrackingStatusPendaftaranController.cs" />
@@ -187,8 +188,8 @@
     <Content Include="Scripts\Admin\DaftarSeluruhMhs\main_detail.js" />
     <Content Include="Scripts\Admin\MasterCPL\crud.js" />
     <Content Include="Scripts\Admin\MasterCPL\main.js" />
-    <Content Include="Scripts\Admin\MasterMapingCpl\crud.js" />
-    <Content Include="Scripts\Admin\MasterMapingCpl\main.js" />
+    <Content Include="Scripts\Admin\MasterMapingCapaianPembelajaran\crud.js" />
+    <Content Include="Scripts\Admin\MasterMapingCapaianPembelajaran\main.js" />
     <Content Include="Scripts\Admin\MenuRole\crud.js" />
     <Content Include="Scripts\Admin\MenuRole\main.js" />
     <Content Include="Scripts\loading\loadingoverlay.min.js" />
@@ -414,10 +415,7 @@
     <Content Include="Areas\Admin\Views\DaftarSeluruhMahasiswa\Index.cshtml" />
     <Content Include="Areas\Admin\Views\MasterCPL\Index.cshtml" />
     <Content Include="Areas\Admin\Views\MasterCPL\ModalCreateCPL.cshtml" />
-    <Content Include="Areas\Admin\Views\MasterMapingCpl\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\MasterMapingCpl\ModalCreateMasterMapingCpl.cshtml" />
-    <Content Include="Areas\Admin\Views\MasterMapingCpl\ModalDetailMasterMapingCpl.cshtml" />
-    <Content Include="Areas\Admin\Views\MasterMapingCpl\ModalUpdateMasterMapingCpl.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterMapingCapaianPembelajaran\Index.cshtml" />
     <Content Include="Areas\Portal\Views\DetailCPL\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ApprovalPendaftaranMatakuliah\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ApprovalPendaftaranMatakuliah\DetailCPL.cshtml" />
@@ -426,6 +424,10 @@
     <Content Include="Areas\Admin\Views\MasterCPL\ModalDetailMasterCpl.cshtml" />
     <Content Include="Areas\Admin\Views\MasterCPL\ModalUpdateMasterCpl.cshtml" />
     <Content Include="Areas\Admin\Views\DaftarSeluruhMahasiswa\ModalDetailMhs.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterMapingCapaianPembelajaran\ModalCreateMasterMapingCapaianPembelajaran.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterMapingCapaianPembelajaran\ModalUpdateMasterMapingCapaianPembelajaran.cshtml" />
+    <Content Include="Areas\Admin\Views\MasterMapingCapaianPembelajaran\ModalDetailMasterMapingCapaianPembelajaran.cshtml" />
+    <Content Include="Areas\Portal\Views\PendaftaranMataKuliah\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
