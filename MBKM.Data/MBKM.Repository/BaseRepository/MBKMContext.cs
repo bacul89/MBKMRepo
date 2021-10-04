@@ -34,6 +34,8 @@ namespace MBKM.Repository.BaseRepository
         public DbSet<Role> Roles { get; set; }
         public DbSet<MenuRole> MenuRoles { get; set; }
         public DbSet<Menu> Menus { get; set; }
+        public DbSet<JadwalKuliah> jadwalKuliahs { get; set; }
+        public DbSet<PendaftaranMataKuliah> PendaftaranMataKuliahs { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new MenuMap());

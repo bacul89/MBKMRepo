@@ -52,5 +52,40 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return result;
             }
         }
+
+        public VMListPendaftaranMataKuliah GetPendaftaranList(int Skip, int Length, string SearchParam, string SortBy, bool SortDir)
+        {
+            VMListPendaftaranMataKuliah mListPendaftaranMataKuliah = new VMListPendaftaranMataKuliah();
+            if (String.IsNullOrEmpty(SearchParam))
+            {
+                SearchParam = "";
+            }
+            using (var context = new MBKMContext())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                var result = context.PendaftaranMataKuliahs.Where(x => x.IsDeleted == false).Include(x => x.mahasiswas).Include(x => x.JadwalKuliahs);
+                mListPendaftaranMataKuliah.TotalCount = result.Count();
+                var gridfilter = result
+                    .AsQueryable()
+                    .Where(y => y.Nilai.Contains(SearchParam));    
+                mListPendaftaranMataKuliah.gridDatas = gridfilter.Take(Length)
+                    .Select(z => new GridListPendaftaranMataKuliah
+                    {
+                        ID = z.ID,
+                        DosenPembimbing = z.DosenPembimbing,
+                        DosenID = z.DosenID,
+                        Hasil = z.Hasil,
+                        JadwalKuliahID = z.JadwalKuliahID,
+                        JadwalKuliahs = z.JadwalKuliahs,
+                        mahasiswas = z.mahasiswas,
+                        MatkulKodeAsal = z.MatkulKodeAsal,
+                        MatkulAsal = z.MatkulAsal,
+                    }).ToList();
+                mListPendaftaranMataKuliah.TotalFilterCount = gridfilter.Count();
+                return mListPendaftaranMataKuliah;
+            }
+        }
+
+
     }
 }
