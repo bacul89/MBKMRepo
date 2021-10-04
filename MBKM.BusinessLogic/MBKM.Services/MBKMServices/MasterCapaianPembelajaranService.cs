@@ -18,6 +18,8 @@ namespace MBKM.Services.MBKMServices
         IEnumerable<VMFakultas> GetFakultas(string jenjangStudi, string search);
         IEnumerable<VMProdi> GetProdiByFakultas(string jenjangStudi, string idFakultas, string search);
         IEnumerable<VMProdi> GetLokasiByProdi(string jenjangStudi, string idProdi, string search);
+        IEnumerable<VMMataKuliah> GetMatkul(int PageNumber, int PageSize, string search);
+
     }
     public class MasterCapaianPembelajaranService : EntityService<MasterCapaianPembelajaran>, IMasterCapaianPembelajaranService
     {
@@ -30,6 +32,7 @@ namespace MBKM.Services.MBKMServices
             _unitOfWork = unitOfWork;
             _mcpRepository = MCPRepository;
         }
+
 
         public IEnumerable<VMFakultas> GetFakultas(string jenjangStudi, string search)
         {
@@ -64,6 +67,10 @@ namespace MBKM.Services.MBKMServices
         public IEnumerable<VMProdi> GetProdiByFakultas(string jenjangStudi, string idFakultas, string search)
         {
             return _mcpRepository.GetProdiByFakultas(jenjangStudi, idFakultas, search);
+        }
+        public IEnumerable<VMMataKuliah> GetMatkul(int PageNumber, int PageSize, string search)
+        {
+            return _mcpRepository.GetMatkul(PageNumber, PageSize, search);
         }
     }
 }
