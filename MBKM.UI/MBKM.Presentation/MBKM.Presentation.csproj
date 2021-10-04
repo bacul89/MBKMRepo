@@ -430,6 +430,9 @@
     <Content Include="Areas\Admin\Views\MasterMapingCapaianPembelajaran\ModalUpdateMasterMapingCapaianPembelajaran.cshtml" />
     <Content Include="Areas\Admin\Views\MasterMapingCapaianPembelajaran\ModalDetailMasterMapingCapaianPembelajaran.cshtml" />
     <Content Include="Areas\Portal\Views\PendaftaranMataKuliah\Index.cshtml" />
+    <Content Include="Areas\Portal\Views\PendaftaranMataKuliah\Internal.cshtml" />
+    <Content Include="Areas\Portal\Views\PendaftaranMataKuliah\FormPendaftaran.cshtml" />
+    <Content Include="Areas\Portal\Views\PendaftaranMataKuliah\Eksternal.cshtml" />
     <Content Include="Areas\Admin\Views\Role\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Role\ModalCreateRole.cshtml" />
     <Content Include="Areas\Admin\Views\Role\ModalDetailRole.cshtml" />
