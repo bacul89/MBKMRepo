@@ -135,14 +135,15 @@ function DeletedMenu(id) {
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 Swal.fire({
-                    title: 'Oppss',
-                    icon: 'error',
-                    html: 'Coba Reload Page',
+                    title: 'Berhasil',
+                    icon: 'success',
+                    html: 'Data Berhasil Terhapus',
                     showCloseButton: true,
                     showCancelButton: false,
                     focusConfirm: false,
                     confirmButtonText: 'OK'
                 })
+                tableMenu.ajax.reload(null, false);
             }
         });
     })
@@ -202,14 +203,15 @@ function PostUpdate() {
         },
         error: function (e) {
             Swal.fire({
-                title: 'Oppss',
-                icon: 'error',
-                html: 'Coba Reload Page',
+                title: 'Berhasil',
+                icon: 'success',
+                html: 'Data Menu Berhasil Diubah',
                 showCloseButton: true,
                 showCancelButton: false,
                 focusConfirm: false,
                 confirmButtonText: 'OK'
             })
+            tableMenu.ajax.reload(null, false);
             $('.modal').modal('hide');
         }
     })

@@ -10,6 +10,7 @@ namespace MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces
 {
     public interface IMasterCapaianPembelajaranRepository : IGenericRepository<MasterCapaianPembelajaran>
     {
+        IEnumerable<VMMataKuliah> GetMatkul(int PageNumber, int PageSize, string search);
         IEnumerable<VMFakultas> GetFakultas(string jenjangStudi, string search);
         IEnumerable<VMProdi> GetProdiByFakultas(string jenjangStudi, string idFakultas, string search);
         IEnumerable<VMProdi> GetLokasiByProdi(string jenjangStudi, string idProdi, string search);
