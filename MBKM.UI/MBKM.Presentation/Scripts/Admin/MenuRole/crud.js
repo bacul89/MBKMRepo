@@ -231,3 +231,120 @@ function DeletedMenuRole(id) {
     })
 
 }
+function UpdateMenuRole(id) {
+/*    $.LoadingOverlay("show");*/
+    $.ajax({
+        url: '/Admin/MenuRole/ModalUpdateMenuRole/' + id,
+        type: 'get',
+        datatype: 'html',
+        success: function (e) {
+            /*$.LoadingOverlay("hide");*/
+            /*console.log(e);*/
+            if ($('.data-content-modal').length) {
+                $('.data-content-modal').remove();
+            }
+            $('#modal-inner').append(e);
+            $('.modal').modal('show');
+        }, error: function (e) {
+            $.LoadingOverlay("hide");
+            Swal.fire({
+                title: 'Oppss',
+                icon: 'error',
+                html: 'Coba Reload Page',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText: 'OK'
+            })
+            $('.modal').modal('hide');
+        }
+    })
+}
+function PostUpdateMenuRole() {
+    var dMenuRole = new Object();
+    dMenuRole.ID = $('#id_MenuRole').val();
+    dMenuRole.MenuID = $('#MenuID').val();
+    dMenuRole.RoleID = $('#RoleID').val();
+    dMenuRole.IsCreate = $('#IsCreate').val();
+    dMenuRole.IsView = $('#IsView').val();
+    dMenuRole.IsUpdate = $('#IsUpdate').val();
+    dMenuRole.IsDelete = $('#IsDelete').val();
+    var cekAktif = $('input[id=IsActive]:checked').val();
+    if (cekAktif == 1) {
+        dMenuRole.IsActive = "true";
+    }
+    else { dMenuRole.IsActive = "false"; }
+
+    var cekCreate = $('input[id=IsCreate]:checked').val();
+    if (cekCreate == 1) {
+        dMenuRole.IsCreate = "true";
+    }
+    else { dMenuRole.IsCreate = "false"; }
+
+    var cekView = $('input[id=IsView]:checked').val();
+    if (cekView == 1) {
+        dMenuRole.IsView = "true";
+    }
+    else { dMenuRole.IsView = "false"; }
+
+    var cekUpdate = $('input[id=IsUpdate]:checked').val();
+    if (cekUpdate == 1) {
+        dMenuRole.IsUpdate = "true";
+    }
+    else { dMenuRole.IsUpdate = "false"; }
+
+    var cekDelete = $('input[id=IsDelete]:checked').val();
+    if (cekDelete == 1) {
+        dMenuRole.IsDelete = "true";
+    }
+    else { dMenuRole.IsDelete = "false"; }
+    if (validationCustom()) {
+        var base_url = window.location.origin;
+        $.ajax({
+            url: base_url + '/Admin/MenuRole/PostUpdateMenuRole',
+            type: 'post',
+            datatype: 'json',
+            data: JSON.stringify(dMenuRole),
+            contentType: 'application/json',
+            success: function (e) {
+                Swal.fire({
+                    title: 'Berhasil',
+                    icon: 'success',
+                    html: 'Menu Berhasil Diupdate',
+                    showCloseButton: true,
+                    showCancelButton: false,
+                    focusConfirm: false,
+                    confirmButtonText: 'OK'
+                })
+                location.reload();
+                tableMenuRole.ajax.reload(null, false);
+                $('.modal').modal('hide');
+
+            },
+            error: function (e) {
+                Swal.fire({
+                    title: 'Berhasil',
+                    icon: 'success',
+                    html: 'Menu Berhasil Diupdate',
+                    showCloseButton: true,
+                    showCancelButton: false,
+                    focusConfirm: false,
+                    confirmButtonText: 'OK'
+                })
+                tableMenuRole.ajax.reload(null, false);
+                $('.modal').modal('hide');
+            }
+        })
+    } else {
+        Swal.fire({
+            title: 'Oppss',
+            icon: 'warning',
+            html: 'Ada beberapa field yang belum kamu isikan',
+            showCloseButton: true,
+            showCancelButton: false,
+            focusConfirm: false,
+            confirmButtonText: 'OK'
+        })
+    }
+
+}

@@ -20,7 +20,8 @@ namespace MBKM.Repository.Repositories
         {
             using (var context = new MBKMContext())
             {
-                var listmodel = context.Roles.Select(
+                var result = context.Roles.Where(x => x.IsDeleted == false && x.IsActive == true);
+                var listmodel = result.Select(
                     x => new VMLookup
                     {
                         Nama = x.RoleName,
