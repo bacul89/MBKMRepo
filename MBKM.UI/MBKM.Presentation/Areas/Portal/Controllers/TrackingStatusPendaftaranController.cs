@@ -37,5 +37,12 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 }
             );
         }
+
+        [HttpPost]
+        public ActionResult _getIndexDetailView(int id)
+        {
+            var data = _pendaftaranMataKuliahService.Get(id);
+            return View(data);
+        } 
     }
 }

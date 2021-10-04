@@ -19,7 +19,7 @@
             "render": function (data, type, row, meta) {
                 return `<div class="center vertical-center" style="text-align:center; align-items:center">
                             <a href="javascript:void()">
-                                <button type="button" onclick="urlLinkDetailCPMKP()" class="btn btn-warning btn-sm" style="font-size: 0.5vw"><i class="fas fa-search"></i></button>
+                                <button type="button" onclick="urlLinkDetailCPMKP('${data}')" class="btn btn-warning btn-sm" style="font-size: 0.5vw"><i class="fas fa-search"></i></button>
                             </a>
                         </div>`;
             }
@@ -82,6 +82,31 @@
     },
 });
 
-function OpenModal() {
-    $('#DetailTrackingStatus').modal('show');
+function urlLinkDetailCPMKP(id) {
+    $.LoadingOverlay("show");
+    $.ajax({
+        url: '/Portal/TrackingStatusPendaftaran/_getIndexDetailView/' + id,
+        type: 'post',
+        datatype: 'html',
+        success: function (e) {
+            $.LoadingOverlay("hide");
+            if ($('.data-content-modal').length) {
+                $('.data-content-modal').remove();
+            }
+            $('#modal-inner').append(e);
+            $('.modal').modal('show');
+        }, error: function (e) {
+            $.LoadingOverlay("hide");
+            Swal.fire({
+                title: 'Oppss',
+                icon: 'error',
+                html: 'Coba Reload Page',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText: 'OK'
+            })
+            $('.modal').modal('hide');
+        }
+    })
 }

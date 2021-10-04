@@ -59,7 +59,7 @@
         },
         {
             "title": "Tahun Semester",
-            "data": "mahasiswas.NIMAsal",
+            "data": "mahasiswas.Semester",
             "render": function (data, type, row, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }

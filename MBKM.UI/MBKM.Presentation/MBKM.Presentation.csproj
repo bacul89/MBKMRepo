@@ -441,6 +441,7 @@
     <Content Include="Areas\Admin\Views\Menu\ModalCreateMenu.cshtml" />
     <Content Include="Areas\Admin\Views\Menu\ModalDetailMenu.cshtml" />
     <Content Include="Areas\Admin\Views\Menu\ModalUpdateMenu.cshtml" />
+    <Content Include="Areas\Portal\Views\TrackingStatusPendaftaran\_getIndexDetailView.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
