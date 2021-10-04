@@ -15,13 +15,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
     {
 
         IPendaftaranMataKuliahService _pendaftaranMataKuliahService;
+        ICPLMKPendaftaranService _cPLMKPendaftaranService;
 
-        public ApprovalPendaftaranMatakuliahController(IPendaftaranMataKuliahService pendaftaranMataKuliahService)
+        public ApprovalPendaftaranMatakuliahController(IPendaftaranMataKuliahService pendaftaranMataKuliahService, ICPLMKPendaftaranService cPLMKPendaftaranService)
         {
             _pendaftaranMataKuliahService = pendaftaranMataKuliahService;
+            _cPLMKPendaftaranService = cPLMKPendaftaranService;
         }
-
-
 
         // GET: Admin/ApprovalPendaftaranMatakuliah
         public ActionResult Index()
@@ -49,9 +49,12 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 );
         }
 
-        /*public JsonResult GetCobaCoba()
+        [HttpPost]
+        public JsonResult GetCobaCoba()
         {
-            var return 
-        }*/
+
+            var data = _cPLMKPendaftaranService.GetAll();
+            return Json(data);
+        }
     }
 }

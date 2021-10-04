@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -87,7 +88,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                     || y.JadwalKuliahs.KodeMataKuliah.Contains(SearchParam)
                     || y.JadwalKuliahs.NamaMataKuliah.Contains(SearchParam)
                     )
-                     /*.OrderBy(SortBy, SortDir)*/
+                     .OrderBy(SortBy, SortDir)
                     ;
                 mListPendaftaranMataKuliah.gridDatas = gridfilter.Take(Length)
                     .Select(z => new GridListPendaftaranMataKuliah
@@ -135,7 +136,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                     || y.JadwalKuliahs.KodeMataKuliah.Contains(SearchParam)
                     || y.JadwalKuliahs.NamaMataKuliah.Contains(SearchParam)
                     )
-                    /*.OrderBy(SortBy, SortDir)*/
+                    .OrderBy(SortBy, SortDir)
                     ;
                 mListPendaftaranMataKuliah.gridDatas = gridfilter.Take(Length)
                     .Select(z => new GridListPendaftaranMataKuliah
