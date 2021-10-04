@@ -41,8 +41,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             IEnumerable<VMListProdi> listProdi = _lookupService.getListProdi();
             ViewBag.listProdi = new SelectList(listProdi, "IDProdi", "NamaProdi");
 
-            IEnumerable<VMListProdi> listNProdi = _lookupService.getListProdi();
-            ViewBag.listNProdi = new SelectList(listNProdi, "NamaProdi", "IDProdi");
+
 
 
             Debug.WriteLine("akses index");
@@ -212,24 +211,25 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult PostDeleteUser(User user)
         {
             User data = _userService.Get(user.ID);
-            data.NoPegawai = data.NoPegawai;
-            data.UserName = data.UserName;
-            data.Email = data.Email;
-            data.NoTelp = data.NoTelp;
-            data.Password = data.Password;
-            data.RoleID = data.RoleID;
-            //data.Password = HashPasswordService.HashPassword(model.Password);
-            data.CreatedDate = data.CreatedDate;
-            data.UpdatedDate = data.UpdatedDate;
-            data.IsActive = data.IsActive;
-            data.KodeProdi = data.KodeProdi;
-            data.NamaProdi = data.NamaProdi;
+            //data.NoPegawai = data.NoPegawai;
+            //data.UserName = data.UserName;
+            //data.Email = data.Email;
+            //data.NoTelp = data.NoTelp;
+            //data.Password = data.Password;
+            //data.RoleID = data.RoleID;
+            ////data.Password = HashPasswordService.HashPassword(model.Password);
+            //data.CreatedDate = data.CreatedDate;
+            //data.UpdatedDate = data.UpdatedDate;
+            //data.IsActive = data.IsActive;
+            ////data.KodeProdi = data.KodeProdi;
+            ////data.NamaProdi = data.NamaProdi;
 
             data.IsDeleted = true;
 
             //var model = _userService.Get(id);
             _userService.Save(data);
-            return Json(data);
+            //return Json(data);
+            return Json(new ServiceResponse { status = 200, message = "Done" });
         }
 
 

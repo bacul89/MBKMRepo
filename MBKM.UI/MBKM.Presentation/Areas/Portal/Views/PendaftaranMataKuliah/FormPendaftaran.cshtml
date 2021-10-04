@@ -1,0 +1,170 @@
+﻿@{
+    Layout = "~/Areas/Portal/Views/shared/_LayoutHome.cshtml";
+    ViewBag.Title = "SIMBKM";
+}
+
+<input type="hidden" id="namaDosen" value="@Model.NamaDosen" />
+<input type="hidden" id="idDosen" value="@Model.DosenID" />
+<input type="hidden" id="idMatkul" value="@Model.ID" />
+
+<div class="card center-block" style="background-color: white; margin-bottom: 15px;">
+    <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+        <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; padding-left: 15px; font-weight: bold; font-size: 20px; color: black; ">
+            ISI FORM PENDAFTARAN MATA KULIAH
+        </h5>
+        <hr />
+        <div class="container" style="width: 100%; padding-bottom: 15px;">
+
+            <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+                <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 18px; color: black;">MATA KULIAH TUJUAN</h5>
+
+                <div class="container" style="width: 100%;">
+                    <table class="table">
+                        <tr>
+                            <td style="text-align: right;">Fakultas</td>
+                            <td style="text-align: center;">:</td>
+                            <td>@Model.NamaFakultas</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Program Studi</td>
+                            <td style="text-align: center;">:</td>
+                            <td>@Model.NamaProdi</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Lokasi</td>
+                            <td style="text-align: center;">:</td>
+                            <td>@Model.Lokasi</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Kode Mata Kuliah</td>
+                            <td style="text-align: center;">:</td>
+                            <td>@Model.KodeMataKuliah</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Nama Mata Kuliah</td>
+                            <td style="text-align: center;">:</td>
+                            <td>@Model.NamaMataKuliah</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">SKS</td>
+                            <td style="text-align: center;">:</td>
+                            <td>@Model.SKS</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Seksi</td>
+                            <td style="text-align: center;">:</td>
+                            <td>@Model.ClassSection</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Hari</td>
+                            <td style="text-align: center;">:</td>
+                            <td>@Model.Hari</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Waktu</td>
+                            <td style="text-align: center;">:</td>
+                            <td>@Model.JamMasuk - @Model.JamSelesai</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Nama Dosen</td>
+                            <td style="text-align: center;">:</td>
+                            <td>@Model.NamaDosen</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Jenis Program MBKM</td>
+                            <td style="text-align: center;">:</td>
+                            <td id="jenisProgramMBKM"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Jenis Kegiatan MBKM</td>
+                            <td style="text-align: center;">:</td>
+                            <td id="jenisKegiatanMBKM"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">No. Kerjasama</td>
+                            <td style="text-align: center;">:</td>
+                            <td>@Model.NoKerjasama</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+                <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 18px; color: black;">MATA KULIAH ASAL</h5>
+
+                <div class="container" style="width: 100%;">
+                    <table class="table">
+                        <tr>
+                            <td style="text-align: right;">Mata Kuliah</td>
+                            <td style="text-align: center;">:</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="mataKuliahAsal" id="mataKuliahAsal" class="form-control input-md" style="width: 70%;" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Capaian Pembelajaran</td>
+                            <td style="text-align: center;">:</td>
+                            <td>
+                                <div class="form-group">
+                                    <textarea name="capaianPembelajaran" id="capaianPembelajaran" class="form-control" rows="10" style="width: 70%;"></textarea>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <button id="simpan" class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; ">SUBMIT</button>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            getJenisKerjasama();
+        });
+        $('#simpan').click(function () {
+            var data = new Object();
+            data.DosenPembimbing = $('#namaDosen').val();
+            data.DosenID = $('#idDosen').val();
+            data.JadwalKuliahID = $('#idMatkul').val();
+            data.MatkulAsal = $('#mataKuliahAsal').val();
+            data.JenisPertukaran = $('#jenisProgramMBKM').html();
+            data.JenisKerjasama = $('#jenisKegiatanMBKM').html();
+            data.NoKerjasama = '@Model.NoKerjasama';
+            data.CapaianPembelajaran = $('#capaianPembelajaran').val();
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("InsertPendaftaranMK", "PendaftaranMataKuliah")",
+                data: data
+            }).then(function (response) {
+                if (response.status != 500) {
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("InsertPendaftaranMK", "PendaftaranMataKuliah")",
+                        data: data
+                    }).then(function (response) {
+                        if (response.status == 200) {
+                            window.history.back();
+                        }
+                        alert(response.message);
+                    });
+                } else {
+                    alert(response.message);
+                }
+            });
+        });
+        function getJenisKerjasama() {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetJenisKerjasama", "PendaftaranMataKuliah")"
+            }).then(function (response) {
+                $('#jenisProgramMBKM').html(response.JenisPertukaran);
+                $('#jenisKegiatanMBKM').html(response.JenisKerjasama);
+            });
+        }
+    </script>
+}

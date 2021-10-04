@@ -11,5 +11,6 @@ namespace MBKM.Common.Interfaces.RepoInterfaces
     public interface IMenuRepository : IGenericRepository<Menu>
     {
         List<VMMenu> getListMenu();
+        VMListMenu getMenu(int skip, int take, string searchBy, string sortBy, bool sortDir);
     }
 }

@@ -52,8 +52,16 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return result;
             }
         }
-
-        public VMListPendaftaranMataKuliah GetPendaftaranList(int Skip, int Length, string SearchParam, string SortBy, bool SortDir)
+        public VMSemester getOngoingSemester(string jenjangStudi)
+        {
+            using (var context = new MBKMContext())
+            {
+                var jenjangStudiParam = new SqlParameter("@JenjangStudi", jenjangStudi);
+                var result = context.Database
+                    .SqlQuery<VMSemester>("GetSemester @JenjangStudi", jenjangStudiParam).FirstOrDefault();
+                return result;
+            }
+        }        public VMListPendaftaranMataKuliah GetPendaftaranList(int Skip, int Length, string SearchParam, string SortBy, bool SortDir)
         {
             VMListPendaftaranMataKuliah mListPendaftaranMataKuliah = new VMListPendaftaranMataKuliah();
             if (String.IsNullOrEmpty(SearchParam))
@@ -146,7 +154,5 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 mListPendaftaranMataKuliah.TotalFilterCount = gridfilter.Count();
                 return mListPendaftaranMataKuliah;
             }
-        }
-
-    }
+        }    }
 }

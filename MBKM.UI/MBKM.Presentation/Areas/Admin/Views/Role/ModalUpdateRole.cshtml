@@ -1,0 +1,65 @@
+﻿
+@{
+    Layout = null;
+}
+
+@model MBKM.Entities.Models.Role
+
+<div class="modal-content data-content-modal" id="update-Role">
+    <div class="modal-header" style="background-color: #FF8A04; ">
+        <input type="hidden" id="id_Role" value="@Model.ID" />
+        <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+            UPDATE ROLE
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </h5>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="inp_tipeEmail" class="col-sm-3 control-label">Tipe Lookup</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control input-pendaftaran input-data" value="@Model.Code" name="Code" id="Code" placeholder="Input Type Lookup">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inp_email" class="col-sm-3 control-label">Nama Lookup</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control input-pendaftaran input-data" value="@Model.RoleName" name="RoleName" id="RoleName" placeholder="Input Nama Lookup">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inp_status" class="col-sm-3 control-label">Status</label>
+                <div class="col-sm-9">
+                    @{
+                        if (Model.IsActive)
+                        {
+                            <label class="radio-inline input-pendaftaran">
+                                <input type="radio" name="IsActive" id="IsActive" value="true" checked> Aktif
+                            </label>
+                            <label class="radio-inline input-pendaftaran">
+                                <input type="radio" name="IsActive" id="IsActive" value="false"> Tidak Aktif
+                            </label>
+
+                        }
+                        else
+                        {
+                            <label class="radio-inline input-pendaftaran">
+                                <input type="radio" name="IsActive" id="IsActive" value="true"> Aktif
+                            </label>
+                            <label class="radio-inline input-pendaftaran">
+                                <input type="radio" name="IsActive" id="IsActive" value="false" checked> Tidak Aktif
+                            </label>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 col-md-offset-10">
+                    <button type="button" onclick="PostUpdate()" class="btn btn-warning">Simpan</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

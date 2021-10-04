@@ -6,52 +6,70 @@
 
 @section css{
     <link rel="stylesheet" type="text/css" href="~/Content/Admin/inputResponsive.css">
-    <link rel="stylesheet" type="text/css" href="~/Content/Admin/AdminCostumeBS4.css">
+
     @Scripts.Render("~/bundles/jquery")
-    <link href="~/Content/summernote/summernote.min.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/jquery")
+
     <script src="~/Scripts/sweetalert2.all.min.js"></script>
     @*margin-left: -20px; margin-right: -20px;*@
 }
-<div class="container-fluid" style="margin-bottom: 100px; margin-right: -40px;">
-    <div class="card center-block" style="background-color: white; width: 100%; margin-top: 10px; margin-bottom: 50px; margin-left: -20px; margin-right: -20px; ">
-        <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
-            <h5 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
+@section modal{
+    <div class="modal fade" id="TambahCPL" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" id="modal-inner">
+
+        </div>
+    </div>
+}
+<div class="container-fluid" style="padding: 0px ">
+    <div class="card center-block" style="background-color: white; width: 100%; padding: 0px ">
+        <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral">
+            <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
                 Daftar Seluruh Mahasiswa
                 <p style="font-weight: normal; font-size: 15px; color: #c1baba;">Berikut Daftar Seluruh Mahasiswa</p>
-            </h5>
+            </h4>
             <hr />
-            @*<div class="container" style="width: 100%;">*@
-            <div class="container">
+            <div class="container-fluid">
+                @*<div class="container" style="width: 100%;">*@
+
                 @*<button class="btn btn-success" data-toggle="modal" onclick="AddUserTemplate()" data-target="#TambahUser" data-backdrop="true"><i class="fas fa-plus-circle"></i> TAMBAH USER</button>*@
                 @*<button class="btn btn-success" onclick="AddUserTemplate()"><i class="fas fa-plus-circle"></i> TAMBAH USER</button>
                     <br />
                     <br />*@
                 @*<table id="TableList" class="table row-border hover dt-responsive responsive" style="border-spacing: 0 15px; border:0">*@
-                <table id="TableList" class="table table-bordered table-striped table-hover js-basic-example dataTable table-responsive display nowrap">
+                @*<table id="TableList" class="table table-bordered table-striped hover dt-responsive responsive">*@
+                <br />
+                <table id="TableList" class="table row-border hover dt-responsive responsive">
+
                     <thead class="text-center">
                         <tr style="background-color: #FF8A04; border: 0 ">
+                            <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Action</th>
                             <th class="zero-padding no-border vertical-center sorting" style="text-align:center">No.</th>
                             <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Universitas Asal</th>
                             <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Jenjang Studi</th>
                             <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Program Studi Asal</th>
                             <th class="zero-padding no-border vertical-center sorting" style="text-align:center">NIM Asal</th>
                             <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Jenis Kelamin</th>
+                            <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Nama Mahasiswa</th>
                             <th class="zero-padding no-border vertical-center sorting" style="text-align:center">No. Kerjasama</th>
                             <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Status Kerjasama</th>
                             <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Status Pendaftaran</th>
-                            <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Action</th>
+
                         </tr>
                     </thead>
-                    <tbody>
-                    </tbody>
+
                 </table>
+
             </div>
+            <br />
         </div>
     </div>
 </div>
 @section scripts{
-    <script src="~/Content/summernote/summernote.min.js"></script>
-    <script src="~/Scripts/Admin/DaftarSeluruhMhs/"></script>
+
+    <script src="~/Scripts/Admin/DaftarSeluruhMhs/main.js"></script>
+    <script src="~/Scripts/Admin/DaftarSeluruhMhs/main_detail.js"></script>
+    <script src="~/Scripts/loading/loadingoverlay.min.js"></script>
+
     @*<script src="~/Scripts/Admin/UserManage/crud.js"></script>*@
 }
 

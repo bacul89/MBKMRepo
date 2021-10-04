@@ -17,6 +17,7 @@
         align-self: center;
         text-align: center
     }
+
     .zero-padding {
         padding: 10px 15px !important;
     }
@@ -28,6 +29,7 @@
     .no-border {
         border: 0px !important;
     }
+
     .table-responsive {
         display: block;
         width: 100%;
@@ -69,10 +71,15 @@
     }
 </style>
 
+<form action="@Url.Action("FormPendaftaran","PendaftaranMataKuliah")" method="post" id="daftarMatkul">
+    <input type="hidden" id="idMatkul" name="idMatkul" />
+</form>
+<input type="hidden" name="strm" id="strm" value="@Model.ID" />
+
 <div class="card center-block" style="background-color: white; margin: 15px;">
     <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
         <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; padding-left: 15px; font-weight: bold; font-size: 20px; color: black; ">
-            PENDAFTARAN MATA KULIAH <br />
+            PENDAFTARAN MATA KULIAH
         </h5>
         <hr />
         <div class="container" style="width: 100%; padding-bottom: 15px;">
@@ -98,7 +105,7 @@
                 <tr>
                     <td style="text-align: right">Tahun Semester</td>
                     <td style="width: 400px;">
-                        <input type="text" name="tahunSemester" id="tahunSemester" class="form-control input-md" value="ODD Semester 2021/2022" disabled></input>
+                        <input type="text" name="tahunSemester" id="tahunSemester" class="form-control input-md" value="@Model.Nama" disabled></input>
                     </td>
                 </tr>
                 <tr>
@@ -108,8 +115,11 @@
                 </tr>
             </table>
             <hr />
-            <div id="table-data-master-lookup-overflow">
-                <table id="hasilPencarian" class="table table-bordered table-spacing js-basic-example dataTable table-responsive display nowrap">
+            <div style="overflow-x: auto;">
+                <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; font-weight: bold; font-size: 18px; color: black; ">
+                    JADWAL MATA KULIAH
+                </h5>
+                <table id="hasilPencarian" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
                     <thead>
                         <tr>
                             <th class="zero-padding no-border vertical-center sorting">Registrasi</th>
@@ -119,6 +129,7 @@
                             <th class="zero-padding no-border vertical-center sorting">SKS</th>
                             <th class="zero-padding no-border vertical-center sorting">Seksi</th>
                             <th class="zero-padding no-border vertical-center sorting">Hari</th>
+                            <th class="zero-padding no-border vertical-center sorting">Waktu</th>
                             <th class="zero-padding no-border vertical-center sorting">Waktu</th>
                             <th class="zero-padding no-border vertical-center sorting">Nama Dosen</th>
                         </tr>
@@ -141,91 +152,82 @@
             $("#lokasi").select2({
                 placeholder: "-- Pilih Lokasi --"
             });
-            datatable = $('#hasilPencarian').DataTable({
-            });
+            datatable = $('#hasilPencarian').DataTable();
         });
         $('#cari').click(function () {
             datatable.destroy();
             datatable = $('#hasilPencarian').DataTable({
                 ajax: {
-                    url: '@Url.Action("GetMataKuliahByProdi","PendaftaranMataKuliah")?idProdi=' + $('#prodi').val(),
+                    url: '@Url.Action("GetMataKuliahByProdi","PendaftaranMataKuliah")?idProdi=' + $('#prodi').val() + '&lokasi=' + $('#lokasi').val() + '&strm=' + $('#strm').val(),
                     dataSrc: ''
                 },
                 "columns": [
                     {
                         "data": "ID",
                         "render": function (data, type, row, meta) {
-                            return `<div class="row justify-content-center">
-                            <div class="col" style="text-align:center">
-                                <a href="javascript:void(0)" style="color:black" onclick="javascript:alert('${data}')"> tes</i></a>
-                            </div>
-                        </div>`;
+                            return `<div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick="javascript:$('#idMatkul').val(${data}); $('#daftarMatkul').submit();"><i class="fas fa-edit"></i></a></div>`;
                         }
                     },
                     {
                         "data": null,
                         "render": function (data, type, full, meta) {
-                            return meta.row + 1;
+                            return '<div style="text-align:center; vertical-align: middle;">' + (meta.row + 1) + '</div>';
                         }
                     },
                     {
-                        "data": null,
-                        "render": function (data, type, full, meta) {
-                            return meta.row + 1;
+                        "data": "KodeMataKuliah",
+                        "render": function (data, type, row, meta) {
+                            return '<div style="text-align:center; vertical-align: middle;">' + data + '</div>';
                         }
                     },
                     {
-                        "data": null,
-                        "render": function (data, type, full, meta) {
-                            return meta.row + 1;
+                        "data": "NamaMataKuliah",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
                         }
                     },
                     {
-                        "data": null,
-                        "render": function (data, type, full, meta) {
-                            return meta.row + 1;
+                        "data": "SKS",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
                         }
                     },
                     {
-                        "data": null,
-                        "render": function (data, type, full, meta) {
-                            return meta.row + 1;
+                        "data": "ClassSection",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
                         }
                     },
                     {
-                        "data": null,
-                        "render": function (data, type, full, meta) {
-                            return meta.row + 1;
+                        "data": "Hari",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
                         }
                     },
                     {
-                        "data": null,
-                        "render": function (data, type, full, meta) {
-                            return meta.row + 1;
+                        "data": "JamMasuk",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
                         }
                     },
                     {
-                        "data": null,
-                        "render": function (data, type, full, meta) {
-                            return meta.row + 1;
+                        "data": "JamSelesai",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "NamaDosen",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
                         }
                     }
                 ]
             });
         });
-        function convertMilisecondToDate(value) {
-            var num = parseInt(value.match(/\d+/), 10)
-            // console.log(value);
-
-            // var time = value; // get your number
-            var date = new Date(num); // create Date object
-            // var date = new Date(1324339200000);
-            // console.log(date.toString());
-            var result = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()
-            return result;
-
-        }
         function loadFakultas() {
+            $("#prodi").prop("disabled", true);
+            $("#lokasi").prop("disabled", true);
             $("#fakultas").select2({
                 placeholder: "-- Pilih Fakultas --",
                 width: "100%",
@@ -248,6 +250,10 @@
                 }
             });
             $("#fakultas").change(function () {
+                $("#lokasi").empty();
+                $("#prodi").empty();
+                $("#prodi").prop("disabled", false);
+                $("#lokasi").prop("disabled", true);
                 $("#prodi").select2({
                     placeholder: "-- Pilih Program Studi --",
                     width: "100%",
@@ -271,6 +277,8 @@
                     }
                 });
                 $("#prodi").change(function () {
+                    $("#lokasi").empty();
+                    $("#lokasi").prop("disabled", false);
                     $("#lokasi").select2({
                         placeholder: "-- Pilih Lokasi --",
                         width: "100%",
@@ -288,7 +296,7 @@
                             },
                             processResults: function (data, params) {
                                 return {
-                                    results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Kampus } })
+                                    results: $.map(data, function (item) { return { id: item.Kampus, value: item.Kampus, text: item.Kampus } })
                                 };
                             },
                         }

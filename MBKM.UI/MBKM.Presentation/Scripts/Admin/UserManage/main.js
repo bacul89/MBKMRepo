@@ -33,7 +33,8 @@ var tableUser = $('#TableList').DataTable({
                             <div class="col" style="text-align:center">
                                 <a href="javascript:void(0)" style="color:black" onclick="EditUserTemplate('${data}')"> <i class="fas fa-edit coral" ></i></a>
                                 <a href="javascript:void(0)" style="color:black" onclick="DetailUserTemplate('${data}')"> <i class="fas fa-file-search coral"></i></a>
-                                <a type="button"  id="btnDel"> <i class="fas fa-trash-alt coral"></i> </button >
+
+                                <a href="javascript:void(0)" style="color:black" onclick="DeleteDataUser('${data}')"> <i class="fas fa-trash-alt coral"></i></a>
                                 
                                 
                             </div>
@@ -146,41 +147,51 @@ function validationCustomEditUser() {
     });
     return isValid;
 }
-$("#TableList").on('click', '#btnDel', function () {
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
+function DeleteDataUser(idt) {
+    swal.fire({
+        title: "Apakah anda yakin?",
+        type: "warning",
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, delete it!",
+        closeOnConfirm: false
     }).then((result) => {
         if (result.isConfirmed) {
-            var data = $("#TableList").DataTable().row($(this).parents('tr')).data();
-            console.log(data); 
-            
-            var base_url = window.location.origin;
+            $.LoadingOverlay("show");
             $.ajax({
-                url: base_url + '/Admin/UserManage/PostDeleteUser',
+                url: '/Admin/UserManage/PostDeleteUser/',
                 type: 'post',
-                datatype: 'json',
-                data: JSON.stringify(data),
-                contentType: 'application/json',
-                success: function (e) {
-                    Swal.fire({
-                        title: 'Berhasil',
-                        icon: 'success',
-                        html: 'Data User Berhasil Dihapus',
-                        showCloseButton: true,
-                        showCancelButton: false,
-                        focusConfirm: false,
-                        confirmButtonText: 'OK'
-                    })
-                    tableUser.ajax.reload(null, false);
-                   
+                data: {
+                    id: idt
                 },
-                error: function (e) {
+                datatype: 'json',
+                success: function (e) {
+                    $.LoadingOverlay("hide");
+                    if (e.status == 500) {
+                        Swal.fire({
+                            title: 'Oppss',
+                            icon: 'error',
+                            html: e.message,
+                            showCloseButton: true,
+                            showCancelButton: false,
+                            focusConfirm: false,
+                            confirmButtonText: 'OK'
+                        })
+                    } else {
+                        Swal.fire({
+                            title: 'Berhasil',
+                            icon: 'success',
+                            html: 'User Berhasil Dihapus',
+                            showCloseButton: true,
+                            showCancelButton: false,
+                            focusConfirm: false,
+                            confirmButtonText: 'OK'
+                        })
+                        tableUser.ajax.reload(null, false);
+                    }
+                }, error: function (e) {
+                    $.LoadingOverlay("hide");
                     Swal.fire({
                         title: 'Oppss',
                         icon: 'error',
@@ -190,11 +201,61 @@ $("#TableList").on('click', '#btnDel', function () {
                         focusConfirm: false,
                         confirmButtonText: 'OK'
                     })
+                }
+            })
+        }
+    })
+}
+
+//$("#TableList").on('click', '#btnDel', function () {
+//    Swal.fire({
+//        title: 'Are you sure?',
+//        text: "You won't be able to revert this!",
+//        icon: 'warning',
+//        showCancelButton: true,
+//        confirmButtonColor: '#3085d6',
+//        cancelButtonColor: '#d33',
+//        confirmButtonText: 'Yes, delete it!'
+//    }).then((result) => {
+//        if (result.isConfirmed) {
+//            var data = $("#TableList").DataTable().row($(this).parents('tr')).data();
+//            console.log(data); 
+            
+//            var base_url = window.location.origin;
+//            $.ajax({
+//                url: base_url + '/Admin/UserManage/PostDeleteUser',
+//                type: 'post',
+//                datatype: 'json',
+//                data: JSON.stringify(data),
+//                contentType: 'application/json',
+//                success: function (e) {
+//                    Swal.fire({
+//                        title: 'Berhasil',
+//                        icon: 'success',
+//                        html: 'Data User Berhasil Dihapus',
+//                        showCloseButton: true,
+//                        showCancelButton: false,
+//                        focusConfirm: false,
+//                        confirmButtonText: 'OK'
+//                    })
+//                    tableUser.ajax.reload(null, false);
+                   
+//                },
+//                error: function (e) {
+//                    Swal.fire({
+//                        title: 'Oppss',
+//                        icon: 'error',
+//                        html: 'Coba Reload Page',
+//                        showCloseButton: true,
+//                        showCancelButton: false,
+//                        focusConfirm: false,
+//                        confirmButtonText: 'OK'
+//                    })
                   
-                }
-            })
+//                }
+//            })
            
-                }
-            })
-        })
+//                }
+//            })
+//        })
 

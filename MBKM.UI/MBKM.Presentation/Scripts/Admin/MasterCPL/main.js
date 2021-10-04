@@ -4,16 +4,17 @@
         "orderable": false,
         "paging": false,
         "targets": 0,
-        "visible": false, 'targets': [4, 6]
+        //"visible": false, 'targets': [4, 6]
     }],
     //"order": [[1, 'asc']],
-    "proccessing": true,
-    "serverSide": true,
-    "order": [[1, 'asc']],
+    //"proccessing": true,
+    //"serverSide": true,
+    "order": [[2, 'asc']],
     //"aaSorting": [[0, "asc"]],
     "ajax": {
-        url: '/Admin/DaftarSeluruhMahasiswa/GetList',
-        type: 'POST'
+        url: '/Admin/MasterCPL/GetDataMasterCpl',
+        dataSrc: ''
+        //type: 'POST'
     },
     "language": {
         "emptyTable": "No record found.",
@@ -24,6 +25,23 @@
     },
     "columns": [
         {
+            "title": "Action",
+            "data": "ID",
+            "render": function (data, type, row, meta) {
+                return `<div class="row justify-content-center">
+                            <div class="col" style="text-align:center">
+                                
+                               <a href="javascript:void(0)" style="color:black" onclick="UpdateMasterCPL('${data}')"> <i class="fas fa-edit coral" ></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="DetailMasterCPL('${data}')"> <i class="fas fa-file-search coral"></i></a>
+                                <a type="button"  id="btnDel"> <i class="fas fa-trash-alt coral"></i> </button >
+                                
+                                
+                                
+                            </div>
+                        </div>`;//<a href="javascript:void(0)" style="color:black" onclick="DeleteUserGetID('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
+            }
+        },
+        {
             //"title": "No",
             "data": null,
             "render": function (data, type, full, meta) {
@@ -32,7 +50,7 @@
         },
         {
             //"title": "Nomor Induk Pegawai",
-            "data": "Kodes",
+            "data": "Kode",
             "name": "Kode",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + data + '</div>';
@@ -56,23 +74,7 @@
         },
        
 
-        {
-            "title": "Action",
-            "data": "ID",
-            "render": function (data, type, row, meta) {
-                return `<div class="row justify-content-center">
-                            <div class="col" style="text-align:center">
-                                
-                               <a href="javascript:void(0)" style="color:black" onclick="EditUserTemplate('${data}')"> <i class="fas fa-edit coral" ></i></a>
-                                <a href="javascript:void(0)" style="color:black" onclick="DetailUserTemplate('${data}')"> <i class="fas fa-file-search coral"></i></a>
-                                <a type="button"  id="btnDel"> <i class="fas fa-trash-alt coral"></i> </button >
-                                
-                                
-                                
-                            </div>
-                        </div>`;//<a href="javascript:void(0)" style="color:black" onclick="DeleteUserGetID('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
-            }
-        },
+        
 
     ],
     "createdRow": function (row, data, index) {
@@ -88,3 +90,88 @@
     //    { 'visible': false, 'targets': [5] }
     //]
 });
+//$(document).ready(function () {
+//    loadFakultas();
+//    $("#prodi").select2({
+//        dropdownParent: $("#TambahCPL"),
+//        placeholder: "-- Pilih Program Studi --"
+//    });
+//    $("#lokasi").select2({
+//        dropdownParent: $("#TambahCPL"),
+//        placeholder: "-- Pilih Lokasi --"
+//    });
+//});
+//function loadFakultas() {
+//    $("#fakultas").select2({
+//        dropdownParent: $("#TambahCPL"),
+//        placeholder: "-- Pilih Fakultas --",
+//        width: "100%",
+//        ajax: {
+//            url: '/Admin/MasterCPL/GetFakultas',
+//            dataType: 'json',
+//            method: "POST",
+//            delay: 250,
+//            cache: false,
+//            data: function (params) {
+//                return {
+//                    Search: params.term || ""
+//                };
+//            },
+//            processResults: function (data, params) {
+//                return {
+//                    results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+//                };
+//            },
+//        }
+//    });
+//    $("#fakultas").change(function () {
+//        $("#prodi").select2({
+//            dropdownParent: $("#TambahCPL"),
+//            placeholder: "-- Pilih Program Studi --",
+//            width: "100%",
+//            ajax: {
+//                url: '/Admin/MasterCPL/GetProdiByFakultas',
+//                dataType: 'json',
+//                method: "POST",
+//                delay: 250,
+//                cache: false,
+//                data: function (params) {
+//                    return {
+//                        Search: params.term || "",
+//                        IDFakultas: $('#fakultas').val()
+//                    };
+//                },
+//                processResults: function (data, params) {
+//                    return {
+//                        results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+//                    };
+//                },
+//            }
+//        });
+//        $("#prodi").change(function () {
+//            $("#lokasi").select2({
+//                dropdownParent: $("#TambahCPL"),
+//                placeholder: "-- Pilih Lokasi --",
+//                width: "100%",
+//                ajax: {
+//                    url: '/Admin/MasterCPL/GetLokasiByProdi',
+//                    dataType: 'json',
+//                    method: "POST",
+//                    delay: 250,
+//                    cache: false,
+//                    data: function (params) {
+//                        return {
+//                            Search: params.term || "",
+//                            IDProdi: $('#prodi').val()
+//                        };
+//                    },
+//                    processResults: function (data, params) {
+//                        return {
+//                            results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Kampus } })
+//                        };
+//                    },
+//                }
+//            });
+//        });
+//    });
+//}

@@ -15,6 +15,7 @@ namespace MBKM.Entities.Models.MBKM
         public string Instansi { get; set; }
         public string NamaUnit { get; set; }
         public string JenisPertukaran { get; set; }
+        [JsonIgnore]
         public string JenisKerjasama { get; set; }
         public int BiayaKuliah { get; set; } = 0;
         [JsonIgnore]

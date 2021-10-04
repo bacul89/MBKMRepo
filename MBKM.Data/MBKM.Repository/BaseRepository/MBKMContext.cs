@@ -34,8 +34,10 @@ namespace MBKM.Repository.BaseRepository
         public DbSet<Role> Roles { get; set; }
         public DbSet<MenuRole> MenuRoles { get; set; }
         public DbSet<Menu> Menus { get; set; }
+        public DbSet<MasterCapaianPembelajaran> MasterCPLS { get; set; }
         public DbSet<JadwalKuliah> jadwalKuliahs { get; set; }
         public DbSet<PendaftaranMataKuliah> PendaftaranMataKuliahs { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new MenuMap());
@@ -59,6 +61,7 @@ namespace MBKM.Repository.BaseRepository
             modelBuilder.Configurations.Add(new PendaftaranMataKuliahMap());
             modelBuilder.Configurations.Add(new InformasiPertukaranMap());
             modelBuilder.Configurations.Add(new ApprovalPendaftaranMap());
+            modelBuilder.Configurations.Add(new CPLMKPendaftaranMap());
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();

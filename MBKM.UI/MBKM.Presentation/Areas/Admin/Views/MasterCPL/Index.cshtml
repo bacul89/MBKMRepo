@@ -5,42 +5,202 @@
 }
 @section css{
     <link rel="stylesheet" type="text/css" href="~/Content/Admin/inputResponsive.css">
-    <link rel="stylesheet" type="text/css" href="~/Content/Admin/AdminCostumeBS4.css">
+
     @Scripts.Render("~/bundles/jquery")
-    <link href="~/Content/summernote/summernote.min.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/jquery")
+    @*<link href="~/Content/select2.min.css" rel="stylesheet" />*@
+
     <script src="~/Scripts/sweetalert2.all.min.js"></script>
 
 }
 @section modal{
-    <div class="modal fade" id="TambahCPL" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document" id="modal-inner">
+    @*tabindex="-1"*@
+    <!--<div class="modal fade" id="detail-cpl-template" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content data-content-modal" id="detail-cpl-templates">
+                <div class="modal-header" style="background-color: #FF8A04; ">
+                    <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+                        DETAIL CAPAIAN BELAJAR
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal" id="frmSave">
+                        <div class="form-group">
+                            <label for="prodi" class="col-sm-3 control-label">Program Studi</label>
+                            <div class="col-sm-9">
+                                <select class="form-control input-pendaftaran input-data" id="txtProdi" name="txtProdi" placeholder="Pilih Program Studi" disabled>
+                                    <option value="value">-</option>
+                                    <option value="value">text</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtKelompok" class="col-sm-3 control-label">Kelompok</label>
+                            <div class="col-sm-9">
+                                <select class="form-control input-pendaftaran input-data" id="txtKelompok" name="txtKelompok" placeholder="Pilih Kelompok" disabled>
+                                    <option value="value">-</option>
+                                    <option value="value">text</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtKodeCPL" class="col-sm-3 control-label">Kode CPL</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control input-pendaftaran input-data" id="txtKodeCPL" name="txtKodeCPL" placeholder="Input Kode CPL" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtdCPL" class="col-sm-3 control-label">Capaian Pembelajaran</label>
+                            <div class="col-sm-9">-->
+                                @*<input type="text" class="form-control input-pendaftaran input-data" id="txtCPL" name="txtCPL" placeholder="Input Deskripsi Capaian Pembelajaran">*@
+                                <!--<textarea class="form-control input-pendaftaran summernote input-data" name="txtdCPL" rows="5" id="txtdCPL" placeholder="Input Deskripsi Capaian Pembelajaran" disabled></textarea>
 
-        </div>
-    </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inp_status" class="col-sm-3 control-label">Status</label>
+                            <div class="col-sm-9">
+                                <label class="radio-inline input-pendaftaran">
+                                    <input type="radio" name="inpStatus" id="inp_status" value="1" disabled> Aktif
+                                </label>
+                                <label class="radio-inline input-pendaftaran">
+                                    <input type="radio" name="inpStatus" id="inp_status" value="0" disabled> Tidak Aktif
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                </div>
+                </div>
+            </div>-->
+
+            <div class="modal fade" id="TambahCPL" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color: #FF8A04; ">
+                            <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+                                TAMBAH CAPAIAN BELAJAR
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </h5>
+                        </div>
+                        <div class="modal-body">
+                            @*<form class="form-horizontal" id="frmSave">*@
+                            <form id="formRegistrasi">
+                                <div class="container" style="width: 100%;">
+                                    <div class="form-group ">
+                                        <label for="jenjang" class="col-sm-3 control-label">Jenjang Studi</label>
+                                        @* <div class="col-sm-9">*@
+
+                                        <select name="jenjang" id="jenjang" class="form-control input-pendaftaran input-data"></select>
+                                        @* </div> *@
+
+                                    </div>
+                                    <div class="form-group ">
+
+
+                                        <label for="fakultas" class="col-sm-3 control-label">Fakultas</label>
+                                        @*<div class="col-sm-9">*@
+                                        <select name="fakultas" id="fakultas" class="form-control input-pendaftaran input-data"></select>
+                                        @*@Html.DropDownListFor(model => model.Nama, ViewBag.listProdi as SelectList, "--Pilih Prodi/unit--", new { @class = "form-control input-pendaftaran input-data", @id = "txtProdi", @name = "txtProdi" })*@
+                                        @* </div> *@
+
+                                    </div>
+                                    <div class="form-group ">
+                                        <label for="prodi" class="col-sm-3 control-label">Program Studi</label>
+                                        @* <div class="col-sm-9">*@
+
+                                        <select name="prodi" id="prodi" class="form-control input-pendaftaran input-data"></select>
+                                        @* </div> *@
+
+                                    </div>
+                                    <div class="form-group ">
+                                        <label for="lokasi" class="col-sm-3 control-label">Lokasi</label>
+                                        @*<div class="col-sm-9">*@
+
+                                        <select name="lokasi" id="lokasi" class="form-control input-md input-pendaftaran input-data"></select>
+                                        @*</div>*@
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="kelompok" class="col-sm-3 control-label">Kelompok</label>
+                                        @*<div class="col-sm-9">*@
+                                        <select class="form-control input-pendaftaran input-data" id="kelompok" name="kelompok" placeholder="Pilih Kelompok">
+                                            <option value="value">-</option>
+                                            <option value="value">text</option>
+                                        </select>
+                                        @*</div>*@
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="kode" class="col-sm-3 control-label">Kode CPL</label>
+                                        @*<div class="col-sm-9">*@
+                                        <input type="text" class="form-control input-pendaftaran input-data" id="kode" name="kode" placeholder="Input Kode CPL">
+                                        @*</div>*@
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="txtCPL" class="col-sm-3 control-label">Capaian Pembelajaran</label>
+                                        @*<div class="col-sm-9">*@
+                                        @*<input type="text" class="form-control input-pendaftaran input-data" id="txtCPL" name="txtCPL" placeholder="Input Deskripsi Capaian Pembelajaran">*@
+                                        <textarea class="form-control input-pendaftaran summernote input-data" name="txtCPL" rows="5" id="txtCPL" placeholder="Input Deskripsi Capaian Pembelajaran"></textarea>
+
+                                        @*</div>*@
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="inp_status" class="col-sm-3 control-label">Status</label>
+                                        @*<div class="col-sm-9">*@
+                                        <label class="radio-inline input-pendaftaran">
+                                            <input type="radio" name="inpStatus" id="inp_status" value="1"> Aktif
+                                        </label>
+                                        <label class="radio-inline input-pendaftaran">
+                                            <input type="radio" name="inpStatus" id="inp_status" value="0"> Tidak Aktif
+                                        </label>
+                                        @*</div>*@
+                                    </div>
+                                    <div class="form-group">
+                                        @*<div class="col-sm-2 col-md-offset-10">*@
+                                        <button type="button" onclick="PostCreate3()" class="btn btn-warning">SIMPAN</button>
+                                        @*</div>*@
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
 }
+
 @*<div class="container-fluid" style="margin-left:40px; margin-right:40px;margin-bottom:100px;">*@
-<div class="container-fluid" style="margin-bottom:100px;">
-    <div class="card center-block" style="background-color: white; width: 100%; margin-top: 50px; margin-bottom: 50px; ">
+<div class="container-fluid" style="padding: 0px">
+    <div class="card center-block" style="background-color: white; width: 100%">
         <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
             <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
                 MANAGE CAPAIAN PEMBELAJARAN
             </h4>
             <hr />
             @*<div class="container" style="width: 100%;">*@
-            <div class="container" style="width: 100%;over">
+            <div class="container" style="width: 100%">
                 @*<button class="btn btn-success" data-toggle="modal" onclick="AddUserTemplate()" data-target="#TambahUser" data-backdrop="true"><i class="fas fa-plus-circle"></i> TAMBAH USER</button>*@
-                <button class="btn btn-success" onclick="AddCPLTemplate()"><i class="fas fa-plus-circle"></i> TAMBAH CPL</button>
+                @*<button class="btn btn-success" onclick="AddCPLTemplate()"><i class="fas fa-plus-circle"></i> TAMBAH CPL</button>*@
+                <a data-toggle="modal" data-target="#TambahCPL" style="color: #FF8A04;">Tambah CPL</a>
                 <br />
                 <br />
                 @*<table id="TableList" class="table row-border hover dt-responsive responsive" style="border-spacing: 0 15px; border:0">*@
-                <table id="TableList" class="table table-bordered table-striped table-hover js-basic-example dataTable table-responsive display nowrap">
+                <table id="TableList" class="table table-bordered table-striped hover dt-responsive responsive">
                     <thead class="text-center">
                         <tr style="background-color: #FF8A04; border: 0 ">
+                            <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Action</th>
                             <th class="zero-padding no-border vertical-center sorting" style="text-align:center">No.</th>
                             <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Kode</th>
                             <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Kelompok</th>
                             <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Capaian Pembelajaran</th>
-                            <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,8 +212,330 @@
 </div>
 
 @section scripts{
-    <script src="~/Content/summernote/summernote.min.js"></script>
-    <script src="~/Scripts/Admin/MasterCPL/main.js"></script>
-    <script src="~/Scripts/Admin/MasterCPL/crud.js"></script>
+
+    @*<script src="~/Scripts/Admin/MasterCPL/main.js"></script>
+    <script src="~/Scripts/Admin/MasterCPL/crud.js"></script>*@
+    <script src="~/Scripts/loading/loadingoverlay.min.js"></script>
+    <script src="~/Scripts/select2.min.js"></script>
+    <script>
+        function clearValueOnForm() {
+            $("#prodi").val('');
+            $("#fakultas").val('');
+            $("#jenjang").val('');
+            $('input[name=inp_status]').prop('checked', false);
+        }
+        $(document).ready(function () {
+            loadFakultas();
+            loadFromLookup("JenjangStudi", "jenjang", "JenjangStudi");
+            loadFromLookup("Kelompok", "kelompok", "Kelompok");
+            $("#prodi").select2({
+                //dropdownParent: $("#TambahCPL"),
+                placeholder: "-- Pilih Program Studi --"
+            });
+            $("#lokasi").select2({
+                //dropdownParent: $("#TambahCPL"),
+                placeholder: "-- Pilih Lokasi --"
+            });
+        });
+        function loadFakultas() {
+            $("#fakultas").select2({
+                //dropdownParent: $("#TambahCPL"),
+                placeholder: "-- Pilih Fakultas --",
+                width: "100%",
+                ajax: {
+                    url: "@Url.Action("GetFakultas", "MasterCPL")",
+                    dataType: 'json',
+                    method: "POST",
+                    delay: 250,
+                    cache: false,
+                    data: function (params) {
+                        return {
+                            Search: params.term || "",
+                            Jenjang: $('#jenjang').val()
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+                        };
+                    },
+                }
+            });
+            $("#fakultas").change(function () {
+
+                $("#prodi").select2({
+                    placeholder: "-- Pilih Program Studi --",
+                    width: "100%",
+                    ajax: {
+                        url: "@Url.Action("GetProdiByFakultas", "MasterCPL")",
+                        dataType: 'json',
+                        method: "POST",
+                        delay: 250,
+                        cache: false,
+                        data: function (params) {
+                            return {
+                                Search: params.term || "",
+                                IDFakultas: $('#fakultas').val(),
+                                Jenjang: $('#jenjang').val()
+                            };
+                        },
+                        processResults: function (data, params) {
+                            return {
+                                results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+                            };
+                        },
+                    }
+                });
+                $("#prodi").change(function () {
+                    $("#lokasi").select2({
+                        placeholder: "-- Pilih Lokasi --",
+                        width: "100%",
+                        ajax: {
+                            url: "@Url.Action("GetLokasiByProdi", "MasterCPL")",
+                            dataType: 'json',
+                            method: "POST",
+                            delay: 250,
+                            cache: false,
+                            data: function (params) {
+                                return {
+                                    Search: params.term || "",
+                                    IDProdi: $('#prodi').val(),
+                                    Jenjang: $('#jenjang').val()
+                                };
+                            },
+                            processResults: function (data, params) {
+                                return {
+                                    results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Kampus } })
+                                };
+                            },
+                        }
+                    });
+                });
+            });
+        }
+        //batas crud detail
+        function DetailMasterCPL(id) {
+            $.LoadingOverlay("show");
+            $.ajax({
+                url: '/Admin/MasterCPL/ModalDetailMasterCpl/' + id,
+                type: 'get',
+                datatype: 'html',
+                success: function (e) {
+                    $.LoadingOverlay("hide");
+                    /*console.log(e);*/
+                    if ($('.data-content-modal').length) {
+                        $('.data-content-modal').remove();
+                    }
+                    $('#modal-inner').append(e);
+                    $('#detail-cpl-template').modal('show');
+                }, error: function (e) {
+                    $.LoadingOverlay("hide");
+                    Swal.fire({
+                        title: 'Oppss',
+                        icon: 'error',
+                        html: 'Coba Reload Page',
+                        showCloseButton: true,
+                        showCancelButton: false,
+                        focusConfirm: false,
+                        confirmButtonText: 'OK'
+                    })
+                    $('.modal').modal('hide');
+                }
+            })
+
+        }
+        //create
+        function PostCreate3() {
+            //getValueOnForm();
+            var formInputUser = new Object();
+            //var namaProdi = document.getElementById("idProdi");
+            //var selectedProdi = namaProdi.options[namaProdi.selectedIndex].text;
+            //var namaProdi = selectedProdi.substring(selectedProdi.indexOf('-') + 1);
+            formInputUser.FakultasID = $('#fakultas').val();
+            formInputUser.NamaFakultas = $('#fakultas').text();
+            formInputUser.ProdiID = $('#prodi').val();
+            formInputUser.NamaProdi = $('#prodi').text();
+            formInputUser.Kode = $('#kode').val();
+            formInputUser.Kelompok = $('#kelompok').val();
+
+            formInputUser.Capaian = $('textarea[name=txtCPL]').val();
+
+
+            var cekAktif = $('input[id=inp_status]:checked').val();
+            if (cekAktif == 1) {
+                formInputUser.IsActive = "true";
+            }
+            else { formInputUser.IsActive = "false"; }
+            console.log(formInputUser);
+            var base_url = window.location.origin;
+            $.ajax({
+                url: base_url + '/Admin/MasterCPL/PostDataCPL',
+                type: 'post',
+                datatype: 'json',
+                data: JSON.stringify(formInputUser),
+                //contentType: 'application/json'
+                contentType: 'application/json',
+            }).then(function (response) {
+                if (response.status == 400) {
+                    Swal.fire({
+                        title: 'Gagal!',
+                        icon: 'error',
+                        html: 'EMAIL atau NIP telah terdaftar!',
+                        showCloseButton: true,
+                        showCancelButton: false,
+                        focusConfirm: false,
+                        confirmButtonText: 'OK'
+                    })
+                    tableUser.ajax.reload(null, false);
+                    $('.modal').modal('hide');
+                    
+                    //$('#TambahUser')[0].reset();
+                }
+                else
+                    if (response.status == 200) {
+                        Swal.fire({
+                            title: 'Berhasil',
+                            icon: 'success',
+                            html: 'CPL Baru Berhasil Ditambahkan',
+                            showCloseButton: true,
+                            showCancelButton: false,
+                            focusConfirm: false,
+                            confirmButtonText: 'OK'
+                        })
+                        tableUser.ajax.reload(null, false);
+                        $('.modal').modal('hide');
+                        $("#fakultas").empty();
+                        $("#prodi").empty();
+                        $("#jenjang").empty();
+                        //$("#formRegistrasi").trigger("reset");
+                        //clearValueOnForm();
+                        //$('#TambahUser')[0].reset();
+
+                    }
+
+            });
+
+
+}
+
+        //batas main
+        var tableUser = $('#TableList').DataTable({
+            "columnDefs": [{
+                "searchable": false,
+                "orderable": false,
+                "paging": false,
+                "targets": 0,
+                //"visible": false, 'targets': [4, 6]
+            }],
+            //"order": [[1, 'asc']],
+            "proccessing": true,
+            "serverSide": true,
+            "order": [[1, 'asc']],
+            //"aaSorting": [[0, "asc"]],
+            "ajax": {
+                url: '/Admin/MasterCPL/GetList',
+                //dataSrc: ''
+                type: 'POST'
+            },
+            "language": {
+                "emptyTable": "No record found.",
+                "processing":
+                    '<i class="fa fa-spinner fa-spin fa-3x fa-fw" style="color:#2a2b2b;"></i><span class="sr-only">Loading...</span> ',
+                "search": "Search:",
+                "searchPlaceholder": ""
+            },
+            "columns": [
+                {
+                    "title": "Action",
+                    "data": "ID",
+                    "render": function (data, type, row, meta) {
+                        return `<div class="row justify-content-center">
+                            <div class="col" style="text-align:center">
+
+                               <a href="javascript:void(0)" style="color:black" onclick="UpdateMasterCPL('${data}')"> <i class="fas fa-edit coral" ></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="DetailMasterCPL('${data}')"> <i class="fas fa-file-search coral"></i></a>
+                                <a type="button"  id="btnDel"> <i class="fas fa-trash-alt coral"></i> </button >
+
+
+
+                            </div>
+                        </div>`;//<a href="javascript:void(0)" style="color:black" onclick="DeleteUserGetID('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
+                    }
+                },
+                {
+                    //"title": "No",
+                    "data": null,
+                    "render": function (data, type, full, meta) {
+                        return meta.row + 1;
+                    }
+                },
+                {
+                    //"title": "Nomor Induk Pegawai",
+                    "data": "Kode",
+                    "name": "Kode",
+                    "render": function (data, type, row, meta) {
+                        return '<div class="center">' + data + '</div>';
+                    }
+                },
+                {
+                    //"title": "Nama",
+                    "data": "Kelompok",
+                    "name": "Kelompok",
+                    "render": function (data, type, row, meta) {
+                        return '<div class="center">' + data + '</div>';
+                    }
+                },
+                {
+                    //"title": "Email",
+                    "data": "Capaian",
+                    "name": "Capaian",
+                    "render": function (data, type, row, meta) {
+                        return '<div class="center">' + data + '</div>';
+                    }
+                },
+
+
+
+
+            ],
+            "createdRow": function (row, data, index) {
+                $('td', row).css({
+                    'border': '1px solid coral',
+                    'border-collapse': 'collapse',
+                    'vertical-align': 'center',
+                });
+
+            }//,
+            //'columnDefs': [
+            //    //hide the second & fourth column
+            //    { 'visible': false, 'targets': [5] }
+            //]
+        });
+        //lookup kelompok
+        function loadFromLookup(tipe, id, nama) {
+
+            $("#" + id).select2({
+                placeholder: "-- Pilih " + nama + " --",
+                width: "100%",
+                ajax: {
+                    url: "@Url.Action("getLookupByTipe", "MasterCPL")",
+                    dataType: 'json',
+                    method: "POST",
+                    delay: 250,
+                    cache: false,
+                    data: function (params) {
+                        return {
+                            Tipe: tipe
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: $.map(data, function (item) { return { id: item.Nilai, value: item.Nilai, text: item.Nama } })
+                        };
+                    },
+                }
+            });
+        }
+    </script>
 }
 

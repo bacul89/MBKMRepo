@@ -1,13 +1,17 @@
-﻿
+﻿@model MBKM.Entities.ViewModel.VMLookup
 @{
     ViewBag.Title = "ModalCreateCPL";
     Layout = null;
 }
+@*@section css{
+
+    <link href="~/Content/select2.min.css" rel="stylesheet" />
+}*@
 
 <div class="modal-content data-content-modal" id="created-cpl-template">
     <div class="modal-header" style="background-color: #FF8A04; ">
         <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
-            TAMBAH CAPAIAN PEMBELAJARAN
+            TAMBAH CAPAIAN BELAJAR
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -15,10 +19,40 @@
     </div>
     <div class="modal-body">
         <form class="form-horizontal" id="frmSave">
-            <div class="form-group" id="frmAddUser">
+            <div class="form-group row">
+
+
+                <label for="fakultas" class="col-sm-3 control-label">Fakultas</label>
+                <div class="col-sm-9">
+                    <select name="fakultas" id="fakultas" class="form-control input-pendaftaran input-data"></select>
+                    @*@Html.DropDownListFor(model => model.Nama, ViewBag.listProdi as SelectList, "--Pilih Prodi/unit--", new { @class = "form-control input-pendaftaran input-data", @id = "txtProdi", @name = "txtProdi" })*@
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <label for="prodi" class="col-sm-3 control-label">Program Studi</label>
+                <div class="col-sm-9">
+
+                    <select name="prodi" id="prodi" class="form-control input-pendaftaran input-data"></select>
+                </div>
+
+            </div>
+            <div class="form-group row">
+                <label for="lokasi" class="col-sm-3 control-label">Lokasi</label>
+                <div class="col-sm-9">
+
+                    <select name="lokasi" id="lokasi" class="form-control input-md input-pendaftaran input-data"></select>
+                </div>
+
+            </div>
+
+            <div class="form-group">
                 <label for="txtKelompok" class="col-sm-3 control-label">Kelompok</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control input-pendaftaran input-data" id="txtKelompok" name="txtKelompok" placeholder="Input Kelompok">
+                    <select class="form-control input-pendaftaran input-data" id="txtKelompok" name="txtKelompok" placeholder="Pilih Kelompok">
+                        <option value="value">-</option>
+                        <option value="value">text</option>
+                    </select>
                 </div>
             </div>
             <div class="form-group">
@@ -31,11 +65,11 @@
                 <label for="txtCPL" class="col-sm-3 control-label">Capaian Pembelajaran</label>
                 <div class="col-sm-9">
                     @*<input type="text" class="form-control input-pendaftaran input-data" id="txtCPL" name="txtCPL" placeholder="Input Deskripsi Capaian Pembelajaran">*@
-                    <textarea class="form-control input-pendaftaran summernote input-data" name="txtCPL" rows="5" id="txtCPL"  placeholder="Input Deskripsi Capaian Pembelajaran"></textarea>
+                    <textarea class="form-control input-pendaftaran summernote input-data" name="txtCPL" rows="5" id="txtCPL" placeholder="Input Deskripsi Capaian Pembelajaran"></textarea>
 
                 </div>
             </div>
-           
+
             <div class="form-group">
                 <label for="inp_status" class="col-sm-3 control-label">Status</label>
                 <div class="col-sm-9">
@@ -55,4 +89,92 @@
         </form>
     </div>
 </div>
+@*@section Scripts{
+    <script>
+        $(document).ready(function () {
+            loadFakultas();
+            $("#prodi").select2({
+                dropdownParent: $("#TambahCPL"),
+                placeholder: "-- Pilih Program Studi --"
+            });
+            $("#lokasi").select2({
+                dropdownParent: $("#TambahCPL"),
+                placeholder: "-- Pilih Lokasi --"
+            });
+        });
+        function loadFakultas() {
+            $("#fakultas").select2({
+                dropdownParent: $("#TambahCPL"),
+                placeholder: "-- Pilih Fakultas --",
+                width: "100%",
+                ajax: {
+                    url: "@Url.Action("GetFakultas", "MasterCPL")",
+                    dataType: 'json',
+                    method: "POST",
+                    delay: 250,
+                    cache: false,
+                    data: function (params) {
+                        return {
+                            Search: params.term || ""
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+                        };
+                    },
+                }
+            });
+            $("#fakultas").change(function () {
+                $("#prodi").select2({
+                    placeholder: "-- Pilih Program Studi --",
+                    width: "100%",
+                    ajax: {
+                        url: "@Url.Action("GetProdiByFakultas", "MasterCPL")",
+                        dataType: 'json',
+                        method: "POST",
+                        delay: 250,
+                        cache: false,
+                        data: function (params) {
+                            return {
+                                Search: params.term || "",
+                                IDFakultas: $('#fakultas').val()
+                            };
+                        },
+                        processResults: function (data, params) {
+                            return {
+                                results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+                            };
+                        },
+                    }
+                });
+                $("#prodi").change(function () {
+                    $("#lokasi").select2({
+                        placeholder: "-- Pilih Lokasi --",
+                        width: "100%",
+                        ajax: {
+                            url: "@Url.Action("GetLokasiByProdi", "PendaftaranMataKuliah")",
+                            dataType: 'json',
+                            method: "POST",
+                            delay: 250,
+                            cache: false,
+                            data: function (params) {
+                                return {
+                                    Search: params.term || "",
+                                    IDProdi: $('#prodi').val()
+                                };
+                            },
+                            processResults: function (data, params) {
+                                return {
+                                    results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Kampus } })
+                                };
+                            },
+                        }
+                    });
+                });
+            });
+        }
+    </script>
+    <script src="~/Scripts/select2.min.js"></script>
+}*@
 

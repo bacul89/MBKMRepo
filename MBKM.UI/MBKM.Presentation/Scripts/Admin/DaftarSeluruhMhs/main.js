@@ -1,19 +1,20 @@
 ﻿var tableUser = $('#TableList').DataTable({
+    
     "columnDefs": [{
         "searchable": false,
         "orderable": false,
         "paging": false,
-        "targets": 0,
-        "visible": false, 'targets': [4, 6]
+        "targets": 0
+       
     }],
     //"order": [[1, 'asc']],
-    "proccessing": true,
-    "serverSide": true,
-    "order": [[1, 'asc']],
+    //"proccessing": true,
+   // "serverSide": true,
+    "order": [[2, 'asc']],
     //"aaSorting": [[0, "asc"]],
     "ajax": {
-        url: '/Admin/DaftarSeluruhMahasiswa/GetList',
-        type: 'POST'
+        url: '/Admin/DaftarSeluruhMahasiswa/GetDataMHS',
+        dataSrc: ''
     },
     "language": {
         "emptyTable": "No record found.",
@@ -23,6 +24,21 @@
         "searchPlaceholder": ""
     },
     "columns": [
+        {
+            "title": "Action",
+            "data": "ID",
+            "render": function (data, type, row, meta) {
+                return `<div class="row justify-content-center">
+                            <div class="col" style="text-align:center">
+                                
+                                 <a href="javascript:void(0)" style="color:black" onclick="DetailMhs('${data}')"> <i class="fas fa-file-search coral"></i></a>
+                                
+                                
+                                
+                            </div>
+                        </div>`;//<a href="javascript:void(0)" style="color:black" onclick="DeleteUserGetID('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
+            }
+        },
         {
             //"title": "No",
             "data": null,
@@ -62,14 +78,7 @@
                 return '<div class="center">' + data + '</div>';
             }
         },
-        {
-            //"title": "Jabatan",
-            "data": "Nama",
-            "name": "Nama",
-            "render": function (data, type, row, meta) {
-                return '<div class="center">' + data + '</div>';
-            }
-        },
+        
         {
             //"title": "Jabatan",
             "data": "Gender",
@@ -81,11 +90,19 @@
 
         },
         {
+            //"title": "Jabatan",
+            "data": "Nama",
+            "name": "Nama",
+            "render": function (data, type, row, meta) {
+                return '<div class="center">' + data + '</div>';
+            }
+        },
+        {
             //"title": "Program Studi/Unit",
             "data": "NoKerjasama",
             "name": "NoKerjasama",
             "render": function (data, type, row, meta) {
-                return '<div class="center">' + row.NamaProdi + '(' + row.KodeProdi + ')' + '</div>';
+                return '<div class="center">' + data + '</div>';
             }
         },
         {
@@ -93,7 +110,7 @@
             "data": "StatusKerjasama",
             "name": "StatusKerjasama",
             "render": function (data, type, row, meta) {
-                return '<div class="center">' + row.NamaProdi + '(' + row.KodeProdi + ')' + '</div>';
+                return '<div class="center">' + data + '</div>';
             }
         },
         {
@@ -101,25 +118,11 @@
             "data": "StatusVerifikasi",
             "name": "StatusVerifikasi",
             "render": function (data, type, row, meta) {
-                return '<div class="center">' + row.NamaProdi + '(' + row.KodeProdi + ')' + '</div>';
+                return '<div class="center">' + data + '</div>';
             }
         },
 
-        {
-            "title": "Action",
-            "data": "ID",
-            "render": function (data, type, row, meta) {
-                return `<div class="row justify-content-center">
-                            <div class="col" style="text-align:center">
-                                
-                                <a href="javascript:void(0)" style="color:black" onclick="DetailUserTemplate('${data}')"> <i class="fas fa-file-search coral"></i></a>
-                                
-                                
-                                
-                            </div>
-                        </div>`;//<a href="javascript:void(0)" style="color:black" onclick="DeleteUserGetID('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
-            }
-        },
+       
 
     ],
     "createdRow": function (row, data, index) {

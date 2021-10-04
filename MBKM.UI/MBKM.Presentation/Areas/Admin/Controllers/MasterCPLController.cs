@@ -1,4 +1,10 @@
-﻿using System;
+﻿using MBKM.Common.Helpers;
+using MBKM.Entities.Models.MBKM;
+using MBKM.Entities.ViewModel;
+using MBKM.Presentation.models;
+using MBKM.Services;
+using MBKM.Services.MBKMServices;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -9,25 +15,111 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 {
     public class MasterCPLController : Controller
     {
+        private ILookupService _lookupService;
+        private IMasterCapaianPembelajaranService _mcpService;
+        public MasterCPLController(ILookupService lookupService,IMasterCapaianPembelajaranService mcpService)
+        {
+            _lookupService = lookupService;
+            _mcpService = mcpService;
+        }
+
         // GET: Admin/MasterCPL
         public ActionResult Index()
         {
+            Session["username"] = "Smitty Werben Jeger Man Jensen";
             return View();
         }
-        public ActionResult ModaladdCPL()
+        [HttpPost]
+        public JsonResult GetList(DataTableAjaxPostModel model)
         {
-            //IEnumerable<VMLookup> listJabatan = _roleService.getLookupRole();
-            //ViewBag.listJabatan = new SelectList(listJabatan, "Nilai", "Nama");
+            VMListMasterCPL vMListCPL = _mcpService.GetListMasterCPL(model);
+            return Json(new
+            {
+                // this is what datatables wants sending back
+                draw = model.draw,
+                recordsTotal = vMListCPL.TotalCount,
+                recordsFiltered = vMListCPL.TotalFilterCount,
+                data = vMListCPL.gridDatas
+            });
+        }
 
-            //IEnumerable<VMListProdi> listProdi = _lookupService.getListProdi();
-            //ViewBag.listProdi = new SelectList(listProdi, "IDProdi", "NamaProdi");
+        [HttpPost]
+        public ActionResult PostDataCPL(MasterCapaianPembelajaran model)
+        {
 
-            //IEnumerable<VMListProdi> listNProdi = _lookupService.getListProdi();
-            //ViewBag.listNProdi = new SelectList(listNProdi, "NamaProdi", "IDProdi");
+            try
+            {
+               
+                        //model.NoTelp = "123";
+                       
+                        model.CreatedDate = DateTime.Now;
+                        model.UpdatedDate = DateTime.Now;
+                        model.IsDeleted = false;
+                        model.IsActive = model.IsActive;
+                        model.CreatedBy = "admin";
 
-            //return RedirectToAction("Index", "Home", new { area = "Portal" });
-            //Debug.WriteLine("akses index");
-            return View("ModalCreateCPL");
+                        _mcpService.Save(model);
+                        return Json(new ServiceResponse { status = 200, message = "Pendaftaran CPL Berhasil!" });
+                   
+
+            }
+            catch (Exception e)
+            {
+                return Json(new ServiceResponse { status = 500, message = e.Message });
+            }
+
+        }
+        //public ActionResult ModaladdCPL()
+        //{
+        //    IEnumerable<VMListProdi> listProdi = _lookupService.getListProdi();
+        //    ViewBag.listProdi = new SelectList(listProdi, "IDProdi", "NamaProdi");
+
+
+        //    return View("ModalCreateCPL");
+        //}
+        public ActionResult ModalDetailMasterCpl()
+        {
+
+            return View();
+        }
+        //public ActionResult ModalUpdateMasterCpl(int id)
+        //{
+        //    /*  var data = "";
+        //              if (id != null)
+        //                {*/
+        //    var json = "[{\"Kode\":\"john\",\"Kelompok\":22,\"CapaianPembelajaran\":\"mca\"}]";
+        //    List<MyJsonObject> myJsonObjects = Newtonsoft.Json.JsonConvert.DeserializeObject<List<MyJsonObject>>(json);
+        //    var data = myJsonObjects[0];
+
+        //    /* 
+        //  }*/
+        //    /*
+        //                var myJsonObjects = Newtonsoft.Json.JsonConvert.DeserializeObject(data);*/
+
+        //    return View(data);
+        //}
+        public ActionResult GetFakultas(string search,string jenjang)
+        {
+            //string email = Session["email"] as string;
+            //var result = GetMahasiswaByEmail(email);
+            return Json(_mcpService.GetFakultas(jenjang, search), JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetProdiByFakultas(string idFakultas, string search, string jenjang)
+        {
+            //string email = Session["email"] as string;
+            //var result = GetMahasiswaByEmail(email);
+            //return Json(_pmkService.GetFakultas(result.JenjangStudi, search), JsonRequestBehavior.AllowGet);
+            return Json(_mcpService.GetProdiByFakultas(jenjang, idFakultas, search), JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetLokasiByProdi(string idProdi, string search, string jenjang)
+        {
+            //string email = Session["email"] as string;
+            //var result = GetMahasiswaByEmail(email);
+            return Json(_mcpService.GetLokasiByProdi(jenjang, idProdi, search), JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult getLookupByTipe(string tipe)
+        {
+            return Json(_lookupService.getLookupByTipe(tipe), JsonRequestBehavior.AllowGet);
         }
     }
 }

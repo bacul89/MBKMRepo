@@ -1,4 +1,5 @@
 ﻿using MBKM.Entities.Basentities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -28,6 +29,7 @@ namespace MBKM.Entities.Models.MBKM
         public string NamaFakultas { get; set; }
         public Int64 ProdiID { get; set; }
         public string NamaProdi { get; set; }
+        [JsonIgnore]
         public virtual ICollection<PendaftaranMataKuliah> PendaftaranMataKuliahs { get; set; }
 
     }

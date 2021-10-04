@@ -17,7 +17,7 @@ namespace MBKM.Services.MBKMServices
         IEnumerable<VMFakultas> GetFakultas(string jenjangStudi, string search);
         IEnumerable<VMProdi> GetProdiByFakultas(string jenjangStudi, string idFakultas, string search);
         IEnumerable<VMProdi> GetLokasiByProdi(string jenjangStudi, string idProdi, string search);
-
+        VMSemester getOngoingSemester(string jenjangStudi);
         VMListPendaftaranMataKuliah GetPendaftaranMahasiswaDataTable(DataTableAjaxPostModel model);
         VMListPendaftaranMataKuliah GetPendaftaranMahasiswaDataTableByMahasiswa(DataTableAjaxPostModel model, string emailMahasiswa);
     }
@@ -46,6 +46,10 @@ namespace MBKM.Services.MBKMServices
             return _pmkRepository.GetLokasiByProdi(jenjangStudi, idProdi, search);
         }
 
+        public VMSemester getOngoingSemester(string jenjangStudi)
+        {
+            return _pmkRepository.getOngoingSemester(jenjangStudi);
+        }
         public VMListPendaftaranMataKuliah GetPendaftaranMahasiswaDataTable(DataTableAjaxPostModel model)
         {
             var searchBy = (model.search != null) ? model.search.value : null;
@@ -84,6 +88,5 @@ namespace MBKM.Services.MBKMServices
                 sortBy = "ID";
             sortBy = sortBy + " " + model.order[0].dir.ToUpper();
             return _pmkRepository.GetPendaftaranListFromMahasiswa(skip, take, searchBy, sortBy, sortDir, emailMahasiswa);
-        }
-    }
+        }    }
 }
