@@ -34,23 +34,24 @@
                 <div class="col-md-12">
                     <form class="form-horizontal col-md-7">
                         <div class="form-group">
-                            <label for="inp_tipeEmail" class="col-sm-3 control-label">Fakultas</label>
+                            <label for="inp_fakultas" class="col-sm-3 control-label">Fakultas</label>
                             <div class="col-sm-9">
-                                <select class="form-control input-pendaftaran input-data">
-                                    <option value="value">-</option>
-                                    <option value="value">hallo</option>
-                                    <option value="value">hallo</option>
+                                <select class="form-control input-data" name="jenjang" id="jenjang">
+                                    @*<option value="" selected disabled>-- Pilih Authority Approval --</option>*@
                                 </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inp_fakultas" class="col-sm-3 control-label">Fakultas</label>
+                            <div class="col-sm-9">
+                                <select name="fakultas" id="fakultas" class="form-control input-md"></select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inp_email" class="col-sm-3 control-label">Program Studi</label>
                             <div class="col-sm-9">
-                                <select class="form-control input-pendaftaran input-data">
-                                    <option value="value">-</option>
-                                    <option value="value">hallo</option>
-                                    <option value="value">hallo</option>
-                                </select>
+                                <select name="prodi" id="prodi" class="form-control input-md"></select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -103,5 +104,204 @@
     <script src="~/Scripts/Admin/MasterMapingCapaianPembelajaran/main.js"></script>
     <script src="~/Scripts/Admin/MasterMapingCapaianPembelajaran/crud.js"></script>
     <script src="~/Scripts/loading/loadingoverlay.min.js"></script>
+
+
+
+    <script>
+        var datatable = null;
+        $(document).ready(function () {
+
+            loadFromLookup("JenjangStudi", "jenjang", "Jenjang Studi");
+
+            @*loadFakultas();*@
+            @*$("#prodi").select2({
+                placeholder: "-- Pilih Program Studi --"
+            });
+            $("#lokasi").select2({
+                placeholder: "-- Pilih Lokasi --"
+            });
+            datatable = $('#hasilPencarian').DataTable({
+            });*@
+        });
+        $('#cari').click(function () {
+            datatable.destroy();
+            datatable = $('#hasilPencarian').DataTable({
+                ajax: {
+                    url: '@Url.Action("GetMataKuliahByProdi","PendaftaranMataKuliah")?idProdi=' + $('#prodi').val(),
+                    dataSrc: ''
+                },
+                "columns": [
+                    {
+                        "data": "ID",
+                        "render": function (data, type, row, meta) {
+                            return `<div class="row justify-content-center">
+                            <div class="col" style="text-align:center">
+                                <a href="javascript:void(0)" style="color:black" onclick="javascript:alert('${data}')"> tes</i></a>
+                            </div>
+                        </div>`;
+                        }
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, full, meta) {
+                            return meta.row + 1;
+                        }
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, full, meta) {
+                            return meta.row + 1;
+                        }
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, full, meta) {
+                            return meta.row + 1;
+                        }
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, full, meta) {
+                            return meta.row + 1;
+                        }
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, full, meta) {
+                            return meta.row + 1;
+                        }
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, full, meta) {
+                            return meta.row + 1;
+                        }
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, full, meta) {
+                            return meta.row + 1;
+                        }
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, full, meta) {
+                            return meta.row + 1;
+                        }
+                    }
+                ]
+            });
+        });
+        function convertMilisecondToDate(value) {
+            var num = parseInt(value.match(/\d+/), 10)
+            // console.log(value);
+
+            // var time = value; // get your number
+            var date = new Date(num); // create Date object
+            // var date = new Date(1324339200000);
+            // console.log(date.toString());
+            var result = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()
+            return result;
+
+        }
+
+        function loadFakultas() {
+            $("#fakultas").select2({
+                placeholder: "-- Pilih Fakultas --",
+                width: "100%",
+                ajax: {
+                    url: "/Portal/PendaftaranMataKuliah/GetFakultas",
+                    dataType: 'json',
+                    method: "POST",
+                    delay: 250,
+                    cache: false,
+                    data: function (params) {
+                        console.log(params);
+                        return {
+                            Search: params.term || ""
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+                        };
+                    },
+                }
+            });
+            $("#fakultas").change(function () {
+                $("#prodi").select2({
+                    placeholder: "-- Pilih Program Studi --",
+                    width: "100%",
+                    ajax: {
+                        url: "/Portal/PendaftaranMataKuliah/GetProdiByFakultas",
+                        dataType: 'json',
+                        method: "POST",
+                        delay: 250,
+                        cache: false,
+                        data: function (params) {
+                            return {
+                                Search: params.term || "",
+                                IDFakultas: $('#fakultas').val()
+                            };
+                        },
+                        processResults: function (data, params) {
+                            return {
+                                results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+                            };
+                        },
+                    }
+                });
+                $("#prodi").change(function () {
+                    $("#lokasi").select2({
+                        placeholder: "-- Pilih Lokasi --",
+                        width: "100%",
+                        ajax: {
+                            url: "@Url.Action("GetLokasiByProdi", "PendaftaranMataKuliah")",
+                            dataType: 'json',
+                            method: "POST",
+                            delay: 250,
+                            cache: false,
+                            data: function (params) {
+                                return {
+                                    Search: params.term || "",
+                                    IDProdi: $('#prodi').val()
+                                };
+                            },
+                            processResults: function (data, params) {
+                                return {
+                                    results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Kampus } })
+                                };
+                            },
+                        }
+                    });
+                });
+            });
+        }
+
+        function loadFromLookup(tipe, id, nama) {
+            $("#" + id).select2({
+                placeholder: "-- Pilih " + nama + " --",
+                width: "100%",
+                ajax: {
+                    url: "@Url.Action("getLookupByTipe", "Home")",
+                    dataType: 'json',
+                    method: "POST",
+                    delay: 250,
+                    cache: false,
+                    data: function (params) {
+                        return {
+                            Tipe: tipe
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: $.map(data, function (item) { return { id: item.Nilai, value: item.Nilai, text: item.Nama } })
+                        };
+                    },
+                }
+            });
+        }
+    </script>
+
 }
 

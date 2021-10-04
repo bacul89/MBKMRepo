@@ -100,6 +100,7 @@
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\VMMataKuliah.cs" />
     <Compile Include="ViewModel\VMProdi.cs" />
     <Compile Include="ViewModel\VMFakultas.cs" />
     <Compile Include="ViewModel\VMListMahasiswa.cs" />
