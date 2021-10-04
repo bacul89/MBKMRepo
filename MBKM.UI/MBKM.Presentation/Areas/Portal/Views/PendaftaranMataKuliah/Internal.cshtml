@@ -1,0 +1,529 @@
+﻿
+@{
+    Layout = "~/Areas/Portal/Views/shared/_LayoutHome.cshtml";
+    ViewBag.Title = "SIMBKM";
+}
+
+<style>
+
+    .coral {
+        color: coral;
+    }
+
+    .center {
+        align-content: center;
+        align-items: center;
+        vertical-align: unset;
+        align-self: center;
+        text-align: center
+    }
+    .zero-padding {
+        padding: 10px 15px !important;
+    }
+
+    .vertical-center {
+        vertical-align: middle !important;
+    }
+
+    .no-border {
+        border: 0px !important;
+    }
+    .table-responsive {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+
+    table.dataTable.no-footer {
+        border: none;
+    }
+
+    .dataTables_wrapper .dataTables_processing {
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        width: 30%;
+        height: 40px;
+        margin-left: -20%;
+        margin-top: -25px;
+        padding-top: 20px;
+        text-align: center;
+        font-size: 1.2em;
+        background: none;
+    }
+
+    thead tr {
+        background-color: #FF8A04;
+        border: 0;
+    }
+
+    .table-spacing {
+        border-spacing: 0px 0.5rem !important;
+    }
+
+    .body-content {
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+    }
+</style>
+
+<form action="@Url.Action("FormPendaftaran","PendaftaranMataKuliah")" method="post" id="daftarMatkul"> 
+    <input type="hidden" id="idMatkul" name="idMatkul" />
+</form>
+<input type="hidden" name="strm" id="strm" value="@Model.ID" />
+
+<div class="card center-block" style="background-color: white; margin: 15px;">
+    <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+        <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; padding-left: 15px; font-weight: bold; font-size: 20px; color: black; ">
+            PENDAFTARAN MATA KULIAH <br />
+        </h5>
+        <hr />
+        <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); margin: 15px;">
+            <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; padding-left: 15px; font-weight: bold; font-size: 18px; color: black; ">
+                FORM INPUT INFORMASI PERTUKARAN <br />
+            </h5>
+            <hr />
+            <div class="container" style="width: 100%; padding-bottom: 15px;">
+                <table class="table" style="width: auto;">
+                    <tr>
+                        <td style="text-align: right">Jenis Program MBKM</td>
+                        <td style="width: 400px;">
+                            <select name="jenisProgramMBKM" id="jenisProgramMBKM" class="form-control input-md"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right">Jenis Kegiatan MBKM</td>
+                        <td style="width: 400px;">
+                            <select name="jenisKegiatanMBKM" id="jenisKegiatanMBKM" class="form-control input-md"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right">Nama Instansi</td>
+                        <td style="width: 400px;">
+                            <select name="namaInstansi" id="namaInstansi" class="form-control input-md"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right">No. Kerjasama</td>
+                        <td style="width: 400px;">
+                            <select name="noKerjasama" id="noKerjasama" class="form-control input-md"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button id="submit" name="submit" class="btn" style="float: right; background-color: #FF8A04; color: white; padding: 2px 30px; font-weight: bold; font-size: 16px;">SUBMIT</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <hr />
+        <div class="container" style="width: 100%; padding-bottom: 15px;">
+            <table class="table" style="width: auto;">
+                <tr>
+                    <td style="text-align: right">Fakultas</td>
+                    <td style="width: 400px;">
+                        <select name="fakultas" id="fakultas" class="form-control input-md"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right">Program Studi</td>
+                    <td style="width: 400px;">
+                        <select name="prodi" id="prodi" class="form-control input-md"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right">Lokasi</td>
+                    <td style="width: 400px;">
+                        <select name="lokasi" id="lokasi" class="form-control input-md"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right">Tahun Semester</td>
+                    <td style="width: 400px;">
+                        <input type="text" name="tahunSemester" id="tahunSemester" class="form-control input-md" value="@Model.Nama" disabled></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button id="cari" name="cari" class="btn" style="float: right; background-color: #FF8A04; color: white; padding: 2px 30px; font-weight: bold; font-size: 16px;">CARI</button>
+                    </td>
+                </tr>
+            </table>
+            <hr />
+            <div style="overflow-x: auto;">
+                <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; font-weight: bold; font-size: 18px; color: black; ">
+                    JADWAL MATA KULIAH
+                </h5>
+                <table id="hasilPencarian" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
+                    <thead>
+                        <tr>
+                            <th class="zero-padding no-border vertical-center sorting">Registrasi</th>
+                            <th class="zero-padding no-border vertical-center sorting">No.</th>
+                            <th class="zero-padding no-border vertical-center sorting">Kode Matakuliah</th>
+                            <th class="zero-padding no-border vertical-center sorting">Nama Matakuliah</th>
+                            <th class="zero-padding no-border vertical-center sorting">SKS</th>
+                            <th class="zero-padding no-border vertical-center sorting">Seksi</th>
+                            <th class="zero-padding no-border vertical-center sorting">Hari</th>
+                            <th class="zero-padding no-border vertical-center sorting">Waktu</th>
+                            <th class="zero-padding no-border vertical-center sorting">Waktu</th>
+                            <th class="zero-padding no-border vertical-center sorting">Nama Dosen</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        var datatable = null;
+        $(document).ready(function () {
+            loadFakultas();
+            loadProgram();
+            setInformasiPertukaran();
+            $("#prodi").select2({
+                placeholder: "-- Pilih Program Studi --"
+            });
+            $("#lokasi").select2({
+                placeholder: "-- Pilih Lokasi --"
+            });
+            $("#jenisKegiatanMBKM").select2({
+                placeholder: "-- Pilih Jenis Kegiatan --"
+            });
+            $("#namaInstansi").select2({
+                placeholder: "-- Pilih Nama Instansi --"
+            });
+            $("#noKerjasama").select2({
+                placeholder: "-- Pilih No. Kerjasama --"
+            });
+            datatable = $('#hasilPencarian').DataTable();
+        });
+        $('#cari').click(function () {
+            if (!$('#submit').is(":hidden")) {
+                alert('Tolong input informasi pertukan terlebih dahulu!');
+                return;
+            } 
+            datatable.destroy();
+            datatable = $('#hasilPencarian').DataTable({
+                ajax: {
+                    url: '@Url.Action("GetMataKuliahByProdi","PendaftaranMataKuliah")?idProdi=' + $('#prodi').val() + '&lokasi=' + $('#lokasi').val() + '&strm=' + $('#strm').val(),
+                    dataSrc: ''
+                },
+                "columns": [
+                    {
+                        "data": "ID",
+                        "render": function (data, type, row, meta) {
+                            return `<div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick="javascript:$('#idMatkul').val(${data}); $('#daftarMatkul').submit();"><i class="fas fa-edit"></i></a></div>`;
+                        }
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, full, meta) {
+                            return '<div style="text-align:center; vertical-align: middle;">' + (meta.row + 1) + '</div>';
+                        }
+                    },
+                    {
+                        "data": "KodeMataKuliah",
+                        "render": function (data, type, row, meta) {
+                            return '<div style="text-align:center; vertical-align: middle;">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "NamaMataKuliah",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "SKS",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "ClassSection",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "Hari",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "JamMasuk",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "JamSelesai",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "NamaDosen",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    }
+                ]
+            });
+        });
+        $('#submit').click(function () {
+            var data = new Object();
+            data.JenisPertukaran = $('#jenisProgramMBKM').select2('data')[0].text;
+            data.JenisKerjasama = $('#jenisKegiatanMBKM').select2('data')[0].text;
+            data.STRM = $('#strm').val();
+            if ($('#noKerjasama').val()) {
+                data.NoKerjasama = $('#noKerjasama').select2('data')[0].text;
+            }
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("InsertInformasiPertukaran", "PendaftaranMataKuliah")",
+                data: data
+            }).then(function (response) {
+                alert(response.message);
+                if (response.status == 200) {
+                    $('#submit').hide();
+                    $("#jenisProgramMBKM").prop("disabled", true);
+                    $("#jenisKegiatanMBKM").prop("disabled", true);
+                    $("#namaInstansi").prop("disabled", true);
+                    $("#noKerjasama").prop("disabled", true);
+                }
+            });
+        });
+        function loadFakultas() {
+            $("#prodi").prop("disabled", true);
+            $("#lokasi").prop("disabled", true);
+            $("#fakultas").select2({
+                placeholder: "-- Pilih Fakultas --",
+                width: "100%",
+                ajax: {
+                    url: "@Url.Action("GetFakultas", "PendaftaranMataKuliah")",
+                    dataType: 'json',
+                    method: "POST",
+                    delay: 250,
+                    cache: false,
+                    data: function (params) {
+                        return {
+                            Search: params.term || ""
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+                        };
+                    },
+                }
+            });
+            $("#fakultas").change(function () {
+                $("#lokasi").empty();
+                $("#prodi").empty();
+                $("#prodi").prop("disabled", false);
+                $("#lokasi").prop("disabled", true);
+                $("#prodi").select2({
+                    placeholder: "-- Pilih Program Studi --",
+                    width: "100%",
+                    ajax: {
+                        url: "@Url.Action("GetProdiByFakultas", "PendaftaranMataKuliah")",
+                        dataType: 'json',
+                        method: "POST",
+                        delay: 250,
+                        cache: false,
+                        data: function (params) {
+                            return {
+                                Search: params.term || "",
+                                IDFakultas: $('#fakultas').val()
+                            };
+                        },
+                        processResults: function (data, params) {
+                            return {
+                                results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+                            };
+                        },
+                    }
+                });
+                $("#prodi").change(function () {
+                    $("#lokasi").empty();
+                    $("#lokasi").prop("disabled", false);
+                    $("#lokasi").select2({
+                        placeholder: "-- Pilih Lokasi --",
+                        width: "100%",
+                        ajax: {
+                            url: "@Url.Action("GetLokasiByProdi", "PendaftaranMataKuliah")",
+                            dataType: 'json',
+                            method: "POST",
+                            delay: 250,
+                            cache: false,
+                            data: function (params) {
+                                return {
+                                    Search: params.term || "",
+                                    IDProdi: $('#prodi').val()
+                                };
+                            },
+                            processResults: function (data, params) {
+                                return {
+                                    results: $.map(data, function (item) { return { id: item.Kampus, value: item.Kampus, text: item.Kampus } })
+                                };
+                            },
+                        }
+                    });
+                });
+            });
+        }
+        function loadProgram() {
+            $("#jenisKegiatanMBKM").prop("disabled", true);
+            $("#namaInstansi").prop("disabled", true);
+            $("#noKerjasama").prop("disabled", true);
+            $("#jenisProgramMBKM").select2({
+                placeholder: "-- Pilih Jenis Program --",
+                width: "100%",
+                ajax: {
+                    url: "@Url.Action("GetProgram", "PendaftaranMataKuliah")",
+                    dataType: 'json',
+                    method: "POST",
+                    delay: 250,
+                    cache: false,
+                    data: function (params) {
+                        return {
+                            Search: params.term || ""
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: $.map(data, function (item) { return { id: item.JenisPertukaran, value: item.JenisPertukaran, text: item.JenisPertukaran } })
+                        };
+                    },
+                }
+            });
+            $("#jenisProgramMBKM").change(function () {
+                $("#jenisKegiatanMBKM").empty();
+                $("#namaInstansi").empty();
+                $("#noKerjasama").empty();
+                $("#jenisKegiatanMBKM").prop("disabled", false);
+                $("#namaInstansi").prop("disabled", true);
+                $("#noKerjasama").prop("disabled", true);
+
+                $("#jenisKegiatanMBKM").select2({
+                    placeholder: "-- Pilih Jenis Kegiatan --",
+                    width: "100%",
+                    ajax: {
+                        url: "@Url.Action("GetKegiatanByProgram", "PendaftaranMataKuliah")",
+                        dataType: 'json',
+                        method: "POST",
+                        delay: 250,
+                        cache: false,
+                        data: function (params) {
+                            return {
+                                Search: params.term || "",
+                                program: $('#jenisProgramMBKM').val()
+                            };
+                        },
+                        processResults: function (data, params) {
+                            return {
+                                results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.JenisKerjasama } })
+                            };
+                        },
+                    }
+                });
+                $("#jenisKegiatanMBKM").change(function () {
+                    if ($("#jenisProgramMBKM").val() == 'Pertukaran') {
+                        return;
+                    }
+                    $("#namaInstansi").empty();
+                    $("#noKerjasama").empty();
+                    $("#namaInstansi").prop("disabled", false);
+                    $("#noKerjasama").prop("disabled", true);
+
+                    $("#namaInstansi").select2({
+                        placeholder: "-- Pilih Nama Instansi --",
+                        width: "100%",
+                        ajax: {
+                            url: "@Url.Action("GetInstansiByJenisKerjasama", "PendaftaranMataKuliah")",
+                            dataType: 'json',
+                            method: "POST",
+                            delay: 250,
+                            cache: false,
+                            data: function (params) {
+                                return {
+                                    Search: params.term || "",
+                                    idKerjasama: $('#jenisKegiatanMBKM').val()
+                                };
+                            },
+                            processResults: function (data, params) {
+                                return {
+                                    results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
+                                };
+                            },
+                        }
+                    });
+                    $("#namaInstansi").change(function () {
+                        $("#noKerjasama").empty();
+                        $("#noKerjasama").prop("disabled", false);
+
+                        $("#noKerjasama").select2({
+                            placeholder: "-- Pilih Nomor Kerja Sama --",
+                            width: "100%",
+                            ajax: {
+                                url: "@Url.Action("GetNoKerjasamaByInstansi", "PendaftaranMataKuliah")",
+                                dataType: 'json',
+                                method: "POST",
+                                delay: 250,
+                                cache: false,
+                                data: function (params) {
+                                    return {
+                                        Search: params.term || "",
+                                        instansi: $('#namaInstansi').val()
+                                    };
+                                },
+                                processResults: function (data, params) {
+                                    return {
+                                        results: $.map(data, function (item) { return { id: item.NoPerjanjian, value: item.NoPerjanjian, text: item.NoPerjanjian } })
+                                    };
+                                },
+                            }
+                        });
+                    });
+                });
+            });
+        }
+        function setInformasiPertukaran() {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetInformasiPertukaran", "PendaftaranMataKuliah")"
+            }).then(function (response) {
+                if (response != null) {
+                    var option = $("<option selected='selected'></option>").val(response.JenisPertukaran).text(response.JenisPertukaran);
+                    $("#jenisProgramMBKM").append(option).trigger('change');
+                    $("#jenisProgramMBKM").prop("disabled", true);
+                    option = $("<option selected='selected'></option>").val(response.JenisKerjasama).text(response.JenisKerjasama);
+                    $("#jenisKegiatanMBKM").append(option).trigger('change');
+                    $("#jenisKegiatanMBKM").prop("disabled", true);
+                    if (response.NoKerjasama != null) {
+                        $.ajax({
+                            type: "GET",
+                            url: "@Url.Action("GetInstansiByNoKerjasama", "PendaftaranMataKuliah")?noKerjasama=" + response.NoKerjasama
+                        }).then(function (response2) {
+                            var option = $("<option selected='selected'></option>").val(response2.NamaInstansi).text(response2.NamaInstansi);
+                            $("#namaInstansi").append(option).trigger('change');
+                            $("#namaInstansi").prop("disabled", true);
+                            option = $("<option selected='selected'></option>").val(response.NoKerjasama).text(response.NoKerjasama);
+                            $("#noKerjasama").append(option).trigger('change');
+                            $("#noKerjasama").prop("disabled", true);
+                        });
+                    }
+                    $('#submit').hide();
+                }
+            });
+        }
+    </script>
+}

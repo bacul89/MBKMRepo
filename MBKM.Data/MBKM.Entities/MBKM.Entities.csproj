@@ -98,8 +98,10 @@
     <Compile Include="Models\Menu.cs" />
     <Compile Include="Models\MenuRole.cs" />
     <Compile Include="Models\Role.cs" />
+    <Compile Include="ViewModel\VMSemester.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\VMPendaftaranJadwalKuliah.cs" />
     <Compile Include="ViewModel\VMProdi.cs" />
     <Compile Include="ViewModel\VMFakultas.cs" />
     <Compile Include="ViewModel\VMListMahasiswa.cs" />

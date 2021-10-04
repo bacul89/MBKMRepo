@@ -13,5 +13,6 @@ namespace MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces
         IEnumerable<VMFakultas> GetFakultas(string jenjangStudi, string search);
         IEnumerable<VMProdi> GetProdiByFakultas(string jenjangStudi, string idFakultas, string search);
         IEnumerable<VMProdi> GetLokasiByProdi(string jenjangStudi, string idProdi, string search);
+        VMSemester getOngoingSemester(string jenjangStudi);
     }
 }

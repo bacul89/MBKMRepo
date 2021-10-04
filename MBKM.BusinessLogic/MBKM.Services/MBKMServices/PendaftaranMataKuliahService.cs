@@ -16,6 +16,7 @@ namespace MBKM.Services.MBKMServices
         IEnumerable<VMFakultas> GetFakultas(string jenjangStudi, string search);
         IEnumerable<VMProdi> GetProdiByFakultas(string jenjangStudi, string idFakultas, string search);
         IEnumerable<VMProdi> GetLokasiByProdi(string jenjangStudi, string idProdi, string search);
+        VMSemester getOngoingSemester(string jenjangStudi);
     }
     public class PendaftaranMataKuliahService : EntityService<PendaftaranMataKuliah>, IPendaftaranMataKuliahService
     {
@@ -40,6 +41,10 @@ namespace MBKM.Services.MBKMServices
         public IEnumerable<VMProdi> GetLokasiByProdi(string jenjangStudi, string idProdi, string search)
         {
             return _pmkRepository.GetLokasiByProdi(jenjangStudi, idProdi, search);
+        }
+        public VMSemester getOngoingSemester(string jenjangStudi)
+        {
+            return _pmkRepository.getOngoingSemester(jenjangStudi);
         }
     }
 }

@@ -52,5 +52,15 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return result;
             }
         }
+        public VMSemester getOngoingSemester(string jenjangStudi)
+        {
+            using (var context = new MBKMContext())
+            {
+                var jenjangStudiParam = new SqlParameter("@JenjangStudi", jenjangStudi);
+                var result = context.Database
+                    .SqlQuery<VMSemester>("GetSemester @JenjangStudi", jenjangStudiParam).FirstOrDefault();
+                return result;
+            }
+        }
     }
 }
