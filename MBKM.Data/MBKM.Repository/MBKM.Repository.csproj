@@ -112,6 +112,7 @@
     <Compile Include="Repositories\MBKMRepository\AttachmentRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\CPLMatakuliahRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\CPLMKPendaftaranRepository.cs" />
+    <Compile Include="Repositories\MBKMRepository\DaftarAllMahasiswaRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\InformasiPertukaranRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\JadwalKuliahMahasiswaRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\JadwalKuliahRepository.cs" />
