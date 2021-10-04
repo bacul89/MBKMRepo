@@ -85,6 +85,36 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             _menuRoleService.Save(data);
             return Json(data);
         }
+        /*Modal Update*/
+        public ActionResult ModalUpdateMenuRole(int id)
+        {
+            var data = _menuRoleService.Get(id);
+            var listRole = _roleService.getLookupRole();
+            ViewData["listRole"] = listRole;
+            var listMenu = _menuService.getListMenu();
+            ViewData["listMenu"] = listMenu;
+            return View(data);
+        }
+        [HttpPost]
+        public ActionResult PostUpdateMenuRole(MenuRole menuRole)
+        {
+
+            MenuRole data = _menuRoleService.Get(menuRole.ID);
+            data.MenuID = menuRole.MenuID;
+            data.RoleID = menuRole.RoleID;
+            data.IsActive = menuRole.IsActive;
+            data.IsCreate = menuRole.IsCreate;
+            data.IsView = menuRole.IsView;
+            data.IsUpdate = menuRole.IsUpdate;
+            data.IsDelete = menuRole.IsDelete;
+            data.UpdatedBy = Session["username"] as string;
+
+
+
+            _menuRoleService.Save(data);
+
+            return Json(data);
+        }
 
     }
 }

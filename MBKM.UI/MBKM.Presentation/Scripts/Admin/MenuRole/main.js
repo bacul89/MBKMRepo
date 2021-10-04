@@ -27,7 +27,7 @@
             "render": function (data, type, row, meta) {
                 return `<div class="row justify-content-center">
                             <div class="col" style="text-align:center">
-                                <a href="javascript:void(0)" style="color:black" onclick="IndexUpdateEmailTemplate('${data}')"> <i class="fas fa-edit coral" ></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="UpdateMenuRole('${data}')"> <i class="fas fa-edit coral" ></i></a>
                                 <a href="javascript:void(0)" style="color:black" onclick="DetailMenuRole('${data}')"> <i class="fas fa-file-search coral"></i></a>
                                 <a href="javascript:void(0)" style="color:black" onclick="DeletedMenuRole('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
                             </div>
