@@ -18,7 +18,7 @@
             "render": function (data, type, row, meta) {
                 return `<div class="center vertical-center" style="text-align:center; align-items:center">
                             <a href="javascript:void()">
-                                <button type="button" onclick="IndexDetailVerifikasiMahasiswa('${data}')" class="btn btn-warning btn-sm" style="font-size: 0.5vw"><i class="fas fa-search"></i></button>
+                                <button type="button" onclick="urlLinkDetailCPMKP()" class="btn btn-warning btn-sm" style="font-size: 0.5vw"><i class="fas fa-search"></i></button>
                             </a>
                         </div>`;
             }
@@ -119,4 +119,8 @@
 
 function OpenModal() {
     $('#DetailTrackingStatus').modal('show');
+}
+
+function urlLinkDetailCPMKP(id) {
+    window.location.href = "/Admin/ApprovalPendaftaranMatakuliah/DetailCPL";
 }

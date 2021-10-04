@@ -19,6 +19,7 @@ namespace MBKM.Services.MBKMServices
         IEnumerable<VMProdi> GetLokasiByProdi(string jenjangStudi, string idProdi, string search);
 
         VMListPendaftaranMataKuliah GetPendaftaranMahasiswaDataTable(DataTableAjaxPostModel model);
+        VMListPendaftaranMataKuliah GetPendaftaranMahasiswaDataTableByMahasiswa(DataTableAjaxPostModel model, string emailMahasiswa);
     }
     public class PendaftaranMataKuliahService : EntityService<PendaftaranMataKuliah>, IPendaftaranMataKuliahService
     {
@@ -63,6 +64,26 @@ namespace MBKM.Services.MBKMServices
                 sortBy = "ID";
             sortBy = sortBy + " " + model.order[0].dir.ToUpper();
             return _pmkRepository.GetPendaftaranList(skip, take, searchBy, sortBy, sortDir);
+        }
+
+        public VMListPendaftaranMataKuliah GetPendaftaranMahasiswaDataTableByMahasiswa(DataTableAjaxPostModel model, string emailMahasiswa)
+        {
+            var searchBy = (model.search != null) ? model.search.value : null;
+            var take = model.length;
+            var skip = model.start;
+            string sortBy = "";
+            bool sortDir = true;
+
+            if (model.order != null)
+            {
+                // in this example we just default sort on the 1st column
+                sortBy = model.columns[model.order[0].column].data;
+                sortDir = model.order[0].dir.ToLower() == "asc";
+            }
+            if (sortBy == null)
+                sortBy = "ID";
+            sortBy = sortBy + " " + model.order[0].dir.ToUpper();
+            return _pmkRepository.GetPendaftaranListFromMahasiswa(skip, take, searchBy, sortBy, sortDir, emailMahasiswa);
         }
     }
 }

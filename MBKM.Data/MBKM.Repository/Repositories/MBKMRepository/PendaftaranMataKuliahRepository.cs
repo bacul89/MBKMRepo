@@ -67,7 +67,20 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 mListPendaftaranMataKuliah.TotalCount = result.Count();
                 var gridfilter = result
                     .AsQueryable()
-                    .Where(y => y.Nilai.Contains(SearchParam));    
+                    .Where(y => y.Nilai.Contains(SearchParam) 
+                    || y.mahasiswas.NamaUniversitas.Contains(SearchParam) 
+                    || y.mahasiswas.ProdiAsal.Contains(SearchParam)
+                    || y.mahasiswas.NIMAsal.Contains(SearchParam)
+                    || y.mahasiswas.Nama.Contains(SearchParam)
+                    || y.mahasiswas.NoKerjasama.Contains(SearchParam)
+                    || y.MatkulKodeAsal.Contains(SearchParam)
+                    || y.MatkulAsal.Contains(SearchParam)
+                    || y.JadwalKuliahs.NamaProdi.Contains(SearchParam)
+                    || y.JadwalKuliahs.KodeMataKuliah.Contains(SearchParam)
+                    || y.JadwalKuliahs.NamaMataKuliah.Contains(SearchParam)
+                    )
+                     /*.OrderBy(SortBy, SortDir)*/
+                    ;
                 mListPendaftaranMataKuliah.gridDatas = gridfilter.Take(Length)
                     .Select(z => new GridListPendaftaranMataKuliah
                     {
@@ -80,12 +93,60 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                         mahasiswas = z.mahasiswas,
                         MatkulKodeAsal = z.MatkulKodeAsal,
                         MatkulAsal = z.MatkulAsal,
+                        StatusPendaftaran = z.StatusPendaftaran,
                     }).ToList();
                 mListPendaftaranMataKuliah.TotalFilterCount = gridfilter.Count();
                 return mListPendaftaranMataKuliah;
             }
         }
 
+
+        public VMListPendaftaranMataKuliah GetPendaftaranListFromMahasiswa(int Skip, int Length, string SearchParam, string SortBy, bool SortDir, string emailMahasiswa)
+        {
+            VMListPendaftaranMataKuliah mListPendaftaranMataKuliah = new VMListPendaftaranMataKuliah();
+            if (String.IsNullOrEmpty(SearchParam))
+            {
+                SearchParam = "";
+            }
+            using (var context = new MBKMContext())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                var result = context.PendaftaranMataKuliahs.Where(x => x.IsDeleted == false && x.mahasiswas.Email == emailMahasiswa).Include(x => x.mahasiswas).Include(x => x.JadwalKuliahs);
+                mListPendaftaranMataKuliah.TotalCount = result.Count();
+                var gridfilter = result
+                    .AsQueryable()
+                    .Where(y => y.Nilai.Contains(SearchParam)
+                    || y.mahasiswas.NamaUniversitas.Contains(SearchParam)
+                    || y.mahasiswas.ProdiAsal.Contains(SearchParam)
+                    || y.mahasiswas.NIMAsal.Contains(SearchParam)
+                    || y.mahasiswas.Nama.Contains(SearchParam)
+                    || y.mahasiswas.NoKerjasama.Contains(SearchParam)
+                    || y.MatkulKodeAsal.Contains(SearchParam)
+                    || y.MatkulAsal.Contains(SearchParam)
+                    || y.JadwalKuliahs.NamaProdi.Contains(SearchParam)
+                    || y.JadwalKuliahs.KodeMataKuliah.Contains(SearchParam)
+                    || y.JadwalKuliahs.NamaMataKuliah.Contains(SearchParam)
+                    )
+                    /*.OrderBy(SortBy, SortDir)*/
+                    ;
+                mListPendaftaranMataKuliah.gridDatas = gridfilter.Take(Length)
+                    .Select(z => new GridListPendaftaranMataKuliah
+                    {
+                        ID = z.ID,
+                        DosenPembimbing = z.DosenPembimbing,
+                        DosenID = z.DosenID,
+                        Hasil = z.Hasil,
+                        JadwalKuliahID = z.JadwalKuliahID,
+                        JadwalKuliahs = z.JadwalKuliahs,
+                        mahasiswas = z.mahasiswas,
+                        MatkulKodeAsal = z.MatkulKodeAsal,
+                        MatkulAsal = z.MatkulAsal,
+                        StatusPendaftaran = z.StatusPendaftaran,
+                    }).ToList();
+                mListPendaftaranMataKuliah.TotalFilterCount = gridfilter.Count();
+                return mListPendaftaranMataKuliah;
+            }
+        }
 
     }
 }
