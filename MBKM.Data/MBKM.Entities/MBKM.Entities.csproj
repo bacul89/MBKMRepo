@@ -62,6 +62,7 @@
     <Compile Include="Map\MBKMMap\AttachmentMap.cs" />
     <Compile Include="Map\MBKMMap\AttachmentPerjanjianKerjasamaMap.cs" />
     <Compile Include="Map\MBKMMap\CPLMatakuliahMap.cs" />
+    <Compile Include="Map\MBKMMap\CPLMKPendaftaranMap.cs" />
     <Compile Include="Map\MBKMMap\InformasiPertukaranMap.cs" />
     <Compile Include="Map\MBKMMap\JadwalKuliahMahasiswaMap.cs" />
     <Compile Include="Map\MBKMMap\JadwalKuliahMap.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Models\MBKM\Attachment.cs" />
     <Compile Include="Models\MBKM\AttachmentPerjanjianKerjasama.cs" />
     <Compile Include="Models\MBKM\CPLMatakuliah.cs" />
+    <Compile Include="Models\MBKM\CPLMKPendaftaran.cs" />
     <Compile Include="Models\MBKM\InformasiPertukaran.cs" />
     <Compile Include="Models\MBKM\JadwalKuliah.cs" />
     <Compile Include="Models\MBKM\JadwalKuliahMahasiswa.cs" />

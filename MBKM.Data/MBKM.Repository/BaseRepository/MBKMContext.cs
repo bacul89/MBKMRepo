@@ -58,6 +58,7 @@ namespace MBKM.Repository.BaseRepository
             modelBuilder.Configurations.Add(new PendaftaranMataKuliahMap());
             modelBuilder.Configurations.Add(new InformasiPertukaranMap());
             modelBuilder.Configurations.Add(new ApprovalPendaftaranMap());
+            modelBuilder.Configurations.Add(new CPLMKPendaftaranMap());
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();

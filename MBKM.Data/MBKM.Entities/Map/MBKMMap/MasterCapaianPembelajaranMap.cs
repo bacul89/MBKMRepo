@@ -20,7 +20,7 @@ namespace MBKM.Entities.Map.MBKMMap
             Property(t => t.FakultasID).HasMaxLength(30).IsRequired();
             Property(t => t.NamaFakultas).HasMaxLength(150).IsRequired();
             Property(t => t.ProdiID).HasMaxLength(30).IsRequired();
-            Property(t => t.NamaProdi).HasMaxLength(20).IsRequired();
+            Property(t => t.NamaProdi).HasMaxLength(150);
         }
     }
 }
