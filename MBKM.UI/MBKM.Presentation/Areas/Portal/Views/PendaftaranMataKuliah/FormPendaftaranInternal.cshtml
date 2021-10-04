@@ -88,31 +88,23 @@
                     </table>
                 </div>
             </div>
+            <div id="matkulAsal">
+                <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+                    <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 18px; color: black;">MATA KULIAH ASAL</h5>
 
-            <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
-                <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 18px; color: black;">MATA KULIAH ASAL</h5>
-
-                <div class="container" style="width: 100%;">
-                    <table class="table">
-                        <tr>
-                            <td style="text-align: right;">Mata Kuliah</td>
-                            <td style="text-align: center;">:</td>
-                            <td>
-                                <div class="form-group">
-                                    <input type="text" name="mataKuliahAsal" id="mataKuliahAsal" class="form-control input-md" style="width: 70%;" />
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: right;">Capaian Pembelajaran</td>
-                            <td style="text-align: center;">:</td>
-                            <td>
-                                <div class="form-group">
-                                    <textarea name="capaianPembelajaran" id="capaianPembelajaran" class="form-control" rows="10" style="width: 70%;"></textarea>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
+                    <div class="container" style="width: 100%;">
+                        <table class="table">
+                            <tr>
+                                <td style="text-align: right;">Mata Kuliah</td>
+                                <td style="text-align: center;">:</td>
+                                <td>
+                                    <div class="form-group">
+                                        <select name="mataKuliahAsal" id="mataKuliahAsal" class="form-control input-md"></select>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
             <button id="simpan" class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; ">SUBMIT</button>
@@ -125,46 +117,63 @@
     <script>
         $(document).ready(function () {
             getJenisKerjasama();
+            if ($('#jenisProgramMBKM').html() == 'Non Pertukaran') {
+                $('#matkulAsal').hide();
+            } else {
+                loadMataKuliahAsal();
+            }
         });
         $('#simpan').click(function () {
             if (!confirm("Apakah anda yakin akan mendaftar mata kuliah ini?")) {
                 return;
-            } 
+            }
             var data = new Object();
             data.DosenPembimbing = $('#namaDosen').val();
             data.DosenID = $('#idDosen').val();
             data.JadwalKuliahID = $('#idMatkul').val();
             data.MatkulAsal = $('#mataKuliahAsal').val();
-            data.JenisPertukaran = $('#jenisProgramMBKM').html();
-            data.JenisKerjasama = $('#jenisKegiatanMBKM').html();
-            data.NoKerjasama = '@Model.NoKerjasama';
-            data.CPLAsal = $('#capaianPembelajaran').val();
+            if ($('#jenisProgramMBKM').html() != 'Non Pertukaran') {
+                data.CPLMatakuliahID = $('#mataKuliahAsal').val();
+            }
             $.ajax({
                 type: "POST",
-                url: "@Url.Action("InsertInformasiPertukaran", "PendaftaranMataKuliah")",
+                url: "@Url.Action("InsertPendaftaranMK", "PendaftaranMataKuliah")",
                 data: data
-            }).then(function (response) {
-                if (response.status != 500) {
-                    $.ajax({
-                        type: "POST",
-                        url: "@Url.Action("InsertPendaftaranMK", "PendaftaranMataKuliah")",
-                        data: data
-                    }).then(function (response2) {
-                        if (response2.status == 200) {
-                            window.history.back();
-                        } else {
-                            alert(response2.message);
-                        }
-                    });
+            }).then(function (response2) {
+                if (response2.status == 200) {
+                    window.history.back();
                 } else {
-                    alert(response.message);
+                    alert(response2.message);
                 }
             });
         });
+        function loadMataKuliahAsal() {
+            $("#mataKuliahAsal").select2({
+                placeholder: "-- Pilih Mata Kuliah Asal --",
+                width: "100%",
+                ajax: {
+                    url: "@Url.Action("GetMataKuliahAsal", "PendaftaranMataKuliah")?idMatkul=" + $('#idMatkul').val(),
+                    dataType: 'json',
+                    method: "POST",
+                    delay: 250,
+                    cache: false,
+                    data: function (params) {
+                        return {
+                            Search: params.term || ""
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.KodeMataKuliah + ' - ' + item.NamaMataKuliah } })
+                        };
+                    },
+                }
+        });
+        }
         function getJenisKerjasama() {
             $.ajax({
                 type: "GET",
-                url: "@Url.Action("GetJenisKerjasama", "PendaftaranMataKuliah")"
+                url: "@Url.Action("GetJenisKerjasamaInternal", "PendaftaranMataKuliah")"
             }).then(function (response) {
                 $('#jenisProgramMBKM').html(response.JenisPertukaran);
                 $('#jenisKegiatanMBKM').html(response.JenisKerjasama);
