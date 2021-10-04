@@ -18,6 +18,18 @@ namespace MBKM.Repository.Repositories.MBKMRepository
         public MasterCapaianPembelajaranRepository(DbContext _db) : base(_db)
         {
         }
+        public IEnumerable<VMMataKuliah> GetMatkul(int PageNumber, int PageSize, string search)
+        {
+            using (var context = new MBKMContext())
+            {
+                var PageNumberParam = new SqlParameter("@PageNumber", PageNumber);
+                var PageSizeParam = new SqlParameter("@PageSize", PageSize);
+                var searchParam = new SqlParameter("@Search", search);
+                var result = context.Database
+                    .SqlQuery<VMMataKuliah>("GetMatkul @PageNumber, @PageSize, @Search", PageNumberParam, PageSizeParam, searchParam).ToList();
+                return result;
+            }
+        }
         
         public IEnumerable<VMFakultas> GetFakultas(string jenjangStudi, string search)
         {

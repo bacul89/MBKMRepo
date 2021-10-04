@@ -23,7 +23,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         private IPerjanjianKerjasamaService _perjanjianKerjasamaService;
         private IInformasiPertukaranService _informasiPertukaranService;
         private IPendaftaranMataKuliahService _pendaftaranMataKuliahService;
-        public PendaftaranMataKuliahController(IPendaftaranMataKuliahService pendaftaranMataKuliahService, IInformasiPertukaranService informasiPertukaranService, IPerjanjianKerjasamaService perjanjianKerjasamaService, IJenisKerjasamaModelService jenisKerjasamaService, IPendaftaranMataKuliahService pmkService, IMahasiswaService mahasiswaService, IJadwalKuliahService jkService)
+        private ICPLMKPendaftaranService _cplmkPendaftaranService;
+        private ICPLMatakuliahService _cplMatakuliahService;
+        public PendaftaranMataKuliahController(ICPLMatakuliahService cplMatakuliahService, ICPLMKPendaftaranService cplmkPendaftaranService, IPendaftaranMataKuliahService pendaftaranMataKuliahService, IInformasiPertukaranService informasiPertukaranService, IPerjanjianKerjasamaService perjanjianKerjasamaService, IJenisKerjasamaModelService jenisKerjasamaService, IPendaftaranMataKuliahService pmkService, IMahasiswaService mahasiswaService, IJadwalKuliahService jkService)
         {
             _pmkService = pmkService;
             _mahasiswaService = mahasiswaService;
@@ -32,6 +34,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             _perjanjianKerjasamaService = perjanjianKerjasamaService;
             _informasiPertukaranService = informasiPertukaranService;
             _pendaftaranMataKuliahService = pendaftaranMataKuliahService;
+            _cplmkPendaftaranService = cplmkPendaftaranService;
+            _cplMatakuliahService = cplMatakuliahService;
         }
         public ActionResult Index()
         {
@@ -60,6 +64,14 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             model.NoKerjasama = GetMahasiswaByEmail(Session["email"] as string).NoKerjasama;
             return View(model);
         }
+        public ActionResult FormPendaftaranInternal(int idMatkul)
+        {
+            var matkul = GetJadwalKuliah(idMatkul);
+            VMPendaftaranJadwalKuliah model = new VMPendaftaranJadwalKuliah(matkul);
+            model.ID = idMatkul;
+            model.NoKerjasama = GetMahasiswaByEmail(Session["email"] as string).NoKerjasama;
+            return View(model);
+        }
         public ActionResult GetFakultas(string search)
         {
             string email = Session["email"] as string;
@@ -68,7 +80,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult GetMataKuliahByProdi(int idProdi, string lokasi, int strm)
         {
-            return Json(_jkService.Find(jk => jk.ProdiID == idProdi && jk.Lokasi == lokasi && jk.STRM == strm).ToList(), JsonRequestBehavior.AllowGet);
+            return new ContentResult { Content = JsonConvert.SerializeObject(_jkService.Find(jk => jk.ProdiID == idProdi && jk.Lokasi == lokasi && jk.STRM == strm).ToList()), ContentType = "application/json" };
         }
         public ActionResult GetProdiByFakultas(string idFakultas, string search)
         {
@@ -138,6 +150,16 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var jenisKerjasama = _jenisKerjasamaService.Find(jk => jk.ID == jenisKerjasamaID).FirstOrDefault();
             return new ContentResult { Content = JsonConvert.SerializeObject(jenisKerjasama), ContentType = "application/json" };
         }
+        public ActionResult GetJenisKerjasamaInternal()
+        {
+            Int64 id = GetMahasiswaByEmail(Session["email"] as string).ID;
+            var informasiPertukaran = _informasiPertukaranService.Find(ip => ip.MahasiswaID == id).FirstOrDefault();
+            return new ContentResult { Content = JsonConvert.SerializeObject(informasiPertukaran), ContentType = "application/json" };
+        }
+        public ActionResult GetMataKuliahAsal(string idMatkul)
+        {
+            return new ContentResult { Content = JsonConvert.SerializeObject(_cplMatakuliahService.Find(cplmk => cplmk.IDMataKUliah == idMatkul).ToList()), ContentType = "application/json" };
+        }
         public ActionResult InsertInformasiPertukaran(InformasiPertukaran informasiPertukaran)
         {
             try
@@ -161,7 +183,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 return Json(new ServiceResponse { status = 500, message = e.Message });
             }
         }
-        public ActionResult InsertPendaftaranMK(PendaftaranMataKuliah pendaftaranMataKuliah, string capaianPembelajaran)
+        public ActionResult InsertPendaftaranMK(PendaftaranMataKuliah pendaftaranMataKuliah, CPLMKPendaftaran cplmkPendaftaran)
         {
             try
             {
@@ -174,10 +196,16 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     pendaftaranMataKuliah.CreatedDate = DateTime.Now;
                     pendaftaranMataKuliah.UpdatedDate = DateTime.Now;
                     pendaftaranMataKuliah.StatusPendaftaran = "MENUNGGU APPROVAL KAPRODI/WR BIDANG AKADEMIK";
-                    pendaftaranMataKuliah.Hasil += "a";
+                    //pendaftaranMataKuliah.Hasil += "a";
                     _pendaftaranMataKuliahService.Save(pendaftaranMataKuliah);
                     Int64 ID = pendaftaranMataKuliah.ID;
-                    return Json(new ServiceResponse { status = 200, message = "Data berhasil tersimpan!" });
+                    cplmkPendaftaran.PendaftaranMataKuliahID = ID;
+                    cplmkPendaftaran.IsActive = true;
+                    cplmkPendaftaran.IsDeleted = false;
+                    cplmkPendaftaran.CreatedDate = DateTime.Now;
+                    cplmkPendaftaran.UpdatedDate = DateTime.Now;
+                    _cplmkPendaftaranService.Save(cplmkPendaftaran);
+                    return Json(new ServiceResponse { status = 200, message = "Anda berhasil terdaftar, silahkan cek tracking pendaftaran untuk melihat status pendaftaran!" });
                 }
                 return Json(new ServiceResponse { status = 400, message = "Anda sudah mendaftar matakuliah ini!" });
             }

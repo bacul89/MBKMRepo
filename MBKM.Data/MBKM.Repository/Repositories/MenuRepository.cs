@@ -22,7 +22,8 @@ namespace MBKM.Repository.Repositories
         {
             using (var context = new MBKMContext())
             {
-                var listmodel = context.Menus.Select(
+                var result = context.Menus.Where(x => x.IsDeleted == false && x.IsActive == true);
+                var listmodel = result.Select(
                     x => new VMMenu
                     {
                         Nama = x.MenuName,

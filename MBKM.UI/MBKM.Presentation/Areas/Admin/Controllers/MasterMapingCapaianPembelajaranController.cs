@@ -12,11 +12,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
     {
 
 
-        private Services.MBKMServices.IMasterCapaianPembelajaranService _masterCapaianPembelajaranService;
+        private IMasterCapaianPembelajaranService _masterCapaianPembelajaranService;
+        private ILookupService _lookupService;
 
-        public MasterMapingCapaianPembelajaranController(IMasterCapaianPembelajaranService masterCapaianPembelajaranService)
+        public MasterMapingCapaianPembelajaranController(IMasterCapaianPembelajaranService masterCapaianPembelajaranService, ILookupService lookupService)
         {
-            _masterCapaianPembelajaranService = masterCapaianPembelajaranService;
+                _lookupService = lookupService;
+                _masterCapaianPembelajaranService = masterCapaianPembelajaranService;
         }
 
         /*        public string arr { get; set; }
@@ -133,6 +135,29 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             
             return View();
+        }
+
+        public ActionResult GetMataKuliah()
+        {
+            int pageNumber = 1;
+            int pageSize = 100;
+            string search = "";
+            /*string email = Session["email"] as string;*/
+            /*var result = GetMa=takuliah(email);*/
+            return Json(_masterCapaianPembelajaranService.GetMatkul(pageNumber, pageSize, search), JsonRequestBehavior.AllowGet);
+        }
+
+        /*        public ActionResult getLookupByValue(string tipe, string value)
+                {
+                    return Json(_lookupService.Find(l => l.Nilai == value && l.Tipe == tipe).FirstOrDefault(), JsonRequestBehavior.AllowGet); ;
+                }*/
+
+
+
+
+        public ActionResult getLookupByTipe(string tipe)
+        {
+            return Json(_lookupService.getLookupByTipe(tipe), JsonRequestBehavior.AllowGet);
         }
 
 

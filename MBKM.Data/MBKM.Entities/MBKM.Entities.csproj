@@ -106,6 +106,7 @@
     <Compile Include="ViewModel\VMListMasterCPL.cs" />
     <Compile Include="ViewModel\VMPendaftaranJadwalKuliah.cs" />
     <Compile Include="ViewModel\VMListPendaftaranMataKuliah.cs" />
+    <Compile Include="ViewModel\VMMataKuliah.cs" />
     <Compile Include="ViewModel\VMProdi.cs" />
     <Compile Include="ViewModel\VMFakultas.cs" />
     <Compile Include="ViewModel\VMListMahasiswa.cs" />
