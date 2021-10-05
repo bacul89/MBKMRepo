@@ -13,8 +13,8 @@ using MBKM.Services;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
-/*    [MBKMAuthorize]
-*/    public class ApprovalPendaftaranMatakuliahController : Controller
+    [MBKMAuthorize]
+    public class ApprovalPendaftaranMatakuliahController : Controller
     {
 
         IPendaftaranMataKuliahService _pendaftaranMataKuliahService;
@@ -47,8 +47,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             var data = _cPLMKPendaftaranService.Find(x => x.IsDeleted == false && x.PendaftaranMataKuliahID == id).First();
             if(data.PendaftaranMataKuliahs.mahasiswas.NIM != data.PendaftaranMataKuliahs.mahasiswas.NIMAsal)
             {
-                ViewData["jenisProgram"] = "Pertukaran";
-                ViewData["jenisKegiatan"] = "Eksternal";
+                ViewData["jenisProgram"] = "Non-Pertukaran";
+                ViewData["jenisKegiatan"] = "Internal";
+                /*ViewData["jenisProgram"] = "Pertukaran";
+                ViewData["jenisKegiatan"] = "Eksternal";*/
             }
             else if(data.PendaftaranMataKuliahs.mahasiswas.NoKerjasama != null)
             {
@@ -62,7 +64,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             var IDMakul = data.PendaftaranMataKuliahs.JadwalKuliahs.MataKuliahID;
             IList<CPLMatakuliah> capaianTujuan = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.PendaftaranMataKuliahs.JadwalKuliahs.MataKuliahID).ToList();
             ViewData["capaianTujuan"] = capaianTujuan;
-
+            ViewData["countCPTujuan"] = capaianTujuan.Count();
             return View(data);
         }
         
@@ -122,6 +124,54 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 return Json(new ServiceResponse { status = 200, message = "Done" });
             }
             catch(Exception e)
+            {
+                return Json(new ServiceResponse { status = 500, message = "Error" });
+            }
+        }
+
+
+        [HttpPost]
+        public JsonResult PostDataApprovalRejected(CPLMKPendaftaran request)
+        {
+            try
+            {
+                CPLMKPendaftaran TmpApproval = _cPLMKPendaftaranService.Get(request.ID);
+                var idPEndaftaran = TmpApproval.PendaftaranMataKuliahID;
+                PendaftaranMataKuliah pendaftaran = _pendaftaranMataKuliahService.Get(TmpApproval.PendaftaranMataKuliahID);
+                pendaftaran.Kesenjangan = request.PendaftaranMataKuliahs.Kesenjangan;
+                pendaftaran.Hasil = request.PendaftaranMataKuliahs.Hasil;
+                pendaftaran.Konversi = request.PendaftaranMataKuliahs.Konversi;
+                if (request.PendaftaranMataKuliahs.DosenID != 0)
+                {
+                    pendaftaran.DosenID = request.PendaftaranMataKuliahs.DosenID;
+                    pendaftaran.DosenPembimbing = request.PendaftaranMataKuliahs.DosenPembimbing;
+                }
+                pendaftaran.StatusPendaftaran = "Rejected By " + HttpContext.Session["RoleName"].ToString();
+                pendaftaran.UpdatedBy = HttpContext.Session["username"].ToString();
+                pendaftaran.UpdatedDate = DateTime.Now;
+                try
+                {
+                    _pendaftaranMataKuliahService.Save(pendaftaran);
+                }
+                catch (Exception e)
+                {
+                    return Json(new ServiceResponse { status = 300, message = "Error Saat Menyimpan Data Pendaftaran" });
+                }
+                Mahasiswa tmpMahasiswa = _mahasiswaService.Get(pendaftaran.MahasiswaID);
+                tmpMahasiswa.Catatan = request.PendaftaranMataKuliahs.mahasiswas.Catatan;
+                tmpMahasiswa.UpdatedBy = HttpContext.Session["username"].ToString();
+                tmpMahasiswa.UpdatedDate = DateTime.Now;
+                try
+                {
+                    _mahasiswaService.Save(tmpMahasiswa);
+                }
+                catch (Exception e)
+                {
+                    return Json(new ServiceResponse { status = 300, message = "Error Saat Menyimpan Data Pendaftaran" });
+                }
+                return Json(new ServiceResponse { status = 200, message = "Done" });
+            }
+            catch (Exception e)
             {
                 return Json(new ServiceResponse { status = 500, message = "Error" });
             }
