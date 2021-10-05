@@ -1,14 +1,12 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Detail CPL";
     Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
 }
-
+@model MBKM.Entities.Models.MBKM.CPLMKPendaftaran
 @section css{
     <link rel="stylesheet" type="text/css" href="~/Content/Admin/inputResponsive.css">
     <link rel="stylesheet" type="text/css" href="~/Content/Admin/AdminCostumeBS4.css">
-    <link rel="stylesheet" type="text/css" href="~/Content/Portal/TrackingStatus/main.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.1/css/jquery.dataTables.css">
+    <script src="~/Scripts/sweetalert2.all.min.js"></script>
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 }
 <div class="container-fluid" style="margin-bottom:100px;">
@@ -20,13 +18,15 @@
             <hr />
             <div class="container-fluid">
                 <div class="container" style="width: 100%; padding-bottom: 15px;">
+                    <input type="hidden" value="@Model.ID" id="inp_ID" disabled />
+                    <input type="hidden" value="" id="inp_ID" disabled />
                     <form class="form-horizontal">
                         <div class="row">
                             <div class="col-sm-3 text-right">
                                 <h4>Nomor Induk Mahasiswa &nbsp:</h4>
                             </div>
                             <div class="col-sm-8">
-                                <h4>128379218467326846325842</h4>
+                                <h4>@Model.PendaftaranMataKuliahs.mahasiswas.NIMAsal</h4>
                             </div>
                         </div>
                         <div class="row">
@@ -34,7 +34,7 @@
                                 <h4>Nama Mahasiswa &nbsp:</h4>
                             </div>
                             <div class="col-sm-8">
-                                <h4>ARTI PANGESTU</h4>
+                                <h4>@Model.PendaftaranMataKuliahs.mahasiswas.Nama</h4>
                             </div>
                         </div>
                         <div class="row">
@@ -42,7 +42,7 @@
                                 <h4>Program Studi Asal &nbsp:</h4>
                             </div>
                             <div class="col-sm-8">
-                                <h4>MANAGEMENT AKUNTANSI</h4>
+                                <h4>@Model.PendaftaranMataKuliahs.mahasiswas.ProdiAsal</h4>
                             </div>
                         </div>
                         <div class="row">
@@ -50,7 +50,7 @@
                                 <h4>Universitas Asal &nbsp:</h4>
                             </div>
                             <div class="col-sm-8">
-                                <h4>UNIVERSITAS ISLAM INDONESIA</h4>
+                                <h4>@Model.PendaftaranMataKuliahs.mahasiswas.NamaUniversitas</h4>
                             </div>
                         </div>
                         <div class="row">
@@ -58,7 +58,7 @@
                                 <h4>Semester &nbsp:</h4>
                             </div>
                             <div class="col-sm-8">
-                                <h4>VIII</h4>
+                                <h4>@Model.PendaftaranMataKuliahs.mahasiswas.Semester</h4>
                             </div>
                         </div>
                         <div class="row">
@@ -66,7 +66,7 @@
                                 <h4>Jenis Program MBKM &nbsp:</h4>
                             </div>
                             <div class="col-sm-8">
-                                <h4>Pertukaran</h4>
+                                <h4>@ViewData["jenisProgram"]</h4>
                             </div>
                         </div>
                         <div class="row">
@@ -74,16 +74,27 @@
                                 <h4>Jenis Kegiatan MBKM &nbsp:</h4>
                             </div>
                             <div class="col-sm-8">
-                                <h4>EKSTERNAL</h4>
+                                <h4>@ViewData["jenisKegiatan"]</h4>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-3 text-right">
                                 <h4>No. Kerjasama &nbsp:</h4>
                             </div>
-                            <div class="col-sm-8">
-                                <h4>987987-9879-879879</h4>
-                            </div>
+                            @{
+                                if (Model.PendaftaranMataKuliahs.mahasiswas.NoKerjasama == null || Model.PendaftaranMataKuliahs.mahasiswas.NoKerjasama == "")
+                                {
+                                    <div class="col-sm-8">
+                                        <h4>-</h4>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-sm-8">
+                                        <h4>@Model.PendaftaranMataKuliahs.mahasiswas.NoKerjasama</h4>
+                                    </div>
+                                }
+                            }
                         </div>
                         <br />
                         <div class="row">
@@ -91,7 +102,7 @@
                                 <h4>Kesenjangan  &nbsp</h4>
                             </div>
                             <div class="col-sm-5">
-                                <textarea class="form-control input-data summernote" name="inp_kesenjangan" rows="3" id="inp_kesenjangan" placeholder="Masukkan Kesenjangan"></textarea>
+                                <textarea class="form-control input-data" name="inp_kesenjangan" rows="3" id="inp_kesenjangan" placeholder="Input Kesenjangan"></textarea>
                             </div>
                         </div>
                         <br />
@@ -99,48 +110,58 @@
                             <div class="col-sm-3 text-right">
                                 <h4>Hasil  &nbsp</h4>
                             </div>
-                            <div class="col-sm-5"> 
-                                <input type="text" name="inp_hasil" id="inp_hasil" class="form-control input-md input-data" required/>
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-sm-3 text-right">
-                                <h4>Konversi  &nbsp</h4>
-                            </div>
                             <div class="col-sm-5">
-                                <select name="inp_konversi" id="inp_konversi" class="form-control input-data" required>
-                                    <option value="" selected disabled>-- Masukkan Konversi --</option>
-                                    <option value="Transkrip Nilai" selected>Transkrip Nilai</option>
-                                    <option value="SKPI" selected>SKPI</option>
-                                </select>
+                                <input type="text" name="inp_hasil" id="inp_hasil" class="form-control input-md input-data" placeholder="Input Hasil" />
                             </div>
                         </div>
                         <br />
+                        @{
+                            if (ViewData["jenisKegiatan"] != "Eksternal")
+                            {
+                                <div class="row">
+                                    <div class="col-sm-3 text-right">
+                                        <h4>Konversi  &nbsp</h4>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <select name="inp_konversi" id="inp_konversi" class="form-control input-data" required>
+                                            <option value="" selected disabled> -- Input Konversi -- </option>
+                                            <option value="Transkrip Nilai">Transkrip Nilai</option>
+                                            <option value="SKPI">SKPI</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br />
+                            }
+                        }
                         <div class="row">
                             <div class="col-sm-3 text-right">
                                 <h4>Catatan  &nbsp</h4>
                             </div>
                             <div class="col-sm-5">
-                                <textarea class="form-control input-data" name="inp_catatan" rows="3" id="inp_catatan" placeholder="Masukkan Catatan"></textarea>
+                                <textarea class="form-control input-data " name="inp_catatan" rows="3" id="inp_catatan" placeholder="Input Catatan"></textarea>
                             </div>
                         </div>
                         <br />
-                        <div class="row">
-                            <div class="col-sm-3 text-right">
-                                <h4>Dosen Pembimbing  &nbsp</h4>
-                            </div>
-                            <div class="col-sm-5">
-                                <select name="inp_dosenPembimbing" id="inp_dosenPembimbing" class="form-control input-data" required>
-                                    <option value="" selected disabled>Kojiro Yoga</option>
-                                </select>
-                            </div>
-                        </div>
-                        <br />
+                        @{
+                            if (ViewData["jenisKegiatan"] == "Internal" && ViewData["jenisProgram"] != "Pertukaran")
+                            {
+                                <div class="row">
+                                    <div class="col-sm-3 text-right">
+                                        <h4>Dosen Pembimbing  &nbsp</h4>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <select class="form-control input-data js-example-basic-single" name="inp_dosbing" id="inp_dosbing">
+                                            <option selected value="@Model.PendaftaranMataKuliahs.DosenID" disabled>@Model.PendaftaranMataKuliahs.DosenPembimbing</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <br />
+                            }
+                        }
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-6" style="padding-left:50px">
-                                <button type="button" id="editVerifikasiButton" onclick="IndexEditVerifikasi()" class="btn btn-danger">REJECT</button>
-                                <button type="button" onclick="PostDataUpdate()" class="btn btn-warning">ACCEPT</button>
+                                <button type="button" onclick="IndexEditVerifikasi()" class="btn btn-danger">REJECT</button>
+                                <button type="button" onclick="AcceptedPendaftaranEksternal()" class="btn btn-warning">ACCEPT</button>
                             </div>
                         </div>
                         <br />
@@ -154,7 +175,7 @@
                                     <h4>Kode Mata Kuliah &nbsp :</h4>
                                 </div>
                                 <div class="col-sm-8">
-                                    <h4>987987-9879-879879</h4>
+                                    <h4>@Model.CPLMatakuliahs.KodeMataKuliah</h4>
                                 </div>
                             </div>
                             <div class="row">
@@ -162,7 +183,7 @@
                                     <h4>Nama Mata Kuliah &nbsp :</h4>
                                 </div>
                                 <div class="col-sm-8">
-                                    <h4>Management Business and Management Politict</h4>
+                                    <h4>@Model.CPLMatakuliahs.NamaMataKuliah</h4>
                                 </div>
                             </div>
                             <div class="row">
@@ -172,12 +193,7 @@
                                 <div class="col-sm-8">
                                     <div class="row" style="padding-bottom:10px">
                                         <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">
-                                            <h4>Management Business and Management Politict</h4>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">
-                                            <h4>Management Business and Management Politict</h4>
+                                            <h4>@Model.CPLAsal</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -194,15 +210,7 @@
                                     <h4>Kode Mata Kuliah &nbsp :</h4>
                                 </div>
                                 <div class="col-sm-8">
-                                    <h4>987987-9879-879879</h4>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-3 text-right">
-                                    <h4>Nama Mata Kuliah &nbsp :</h4>
-                                </div>
-                                <div class="col-sm-8">
-                                    <h4>Management Business and Management Politict</h4>
+                                    <h4>@Model.CPLMatakuliahs.KodeMataKuliah</h4>
                                 </div>
                             </div>
                             <div class="row">
@@ -210,16 +218,16 @@
                                     <h4>Capaian Pembelajaran &nbsp:</h4>
                                 </div>
                                 <div class="col-sm-8">
-                                    <div class="row" style="padding-bottom:10px">
-                                        <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">
-                                            <h4>Management Business and Management Politict</h4>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">
-                                            <h4>Management Business and Management Politict</h4>
-                                        </div>
-                                    </div>
+                                    @{
+                                        foreach (var dat in ViewData["capaianTujuan"] as IList<MBKM.Entities.Models.MBKM.CPLMatakuliah>)
+                                        {
+                                            <div class="row" style="padding-bottom:10px">
+                                                <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">
+                                                    <h4>@dat.MasterCapaianPembelajarans.Capaian</h4>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
                                 </div>
                             </div>
                             <br />
@@ -232,8 +240,8 @@
 </div>
 
 @section scripts{
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.js"></script>
-    <script src="~/Scripts/Portal/TrackingStatus/main.js"></script>
+    <script src="~/Scripts/Admin/ApprovalPendaftaranMakul/detailApproval.js"></script>
+    <script src="~/Scripts/loading/loadingoverlay.min.js"></script>
 }
 
 
