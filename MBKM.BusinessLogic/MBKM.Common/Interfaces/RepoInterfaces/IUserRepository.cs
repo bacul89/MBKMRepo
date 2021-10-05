@@ -11,5 +11,6 @@ namespace MBKM.Common.Interfaces.RepoInterfaces
     public interface IUserRepository : IGenericRepository<User>
     {
        VMListUser getListUserGrid(int Skip, int Length, string SearchParam, string SortBy, bool SortDir );
+       List<VMLookUpUser> getDosenList(int Skip, int Length, string Search);
     }
 }
