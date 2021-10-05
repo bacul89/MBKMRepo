@@ -18,6 +18,7 @@ namespace MBKM.Entities.Map.MBKMMap
             Property(t => t.IDMataKUliah).IsRequired();
             Property(t => t.KodeMataKuliah).HasMaxLength(50).IsRequired();
             Property(t => t.NamaMataKuliah).HasMaxLength(350).IsRequired();
+            Property(t => t.Kelompok).HasMaxLength(100).IsRequired();
         }
     }
 }
