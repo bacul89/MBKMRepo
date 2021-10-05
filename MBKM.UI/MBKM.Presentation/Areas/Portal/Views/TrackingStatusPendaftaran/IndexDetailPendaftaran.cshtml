@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="~/Content/Admin/inputResponsive.css">
     <link rel="stylesheet" type="text/css" href="~/Content/Admin/AdminCostumeBS4.css">
     <link rel="stylesheet" type="text/css" href="~/Content/Portal/TrackingStatus/main.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.1/css/jquery.dataTables.css">
+    <script src="~/Scripts/sweetalert2.all.min.js"></script>
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 }
 
@@ -23,6 +23,7 @@
             <div class="container-fluid">
                 <div class="container" style="width: 100%; padding-bottom: 15px;">
                     <form class="form-horizontal">
+                        <input type="hidden" value="@Model.ID" id="inp_ID" disabled />
                         <div class="row">
                             <div class="col-sm-3 text-right">
                                 <h4>Nomor Induk Mahasiswa &nbsp:</h4>
@@ -160,8 +161,8 @@
                         }
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-6" style="padding-left:50px">
-                                <button type="button" id="editVerifikasiButton" onclick="IndexEditVerifikasi()" class="btn btn-danger">REJECT</button>
-                                <button type="button" onclick="PostDataUpdate()" class="btn btn-warning">ACCEPT</button>
+                                <button type="button" onclick="RejectCPLPendaftaran()" class="btn btn-danger">REJECT</button>
+                                <button type="button" onclick="AcceptedCPLPendaftaran()" class="btn btn-warning">ACCEPT</button>
                             </div>
                         </div>
                         <br />
@@ -304,7 +305,9 @@
 
 @section scripts{
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.js"></script>
-    <script src="~/Scripts/Portal/TrackingStatus/main.js"></script>
+    <script src="~/Scripts/Portal/TrackingStatus/trackingDetail.js"></script>
+    <script src="~/Scripts/loading/loadingoverlay.min.js"></script>
+
 }
 
 

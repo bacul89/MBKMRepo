@@ -1,5 +1,6 @@
 ﻿using MBKM.Common.Helpers;
 using MBKM.Entities.Models.MBKM;
+using MBKM.Presentation.models;
 using MBKM.Services.MBKMServices;
 using System;
 using System.Collections.Generic;
@@ -75,6 +76,56 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             ViewData["capaianTujuan"] = capaianTujuan;
             ViewData["countCPTujuan"] = capaianTujuan.Count();
             return View(data);
+        }
+
+        [HttpPost]
+        public JsonResult PostApprovalAccepted(int id)
+        {
+            try
+            {
+                CPLMKPendaftaran TmpApproval = _cPLMKPendaftaranService.Get(id);
+                PendaftaranMataKuliah pendaftaran = _pendaftaranMataKuliahService.Get(TmpApproval.PendaftaranMataKuliahID);
+                pendaftaran.StatusPendaftaran = "Accepted By Mahasiswa";
+                pendaftaran.UpdatedDate = DateTime.Now;
+                try
+                {
+                    _pendaftaranMataKuliahService.Save(pendaftaran);
+                }
+                catch (Exception e)
+                {
+                    return Json(new ServiceResponse { status = 300, message = "Terjadi Kesalahan Saat Proses Accepted" });
+                }
+                return Json(new ServiceResponse { status = 200, message = "Done" });
+            }
+            catch (Exception e)
+            {
+                return Json(new ServiceResponse { status = 500, message = "Error" });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult PostApprovalRejected(int id)
+        {
+            try
+            {
+                CPLMKPendaftaran TmpApproval = _cPLMKPendaftaranService.Get(id);
+                PendaftaranMataKuliah pendaftaran = _pendaftaranMataKuliahService.Get(TmpApproval.PendaftaranMataKuliahID);
+                pendaftaran.StatusPendaftaran = "Rejected By Mahasiswa";
+                pendaftaran.UpdatedDate = DateTime.Now;
+                try
+                {
+                    _pendaftaranMataKuliahService.Save(pendaftaran);
+                }
+                catch (Exception e)
+                {
+                    return Json(new ServiceResponse { status = 300, message = "Terjadi Kesalahan Saat Proses Accepted" });
+                }
+                return Json(new ServiceResponse { status = 200, message = "Done" });
+            }
+            catch (Exception e)
+            {
+                return Json(new ServiceResponse { status = 500, message = "Error" });
+            }
         }
     }
 }

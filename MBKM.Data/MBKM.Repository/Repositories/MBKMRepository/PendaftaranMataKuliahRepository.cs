@@ -121,7 +121,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             using (var context = new MBKMContext())
             {
                 context.Configuration.LazyLoadingEnabled = false;
-                var result = context.PendaftaranMataKuliahs.Where(x => x.IsDeleted == false && x.mahasiswas.Email == emailMahasiswa).Include(x => x.mahasiswas).Include(x => x.JadwalKuliahs);
+                var result = context.PendaftaranMataKuliahs.Where(x => x.IsDeleted == false && x.mahasiswas.Email == emailMahasiswa /*&& x.StatusPendaftaran != "MENUNGGU APPROVAL KAPRODI/WR BIDANG AKADEMIK"*/).Include(x => x.mahasiswas).Include(x => x.JadwalKuliahs);
                 mListPendaftaranMataKuliah.TotalCount = result.Count();
                 var gridfilter = result
                     .AsQueryable()
