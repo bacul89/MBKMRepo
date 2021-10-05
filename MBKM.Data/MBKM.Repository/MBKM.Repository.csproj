@@ -102,6 +102,10 @@
     <Compile Include="Migrations\202110040551240_migrasi4okt.designer.cs">
       <DependentUpon>202110040551240_migrasi4okt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110050813069_tambahkelompoksp2.cs" />
+    <Compile Include="Migrations\202110050813069_tambahkelompoksp2.designer.cs">
+      <DependentUpon>202110050813069_tambahkelompoksp2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EmailTemplateRepository.cs" />
@@ -175,6 +179,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202110040551240_migrasi4okt.resx">
       <DependentUpon>202110040551240_migrasi4okt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110050813069_tambahkelompoksp2.resx">
+      <DependentUpon>202110050813069_tambahkelompoksp2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
