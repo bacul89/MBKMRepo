@@ -54,5 +54,22 @@ namespace MBKM.Repository.Repositories
                 return mListUser;
             }
         }
+
+        public List<VMLookUpUser> getDosenList(int Skip, int Length, string Search)
+        {
+            using (var context = new MBKMContext())
+            {
+                var result = context.Users.Where(x => x.UserName.Contains(Search) && x.IsActive == true && x.IsDeleted == false )
+                    .OrderBy("Username").Skip(Skip).Take(Length).Select(x => new VMLookUpUser
+                    {
+                        ID = x.ID,
+                        UserName = x.UserName,
+                        KodeProdi = x.KodeProdi,
+                        NamaProdi = x.NamaProdi
+                    }).ToList();
+                return result;
+            }
+
+        }
     }
 }
