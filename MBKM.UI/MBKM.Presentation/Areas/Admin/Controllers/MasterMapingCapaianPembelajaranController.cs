@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using MBKM.Services;
 using MBKM.Services.MBKMServices;
+using Newtonsoft.Json;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
@@ -14,11 +15,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
         private IMasterCapaianPembelajaranService _masterCapaianPembelajaranService;
         private ILookupService _lookupService;
+        private IJadwalKuliahService _jkService;
 
-        public MasterMapingCapaianPembelajaranController(IMasterCapaianPembelajaranService masterCapaianPembelajaranService, ILookupService lookupService)
+        public MasterMapingCapaianPembelajaranController(IMasterCapaianPembelajaranService masterCapaianPembelajaranService, ILookupService lookupService, IJadwalKuliahService jkService)
         {
-                _lookupService = lookupService;
-                _masterCapaianPembelajaranService = masterCapaianPembelajaranService;
+            _lookupService = lookupService;
+            _jkService = jkService;
+            _masterCapaianPembelajaranService = masterCapaianPembelajaranService;
         }
 
         /*        public string arr { get; set; }
@@ -160,6 +163,21 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             return Json(_lookupService.getLookupByTipe(tipe), JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult GetFakultas(string search, string JenjangStudi)
+        {
+
+            return Json(_masterCapaianPembelajaranService.GetFakultas(JenjangStudi, search), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetMataKuliahByProdi(int idProdi)
+        {
+            return new ContentResult { Content = JsonConvert.SerializeObject(_jkService.Find(jk => jk.ProdiID == idProdi).ToList()), ContentType = "application/json" };
+        }
+
+        public ActionResult GetProdiByFakultas(String JenjangStudi,  string idFakultas,  string search)
+        {
+            return Json(_masterCapaianPembelajaranService.GetProdiByFakultas(JenjangStudi, idFakultas, search), JsonRequestBehavior.AllowGet);
+        }
 
 
     }
