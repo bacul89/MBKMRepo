@@ -1,5 +1,7 @@
 ﻿using MBKM.Common.Helpers;
+using MBKM.Entities.Models.MBKM;
 using MBKM.Entities.ViewModel;
+using MBKM.Presentation.models;
 using MBKM.Services.MBKMServices;
 using System;
 using System.Collections.Generic;
@@ -30,6 +32,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             return Json(_perjanjianKerjasamaService.getNoKerjasama(Skip, Length, Search, NamaInstansi), JsonRequestBehavior.AllowGet);
         }
+        public ActionResult GetBiaya(string NoKerjaSama)
+        {
+            return Json(_perjanjianKerjasamaService.getBiaya(NoKerjaSama), JsonRequestBehavior.AllowGet);
+        }
         [HttpPost]
         public JsonResult GetList(DataTableAjaxPostModel model)
         {
@@ -50,6 +56,21 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             var model = _mahasiswaService.Get(id);
 
             return View("ModalDetailMhs", model);
+        }
+        [HttpPost]
+        public ActionResult UpdateKJ(Mahasiswa mhs)
+        {
+            Mahasiswa data = _mahasiswaService.Get(mhs.ID);
+            data.NoKerjasama = mhs.NoKerjasama;
+            data.BiayaKuliah = mhs.BiayaKuliah;
+            
+
+
+
+            _mahasiswaService.Save(data);
+
+            //return Json(data);
+            return Json(new ServiceResponse { status = 200, message = "Kerjasama Berhasil Di Ubah" });
         }
     }
 }

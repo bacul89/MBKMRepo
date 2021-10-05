@@ -17,24 +17,24 @@
             <div class="form-group">
                 <label class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Universitas Asal: </label>
                 <div class="col-sm-8">
-                    @Html.EditorFor(model => model.NamaUniversitas, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled",@id="namaUniversitas" } })
+                    @Html.EditorFor(model => model.NamaUniversitas, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled", @id = "namaUniversitas" } })
 
                 </div>
             </div>
             <div class="form-group">
-                <label  class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Jenjang Studi: </label>
+                <label class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Jenjang Studi: </label>
                 <div class="col-sm-8">
                     @Html.EditorFor(model => model.JenjangStudi, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled" } })
                 </div>
             </div>
             <div class="form-group">
-                <label  class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Program Studi Asal: </label>
+                <label class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Program Studi Asal: </label>
                 <div class="col-sm-8">
                     @Html.EditorFor(model => model.ProdiAsal, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled" } })
                 </div>
             </div>
             <div class="form-group">
-                <label  class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Nama Mahasiswa: </label>
+                <label class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Nama Mahasiswa: </label>
                 <div class="col-sm-8">
 
                     @Html.EditorFor(model => model.Nama, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled" } })
@@ -42,20 +42,20 @@
                 </div>
             </div>
             <div class="form-group">
-                <label  class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">NIM Asal: </label>
+                <label class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">NIM Asal: </label>
                 <div class="col-sm-8">
                     @Html.EditorFor(model => model.NIMAsal, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled" } })
                 </div>
             </div>
             <div class="form-group">
-                <label  class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Jenis Kelamin: </label>
+                <label class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Jenis Kelamin: </label>
                 <div class="col-sm-8">
                     @Html.EditorFor(model => model.Gender, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled" } })
                 </div>
             </div>
             <div id="univAsal">
                 <div class='form-group'>
-                    <label  class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">No. Handphone: </label>
+                    <label class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">No. Handphone: </label>
                     <div class="col-sm-8">
                         @Html.EditorFor(model => model.NoHp, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled" } })
                     </div>
@@ -70,7 +70,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label  class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Alamat Email: </label>
+                <label class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Alamat Email: </label>
                 <div class="col-sm-8">
                     @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled" } })
                 </div>
@@ -82,14 +82,20 @@
                 </div>
             </div>
             <div class='form-group'>
-                <label  class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">No. Kerjasama: </label>
-                <div class="col-sm-8" id="noKerjaSama">
-                    @*<select name="noKJ" id="noKJ" disabled = "disabled" class="form-control input-md" required></select>*@
-                    @Html.EditorFor(model => model.NoKerjasama, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled", @id = "noKJ" } })
+                <label class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">No. Kerjasama: </label>
+                <div class="col-sm-8" id="noKerjaSama1" hidden>
+                    <select name="noKJ" id="noKJ" disabled="disabled" class="form-control input-md" hidden required></select>
+
+                    @*@Html.EditorFor(model => model.NoKerjasama, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled", @id = "noKJs" } })*@
+                </div>
+                <div class="col-sm-8" id="noKerjaSama2">
+                    @*<select name="noKJ" id="noKJ" disabled="disabled" class="form-control input-md" hidden required></select>*@
+
+                    @Html.EditorFor(model => model.NoKerjasama, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled", @id = "noKJs" } })
                 </div>
             </div>
             <div class="form-group">
-                <label  class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Status Pendaftaran</label>
+                <label class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Status Pendaftaran</label>
                 <div class="col-sm-8">
                     @Html.EditorFor(model => model.StatusVerifikasi, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled" } })
 
@@ -101,10 +107,17 @@
                     @Html.EditorFor(model => model.NIM, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled" } })
                 </div>
             </div>
+            <div class="form-group" hidden>
+                <label for="biaya" class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Biaya: </label>
+                <div class="col-sm-8">
+                    <input type="text" value="" class="form-control input-pendaftaran input-data" disabled="disabled" id="biaya" name="biaya"hidden>
+                    @*@Html.EditorFor(model => model.BiayaKuliah, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled", @id = "biaya" } })*@
+                </div>
+            </div>
 
             <div class="form-group">
-                <input id="Edit" onclick="" type="button" value="Edit" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
-                <input id="Update" onclick="" type="button" value="Update" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
+                <button id="Edit" onclick="" type="button" value="Edit" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;">Edit</button>
+                <button id="Update" onclick="" type="button" value="Update" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" >Update</button>
             </div>
 
 
