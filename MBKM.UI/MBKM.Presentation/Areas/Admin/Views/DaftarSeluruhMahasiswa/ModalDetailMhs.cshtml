@@ -78,13 +78,13 @@
             <div class="form-group">
                 <label for="nimAsal" class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Status Kerjasama: </label>
                 <div class="col-sm-8">
-                    @Html.EditorFor(model => model.StatusKerjasama, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled" } })
+                    @Html.EditorFor(model => model.StatusKerjasama, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled", @id = "statusKJ" } })
                 </div>
             </div>
             <div class='form-group'>
                 <label  class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">No. Kerjasama: </label>
                 <div class="col-sm-8">
-                    @Html.EditorFor(model => model.NoKerjasama, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled" } })
+                    @Html.EditorFor(model => model.NoKerjasama, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled", @id = "noKJ" } })
                 </div>
             </div>
             <div class="form-group">
@@ -102,7 +102,8 @@
             </div>
 
             <div class="form-group">
-                <input onclick="" type="button" value="Registrasi" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
+                <input id="Edit" onclick="" type="button" value="Edit" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
+                <input id="Update" onclick="" type="button" value="Update" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
             </div>
 
 
