@@ -12,13 +12,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
     public class DaftarSeluruhMahasiswaController : Controller
     {
         // GET: Admin/DaftarSeluruhMahasiswa
-        private readonly IDaftarAllMahasiswaService _mahasiswaService;
-        //private IPerjanjianKerjasamaService _perjanjianKerjasamaService;
-        //, IPerjanjianKerjasamaService perjanjianKerjasamaService
-        public DaftarSeluruhMahasiswaController(IDaftarAllMahasiswaService mahasiswaService)
+        private IDaftarAllMahasiswaService _mahasiswaService;
+        private IPerjanjianKerjasamaService _perjanjianKerjasamaService;
+        //
+        public DaftarSeluruhMahasiswaController(IDaftarAllMahasiswaService mahasiswaService, IPerjanjianKerjasamaService perjanjianKerjasamaService)
         {
             _mahasiswaService = mahasiswaService;
-            //_perjanjianKerjasamaService = perjanjianKerjasamaService;
+            _perjanjianKerjasamaService = perjanjianKerjasamaService;
         }
 
         public ActionResult Index()
@@ -26,10 +26,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             Session["username"] = "Smitty Werben Jeger Man Jensen";
             return View();
         }
-        //public ActionResult GetNoKerjasama(int Skip, int Length, string Search, string NamaInstansi)
-        //{
-        //    return Json(_perjanjianKerjasamaService.getNoKerjasama(Skip, Length, Search, NamaInstansi), JsonRequestBehavior.AllowGet);
-        //}
+        public ActionResult GetNoKerjasama(int Skip, int Length, string Search, string NamaInstansi)
+        {
+            return Json(_perjanjianKerjasamaService.getNoKerjasama(Skip, Length, Search, NamaInstansi), JsonRequestBehavior.AllowGet);
+        }
         [HttpPost]
         public JsonResult GetList(DataTableAjaxPostModel model)
         {

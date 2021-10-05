@@ -17,7 +17,7 @@
             <div class="form-group">
                 <label class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Universitas Asal: </label>
                 <div class="col-sm-8">
-                    @Html.EditorFor(model => model.NamaUniversitas, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled" } })
+                    @Html.EditorFor(model => model.NamaUniversitas, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled",@id="namaUniversitas" } })
 
                 </div>
             </div>
@@ -83,7 +83,8 @@
             </div>
             <div class='form-group'>
                 <label  class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">No. Kerjasama: </label>
-                <div class="col-sm-8">
+                <div class="col-sm-8" id="noKerjaSama">
+                    @*<select name="noKJ" id="noKJ" disabled = "disabled" class="form-control input-md" required></select>*@
                     @Html.EditorFor(model => model.NoKerjasama, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled", @id = "noKJ" } })
                 </div>
             </div>

@@ -19,11 +19,12 @@
                 //$("textarea").removeAttr("disabled");
                 //$("#simpan").show();
                 $("#Update").show();
-                //loadNoKerjasama();
+                loadNoKerjasama();
                 $("#Edit").hide();
-                //$("#statusKJ").removeAttr("disabled");
+                $("#statusKJ").removeAttr("disabled");
                 //$("#noKJ").removeAttr("disabled");
-
+                
+                $("#noKerjaSama").html("<select name='noKerjasama' id='noKerjasama' class='form-control input-lg' required></select>");
             });
         }, error: function (e) {
             $.LoadingOverlay("hide");
@@ -41,33 +42,33 @@
     })
 
 }
-//function loadNoKerjasama() {
-//    $("#noKerjasama").select2({
-//        placeholder: "-- Pilih Nomor Kerjasama --",
-//        width: "100%",
-//        ajax: {
-//            url: '/Admin/DaftarseluruhMahasiswa/GetNoKerjasama',
-//            dataType: 'json',
-//            method: "POST",
-//            delay: 250,
-//            cache: false,
-//            data: function (params) {
-//                return {
-//                    Length: "10",
-//                    Search: params.term || "",
-//                    Skip: params.page - 1 || 0,
-//                    NamaInstansi: $('#namaUniversitas').val()
-//                };
-//            },
-//            processResults: function (data, params) {
-//                var page = params.page || 1;
-//                return {
-//                    results: $.map(data, function (item) { return { id: item.NoKerjasama, value: item.NoKerjasama, text: item.NoKerjasama } }),
-//                    pagination: {
-//                        more: (page * 10) <= data.length
-//                    }
-//                };
-//            },
-//        }
-//    });
-//}
+function loadNoKerjasama() {
+    $("#noKerjaSama").select2({
+        placeholder: "-- Pilih Nomor Kerjasama --",
+        width: "100%",
+        ajax: {
+            url: '/Admin/DaftarseluruhMahasiswa/GetNoKerjasama',
+            dataType: 'json',
+            method: "POST",
+            delay: 250,
+            cache: false,
+            data: function (params) {
+                return {
+                    Length: "10",
+                    Search: params.term || "",
+                    Skip: params.page - 1 || 0,
+                    NamaInstansi: $('#namaUniversitas').val()
+                };
+            },
+            processResults: function (data, params) {
+                var page = params.page || 1;
+                return {
+                    results: $.map(data, function (item) { return { id: item.NoKerjasama, value: item.NoKerjasama, text: item.NoKerjasama } }),
+                    pagination: {
+                        more: (page * 10) <= data.length
+                    }
+                };
+            },
+        }
+    });
+}
