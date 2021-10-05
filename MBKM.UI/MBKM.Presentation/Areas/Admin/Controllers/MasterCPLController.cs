@@ -77,10 +77,11 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
         //    return View("ModalCreateCPL");
         //}
-        public ActionResult ModalDetailMasterCpl()
+        public ActionResult ModalDetailMasterCpl(int id)
         {
+            var model = _mcpService.Get(id);
 
-            return View();
+            return PartialView("Index",model);
         }
         //public ActionResult ModalUpdateMasterCpl(int id)
         //{
