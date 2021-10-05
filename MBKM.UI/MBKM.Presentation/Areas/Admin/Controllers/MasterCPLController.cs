@@ -81,7 +81,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             var model = _mcpService.Get(id);
 
-            return PartialView("Index",model);
+            return PartialView(model);
         }
         //public ActionResult ModalUpdateMasterCpl(int id)
         //{
