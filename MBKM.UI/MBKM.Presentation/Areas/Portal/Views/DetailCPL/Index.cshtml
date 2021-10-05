@@ -3,6 +3,7 @@
     ViewBag.Title = "Detail CPL";
     Layout = "~/Areas/Portal/Views/Shared/_LayoutHome.cshtml";
 }
+@model MBKM.Entities.Models.MBKM.CPLMKPendaftaran
 
 @section css{
     <link rel="stylesheet" type="text/css" href="~/Content/Admin/inputResponsive.css">
@@ -10,25 +11,6 @@
     <link rel="stylesheet" type="text/css" href="~/Content/Portal/TrackingStatus/main.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.1/css/jquery.dataTables.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-}
-@section modal{
-    <div class="modal fade" id="DetailTrackingStatus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document" id="modal-inner">
-            <div class="modal-content data-content-modal" id="created-email-template">
-                <div class="modal-header" style="background-color: #FF8A04; ">
-                    <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
-                        TAMBAH MASTER EMAIL TEMPLATE
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </h5>
-                </div>
-                <div class="modal-body">
-                    
-                </div>
-            </div>
-        </div>
-    </div>
 }
     <div class="container-fluid" style="margin-bottom:100px;">
         <div class="card center-block" style="background-color: white; width: 100%; margin-top: 30px; margin-bottom: 50px;">
@@ -45,7 +27,7 @@
                                     <h4>Nomor Induk Mahasiswa &nbsp:</h4>
                                 </div>
                                 <div class="col-sm-8">
-                                    <h4>128379218467326846325842</h4>
+                                    <h4>@Model.PendaftaranMataKuliahs.mahasiswas.NIMAsal</h4>
                                 </div>
                             </div>
                             <div class="row">
@@ -53,7 +35,7 @@
                                     <h4>Nama Mahasiswa &nbsp:</h4>
                                 </div>
                                 <div class="col-sm-8">
-                                    <h4>ARTI PANGESTU</h4>
+                                    <h4>@Model.PendaftaranMataKuliahs.mahasiswas.Nama</h4>
                                 </div>
                             </div>
                             <div class="row">
@@ -61,7 +43,7 @@
                                     <h4>Program Studi Asal &nbsp:</h4>
                                 </div>
                                 <div class="col-sm-8">
-                                    <h4>MANAGEMENT AKUNTANSI</h4>
+                                    <h4>@Model.PendaftaranMataKuliahs.mahasiswas.ProdiAsal</h4>
                                 </div>
                             </div>
                             <div class="row">
@@ -69,7 +51,7 @@
                                     <h4>Universitas Asal &nbsp:</h4>
                                 </div>
                                 <div class="col-sm-8">
-                                    <h4>UNIVERSITAS ISLAM INDONESIA</h4>
+                                    <h4>@Model.PendaftaranMataKuliahs.mahasiswas.NamaUniversitas</h4>
                                 </div>
                             </div>
                             <div class="row">
@@ -77,7 +59,7 @@
                                     <h4>Semester &nbsp:</h4>
                                 </div>
                                 <div class="col-sm-8">
-                                    <h4>VIII</h4>
+                                    <h4>@Model.PendaftaranMataKuliahs.mahasiswas.Semester</h4>
                                 </div>
                             </div>
                             <div class="row">
@@ -85,7 +67,7 @@
                                     <h4>Jenis Program MBKM &nbsp:</h4>
                                 </div>
                                 <div class="col-sm-8">
-                                    <h4>Pertukaran</h4>
+                                    <h4>@ViewData["jenisProgram"]</h4>
                                 </div>
                             </div>
                             <div class="row">
@@ -93,16 +75,27 @@
                                     <h4>Jenis Kegiatan MBKM &nbsp:</h4>
                                 </div>
                                 <div class="col-sm-8">
-                                    <h4>EKSTERNAL</h4>
+                                    <h4>@ViewData["jenisKegiatan"]</h4>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-3 text-right">
                                     <h4>No. Kerjasama &nbsp:</h4>
                                 </div>
-                                <div class="col-sm-8">
-                                    <h4>987987-9879-879879</h4>
-                                </div>
+                                @{
+                                    if (Model.PendaftaranMataKuliahs.mahasiswas.NoKerjasama == null || Model.PendaftaranMataKuliahs.mahasiswas.NoKerjasama == "")
+                                    {
+                                        <div class="col-sm-8">
+                                            <h4>-</h4>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-sm-8">
+                                            <h4>@Model.PendaftaranMataKuliahs.mahasiswas.NoKerjasama</h4>
+                                        </div>
+                                    }
+                                }
                             </div>
                             <br />
                             <div class="row">
@@ -110,7 +103,7 @@
                                     <h4>Kesenjangan  &nbsp</h4>
                                 </div>
                                 <div class="col-sm-5">
-                                    <textarea class="form-control input-data summernote" name="inp_bodyEmail" rows="3" id="inp_bodyEmail" placeholder="Input Body Email" disabled>Ini diinoutkan oleh orang penting</textarea>
+                                    <textarea class="form-control input-data summernote" name="inp_bodyEmail" rows="3" id="inp_bodyEmail" placeholder="Input Body Email" disabled>@Model.PendaftaranMataKuliahs.Kesenjangan</textarea>
                                 </div>
                             </div>
                             <br />
@@ -119,41 +112,51 @@
                                     <h4>Hasil  &nbsp</h4>
                                 </div>
                                 <div class="col-sm-5">
-                                    <input type="text" name="kewarganegaraan" value="asdasd" id="kewarganegaraan" class="form-control input-md input-data" disabled />
+                                    <input type="text" name="kewarganegaraan" value="@Model.PendaftaranMataKuliahs.Hasil" id="kewarganegaraan" class="form-control input-md input-data" disabled />
                                 </div>
                             </div>
                             <br />
-                            <div class="row">
-                                <div class="col-sm-3 text-right">
-                                    <h4>Konversi  &nbsp</h4>
-                                </div>
-                                <div class="col-sm-5">
-                                    <select name="jenjangStudi" id="jenjangStudi" class="form-control input-data" required disabled>
-                                        <option value="" selected disabled>Transkrip Nilai</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <br />
+                            @{ 
+                                if(ViewData["jenisKegiatan"] != "Eksternal")
+                                {
+                                    <div class="row">
+                                        <div class="col-sm-3 text-right">
+                                            <h4>Konversi  &nbsp</h4>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <select name="jenjangStudi" id="jenjangStudi" class="form-control input-data" required disabled>
+                                                <option value="" selected disabled>@Model.PendaftaranMataKuliahs.Konversi</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <br />
+                                }
+                            }
                             <div class="row">
                                 <div class="col-sm-3 text-right">
                                     <h4>Catatan  &nbsp</h4>
                                 </div>
                                 <div class="col-sm-5">
-                                    <textarea class="form-control input-data summernote" name="inp_bodyEmail" rows="3" id="inp_bodyEmail" placeholder="Input Body Email" disabled>Ini Adalah catatan dari dan untuk orang penting</textarea>
+                                    <textarea class="form-control input-data summernote" name="inp_bodyEmail" rows="3" id="inp_bodyEmail" placeholder="Input Body Email" disabled>@Model.PendaftaranMataKuliahs.mahasiswas.Catatan</textarea>
                                 </div>
                             </div>
                             <br />
-                            <div class="row">
-                                <div class="col-sm-3 text-right">
-                                    <h4>Dosen Pembimbing  &nbsp</h4>
-                                </div>
-                                <div class="col-sm-5">
-                                    <select name="jenjangStudi" id="jenjangStudi" class="form-control input-data" required disabled>
-                                        <option value="" selected disabled>Kojiro Yoga</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <br />
+                            @{ 
+                                if(ViewData["jenisKegiatan"] == "Internal" && ViewData["jenisProgram"] != "Pertukaran")
+                                {
+                                    <div class="row">
+                                        <div class="col-sm-3 text-right">
+                                            <h4>Dosen Pembimbing  &nbsp</h4>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <select name="jenjangStudi" id="jenjangStudi" class="form-control input-data" required disabled>
+                                                <option value="" selected disabled>@Model.PendaftaranMataKuliahs.DosenPembimbing</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <br />
+                                }
+                            }
                             <div class="form-group">
                                 <div class="col-sm-4 col-sm-offset-6" style="padding-left:50px">
                                     <button type="button" id="editVerifikasiButton" onclick="IndexEditVerifikasi()" class="btn btn-danger">REJECT</button>
@@ -171,7 +174,7 @@
                                         <h4>Kode Mata Kuliah &nbsp :</h4>
                                     </div>
                                     <div class="col-sm-8">
-                                        <h4>987987-9879-879879</h4>
+                                        <h4>@Model.CPLMatakuliahs.KodeMataKuliah</h4>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -179,7 +182,7 @@
                                         <h4>Nama Mata Kuliah &nbsp :</h4>
                                     </div>
                                     <div class="col-sm-8">
-                                        <h4>Management Business and Management Politict</h4>
+                                        <h4>@Model.CPLMatakuliahs.NamaMataKuliah</h4>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -211,7 +214,7 @@
                                         <h4>Kode Mata Kuliah &nbsp :</h4>
                                     </div>
                                     <div class="col-sm-8">
-                                        <h4>987987-9879-879879</h4>
+                                        <h4>@Model.CPLMatakuliahs.KodeMataKuliah</h4>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -219,7 +222,7 @@
                                         <h4>Nama Mata Kuliah &nbsp :</h4>
                                     </div>
                                     <div class="col-sm-8">
-                                        <h4>Management Business and Management Politict</h4>
+                                        <h4>@Model.CPLMatakuliahs.NamaMataKuliah</h4>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -229,12 +232,7 @@
                                     <div class="col-sm-8">
                                         <div class="row" style="padding-bottom:10px">
                                             <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">
-                                                <h4>Management Business and Management Politict</h4>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">
-                                                <h4>Management Business and Management Politict</h4>
+                                                <h4>@Model.CPLAsal</h4>
                                             </div>
                                         </div>
                                     </div>

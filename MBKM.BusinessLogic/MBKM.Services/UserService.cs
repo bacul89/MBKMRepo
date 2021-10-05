@@ -14,8 +14,8 @@ namespace MBKM.Services
 {
     public interface IUserService : IEntityService<User>
     {
-        //VMListUser getListUserGrid(int Skip, int Length, string SearchParama);
         VMListUser getListUserGrid(DataTableAjaxPostModel model);
+        List<VMLookUpUser> getDosenList(int Skip, int Length, string Search);
     }
 
     public class UserService : EntityService<User>, IUserService
@@ -30,10 +30,10 @@ namespace MBKM.Services
             _userRepository = userRepository;
         }
 
-        //public VMListUser getListUserGrid(int Skip, int Length, string SearchParam)
-        //{
-        //    return _userRepository.getListUserGrid(Skip, Length, SearchParam);
-        //}
+        public List<VMLookUpUser> getDosenList(int Skip, int Length, string Search)
+        {
+            return _userRepository.getDosenList(Skip, Length, Search);
+        }
 
         public VMListUser getListUserGrid(DataTableAjaxPostModel model)
         {
