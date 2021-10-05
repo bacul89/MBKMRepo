@@ -292,7 +292,7 @@
                         return {
                             Length: "10",
                             Search: params.term || "",
-                            Skip: params.skip || 0,
+                            Skip: (params.page - 1) * 10 || 0,
                         };
                     },
                     processResults: function (data, params) {
