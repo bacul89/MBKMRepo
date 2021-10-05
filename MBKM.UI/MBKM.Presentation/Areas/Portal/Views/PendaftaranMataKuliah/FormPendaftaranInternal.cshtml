@@ -131,9 +131,12 @@
             data.DosenPembimbing = $('#namaDosen').val();
             data.DosenID = $('#idDosen').val();
             data.JadwalKuliahID = $('#idMatkul').val();
-            data.MatkulAsal = $('#mataKuliahAsal').val();
             if ($('#jenisProgramMBKM').html() != 'Non Pertukaran') {
                 data.CPLMatakuliahID = $('#mataKuliahAsal').val();
+                var string = $('#mataKuliahAsal').select2('data')[0].text.split(' - ');
+                data.MatkulAsal = string[1];
+                data.MatkulKodeAsal = string[0];
+                data.MatkulIDAsal = $('#mataKuliahAsal').val();
             }
             $.ajax({
                 type: "POST",
@@ -168,7 +171,7 @@
                         };
                     },
                 }
-        });
+            });
         }
         function getJenisKerjasama() {
             $.ajax({
