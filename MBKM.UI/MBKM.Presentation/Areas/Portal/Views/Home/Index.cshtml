@@ -201,8 +201,8 @@
             mahasiswa.Gender = $("#gender").val();
             mahasiswa.Agama = $("#agama").val();
             if ($("#kerjasama").val() == "y") {
-                mahasiswa.BiayaKuliah = $('#namaUniversitas').select2('data')[0].biaya;
-                mahasiswa.NamaUniversitas = $('#namaUniversitas').select2('data')[0].nama;
+                mahasiswa.BiayaKuliah = $('#noKerjasama').select2('data')[0].biaya;
+                mahasiswa.NamaUniversitas = $('#noKerjasama').select2('data')[0].nama;
                 mahasiswa.NoKerjasama = $('#noKerjasama').select2('data')[0].value;
             } else {
                 mahasiswa.NamaUniversitas = $("#NamaUniversitas").val();
@@ -244,7 +244,7 @@
                     processResults: function (data, params) {
                         var page = params.page || 1;
                         return {
-                            results: $.map(data, function (item) { return { id: item.NoKerjasama, value: item.NoKerjasama, biaya: item.Biaya, nama: item.NamaInstansi, text: item.NamaInstansi } }),
+                            results: $.map(data, function (item) { return { id: item.NoKerjasama, value: item.NoKerjasama, nama: item.NamaInstansi, text: item.NamaInstansi } }),
                             pagination: {
                                 more: (page * 10) <= data.length
                             }
@@ -274,7 +274,7 @@
                     processResults: function (data, params) {
                         var page = params.page || 1;
                         return {
-                            results: $.map(data, function (item) { return { id: item.NoKerjasama, value: item.NoKerjasama, text: item.NoKerjasama } }),
+                            results: $.map(data, function (item) { return { id: item.NoKerjasama, value: item.NoKerjasama, biaya: item.Biaya, nama: item.NamaInstansi, text: item.NoKerjasama } }),
                             pagination: {
                                 more: (page * 10) <= data.length
                             }

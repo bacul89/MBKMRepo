@@ -124,7 +124,7 @@
                             </tr>
                         </table>
                     </form>
-                    <button class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: rgb(0, 166, 81); color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; " data-dismiss="modal" aria-label="Close">UPLOAD DATA PENDUKUNG</button>
+                    <button class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: rgb(0, 166, 81); color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; " data-dismiss="modal" aria-label="Close" onclick="generateTable()">UPLOAD DATA PENDUKUNG</button>
                 </div>
             </div>
         </div>
@@ -132,7 +132,7 @@
 </div>
 
 <div id="hiddenField">
-    <input type="hidden" id="id"/>
+    <input type="hidden" id="id" />
 </div>
 
 <div class="card center-block" style="background-color: white; margin-bottom: 15px;">
@@ -301,10 +301,7 @@
                         <tr>
                             <td style="width: 20%;">Universitas Asal</td>
                             <td>
-                                <div class="form-group" id="univAsal">
-                                    <select name="universitasAsal" id="universitasAsal" class="form-control input-md" required>
-                                    </select>
-                                </div>
+                                <input type="text" name="universitasAsal" id="universitasAsal" class="form-control input-md" required disabled />
                             </td>
                         </tr>
                         <tr>
@@ -332,11 +329,20 @@
                         </tr>
                     </table>
                 </div>
-
-                <button id="edit" class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 16px;">EDIT</button>
-                <button id="simpan" class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 16px; ">SIMPAN</button>
-                <button id="upload" class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: rgb(0, 166, 81); color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; " data-toggle="modal" data-target="#dataPendukung" data-backdrop="false">UPLOAD DATA PENDUKUNG</button>
             </div>
+
+            <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); " id="dokumenPendukung">
+                <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 18px; color: black;">
+                    DOKUMEN PENDUKUNG
+                </h5>
+                <div id="tblPendukung">
+                </div>
+                
+            </div>
+
+            <button id="edit" class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 16px;">EDIT</button>
+            <button id="simpan" class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 16px; ">SIMPAN</button>
+            <button id="upload" class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: rgb(0, 166, 81); color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; " data-toggle="modal" data-target="#dataPendukung" data-backdrop="false">UPLOAD DATA PENDUKUNG</button>
 
         </div>
     </div>
@@ -348,6 +354,7 @@
             //$('.file-upload').file_upload();
             $("#upload").hide();
             $("#simpan").hide();
+            $("#dokumenPendukung").hide();
             $("input").attr("disabled", true);
             $("select").attr("disabled", true);
             $("textarea").attr("disabled", true);
@@ -357,7 +364,6 @@
                 }
             } catch (e) {
             }
-            loadNamaUniversitas();
             loadFromLookup("WargaNegara", "kewarganegaraan", "Kewarganegaraan");
             loadFromLookup("KontakDarurat", "hubungan", "Hubungan");
             loadFromLookup("Gender", "gender", "Jenis Kelamin");
@@ -371,6 +377,7 @@
             $("#simpan").show();
             $("#upload").show();
             $("#edit").hide();
+            $("#universitasAsal").attr("disabled", true);
         });
         $("#simpan").click(function () {
             $.ajax({
@@ -397,21 +404,6 @@
                 data.append("TeleponDarurat", $("#noTelpDarurat").val());
                 data.append("EmailDarurat", $("#emailDarurat").val());
                 data.append("AlamatDarurat", $("#alamatDarurat").val());
-
-                if (mahasiswa.NoKerjasama != null) {
-                    if ($('#universitasAsal').select2('data')[0].biaya != null) {
-                        data.append("BiayaKuliah", $('#universitasAsal').select2('data')[0].biaya);
-                        data.append("NamaUniversitas", $('#universitasAsal').select2('data')[0].nama);
-                        data.append("NoKerjasama", $('#universitasAsal').select2('data')[0].value);
-                    } else {
-                        data.append("BiayaKuliah", $('#universitasAsal').find(':selected').attr('data-biaya'));
-                        data.append("NamaUniversitas", $('#universitasAsal').find(':selected').attr('data-nama'));
-                        data.append("NoKerjasama", $('#universitasAsal').val());
-                    }
-                } else {
-                    data.append("NamaUniversitas", $("#universitasAsal").val());
-                }
-
                 data.append("JenjangStudi", $("#jenjangStudi").val());
                 data.append("ProdiAsal", $("#programStudi").val());
                 data.append("NIMAsal", $("#nimAsal").val());
@@ -440,7 +432,29 @@
                 });
             });
         });
-
+        function generateTable() {
+            $("#dokumenPendukung").show();
+            $('#tblPendukung').html('<table class="table" id="tablePendukung"><thead><tr><td>No.</td><td>Tipe File</td><td>Nama File</td><td>Download</td></tr></thead></table>');
+            var index = 1;
+            if ($('#fotoDiri')[0].files.length == 1) {
+                $('#tablePendukung tr:last').after('<tr><td>' + index++ + '.</td><td>Foto Diri</td><td>' + $('#fotoDiri')[0].files[0].name + '</td><td><a href="' + URL.createObjectURL($('#fotoDiri')[0].files[0]) + '" target="_blank"><i class="fas fa-file-download"></i></a></td></tr>');
+            }
+            if ($('#fotoKTP')[0].files.length == 1) {
+                $('#tablePendukung tr:last').after('<tr><td>' + index++ + '.</td><td>Foto KTP</td><td>' + $('#fotoKTP')[0].files[0].name + '</td><td><a href="' + URL.createObjectURL($('#fotoKTP')[0].files[0]) + '" target="_blank"><i class="fas fa-file-download"></i></a></td></tr>');
+            }
+            if ($('#fotoKIM')[0].files.length == 1) {
+                $('#tablePendukung tr:last').after('<tr><td>' + index++ + '.</td><td>Foto KIM</td><td>' + $('#fotoKIM')[0].files[0].name + '</td><td><a href="' + URL.createObjectURL($('#fotoKIM')[0].files[0]) + '" target="_blank"><i class="fas fa-file-download"></i></a></td></tr>');
+            }
+            if ($('#transkripNilai')[0].files.length == 1) {
+                $('#tablePendukung tr:last').after('<tr><td>' + index++ + '.</td><td>Transkrip Nilai</td><td>' + $('#transkripNilai')[0].files[0].name + '</td><td><a href="' + URL.createObjectURL($('#transkripNilai')[0].files[0]) + '" target="_blank"><i class="fas fa-file-download"></i></a></td></tr>');
+            }
+            if ($('#suratKeterangan')[0].files.length == 1) {
+                $('#tablePendukung tr:last').after('<tr><td>' + index++ + '.</td><td>Surat Keterangan</td><td>' + $('#suratKeterangan')[0].files[0].name + '</td><td><a href="' + URL.createObjectURL($('#suratKeterangan')[0].files[0]) + '" target="_blank"><i class="fas fa-file-download"></i></a></td></tr>');
+            }
+            if (index == 1) {
+                $("#dokumenPendukung").hide();
+            }
+        };
         function getDataMahasiswa() {
             $.ajax({
                 type: "GET",
@@ -470,47 +484,13 @@
                 $("#noHPDarurat").val(response.NoHPDarurat);
                 $("#noTelpDarurat").val(response.TeleponDarurat);
                 $("#alamatDarurat").val(response.AlamatDarurat);
-                if (response.NoKerjasama == null) {
-                    $("#univAsal").html('<input type="text" name="universitasAsal" id="universitasAsal" class="form-control input-md" required disabled />');
-                    $("#universitasAsal").val(response.NamaUniversitas);
-                } else {
-                    setUniversitas(response.NoKerjasama);
-                }
+                $("#universitasAsal").val(response.NamaUniversitas);
                 if (response.JenjangStudi != null) {
                     setLookupValue("JenjangStudi", response.JenjangStudi, "jenjangStudi");
                     $("#jenjangStudi").val(response.JenjangStudi);
                 }
                 $("#programStudi").val(response.ProdiAsal);
                 $("#nimAsal").val(response.NIMAsal);
-            });
-        }
-        function loadNamaUniversitas() {
-            $("#universitasAsal").select2({
-                placeholder: "-- Pilih Universitas --",
-                width: "100%",
-                ajax: {
-                    url: "@Url.Action("GetNamaInstansi", "Home")",
-                    dataType: 'json',
-                    method: "POST",
-                    delay: 250,
-                    cache: false,
-                    data: function (params) {
-                        return {
-                            Length: "10",
-                            Search: params.term || "",
-                            Skip: params.page - 1 || 0,
-                        };
-                    },
-                    processResults: function (data, params) {
-                        var page = params.page || 1;
-                        return {
-                            results: $.map(data, function (item) { return { id: item.NoKerjasama, value: item.NoKerjasama, biaya: item.Biaya, nama: item.NamaInstansi, text: item.NamaInstansi } }),
-                            pagination: {
-                                more: (page * 10) <= data.length
-                            }
-                        };
-                    },
-                }
             });
         }
         function loadFromLookup(tipe, id, nama) {
@@ -543,15 +523,6 @@
             }).then(function (response) {
                 var option = $("<option selected='selected'></option>").val(response.Nilai).text(response.Nama);
                 $("#" + id).append(option).trigger('change');
-            });
-        }
-        function setUniversitas(noPerjanjian) {
-            $.ajax({
-                type: "GET",
-                url: "@Url.Action("GetPerjanjianKerjasama", "DataDiri")?noPerjanjian=" + noPerjanjian
-            }).then(function (response) {
-                var option = $("<option selected='selected'></option>").val(response.NoPerjanjian).text(response.NamaInstansi).attr('data-biaya', response.BiayaKuliah).attr('data-nama', response.NamaInstansi);
-                $("#universitasAsal").append(option).trigger('change');
             });
         }
         function appendZero(string, length) {

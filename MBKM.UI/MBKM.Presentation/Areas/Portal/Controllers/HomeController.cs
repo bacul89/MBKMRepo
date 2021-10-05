@@ -68,7 +68,17 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult GetNamaInstansi(int Skip, int Length, string Search)
         {
-            return Json(_perjanjianKerjasamaService.getNamaInstansi(Skip, Length, Search), JsonRequestBehavior.AllowGet);
+            List<string> instansis = new List<string>();
+            List<VMLookupNoKerjasama> pks = new List<VMLookupNoKerjasama>();
+            foreach (var item in _perjanjianKerjasamaService.getNamaInstansi(Skip, Length, Search))
+            {
+                if (!instansis.Contains(item.NamaInstansi))
+                {
+                    instansis.Add(item.NamaInstansi);
+                    pks.Add(item);
+                }
+            }
+            return Json(pks, JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetNoKerjasama(int Skip, int Length, string Search, string NamaInstansi)
         {

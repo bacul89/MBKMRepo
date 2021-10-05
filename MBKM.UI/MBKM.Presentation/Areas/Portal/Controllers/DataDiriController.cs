@@ -118,9 +118,6 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 res.TeleponDarurat = mahasiswa.TeleponDarurat;
                 res.EmailDarurat = mahasiswa.EmailDarurat;
                 res.AlamatDarurat = mahasiswa.AlamatDarurat;
-                res.BiayaKuliah = mahasiswa.BiayaKuliah;
-                res.NamaUniversitas = mahasiswa.NamaUniversitas;
-                res.NoKerjasama = mahasiswa.NoKerjasama;
                 res.JenjangStudi = mahasiswa.JenjangStudi;
                 res.ProdiAsal = mahasiswa.ProdiAsal;
                 res.NIMAsal = mahasiswa.NIMAsal;
