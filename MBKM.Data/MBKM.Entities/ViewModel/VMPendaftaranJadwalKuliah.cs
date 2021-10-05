@@ -1,12 +1,13 @@
 ﻿using MBKM.Entities.Basentities;
+using MBKM.Entities.Models.MBKM;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace MBKM.Entities.Models.MBKM
+namespace MBKM.Entities.ViewModel
 {
-    public class VMPendaftaranJadwalKuliah : BaseEntity
+    public class VMPendaftaranJadwalKuliah
     {
         public Int64 ID { get; set; }
         public Int64 DosenID { get; set; }
