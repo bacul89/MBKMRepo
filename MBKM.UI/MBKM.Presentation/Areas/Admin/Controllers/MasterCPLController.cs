@@ -77,11 +77,25 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
         //    return View("ModalCreateCPL");
         //}
+        //public ActionResult ModalDetailMasterCpl(int id)
+        //{
+        //    var model = _mcpService.Get(id);
+
+        //    return Json(model);
+
+        //    //return View(model);
+        //}
         public ActionResult ModalDetailMasterCpl(int id)
         {
-            var model = _mcpService.Get(id);
+            var data = _mcpService.Get(id);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult ModalEditMasterCpl(int id)
+        {
+     
 
-            return PartialView(model);
+            var data = _mcpService.Get(id);
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
         //public ActionResult ModalUpdateMasterCpl(int id)
         //{
@@ -110,13 +124,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             //string email = Session["email"] as string;
             //var result = GetMahasiswaByEmail(email);
             //return Json(_pmkService.GetFakultas(result.JenjangStudi, search), JsonRequestBehavior.AllowGet);
-            return Json(_mcpService.GetProdiByFakultas(jenjang, idFakultas, search), JsonRequestBehavior.AllowGet);
+            return Json(_mcpService.GetProdiByFakultas(jenjang,idFakultas, search), JsonRequestBehavior.AllowGet);
         }
-        public ActionResult GetLokasiByProdi(string idProdi, string search, string jenjang)
+        public ActionResult GetLokasiByProdi(string idProdi, string search,string jenjang)
         {
             //string email = Session["email"] as string;
             //var result = GetMahasiswaByEmail(email);
-            return Json(_mcpService.GetLokasiByProdi(jenjang, idProdi, search), JsonRequestBehavior.AllowGet);
+            return Json(_mcpService.GetLokasiByProdi( jenjang,idProdi, search), JsonRequestBehavior.AllowGet);
         }
         public ActionResult getLookupByTipe(string tipe)
         {

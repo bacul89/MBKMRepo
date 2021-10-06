@@ -1,11 +1,12 @@
 ﻿@{
     Layout = null;
 }
+@model MBKM.Entities.Models.MBKM.CPLMatakuliah
 
 <div class="modal-content data-content-modal" id="detail-master-maping-cpl">
     <div class="modal-header" style="background-color: #FF8A04; ">
         <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
-            DETAIL MASTER LOOKUP
+            DETAIL MAPING CAPAIAN PEMBELAJARAN PER-MATA KULIAH
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
@@ -17,58 +18,49 @@
             <div class="form-group">
                 <label for="inp_tipeEmail" class="col-sm-3 control-label">Kode Mata Kuliah</label>
                 <div class="col-sm-9">
-                    <select class="form-control input-pendaftaran input-data" name="inp_kode_mata_kuliah" id="inp_kode_mata_kuliah" placeholder="Pilih Kode Mata Kuliah" disabled>
-                        <option value="value">-</option>
-                        <option value="value">text</option>
-                    </select>
+                    <input type="text" class="form-control input-pendaftaran input-data" value="@Model.KodeMataKuliah" disabled/>
                     <!--<input type="text">-->
                 </div>
             </div>
             <div class="form-group">
                 <label for="inp_tipeEmail" class="col-sm-3 control-label">Mata Kuliah</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control input-pendaftaran input-data" name="inp_mata_kuliah" id="inp_mata_kuliah" placeholder="Pilih Mata Kuliah" disabled>
+                    <input type="text" class="form-control input-pendaftaran input-data" value="@Model.NamaMataKuliah" disabled/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="inp_email" class="col-sm-3 control-label">Kelompok</label>
                 <div class="col-sm-9">
-                    <select class="form-control input-pendaftaran input-data" name="inp_kelompok" id="inp_kelompok" placeholder="Pilih Kelompok" disabled>
-                        <option value="value">-</option>
-                        <option value="value">text</option>
-                    </select>
+                    <input type="text" class="form-control input-pendaftaran input-data" value="@Model.MasterCapaianPembelajarans.Kelompok" disabled/>
                     <!--<input type="text" >-->
                 </div>
             </div>
             <div class="form-group">
                 <label for="inp_bodyEmail" class="col-sm-3 control-label">Kode Capian Pembelajaran</label>
                 <div class="col-sm-9">
-                    <select class="form-control input-pendaftaran input-data" name="inp_kode_capaian_pembelajaran" id="inp_kode_capaian_pembelajaran" placeholder="Pilih Kode Capian Pembelajaran" disabled>
-                        <option value="value">-</option>
-                        <option value="value">text</option>
-                    </select>
+                    <input type="text" class="form-control input-pendaftaran input-data" value="@Model.MasterCapaianPembelajarans.Kode" disabled/>
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="inp_bodyEmail" class="col-sm-3 control-label">Capaian Pembelajaran</label>
                 <div class="col-sm-9">
-                    <textarea type="text" class="form-control input-pendaftaran input-data" name="inp_nilai" id="inp_nilai" placeholder="Keterangan" disabled></textarea>
+                    <textarea type="text" class="form-control input-pendaftaran input-data" placeholder="Capaian" disabled>@Model.MasterCapaianPembelajarans.Capaian</textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label for="inp_status" class="col-sm-3 control-label">Status</label>
                 <div class="col-sm-9">
-                    @*       @{
+                     @{
                         if (Model.IsActive)
-                        { *@
-                    <input type="email" class="form-control input-pendaftaran" value="Aktif" name="inp_email" id="inp_email" placeholder="Input Subject Email" disabled>
-                    @*                        }
+                        { 
+                            <input type="email" class="form-control input-pendaftaran" value="Aktif"  disabled>
+                        }
                         else
-                        {*@
-                    @*<input type="email" class="form-control input-pendaftaran" value="Tidak Aktif" name="inp_email" id="inp_email" placeholder="Input Subject Email" disabled>*@
-                    @*    }
-                        }*@
+                        {
+                            <input type="email" class="form-control input-pendaftaran" value="Tidak Aktif"  disabled>
+                        }
+                     }
                 </div>
             </div>
         </form>
