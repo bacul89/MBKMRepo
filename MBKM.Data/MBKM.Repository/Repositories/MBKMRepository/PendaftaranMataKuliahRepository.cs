@@ -41,15 +41,15 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                  return result;
             }
         }
-        public IEnumerable<VMProdi> GetLokasiByProdi(string jenjangStudi, string idProdi, string search)
+        public IEnumerable<VMProdi> GetLokasiByProdi(string jenjangStudi, string namaProdi, string search)
         {
             using (var context = new MBKMContext())
             {
                 var jenjangStudiParam = new SqlParameter("@JenjangStudi", jenjangStudi);
-                var idProdiParam = new SqlParameter("@IdProdi", idProdi);
+                var namaProdiParam = new SqlParameter("@NamaProdi", namaProdi);
                 var searchParam = new SqlParameter("@Search", search);
                 var result = context.Database
-                    .SqlQuery<VMProdi>("GetLokasiByProdi @JenjangStudi, @IdProdi, @Search", jenjangStudiParam, idProdiParam, searchParam).ToList();
+                    .SqlQuery<VMProdi>("GetLokasiByProdi @JenjangStudi, @NamaProdi, @Search", jenjangStudiParam, namaProdiParam, searchParam).ToList();
                 return result;
             }
         }
@@ -63,7 +63,6 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return result;
             }
         }        
-        
         public VMListPendaftaranMataKuliah GetPendaftaranList(int Skip, int Length, string SearchParam, string SortBy, bool SortDir)
         {
             VMListPendaftaranMataKuliah mListPendaftaranMataKuliah = new VMListPendaftaranMataKuliah();
@@ -109,8 +108,6 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return mListPendaftaranMataKuliah;
             }
         }
-
-
         public VMListPendaftaranMataKuliah GetPendaftaranListFromMahasiswa(int Skip, int Length, string SearchParam, string SortBy, bool SortDir, string emailMahasiswa)
         {
             VMListPendaftaranMataKuliah mListPendaftaranMataKuliah = new VMListPendaftaranMataKuliah();
@@ -121,7 +118,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             using (var context = new MBKMContext())
             {
                 context.Configuration.LazyLoadingEnabled = false;
-                var result = context.PendaftaranMataKuliahs.Where(x => x.IsDeleted == false && x.mahasiswas.Email == emailMahasiswa).Include(x => x.mahasiswas).Include(x => x.JadwalKuliahs);
+                var result = context.PendaftaranMataKuliahs.Where(x => x.IsDeleted == false && x.mahasiswas.Email == emailMahasiswa /*&& x.StatusPendaftaran != "MENUNGGU APPROVAL KAPRODI/WR BIDANG AKADEMIK"*/).Include(x => x.mahasiswas).Include(x => x.JadwalKuliahs);
                 mListPendaftaranMataKuliah.TotalCount = result.Count();
                 var gridfilter = result
                     .AsQueryable()

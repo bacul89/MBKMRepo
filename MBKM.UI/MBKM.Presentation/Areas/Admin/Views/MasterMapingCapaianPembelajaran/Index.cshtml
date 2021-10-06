@@ -36,7 +36,7 @@
                         <div class="form-group">
                             <label for="inp_jenjang" class="col-sm-3 control-label">Jenjang Studi</label>
                             <div class="col-sm-9">
-                                <select class="form-control input-data" name="jenjang" id="jenjang">
+                                <select name="jenjangCari" id="jenjangCari" class="form-control input-md">
                                     @*<option value="" selected disabled>-- Pilih Authority Approval --</option>*@
                                 </select>
                             </div>
@@ -45,23 +45,45 @@
                         <div class="form-group">
                             <label for="inp_fakultas" class="col-sm-3 control-label">Fakultas</label>
                             <div class="col-sm-9">
-                                <select name="fakultas" id="fakultas" class="form-control input-md"></select>
+                                <select name="fakultasCari" id="fakultasCari" class="form-control input-md"></select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inp_email" class="col-sm-3 control-label">Program Studi</label>
+                            <label for="inp_prodi" class="col-sm-3 control-label">Program Studi</label>
                             <div class="col-sm-9">
-                                <select name="prodi" id="prodi" class="form-control input-md"></select>
+                                <select name="prodiCari" id="prodiCari" class="form-control input-md"></select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inp_bodyEmail" class="col-sm-3 control-label">Mata Kuliah</label>
+                            <label for="inp_lokasi" class="col-sm-3 control-label">Lokasi</label>
                             <div class="col-sm-9">
-                                <select class="form-control input-pendaftaran input-data">
-                                    <option value="value">-</option>
-                                    <option value="value">hallo</option>
-                                    <option value="value">hallo</option>
+                                <select name="lokasiCari" id="lokasiCari" class="form-control input-md"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inp_matakuliah" class="col-sm-3 control-label">Mata Kuliah</label>
+                            <div class="col-sm-9">
+                                <select name="matakuliahCari" id="matakuliahCari" class="form-control input-md">
                                 </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group" hidden>
+                            <label for="inp_matakuliahId" class="col-sm-3 control-label">Nama Mata Kuliah</label>
+                            <div class="col-sm-9">
+                                <input name="matakuliahNamaCari" id="matakuliahNamaCari" class="form-control input-md">
+                            </div>
+                        </div>
+                        <div class="form-group" hidden>
+                            <label for="inp_matakuliahKode" class="col-sm-3 control-label">Kode Mata Kuliah</label>
+                            <div class="col-sm-9">
+                                <input name="matakuliahKodeCari" id="matakuliahKodeCari" class="form-control input-md">
+                            </div>
+                        </div>
+                        <div class="form-group" hidden>
+                            <label for="inp_matakuliahId" class="col-sm-3 control-label">Id Mata Kuliah</label>
+                            <div class="col-sm-9">
+                                <input name="matakuliahIdCari" id="matakuliahIdCari" class="form-control input-md">
                             </div>
                         </div>
                         <div class="form-group">
@@ -110,8 +132,11 @@
     <script>
         var datatable = null;
         $(document).ready(function () {
-
-            loadFromLookup("JenjangStudi", "jenjang", "Jenjang Studi");
+            $("#fakultasCari").prop("disabled", true);
+            $("#prodiCari").prop("disabled", true);
+            $("#lokasiCari").prop("disabled", true);
+            $("#matakuliahCari").prop("disabled", true);
+            loadJenjangStudi("JenjangStudi", "jenjang", "Jenjang Studi");
 
             @*loadFakultas();*@
             @*$("#prodi").select2({
@@ -205,98 +230,21 @@
 
         }
 
-@*        function loadFakultas() {
 
-
-            $("#fakultas").select2({
-                placeholder: "-- Pilih Fakultas --",
+        @* search *@
+        function loadJenjangStudi(tipe, id, nama) {
+            $("#" + id+"Cari").select2({
+                placeholder: "-- Pilih " + nama + " --",
                 width: "100%",
                 ajax: {
-                    url: "/Admin/MasterMapingCapaianPembelajaran/GetFakultas",
+                    url: "@Url.Action("getLookupByTipe", "MasterMapingCapaianPembelajaran")",
                     dataType: 'json',
                     method: "POST",
                     delay: 250,
                     cache: false,
                     data: function (params) {
-                        console.log(params);
-
-                        return {
-                            Tipe: tipe
-                        };
                         return {
                             Search: params.term || "",
-                            jenjang: $("#jenjang").val()
-                        };
-                    },
-                    processResults: function (data, params) {
-                        return {
-                            results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
-                        };
-                    },
-                }
-            });
-            $("#fakultas").change(function () {
-                $("#prodi").select2({
-                    placeholder: "-- Pilih Program Studi --",
-                    width: "100%",
-                    ajax: {
-                        url: "/Admin/MasterMapingCapaianPembelajaran/GetProdiByFakultas",
-                        dataType: 'json',
-                        method: "POST",
-                        delay: 250,
-                        cache: false,
-                        data: function (params) {
-                            return {
-                                Search: params.term || "",
-                                IDFakultas: $('#fakultas').val()
-                            };
-                        },
-                        processResults: function (data, params) {
-                            return {
-                                results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
-                            };
-                        },
-                    }
-                });
-                $("#prodi").change(function () {
-                    $("#lokasi").select2({
-                        placeholder: "-- Pilih Lokasi --",
-                        width: "100%",
-                        ajax: {
-                            url: "@Url.Action("GetLokasiByProdi", "PendaftaranMataKuliah")",
-                            dataType: 'json',
-                            method: "POST",
-                            delay: 250,
-                            cache: false,
-                            data: function (params) {
-                                return {
-                                    Search: params.term || "",
-                                    IDProdi: $('#prodi').val()
-                                };
-                            },
-                            processResults: function (data, params) {
-                                return {
-                                    results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Kampus } })
-                                };
-                            },
-                        }
-                    });
-                });
-            });
-        }
-*@
-@*        function loadFromLookup(tipe, id, nama) {
-            $("#" + id).select2({
-                placeholder: "-- Pilih " + nama + " --",
-                width: "100%",
-                ajax: {
-                    url: "@Url.Action("getLookupByTipe", "MasterMapingCapaianPembelajaran")",
-                    dataType: 'json',
-                    method: "POST",
-                    delay: 250,
-                    cache: false,
-                    data: function (params) {
-                        return {
                             Tipe: tipe
                         };
                     },
@@ -307,33 +255,9 @@
                     },
                 }
             });
-        }
-*@
-
-        function loadFromLookup(tipe, id, nama) {
-            $("#" + id).select2({
-                placeholder: "-- Pilih " + nama + " --",
-                width: "100%",
-                ajax: {
-                    url: "@Url.Action("getLookupByTipe", "MasterMapingCapaianPembelajaran")",
-                    dataType: 'json',
-                    method: "POST",
-                    delay: 250,
-                    cache: false,
-                    data: function (params) {
-                        return {
-                            Tipe: tipe
-                        };
-                    },
-                    processResults: function (data, params) {
-                        return {
-                            results: $.map(data, function (item) { return { id: item.Nilai, value: item.Nilai, text: item.Nama } })
-                        };
-                    },
-                }
-            });
-            $("#" + id).change(function () {
-                $("#fakultas").select2({
+            $("#" + id + "Cari").change(function () {
+                $("#fakultasCari").prop("disabled", false);
+                $("#fakultasCari").select2({
                     placeholder: "-- Fakultas --",
                     width: "100%",
                     ajax: {
@@ -345,7 +269,7 @@
                         data: function (params) {
                             return {
                                 Search: params.term || "",
-                                JenjangStudi: $('#'+id).val()
+                                JenjangStudi: $('#' + id + "Cari").val(),
                             };
                         },
                         processResults: function (data, params) {
@@ -355,8 +279,9 @@
                         },
                     }
                 });
-                $("#fakultas").change(function () {
-                    $("#prodi").select2({
+                $("#fakultasCari").change(function () {
+                    $("#prodiCari").prop("disabled", false);
+                    $("#prodiCari").select2({
                         placeholder: "-- Pilih Program Studi --",
                         width: "100%",
                         ajax: {
@@ -368,8 +293,8 @@
                             data: function (params) {
                                 return {
                                     Search: params.term || "",
-                                    JenjangStudi: $('#' + id).val(),
-                                    IDFakultas: $('#fakultas').val()
+                                    JenjangStudi: $('#' + id +"Cari").val(),
+                                    IDFakultas: $('#fakultasCari').val()
                                 };
                             },
                             processResults: function (data, params) {
@@ -379,12 +304,15 @@
                             },
                         }
                     });
-                    $("#prodi").change(function () {
-                        $("#matakuliah").select2({
-                            placeholder: "-- Pilih Program Studi --",
+
+                    $("#prodiCari").change(function () {
+
+                       $("#lokasiCari").prop("disabled", false);
+                       $("#lokasiCari").select2({
+                            placeholder: "-- Lokasi Studi --",
                             width: "100%",
                             ajax: {
-                                url: "/Admin/MasterMapingCapaianPembelajaran/GetMataKuliahByProdi",
+                                url: "/Admin/MasterMapingCapaianPembelajaran/GetLokasiByProdi",
                                 dataType: 'json',
                                 method: "POST",
                                 delay: 250,
@@ -392,23 +320,25 @@
                                 data: function (params) {
                                     return {
                                         Search: params.term || "",
-                                        JenjangStudi: $('#' + id).val(),
-                                        IDFakultas: $('#fakultas').val()
+                                        IDProdi: $('#prodiCari').val(),
+                                        JenjangStudi: $('#' + id + "Cari").val()
                                     };
                                 },
                                 processResults: function (data, params) {
                                     return {
-                                        results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+                                        results: $.map(data, function (item) { return { id: item.Kampus, value: item.Kampus, text: item.Kampus } })
                                     };
                                 },
                             }
                         });
-                        $("#matakuliah").change(function () {
-                            $("#lokasi").select2({
-                                placeholder: "-- Pilih Lokasi --",
+                        $("#lokasiCari").change(function () {
+
+                            $("#matakuliahCari").prop("disabled", false);
+                            $("#matakuliahCari").select2({
+                                placeholder: "-- Mata Kuliah Studi --",
                                 width: "100%",
                                 ajax: {
-                                    url: "@Url.Action("GetMataKuliahByProdi", "MasterMapingCapaianPembelajaran")",
+                                    url: "/Admin/MasterMapingCapaianPembelajaran/GetMataKuliahByProdi",
                                     dataType: 'json',
                                     method: "POST",
                                     delay: 250,
@@ -416,24 +346,55 @@
                                     data: function (params) {
                                         return {
                                             Search: params.term || "",
-                                            IDProdi: $('#prodi').val(),
+                                            IDProdi: $('#prodiCari').val(),
+                                            lokasi: $('#lokasiCari').val()
                                         };
                                     },
-                                    processResults: function (data, params) {
+                                    processResults: function (data, params) {                                        
                                         return {
-                                            results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Kampus } })
+                                            results: $.map(data, function (item) { return { id: item.MataKuliahID, value: item.MataKuliahID, text: item.NamaMataKuliah } })
                                         };
                                     },
                                 }
                             });
+                            $("#matakuliahCari").change(function () {
+                                dataParam = {};
+
+                                dataParam.IDProdi = $('#prodiCari').val();
+                                dataParam.lokasi = $('#lokasiCari').val();
+                                dataParam.MataKuliahID = $('#matakuliahCari').val();
+
+                                $.ajax({
+                                    url: "/Admin/MasterMapingCapaianPembelajaran/GetMataKuliahByID",
+                                    dataType: 'json',
+                                    method: "POST",
+                                    delay: 250,
+                                    cache: false,
+                                    contentType: 'application/json',
+                                    data: JSON.stringify(dataParam),
+                                    success: function (e) {
+                                        //console.log(e[0]);
+                                        $("#matakuliahNamaCari").val(e[0].NamaMataKuliah);
+                                        $("#matakuliahKodeCari").val(e[0].KodeMataKuliah);
+                                        $("#matakuliahIdCari").val(e[0].MataKuliahID);
+                                    },
+                                    error: function (e) {
+                                        console.log("matakuliah not found...");
+                                    }
+                                })
+
+
+                            });
                         });
+
+
+
+
+
                     });
                 });
             });
         }
-
-
-
 
     </script>
 

@@ -21,6 +21,8 @@ namespace MBKM.Entities.Map.MBKMMap
             Property(t => t.NamaFakultas).HasMaxLength(150).IsRequired();
             Property(t => t.ProdiID).HasMaxLength(30).IsRequired();
             Property(t => t.NamaProdi).HasMaxLength(150);
+            Property(t => t.JenjangStudi).HasMaxLength(10).IsRequired();
+            Property(t => t.Lokasi).HasMaxLength(150).IsRequired();
         }
     }
 }
