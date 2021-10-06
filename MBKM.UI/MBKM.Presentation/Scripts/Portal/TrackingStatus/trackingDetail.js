@@ -1,48 +1,13 @@
-﻿$(document).ready(function (e) {
-    $('.js-example-basic-single').select2({
-        placeholder: "Masukkan Nama Dosen",
-        "proccessing": true,
-        "serverSide": true,
-        ajax: {
-            url: '/Admin/ApprovalPendaftaranMatakuliah/GetAllDataDosen/',
-            type: 'post',
-            dataType: 'json',
-            data: function (params) {
-                return {
-                    search: params.term,
-                    length: params.length || 10,
-                    skip: params.skip || 0
-                };
-            },
-            processResults: function (data, page) {
-                return {
-                    results: data
-                }
-            }
-        }
-    });
-})
-dCPL = {};
-dApproval = {};
-dMahasiswa = {};
-
-function AcceptedPendaftaran() {
+﻿function AcceptedCPLPendaftaran() {
     $.LoadingOverlay("show");
-    dApproval.Kesenjangan = $('#inp_kesenjangan').val();
-    dApproval.Hasil = $('#inp_hasil').val();
-    dApproval.Konversi = $('select[name="inp_konversi"] option').filter(':selected').val()
-    dApproval.DosenID = $('select[name="inp_dosbing"] option').filter(':selected').val()
-    dApproval.DosenPembimbing = $('select[name="inp_dosbing"] option').filter(':selected').text()
-    dMahasiswa.Catatan = $('#inp_catatan').val();
-    dApproval.mahasiswas = dMahasiswa;
-    dCPL.ID = $('#inp_ID').val();
-    dCPL.PendaftaranMataKuliahs = dApproval;
+    id = $('#inp_ID').val();
     $.ajax({
-        url: '/Admin/ApprovalPendaftaranMatakuliah/PostDataApprovalAccepted/',
+        url: '/Portal/TrackingStatusPendaftaran/PostApprovalAccepted/',
         type: 'post',
         datatype: 'json',
-        data: JSON.stringify(dCPL),
-        contentType: 'application/json',
+        data: {
+            id : $('#inp_ID').val()
+        },
         success: function (e) {
             $.LoadingOverlay("hide");
             if (e.status == 200) {
@@ -53,7 +18,7 @@ function AcceptedPendaftaran() {
                     confirmButtonText: 'OK'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href = '/Admin/ApprovalPendaftaranMatakuliah/'
+                        window.location.href = '/Portal/TrackingStatusPendaftaran/'
                     }
                 })
             } else {
@@ -83,16 +48,7 @@ function AcceptedPendaftaran() {
     })
 }
 
-function RejectedPendaftaran() {
-    dApproval.Kesenjangan = $('#inp_kesenjangan').val();
-    dApproval.Hasil = $('#inp_hasil').val();
-    dApproval.Konversi = $('select[name="inp_konversi"] option').filter(':selected').val()
-    dApproval.DosenID = $('select[name="inp_dosbing"] option').filter(':selected').val()
-    dApproval.DosenPembimbing = $('select[name="inp_dosbing"] option').filter(':selected').text()
-    dMahasiswa.Catatan = $('#inp_catatan').val();
-    dApproval.mahasiswas = dMahasiswa;
-    dCPL.ID = $('#inp_ID').val();
-    dCPL.PendaftaranMataKuliahs = dApproval;
+function RejectCPLPendaftaran() {
     swal.fire({
         title: "Apakah anda yakin?",
         type: "warning",
@@ -104,12 +60,14 @@ function RejectedPendaftaran() {
     }).then((result) => {
         if (result.isConfirmed) {
             $.LoadingOverlay("show");
+            id = $('#inp_ID').val();
             $.ajax({
-                url: '/Admin/ApprovalPendaftaranMatakuliah/PostDataApprovalRejected/',
+                url: '/Portal/TrackingStatusPendaftaran/PostApprovalRejected/',
                 type: 'post',
                 datatype: 'json',
-                data: JSON.stringify(dCPL),
-                contentType: 'application/json',
+                data: {
+                    id: $('#inp_ID').val()
+                },
                 success: function (e) {
                     $.LoadingOverlay("hide");
                     if (e.status == 200) {
@@ -120,7 +78,7 @@ function RejectedPendaftaran() {
                             confirmButtonText: 'OK'
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                window.location.href = '/Admin/ApprovalPendaftaranMatakuliah/'
+                                window.location.href = '/Portal/TrackingStatusPendaftaran/'
                             }
                         })
                     } else {

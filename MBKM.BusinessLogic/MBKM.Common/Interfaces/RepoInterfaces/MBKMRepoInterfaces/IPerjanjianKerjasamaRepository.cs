@@ -13,5 +13,6 @@ namespace MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces
         VMListPerjanjianKerjasama getListPerjanjianKerjasama(int Skip, int Length, string SearchParam, string SortBy, bool SortDir);
         List<VMLookupNoKerjasama> getNoKerjasama(int Skip, int Length,string Search, string NamaInstansi);
         List<VMLookupNoKerjasama> getNamaInstansi(int Skip, int Length, string Search);
+        int getBiaya(string NoKerjasama);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using MBKM.Entities.Models.MBKM;
+using MBKM.Presentation.Helper;
 using MBKM.Presentation.models;
 using MBKM.Presentation.Models;
 using MBKM.Services;
@@ -14,6 +15,7 @@ using System.Web.Mvc;
 
 namespace MBKM.Presentation.Areas.Portal.Controllers
 {
+    [MBKMAuthorize]
     public class DataDiriController : Controller
     {
         private IMahasiswaService _mahasiswaService;
@@ -118,9 +120,6 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 res.TeleponDarurat = mahasiswa.TeleponDarurat;
                 res.EmailDarurat = mahasiswa.EmailDarurat;
                 res.AlamatDarurat = mahasiswa.AlamatDarurat;
-                res.BiayaKuliah = mahasiswa.BiayaKuliah;
-                res.NamaUniversitas = mahasiswa.NamaUniversitas;
-                res.NoKerjasama = mahasiswa.NoKerjasama;
                 res.JenjangStudi = mahasiswa.JenjangStudi;
                 res.ProdiAsal = mahasiswa.ProdiAsal;
                 res.NIMAsal = mahasiswa.NIMAsal;

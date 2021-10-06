@@ -16,6 +16,7 @@ namespace MBKM.Services.MBKMServices
     {
         VMListPerjanjianKerjasama getListPKGrid(DataTableAjaxPostModel model);
         List<VMLookupNoKerjasama> getNoKerjasama(int Skip, int Length, string Search, string NamaInstansi);
+        int getBiaya(string NamaInstansi);
         List<VMLookupNoKerjasama> getNamaInstansi(int Skip, int Length, string Search);
     }
     public class PerjanjianKerjasamaService : EntityService<PerjanjianKerjasama>, IPerjanjianKerjasamaService
@@ -28,6 +29,11 @@ namespace MBKM.Services.MBKMServices
         {
             _unitOfWork = unitOfWork;
             _perjanjianKerjasamaRepository = PerjanjianKerjasamaRepository;
+        }
+
+        public int getBiaya(string NoKerjaSama)
+        {
+            return _perjanjianKerjasamaRepository.getBiaya(NoKerjaSama);
         }
 
         public VMListPerjanjianKerjasama getListPKGrid(DataTableAjaxPostModel model)
