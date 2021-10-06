@@ -1,16 +1,19 @@
 ﻿var tableUser = $('#TableList').DataTable({
     
     "columnDefs": [{
+        //"orderable": false,
+        //"paging": false,
+        "targets": [0, 1],
         "searchable": false,
         "orderable": false,
-        "paging": false,
-        "targets": 0
+        "paging": false
+        
        
     }],
     //"order": [[1, 'asc']],
     "proccessing": true,
     "serverSide": true,
-    "order": [[1, 'asc']],
+    "order": [[2, 'asc']],
     //"aaSorting": [[0, "asc"]],
     "ajax": {
         url: '/Admin/DaftarSeluruhMahasiswa/GetList',
@@ -43,7 +46,7 @@
             //"title": "No",
             "data": null,
             "render": function (data, type, full, meta) {
-                return meta.row + 1;
+                return'<div class="center vertical-center">' + (meta.row + 1) + '</div>';
             }
         },
         {

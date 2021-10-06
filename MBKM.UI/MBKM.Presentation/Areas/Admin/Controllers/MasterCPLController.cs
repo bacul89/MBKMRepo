@@ -1,6 +1,7 @@
 ﻿using MBKM.Common.Helpers;
 using MBKM.Entities.Models.MBKM;
 using MBKM.Entities.ViewModel;
+using MBKM.Presentation.Helper;
 using MBKM.Presentation.models;
 using MBKM.Services;
 using MBKM.Services.MBKMServices;
@@ -13,6 +14,7 @@ using System.Web.Mvc;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
+    [MBKMAuthorize]
     public class MasterCPLController : Controller
     {
         private ILookupService _lookupService;
@@ -26,7 +28,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         // GET: Admin/MasterCPL
         public ActionResult Index()
         {
-            Session["username"] = "Smitty Werben Jeger Man Jensen";
+            
             return View();
         }
         [HttpPost]
