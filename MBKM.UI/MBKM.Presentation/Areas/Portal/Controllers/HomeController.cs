@@ -105,6 +105,17 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult LoginInternal(string username, string password)
         {
+            if (GetMahasiswaByNim(username) != null)
+            {
+                Mahasiswa res = _mahasiswaService.Find(m => m.NIM == username).FirstOrDefault();
+                if (res == null || !HashPasswordService.ValidatePassword(password, res.Password))
+                {
+                    TempData["alertMessage"] = "Username atau password anda salah!";
+                    return RedirectToAction("Index", "Home");
+                }
+                PopulateSession(true, res.Email, res.Nama);
+                return RedirectToAction("Index", "DataDiri");
+            }
             var a = _mahasiswaService.getLoginInternal(username, password);
             if (a == null)
             {
@@ -123,17 +134,19 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     mahasiswa.Telepon = a.Phone;
                     mahasiswa.Alamat = a.Alamat;
                     mahasiswa.Agama = a.Agama;
-                    mahasiswa.Password = a.PasswordData;
+                    mahasiswa.Password = hp(a.PasswordData);
                     mahasiswa.CreatedDate = DateTime.Now;
                     mahasiswa.UpdatedDate = DateTime.Now;
                     mahasiswa.IsActive = true;
                     mahasiswa.IsDeleted = false;
+                    //var tanggalLahir = DateTime.ParseExact(a.TanggalLahir, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
                     mahasiswa.TanggalLahir = a.TanggalLahir;
                     mahasiswa.TempatLahir = "Jakarta";
                     mahasiswa.Gender = a.Gender;
                     mahasiswa.ProdiAsal = a.Prodi;
                     mahasiswa.NIM = a.NIM;
                     mahasiswa.NIMAsal = a.NIM;
+                    mahasiswa.JenjangStudi = a.JenjangStudi;
                     mahasiswa.StatusVerifikasi = "AKTIF";
 
                     _mahasiswaService.Save(mahasiswa);

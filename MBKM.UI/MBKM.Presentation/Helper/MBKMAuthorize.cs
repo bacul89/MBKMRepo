@@ -23,9 +23,9 @@ namespace MBKM.Presentation.Helper
                     return;
                 }
             }
-            else
+            else if (area.ToLower() == "portal")
             {
-                if (filterContext.HttpContext.Session["nama"] == null)
+                if (filterContext.HttpContext.Session["email"] == null)
                 {
                     filterContext.Result = new RedirectResult("~/Portal/Home");
                     return;

@@ -1,6 +1,7 @@
 ﻿using MBKM.Common.Helpers;
 using MBKM.Entities.Models.MBKM;
 using MBKM.Entities.ViewModel;
+using MBKM.Presentation.Helper;
 using MBKM.Presentation.models;
 using MBKM.Services;
 using MBKM.Services.MBKMServices;
@@ -14,6 +15,7 @@ using System.Web.Mvc;
 
 namespace MBKM.Presentation.Areas.Portal.Controllers
 {
+    [MBKMAuthorize]
     public class PendaftaranMataKuliahController : Controller
     {
         private IPendaftaranMataKuliahService _pmkService;
@@ -40,6 +42,21 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult Index()
         {
             var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
+            if (mahasiswa.StatusVerifikasi == "DAFTAR")
+            {
+                TempData["alertMessage"] = "Tolong lengkapi data diri anda terlebih dahulu!";
+                return RedirectToAction("Index", "DataDiri");
+            }
+            else if (mahasiswa.StatusVerifikasi == "MENUNGGU VERIFIKASI")
+            {
+                TempData["alertMessage"] = "Tolong tunggu sementara data diri anda diverifikasi!";
+                return RedirectToAction("Index", "DataDiri");
+            }
+            else if (mahasiswa.StatusVerifikasi == "DITOLAK")
+            {
+                TempData["alertMessage"] = "Lengkapi kembali data diri anda atau hubungi pihak administrator universitas atma jaya!";
+                return RedirectToAction("Index", "DataDiri");
+            }
             if (mahasiswa.NIM == mahasiswa.NIMAsal)
             {
                 return RedirectToAction("Internal");
@@ -48,14 +65,25 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult Internal()
         {
-            var model = _pmkService.getOngoingSemester(GetMahasiswaByEmail(Session["email"] as string).JenjangStudi);
+            var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
+            if (mahasiswa.NIM != mahasiswa.NIMAsal)
+            {
+                return RedirectToAction("Eksternal");
+            }
+            var model = _pmkService.getOngoingSemester(mahasiswa.JenjangStudi);
             return View(model);
         }
         public ActionResult Eksternal()
         {
-            var model = _pmkService.getOngoingSemester(GetMahasiswaByEmail(Session["email"] as string).JenjangStudi);
+            var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
+            if (mahasiswa.NIM == mahasiswa.NIMAsal)
+            {
+                return RedirectToAction("Internal");
+            }
+            var model = _pmkService.getOngoingSemester(mahasiswa.JenjangStudi);
             return View(model);
         }
+
         public ActionResult FormPendaftaran(int idMatkul)
         {
             var matkul = GetJadwalKuliah(idMatkul);
@@ -80,7 +108,17 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult GetMataKuliahByProdi(int idProdi, string lokasi, int strm)
         {
-            return new ContentResult { Content = JsonConvert.SerializeObject(_jkService.Find(jk => jk.ProdiID == idProdi && jk.Lokasi == lokasi && jk.STRM == strm).ToList()), ContentType = "application/json" };
+            List<JadwalKuliah> jks = new List<JadwalKuliah>();
+            List<string> jadwalKuliahs = new List<string>();
+            foreach (var item in _jkService.Find(jk => jk.ProdiID == idProdi && jk.Lokasi == lokasi && jk.STRM == strm).ToList())
+            {
+                if (!jadwalKuliahs.Contains(item.NamaMataKuliah))
+                {
+                    jks.Add(item);
+                    jadwalKuliahs.Add(item.NamaMataKuliah);
+                }
+            }
+            return new ContentResult { Content = JsonConvert.SerializeObject(jks), ContentType = "application/json" };
         }
         public ActionResult GetProdiByFakultas(string idFakultas, string search)
         {
@@ -88,11 +126,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var result = GetMahasiswaByEmail(email);
             return Json(_pmkService.GetProdiByFakultas(result.JenjangStudi, idFakultas, search), JsonRequestBehavior.AllowGet);
         }
-        public ActionResult GetLokasiByProdi(string idProdi, string search)
+        public ActionResult GetLokasiByProdi(string namaProdi, string search)
         {
             string email = Session["email"] as string;
             var result = GetMahasiswaByEmail(email);
-            return Json(_pmkService.GetLokasiByProdi(result.JenjangStudi, idProdi, search), JsonRequestBehavior.AllowGet);
+            return Json(_pmkService.GetLokasiByProdi(result.JenjangStudi, namaProdi, search), JsonRequestBehavior.AllowGet);
         }
         public ActionResult GetProgram()
         {

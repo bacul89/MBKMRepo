@@ -30,14 +30,6 @@
         border: 0px !important;
     }
 
-    .table-responsive {
-        display: block;
-        width: 100%;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        -ms-overflow-style: -ms-autohiding-scrollbar;
-    }
-
     table.dataTable.no-footer {
         border: none;
     }
@@ -155,10 +147,14 @@
             datatable = $('#hasilPencarian').DataTable();
         });
         $('#cari').click(function () {
+            if (!$('#fakultas').val() || !$('#prodi').val() || !$('#lokasi').val()) {
+                alert('Tolong lengkapi data pencarian!');
+                return;
+            }
             datatable.destroy();
             datatable = $('#hasilPencarian').DataTable({
                 ajax: {
-                    url: '@Url.Action("GetMataKuliahByProdi","PendaftaranMataKuliah")?idProdi=' + $('#prodi').val() + '&lokasi=' + $('#lokasi').val() + '&strm=' + $('#strm').val(),
+                    url: '@Url.Action("GetMataKuliahByProdi","PendaftaranMataKuliah")?idProdi=' + $('#lokasi').val() + '&lokasi=' + $('#lokasi').select2('data')[0].text + '&strm=' + $('#strm').val(),
                     dataSrc: ''
                 },
                 "columns": [
@@ -271,7 +267,7 @@
                         },
                         processResults: function (data, params) {
                             return {
-                                results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+                                results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
                             };
                         },
                     }
@@ -291,12 +287,12 @@
                             data: function (params) {
                                 return {
                                     Search: params.term || "",
-                                    IDProdi: $('#prodi').val()
+                                    NamaProdi: $('#prodi').val()
                                 };
                             },
                             processResults: function (data, params) {
                                 return {
-                                    results: $.map(data, function (item) { return { id: item.Kampus, value: item.Kampus, text: item.Kampus } })
+                                    results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Kampus } })
                                 };
                             },
                         }
