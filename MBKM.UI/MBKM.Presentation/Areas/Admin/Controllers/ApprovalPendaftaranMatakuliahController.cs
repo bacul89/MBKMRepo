@@ -63,6 +63,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             }
             var IDMakul = data.PendaftaranMataKuliahs.JadwalKuliahs.MataKuliahID;
             IList<CPLMatakuliah> capaianTujuan = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.PendaftaranMataKuliahs.JadwalKuliahs.MataKuliahID).ToList();
+            if (data.CPLMatakuliahID != null)
+            {
+                IList<CPLMatakuliah> capaianAsal = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.CPLMatakuliahs.IDMataKUliah).ToList();
+                ViewData["capaianAsal"] = capaianAsal;
+                ViewData["countCPAsal"] = capaianAsal.Count();
+
+            }
             ViewData["capaianTujuan"] = capaianTujuan;
             ViewData["countCPTujuan"] = capaianTujuan.Count();
             return View(data);
