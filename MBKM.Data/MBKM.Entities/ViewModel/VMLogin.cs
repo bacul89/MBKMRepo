@@ -19,6 +19,7 @@ namespace MBKM.Entities.ViewModel
         public string NIM { get; set; }
         public string Phone { get; set; }
         public Int64 IdMahasiswa { get; set; }
+        public string JenjangStudi { get; set; }
     }
 }
 

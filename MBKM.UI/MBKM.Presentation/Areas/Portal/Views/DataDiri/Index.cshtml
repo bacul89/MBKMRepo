@@ -351,6 +351,10 @@
 @section Scripts{
     <script>
         $(document).ready(function () {
+            var alertMessage = '@TempData["alertMessage"]';
+            if (alertMessage.length != 0) {
+                alert(alertMessage);
+            }
             //$('.file-upload').file_upload();
             $("#upload").hide();
             $("#simpan").hide();
@@ -359,7 +363,7 @@
             $("select").attr("disabled", true);
             $("textarea").attr("disabled", true);
             try {
-                if ("@ViewData["status"].ToString()" != "DAFTAR") {
+                if ("@ViewData["status"].ToString()" == "MENUNGGU VERIFIKASI") {
                     $("#edit").hide();
                 }
             } catch (e) {
