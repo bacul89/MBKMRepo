@@ -106,7 +106,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         pendaftaran.DosenID = request.PendaftaranMataKuliahs.DosenID;
                         pendaftaran.DosenPembimbing = request.PendaftaranMataKuliahs.DosenPembimbing;
                     }
-                    pendaftaran.StatusPendaftaran = "Approved By " + HttpContext.Session["RoleName"].ToString();
+                    pendaftaran.StatusPendaftaran = "APPROVED BY " + HttpContext.Session["RoleName"].ToString().ToUpper();
                     pendaftaran.UpdatedBy = HttpContext.Session["username"].ToString();
                     pendaftaran.UpdatedDate = DateTime.Now;
                 try
@@ -153,7 +153,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     pendaftaran.DosenID = request.PendaftaranMataKuliahs.DosenID;
                     pendaftaran.DosenPembimbing = request.PendaftaranMataKuliahs.DosenPembimbing;
                 }
-                pendaftaran.StatusPendaftaran = "Rejected By " + HttpContext.Session["RoleName"].ToString();
+                pendaftaran.StatusPendaftaran = "REJECTED BY " + HttpContext.Session["RoleName"].ToString().ToUpper();
                 pendaftaran.UpdatedBy = HttpContext.Session["username"].ToString();
                 pendaftaran.UpdatedDate = DateTime.Now;
                 try
