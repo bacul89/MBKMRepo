@@ -100,19 +100,15 @@
     <Compile Include="Models\Menu.cs" />
     <Compile Include="Models\MenuRole.cs" />
     <Compile Include="Models\Role.cs" />
-    <Compile Include="ViewModel\VMListMapingCPL.cs" />
-    <Compile Include="ViewModel\VMSemester.cs" />
-    <Compile Include="Models\User.cs" />
+    <Compile Include="ViewModel\VMListDaftarAllMahasiswa.cs" />
+    <Compile Include="ViewModel\VMLookUpUser.cs" />    <Compile Include="ViewModel\VMListMapingCPL.cs" />    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModel\VMListMasterCPL.cs" />
-    <Compile Include="ViewModel\VMPendaftaranJadwalKuliah.cs" />
-    <Compile Include="ViewModel\VMListPendaftaranMataKuliah.cs" />
-    <Compile Include="ViewModel\VMMataKuliah.cs" />
-    <Compile Include="ViewModel\VMProdi.cs" />
     <Compile Include="ViewModel\VMFakultas.cs" />
     <Compile Include="ViewModel\VMListMahasiswa.cs" />
+    <Compile Include="ViewModel\VMListMasterCPL.cs" />
     <Compile Include="ViewModel\VMListMenu.cs" />
     <Compile Include="ViewModel\VMListMenuRole.cs" />
+    <Compile Include="ViewModel\VMListPendaftaranMataKuliah.cs" />
     <Compile Include="ViewModel\VMListPerjanjianKerjasama.cs" />
     <Compile Include="ViewModel\VMListProdi.cs" />
     <Compile Include="ViewModel\VMListRole.cs" />
@@ -120,7 +116,11 @@
     <Compile Include="ViewModel\VMLogin.cs" />
     <Compile Include="ViewModel\VMLookup.cs" />
     <Compile Include="ViewModel\VMLookupNoKerjasama.cs" />
+    <Compile Include="ViewModel\VMMataKuliah.cs" />
     <Compile Include="ViewModel\VMMenu.cs" />
+    <Compile Include="ViewModel\VMPendaftaranJadwalKuliah.cs" />
+    <Compile Include="ViewModel\VMProdi.cs" />
+    <Compile Include="ViewModel\VMSemester.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

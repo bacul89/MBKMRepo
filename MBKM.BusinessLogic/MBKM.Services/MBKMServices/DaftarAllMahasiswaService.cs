@@ -1,7 +1,7 @@
 ﻿using MBKM.Common.Helpers;
 using MBKM.Common.Interfaces;
-using MBKM.Common.Interfaces.RepoInterfaces;
-using MBKM.Entities.Models;
+using MBKM.Entities.Models.MBKM;
+using MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces;
 using MBKM.Entities.ViewModel;
 using MBKM.Services.BaseServices;
 using System;
@@ -10,32 +10,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MBKM.Services
+namespace MBKM.Services.MBKMServices
 {
-    public interface IUserService : IEntityService<User>
+    public interface IDaftarAllMahasiswaService : IEntityService<Mahasiswa>
     {
-        VMListUser getListUserGrid(DataTableAjaxPostModel model);
-        List<VMLookUpUser> getDosenList(int Skip, int Length, string Search);
-    }
+        VMListDaftarAllMahasiswa GetListDaftarAllMahasiswa(DataTableAjaxPostModel model);
 
-    public class UserService : EntityService<User>, IUserService
+
+    }
+    public class DaftarAllMahasiswaService : EntityService<Mahasiswa>, IDaftarAllMahasiswaService
     {
         IUnitOfWork _unitOfWork;
-        IUserRepository _userRepository;
+        IDaftarAllMahasiswaRepository _damRepository;
 
-        public UserService(IUnitOfWork unitOfWork, IUserRepository userRepository)
-            : base(unitOfWork, userRepository)
+        public DaftarAllMahasiswaService(IUnitOfWork unitOfWork, IDaftarAllMahasiswaRepository DAMRepository)
+            : base(unitOfWork, DAMRepository)
         {
             _unitOfWork = unitOfWork;
-            _userRepository = userRepository;
+            _damRepository = DAMRepository;
         }
 
-        public List<VMLookUpUser> getDosenList(int Skip, int Length, string Search)
-        {
-            return _userRepository.getDosenList(Skip, Length, Search);
-        }
-
-        public VMListUser getListUserGrid(DataTableAjaxPostModel model)
+        public VMListDaftarAllMahasiswa GetListDaftarAllMahasiswa(DataTableAjaxPostModel model)
         {
             var searchBy = (model.search != null) ? model.search.value : null;
             var take = model.length;
@@ -52,7 +47,7 @@ namespace MBKM.Services
             if (sortBy == null)
                 sortBy = "ID";
             sortBy = sortBy + " " + model.order[0].dir.ToUpper();
-            return _userRepository.getListUserGrid(skip, take, searchBy, sortBy, sortDir);
+            return _damRepository.GetListAllMhs(skip, take, searchBy, sortBy, sortDir);
         }
     }
 }

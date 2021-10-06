@@ -61,15 +61,17 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             using (var context = new MBKMContext())
             {
                 var result = context.PerjanjianKerjasamas.Where(x => x.NamaInstansi.Contains(Search))
-                    .Distinct()
-                    .Select(x => new VMLookupNoKerjasama
+                    .GroupBy(x => x.NamaInstansi).Select(x => x.FirstOrDefault());
+                //var result2 = new List<VMLookupNoKerjasama>();
+                var result2 = result.Select(y => new VMLookupNoKerjasama
                     {
-                        ID = x.ID,
-                        NoKerjasama = x.NoPerjanjian,
-                        NamaInstansi = x.NamaInstansi,
-                        Biaya = x.BiayaKuliah
-                    }).OrderBy("NamaInstansi").Skip(Skip).Take(Length).ToList();
-                return result;
+                        ID = y.ID,
+                        NoKerjasama = y.NoPerjanjian,
+                        NamaInstansi = y.NamaInstansi,
+                        Biaya = y.BiayaKuliah
+                    }).OrderBy("NamaInstansi").Skip(Skip).Take(Length)
+                    .ToList();
+                return result2;
             }
         }
 

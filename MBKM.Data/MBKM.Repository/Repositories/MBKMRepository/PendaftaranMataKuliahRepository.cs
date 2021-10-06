@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Linq.Dynamic;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -61,7 +62,9 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                     .SqlQuery<VMSemester>("GetSemester @JenjangStudi", jenjangStudiParam).FirstOrDefault();
                 return result;
             }
-        }        public VMListPendaftaranMataKuliah GetPendaftaranList(int Skip, int Length, string SearchParam, string SortBy, bool SortDir)
+        }        
+        
+        public VMListPendaftaranMataKuliah GetPendaftaranList(int Skip, int Length, string SearchParam, string SortBy, bool SortDir)
         {
             VMListPendaftaranMataKuliah mListPendaftaranMataKuliah = new VMListPendaftaranMataKuliah();
             if (String.IsNullOrEmpty(SearchParam))
@@ -71,7 +74,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             using (var context = new MBKMContext())
             {
                 context.Configuration.LazyLoadingEnabled = false;
-                var result = context.PendaftaranMataKuliahs.Where(x => x.IsDeleted == false).Include(x => x.mahasiswas).Include(x => x.JadwalKuliahs);
+                var result = context.PendaftaranMataKuliahs.Where(x => x.IsDeleted == false && x.StatusPendaftaran == "MENUNGGU APPROVAL KAPRODI/WR BIDANG AKADEMIK").Include(x => x.mahasiswas).Include(x => x.JadwalKuliahs);
                 mListPendaftaranMataKuliah.TotalCount = result.Count();
                 var gridfilter = result
                     .AsQueryable()
@@ -86,8 +89,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                     || y.JadwalKuliahs.NamaProdi.Contains(SearchParam)
                     || y.JadwalKuliahs.KodeMataKuliah.Contains(SearchParam)
                     || y.JadwalKuliahs.NamaMataKuliah.Contains(SearchParam)
-                    )
-                     /*.OrderBy(SortBy, SortDir)*/
+                    ).OrderBy(SortBy, SortDir)
                     ;
                 mListPendaftaranMataKuliah.gridDatas = gridfilter.Take(Length)
                     .Select(z => new GridListPendaftaranMataKuliah
@@ -134,8 +136,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                     || y.JadwalKuliahs.NamaProdi.Contains(SearchParam)
                     || y.JadwalKuliahs.KodeMataKuliah.Contains(SearchParam)
                     || y.JadwalKuliahs.NamaMataKuliah.Contains(SearchParam)
-                    )
-                    /*.OrderBy(SortBy, SortDir)*/
+                    ).OrderBy(SortBy, SortDir)
                     ;
                 mListPendaftaranMataKuliah.gridDatas = gridfilter.Take(Length)
                     .Select(z => new GridListPendaftaranMataKuliah

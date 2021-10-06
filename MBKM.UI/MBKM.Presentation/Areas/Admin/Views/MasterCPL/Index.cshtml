@@ -13,11 +13,12 @@
     <script src="~/Scripts/sweetalert2.all.min.js"></script>
 
 }
+
+    @model MBKM.Entities.Models.MBKM.MasterCapaianPembelajaran
 @section modal{
-    @*tabindex="-1"*@
-    <!--<div class="modal fade" id="detail-cpl-template" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="detail-cpl-template" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content data-content-modal" id="detail-cpl-templates">
+            <div class="modal-content data-content-modal">
                 <div class="modal-header" style="background-color: #FF8A04; ">
                     <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
                         DETAIL CAPAIAN BELAJAR
@@ -29,34 +30,30 @@
                 <div class="modal-body">
                     <div class="form-horizontal" id="frmSave">
                         <div class="form-group">
-                            <label for="prodi" class="col-sm-3 control-label">Program Studi</label>
+                            <label class="col-sm-3 control-label">Program Studi</label>
                             <div class="col-sm-9">
-                                <select class="form-control input-pendaftaran input-data" id="txtProdi" name="txtProdi" placeholder="Pilih Program Studi" disabled>
-                                    <option value="value">-</option>
-                                    <option value="value">text</option>
-                                </select>
+                                @Html.EditorFor(model => model.NamaProdi, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled" } })
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="txtKelompok" class="col-sm-3 control-label">Kelompok</label>
+                            <label class="col-sm-3 control-label">Kelompok</label>
                             <div class="col-sm-9">
-                                <select class="form-control input-pendaftaran input-data" id="txtKelompok" name="txtKelompok" placeholder="Pilih Kelompok" disabled>
-                                    <option value="value">-</option>
-                                    <option value="value">text</option>
-                                </select>
+                                @Html.EditorFor(model => model.Kelompok, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled" } })
+
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="txtKodeCPL" class="col-sm-3 control-label">Kode CPL</label>
+                            <label for="kodeDetail" class="col-sm-3 control-label">Kode CPL</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control input-pendaftaran input-data" id="txtKodeCPL" name="txtKodeCPL" placeholder="Input Kode CPL" disabled>
+                                @*<input type="text" value="" class="form-control input-pendaftaran input-data" id="kodeDetail" name="kodeDetail" placeholder="Input Kode CPL">*@
+                                @Html.EditorFor(model => model.Kode, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled" } })
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="txtdCPL" class="col-sm-3 control-label">Capaian Pembelajaran</label>
-                            <div class="col-sm-9">-->
+                            <div class="col-sm-9">
                                 @*<input type="text" class="form-control input-pendaftaran input-data" id="txtCPL" name="txtCPL" placeholder="Input Deskripsi Capaian Pembelajaran">*@
-                                <!--<textarea class="form-control input-pendaftaran summernote input-data" name="txtdCPL" rows="5" id="txtdCPL" placeholder="Input Deskripsi Capaian Pembelajaran" disabled></textarea>
+                                <textarea class="form-control input-pendaftaran summernote input-data" name="txtdCPL" rows="5" id="txtdCPL" placeholder="Input Deskripsi Capaian Pembelajaran" disabled></textarea>
 
                             </div>
                         </div>
@@ -75,106 +72,203 @@
 
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="TambahCPL" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #FF8A04; ">
+                    <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+                        TAMBAH CAPAIAN BELAJAR
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </h5>
                 </div>
-                </div>
-            </div>-->
+                <div class="modal-body">
+                    <form class="form-horizontal" id="formRegistrasi">
+                        @*<form id="formRegistrasi">*@
+                        <div class="container" style="width: 100%;">
+                            <div class="form-group ">
+                                <label for="jenjang" class="col-sm-3 control-label">Jenjang Studi</label>
+                                <div class="col-sm-9">
 
-            <div class="modal fade" id="TambahCPL" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header" style="background-color: #FF8A04; ">
-                            <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
-                                TAMBAH CAPAIAN BELAJAR
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </h5>
-                        </div>
-                        <div class="modal-body">
-                            @*<form class="form-horizontal" id="frmSave">*@
-                            <form id="formRegistrasi">
-                                <div class="container" style="width: 100%;">
-                                    <div class="form-group ">
-                                        <label for="jenjang" class="col-sm-3 control-label">Jenjang Studi</label>
-                                        @* <div class="col-sm-9">*@
-
-                                        <select name="jenjang" id="jenjang" class="form-control input-pendaftaran input-data"></select>
-                                        @* </div> *@
-
-                                    </div>
-                                    <div class="form-group ">
-
-
-                                        <label for="fakultas" class="col-sm-3 control-label">Fakultas</label>
-                                        @*<div class="col-sm-9">*@
-                                        <select name="fakultas" id="fakultas" class="form-control input-pendaftaran input-data"></select>
-                                        @*@Html.DropDownListFor(model => model.Nama, ViewBag.listProdi as SelectList, "--Pilih Prodi/unit--", new { @class = "form-control input-pendaftaran input-data", @id = "txtProdi", @name = "txtProdi" })*@
-                                        @* </div> *@
-
-                                    </div>
-                                    <div class="form-group ">
-                                        <label for="prodi" class="col-sm-3 control-label">Program Studi</label>
-                                        @* <div class="col-sm-9">*@
-
-                                        <select name="prodi" id="prodi" class="form-control input-pendaftaran input-data"></select>
-                                        @* </div> *@
-
-                                    </div>
-                                    <div class="form-group ">
-                                        <label for="lokasi" class="col-sm-3 control-label">Lokasi</label>
-                                        @*<div class="col-sm-9">*@
-
-                                        <select name="lokasi" id="lokasi" class="form-control input-md input-pendaftaran input-data"></select>
-                                        @*</div>*@
-
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="kelompok" class="col-sm-3 control-label">Kelompok</label>
-                                        @*<div class="col-sm-9">*@
-                                        <select class="form-control input-pendaftaran input-data" id="kelompok" name="kelompok" placeholder="Pilih Kelompok">
-                                            <option value="value">-</option>
-                                            <option value="value">text</option>
-                                        </select>
-                                        @*</div>*@
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="kode" class="col-sm-3 control-label">Kode CPL</label>
-                                        @*<div class="col-sm-9">*@
-                                        <input type="text" class="form-control input-pendaftaran input-data" id="kode" name="kode" placeholder="Input Kode CPL">
-                                        @*</div>*@
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="txtCPL" class="col-sm-3 control-label">Capaian Pembelajaran</label>
-                                        @*<div class="col-sm-9">*@
-                                        @*<input type="text" class="form-control input-pendaftaran input-data" id="txtCPL" name="txtCPL" placeholder="Input Deskripsi Capaian Pembelajaran">*@
-                                        <textarea class="form-control input-pendaftaran summernote input-data" name="txtCPL" rows="5" id="txtCPL" placeholder="Input Deskripsi Capaian Pembelajaran"></textarea>
-
-                                        @*</div>*@
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="inp_status" class="col-sm-3 control-label">Status</label>
-                                        @*<div class="col-sm-9">*@
-                                        <label class="radio-inline input-pendaftaran">
-                                            <input type="radio" name="inpStatus" id="inp_status" value="1"> Aktif
-                                        </label>
-                                        <label class="radio-inline input-pendaftaran">
-                                            <input type="radio" name="inpStatus" id="inp_status" value="0"> Tidak Aktif
-                                        </label>
-                                        @*</div>*@
-                                    </div>
-                                    <div class="form-group">
-                                        @*<div class="col-sm-2 col-md-offset-10">*@
-                                        <button type="button" onclick="PostCreate3()" class="btn btn-warning">SIMPAN</button>
-                                        @*</div>*@
-                                    </div>
+                                    <select name="jenjang" id="jenjang" class="form-control input-pendaftaran input-data"></select>
                                 </div>
-                            </form>
+
+                            </div>
+                            <div class="form-group ">
+
+
+                                <label for="fakultas" class="col-sm-3 control-label">Fakultas</label>
+                                <div class="col-sm-9">
+                                    <select name="fakultas" id="fakultas" class="form-control input-pendaftaran input-data"></select>
+                                    @*@Html.DropDownListFor(model => model.Nama, ViewBag.listProdi as SelectList, "--Pilih Prodi/unit--", new { @class = "form-control input-pendaftaran input-data", @id = "txtProdi", @name = "txtProdi" })*@
+                                </div>
+
+                            </div>
+                            <div class="form-group ">
+                                <label for="prodi" class="col-sm-3 control-label">Program Studi</label>
+                                <div class="col-sm-9">
+
+                                    <select name="prodi" id="prodi" class="form-control input-pendaftaran input-data"></select>
+                                </div>
+
+                            </div>
+                            <div class="form-group ">
+                                <label for="lokasi" class="col-sm-3 control-label">Lokasi</label>
+                                <div class="col-sm-9">
+
+                                    <select name="lokasi" id="lokasi" class="form-control input-md input-pendaftaran input-data"></select>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="kelompok" class="col-sm-3 control-label">Kelompok</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control input-pendaftaran input-data" id="kelompok" name="kelompok" placeholder="Pilih Kelompok">
+                                        <option value="value">-</option>
+                                        <option value="value">text</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="kode" class="col-sm-3 control-label">Kode CPL</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control input-pendaftaran input-data" id="kode" name="kode" placeholder="Input Kode CPL">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCPL" class="col-sm-3 control-label">Capaian Pembelajaran</label>
+                                <div class="col-sm-9">
+                                    @*<input type="text" class="form-control input-pendaftaran input-data" id="txtCPL" name="txtCPL" placeholder="Input Deskripsi Capaian Pembelajaran">*@
+                                    <textarea class="form-control input-pendaftaran summernote input-data" name="txtCPL" rows="5" id="txtCPL" placeholder="Input Deskripsi Capaian Pembelajaran"></textarea>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inp_status" class="col-sm-3 control-label">Status</label>
+                                <div class="col-sm-9">
+                                    <label class="radio-inline input-pendaftaran">
+                                        <input type="radio" name="inpStatus" id="inp_status" value="1"> Aktif
+                                    </label>
+                                    <label class="radio-inline input-pendaftaran">
+                                        <input type="radio" name="inpStatus" id="inp_status" value="0"> Tidak Aktif
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-2 col-md-offset-10">
+                                    <button type="button" onclick="PostCreate3()" class="btn btn-warning">SIMPAN</button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
+        </div>
+    </div>
+    @* UPDATE  *@
+    <div class="modal fade" id="EditCPL" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #FF8A04; ">
+                    <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+                        EDIT CAPAIAN BELAJAR
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" id="formRegistrasi">
+                        @*<form id="formRegistrasi">*@
+                        <div class="container" style="width: 100%;">
+                            <div class="form-group ">
+                                <label for="jenjangEdit" class="col-sm-3 control-label">Jenjang Studi</label>
+                                <div class="col-sm-9">
+
+                                    <select name="jenjang" id="jenjangEdit" class="form-control input-pendaftaran input-data"></select>
+                                </div>
+
+                            </div>
+                            <div class="form-group ">
+
+
+                                <label for="fakultas" class="col-sm-3 control-label">Fakultas</label>
+                                <div class="col-sm-9">
+                                    <select name="fakultas" id="fakultas" class="form-control input-pendaftaran input-data"></select>
+                                    @*@Html.DropDownListFor(model => model.Nama, ViewBag.listProdi as SelectList, "--Pilih Prodi/unit--", new { @class = "form-control input-pendaftaran input-data", @id = "txtProdi", @name = "txtProdi" })*@
+                                </div>
+
+                            </div>
+                            <div class="form-group ">
+                                <label for="prodi" class="col-sm-3 control-label">Program Studi</label>
+                                <div class="col-sm-9">
+
+                                    <select name="prodi" id="prodi" class="form-control input-pendaftaran input-data"></select>
+                                </div>
+
+                            </div>
+                            <div class="form-group ">
+                                <label for="lokasi" class="col-sm-3 control-label">Lokasi</label>
+                                <div class="col-sm-9">
+
+                                    <select name="lokasi" id="lokasi" class="form-control input-md input-pendaftaran input-data"></select>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="kelompok" class="col-sm-3 control-label">Kelompok</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control input-pendaftaran input-data" id="kelompok" name="kelompok" placeholder="Pilih Kelompok">
+                                        <option value="value">-</option>
+                                        <option value="value">text</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="kode" class="col-sm-3 control-label">Kode CPL</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control input-pendaftaran input-data" id="kode" name="kode" placeholder="Input Kode CPL">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtCPL" class="col-sm-3 control-label">Capaian Pembelajaran</label>
+                                <div class="col-sm-9">
+                                    @*<input type="text" class="form-control input-pendaftaran input-data" id="txtCPL" name="txtCPL" placeholder="Input Deskripsi Capaian Pembelajaran">*@
+                                    <textarea class="form-control input-pendaftaran summernote input-data" name="txtCPL" rows="5" id="txtCPL" placeholder="Input Deskripsi Capaian Pembelajaran"></textarea>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inp_status" class="col-sm-3 control-label">Status</label>
+                                <div class="col-sm-9">
+                                    <label class="radio-inline input-pendaftaran">
+                                        <input type="radio" name="inpStatus" id="inp_status" value="1"> Aktif
+                                    </label>
+                                    <label class="radio-inline input-pendaftaran">
+                                        <input type="radio" name="inpStatus" id="inp_status" value="0"> Tidak Aktif
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-2 col-md-offset-10">
+                                    <button type="button" onclick="PostCreate3()" class="btn btn-warning">SIMPAN</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 
 @*<div class="container-fluid" style="margin-left:40px; margin-right:40px;margin-bottom:100px;">*@
@@ -214,7 +308,7 @@
 @section scripts{
 
     @*<script src="~/Scripts/Admin/MasterCPL/main.js"></script>
-    <script src="~/Scripts/Admin/MasterCPL/crud.js"></script>*@
+        <script src="~/Scripts/Admin/MasterCPL/crud.js"></script>*@
     <script src="~/Scripts/loading/loadingoverlay.min.js"></script>
     <script src="~/Scripts/select2.min.js"></script>
     <script>
@@ -261,8 +355,15 @@
                     },
                 }
             });
+            $("#jenjang").change(function () {
+                $("#fakultas").empty();
+                $("#lokasi").empty();
+                $("#prodi").empty();
+            });
             $("#fakultas").change(function () {
 
+                $("#prodi").empty();
+                $("#lokasi").empty();
                 $("#prodi").select2({
                     placeholder: "-- Pilih Program Studi --",
                     width: "100%",
@@ -317,17 +418,19 @@
         function DetailMasterCPL(id) {
             $.LoadingOverlay("show");
             $.ajax({
-                url: '/Admin/MasterCPL/ModalDetailMasterCpl/' + id,
+                url: "@Url.Action("ModalDetailMasterCpl", "MasterCPL")/"+id,
                 type: 'get',
                 datatype: 'html',
-                success: function (e) {
+                success: function (data) {
                     $.LoadingOverlay("hide");
                     /*console.log(e);*/
-                    if ($('.data-content-modal').length) {
-                        $('.data-content-modal').remove();
-                    }
-                    $('#modal-inner').append(e);
+                    //if ($('.data-content-modal').length) {
+                    //    $('.data-content-modal').remove();
+                    //}
+                    //$('#modal-inner').append(e);
+                    $('#kodeDetail').val(data.Kode);
                     $('#detail-cpl-template').modal('show');
+
                 }, error: function (e) {
                     $.LoadingOverlay("hide");
                     Swal.fire({
@@ -388,7 +491,7 @@
                     })
                     tableUser.ajax.reload(null, false);
                     $('.modal').modal('hide');
-                    
+
                     //$('#TambahUser')[0].reset();
                 }
                 else
@@ -416,7 +519,39 @@
             });
 
 
-}
+        }
+        //UPDATE
+        function UpdateMasterCPL(id) {
+            $.LoadingOverlay("show");
+            $.ajax({
+                url: '/Admin/MasterCPL/ModalDetailMasterCpl/' + id,
+                type: 'get',
+                datatype: 'html',
+                success: function (e) {
+                    $.LoadingOverlay("hide");
+                    loadFromLookup("JenjangStudi", "jenjangEdit", "JenjangStudi");
+                    /*console.log(e);*/
+                    //if ($('.data-content-modal').length) {
+                    //    $('.data-content-modal').remove();
+                    //}
+                    //$('#modal-inner').append(e);
+                    $('#EditCPL').modal('show');
+                }, error: function (e) {
+                    $.LoadingOverlay("hide");
+                    Swal.fire({
+                        title: 'Oppss',
+                        icon: 'error',
+                        html: 'Coba Reload Page',
+                        showCloseButton: true,
+                        showCancelButton: false,
+                        focusConfirm: false,
+                        confirmButtonText: 'OK'
+                    })
+                    $('.modal').modal('hide');
+                }
+            })
+
+        }
 
         //batas main
         var tableUser = $('#TableList').DataTable({
@@ -453,13 +588,15 @@
                             <div class="col" style="text-align:center">
 
                                <a href="javascript:void(0)" style="color:black" onclick="UpdateMasterCPL('${data}')"> <i class="fas fa-edit coral" ></i></a>
-                                <a href="javascript:void(0)" style="color:black" onclick="DetailMasterCPL('${data}')"> <i class="fas fa-file-search coral"></i></a>
+
+                                <a href="javascript:void(0)" style="color:black" onclick="DetailMasterCPL('${data}')"data-bs-target="#detail-cpl-template"> <i class="fas fa-file-search coral"></i></a>
                                 <a type="button"  id="btnDel"> <i class="fas fa-trash-alt coral"></i> </button >
 
 
 
                             </div>
                         </div>`;//<a href="javascript:void(0)" style="color:black" onclick="DeleteUserGetID('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
+                                //<a href="javascript:void(0)" style="color:black" onclick="DetailMasterCPL('${data}')"> <i class="fas fa-file-search coral"></i></a>
                     }
                 },
                 {
@@ -511,6 +648,16 @@
             //    { 'visible': false, 'targets': [5] }
             //]
         });
+        //tes detail overtime
+        $("#tableList").on('click', '#btnDetail', function () {
+            var data = $("#tableList").DataTable().row($(this).parents('tr')).data();
+            console.log(data);
+            //alert("tes aaaaaa dong bro");
+            //$("#staticBackdropLabel").text(data.firstName + " " + data.lastName);
+
+            $("#kodeDetail").val(data.Kode);
+
+        });
         //lookup kelompok
         function loadFromLookup(tipe, id, nama) {
 
@@ -537,5 +684,6 @@
             });
         }
     </script>
+    <script src="~/Scripts/Admin/MasterCPL/crud.js"></script>
 }
 

@@ -185,8 +185,11 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Portal\TrackingStatus\main.css" />
+    <Content Include="Scripts\Admin\ApprovalPendaftaranMakul\detailApproval.js" />
     <Content Include="Scripts\Admin\DaftarSeluruhMhs\main.js" />
     <Content Include="Scripts\Admin\ApprovalPendaftaranMakul\main.js" />
+    <Content Include="Scripts\Admin\DaftarSeluruhMhs\main_detail.js" />
     <Content Include="Scripts\Admin\MasterCPL\crud.js" />
     <Content Include="Scripts\Admin\MasterCPL\main.js" />
     <Content Include="Scripts\Admin\MasterMapingCapaianPembelajaran\crud.js" />
@@ -429,7 +432,6 @@
     <Content Include="Areas\Admin\Views\MasterMapingCapaianPembelajaran\ModalCreateMasterMapingCapaianPembelajaran.cshtml" />
     <Content Include="Areas\Admin\Views\MasterMapingCapaianPembelajaran\ModalUpdateMasterMapingCapaianPembelajaran.cshtml" />
     <Content Include="Areas\Admin\Views\MasterMapingCapaianPembelajaran\ModalDetailMasterMapingCapaianPembelajaran.cshtml" />
-    <Content Include="Areas\Portal\Views\PendaftaranMataKuliah\Index.cshtml" />
     <Content Include="Areas\Portal\Views\PendaftaranMataKuliah\Internal.cshtml" />
     <Content Include="Areas\Portal\Views\PendaftaranMataKuliah\FormPendaftaran.cshtml" />
     <Content Include="Areas\Portal\Views\PendaftaranMataKuliah\Eksternal.cshtml" />
@@ -443,6 +445,10 @@
     <Content Include="Areas\Admin\Views\Menu\ModalUpdateMenu.cshtml" />
     <Content Include="Areas\Portal\Views\PendaftaranMataKuliah\FormPendaftaranInternal.cshtml" />
     <Content Include="Areas\Portal\Views\TrackingStatusPendaftaran\_getIndexDetailView.cshtml" />
+    <Content Include="Areas\Admin\Views\DaftarSeluruhMahasiswa\ModalDetailMhs.cshtml" />
+    <Content Include="Areas\Admin\Views\ApprovalPendaftaranMatakuliah\DetailCPL.cshtml" />
+    <Content Include="Areas\Admin\Views\ApprovalPendaftaranMatakuliah\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MenuRole\ModalUpdateMenuRole.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
@@ -459,6 +465,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\Portal\NimDigital\main.js" />
+    <Content Include="Scripts\Portal\TrackingStatus\main.js" />
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />

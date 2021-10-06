@@ -8,13 +8,13 @@
        
     }],
     //"order": [[1, 'asc']],
-    //"proccessing": true,
-   // "serverSide": true,
-    "order": [[2, 'asc']],
+    "proccessing": true,
+    "serverSide": true,
+    "order": [[1, 'asc']],
     //"aaSorting": [[0, "asc"]],
     "ajax": {
-        url: '/Admin/DaftarSeluruhMahasiswa/GetDataMHS',
-        dataSrc: ''
+        url: '/Admin/DaftarSeluruhMahasiswa/GetList',
+        type: 'POST'
     },
     "language": {
         "emptyTable": "No record found.",
