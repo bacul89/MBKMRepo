@@ -156,6 +156,7 @@ function IndexUpdateMasterMapingCapaianPembelajaran(id) {
             $('#modal-inner').append(e);
             $('.modal').modal('show');
             loadFromLookup("Kelompok", "inp_kelompok", "Kelompok");
+            loadJenjangStudiEdit("JenjangStudi", "jenjang", "Jenjang Studi");
         }, error: function (e) {
             $.LoadingOverlay("hide");
             Swal.fire({
@@ -342,4 +343,170 @@ function DeletedMasterMapingCapaianPembelajaran(id) {
         });
     })
 
+}
+
+
+// searchEdit
+function loadJenjangStudiEdit(tipe, id, nama) {
+    $("#" + id + "Edit").select2({
+        placeholder: "-- Pilih " + nama + " --",
+        width: "100%",
+        ajax: {
+            url: "/Admin/MasterMapingCapaianPembelajaran/getLookupByTipe",
+            dataType: 'json',
+            method: "POST",
+            delay: 250,
+            cache: false,
+            data: function (params) {
+                return {
+                    Search: params.term || "",
+                    Tipe: tipe
+                };
+            },
+            processResults: function (data, params) {
+                return {
+                    results: $.map(data, function (item) { return { id: item.Nilai, value: item.Nilai, text: item.Nama } })
+                };
+            },
+        }
+    });
+    $("#" + id + "Edit").change(function () {
+        $("#fakultasEdit").prop("disabled", false);
+        $("#fakultasEdit").select2({
+            placeholder: "-- Fakultas --",
+            width: "100%",
+            ajax: {
+                url: "/Admin/MasterMapingCapaianPembelajaran/GetFakultas",
+                dataType: 'json',
+                method: "POST",
+                delay: 250,
+                cache: false,
+                data: function (params) {
+                    return {
+                        Search: params.term || "",
+                        JenjangStudi: $('#' + id + "Edit").val(),
+                    };
+                },
+                processResults: function (data, params) {
+                    return {
+                        results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+                    };
+                },
+            }
+        });
+        $("#fakultasEdit").change(function () {
+            $("#prodiEdit").prop("disabled", false);
+            $("#prodiEdit").select2({
+                placeholder: "-- Pilih Program Studi --",
+                width: "100%",
+                ajax: {
+                    url: "/Admin/MasterMapingCapaianPembelajaran/GetProdiByFakultas",
+                    dataType: 'json',
+                    method: "POST",
+                    delay: 250,
+                    cache: false,
+                    data: function (params) {
+                        return {
+                            Search: params.term || "",
+                            JenjangStudi: $('#' + id + "Edit").val(),
+                            IDFakultas: $('#fakultasEdit').val()
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+                        };
+                    },
+                }
+            });
+
+            $("#prodiEdit").change(function () {
+
+                $("#lokasiEdit").prop("disabled", false);
+                $("#lokasiEdit").select2({
+                    placeholder: "-- Lokasi Studi --",
+                    width: "100%",
+                    ajax: {
+                        url: "/Admin/MasterMapingCapaianPembelajaran/GetLokasiByProdi",
+                        dataType: 'json',
+                        method: "POST",
+                        delay: 250,
+                        cache: false,
+                        data: function (params) {
+                            return {
+                                Search: params.term || "",
+                                IDProdi: $('#prodiEdit').val(),
+                                JenjangStudi: $('#' + id + "Edit").val()
+                            };
+                        },
+                        processResults: function (data, params) {
+                            return {
+                                results: $.map(data, function (item) { return { id: item.Kampus, value: item.Kampus, text: item.Kampus } })
+                            };
+                        },
+                    }
+                });
+                $("#lokasiEdit").change(function () {
+
+                    $("#matakuliahEdit").prop("disabled", false);
+                    $("#matakuliahEdit").select2({
+                        placeholder: "-- Mata Kuliah Studi --",
+                        width: "100%",
+                        ajax: {
+                            url: "/Admin/MasterMapingCapaianPembelajaran/GetMataKuliahByProdi",
+                            dataType: 'json',
+                            method: "POST",
+                            delay: 250,
+                            cache: false,
+                            data: function (params) {
+                                return {
+                                    Search: params.term || "",
+                                    IDProdi: $('#prodiEdit').val(),
+                                    lokasi: $('#lokasiEdit').val()
+                                };
+                            },
+                            processResults: function (data, params) {
+                                return {
+                                    results: $.map(data, function (item) { return { id: item.MataKuliahID, value: item.MataKuliahID, text: item.NamaMataKuliah } })
+                                };
+                            },
+                        }
+                    });
+                    $("#matakuliahEdit").change(function () {
+                        dataParam = {};
+
+                        dataParam.IDProdi = $('#prodiEdit').val();
+                        dataParam.lokasi = $('#lokasiEdit').val();
+                        dataParam.MataKuliahID = $('#matakuliahEdit').val();
+
+                        $.ajax({
+                            url: "/Admin/MasterMapingCapaianPembelajaran/GetMataKuliahByID",
+                            dataType: 'json',
+                            method: "POST",
+                            delay: 250,
+                            cache: false,
+                            contentType: 'application/json',
+                            data: JSON.stringify(dataParam),
+                            success: function (e) {
+                                //console.log(e[0]);
+                                $("#matakuliahNamaEdit").val(e[0].NamaMataKuliah);
+                                $("#matakuliahKodeEdit").val(e[0].KodeMataKuliah);
+                                $("#matakuliahIdEdit").val(e[0].MataKuliahID);
+                            },
+                            error: function (e) {
+                                console.log("matakuliah not found...");
+                            }
+                        })
+
+
+                    });
+                });
+
+
+
+
+
+            });
+        });
+    });
 }
