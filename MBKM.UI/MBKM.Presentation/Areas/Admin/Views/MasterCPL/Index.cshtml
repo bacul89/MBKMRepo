@@ -32,28 +32,31 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Program Studi</label>
                             <div class="col-sm-9">
-                                @Html.EditorFor(model => model.NamaProdi, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled" } })
+                                <input type="text" value="" class="form-control input-pendaftaran input-data" disabled="disabled" id="prodiDetail" name="kelompokDetail">
+                                @*@Html.EditorFor(model => model.NamaProdi, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled" } })*@
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Kelompok</label>
                             <div class="col-sm-9">
-                                @Html.EditorFor(model => model.Kelompok, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled" } })
+                                <input type="text" value="" class="form-control input-pendaftaran input-data" disabled="disabled" id="kelompokDetail" name="kelompokDetail">
+
+                                @*@Html.EditorFor(model => model.Kelompok, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled" } })*@
 
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="kodeDetail" class="col-sm-3 control-label">Kode CPL</label>
                             <div class="col-sm-9">
-                                @*<input type="text" value="" class="form-control input-pendaftaran input-data" id="kodeDetail" name="kodeDetail" placeholder="Input Kode CPL">*@
-                                @Html.EditorFor(model => model.Kode, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled" } })
+                                <input type="text" value="" class="form-control input-pendaftaran input-data" disabled = "disabled" id="kodeDetail" name="kodeDetail">
+                                @*@Html.EditorFor(model => model.Kode, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled" } })*@
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="txtdCPL" class="col-sm-3 control-label">Capaian Pembelajaran</label>
                             <div class="col-sm-9">
                                 @*<input type="text" class="form-control input-pendaftaran input-data" id="txtCPL" name="txtCPL" placeholder="Input Deskripsi Capaian Pembelajaran">*@
-                                <textarea class="form-control input-pendaftaran summernote input-data" name="txtdCPL" rows="5" id="txtdCPL" placeholder="Input Deskripsi Capaian Pembelajaran" disabled></textarea>
+                                <textarea class="form-control input-pendaftaran summernote input-data" name="txtdCPL" rows="5" id="cplDetail"  disabled></textarea>
 
                             </div>
                         </div>
@@ -61,12 +64,11 @@
                         <div class="form-group">
                             <label for="inp_status" class="col-sm-3 control-label">Status</label>
                             <div class="col-sm-9">
-                                <label class="radio-inline input-pendaftaran">
-                                    <input type="radio" name="inpStatus" id="inp_status" value="1" disabled> Aktif
+                                <label id ="aktif"  class="radio-inline input-pendaftaran ">
+                                    <input type="text" name="inpStatus1" id="inp_status1" value="1" disabled> Aktif
                                 </label>
-                                <label class="radio-inline input-pendaftaran">
-                                    <input type="radio" name="inpStatus" id="inp_status" value="0" disabled> Tidak Aktif
-                                </label>
+                                
+
                             </div>
                         </div>
 
@@ -210,7 +212,7 @@
                                 <label for="prodi" class="col-sm-3 control-label">Program Studi</label>
                                 <div class="col-sm-9">
 
-                                    <select name="prodi" id="prodi" class="form-control input-pendaftaran input-data"></select>
+                                    <select name="prodi" id="prodiEdit" class="form-control input-pendaftaran input-data"></select>
                                 </div>
 
                             </div>
@@ -218,7 +220,7 @@
                                 <label for="lokasi" class="col-sm-3 control-label">Lokasi</label>
                                 <div class="col-sm-9">
 
-                                    <select name="lokasi" id="lokasi" class="form-control input-md input-pendaftaran input-data"></select>
+                                    <select name="lokasi" id="lokasiEdit" class="form-control input-md input-pendaftaran input-data"></select>
                                 </div>
 
                             </div>
@@ -226,23 +228,23 @@
                             <div class="form-group">
                                 <label for="kelompok" class="col-sm-3 control-label">Kelompok</label>
                                 <div class="col-sm-9">
-                                    <select class="form-control input-pendaftaran input-data" id="kelompok" name="kelompok" placeholder="Pilih Kelompok">
+                                    <select class="form-control input-pendaftaran input-data" id="kelompokEdit2" name="kelompok" placeholder="Pilih Kelompok">
                                         <option value="value">-</option>
-                                        <option value="value">text</option>
+                                        <option value="value" id="kelompokEdit">text</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="kode" class="col-sm-3 control-label">Kode CPL</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control input-pendaftaran input-data" id="kode" name="kode" placeholder="Input Kode CPL">
+                                    <input type="text" class="form-control input-pendaftaran input-data" id="kodeEdit" name="kode" placeholder="Input Kode CPL">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="txtCPL" class="col-sm-3 control-label">Capaian Pembelajaran</label>
                                 <div class="col-sm-9">
                                     @*<input type="text" class="form-control input-pendaftaran input-data" id="txtCPL" name="txtCPL" placeholder="Input Deskripsi Capaian Pembelajaran">*@
-                                    <textarea class="form-control input-pendaftaran summernote input-data" name="txtCPL" rows="5" id="txtCPL" placeholder="Input Deskripsi Capaian Pembelajaran"></textarea>
+                                    <textarea class="form-control input-pendaftaran summernote input-data" name="cplEdit" rows="5" id="cplEdit" placeholder="Input Deskripsi Capaian Pembelajaran"></textarea>
 
                                 </div>
                             </div>
@@ -260,7 +262,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-2 col-md-offset-10">
-                                    <button type="button" onclick="PostCreate3()" class="btn btn-warning">SIMPAN</button>
+                                    <button type="button" onclick="" class="btn btn-warning">SIMPAN</button>
                                 </div>
                             </div>
                         </div>
@@ -332,8 +334,14 @@
             });
         });
         function loadFakultas() {
+            $("#prodi").prop("disabled", true);
+            $("#lokasi").prop("disabled", true);
+            $("#fakultas").prop("disabled", true);
+
+           // $('#fakultas').val(null).trigger('change');
             $("#fakultas").select2({
                 //dropdownParent: $("#TambahCPL"),
+                multiple: false,
                 placeholder: "-- Pilih Fakultas --",
                 width: "100%",
                 ajax: {
@@ -355,16 +363,27 @@
                     },
                 }
             });
+            $('#fakultas').on('select2:select', function (e) {
+                console.log(e.params.data.text);
+            });
             $("#jenjang").change(function () {
                 $("#fakultas").empty();
+                $("#fakultas").prop("disabled",false);
                 $("#lokasi").empty();
                 $("#prodi").empty();
+                $("#prodi").prop("disabled", true);
+                $("#lokasi").prop("disabled", true);
             });
             $("#fakultas").change(function () {
-
+                //$('#fakultas').val(null).trigger('change');
+                var latest_value = $("option:selected:first", this).text();
+                //alert(latest_value);
                 $("#prodi").empty();
+                $("#prodi").prop("disabled", false);
+                $("#lokasi").prop("disabled", true);
                 $("#lokasi").empty();
                 $("#prodi").select2({
+                    multiple: false,
                     placeholder: "-- Pilih Program Studi --",
                     width: "100%",
                     ajax: {
@@ -383,11 +402,17 @@
                         processResults: function (data, params) {
                             return {
                                 results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+
                             };
                         },
                     }
                 });
                 $("#prodi").change(function () {
+                    $("#lokasi").empty();
+                        
+                
+                    $("#lokasi").prop("disabled",false);
+
                     $("#lokasi").select2({
                         placeholder: "-- Pilih Lokasi --",
                         width: "100%",
@@ -423,13 +448,26 @@
                 datatype: 'html',
                 success: function (data) {
                     $.LoadingOverlay("hide");
-                    /*console.log(e);*/
+                    console.log(data);
                     //if ($('.data-content-modal').length) {
                     //    $('.data-content-modal').remove();
                     //}
                     //$('#modal-inner').append(e);
                     $('#kodeDetail').val(data.Kode);
+                    $('#prodiDetail').val(data.NamaProdi);
+                    $('#kelompokDetail').val(data.Kelompok);
+                    $('#cplDetail').val(data.Capaian);
+                    if (data.IsActive == true) {
+                        $('#aktif').text("Aktif");
+                       
+
+                    }
+                    else  {
+                        $('#aktif').text("Tidak Aktif");
+                    }
+                    //$('#inp_status').checked(data.IsActive);
                     $('#detail-cpl-template').modal('show');
+                    
 
                 }, error: function (e) {
                     $.LoadingOverlay("hide");
@@ -451,13 +489,23 @@
         function PostCreate3() {
             //getValueOnForm();
             var formInputUser = new Object();
+            var latest_valueFakultas = $("option:selected:first", "#fakultas").text();
+            var latest_valueProdi = $("option:selected:first", "#prodi").text();
+            //alert(latest_value);
             //var namaProdi = document.getElementById("idProdi");
             //var selectedProdi = namaProdi.options[namaProdi.selectedIndex].text;
             //var namaProdi = selectedProdi.substring(selectedProdi.indexOf('-') + 1);
+            //$('#fakultas').on('select2:select', function (e) {
+            //    console.log(e.params.data.text);
+            //});
             formInputUser.FakultasID = $('#fakultas').val();
-            formInputUser.NamaFakultas = $('#fakultas').text();
+            //var asd = $('#fakultas').on('select2:select');
+            formInputUser.NamaFakultas = latest_valueFakultas;
+            //$('#select2').on('select2:select', function (e: any) {
+            //    console.log(e.params.data.id);
+            //});
             formInputUser.ProdiID = $('#prodi').val();
-            formInputUser.NamaProdi = $('#prodi').text();
+            formInputUser.NamaProdi = latest_valueProdi;
             formInputUser.Kode = $('#kode').val();
             formInputUser.Kelompok = $('#kelompok').val();
 
@@ -476,6 +524,7 @@
                 type: 'post',
                 datatype: 'json',
                 data: JSON.stringify(formInputUser),
+
                 //contentType: 'application/json'
                 contentType: 'application/json',
             }).then(function (response) {
@@ -496,6 +545,7 @@
                 }
                 else
                     if (response.status == 200) {
+
                         Swal.fire({
                             title: 'Berhasil',
                             icon: 'success',
@@ -510,6 +560,7 @@
                         $("#fakultas").empty();
                         $("#prodi").empty();
                         $("#jenjang").empty();
+                        $("#lokasi").empty();
                         //$("#formRegistrasi").trigger("reset");
                         //clearValueOnForm();
                         //$('#TambahUser')[0].reset();
@@ -524,10 +575,10 @@
         function UpdateMasterCPL(id) {
             $.LoadingOverlay("show");
             $.ajax({
-                url: '/Admin/MasterCPL/ModalDetailMasterCpl/' + id,
+                url: '/Admin/MasterCPL/ModalEditMasterCpl/' + id,
                 type: 'get',
                 datatype: 'html',
-                success: function (e) {
+                success: function (data) {
                     $.LoadingOverlay("hide");
                     loadFromLookup("JenjangStudi", "jenjangEdit", "JenjangStudi");
                     /*console.log(e);*/
@@ -535,6 +586,10 @@
                     //    $('.data-content-modal').remove();
                     //}
                     //$('#modal-inner').append(e);
+                    $('#kodeEdit').val(data.Kode);
+                    $('#prodiEdit').val(data.NamaProdi);
+                    $('#kelompokEdit').val(data.Kelompok);
+                    $('#cplEdit').val(data.Capaian);
                     $('#EditCPL').modal('show');
                 }, error: function (e) {
                     $.LoadingOverlay("hide");
@@ -648,16 +703,7 @@
             //    { 'visible': false, 'targets': [5] }
             //]
         });
-        //tes detail overtime
-        $("#tableList").on('click', '#btnDetail', function () {
-            var data = $("#tableList").DataTable().row($(this).parents('tr')).data();
-            console.log(data);
-            //alert("tes aaaaaa dong bro");
-            //$("#staticBackdropLabel").text(data.firstName + " " + data.lastName);
-
-            $("#kodeDetail").val(data.Kode);
-
-        });
+        
         //lookup kelompok
         function loadFromLookup(tipe, id, nama) {
 

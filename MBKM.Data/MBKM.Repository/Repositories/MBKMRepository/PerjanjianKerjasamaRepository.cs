@@ -18,6 +18,17 @@ namespace MBKM.Repository.Repositories.MBKMRepository
         {
         }
 
+        public int getBiaya(string NoKerjasama)
+        {
+            using (var context = new MBKMContext())
+            {
+                var result = context.PerjanjianKerjasamas.Where(x => x.NoPerjanjian == NoKerjasama)
+                    .Select(x => x.BiayaKuliah).SingleOrDefault();
+                    
+                return result;
+            }
+        }
+
         public VMListPerjanjianKerjasama getListPerjanjianKerjasama(int Skip, int Length, string SearchParam, string SortBy, bool SortDir)
         {
             VMListPerjanjianKerjasama mListmodel = new VMListPerjanjianKerjasama();
