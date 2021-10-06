@@ -30,6 +30,13 @@
                 <div class="modal-body">
                     <div class="form-horizontal" id="frmSave">
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">Fakultas</label>
+                            <div class="col-sm-9">
+                                <input type="text" value="" class="form-control input-pendaftaran input-data" disabled="disabled" id="fakultasDetail" name="fakultasDetail">
+                                @*@Html.EditorFor(model => model.NamaProdi, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled" } })*@
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">Program Studi</label>
                             <div class="col-sm-9">
                                 <input type="text" value="" class="form-control input-pendaftaran input-data" disabled="disabled" id="prodiDetail" name="kelompokDetail">
@@ -48,7 +55,7 @@
                         <div class="form-group">
                             <label for="kodeDetail" class="col-sm-3 control-label">Kode CPL</label>
                             <div class="col-sm-9">
-                                <input type="text" value="" class="form-control input-pendaftaran input-data" disabled = "disabled" id="kodeDetail" name="kodeDetail">
+                                <input type="text" value="" class="form-control input-pendaftaran input-data" disabled="disabled" id="kodeDetail" name="kodeDetail">
                                 @*@Html.EditorFor(model => model.Kode, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled" } })*@
                             </div>
                         </div>
@@ -56,7 +63,7 @@
                             <label for="txtdCPL" class="col-sm-3 control-label">Capaian Pembelajaran</label>
                             <div class="col-sm-9">
                                 @*<input type="text" class="form-control input-pendaftaran input-data" id="txtCPL" name="txtCPL" placeholder="Input Deskripsi Capaian Pembelajaran">*@
-                                <textarea class="form-control input-pendaftaran summernote input-data" name="txtdCPL" rows="5" id="cplDetail"  disabled></textarea>
+                                <textarea class="form-control input-pendaftaran summernote input-data" name="txtdCPL" rows="5" id="cplDetail" disabled></textarea>
 
                             </div>
                         </div>
@@ -64,10 +71,10 @@
                         <div class="form-group">
                             <label for="inp_status" class="col-sm-3 control-label">Status</label>
                             <div class="col-sm-9">
-                                <label id ="aktif"  class="radio-inline input-pendaftaran ">
+                                <label id="aktif" class="radio-inline input-pendaftaran ">
                                     <input type="text" name="inpStatus1" id="inp_status1" value="1" disabled> Aktif
                                 </label>
-                                
+
 
                             </div>
                         </div>
@@ -202,17 +209,31 @@
 
 
                                 <label for="fakultas" class="col-sm-3 control-label">Fakultas</label>
-                                <div class="col-sm-9">
-                                    <select name="fakultas" id="fakultas" class="form-control input-pendaftaran input-data"></select>
+                                <div class="col-sm-9" id="fakultasEdit1">
+                                    <select name="fakultasEdit" id="fakultasEdit" class="form-control input-pendaftaran input-data" ></select>
                                     @*@Html.DropDownListFor(model => model.Nama, ViewBag.listProdi as SelectList, "--Pilih Prodi/unit--", new { @class = "form-control input-pendaftaran input-data", @id = "txtProdi", @name = "txtProdi" })*@
+                                </div>
+                                <div class="col-sm-9" id="fakultasEdit2">
+                                    @*<select name="noKJ" id="noKJ" disabled="disabled" class="form-control input-md" hidden required></select>*@
+
+                                    @Html.EditorFor(model => model.NamaFakultas, new { htmlAttributes = new { @class = "form-control input-pendaftaran input-data", maxlength = 100, disabled = "disabled", @id = "fakultasEdits"} })
+                                    @Html.EditorFor(model => model.FakultasID, new { htmlAttributes = new { @class = "form-control input-pendaftaran input-data", maxlength = 100, disabled = "disabled", @id = "fakultasEditsID"} })
                                 </div>
 
                             </div>
                             <div class="form-group ">
-                                <label for="prodi" class="col-sm-3 control-label">Program Studi</label>
-                                <div class="col-sm-9">
 
-                                    <select name="prodi" id="prodiEdit" class="form-control input-pendaftaran input-data"></select>
+
+                                <label for="fakultas" class="col-sm-3 control-label">Program Studi</label>
+                                <div class="col-sm-9" id="prodiEdit1" >
+                                    <select name="prodiEdit" id="prodiEdit" class="form-control input-pendaftaran input-data"></select>
+                                    @*@Html.DropDownListFor(model => model.Nama, ViewBag.listProdi as SelectList, "--Pilih Prodi/unit--", new { @class = "form-control input-pendaftaran input-data", @id = "txtProdi", @name = "txtProdi" })*@
+                                </div>
+                                <div class="col-sm-9" id="prodiEdit2">
+                                    @*<select name="noKJ" id="noKJ" disabled="disabled" class="form-control input-md" hidden required></select>*@
+
+                                    @Html.EditorFor(model => model.NamaProdi, new { htmlAttributes = new { @class = "form-control input-pendaftaran input-data", maxlength = 100, disabled = "disabled", @id = "prodiEdits" } })
+                                    @Html.EditorFor(model => model.ProdiID, new { htmlAttributes = new { @class = "form-control input-pendaftaran input-data", maxlength = 100, disabled = "disabled", @id = "prodiEditsID" } })
                                 </div>
 
                             </div>
@@ -220,7 +241,7 @@
                                 <label for="lokasi" class="col-sm-3 control-label">Lokasi</label>
                                 <div class="col-sm-9">
 
-                                    <select name="lokasi" id="lokasiEdit" class="form-control input-md input-pendaftaran input-data"></select>
+                                    <select name="lokasiEdit" id="lokasiEdit" class="form-control input-md input-pendaftaran input-data"></select>
                                 </div>
 
                             </div>
@@ -228,16 +249,15 @@
                             <div class="form-group">
                                 <label for="kelompok" class="col-sm-3 control-label">Kelompok</label>
                                 <div class="col-sm-9">
-                                    <select class="form-control input-pendaftaran input-data" id="kelompokEdit2" name="kelompok" placeholder="Pilih Kelompok">
-                                        <option value="value">-</option>
-                                        <option value="value" id="kelompokEdit">text</option>
+                                    <select class="form-control input-pendaftaran input-data" id="kelompokEdit" name="kelompokEdit" placeholder="Pilih Kelompok">
+                                        
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="kode" class="col-sm-3 control-label">Kode CPL</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control input-pendaftaran input-data" id="kodeEdit" name="kode" placeholder="Input Kode CPL">
+                                    <input type="text" class="form-control input-pendaftaran input-data" id="kodeEdit" name="kodeEdit" placeholder="Input Kode CPL">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -322,8 +342,11 @@
         }
         $(document).ready(function () {
             loadFakultas();
+            loadFakultasEdit();
             loadFromLookup("JenjangStudi", "jenjang", "JenjangStudi");
+            loadFromLookup("JenjangStudi", "jenjangEdit", "JenjangStudi");
             loadFromLookup("Kelompok", "kelompok", "Kelompok");
+            loadFromLookup("Kelompok", "kelompokEdit", "Kelompok");
             $("#prodi").select2({
                 //dropdownParent: $("#TambahCPL"),
                 placeholder: "-- Pilih Program Studi --"
@@ -332,10 +355,18 @@
                 //dropdownParent: $("#TambahCPL"),
                 placeholder: "-- Pilih Lokasi --"
             });
+            $("#prodiEdit").select2({
+                //dropdownParent: $("#TambahCPL"),
+                placeholder: "-- Pilih Program Studi --"
+            });
+            $("#lokasiEdit").select2({
+                //dropdownParent: $("#TambahCPL"),
+                placeholder: "-- Pilih Lokasi --"
+            });
         });
         function loadFakultas() {
             $("#prodi").prop("disabled", true);
-            $("#lokasi").prop("disabled", true);
+            //$("#lokasi").prop("disabled", true);
             $("#fakultas").prop("disabled", true);
 
            // $('#fakultas').val(null).trigger('change');
@@ -372,7 +403,7 @@
                 $("#lokasi").empty();
                 $("#prodi").empty();
                 $("#prodi").prop("disabled", true);
-                $("#lokasi").prop("disabled", true);
+                //$("#lokasi").prop("disabled", true);
             });
             $("#fakultas").change(function () {
                 //$('#fakultas').val(null).trigger('change');
@@ -380,7 +411,7 @@
                 //alert(latest_value);
                 $("#prodi").empty();
                 $("#prodi").prop("disabled", false);
-                $("#lokasi").prop("disabled", true);
+               // $("#lokasi").prop("disabled", true);
                 $("#lokasi").empty();
                 $("#prodi").select2({
                     multiple: false,
@@ -408,9 +439,9 @@
                     }
                 });
                 $("#prodi").change(function () {
-                    $("#lokasi").empty();
-                        
-                
+                   // $("#lokasi").empty();
+
+
                     $("#lokasi").prop("disabled",false);
 
                     $("#lokasi").select2({
@@ -439,6 +470,113 @@
                 });
             });
         }
+        //SETTING UPDATE-=-=======================================================================================
+        function loadFakultasEdit() {
+            $("#prodiEdit").prop("disabled", true);
+            $("#lokasiEdit").prop("disabled", true);
+            $("#fakultasEdit").prop("disabled", true);
+
+           // $('#fakultas').val(null).trigger('change');
+            $("#fakultasEdit").select2({
+                //dropdownParent: $("#TambahCPL"),
+                multiple: false,
+                placeholder: "-- Pilih Fakultas --",
+                width: "100%",
+                ajax: {
+                    url: "@Url.Action("GetFakultas", "MasterCPL")",
+                    dataType: 'json',
+                    method: "POST",
+                    delay: 250,
+                    cache: false,
+                    data: function (params) {
+                        return {
+                            Search: params.term || "",
+                            Jenjang: $('#jenjangEdit').val()
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+                        };
+                    },
+                }
+            });
+            $('#fakultasEdit').on('select2:select', function (e) {
+                console.log(e.params.data.text);
+            });
+            $("#jenjangEdit").change(function () {
+                $("#fakultasEdit").empty();
+                $("#fakultasEdit").prop("disabled",false);
+                $("#lokasiEdit").empty();
+                $("#prodiEdit").empty();
+                $("#prodiEdit").prop("disabled", true);
+                $("#lokasiEdit").prop("disabled", true);
+            });
+            $("#fakultasEdit").change(function () {
+                //$('#fakultas').val(null).trigger('change');
+                var latest_value = $("option:selected:first", this).text();
+                //alert(latest_value);
+                $("#prodiEdit").empty();
+                $("#prodiEdit").prop("disabled", false);
+                $("#lokasiEdit").prop("disabled", true);
+                $("#lokasiEdit").empty();
+                $("#prodiEdit").select2({
+                    multiple: false,
+                    placeholder: "-- Pilih Program Studi --",
+                    width: "100%",
+                    ajax: {
+                        url: "@Url.Action("GetProdiByFakultas", "MasterCPL")",
+                        dataType: 'json',
+                        method: "POST",
+                        delay: 250,
+                        cache: false,
+                        data: function (params) {
+                            return {
+                                Search: params.term || "",
+                                IDFakultas: $('#fakultasEdit').val(),
+                                Jenjang: $('#jenjangEdit').val()
+                            };
+                        },
+                        processResults: function (data, params) {
+                            return {
+                                results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+
+                            };
+                        },
+                    }
+                });
+                $("#prodiEdit").change(function () {
+                    $("#lokasiEdit").empty();
+
+
+                    $("#lokasiEdit").prop("disabled",false);
+
+                    $("#lokasiEdit").select2({
+                        placeholder: "-- Pilih Lokasi --",
+                        width: "100%",
+                        ajax: {
+                            url: "@Url.Action("GetLokasiByProdi", "MasterCPL")",
+                            dataType: 'json',
+                            method: "POST",
+                            delay: 250,
+                            cache: false,
+                            data: function (params) {
+                                return {
+                                    Search: params.term || "",
+                                    IDProdi: $('#prodiEdit').val(),
+                                    Jenjang: $('#jenjangEdit').val()
+                                };
+                            },
+                            processResults: function (data, params) {
+                                return {
+                                    results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Kampus } })
+                                };
+                            },
+                        }
+                    });
+                });
+            });
+        }
         //batas crud detail
         function DetailMasterCPL(id) {
             $.LoadingOverlay("show");
@@ -453,13 +591,14 @@
                     //    $('.data-content-modal').remove();
                     //}
                     //$('#modal-inner').append(e);
+                    $('#fakultasDetail').val(data.NamaFakultas);
                     $('#kodeDetail').val(data.Kode);
                     $('#prodiDetail').val(data.NamaProdi);
                     $('#kelompokDetail').val(data.Kelompok);
                     $('#cplDetail').val(data.Capaian);
                     if (data.IsActive == true) {
                         $('#aktif').text("Aktif");
-                       
+
 
                     }
                     else  {
@@ -467,7 +606,7 @@
                     }
                     //$('#inp_status').checked(data.IsActive);
                     $('#detail-cpl-template').modal('show');
-                    
+
 
                 }, error: function (e) {
                     $.LoadingOverlay("hide");
@@ -580,14 +719,21 @@
                 datatype: 'html',
                 success: function (data) {
                     $.LoadingOverlay("hide");
-                    loadFromLookup("JenjangStudi", "jenjangEdit", "JenjangStudi");
+
                     /*console.log(e);*/
                     //if ($('.data-content-modal').length) {
                     //    $('.data-content-modal').remove();
                     //}
                     //$('#modal-inner').append(e);
+                    console.log(data.NamaProdi);
+                    //alert(data.NamaFakultas);
+
+                    //select$('#fakultasEdit').val(data.NamaFakultas);
+                    $('#fakultasEdits').val(data.NamaFakultas);
+                    $('#fakultasEditsID').val(data.FakultasID);
+                    $('#prodiEditsID').val(data.ProdiID);
+                    $('#prodiEdits').val(data.NamaProdi);
                     $('#kodeEdit').val(data.Kode);
-                    $('#prodiEdit').val(data.NamaProdi);
                     $('#kelompokEdit').val(data.Kelompok);
                     $('#cplEdit').val(data.Capaian);
                     $('#EditCPL').modal('show');
@@ -703,7 +849,7 @@
             //    { 'visible': false, 'targets': [5] }
             //]
         });
-        
+
         //lookup kelompok
         function loadFromLookup(tipe, id, nama) {
 
