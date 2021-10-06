@@ -149,7 +149,6 @@
     <Compile Include="Areas\Admin\Controllers\UserManageController.cs" />
     <Compile Include="Areas\Admin\Controllers\VerifikasiMahasiswaController.cs" />
     <Compile Include="Areas\Portal\Controllers\DataDiriController.cs" />
-    <Compile Include="Areas\Portal\Controllers\DetailCPLController.cs" />
     <Compile Include="Areas\Portal\Controllers\PendaftaranMataKuliahController.cs" />
     <Compile Include="Areas\Portal\Controllers\HomeController.cs" />
     <Compile Include="Areas\Portal\Controllers\NimDigitalController.cs" />
@@ -424,7 +423,6 @@
     <Content Include="Areas\Admin\Views\MasterCPL\Index.cshtml" />
     <Content Include="Areas\Admin\Views\MasterCPL\ModalCreateCPL.cshtml" />
     <Content Include="Areas\Admin\Views\MasterMapingCapaianPembelajaran\Index.cshtml" />
-    <Content Include="Areas\Portal\Views\DetailCPL\Index.cshtml" />
     <Content Include="Areas\Admin\Views\MenuRole\AddMenuRole.cshtml" />
     <Content Include="Areas\Admin\Views\MenuRole\DetailMenuRole.cshtml" />
     <Content Include="Areas\Admin\Views\MasterCPL\ModalDetailMasterCpl.cshtml" />
@@ -449,6 +447,7 @@
     <Content Include="Areas\Admin\Views\ApprovalPendaftaranMatakuliah\DetailCPL.cshtml" />
     <Content Include="Areas\Admin\Views\ApprovalPendaftaranMatakuliah\Index.cshtml" />
     <Content Include="Areas\Admin\Views\MenuRole\ModalUpdateMenuRole.cshtml" />
+    <Content Include="Areas\Portal\Views\TrackingStatusPendaftaran\IndexDetailPendaftaran.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
@@ -466,6 +465,7 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\Portal\NimDigital\main.js" />
     <Content Include="Scripts\Portal\TrackingStatus\main.js" />
+    <Content Include="Scripts\Portal\TrackingStatus\trackingDetail.js" />
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />

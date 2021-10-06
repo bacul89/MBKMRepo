@@ -18,7 +18,7 @@
             "render": function (data, type, row, meta) {
                 return `<div class="center vertical-center" style="text-align:center; align-items:center">
                             <a href="javascript:void()">
-                                <button type="button" onclick="urlLinkDetailCPMKP()" class="btn btn-warning btn-sm" style="font-size: 0.5vw"><i class="fas fa-search"></i></button>
+                                <button type="button" onclick="urlLinkDetailCPMKP('${data}')" class="btn btn-warning btn-sm" style="font-size: 0.5vw"><i class="fas fa-search"></i></button>
                             </a>
                         </div>`;
             }
@@ -122,5 +122,5 @@ function OpenModal() {
 }
 
 function urlLinkDetailCPMKP(id) {
-    window.location.href = "/Admin/ApprovalPendaftaranMatakuliah/DetailCPL";
+    window.location.href = "/Admin/ApprovalPendaftaranMatakuliah/DetailCPL/" + id;
 }
