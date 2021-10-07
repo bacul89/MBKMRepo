@@ -23,5 +23,7 @@ namespace MBKM.Entities.ViewModel
         public string Kode { get; set; }
         public string Capaian { get; set; }
         public bool Status { get; set; }
+        public string JenjangStudi { get; set; }
+        public string Lokasi { get; set; }
     }
 }

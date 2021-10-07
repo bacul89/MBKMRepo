@@ -1,4 +1,5 @@
 ﻿using MBKM.Entities.Basentities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,8 @@ namespace MBKM.Entities.Models.MBKM
         public string Kelompok { get; set; }
         public string Kode { get; set; }
         public string Capaian { get; set; }
-        //public virtual ICollection<CPLMatakuliah> CPLMatakuliahs { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<CPLMatakuliah> CPLMatakuliahs { get; set; }
         public string JenjangStudi { get; set; }
         public string Lokasi { get; set; }
     }

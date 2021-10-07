@@ -13,7 +13,7 @@ namespace MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces
         IEnumerable<VMMataKuliah> GetMatkul(int PageNumber, int PageSize, string search);
         IEnumerable<VMFakultas> GetFakultas(string jenjangStudi, string search);
         IEnumerable<VMProdi> GetProdiByFakultas(string jenjangStudi, string idFakultas, string search);
-        IEnumerable<VMProdi> GetLokasiByProdi(string jenjangStudi, string idProdi, string search);
+        IEnumerable<VMProdi> GetLokasiByProdi(string jenjangStudi, string namaProdi, string search);
         VMListMasterCPL GetListMasterCPL(int Skip, int Length, string SearchParam, string SortBy, bool SortDir);
     }
 }
