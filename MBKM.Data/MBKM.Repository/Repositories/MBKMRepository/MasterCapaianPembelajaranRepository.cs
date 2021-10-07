@@ -45,7 +45,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             }
         }
 
-        public IEnumerable<VMProdi> GetLokasiByProdi(string jenjangStudi, string idProdi, string search)
+        public IEnumerable<VMProdi> GetLokasiByProdiId(string jenjangStudi, string idProdi, string search)
         {
             using (var context = new MBKMContext())
             {
@@ -56,6 +56,19 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 var searchParam = new SqlParameter("@Search", search);
                 var result = context.Database
                     .SqlQuery<VMProdi>("GetLokasiByProdi @JenjangStudi, @IdProdi, @Search", jenjangStudiParam, idProdiParam, searchParam).ToList();
+                return result;
+            }
+        }
+
+        public IEnumerable<VMProdi> GetLokasiByProdi(string jenjangStudi, string namaProdi, string search)
+        {
+            using (var context = new MBKMContext())
+            {
+                var jenjangStudiParam = new SqlParameter("@JenjangStudi", jenjangStudi);
+                var namaProdiParam = new SqlParameter("@NamaProdi", namaProdi);
+                var searchParam = new SqlParameter("@Search", search);
+                var result = context.Database
+                    .SqlQuery<VMProdi>("GetLokasiByProdi @JenjangStudi, @NamaProdi, @Search", jenjangStudiParam, namaProdiParam, searchParam).ToList();
                 return result;
             }
         }

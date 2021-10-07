@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    var t = $('#TableList').DataTable({
+/*    var t = $('#TableList').DataTable({
         "scrollX": true,
         "columnDefs": [{
             "searchable": false,
@@ -13,14 +13,13 @@
 
         }
     });
+   
 
-    t.on('order.dt search.dt', function () {
+/*    t.on('order.dt search.dt', function () {
         t.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
             cell.innerHTML = i + 1;
         });
-    }).draw();
-
-
+    }).draw();*/
 
     $('.js-example-basic-single').select2({
         placeholder: "-- Kode Mata Kuliah --",
@@ -70,8 +69,9 @@ function convertMilisecondToDate(value) {
 
 }
 
+
 //batas main
-var tableUser = $('#table-data-master-mapping-cpl').DataTable({
+/*var datatable = $('#table-data-master-mapping-cpl').DataTable({
     "columnDefs": [{
         "searchable": false,
         "orderable": false,
@@ -189,7 +189,7 @@ $("#tableList").on('click', '#btnDetail', function () {
 
     $("#kodeDetail").val(data.Kode);
 
-});
+});*/
 
 
 /*var dataTable = $('#table-data-master-mapping-cpl').DataTable({
