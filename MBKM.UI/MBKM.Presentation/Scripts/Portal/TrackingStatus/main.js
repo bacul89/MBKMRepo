@@ -94,7 +94,6 @@ function urlLinkDetailCPMKP(id) {
                 $('.data-content-modal').remove();
             }
             $('#modal-inner').append(e);
-            console.log($('#statusDisable').val());
             if ($('#statusDisable').val()) {
                 $('#linkDetail').attr("onclick", "").unbind("click");
                 $('.onOff').attr('disabled', true)

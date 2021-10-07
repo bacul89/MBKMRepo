@@ -22,6 +22,7 @@
             <hr />
             <div class="container-fluid">
                 <div class="container" style="width: 100%; padding-bottom: 15px;">
+                    <input type="hidden" value="@ViewData["disabled"].ToString()" id="statusDisable" disabled />
                     <form class="form-horizontal">
                         <input type="hidden" value="@Model.ID" id="inp_ID" disabled />
                         <div class="row">
@@ -161,8 +162,8 @@
                         }
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-6" style="padding-left:50px">
-                                <button type="button" onclick="RejectCPLPendaftaran()" class="btn btn-danger">REJECT</button>
-                                <button type="button" onclick="AcceptedCPLPendaftaran()" class="btn btn-warning">ACCEPT</button>
+                                <button type="button" onclick="RejectCPLPendaftaran()" class="btn btn-danger onOff">REJECT</button>
+                                <button type="button" onclick="AcceptedCPLPendaftaran()" class="btn btn-warning onOff">ACCEPT</button>
                             </div>
                         </div>
                         <br />
