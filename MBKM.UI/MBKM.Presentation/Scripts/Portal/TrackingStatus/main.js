@@ -94,6 +94,10 @@ function urlLinkDetailCPMKP(id) {
                 $('.data-content-modal').remove();
             }
             $('#modal-inner').append(e);
+            if ($('#statusDisable').val()) {
+                $('#linkDetail').attr("onclick", "").unbind("click");
+                $('.onOff').attr('disabled', true)
+            }
             $('.modal').modal('show');
         }, error: function (e) {
             $.LoadingOverlay("hide");
@@ -109,4 +113,8 @@ function urlLinkDetailCPMKP(id) {
             $('.modal').modal('hide');
         }
     })
+}
+
+function redirectToDetail(id) {
+    window.location.href = "/Portal/TrackingStatusPendaftaran/IndexDetailPendaftaran/" + id;
 }

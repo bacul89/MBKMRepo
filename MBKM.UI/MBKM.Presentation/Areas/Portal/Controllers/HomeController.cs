@@ -105,17 +105,17 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult LoginInternal(string username, string password)
         {
-            if (GetMahasiswaByNim(username) != null)
-            {
-                Mahasiswa res = _mahasiswaService.Find(m => m.NIM == username).FirstOrDefault();
-                if (res == null || !HashPasswordService.ValidatePassword(password, res.Password))
-                {
-                    TempData["alertMessage"] = "Username atau password anda salah!";
-                    return RedirectToAction("Index", "Home");
-                }
-                PopulateSession(true, res.Email, res.Nama);
-                return RedirectToAction("Index", "DataDiri");
-            }
+            //if (GetMahasiswaByNim(username) != null)
+            //{
+            //    Mahasiswa res = _mahasiswaService.Find(m => m.NIM == username).FirstOrDefault();
+            //    if (res == null || !HashPasswordService.ValidatePassword(password, res.Password))
+            //    {
+            //        TempData["alertMessage"] = "Username atau password anda salah!";
+            //        return RedirectToAction("Index", "Home");
+            //    }
+            //    PopulateSession(true, res.Email, res.Nama);
+            //    return RedirectToAction("Index", "DataDiri");
+            //}
             var a = _mahasiswaService.getLoginInternal(username, password);
             if (a == null)
             {
@@ -125,8 +125,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             }
             else
             {
-                Mahasiswa mahasiswa = new Mahasiswa();
-                if (GetMahasiswaByNim(a.NIM) == null)
+                Mahasiswa mahasiswa = GetMahasiswaByNim(a.NIM);
+                if (mahasiswa == null)
                 {
                     mahasiswa.Nama = a.Nama;
                     mahasiswa.Email = a.Email;
@@ -135,11 +135,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     mahasiswa.Alamat = a.Alamat;
                     mahasiswa.Agama = a.Agama;
                     mahasiswa.Password = hp(a.PasswordData);
-                    mahasiswa.CreatedDate = DateTime.Now;
-                    mahasiswa.UpdatedDate = DateTime.Now;
-                    mahasiswa.IsActive = true;
-                    mahasiswa.IsDeleted = false;
-                    //var tanggalLahir = DateTime.ParseExact(a.TanggalLahir, "yyyy-MM-dd HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture);
+                    mahasiswa.NamaUniversitas = "UNIKA Atma Jaya";
                     mahasiswa.TanggalLahir = a.TanggalLahir;
                     mahasiswa.TempatLahir = "Jakarta";
                     mahasiswa.Gender = a.Gender;
@@ -148,7 +144,15 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     mahasiswa.NIMAsal = a.NIM;
                     mahasiswa.JenjangStudi = a.JenjangStudi;
                     mahasiswa.StatusVerifikasi = "AKTIF";
-
+                    mahasiswa.CreatedDate = DateTime.Now;
+                    mahasiswa.UpdatedDate = DateTime.Now;
+                    mahasiswa.IsActive = true;
+                    mahasiswa.IsDeleted = false;
+                    _mahasiswaService.Save(mahasiswa);
+                } else
+                {
+                    mahasiswa.Email = a.Email;
+                    mahasiswa.Password = hp(a.PasswordData);
                     _mahasiswaService.Save(mahasiswa);
                 }
                 PopulateSession(true, mahasiswa.Email, mahasiswa.Nama);
