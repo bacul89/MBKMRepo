@@ -226,7 +226,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             try
             {
                 Int64 id = GetMahasiswaByEmail(Session["email"] as string).ID;
-                if (_pendaftaranMataKuliahService.Find(pmk => pmk.MahasiswaID == id).FirstOrDefault() == null)
+                if (_pendaftaranMataKuliahService.Find(pmk => pmk.MahasiswaID == id && pmk.JadwalKuliahID == pendaftaranMataKuliah.JadwalKuliahID).FirstOrDefault() == null)
                 {
                     pendaftaranMataKuliah.MahasiswaID = id;
                     pendaftaranMataKuliah.IsActive = true;
