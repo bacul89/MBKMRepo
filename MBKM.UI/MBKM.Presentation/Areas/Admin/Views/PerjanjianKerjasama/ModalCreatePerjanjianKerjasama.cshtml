@@ -88,7 +88,8 @@
             <div class="form-group row">
                 <label for="biaya" class="col-md-4 col-form-label">Biaya</label>
                 <div class="col-md-8">
-                    <input id="biaya" type="text" name="BiayaKuliah" class="form-control input-data" value="0" required>
+                    <input id="biaya" type="text" class="form-control number-separator" value="0" required>
+                    <input id='text' type="hidden" name="BiayaKuliah" class="form-control input-data" value="0">
                 </div>
             </div>
             <div class="form-group row">
@@ -111,6 +112,12 @@
         </form>
     </div>
 </div>
+<script src="~/Scripts/easy-number-separator.js"></script>
 <script src="~/Scripts/jquery.mask.min.js"></script>
 <script src="~/Scripts/scriptDropdown.js"></script>
 <script src="~/Scripts/script.js"></script>
+<script>
+    $("#biaya").keyup(function () {
+        $("#text").val($("#biaya").val().replace(/,/g, ''));
+    })
+</script>

@@ -112,7 +112,6 @@
 $(document).ready(function () {
     $("#JenisKerjasama").chained("#JenisPertukaran");
         // Format mata uang.
-    /*$('#biaya').mask('000.000.000', { reverse: true });*/
 
 });
 
