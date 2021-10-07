@@ -89,6 +89,16 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 ViewData["countCPAsal"] = capaianAsal.Count();
 
             }
+
+            if (data.PendaftaranMataKuliahs.StatusPendaftaran.Contains("MAHASISWA"))
+            {
+                ViewData["disabled"] = "true";
+            }
+            else
+            {
+                ViewData["disabled"] = "";
+            }
+
             ViewData["capaianTujuan"] = capaianTujuan;
             ViewData["countCPTujuan"] = capaianTujuan.Count();
             return View(data);
@@ -101,7 +111,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             {
                 CPLMKPendaftaran TmpApproval = _cPLMKPendaftaranService.Get(id);
                 PendaftaranMataKuliah pendaftaran = _pendaftaranMataKuliahService.Get(TmpApproval.PendaftaranMataKuliahID);
-                pendaftaran.StatusPendaftaran = "Accepted By Mahasiswa";
+                pendaftaran.StatusPendaftaran = "ACCEPTED BY MAHASISWA";
                 pendaftaran.UpdatedDate = DateTime.Now;
                 try
                 {
@@ -126,7 +136,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             {
                 CPLMKPendaftaran TmpApproval = _cPLMKPendaftaranService.Get(id);
                 PendaftaranMataKuliah pendaftaran = _pendaftaranMataKuliahService.Get(TmpApproval.PendaftaranMataKuliahID);
-                pendaftaran.StatusPendaftaran = "Rejected By Mahasiswa";
+                pendaftaran.StatusPendaftaran = "REJECTED BY MAHASISWA";
                 pendaftaran.UpdatedDate = DateTime.Now;
                 try
                 {

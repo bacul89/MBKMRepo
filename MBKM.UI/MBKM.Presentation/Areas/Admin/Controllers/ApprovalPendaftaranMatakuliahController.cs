@@ -47,10 +47,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             var data = _cPLMKPendaftaranService.Find(x => x.IsDeleted == false && x.PendaftaranMataKuliahID == id).First();
             if(data.PendaftaranMataKuliahs.mahasiswas.NIM != data.PendaftaranMataKuliahs.mahasiswas.NIMAsal)
             {
-                ViewData["jenisProgram"] = "Non-Pertukaran";
-                ViewData["jenisKegiatan"] = "Internal";
-                /*ViewData["jenisProgram"] = "Pertukaran";
-                ViewData["jenisKegiatan"] = "Eksternal";*/
+                ViewData["jenisProgram"] = "Pertukaran";
+                ViewData["jenisKegiatan"] = "Eksternal";
             }
             else if(data.PendaftaranMataKuliahs.mahasiswas.NoKerjasama != null)
             {

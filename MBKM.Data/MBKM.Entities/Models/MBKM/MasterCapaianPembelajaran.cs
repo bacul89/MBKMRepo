@@ -16,7 +16,7 @@ namespace MBKM.Entities.Models.MBKM
         public string Kelompok { get; set; }
         public string Kode { get; set; }
         public string Capaian { get; set; }
-        public virtual ICollection<CPLMatakuliah> CPLMatakuliahs { get; set; }
+        //public virtual ICollection<CPLMatakuliah> CPLMatakuliahs { get; set; }
         public string JenjangStudi { get; set; }
         public string Lokasi { get; set; }
     }
