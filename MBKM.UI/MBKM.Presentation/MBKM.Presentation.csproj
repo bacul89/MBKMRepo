@@ -199,6 +199,7 @@
     <Content Include="Scripts\Admin\Menu\main.js" />
     <Content Include="Scripts\Admin\Role\crud.js" />
     <Content Include="Scripts\Admin\Role\main.js" />
+    <Content Include="Scripts\jquery.mask.min.js" />
     <Content Include="Scripts\loading\loadingoverlay.min.js" />
     <Content Include="Content\summernote\lang\summernote-ar-AR.js" />
     <Content Include="Content\summernote\lang\summernote-ar-AR.min.js" />
@@ -466,9 +467,12 @@
     <Content Include="Scripts\Portal\NimDigital\main.js" />
     <Content Include="Scripts\Portal\TrackingStatus\main.js" />
     <Content Include="Scripts\Portal\TrackingStatus\trackingDetail.js" />
+    <Content Include="Scripts\script.js" />
+    <Content Include="Scripts\scriptDropdown.js" />
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\moment-with-locales.min.js" />
     <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\selectFilter.min.js" />
     <Content Include="Scripts\sweetalert2.all.min.js" />
     <Content Include="Upload\31\31_FotoDiri.png" />
     <Content Include="Upload\31\31_FotoKIM.png" />
