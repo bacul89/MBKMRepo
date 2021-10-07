@@ -14,6 +14,7 @@ namespace MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces
         VMLogin getLoginInternal(string StudentID, string Password);
         List<Mahasiswa> getMahasiswasNotYetVer(string Universitas, string Prodi);
         VMListMahasiswa getMahasiswasNotYetVer(int Skip, int Length, string SearchParam, string SortBy, bool SortDir);
+        string GetNim();
         //int updateRangeVer(Int64[] listId);
     }
 }
