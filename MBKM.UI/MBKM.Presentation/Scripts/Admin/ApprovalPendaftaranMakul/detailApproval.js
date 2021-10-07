@@ -1,4 +1,10 @@
 ﻿$(document).ready(function (e) {
+    $("#inp_hasil").MaxLength(
+        {
+            MaxLength: 10,
+            DisplayCharacterCount: false
+        });
+
     $('.js-example-basic-single').select2({
         placeholder: "Masukkan Nama Dosen",
         "proccessing": true,

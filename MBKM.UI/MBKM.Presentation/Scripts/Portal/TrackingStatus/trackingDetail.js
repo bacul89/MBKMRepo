@@ -1,4 +1,10 @@
-﻿function AcceptedCPLPendaftaran() {
+﻿$(document).ready(function () {
+    if ($('#statusDisable').val()) {
+        $('.onOff').attr("onclick", "").unbind("click").attr('disabled', true);
+    }
+})
+
+function AcceptedCPLPendaftaran() {
     $.LoadingOverlay("show");
     id = $('#inp_ID').val();
     $.ajax({

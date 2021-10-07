@@ -30,6 +30,13 @@
                 <div class="modal-body">
                     <div class="form-horizontal" id="frmSave">
                         <div class="form-group">
+                            <label class="col-sm-3 control-label">Fakultas</label>
+                            <div class="col-sm-9">
+                                <input type="text" value="" class="form-control input-pendaftaran input-data" disabled="disabled" id="fakultasDetail" name="fakultasDetail">
+                                @*@Html.EditorFor(model => model.NamaProdi, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled" } })*@
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-3 control-label">Program Studi</label>
                             <div class="col-sm-9">
                                 <input type="text" value="" class="form-control input-pendaftaran input-data" disabled="disabled" id="prodiDetail" name="kelompokDetail">
@@ -48,7 +55,7 @@
                         <div class="form-group">
                             <label for="kodeDetail" class="col-sm-3 control-label">Kode CPL</label>
                             <div class="col-sm-9">
-                                <input type="text" value="" class="form-control input-pendaftaran input-data" disabled = "disabled" id="kodeDetail" name="kodeDetail">
+                                <input type="text" value="" class="form-control input-pendaftaran input-data" disabled="disabled" id="kodeDetail" name="kodeDetail">
                                 @*@Html.EditorFor(model => model.Kode, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled" } })*@
                             </div>
                         </div>
@@ -56,7 +63,7 @@
                             <label for="txtdCPL" class="col-sm-3 control-label">Capaian Pembelajaran</label>
                             <div class="col-sm-9">
                                 @*<input type="text" class="form-control input-pendaftaran input-data" id="txtCPL" name="txtCPL" placeholder="Input Deskripsi Capaian Pembelajaran">*@
-                                <textarea class="form-control input-pendaftaran summernote input-data" name="txtdCPL" rows="5" id="cplDetail"  disabled></textarea>
+                                <textarea class="form-control input-pendaftaran summernote input-data" name="txtdCPL" rows="5" id="cplDetail" disabled></textarea>
 
                             </div>
                         </div>
@@ -64,10 +71,10 @@
                         <div class="form-group">
                             <label for="inp_status" class="col-sm-3 control-label">Status</label>
                             <div class="col-sm-9">
-                                <label id ="aktif"  class="radio-inline input-pendaftaran ">
+                                <label id="aktif" class="radio-inline input-pendaftaran ">
                                     <input type="text" name="inpStatus1" id="inp_status1" value="1" disabled> Aktif
                                 </label>
-                                
+
 
                             </div>
                         </div>
@@ -179,6 +186,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #FF8A04; ">
+                    <input type="hidden" id="id_cpl" value="" />
                     <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
                         EDIT CAPAIAN BELAJAR
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -191,10 +199,10 @@
                         @*<form id="formRegistrasi">*@
                         <div class="container" style="width: 100%;">
                             <div class="form-group ">
-                                <label for="jenjangEdit" class="col-sm-3 control-label">Jenjang Studi</label>
+                                <label  class="col-sm-3 control-label">Jenjang Studi</label>
                                 <div class="col-sm-9">
-
-                                    <select name="jenjang" id="jenjangEdit" class="form-control input-pendaftaran input-data"></select>
+                                    @Html.EditorFor(model => model.JenjangStudi, new { htmlAttributes = new { @class = "form-control input-pendaftaran input-data", maxlength = 100, disabled = "disabled", @id = "jenjangEdit" } })
+                                    @*<select name="jenjang" id="jenjangEdit" class="form-control input-pendaftaran input-data"></select>*@
                                 </div>
 
                             </div>
@@ -202,25 +210,39 @@
 
 
                                 <label for="fakultas" class="col-sm-3 control-label">Fakultas</label>
-                                <div class="col-sm-9">
-                                    <select name="fakultas" id="fakultas" class="form-control input-pendaftaran input-data"></select>
+                                <!--<div class="col-sm-9" id="fakultasEdit1"hidden>
+                                    <select name="fakultasEdit" id="fakultasEdit" class="form-control input-pendaftaran input-data" hidden></select>-->
                                     @*@Html.DropDownListFor(model => model.Nama, ViewBag.listProdi as SelectList, "--Pilih Prodi/unit--", new { @class = "form-control input-pendaftaran input-data", @id = "txtProdi", @name = "txtProdi" })*@
+                                <!--</div>-->
+                                <div class="col-sm-9" id="fakultasEdit2">
+                                    @*<select name="noKJ" id="noKJ" disabled="disabled" class="form-control input-md" hidden required></select>*@
+
+                                    @Html.EditorFor(model => model.NamaFakultas, new { htmlAttributes = new { @class = "form-control input-pendaftaran input-data", maxlength = 100, disabled = "disabled", @id = "fakultasEdits"} })
+                                   @* @Html.EditorFor(model => model.FakultasID, new { htmlAttributes = new { @class = "form-control input-pendaftaran input-data", maxlength = 100, disabled = "disabled", @id = "fakultasEditsID"} })*@
                                 </div>
 
                             </div>
                             <div class="form-group ">
-                                <label for="prodi" class="col-sm-3 control-label">Program Studi</label>
-                                <div class="col-sm-9">
 
-                                    <select name="prodi" id="prodiEdit" class="form-control input-pendaftaran input-data"></select>
+
+                                <label for="fakultas" class="col-sm-3 control-label">Program Studi</label>
+                                <!--<div class="col-sm-9" id="prodiEdit1"hidden >
+                                    <select name="prodiEdit" id="prodiEdit" class="form-control input-pendaftaran input-data"></select>-->
+                                    @*@Html.DropDownListFor(model => model.Nama, ViewBag.listProdi as SelectList, "--Pilih Prodi/unit--", new { @class = "form-control input-pendaftaran input-data", @id = "txtProdi", @name = "txtProdi" })*@
+                                <!--</div>-->
+                                <div class="col-sm-9" id="prodiEdit2">
+                                    @*<select name="noKJ" id="noKJ" disabled="disabled" class="form-control input-md" hidden required></select>*@
+
+                                    @Html.EditorFor(model => model.NamaProdi, new { htmlAttributes = new { @class = "form-control input-pendaftaran input-data", maxlength = 100, disabled = "disabled", @id = "prodiEdits" } })
+                                    @*@Html.EditorFor(model => model.ProdiID, new { htmlAttributes = new { @class = "form-control input-pendaftaran input-data", maxlength = 100, disabled = "disabled", @id = "prodiEditsID" } })*@
                                 </div>
 
                             </div>
                             <div class="form-group ">
                                 <label for="lokasi" class="col-sm-3 control-label">Lokasi</label>
                                 <div class="col-sm-9">
-
-                                    <select name="lokasi" id="lokasiEdit" class="form-control input-md input-pendaftaran input-data"></select>
+                                    @Html.EditorFor(model => model.Lokasi, new { htmlAttributes = new { @class = "form-control input-pendaftaran input-data", maxlength = 100, disabled = "disabled", @id = "lokasiEdit" } })
+                                    @*<select name="lokasiEdit" id="lokasiEdit" class="form-control input-md input-pendaftaran input-data"></select>*@
                                 </div>
 
                             </div>
@@ -228,16 +250,15 @@
                             <div class="form-group">
                                 <label for="kelompok" class="col-sm-3 control-label">Kelompok</label>
                                 <div class="col-sm-9">
-                                    <select class="form-control input-pendaftaran input-data" id="kelompokEdit2" name="kelompok" placeholder="Pilih Kelompok">
-                                        <option value="value">-</option>
-                                        <option value="value" id="kelompokEdit">text</option>
+                                    <select class="form-control input-pendaftaran input-data" id="kelompokEdit" name="kelompokEdit" placeholder="Pilih Kelompok">
+                                        
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="kode" class="col-sm-3 control-label">Kode CPL</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control input-pendaftaran input-data" id="kodeEdit" name="kode" placeholder="Input Kode CPL">
+                                    <input type="text" class="form-control input-pendaftaran input-data" id="kodeEdit" name="kodeEdit" placeholder="Input Kode CPL">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -253,16 +274,16 @@
                                 <label for="inp_status" class="col-sm-3 control-label">Status</label>
                                 <div class="col-sm-9">
                                     <label class="radio-inline input-pendaftaran">
-                                        <input type="radio" name="inpStatus" id="inp_status" value="1"> Aktif
+                                        <input type="radio" name="inpStatus" id="inp_statusEdit" value="1"> Aktif
                                     </label>
                                     <label class="radio-inline input-pendaftaran">
-                                        <input type="radio" name="inpStatus" id="inp_status" value="0"> Tidak Aktif
+                                        <input type="radio" name="inpStatus" id="inp_statusEdit" value="0"> Tidak Aktif
                                     </label>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-2 col-md-offset-10">
-                                    <button type="button" onclick="" class="btn btn-warning">SIMPAN</button>
+                                    <button type="button" onclick="PostUpdateCPL()" class="btn btn-warning">SIMPAN</button>
                                 </div>
                             </div>
                         </div>
@@ -282,27 +303,28 @@
             </h4>
             <hr />
             @*<div class="container" style="width: 100%;">*@
-            <div class="container" style="width: 100%">
-                @*<button class="btn btn-success" data-toggle="modal" onclick="AddUserTemplate()" data-target="#TambahUser" data-backdrop="true"><i class="fas fa-plus-circle"></i> TAMBAH USER</button>*@
-                @*<button class="btn btn-success" onclick="AddCPLTemplate()"><i class="fas fa-plus-circle"></i> TAMBAH CPL</button>*@
-                <a data-toggle="modal" data-target="#TambahCPL" style="color: #FF8A04;">Tambah CPL</a>
-                <br />
-                <br />
-                @*<table id="TableList" class="table row-border hover dt-responsive responsive" style="border-spacing: 0 15px; border:0">*@
-                <table id="TableList" class="table table-bordered table-striped hover dt-responsive responsive">
-                    <thead class="text-center">
-                        <tr style="background-color: #FF8A04; border: 0 ">
-                            <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Action</th>
-                            <th class="zero-padding no-border vertical-center sorting" style="text-align:center">No.</th>
-                            <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Kode</th>
-                            <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Kelompok</th>
-                            <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Capaian Pembelajaran</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
+        <div class="container" style="width: 100%">
+            @*<button class="btn btn-success" data-toggle="modal" onclick="AddUserTemplate()" data-target="#TambahUser" data-backdrop="true"><i class="fas fa-plus-circle"></i> TAMBAH USER</button>*@
+            @*<button class="btn btn-success" onclick="AddCPLTemplate()"><i class="fas fa-plus-circle"></i> TAMBAH CPL</button>*@
+            @*<a data-toggle="modal" data-target="#TambahCPL" style="color: #FF8A04;">Tambah CPL</a>*@
+            <button data-toggle="modal" data-target="#TambahCPL" class="btn btn-success"><i class="fas fa-plus-circle"></i> Tambah CPL</button>
+            <br />
+            <br />
+            @*<table id="TableList" class="table row-border hover dt-responsive responsive" style="border-spacing: 0 15px; border:0">*@
+            <table id="TableList" class="table table-bordered table-striped hover dt-responsive responsive">
+                <thead class="text-center">
+                    <tr style="background-color: #FF8A04; border: 0 ">
+                        <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Action</th>
+                        <th class="zero-padding no-border vertical-center sorting" style="text-align:center">No.</th>
+                        <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Kode</th>
+                        <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Kelompok</th>
+                        <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Capaian Pembelajaran</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
         </div>
     </div>
 </div>
@@ -322,8 +344,11 @@
         }
         $(document).ready(function () {
             loadFakultas();
+            //loadFakultasEdit();
             loadFromLookup("JenjangStudi", "jenjang", "JenjangStudi");
+            //loadFromLookup("JenjangStudi", "jenjangEdit", "JenjangStudi");
             loadFromLookup("Kelompok", "kelompok", "Kelompok");
+            loadFromLookup("Kelompok", "kelompokEdit", "Kelompok");
             $("#prodi").select2({
                 //dropdownParent: $("#TambahCPL"),
                 placeholder: "-- Pilih Program Studi --"
@@ -332,6 +357,14 @@
                 //dropdownParent: $("#TambahCPL"),
                 placeholder: "-- Pilih Lokasi --"
             });
+            $("#prodiEdit").select2({
+                //dropdownParent: $("#TambahCPL"),
+                placeholder: "-- Pilih Program Studi --"
+            });
+            //$("#lokasiEdit").select2({
+            //    //dropdownParent: $("#TambahCPL"),
+            //    placeholder: "-- Pilih Lokasi --"
+            //});
         });
         function loadFakultas() {
             $("#prodi").prop("disabled", true);
@@ -372,7 +405,7 @@
                 $("#lokasi").empty();
                 $("#prodi").empty();
                 $("#prodi").prop("disabled", true);
-                $("#lokasi").prop("disabled", true);
+                //$("#lokasi").prop("disabled", true);
             });
             $("#fakultas").change(function () {
                 //$('#fakultas').val(null).trigger('change');
@@ -401,7 +434,7 @@
                         },
                         processResults: function (data, params) {
                             return {
-                                results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+                                results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
 
                             };
                         },
@@ -409,8 +442,8 @@
                 });
                 $("#prodi").change(function () {
                     $("#lokasi").empty();
-                        
-                
+
+
                     $("#lokasi").prop("disabled",false);
 
                     $("#lokasi").select2({
@@ -425,8 +458,121 @@
                             data: function (params) {
                                 return {
                                     Search: params.term || "",
-                                    IDProdi: $('#prodi').val(),
+                                    NamaProdi: $('#prodi').val(),
                                     Jenjang: $('#jenjang').val()
+                                };
+                            },
+                            processResults: function (data, params) {
+                                return {
+                                    results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Kampus } })
+                                };
+                            },
+                        }
+                    });
+                    
+                });
+                $('#lokasi').on('select2:select', function (e) {
+                    console.log(e.params.data.id);
+                    //alert(e.params.data.id)
+                });
+            });
+        }
+        //SETTING UPDATE-=-=======================================================================================
+        @*function loadFakultasEdit() {
+            $("#prodiEdit").prop("disabled", true);
+            $("#lokasiEdit").prop("disabled", true);
+            $("#fakultasEdit").prop("disabled", true);
+            $("#jenjangEdit").prop("disabled", true);
+
+           // $('#fakultas').val(null).trigger('change');
+            $("#fakultasEdit").select2({
+                //dropdownParent: $("#TambahCPL"),
+                multiple: false,
+                placeholder: "-- Pilih Fakultas --",
+                width: "100%",
+                ajax: {
+                    url: "@Url.Action("GetFakultas", "MasterCPL")",
+                    dataType: 'json',
+                    method: "POST",
+                    delay: 250,
+                    cache: false,
+                    data: function (params) {
+                        return {
+                            Search: params.term || "",
+                            Jenjang: $('#jenjangEdit').val()
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+                        };
+                    },
+                }
+            });
+            $('#fakultasEdit').on('select2:select', function (e) {
+                console.log(e.params.data.text);
+            });
+            $("#jenjangEdit").change(function () {
+                $("#fakultasEdit").empty();
+                $("#fakultasEdit").prop("disabled",false);
+                $("#lokasiEdit").empty();
+                $("#prodiEdit").empty();
+                $("#prodiEdit").prop("disabled", true);
+                $("#lokasiEdit").prop("disabled", true);
+            });
+            $("#fakultasEdit").change(function () {
+                //$('#fakultas').val(null).trigger('change');
+                var latest_value = $("option:selected:first", this).text();
+                //alert(latest_value);
+                $("#prodiEdit").empty();
+                $("#prodiEdit").prop("disabled", false);
+                $("#lokasiEdit").prop("disabled", true);
+                $("#lokasiEdit").empty();
+                $("#prodiEdit").select2({
+                    multiple: false,
+                    placeholder: "-- Pilih Program Studi --",
+                    width: "100%",
+                    ajax: {
+                        url: "@Url.Action("GetProdiByFakultas", "MasterCPL")",
+                        dataType: 'json',
+                        method: "POST",
+                        delay: 250,
+                        cache: false,
+                        data: function (params) {
+                            return {
+                                Search: params.term || "",
+                                IDFakultas: $('#fakultasEdit').val(),
+                                Jenjang: $('#jenjangEdit').val()
+                            };
+                        },
+                        processResults: function (data, params) {
+                            return {
+                                results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+
+                            };
+                        },
+                    }
+                });
+                $("#prodiEdit").change(function () {
+                    $("#lokasiEdit").empty();
+
+
+                    $("#lokasiEdit").prop("disabled",false);
+
+                    $("#lokasiEdit").select2({
+                        placeholder: "-- Pilih Lokasi --",
+                        width: "100%",
+                        ajax: {
+                            url: "@Url.Action("GetLokasiByProdi", "MasterCPL")",
+                            dataType: 'json',
+                            method: "POST",
+                            delay: 250,
+                            cache: false,
+                            data: function (params) {
+                                return {
+                                    Search: params.term || "",
+                                    IDProdi: $('#prodiEdit').val(),
+                                    Jenjang: $('#jenjangEdit').val()
                                 };
                             },
                             processResults: function (data, params) {
@@ -438,7 +584,7 @@
                     });
                 });
             });
-        }
+        }*@
         //batas crud detail
         function DetailMasterCPL(id) {
             $.LoadingOverlay("show");
@@ -453,13 +599,14 @@
                     //    $('.data-content-modal').remove();
                     //}
                     //$('#modal-inner').append(e);
+                    $('#fakultasDetail').val(data.NamaFakultas);
                     $('#kodeDetail').val(data.Kode);
                     $('#prodiDetail').val(data.NamaProdi);
                     $('#kelompokDetail').val(data.Kelompok);
                     $('#cplDetail').val(data.Capaian);
                     if (data.IsActive == true) {
                         $('#aktif').text("Aktif");
-                       
+
 
                     }
                     else  {
@@ -467,7 +614,7 @@
                     }
                     //$('#inp_status').checked(data.IsActive);
                     $('#detail-cpl-template').modal('show');
-                    
+
 
                 }, error: function (e) {
                     $.LoadingOverlay("hide");
@@ -489,8 +636,13 @@
         function PostCreate3() {
             //getValueOnForm();
             var formInputUser = new Object();
+           // var latest_valueJenjang = $("option:selected:first", "#jenjang").text();
             var latest_valueFakultas = $("option:selected:first", "#fakultas").text();
+            //var latest_valueFakultas = $("option:selected:first", "#fakultas").val();
             var latest_valueProdi = $("option:selected:first", "#prodi").text();
+            var latest_valueLokasi = $("option:selected:first", "#lokasi").text();
+            //var latest_valueLokasi = $("option:selected:first", "#lokasi").text();
+            //var latest_valueProdiId = $("option:selected:first", "#lokasi").id();
             //alert(latest_value);
             //var namaProdi = document.getElementById("idProdi");
             //var selectedProdi = namaProdi.options[namaProdi.selectedIndex].text;
@@ -504,10 +656,12 @@
             //$('#select2').on('select2:select', function (e: any) {
             //    console.log(e.params.data.id);
             //});
-            formInputUser.ProdiID = $('#prodi').val();
+            formInputUser.ProdiID = $('#lokasi').val();
             formInputUser.NamaProdi = latest_valueProdi;
-            formInputUser.Kode = $('#kode').val();
+            formInputUser.JenjangStudi = $('#jenjang').text();
+            formInputUser.Lokasi = latest_valueLokasi;
             formInputUser.Kelompok = $('#kelompok').val();
+            formInputUser.Kode = $('#kode').val();
 
             formInputUser.Capaian = $('textarea[name=txtCPL]').val();
 
@@ -517,39 +671,25 @@
                 formInputUser.IsActive = "true";
             }
             else { formInputUser.IsActive = "false"; }
+           // console.log(formInputUser);
             console.log(formInputUser);
-            var base_url = window.location.origin;
-            $.ajax({
-                url: base_url + '/Admin/MasterCPL/PostDataCPL',
-                type: 'post',
-                datatype: 'json',
-                data: JSON.stringify(formInputUser),
+            if ((($('#jenjang').text()) && (latest_valueProdi) && (latest_valueFakultas) && (latest_valueLokasi) && ($('#kode').val()) && (formInputUser.Kelompok = $('#kelompok').val()) && ($('textarea[name=txtCPL]').val()) != null)) {
 
-                //contentType: 'application/json'
-                contentType: 'application/json',
-            }).then(function (response) {
-                if (response.status == 400) {
-                    Swal.fire({
-                        title: 'Gagal!',
-                        icon: 'error',
-                        html: 'EMAIL atau NIP telah terdaftar!',
-                        showCloseButton: true,
-                        showCancelButton: false,
-                        focusConfirm: false,
-                        confirmButtonText: 'OK'
-                    })
-                    tableUser.ajax.reload(null, false);
-                    $('.modal').modal('hide');
+                var base_url = window.location.origin;
+                $.ajax({
+                    url: base_url + '/Admin/MasterCPL/PostDataCPL',
+                    type: 'post',
+                    datatype: 'json',
+                    data: JSON.stringify(formInputUser),
 
-                    //$('#TambahUser')[0].reset();
-                }
-                else
-                    if (response.status == 200) {
-
+                    //contentType: 'application/json'
+                    contentType: 'application/json',
+                }).then(function (response) {
+                    if (response.status == 400) {
                         Swal.fire({
-                            title: 'Berhasil',
-                            icon: 'success',
-                            html: 'CPL Baru Berhasil Ditambahkan',
+                            title: 'Gagal!',
+                            icon: 'error',
+                            html: 'EMAIL atau NIP telah terdaftar!',
                             showCloseButton: true,
                             showCancelButton: false,
                             focusConfirm: false,
@@ -557,17 +697,37 @@
                         })
                         tableUser.ajax.reload(null, false);
                         $('.modal').modal('hide');
-                        $("#fakultas").empty();
-                        $("#prodi").empty();
-                        $("#jenjang").empty();
-                        $("#lokasi").empty();
-                        //$("#formRegistrasi").trigger("reset");
-                        //clearValueOnForm();
+
                         //$('#TambahUser')[0].reset();
-
                     }
+                    else
+                        if (response.status == 200) {
 
-            });
+                            Swal.fire({
+                                title: 'Berhasil',
+                                icon: 'success',
+                                html: 'CPL Baru Berhasil Ditambahkan',
+                                showCloseButton: true,
+                                showCancelButton: false,
+                                focusConfirm: false,
+                                confirmButtonText: 'OK'
+                            })
+                            tableUser.ajax.reload(null, false);
+                            $('.modal').modal('hide');
+                            $("#fakultas").empty();
+                            $("#prodi").empty();
+                            $("#jenjang").empty();
+                            $("#lokasi").empty();
+                            //$("#formRegistrasi").trigger("reset");
+                            //clearValueOnForm();
+                            //$('#TambahUser')[0].reset();
+
+                        }
+
+                });
+            }
+            else { alert("Lengkapi Data!");}
+            
 
 
         }
@@ -580,16 +740,47 @@
                 datatype: 'html',
                 success: function (data) {
                     $.LoadingOverlay("hide");
-                    loadFromLookup("JenjangStudi", "jenjangEdit", "JenjangStudi");
+                    var formEdit = new Object();
+
                     /*console.log(e);*/
                     //if ($('.data-content-modal').length) {
                     //    $('.data-content-modal').remove();
                     //}
                     //$('#modal-inner').append(e);
+                    console.log(data);
+                    //console.log(data.NamaProdi);
+                    //alert(data.NamaFakultas);
+
+                    //select$('#fakultasEdit').val(data.NamaFakultas);
+                    $('#jenjangEdit').val(data.JenjangStudi);
+                    $('#lokasiEdit').val(data.Lokasi);
+                    $('#fakultasEdits').val(data.NamaFakultas);
+                    $('#fakultasEditsID').val(data.FakultasID);
+                    $('#prodiEditsID').val(data.ProdiID);
+                    $('#prodiEdits').val(data.NamaProdi);
                     $('#kodeEdit').val(data.Kode);
-                    $('#prodiEdit').val(data.NamaProdi);
-                    $('#kelompokEdit').val(data.Kelompok);
+                    $('#id_cpl').val(data.ID);
+                    //$('#kelompokEdit').val(data.Kelompok);
+                    //$("#kelompokEdit").select2('data', { id: "elementID", text: "Hello!" });
+                    //$('#kelompokEdit').val(100).trigger('change');
+                    //$('#kelompokEdit').select2(data.Kelompok);
                     $('#cplEdit').val(data.Capaian);
+                    //if (data.IsActive == true) {
+                    //    $('input[id=inp_statusEdit1]:checked')
+                    //}
+                    //else
+                    //{
+                    //    $('input[id=inp_statusEdit0]:checked')
+                    //}
+                    //var cekAktif = $('input[id=inp_statusEdit]:checked').val();
+                    //if (cekAktif == 1) {
+                    //    formInputUser.IsActive = "true";
+                    //}
+                    //else { formInputUser.IsActive = "false"; }
+                    //formEdit.Kelompok = $('#kelompok').val();
+                    //formEdit.Kode = $('#kode').val();
+
+                    //formEdit.Capaian = $('textarea[name=txtCPL]').val();
                     $('#EditCPL').modal('show');
                 }, error: function (e) {
                     $.LoadingOverlay("hide");
@@ -605,6 +796,68 @@
                     $('.modal').modal('hide');
                 }
             })
+
+        }
+        function PostUpdateCPL() {
+            //getValueOnForm();
+            //alert($('textarea[name=cplEdit]').val());
+            //alert($('#kelompokEdit').val());
+            if (($('#kelompokEdit').val()) && ($('#kodeEdit').val()) != null && ($('textarea[name=cplEdit]').val())!=("")) {
+                var formEdit = new Object();
+
+                formEdit.ID = $('#id_cpl').val();
+                formEdit.Kelompok = $('#kelompokEdit').val();
+                formEdit.Kode = $('#kodeEdit').val();
+
+                formEdit.Capaian = $('textarea[name=cplEdit]').val();
+
+
+                var cekAktif = $('input[id=inp_statusEdit]:checked').val();
+                if (cekAktif == 1) {
+                    formEdit.IsActive = "true";
+                }
+                else { formEdit.IsActive = "false"; }
+                // console.log(formInputUser);
+                console.log(formEdit);
+                var base_url = window.location.origin;
+                $.ajax({
+                    url: base_url + '/Admin/MasterCPL/PostUpdateCPL',
+                    type: 'post',
+                    datatype: 'json',
+                    data: JSON.stringify(formEdit),
+
+                    //contentType: 'application/json'
+                    contentType: 'application/json',
+                }).then(function (response) {
+                    
+                        if (response.status == 200) {
+
+                            Swal.fire({
+                                title: 'Berhasil',
+                                icon: 'success',
+                                html: 'CPL Berhasil DiUpdate',
+                                showCloseButton: true,
+                                showCancelButton: false,
+                                focusConfirm: false,
+                                confirmButtonText: 'OK'
+                            })
+                            tableUser.ajax.reload(null, false);
+                            $('.modal').modal('hide');
+                            //$("#fakultas").empty();
+                            //$("#prodi").empty();
+                            //$("#jenjang").empty();
+                            //$("#lokasi").empty();
+                            //$("#formRegistrasi").trigger("reset");
+                            //clearValueOnForm();
+                            //$('#TambahUser')[0].reset();
+
+                        }
+
+                });
+            }
+            else { alert("mohon lengkapi data!") }
+            
+
 
         }
 
@@ -703,7 +956,7 @@
             //    { 'visible': false, 'targets': [5] }
             //]
         });
-        
+
         //lookup kelompok
         function loadFromLookup(tipe, id, nama) {
 
