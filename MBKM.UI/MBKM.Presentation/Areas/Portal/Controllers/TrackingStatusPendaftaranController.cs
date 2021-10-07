@@ -50,6 +50,15 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult _getIndexDetailView(int id)
         {
             var data = _pendaftaranMataKuliahService.Get(id);
+            if (data.StatusPendaftaran.Contains("MENUNGGU"))
+            {
+                ViewData["disabled"] = "true";
+            }
+            else
+            {
+                ViewData["disabled"] = "";
+            }
+
             return View(data);
         }
 
@@ -73,6 +82,13 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             }
             var IDMakul = data.PendaftaranMataKuliahs.JadwalKuliahs.MataKuliahID;
             IList<CPLMatakuliah> capaianTujuan = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.PendaftaranMataKuliahs.JadwalKuliahs.MataKuliahID).ToList();
+            if (data.CPLMatakuliahID != null)
+            {
+                IList<CPLMatakuliah> capaianAsal = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.CPLMatakuliahs.IDMataKUliah).ToList();
+                ViewData["capaianAsal"] = capaianAsal;
+                ViewData["countCPAsal"] = capaianAsal.Count();
+
+            }
             ViewData["capaianTujuan"] = capaianTujuan;
             ViewData["countCPTujuan"] = capaianTujuan.Count();
             return View(data);

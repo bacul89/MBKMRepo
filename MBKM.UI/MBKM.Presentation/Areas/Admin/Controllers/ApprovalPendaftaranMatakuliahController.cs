@@ -63,6 +63,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             }
             var IDMakul = data.PendaftaranMataKuliahs.JadwalKuliahs.MataKuliahID;
             IList<CPLMatakuliah> capaianTujuan = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.PendaftaranMataKuliahs.JadwalKuliahs.MataKuliahID).ToList();
+            if (data.CPLMatakuliahID != null)
+            {
+                IList<CPLMatakuliah> capaianAsal = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.CPLMatakuliahs.IDMataKUliah).ToList();
+                ViewData["capaianAsal"] = capaianAsal;
+                ViewData["countCPAsal"] = capaianAsal.Count();
+
+            }
             ViewData["capaianTujuan"] = capaianTujuan;
             ViewData["countCPTujuan"] = capaianTujuan.Count();
             return View(data);
@@ -99,7 +106,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         pendaftaran.DosenID = request.PendaftaranMataKuliahs.DosenID;
                         pendaftaran.DosenPembimbing = request.PendaftaranMataKuliahs.DosenPembimbing;
                     }
-                    pendaftaran.StatusPendaftaran = "Approved By " + HttpContext.Session["RoleName"].ToString();
+                    pendaftaran.StatusPendaftaran = "APPROVED BY " + HttpContext.Session["RoleName"].ToString().ToUpper();
                     pendaftaran.UpdatedBy = HttpContext.Session["username"].ToString();
                     pendaftaran.UpdatedDate = DateTime.Now;
                 try
@@ -146,7 +153,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     pendaftaran.DosenID = request.PendaftaranMataKuliahs.DosenID;
                     pendaftaran.DosenPembimbing = request.PendaftaranMataKuliahs.DosenPembimbing;
                 }
-                pendaftaran.StatusPendaftaran = "Rejected By " + HttpContext.Session["RoleName"].ToString();
+                pendaftaran.StatusPendaftaran = "REJECTED BY " + HttpContext.Session["RoleName"].ToString().ToUpper();
                 pendaftaran.UpdatedBy = HttpContext.Session["username"].ToString();
                 pendaftaran.UpdatedDate = DateTime.Now;
                 try
