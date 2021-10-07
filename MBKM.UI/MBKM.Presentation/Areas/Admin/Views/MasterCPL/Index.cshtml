@@ -163,7 +163,7 @@
                                 <label for="inp_status" class="col-sm-3 control-label">Status</label>
                                 <div class="col-sm-9">
                                     <label class="radio-inline input-pendaftaran">
-                                        <input type="radio" name="inpStatus" id="inp_status" value="1"> Aktif
+                                        <input type="radio" name="inpStatus" id="inp_status" value="1"checked> Aktif
                                     </label>
                                     <label class="radio-inline input-pendaftaran">
                                         <input type="radio" name="inpStatus" id="inp_status" value="0"> Tidak Aktif
@@ -199,7 +199,7 @@
                         @*<form id="formRegistrasi">*@
                         <div class="container" style="width: 100%;">
                             <div class="form-group ">
-                                <label  class="col-sm-3 control-label">Jenjang Studi</label>
+                                <label class="col-sm-3 control-label">Jenjang Studi</label>
                                 <div class="col-sm-9">
                                     @Html.EditorFor(model => model.JenjangStudi, new { htmlAttributes = new { @class = "form-control input-pendaftaran input-data", maxlength = 100, disabled = "disabled", @id = "jenjangEdit" } })
                                     @*<select name="jenjang" id="jenjangEdit" class="form-control input-pendaftaran input-data"></select>*@
@@ -211,14 +211,14 @@
 
                                 <label for="fakultas" class="col-sm-3 control-label">Fakultas</label>
                                 <!--<div class="col-sm-9" id="fakultasEdit1"hidden>
-                                    <select name="fakultasEdit" id="fakultasEdit" class="form-control input-pendaftaran input-data" hidden></select>-->
-                                    @*@Html.DropDownListFor(model => model.Nama, ViewBag.listProdi as SelectList, "--Pilih Prodi/unit--", new { @class = "form-control input-pendaftaran input-data", @id = "txtProdi", @name = "txtProdi" })*@
+            <select name="fakultasEdit" id="fakultasEdit" class="form-control input-pendaftaran input-data" hidden></select>-->
+                                @*@Html.DropDownListFor(model => model.Nama, ViewBag.listProdi as SelectList, "--Pilih Prodi/unit--", new { @class = "form-control input-pendaftaran input-data", @id = "txtProdi", @name = "txtProdi" })*@
                                 <!--</div>-->
                                 <div class="col-sm-9" id="fakultasEdit2">
                                     @*<select name="noKJ" id="noKJ" disabled="disabled" class="form-control input-md" hidden required></select>*@
 
-                                    @Html.EditorFor(model => model.NamaFakultas, new { htmlAttributes = new { @class = "form-control input-pendaftaran input-data", maxlength = 100, disabled = "disabled", @id = "fakultasEdits"} })
-                                   @* @Html.EditorFor(model => model.FakultasID, new { htmlAttributes = new { @class = "form-control input-pendaftaran input-data", maxlength = 100, disabled = "disabled", @id = "fakultasEditsID"} })*@
+                                    @Html.EditorFor(model => model.NamaFakultas, new { htmlAttributes = new { @class = "form-control input-pendaftaran input-data", maxlength = 100, disabled = "disabled", @id = "fakultasEdits" } })
+                                    @* @Html.EditorFor(model => model.FakultasID, new { htmlAttributes = new { @class = "form-control input-pendaftaran input-data", maxlength = 100, disabled = "disabled", @id = "fakultasEditsID"} })*@
                                 </div>
 
                             </div>
@@ -227,8 +227,8 @@
 
                                 <label for="fakultas" class="col-sm-3 control-label">Program Studi</label>
                                 <!--<div class="col-sm-9" id="prodiEdit1"hidden >
-                                    <select name="prodiEdit" id="prodiEdit" class="form-control input-pendaftaran input-data"></select>-->
-                                    @*@Html.DropDownListFor(model => model.Nama, ViewBag.listProdi as SelectList, "--Pilih Prodi/unit--", new { @class = "form-control input-pendaftaran input-data", @id = "txtProdi", @name = "txtProdi" })*@
+            <select name="prodiEdit" id="prodiEdit" class="form-control input-pendaftaran input-data"></select>-->
+                                @*@Html.DropDownListFor(model => model.Nama, ViewBag.listProdi as SelectList, "--Pilih Prodi/unit--", new { @class = "form-control input-pendaftaran input-data", @id = "txtProdi", @name = "txtProdi" })*@
                                 <!--</div>-->
                                 <div class="col-sm-9" id="prodiEdit2">
                                     @*<select name="noKJ" id="noKJ" disabled="disabled" class="form-control input-md" hidden required></select>*@
@@ -249,9 +249,13 @@
 
                             <div class="form-group">
                                 <label for="kelompok" class="col-sm-3 control-label">Kelompok</label>
-                                <div class="col-sm-9">
+                                <div class="col-sm-9" id="modelKelompok">
+                                    <select class="form-control input-pendaftaran input-data" id="kelompokEdit1" name="kelompokEdit1" placeholder="Pilih Kelompok">
+                                        <option value="" selected>day</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-9"id="lookKelompok" hidden>
                                     <select class="form-control input-pendaftaran input-data" id="kelompokEdit" name="kelompokEdit" placeholder="Pilih Kelompok">
-                                        
                                     </select>
                                 </div>
                             </div>
@@ -271,22 +275,32 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="inp_status" class="col-sm-3 control-label">Status</label>
-                                <div class="col-sm-9">
+                                <label for="inp_statuss" class="col-sm-3 control-label">Status</label>
+                                <div class="col-sm-9" id="cektrue">
                                     <label class="radio-inline input-pendaftaran">
-                                        <input type="radio" name="inpStatus" id="inp_statusEdit" value="1"> Aktif
+                                        <input type="radio" name="inpStatus1" id="inp_statusEdit1" value="1"> Aktif
                                     </label>
                                     <label class="radio-inline input-pendaftaran">
-                                        <input type="radio" name="inpStatus" id="inp_statusEdit" value="0"> Tidak Aktif
+                                        <input type="radio" name="inpStatus1" id="inp_statusEdit0" value="0"> Tidak Aktif
                                     </label>
                                 </div>
+                                @*<div class="form-group">
+                                    <div class="col-sm-9" id="cekfalse">
+                                        <label class="radio-inline input-pendaftaran">
+                                            <input type="radio" name="inpStatus0" id="inp_statusEdit" value="1"> Aktif
+                                        </label>
+                                        <label class="radio-inline input-pendaftaran">
+                                            <input type="radio" name="inpStatus0" id="inp_statusEdit" value="0" checked> Tidak Aktif
+                                        </label>
+                                    </div>
+                                </div>*@
                             </div>
-                            <div class="form-group">
-                                <div class="col-sm-2 col-md-offset-10">
-                                    <button type="button" onclick="PostUpdateCPL()" class="btn btn-warning">SIMPAN</button>
+                                <div class="form-group">
+                                    <div class="col-sm-2 col-md-offset-10">
+                                        <button type="button" onclick="PostUpdateCPL()" class="btn btn-warning">SIMPAN</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                     </form>
                 </div>
             </div>
@@ -349,6 +363,8 @@
             //loadFromLookup("JenjangStudi", "jenjangEdit", "JenjangStudi");
             loadFromLookup("Kelompok", "kelompok", "Kelompok");
             loadFromLookup("Kelompok", "kelompokEdit", "Kelompok");
+           
+            
             $("#prodi").select2({
                 //dropdownParent: $("#TambahCPL"),
                 placeholder: "-- Pilih Program Studi --"
@@ -357,14 +373,7 @@
                 //dropdownParent: $("#TambahCPL"),
                 placeholder: "-- Pilih Lokasi --"
             });
-            $("#prodiEdit").select2({
-                //dropdownParent: $("#TambahCPL"),
-                placeholder: "-- Pilih Program Studi --"
-            });
-            //$("#lokasiEdit").select2({
-            //    //dropdownParent: $("#TambahCPL"),
-            //    placeholder: "-- Pilih Lokasi --"
-            //});
+
         });
         function loadFakultas() {
             $("#prodi").prop("disabled", true);
@@ -403,6 +412,7 @@
                 $("#fakultas").empty();
                 $("#fakultas").prop("disabled",false);
                 $("#lokasi").empty();
+                $("#lokasi").prop("disabled", true);
                 $("#prodi").empty();
                 $("#prodi").prop("disabled", true);
                 //$("#lokasi").prop("disabled", true);
@@ -477,114 +487,7 @@
                 });
             });
         }
-        //SETTING UPDATE-=-=======================================================================================
-        @*function loadFakultasEdit() {
-            $("#prodiEdit").prop("disabled", true);
-            $("#lokasiEdit").prop("disabled", true);
-            $("#fakultasEdit").prop("disabled", true);
-            $("#jenjangEdit").prop("disabled", true);
 
-           // $('#fakultas').val(null).trigger('change');
-            $("#fakultasEdit").select2({
-                //dropdownParent: $("#TambahCPL"),
-                multiple: false,
-                placeholder: "-- Pilih Fakultas --",
-                width: "100%",
-                ajax: {
-                    url: "@Url.Action("GetFakultas", "MasterCPL")",
-                    dataType: 'json',
-                    method: "POST",
-                    delay: 250,
-                    cache: false,
-                    data: function (params) {
-                        return {
-                            Search: params.term || "",
-                            Jenjang: $('#jenjangEdit').val()
-                        };
-                    },
-                    processResults: function (data, params) {
-                        return {
-                            results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
-                        };
-                    },
-                }
-            });
-            $('#fakultasEdit').on('select2:select', function (e) {
-                console.log(e.params.data.text);
-            });
-            $("#jenjangEdit").change(function () {
-                $("#fakultasEdit").empty();
-                $("#fakultasEdit").prop("disabled",false);
-                $("#lokasiEdit").empty();
-                $("#prodiEdit").empty();
-                $("#prodiEdit").prop("disabled", true);
-                $("#lokasiEdit").prop("disabled", true);
-            });
-            $("#fakultasEdit").change(function () {
-                //$('#fakultas').val(null).trigger('change');
-                var latest_value = $("option:selected:first", this).text();
-                //alert(latest_value);
-                $("#prodiEdit").empty();
-                $("#prodiEdit").prop("disabled", false);
-                $("#lokasiEdit").prop("disabled", true);
-                $("#lokasiEdit").empty();
-                $("#prodiEdit").select2({
-                    multiple: false,
-                    placeholder: "-- Pilih Program Studi --",
-                    width: "100%",
-                    ajax: {
-                        url: "@Url.Action("GetProdiByFakultas", "MasterCPL")",
-                        dataType: 'json',
-                        method: "POST",
-                        delay: 250,
-                        cache: false,
-                        data: function (params) {
-                            return {
-                                Search: params.term || "",
-                                IDFakultas: $('#fakultasEdit').val(),
-                                Jenjang: $('#jenjangEdit').val()
-                            };
-                        },
-                        processResults: function (data, params) {
-                            return {
-                                results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
-
-                            };
-                        },
-                    }
-                });
-                $("#prodiEdit").change(function () {
-                    $("#lokasiEdit").empty();
-
-
-                    $("#lokasiEdit").prop("disabled",false);
-
-                    $("#lokasiEdit").select2({
-                        placeholder: "-- Pilih Lokasi --",
-                        width: "100%",
-                        ajax: {
-                            url: "@Url.Action("GetLokasiByProdi", "MasterCPL")",
-                            dataType: 'json',
-                            method: "POST",
-                            delay: 250,
-                            cache: false,
-                            data: function (params) {
-                                return {
-                                    Search: params.term || "",
-                                    IDProdi: $('#prodiEdit').val(),
-                                    Jenjang: $('#jenjangEdit').val()
-                                };
-                            },
-                            processResults: function (data, params) {
-                                return {
-                                    results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Kampus } })
-                                };
-                            },
-                        }
-                    });
-                });
-            });
-        }*@
         //batas crud detail
         function DetailMasterCPL(id) {
             $.LoadingOverlay("show");
@@ -595,10 +498,7 @@
                 success: function (data) {
                     $.LoadingOverlay("hide");
                     console.log(data);
-                    //if ($('.data-content-modal').length) {
-                    //    $('.data-content-modal').remove();
-                    //}
-                    //$('#modal-inner').append(e);
+
                     $('#fakultasDetail').val(data.NamaFakultas);
                     $('#kodeDetail').val(data.Kode);
                     $('#prodiDetail').val(data.NamaProdi);
@@ -638,18 +538,11 @@
             var formInputUser = new Object();
            // var latest_valueJenjang = $("option:selected:first", "#jenjang").text();
             var latest_valueFakultas = $("option:selected:first", "#fakultas").text();
+            var latest_valueJenjang = $("option:selected:first", "#jenjang").text();
             //var latest_valueFakultas = $("option:selected:first", "#fakultas").val();
             var latest_valueProdi = $("option:selected:first", "#prodi").text();
             var latest_valueLokasi = $("option:selected:first", "#lokasi").text();
-            //var latest_valueLokasi = $("option:selected:first", "#lokasi").text();
-            //var latest_valueProdiId = $("option:selected:first", "#lokasi").id();
-            //alert(latest_value);
-            //var namaProdi = document.getElementById("idProdi");
-            //var selectedProdi = namaProdi.options[namaProdi.selectedIndex].text;
-            //var namaProdi = selectedProdi.substring(selectedProdi.indexOf('-') + 1);
-            //$('#fakultas').on('select2:select', function (e) {
-            //    console.log(e.params.data.text);
-            //});
+
             formInputUser.FakultasID = $('#fakultas').val();
             //var asd = $('#fakultas').on('select2:select');
             formInputUser.NamaFakultas = latest_valueFakultas;
@@ -658,7 +551,7 @@
             //});
             formInputUser.ProdiID = $('#lokasi').val();
             formInputUser.NamaProdi = latest_valueProdi;
-            formInputUser.JenjangStudi = $('#jenjang').text();
+            formInputUser.JenjangStudi = latest_valueJenjang;
             formInputUser.Lokasi = latest_valueLokasi;
             formInputUser.Kelompok = $('#kelompok').val();
             formInputUser.Kode = $('#kode').val();
@@ -715,9 +608,16 @@
                             tableUser.ajax.reload(null, false);
                             $('.modal').modal('hide');
                             $("#fakultas").empty();
+                            $("#fakultas").prop("disabled",true);
                             $("#prodi").empty();
+                            $("#prodi").prop("disabled", true);
                             $("#jenjang").empty();
                             $("#lokasi").empty();
+                            $("#lokasi").prop("disabled", true);
+                            $("#kelompok").empty();
+                            $("#kode").val("");
+                            $('textarea[name=txtCPL]').val("");
+
                             //$("#formRegistrasi").trigger("reset");
                             //clearValueOnForm();
                             //$('#TambahUser')[0].reset();
@@ -740,7 +640,7 @@
                 datatype: 'html',
                 success: function (data) {
                     $.LoadingOverlay("hide");
-                    var formEdit = new Object();
+                    //var formEdit = new Object();
 
                     /*console.log(e);*/
                     //if ($('.data-content-modal').length) {
@@ -751,7 +651,14 @@
                     //console.log(data.NamaProdi);
                     //alert(data.NamaFakultas);
 
+                    //$("#kelompokEdit").select2('data', { id: data.Kelompok, text: data.Kelompok });
+                    console.log(data.Kelompok);
+                    //$('#kelompokEdit').find(':selected');
                     //select$('#fakultasEdit').val(data.NamaFakultas);
+                    //$('#kelompokEdit1').(data.Kelompok);
+                    $('#lookKelompok').prop("hidden", false)
+                    $('#modelKelompok').prop("hidden", true)
+                   
                     $('#jenjangEdit').val(data.JenjangStudi);
                     $('#lokasiEdit').val(data.Lokasi);
                     $('#fakultasEdits').val(data.NamaFakultas);
@@ -760,28 +667,20 @@
                     $('#prodiEdits').val(data.NamaProdi);
                     $('#kodeEdit').val(data.Kode);
                     $('#id_cpl').val(data.ID);
-                    //$('#kelompokEdit').val(data.Kelompok);
-                    //$("#kelompokEdit").select2('data', { id: "elementID", text: "Hello!" });
-                    //$('#kelompokEdit').val(100).trigger('change');
-                    //$('#kelompokEdit').select2(data.Kelompok);
-                    $('#cplEdit').val(data.Capaian);
-                    //if (data.IsActive == true) {
-                    //    $('input[id=inp_statusEdit1]:checked')
-                    //}
-                    //else
-                    //{
-                    //    $('input[id=inp_statusEdit0]:checked')
-                    //}
-                    //var cekAktif = $('input[id=inp_statusEdit]:checked').val();
-                    //if (cekAktif == 1) {
-                    //    formInputUser.IsActive = "true";
-                    //}
-                    //else { formInputUser.IsActive = "false"; }
-                    //formEdit.Kelompok = $('#kelompok').val();
-                    //formEdit.Kode = $('#kode').val();
+                    if (data.IsActive == true) {
+                        
+                        $('input[id=inp_statusEdit1]').prop('checked',true);
 
-                    //formEdit.Capaian = $('textarea[name=txtCPL]').val();
+                    }
+                    else {
+                      
+                        $('input[id=inp_statusEdit0]').prop('checked', true);
+                    }
+                    
+                    $('#cplEdit').val(data.Capaian);
+                    
                     $('#EditCPL').modal('show');
+                   
                 }, error: function (e) {
                     $.LoadingOverlay("hide");
                     Swal.fire({
@@ -802,6 +701,7 @@
             //getValueOnForm();
             //alert($('textarea[name=cplEdit]').val());
             //alert($('#kelompokEdit').val());
+            
             if (($('#kelompokEdit').val()) && ($('#kodeEdit').val()) != null && ($('textarea[name=cplEdit]').val())!=("")) {
                 var formEdit = new Object();
 
@@ -812,11 +712,14 @@
                 formEdit.Capaian = $('textarea[name=cplEdit]').val();
 
 
-                var cekAktif = $('input[id=inp_statusEdit]:checked').val();
+                var cekAktif = $('input[id=inp_statusEdit1]:checked').val();
+                //var cekTAKAktif = $('input[id=inp_statusEdit0]:checked').val();
+                //alert("tak"+cekTAKAktif)
+                //alert("yes"+cekAktif)
                 if (cekAktif == 1) {
                     formEdit.IsActive = "true";
                 }
-                else { formEdit.IsActive = "false"; }
+                else { formEdit.IsActive = "false"; } //else return undefined, so yeah its 0 which is fine
                 // console.log(formInputUser);
                 console.log(formEdit);
                 var base_url = window.location.origin;
@@ -841,6 +744,10 @@
                                 focusConfirm: false,
                                 confirmButtonText: 'OK'
                             })
+                            $('#kelompokEdit').text(null);//mematikan pilihan kelompok saat sukses
+                            //$('#cektrue').prop('hidden', true);
+                            //$('#cekfalse').prop('hidden', true);
+
                             tableUser.ajax.reload(null, false);
                             $('.modal').modal('hide');
                             //$("#fakultas").empty();
@@ -857,6 +764,59 @@
             }
             else { alert("mohon lengkapi data!") }
             
+
+
+        }
+        //===============================DELETE=====================
+        function DeleteCPL(idCPL) {
+
+            Swal.fire({
+                title: "Apakah anda yakin?",
+                icon: "warning",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.LoadingOverlay("show");
+                    $.ajax({
+                        url: '/Admin/MasterCPL/PostDeleteCPL',
+                        type: "POST",
+                        data: { id: idCPL }
+                        ,
+                        dataType: "json",
+                    }).then(function (response) {
+                            $.LoadingOverlay("hide");
+                        if (response.status == 200) {
+                            Swal.fire({
+                                title: 'Berhasil',
+                                icon: 'success',
+                                html: 'Data Berhasil Dihapus',
+                                showCloseButton: true,
+                                showCancelButton: false,
+                                focusConfirm: false,
+                                confirmButtonText: 'OK'
+                            })
+                            tableUser.ajax.reload(null, false);
+                        }
+                        else {
+                            Swal.fire({
+                                title: 'Oppss',
+                                icon: 'error',
+                                html: 'Coba Reload Page',
+                                showCloseButton: true,
+                                showCancelButton: false,
+                                focusConfirm: false,
+                                confirmButtonText: 'OK'
+                            })
+                        }
+
+                    });
+                }
+
+            })
 
 
         }
@@ -898,7 +858,7 @@
                                <a href="javascript:void(0)" style="color:black" onclick="UpdateMasterCPL('${data}')"> <i class="fas fa-edit coral" ></i></a>
 
                                 <a href="javascript:void(0)" style="color:black" onclick="DetailMasterCPL('${data}')"data-bs-target="#detail-cpl-template"> <i class="fas fa-file-search coral"></i></a>
-                                <a type="button"  id="btnDel"> <i class="fas fa-trash-alt coral"></i> </button >
+                                <a href="javascript:void(0)" style="color:black" onclick="DeleteCPL('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
 
 
 
@@ -982,6 +942,64 @@
                 }
             });
         }
+        //-----------------==================------------------Kelompok select2 assigning default selected from model-=-=-=-=- susahhh catatan
+        //if (data.IsActive == true) {
+                    //    $('input[id=inp_statusEdit1]:checked')
+                    //}
+                    //else
+                    //{
+                    //    $('input[id=inp_statusEdit0]:checked')
+                    //}
+                    //var cekAktif = $('input[id=inp_statusEdit]:checked').val();
+                    //if (cekAktif == 1) {
+                    //    formInputUser.IsActive = "true";
+                    //}
+                    //else { formInputUser.IsActive = "false"; }
+                    //formEdit.Kelompok = $('#kelompok').val();
+                    //formEdit.Kode = $('#kode').val();
+
+                    //formEdit.Capaian = $('textarea[name=txtCPL]').val();
+
+                    //$('#EditCPL').on('hidden.bs.modal', function () {
+                    //    $('#modelKelompok').prop("hidden", false);
+                    //    //loadFromLookup("Kelompok", "kelompokEdit1", "Kelompok");
+                    //    $('#lookKelompok').prop("hidden", true);
+                    //    $("#kelompokEdit").select2({
+                    //    //dropdownParent: $("#TambahCPL"),
+
+                    //        placeholder: "-- Pilih kelompok --",
+                    //        initSelection: function (element, callback) {
+                    //        }
+                    //        });
+                    //    $("#kelompokEdit").select2("val", "");
+                    //    //alert(data.IsActive);
+                    //    //loadFromLookup("Kelompok", "kelompokEdit", "Kelompok");
+                    //    $(this).off('hidden.bs.modal');
+                    //})
+        //batas1
+        // loadFromLookup("Kelompok", "kelompokEdit", "Kelompok");
+                    //$("#kelompokEdit").select2({
+                    //    placeholder: "Select a customer",
+                    //    initSelection: function (element, callback) {
+                    //    }
+                    //});
+                    //$("#kelompokEdit").select2("val", data.Kelompok);
+
+                    //$('#kelompokEdit1 option:first').text(data.Kelompok);
+                    //$('#kelompokEdit1').click(function () {
+                    //    $('#modelKelompok').prop("hidden",true)
+                    //    //loadFromLookup("Kelompok", "kelompokEdit1", "Kelompok");
+                    //    $('#lookKelompok').prop("hidden",false)
+                    //});
+                    //$(document).on('click', '#kelompokEdit1', function (event) {
+                    //    event.preventDefault();
+                    //    $("#kelompokEdit").click();
+                    //});
+                    //$("#kelompokEdit").select2({
+                    //    //dropdownParent: $("#TambahCPL"),
+
+                    //    placeholder: "-- Pilih kelompok --"
+                    //});
     </script>
     <script src="~/Scripts/Admin/MasterCPL/crud.js"></script>
 }
