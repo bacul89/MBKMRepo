@@ -21,13 +21,28 @@ function DetailMhs(id) {
             
                 //$("select").removeAttr("disabled");
                 //$("textarea").removeAttr("disabled");
+                loadFromLookup("StatusKerjasama", "skj", "StatusKerjasama");
+                
+                //console.log(latest_valueskj);
+                $("#skj").change(function () {
+                    $("#noKJ").prop('disabled', true);
+                    $("#noKJ").empty();
+                    var latest_valueskj = $("option:selected:first", "#skj").val();
+                    //alert(latest_valueskj)
+                    if (latest_valueskj == "ADA KERJASAMA") {
+                        $("#noKJ").removeAttr("disabled");
+                    }
+                    
+                });
                 //$("#simpan").show();
+                $("#skj").removeAttr("disabled");
+                $("#sKerjaSama2").prop('hidden', true);
+                $("#sKerjaSama1").prop('hidden', false);
                 $("#Update").show();
                 loadNoKerjasama();
                 $("#Edit").hide();
-                $("#statusKJ").removeAttr("disabled");
                 //$("#noKJs").removeAttr("hidden");
-                $("#noKJ").removeAttr("disabled");
+                //THISTOENABLE$("#noKJ").removeAttr("disabled");
                 $("#noKerjaSama2").prop('hidden',true);
                 $("#noKerjaSama1").prop('hidden', false);
                 
@@ -133,9 +148,12 @@ function UpdateKJ(id) {
     var by = $('input[name=biaya]').val();
     //window.setTimeout(loadBiaya(nmrkj), 1);
     console.log(($('input[name=biaya]').val()));
+    var latest_valueskj = $("option:selected:first", "#skj").val();
+    console.log(latest_valueskj);
     dMasterMhs.BiayaKuliah = by;
     dMasterMhs.ID = id;
     dMasterMhs.NoKerjasama = latest_valueKJ;
+    dMasterMhs.StatusKerjasama = latest_valueskj;
     //alert(latest_valueKJ);
     //alert(id);
     //alert(by);
@@ -152,20 +170,47 @@ function UpdateKJ(id) {
             Swal.fire({
                 title: 'Berhasil',
                 icon: 'success',
-                html: 'User Baru Berhasil Diedit',
+                html: 'Kerjasama Berhasil Diedit',
                 showCloseButton: true,
                 showCancelButton: false,
                 focusConfirm: false,
                 confirmButtonText: 'OK'
             })
+            $('.modal').modal('hide');
             tableUser.ajax.reload(null, false);
-            $('#detail-seluruhMHS-template').modal('hide');
 
 
         }
     });
         
     
+}
+function loadFromLookup(tipe, id, nama) {
+
+    $("#" + id).select2({
+        placeholder: "-- Pilih " + nama + " --",
+        width: "100%",
+        ajax: {
+            url: '/Admin/DaftarseluruhMahasiswa/getLookupByTipe',
+            dataType: 'json',
+            method: "POST",
+            delay: 250,
+            async: false,
+            cache: false,
+            data: function (params) {
+                return {
+                    Tipe: tipe
+                };
+            },
+            processResults: function (data, params) {
+                return {
+                    results: $.map(data, function (item) { return { id: item.Nilai, value: item.Nilai, text: item.Nama } })
+                };
+            },
+        }
+    });
+    var latest_valueskj = $("option:selected:first", "#skj").text();
+    console.log(latest_valueskj);
 }
 function getValueOnForm() {
     dMasterLookup.Tipe = $('input[name=inp_tipe]').val();
