@@ -18,6 +18,7 @@ namespace MBKM.Services.MBKMServices
     {
 
         VMListMapingCPL GetListMapingCPL(DataTableAjaxPostModel model);
+        VMListMapingCPL SearchListMapingCPL(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string idMatakuliah);
     }
     public class CPLMatakuliahService : EntityService<CPLMatakuliah>, ICPLMatakuliahService
     {
@@ -53,6 +54,26 @@ namespace MBKM.Services.MBKMServices
                 sortBy = "ID";
             sortBy = sortBy + " " + model.order[0].dir.ToUpper();
             return _cplRepository.GetListMapingCPL(skip, take, searchBy, sortBy, sortDir);
+        }
+
+        public VMListMapingCPL SearchListMapingCPL(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string idMatakuliah)
+        {
+            var searchBy = (model.search != null) ? model.search.value : null;
+            var take = model.length;
+            var skip = model.start;
+            string sortBy = "";
+            bool sortDir = true;
+
+            if (model.order != null)
+            {
+                // in this example we just default sort on the 1st column
+                sortBy = model.columns[model.order[0].column].data;
+                sortDir = model.order[0].dir.ToLower() == "asc";
+            }
+            if (sortBy == null)
+                sortBy = "ID";
+            sortBy = sortBy + " " + model.order[0].dir.ToUpper();
+            return _cplRepository.SearchListMapingCPL(skip, take, searchBy, sortBy, sortDir, idProdi, lokasi, idFakultas, jenjangStudi, idMatakuliah);
         }
     }
 
