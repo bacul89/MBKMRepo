@@ -211,7 +211,7 @@
 
                                 <label for="fakultas" class="col-sm-3 control-label">Fakultas</label>
                                 <!--<div class="col-sm-9" id="fakultasEdit1"hidden>
-            <select name="fakultasEdit" id="fakultasEdit" class="form-control input-pendaftaran input-data" hidden></select>-->
+        <select name="fakultasEdit" id="fakultasEdit" class="form-control input-pendaftaran input-data" hidden></select>-->
                                 @*@Html.DropDownListFor(model => model.Nama, ViewBag.listProdi as SelectList, "--Pilih Prodi/unit--", new { @class = "form-control input-pendaftaran input-data", @id = "txtProdi", @name = "txtProdi" })*@
                                 <!--</div>-->
                                 <div class="col-sm-9" id="fakultasEdit2">
@@ -227,7 +227,7 @@
 
                                 <label for="fakultas" class="col-sm-3 control-label">Program Studi</label>
                                 <!--<div class="col-sm-9" id="prodiEdit1"hidden >
-            <select name="prodiEdit" id="prodiEdit" class="form-control input-pendaftaran input-data"></select>-->
+        <select name="prodiEdit" id="prodiEdit" class="form-control input-pendaftaran input-data"></select>-->
                                 @*@Html.DropDownListFor(model => model.Nama, ViewBag.listProdi as SelectList, "--Pilih Prodi/unit--", new { @class = "form-control input-pendaftaran input-data", @id = "txtProdi", @name = "txtProdi" })*@
                                 <!--</div>-->
                                 <div class="col-sm-9" id="prodiEdit2">
@@ -249,16 +249,17 @@
 
                             <div class="form-group">
                                 <label for="kelompok" class="col-sm-3 control-label">Kelompok</label>
-                                <div class="col-sm-9" id="modelKelompok">
-                                    <select class="form-control input-pendaftaran input-data" id="kelompokEdit1" name="kelompokEdit1" placeholder="Pilih Kelompok">
-                                        <option value="" selected>day</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-9"id="lookKelompok" hidden>
+                                <div class="col-sm-9">
+
                                     <select class="form-control input-pendaftaran input-data" id="kelompokEdit" name="kelompokEdit" placeholder="Pilih Kelompok">
+                                        <option value="3620194" selected="selected">select2/select2</option>
                                     </select>
+                                    @*@Html.DropDownListFor(model => model.Kelompok, Model.Kelompok)*@
+                                    @*@Html.DropDownListFor(model => model.Kelompok , new SelectList(new string[] { "Football", "Rugby", "Horse Racing" }, Model.Kelompok)))*@
                                 </div>
+                                
                             </div>
+                            
                             <div class="form-group">
                                 <label for="kode" class="col-sm-3 control-label">Kode CPL</label>
                                 <div class="col-sm-9">
@@ -285,22 +286,22 @@
                                     </label>
                                 </div>
                                 @*<div class="form-group">
-                                    <div class="col-sm-9" id="cekfalse">
-                                        <label class="radio-inline input-pendaftaran">
-                                            <input type="radio" name="inpStatus0" id="inp_statusEdit" value="1"> Aktif
-                                        </label>
-                                        <label class="radio-inline input-pendaftaran">
-                                            <input type="radio" name="inpStatus0" id="inp_statusEdit" value="0" checked> Tidak Aktif
-                                        </label>
-                                    </div>
-                                </div>*@
+                <div class="col-sm-9" id="cekfalse">
+                    <label class="radio-inline input-pendaftaran">
+                        <input type="radio" name="inpStatus0" id="inp_statusEdit" value="1"> Aktif
+                    </label>
+                    <label class="radio-inline input-pendaftaran">
+                        <input type="radio" name="inpStatus0" id="inp_statusEdit" value="0" checked> Tidak Aktif
+                    </label>
+                </div>
+            </div>*@
                             </div>
-                                <div class="form-group">
-                                    <div class="col-sm-2 col-md-offset-10">
-                                        <button type="button" onclick="PostUpdateCPL()" class="btn btn-warning">SIMPAN</button>
-                                    </div>
+                            <div class="form-group">
+                                <div class="col-sm-2 col-md-offset-10">
+                                    <button type="button" onclick="PostUpdateCPL()" class="btn btn-warning">SIMPAN</button>
                                 </div>
                             </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -362,7 +363,7 @@
             loadFromLookup("JenjangStudi", "jenjang", "JenjangStudi");
             //loadFromLookup("JenjangStudi", "jenjangEdit", "JenjangStudi");
             loadFromLookup("Kelompok", "kelompok", "Kelompok");
-            loadFromLookup("Kelompok", "kelompokEdit", "Kelompok");
+            /*loadFromLookup("Kelompok", "abc", "Kelompok");*/
            
             
             $("#prodi").select2({
@@ -658,6 +659,14 @@
                     //$('#kelompokEdit1').(data.Kelompok);
                     $('#lookKelompok').prop("hidden", false)
                     $('#modelKelompok').prop("hidden", true)
+                    //$('#abc option:first').text(data.Kelompok);
+                    //$('#abc select.option').attr('text', function () { return "AAA" });
+                    //$('#modelKelompok').val(data.Kelompok);
+                    //alert($('#modelKelompok').val(data.Kelompok));
+                    document.getElementsByName('kelompokEdit')[0].options[0].innerHTML = data.Kelompok;
+                   // document.getElementsByName('kelompokEdit')[0].options[0].selected = true.innerHTML = data.Kelompok;
+                    loadFromLookup("Kelompok", "kelompokEdit", "Kelompok");
+
                    
                     $('#jenjangEdit').val(data.JenjangStudi);
                     $('#lokasiEdit').val(data.Lokasi);
@@ -680,6 +689,18 @@
                     $('#cplEdit').val(data.Capaian);
                     
                     $('#EditCPL').modal('show');
+                    //$('#EditCPL').on('hidden.bs.modal', function () {
+                    //    document.getElementsByName('kelompokEdit')[0].options[0].innerHTML = data.Kelompok;
+                    //    //alert("hidden");
+                    //    $(this).off('hidden.bs.modal');
+                    //})
+                    $('#EditCPL').on('hide.bs.modal', function () {
+                        document.getElementsByName('kelompokEdit')[0].options[0].selected = true.innerHTML = data.Kelompok;
+                        var latest_valueKelompok = $("option:selected:first", "#kelompokEdit").text();
+                        //alert(latest_valueKelompok);
+                        $(this).off('hide.bs.modal');
+                    })
+                    
                    
                 }, error: function (e) {
                     $.LoadingOverlay("hide");
@@ -704,9 +725,10 @@
             
             if (($('#kelompokEdit').val()) && ($('#kodeEdit').val()) != null && ($('textarea[name=cplEdit]').val())!=("")) {
                 var formEdit = new Object();
-
+               // document.getElementsByName('kelompokEdit')[0].options[0].selected = true.innerHTML = ($("#kelompokEdit").text());;
+                var latest_valueKelompok = $("option:selected:first", "#kelompokEdit").text();
                 formEdit.ID = $('#id_cpl').val();
-                formEdit.Kelompok = $('#kelompokEdit').val();
+                formEdit.Kelompok = latest_valueKelompok;
                 formEdit.Kode = $('#kodeEdit').val();
 
                 formEdit.Capaian = $('textarea[name=cplEdit]').val();
@@ -744,12 +766,13 @@
                                 focusConfirm: false,
                                 confirmButtonText: 'OK'
                             })
-                            $('#kelompokEdit').text(null);//mematikan pilihan kelompok saat sukses
+                            //$('#kelompokEdit').text(null);//mematikan pilihan kelompok saat sukses
                             //$('#cektrue').prop('hidden', true);
                             //$('#cekfalse').prop('hidden', true);
 
                             tableUser.ajax.reload(null, false);
-                            $('.modal').modal('hide');
+                            $('#EditCPL').modal('hide');
+                            //$('.modal').modal('hidden');
                             //$("#fakultas").empty();
                             //$("#prodi").empty();
                             //$("#jenjang").empty();
