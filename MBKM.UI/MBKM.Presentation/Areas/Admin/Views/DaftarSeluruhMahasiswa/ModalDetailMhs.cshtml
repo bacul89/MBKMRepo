@@ -50,7 +50,17 @@
             <div class="form-group">
                 <label class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Jenis Kelamin: </label>
                 <div class="col-sm-8">
-                    @Html.EditorFor(model => model.Gender, new { htmlAttributes = new { @class = "form-control input-md", maxlength = 100, disabled = "disabled", @style = "border: none" } })
+                    @{ if (Model.Gender == "P")
+                        {
+
+                            <input type="text" value="Perempuan" class="form-control input-pendaftaran input-data"style="border:none" disabled="disabled" id="genderp" name="gp" >
+                        }
+                        else
+                        {
+                            <input type="text" value="Pria" class="form-control input-pendaftaran input-data"style="border:none" disabled="disabled" id="genderl" name="gl" >
+                        }
+                    }
+                    @*@Html.EditorFor(model => model.Gender, new { htmlAttributes = new { @class = "form-control input-md", maxlength = 100, disabled = "disabled", @style = "border: none" } })*@
                 </div>
             </div>
             <div id="univAsal">

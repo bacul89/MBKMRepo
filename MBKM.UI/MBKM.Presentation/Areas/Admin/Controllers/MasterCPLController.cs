@@ -93,6 +93,16 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
 
         }
+        [HttpPost]
+        public ActionResult PostDeleteCPL(int id)
+        {
+            var data = _mcpService.Get(id);
+            data.IsDeleted = true;
+            data.UpdatedBy = Session["username"] as string;
+
+            _mcpService.Save(data);
+            return Json(new ServiceResponse { status = 200, message = "Master CPL Dihapus!" });
+        }
         public ActionResult ModalDetailMasterCpl(int id)
         {
             var data = _mcpService.Get(id);
