@@ -5,7 +5,7 @@
 @model MBKM.Entities.Models.MBKM.PendaftaranMataKuliah
 
 <div class="modal-content data-content-modal" id="detail-pendaftaran-matakuliah">
-    <div class="modal-header" style="background-color: #FF8A04; ">
+    <div class="modal-header center" style="background-color: #FF8A04; ">
         <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
             DETAIL TRACKING PENDAFTARAN MATA KULIAH
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -144,13 +144,11 @@
                                         <div class="col-sm-12 center">||</div>
 
                                     }
-                                    <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate; @{if (ViewData["lastStatus"] != data.StatusPendaftaran) { <text> background-color:dimgray; color:white" </text>  } } ">
+                                    <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate; @{if (ViewData["lastStatus"] != data.StatusPendaftaran) { <text> background-color:lightgrey;</text>} } ">
                                         <h4>@data.StatusPendaftaran</h4>
                                     </div>
-
                                 }
                             }
-
                         </div>
                     </div>
                     <br />
