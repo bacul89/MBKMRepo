@@ -92,10 +92,48 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return mListCPL;
             }
         }
-        VMMataKuliah ICPLMataKuliahRepository.GetMatkul(int skip, int take, string searchBy, string idProdi, string idFakultas)
-        {
+        /*        VMMataKuliah ICPLMataKuliahRepository.GetMatkul(int skip, int take, string searchBy, string idProdi, string idFakultas)
+                {
 
-            VMMataKuliah mListMK = new VMMataKuliah();
+                    VMMataKuliah mListMK = new VMMataKuliah();
+                    if (String.IsNullOrEmpty(searchBy))
+                    {
+                        // if we have an empty search then just order the results by Id ascending
+                        //SortBy = "ID";
+                        //SortDir = true;
+                        searchBy = "";
+                    }
+                    using (var context = new MBKMContext())
+                    {
+
+                        var PageNumberParam = new SqlParameter("@PageNumber", skip);
+                        var PageSizeParam = new SqlParameter("@PageSize", take);
+                        var searchParam = new SqlParameter("@Search", searchBy);
+                        var result = context.Database
+                            .SqlQuery<GridDataMataKuliah>("GetMatkul @PageNumber, @PageSize, @Search", PageNumberParam, PageSizeParam, searchParam)
+                            .Where(y => y.FakultasID.Contains(idFakultas) && y.ProdiID.Contains(idProdi));
+
+
+                        mListMK.TotalCount = result.Count();
+                        var gridfilter = result
+                            .Select(z => new GridDataMataKuliah
+                            {
+                                CRSE_ID = z.CRSE_ID,
+                                Expr1 = z.Expr1,
+                                DESCR = z.DESCR,
+                                Prodi = z.Prodi,
+                                Fakultas = z.Fakultas,
+                                ProdiID = z.ProdiID,
+                                FakultasID = z.FakultasID
+                            });
+                        mListMK.gridDatas = gridfilter.Skip(skip).Take(take).ToList();
+                        mListMK.TotalFilterCount = gridfilter.Count();
+                        return mListMK;
+                    }
+                }
+        */
+        public IEnumerable<VMMataKuliah> GetMatkul(int skip, int take, string searchBy, string idProdi, string idFakultas)
+        {
             if (String.IsNullOrEmpty(searchBy))
             {
                 // if we have an empty search then just order the results by Id ascending
@@ -103,32 +141,18 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 //SortDir = true;
                 searchBy = "";
             }
+
             using (var context = new MBKMContext())
             {
-
                 var PageNumberParam = new SqlParameter("@PageNumber", skip);
                 var PageSizeParam = new SqlParameter("@PageSize", take);
                 var searchParam = new SqlParameter("@Search", searchBy);
+
                 var result = context.Database
-                    .SqlQuery<GridDataMataKuliah>("GetMatkul @PageNumber, @PageSize, @Search", PageNumberParam, PageSizeParam, searchParam)
-                    .Where(y => y.FakultasID.Contains(idFakultas) && y.ProdiID.Contains(idProdi));
-
-
-                mListMK.TotalCount = result.Count();
-                var gridfilter = result
-                    .Select(z => new GridDataMataKuliah
-                    {
-                        CRSE_ID = z.CRSE_ID,
-                        Expr1 = z.Expr1,
-                        DESCR = z.DESCR,
-                        Prodi = z.Prodi,
-                        Fakultas = z.Fakultas,
-                        ProdiID = z.ProdiID,
-                        FakultasID = z.FakultasID
-                    });
-                mListMK.gridDatas = gridfilter.Skip(skip).Take(take).ToList();
-                mListMK.TotalFilterCount = gridfilter.Count();
-                return mListMK;
+                    .SqlQuery<VMMataKuliah>("GetMatkul @PageNumber, @PageSize, @Search", PageNumberParam, PageSizeParam, searchParam).Where(x =>
+                    x.ProdiID == idProdi &&
+                    x.FakultasID == idFakultas).ToList();
+                return result;
             }
         }
 
