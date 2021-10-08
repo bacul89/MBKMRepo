@@ -1,4 +1,5 @@
 ﻿using MBKM.Entities.Basentities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,6 +15,7 @@ namespace MBKM.Entities.Models
         public string MenuParent { get; set; }
         public string MenuIcon { get; set; }
         public string MenuOrder { get; set; }
+        [JsonIgnore]
         public virtual ICollection<MenuRole> MenuRoles { get; set; }
     }
 }
