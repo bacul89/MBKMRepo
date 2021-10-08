@@ -45,7 +45,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             }
         }
 
-        public IEnumerable<VMProdi> GetLokasiByProdi(string jenjangStudi, string namaProdi, string search)
+        public IEnumerable<VMProdi> GetLokasiByProdi(string jenjangStudi, string idProdi, string search)
         {
             using (var context = new MBKMContext())
             {
