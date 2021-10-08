@@ -22,7 +22,9 @@ namespace MBKM.Entities.Models.MBKM
         public Int64 JadwalKuliahID { get; set; }
         [JsonIgnore]
         public virtual JadwalKuliah JadwalKuliahs { get; set; }
+        [JsonIgnore]
         public virtual ICollection<ApprovalPendaftaran> ApprovalPendaftarans { get; set; }
+        [JsonIgnore]
         public virtual ICollection<CPLMKPendaftaran> CPLMKPendaftarans { get; set; }
         public string StatusPendaftaran { get; set; }
 

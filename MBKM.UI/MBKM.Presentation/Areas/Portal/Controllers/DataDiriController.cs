@@ -50,7 +50,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 FileType = x.FileType,
                 ID = x.ID
             });
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return new ContentResult { Content = JsonConvert.SerializeObject(data), ContentType = "application/json" };
         }
         public ActionResult DownloadFile(int id)
         {
@@ -64,7 +64,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult getLookupByValue(string tipe, string value)
         {
-            return Json(_lookupService.Find(l => l.Nilai == value && l.Tipe == tipe).FirstOrDefault(), JsonRequestBehavior.AllowGet); ;
+            return new ContentResult { Content = JsonConvert.SerializeObject(_lookupService.Find(l => l.Nilai == value && l.Tipe == tipe).FirstOrDefault()), ContentType = "application/json" };
         }
         public ActionResult GetPerjanjianKerjasama(string noPerjanjian)
         {

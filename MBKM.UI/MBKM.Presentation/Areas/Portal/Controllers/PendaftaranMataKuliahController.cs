@@ -106,7 +106,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             string email = Session["email"] as string;
             var result = GetMahasiswaByEmail(email);
-            return Json(_pmkService.GetFakultas(result.JenjangStudi, search), JsonRequestBehavior.AllowGet);
+            return new ContentResult { Content = JsonConvert.SerializeObject(_pmkService.GetFakultas(result.JenjangStudi, search)), ContentType = "application/json" };
         }
         public ActionResult GetMataKuliahByProdi(int idProdi, string lokasi, int strm)
         {
@@ -126,13 +126,13 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             string email = Session["email"] as string;
             var result = GetMahasiswaByEmail(email);
-            return Json(_pmkService.GetProdiByFakultas(result.JenjangStudi, idFakultas, search), JsonRequestBehavior.AllowGet);
+            return new ContentResult { Content = JsonConvert.SerializeObject(_pmkService.GetProdiByFakultas(result.JenjangStudi, idFakultas, search)), ContentType = "application/json" };
         }
         public ActionResult GetLokasiByProdi(string namaProdi, string search)
         {
             string email = Session["email"] as string;
             var result = GetMahasiswaByEmail(email);
-            return Json(_pmkService.GetLokasiByProdi(result.JenjangStudi, namaProdi, search), JsonRequestBehavior.AllowGet);
+            return new ContentResult { Content = JsonConvert.SerializeObject(_pmkService.GetLokasiByProdi(result.JenjangStudi, namaProdi, search)), ContentType = "application/json" };
         }
         public ActionResult GetProgram()
         {
@@ -146,11 +146,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     jkm.Add(item);
                 }
             }
-            return Json(jkm, JsonRequestBehavior.AllowGet);
+            return new ContentResult { Content = JsonConvert.SerializeObject(jkm), ContentType = "application/json" };
         }
         public ActionResult GetKegiatanByProgram(string program)
         {
-            return Json(_jenisKerjasamaService.Find(jk => jk.JenisPertukaran == program).ToList(), JsonRequestBehavior.AllowGet);
+            return new ContentResult { Content = JsonConvert.SerializeObject(_jenisKerjasamaService.Find(jk => jk.JenisPertukaran == program).ToList()), ContentType = "application/json" };
         }
         public ActionResult GetInstansiByJenisKerjasama(string idKerjasama)
         {
@@ -167,16 +167,16 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     pks.Add(tes);
                 }
             }
-            return Json(pks, JsonRequestBehavior.AllowGet);
+            return new ContentResult { Content = JsonConvert.SerializeObject(pks), ContentType = "application/json" };
         }
         public ActionResult GetInstansiByNoKerjasama(string noKerjasama)
         {
             var result = _perjanjianKerjasamaService.Find(pk => pk.NoPerjanjian == noKerjasama).FirstOrDefault();
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
-        public ActionResult GetNoKerjasamaByInstansi(string instansi)
+        public ActionResult GetNoKerjasamaByInstansi(string instansi, string idKerjasama)
         {
-            return Json(_perjanjianKerjasamaService.Find(pk => pk.NamaInstansi == instansi).ToList(), JsonRequestBehavior.AllowGet);
+            return new ContentResult { Content = JsonConvert.SerializeObject(_perjanjianKerjasamaService.Find(pk => pk.NamaInstansi == instansi && pk.JenisKerjasama == idKerjasama).ToList()), ContentType = "application/json" };
         }
         public ActionResult GetInformasiPertukaran()
         {

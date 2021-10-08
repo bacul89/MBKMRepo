@@ -4,6 +4,7 @@ using MBKM.Entities.ViewModel;
 using MBKM.Presentation.models;
 using MBKM.Services;
 using MBKM.Services.MBKMServices;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -78,15 +79,15 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     pks.Add(item);
                 }
             }
-            return Json(pks, JsonRequestBehavior.AllowGet);
+            return new ContentResult { Content = JsonConvert.SerializeObject(pks), ContentType = "application/json" };
         }
         public ActionResult GetNoKerjasama(int Skip, int Length, string Search, string NamaInstansi)
         {
-            return Json(_perjanjianKerjasamaService.getNoKerjasama(Skip, Length, Search, NamaInstansi), JsonRequestBehavior.AllowGet);
+            return new ContentResult { Content = JsonConvert.SerializeObject(_perjanjianKerjasamaService.getNoKerjasama(Skip, Length, Search, NamaInstansi)), ContentType = "application/json" };
         }
         public ActionResult getLookupByTipe(string tipe)
         {
-            return Json(_lookupService.getLookupByTipe(tipe), JsonRequestBehavior.AllowGet);
+            return new ContentResult { Content = JsonConvert.SerializeObject(_lookupService.getLookupByTipe(tipe)), ContentType = "application/json" };
         }
         public ActionResult VerifyPage(string token)
         {
