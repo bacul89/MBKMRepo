@@ -30,6 +30,34 @@ function IndexCreateKerjasama() {
         })
     }
 }
+function DeletedFiles(id) {
+
+    Swal.fire({
+        title: "Apakah anda yakin?",
+        text: "warning",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, delete it!",
+        closeOnConfirm: false
+    }).then((result) => {
+        $.ajax({
+            url: '/Admin/PerjanjianKerjasama/PostDeleteFile',
+            type: "POST",
+            data: { id: id }
+            ,
+            dataType: "json",
+            success: function () {
+                console.log("benar");
+
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log("salah");
+            }
+        });
+    })
+
+}
 //function SubmitPerjanjian() {
 //    var data = new FormData($('#createPerjanjian')[0]);
 //    var fileInput = document.getElementById('file');
@@ -95,42 +123,42 @@ function SubmitPerjanjian() {
         var sfilename = fileInput.files[i].name;
         data.append("file", fileInput.files[i]);
     }
-     $.ajax({
-            type: "POST",
-            url: "/Admin/PerjanjianKerjasama/SavePerjanjian",
-            cache: false,
-            contentType: false,
-            processData: false,
-            data: data,
-            success: function (response) {
-                Swal.fire({
-                    title: 'Oppss',
-                    icon: 'error',
-                    html: 'Data Gagal Ditambahkan, Periksa Field dan Ukuran File',
-                    showCloseButton: true,
-                    showCancelButton: false,
-                    focusConfirm: false,
-                    confirmButtonText: 'OK'
-                })
-                table.ajax.reload(null, false),
-                    $('.modal').modal('hide');
-            },
-            error: function (response) {
-                Swal.fire({
-                    title: 'Berhasil',
-                    icon: 'success',
-                    html: 'Data Berhasil Ditambahkan',
-                    showCloseButton: true,
-                    showCancelButton: false,
-                    focusConfirm: false,
-                    confirmButtonText: 'OK'
-                })
-                table.ajax.reload(null, false),
-                    $('.modal').modal('hide');
-                location.reload();
-            }
+    $.ajax({
+        type: "POST",
+        url: "/Admin/PerjanjianKerjasama/SavePerjanjian",
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: data,
+        success: function (response) {
+            Swal.fire({
+                title: 'Oppss',
+                icon: 'error',
+                html: 'Data Gagal Ditambahkan, Periksa Field dan Ukuran File',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText: 'OK'
+            })
+            table.ajax.reload(null, false),
+                $('.modal').modal('hide');
+        },
+        error: function (response) {
+            Swal.fire({
+                title: 'Berhasil',
+                icon: 'success',
+                html: 'Data Berhasil Ditambahkan',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText: 'OK'
+            })
+            table.ajax.reload(null, false),
+                $('.modal').modal('hide');
+            location.reload();
+        }
 
-        })
+    })
 }
 //function SubmitPerjanjian() {
 //    var data = new FormData($('#createPerjanjian')[0]);
