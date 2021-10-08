@@ -101,9 +101,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             {
                 ViewData["disabled"] = "";
             }
-
             ViewData["capaianTujuan"] = capaianTujuan;
             ViewData["countCPTujuan"] = capaianTujuan.Count();
+            ViewData["catatanBaru"] = _approvalPendaftaranService.Find(x => x.PendaftaranMataKuliahID == data.PendaftaranMataKuliahID && x.StatusPendaftaran.Contains("APPROVED")).FirstOrDefault().Catatan;
             return View(data);
         }
 
@@ -120,11 +120,15 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 {
                     _pendaftaranMataKuliahService.Save(pendaftaran);
                     var NimBaru = _mahasiswaService.GetNim();
-                    if(pendaftaran.mahasiswas.NIM != pendaftaran.mahasiswas.NIMAsal)
+                    
+                    if (pendaftaran.mahasiswas.NIM != pendaftaran.mahasiswas.NIMAsal && !pendaftaran.mahasiswas.NIM.Contains("MBKM"))
                     {
                         Mahasiswa tmpMhs = _mahasiswaService.Get(pendaftaran.MahasiswaID);
                         tmpMhs.NIM = NimBaru;
                         _mahasiswaService.Save(tmpMhs);
+                        string[] tempNimArray = NimBaru.Split(new string[] { "MBKM" }, StringSplitOptions.None);
+                        int CountNim = Int32.Parse(tempNimArray[1]);
+                        _mahasiswaService.UpdateNim(CountNim);
                     }
 
                     ApprovalPendaftaran tempHistoryApproval = new ApprovalPendaftaran();

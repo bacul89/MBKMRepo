@@ -220,8 +220,12 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult GetCobaCoba()
         {
-            var data = _mahasiswaService.GetNim();
-            return Json(data);
+            var data1 = _mahasiswaService.GetNim();
+            string[] data = data1.Split(new string[] { "MBKM" }, StringSplitOptions.None);
+            int x = Int32.Parse(data[1]);
+            _mahasiswaService.UpdateNim(x);
+            var data2 = _mahasiswaService.GetNim();
+            return Json(data2);
         }
 
 

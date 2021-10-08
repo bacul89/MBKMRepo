@@ -84,10 +84,27 @@ namespace MBKM.Repository.Repositories.MBKMRepository
         {
             using (var context = new MBKMContext())
             {
-                var jenjangStudiParam = new SqlParameter("@TAHUN", DateTime.Now.Year);
+                var Tahun = new SqlParameter("@TAHUN", DateTime.Now.Year);
                 var result = context.Database
-                    .SqlQuery<string>("GetNIM @TAHUN", jenjangStudiParam).Last();
+                    .SqlQuery<string>("GetNIM @TAHUN", Tahun).Last();
                 return result;
+            }
+        }
+
+        public void UpdateNim(int Nilai)
+        {
+            using (var context = new MBKMContext())
+            {
+                try
+                {
+                    var tmpNilai = new SqlParameter("@Nilai", Nilai);
+                    var tmpTahun = new SqlParameter("@Tahun", DateTime.Now.Year);
+                    context.Database.ExecuteSqlCommand("UpdateNourut @Nilai, @Tahun", tmpNilai, tmpTahun);
+                }catch(Exception e)
+                {
+
+                }
+
             }
         }
 
