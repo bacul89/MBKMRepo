@@ -34,7 +34,7 @@ function loadFromLookup(tipe, id, nama) {
             },
             processResults: function (data, params) {
                 return {
-                    results: $.map(data, function (item) { return { id: item.Nilai, value: item.Nilai, text: item.Nama } })
+                    results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
                 };
             },
         }
@@ -116,7 +116,10 @@ function loadControl(param) {
 
 
     if (param == 'Edit') {
-        var ID = parseInt($('#inp_id_capaian_pembelajaran').val());
+        var getKelompok = $('#get_kelompok').val();
+        console.log(getKelompok);
+        $('#inp_kelompok').select2('data', { id: getKelompok, value: getKelompok, text: getKelompok });
+/*        var ID = parseInt($('#inp_id_capaian_pembelajaran').val());
         console.log(ID);
         $.ajax({
             url: '/Admin/MasterMapingCapaianPembelajaran/GetMasterCPLByID',
@@ -129,14 +132,15 @@ function loadControl(param) {
             success: function (e) {
 
                 console.log(e);
-                $('#inp_capaian').val(e.Capaian);
+*//*                $('#inp_capaian').val(e.Capaian);
                 $('#inp_kode_capaian_pembelajaran').select2("val", e.ID);
-                $("#inp_kelompok").select2("val", e.Kelompok);
+                $("#inp_kelompok").select2("val", e.Kelompok);*//*
+                $('#inp_kelompok').select2('data', { id: e.Kelompok, value: e.Kelompok, text: e.Kelompok });
             },
             error: function (e) {
                 console.log("matakuliah not found...");
             }
-        })
+        })*/
     }
 
     console.log("hello");
