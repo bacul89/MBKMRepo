@@ -51,14 +51,25 @@
         </div>
     </div>
 </div>
+@*<label>TEXT 1: </label>
+<input type="text" id="text_1" value="" class="number-separator"/>
+<br>
+<label>TEXT 2: </label>
+<input id="text_2" />*@
 @section scripts{
+    <script src="~/Scripts/easy-number-separator.js"></script>
     <script src="~/Scripts/moment.js"></script>
     <script src="~/Scripts/moment-with-locales.min.js"></script>
     <script src="~/Scripts/Admin/PerjanjianKerjasama/main.js">
     </script>
     <script src="~/Scripts/Admin/PerjanjianKerjasama/crud.js">
     </script>
-    @*<script src="~/Scripts/Admin/PerjanjianKerjasama/main_detail.js">
-        </script>*@
+    <script type="text/javascript" src="http://www.appelsiini.net/projects/chained/jquery.chained.js?v=0.9.10"></script>
+    <script src="~/Scripts/script.js"></script>
+    <script>
+        $("#text_1").keyup(function () {
+            $("#text_2").val($("#text_1").val().replace(/,/g, ''));
+        })
+    </script>
 
 }

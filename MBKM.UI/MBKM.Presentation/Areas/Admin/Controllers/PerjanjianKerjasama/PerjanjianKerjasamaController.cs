@@ -22,17 +22,25 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
         private ILookupService _lookupService;
         private IPerjanjianKerjasamaService _perjanjianKerjasamaService;
         private IAttachmentPerjanjianKerjasamaService _attachmentPerjanjianKerjasamaService;
+        private IJenisKerjasamaModelService _jenisKerjasamaModelService;
         public PerjanjianKerjasamaController(IMenuService menuService,
-            ILookupService lookupService, IPerjanjianKerjasamaService perjanjianKerjasamaService, IAttachmentPerjanjianKerjasamaService attachmentPerjanjianKerjasamaService)
+            ILookupService lookupService, IPerjanjianKerjasamaService perjanjianKerjasamaService, IAttachmentPerjanjianKerjasamaService attachmentPerjanjianKerjasamaService,
+            IJenisKerjasamaModelService jenisKerjasamaModelService)
         {
             _menuService = menuService;
             _lookupService = lookupService;
             _perjanjianKerjasamaService = perjanjianKerjasamaService;
             _attachmentPerjanjianKerjasamaService = attachmentPerjanjianKerjasamaService;
+            _jenisKerjasamaModelService = jenisKerjasamaModelService;
         }
         // GET: Admin/PerjanjianKerjasama
         public ActionResult Index()
         {
+            var listPerjanjian = _jenisKerjasamaModelService.getPertukaran();
+            ViewData["listPerjanjian"] = listPerjanjian;
+            //var listKerjasama = _lookupService.getLookupByTipe("JenisKerjasama");
+            var listKerjasama = _jenisKerjasamaModelService.getKerjasama();
+            ViewData["listKerjasama"] = listKerjasama;
             Debug.WriteLine("akses index");
             return View();
         }
@@ -53,9 +61,11 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
         /*View Modal Created*/
         public ActionResult ModalCreatePerjanjianKerjasama()
         {
-            var listPerjanjian = _lookupService.getLookupByTipe("JenisPertukaran");
+            //var listPerjanjian = _lookupService.getLookupByTipe("JenisPertukaran");
+            var listPerjanjian = _jenisKerjasamaModelService.getPertukaran();
             ViewData["listPerjanjian"] = listPerjanjian;
-            var listKerjasama = _lookupService.getLookupByTipe("JenisKerjasama");
+            //var listKerjasama = _lookupService.getLookupByTipe("JenisKerjasama");
+            var listKerjasama = _jenisKerjasamaModelService.getKerjasama();
             ViewData["listKerjasama"] = listKerjasama;
             return View("ModalCreatePerjanjianKerjasama");
         }
@@ -95,7 +105,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
                     for (int i = 0; i < file.Length; i++)
                     {
                         var files = file[i];
-                        if (files != null && files.ContentLength > 2154227) {
+                        if (files != null && files.ContentLength > 2154227)
+                        {
                             ViewBag.Message = String.Format("File yang terupload lebih dari 2MB");
 
                         }
@@ -119,9 +130,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
                             perjanjianKerjasama.UpdatedBy = Session["username"] as string;
                             _perjanjianKerjasamaService.Save(perjanjianKerjasama);
                         }
-                        
+
                     }
-                    
+
                 }
                 else
                 {
@@ -130,9 +141,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
                     perjanjianKerjasama.IsActive = true;
                     _perjanjianKerjasamaService.Save(perjanjianKerjasama);
                 }
-            }
+        }
             return Json(perjanjianKerjasama);
-                 
+
         }
 
 
@@ -140,9 +151,11 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
         public ActionResult ModalUpdateKerjasama(int id)
         {
             var context = new MBKMContext();
-            var listPerjanjian = _lookupService.getLookupByTipe("JenisPertukaran");
+            //var listPerjanjian = _lookupService.getLookupByTipe("JenisPertukaran");
+            var listPerjanjian = _jenisKerjasamaModelService.getPertukaran();
             ViewData["listPerjanjian"] = listPerjanjian;
-            var listKerjasama = _lookupService.getLookupByTipe("JenisKerjasama");
+            //var listKerjasama = _lookupService.getLookupByTipe("JenisKerjasama");
+            var listKerjasama = _jenisKerjasamaModelService.getKerjasama();
             ViewData["listKerjasama"] = listKerjasama;
             var j = _perjanjianKerjasamaService.Get(id);
             var jk = context.Lookups.Where(x => x.Tipe == "JenisKerjasama" && x.Nilai == j.JenisKerjasama).Select(x => x.Nama).FirstOrDefault();
@@ -158,10 +171,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
             return View(data);
         }
         [HttpPost]
-        public ActionResult UpdateKerjasama(HttpPostedFileBase[] file,MBKM.Entities.Models.MBKM.PerjanjianKerjasama perjanjianKerjasama)
+        public ActionResult UpdateKerjasama(HttpPostedFileBase[] file, MBKM.Entities.Models.MBKM.PerjanjianKerjasama perjanjianKerjasama)
         {
             MBKM.Entities.Models.MBKM.PerjanjianKerjasama data = _perjanjianKerjasamaService.Get(perjanjianKerjasama.ID);
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
                 if (file != null)
                 {
@@ -204,7 +217,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
                     data.IsActive = true;
                     _perjanjianKerjasamaService.Save(data);
                 }
-                else {
+                else
+                {
                     data.NoPerjanjian = perjanjianKerjasama.NoPerjanjian;
                     data.TanggalMulai = perjanjianKerjasama.TanggalMulai;
                     data.TanggalAkhir = perjanjianKerjasama.TanggalAkhir;
@@ -246,6 +260,32 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
             if (br != fs.Length)
                 throw new System.IO.IOException(s);
             return data;
+        }
+        [HttpPost]
+        public ActionResult PostDeleteFile(int id)
+        {
+            var context = new MBKMContext();
+            context.Configuration.ProxyCreationEnabled = false;
+            var data = _attachmentPerjanjianKerjasamaService.Get(id);
+            data.IsDeleted = true;
+            data.UpdatedBy = Session["username"] as string;
+            data.PerjanjianKerjasamaID = 0;
+
+            _attachmentPerjanjianKerjasamaService.Save(data);
+            return Json(data);
+        }
+        public ActionResult DeleteFile(int id)
+        {
+            var context = new MBKMContext();
+            var res = context.attachmentPerjanjianKerjasamas.Where(x => x.ID == id).First();
+            context.attachmentPerjanjianKerjasamas.Remove(res);
+            context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+        public JsonResult GetPertukaran()
+        {
+            return Json(_jenisKerjasamaModelService.getPertukaran(), JsonRequestBehavior.AllowGet);
         }
     }
 }

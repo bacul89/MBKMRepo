@@ -1,12 +1,11 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
-@model MBKM.Entities.Models.MBKM.PerjanjianKerjasama 
+@model MBKM.Entities.Models.MBKM.PerjanjianKerjasama
 
 <div class="modal-content data-content-modal" id="update-Kerjasama">
     <div class="modal-header" style="background-color: #FF8A04; ">
-        
+
         <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
             EDIT PERJANJIAN KERJASAMA
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -15,7 +14,7 @@
         </h5>
     </div>
     <div class="modal-body">
-        <form class="form-horizontal" enctype= multipart/form-data id="UpdatePerjanjian">
+        <form class="form-horizontal" enctype=multipart/form-data id="UpdatePerjanjian">
             <input type="text" id="idKerjasama" value="@Model.ID" hidden />
             <div class="form-group row">
                 <label for="no" class="col-md-4 col-form-label">No. Kerjasama</label>
@@ -65,9 +64,9 @@
                     <select name="JenisPertukaran" id="JenisPertukaran" class="form-control" required>
                         <option value="@Model.JenisPertukaran" selected>@Model.JenisPertukaran</option>
                         @{
-                            foreach (var data in ViewData["listPerjanjian"] as IEnumerable<MBKM.Entities.ViewModel.VMLookup>)
+                            foreach (var data in ViewData["listPerjanjian"] as IEnumerable<MBKM.Entities.ViewModel.VMJenisPertukaran>)
                             {
-                                <option value="@data.Nilai">@data.Nama</option>
+                                <option value="@data.JenisPertukaran">@data.JenisPertukaran</option>
                             }
                         }
                     </select>
@@ -79,11 +78,11 @@
                 </label>
                 <div class="col-md-8">
                     <select name="JenisKerjasama" id="JenisKerjasama" class="form-control" required>
-                        <option value="@Model.JenisKerjasama" selected>@ViewData["jenisKerjasm"]</option>
+                        <option value="@Model.JenisKerjasama" selected>@Model.JenisKerjasama</option>
                         @{
-                            foreach (var data in ViewData["listKerjasama"] as IEnumerable<MBKM.Entities.ViewModel.VMLookup>)
+                            foreach (var data in ViewData["listKerjasama"] as IEnumerable<MBKM.Entities.ViewModel.VMJenisKerjasama>)
                             {
-                                <option value="@data.Nilai">@data.Nama</option>
+                                <option value="@data.Nama" class="@data.JenisPertukaran">@data.Nama</option>
                             }
                         }
                     </select>
@@ -98,7 +97,8 @@
             <div class="form-group row">
                 <label for="biaya" class="col-md-4 col-form-label">Biaya</label>
                 <div class="col-md-8">
-                    <input id="biaya" name="BiayaKuliah" class="form-control" value="@Model.BiayaKuliah" data-a-sign="Rp. " data-a-dec="," data-a-sep="." required>
+                    <input id="biaya" class="form-control number-separator" value="@Model.BiayaKuliah"  required>
+                    <input id='text' type="hidden" name="BiayaKuliah" class="form-control input-data" value="@Model.BiayaKuliah">
                 </div>
             </div>
             <div class="form-group row">
@@ -114,6 +114,7 @@
                         <thead>
                             <tr>
                                 <th>File</th>
+                                <th>action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -121,15 +122,24 @@
                             {
                                 <tr>
                                     <td>@item.FileName</td>
+                                    <td><a href="@Url.Action("DeleteFile",new { item.ID, item.PerjanjianKerjasamaID})"><i class="fas fa-trash-alt coral"></i></a></td>
                                 </tr>
                             }
                         </tbody>
                     </table>
-                    </div>
                 </div>
-        <div class="modal-footer">
-         <input onclick="UpdatePerjanjian()" type="submit" value="Simpan" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
-        </div>
+            </div>
+            <div class="modal-footer">
+                <input onclick="UpdatePerjanjian()" type="submit" value="Simpan" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
+            </div>
         </form>
     </div>
 </div>
+<script src="~/Scripts/easy-number-separator.js"></script>
+<script src="~/Scripts/scriptDropdown.js"></script>
+<script src="~/Scripts/script.js"></script>
+<script>
+    $("#biaya").keyup(function () {
+        $("#text").val($("#biaya").val().replace(/,/g, ''));
+    })
+</script>

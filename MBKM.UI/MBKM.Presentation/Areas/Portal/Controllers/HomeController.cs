@@ -105,17 +105,6 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult LoginInternal(string username, string password)
         {
-            //if (GetMahasiswaByNim(username) != null)
-            //{
-            //    Mahasiswa res = _mahasiswaService.Find(m => m.NIM == username).FirstOrDefault();
-            //    if (res == null || !HashPasswordService.ValidatePassword(password, res.Password))
-            //    {
-            //        TempData["alertMessage"] = "Username atau password anda salah!";
-            //        return RedirectToAction("Index", "Home");
-            //    }
-            //    PopulateSession(true, res.Email, res.Nama);
-            //    return RedirectToAction("Index", "DataDiri");
-            //}
             var a = _mahasiswaService.getLoginInternal(username, password);
             if (a == null)
             {
@@ -128,34 +117,36 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 Mahasiswa mahasiswa = GetMahasiswaByNim(a.NIM);
                 if (mahasiswa == null)
                 {
-                    mahasiswa.Nama = a.Nama;
-                    mahasiswa.Email = a.Email;
-                    mahasiswa.NoHp = a.Phone;
-                    mahasiswa.Telepon = a.Phone;
-                    mahasiswa.Alamat = a.Alamat;
-                    mahasiswa.Agama = a.Agama;
-                    mahasiswa.Password = hp(a.PasswordData);
-                    mahasiswa.NamaUniversitas = "UNIKA Atma Jaya";
-                    mahasiswa.TanggalLahir = a.TanggalLahir;
-                    mahasiswa.TempatLahir = "Jakarta";
-                    mahasiswa.Gender = a.Gender;
-                    mahasiswa.ProdiAsal = a.Prodi;
-                    mahasiswa.NIM = a.NIM;
-                    mahasiswa.NIMAsal = a.NIM;
-                    mahasiswa.JenjangStudi = a.JenjangStudi;
-                    mahasiswa.StatusVerifikasi = "AKTIF";
-                    mahasiswa.CreatedDate = DateTime.Now;
-                    mahasiswa.UpdatedDate = DateTime.Now;
-                    mahasiswa.IsActive = true;
-                    mahasiswa.IsDeleted = false;
-                    _mahasiswaService.Save(mahasiswa);
+                    Mahasiswa mahasiswa2 = new Mahasiswa();
+                    mahasiswa2.Nama = a.Nama;
+                    mahasiswa2.Email = a.Email;
+                    mahasiswa2.NoHp = a.Phone;
+                    mahasiswa2.Telepon = a.Phone;
+                    mahasiswa2.Alamat = a.Alamat;
+                    mahasiswa2.Agama = a.Agama;
+                    mahasiswa2.Password = hp(a.PasswordData);
+                    mahasiswa2.NamaUniversitas = "UNIKA Atma Jaya";
+                    mahasiswa2.TanggalLahir = a.TanggalLahir;
+                    mahasiswa2.TempatLahir = "Jakarta";
+                    mahasiswa2.Gender = a.Gender;
+                    mahasiswa2.ProdiAsal = a.Prodi;
+                    mahasiswa2.NIM = a.NIM;
+                    mahasiswa2.NIMAsal = a.NIM;
+                    mahasiswa2.JenjangStudi = a.JenjangStudi;
+                    mahasiswa2.StatusVerifikasi = "AKTIF";
+                    mahasiswa2.CreatedDate = DateTime.Now;
+                    mahasiswa2.UpdatedDate = DateTime.Now;
+                    mahasiswa2.IsActive = true;
+                    mahasiswa2.IsDeleted = false;
+                    _mahasiswaService.Save(mahasiswa2);
+                    PopulateSession(true, mahasiswa2.Email, mahasiswa2.Nama);
                 } else
                 {
                     mahasiswa.Email = a.Email;
                     mahasiswa.Password = hp(a.PasswordData);
                     _mahasiswaService.Save(mahasiswa);
+                    PopulateSession(true, mahasiswa.Email, mahasiswa.Nama);
                 }
-                PopulateSession(true, mahasiswa.Email, mahasiswa.Nama);
                 return RedirectToAction("Index", "DataDiri");
             }
         }

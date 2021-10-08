@@ -27,7 +27,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         private IPendaftaranMataKuliahService _pendaftaranMataKuliahService;
         private ICPLMKPendaftaranService _cplmkPendaftaranService;
         private ICPLMatakuliahService _cplMatakuliahService;
-        public PendaftaranMataKuliahController(ICPLMatakuliahService cplMatakuliahService, ICPLMKPendaftaranService cplmkPendaftaranService, IPendaftaranMataKuliahService pendaftaranMataKuliahService, IInformasiPertukaranService informasiPertukaranService, IPerjanjianKerjasamaService perjanjianKerjasamaService, IJenisKerjasamaModelService jenisKerjasamaService, IPendaftaranMataKuliahService pmkService, IMahasiswaService mahasiswaService, IJadwalKuliahService jkService)
+        private IApprovalPendaftaranService _approvalPendaftaranService;
+        public PendaftaranMataKuliahController(IApprovalPendaftaranService approvalPendaftaranService, ICPLMatakuliahService cplMatakuliahService, ICPLMKPendaftaranService cplmkPendaftaranService, IPendaftaranMataKuliahService pendaftaranMataKuliahService, IInformasiPertukaranService informasiPertukaranService, IPerjanjianKerjasamaService perjanjianKerjasamaService, IJenisKerjasamaModelService jenisKerjasamaService, IPendaftaranMataKuliahService pmkService, IMahasiswaService mahasiswaService, IJadwalKuliahService jkService)
         {
             _pmkService = pmkService;
             _mahasiswaService = mahasiswaService;
@@ -38,6 +39,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             _pendaftaranMataKuliahService = pendaftaranMataKuliahService;
             _cplmkPendaftaranService = cplmkPendaftaranService;
             _cplMatakuliahService = cplMatakuliahService;
+            _approvalPendaftaranService = approvalPendaftaranService;
         }
         public ActionResult Index()
         {
@@ -221,7 +223,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 return Json(new ServiceResponse { status = 500, message = e.Message });
             }
         }
-        public ActionResult InsertPendaftaranMK(PendaftaranMataKuliah pendaftaranMataKuliah, CPLMKPendaftaran cplmkPendaftaran)
+        public ActionResult InsertPendaftaranMK(PendaftaranMataKuliah pendaftaranMataKuliah, CPLMKPendaftaran cplmkPendaftaran, ApprovalPendaftaran approvalPendaftaran)
         {
             try
             {
@@ -243,6 +245,15 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     cplmkPendaftaran.CreatedDate = DateTime.Now;
                     cplmkPendaftaran.UpdatedDate = DateTime.Now;
                     _cplmkPendaftaranService.Save(cplmkPendaftaran);
+                    approvalPendaftaran.StatusPendaftaran = "MENUNGGU APPROVAL KAPRODI/WR BIDANG AKADEMIK";
+                    approvalPendaftaran.PendaftaranMataKuliahID = ID;
+                    approvalPendaftaran.Approval = "-";
+                    approvalPendaftaran.Catatan = "-";
+                    approvalPendaftaran.IsActive = true;
+                    approvalPendaftaran.IsDeleted = false;
+                    approvalPendaftaran.CreatedDate = DateTime.Now;
+                    approvalPendaftaran.UpdatedDate = DateTime.Now;
+                    _approvalPendaftaranService.Save(approvalPendaftaran);
                     return Json(new ServiceResponse { status = 200, message = "Anda berhasil terdaftar, silahkan cek tracking pendaftaran untuk melihat status pendaftaran!" });
                 }
                 return Json(new ServiceResponse { status = 400, message = "Anda sudah mendaftar matakuliah ini!" });
