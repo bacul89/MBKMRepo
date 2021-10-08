@@ -80,6 +80,17 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             }
         }
 
+        public string GetNim()
+        {
+            using (var context = new MBKMContext())
+            {
+                var jenjangStudiParam = new SqlParameter("@TAHUN", DateTime.Now.Year);
+                var result = context.Database
+                    .SqlQuery<string>("GetNIM @TAHUN", jenjangStudiParam).Last();
+                return result;
+            }
+        }
+
         //public int updateRangeVer(Int64[] listId)
         //{
         //    using (var context = new MBKMContext())
