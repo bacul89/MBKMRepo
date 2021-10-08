@@ -121,23 +121,36 @@
             <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
                 <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">STATUS PENDAFTARAN</h5>
                 <form class="form-horizontal">
-                    <div class="row">
-                        <div class="col-sm-4 text-right">
-                            <h4>Status Pendaftaran &nbsp:</h4>
-                        </div>
-                        <div class="col-sm-8">
-                            <div class="col-md-11">
-                                <input type="text" name="kewarganegaraan" value="@Model.StatusPendaftaran" id="kewarganegaraan" class="form-control input-md input-data" disabled />
-                            </div>
-                        </div>
-                    </div>
-                    <br />
+                    
                     <div class="row">
                         <div class="col-sm-4 text-right">
                             <h4>Status &nbsp:</h4>
                         </div>
                         <div class="col-sm-8">
                             <a id="linkDetail" onclick="redirectToDetail('@Model.ID')" href="javascript:void();"><button type="button" class="btn btn-warning btn-sm onOff">Lihat</button></a>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-4 text-right">
+                            <h4>Status Pendaftaran &nbsp:</h4>
+                        </div>
+                        <div class="col-sm-7">
+                            @{
+                                foreach (var data in ViewData["status"] as IList<MBKM.Entities.Models.MBKM.ApprovalPendaftaran>)
+                                {
+                                    if (ViewData["lastStatus"] != data.StatusPendaftaran)
+                                    {
+                                        <div class="col-sm-12 center">||</div>
+
+                                    }
+                                    <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate; @{if (ViewData["lastStatus"] != data.StatusPendaftaran) { <text> background-color:dimgray; color:white" </text>  } } ">
+                                        <h4>@data.StatusPendaftaran</h4>
+                                    </div>
+
+                                }
+                            }
+
                         </div>
                     </div>
                     <br />

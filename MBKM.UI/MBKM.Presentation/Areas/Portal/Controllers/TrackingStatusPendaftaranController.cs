@@ -7,9 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MBKM.Presentation.Helper;
 
 namespace MBKM.Presentation.Areas.Portal.Controllers
 {
+    [MBKMAuthorize]
     public class TrackingStatusPendaftaranController : Controller
     {
         private IPendaftaranMataKuliahService _pendaftaranMataKuliahService;
@@ -62,6 +64,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 ViewData["disabled"] = "";
             }
 
+            IList<ApprovalPendaftaran> dataApproval = _approvalPendaftaranService.Find(x => x.PendaftaranMataKuliahID == id).OrderByDescending(x => x.ID).ToList();
+            ViewData["lastStatus"] = _approvalPendaftaranService.Find(x => x.PendaftaranMataKuliahID == id).Last().StatusPendaftaran;
+            ViewData["status"] = dataApproval;
             return View(data);
         }
 
