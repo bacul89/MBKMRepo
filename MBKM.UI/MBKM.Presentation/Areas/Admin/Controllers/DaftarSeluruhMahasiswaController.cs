@@ -1,7 +1,9 @@
 ﻿using MBKM.Common.Helpers;
 using MBKM.Entities.Models.MBKM;
 using MBKM.Entities.ViewModel;
+using MBKM.Presentation.Helper;
 using MBKM.Presentation.models;
+using MBKM.Services;
 using MBKM.Services.MBKMServices;
 using System;
 using System.Collections.Generic;
@@ -11,21 +13,24 @@ using System.Web.Mvc;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
+    [MBKMAuthorize]
     public class DaftarSeluruhMahasiswaController : Controller
     {
         // GET: Admin/DaftarSeluruhMahasiswa
+        private ILookupService _lookupService;
         private IDaftarAllMahasiswaService _mahasiswaService;
         private IPerjanjianKerjasamaService _perjanjianKerjasamaService;
         //
-        public DaftarSeluruhMahasiswaController(IDaftarAllMahasiswaService mahasiswaService, IPerjanjianKerjasamaService perjanjianKerjasamaService)
+        public DaftarSeluruhMahasiswaController(ILookupService lookupService,IDaftarAllMahasiswaService mahasiswaService, IPerjanjianKerjasamaService perjanjianKerjasamaService)
         {
             _mahasiswaService = mahasiswaService;
+            _lookupService = lookupService;
             _perjanjianKerjasamaService = perjanjianKerjasamaService;
         }
 
         public ActionResult Index()
         {
-            Session["username"] = "Smitty Werben Jeger Man Jensen";
+            
             return View();
         }
         public ActionResult GetNoKerjasama(int Skip, int Length, string Search, string NamaInstansi)
@@ -49,8 +54,12 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 data = vMListAllMhs.gridDatas
             });
         }
-       
-      
+        public ActionResult getLookupByTipe(string tipe)
+        {
+            return Json(_lookupService.getLookupByTipe(tipe), JsonRequestBehavior.AllowGet);
+        }
+
+
         public ActionResult ModalDetailMhs(int id)
         {
             var model = _mahasiswaService.Get(id);
@@ -63,7 +72,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             Mahasiswa data = _mahasiswaService.Get(mhs.ID);
             data.NoKerjasama = mhs.NoKerjasama;
             data.BiayaKuliah = mhs.BiayaKuliah;
-            
+            data.StatusKerjasama = mhs.StatusKerjasama;
+            data.UpdatedDate = DateTime.Now;
+            data.UpdatedBy = Session["username"] as string;
+
 
 
 

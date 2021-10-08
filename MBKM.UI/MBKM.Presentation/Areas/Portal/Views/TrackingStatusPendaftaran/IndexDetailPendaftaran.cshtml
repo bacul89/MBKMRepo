@@ -22,6 +22,7 @@
             <hr />
             <div class="container-fluid">
                 <div class="container" style="width: 100%; padding-bottom: 15px;">
+                    <input type="hidden" value="@ViewData["disabled"].ToString()" id="statusDisable" disabled />
                     <form class="form-horizontal">
                         <input type="hidden" value="@Model.ID" id="inp_ID" disabled />
                         <div class="row">
@@ -139,7 +140,7 @@
                                 <h4>Catatan  &nbsp</h4>
                             </div>
                             <div class="col-sm-5">
-                                <textarea class="form-control input-data summernote" name="inp_bodyEmail" rows="3" id="inp_bodyEmail" placeholder="Input Body Email" disabled>@Model.PendaftaranMataKuliahs.mahasiswas.Catatan</textarea>
+                                <textarea class="form-control input-data summernote" name="inp_bodyEmail" rows="3" id="inp_bodyEmail" placeholder="Input Body Email" disabled>@ViewData["catatanBaru"]</textarea>
                             </div>
                         </div>
                         <br />
@@ -161,8 +162,8 @@
                         }
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-6" style="padding-left:50px">
-                                <button type="button" onclick="RejectCPLPendaftaran()" class="btn btn-danger">REJECT</button>
-                                <button type="button" onclick="AcceptedCPLPendaftaran()" class="btn btn-warning">ACCEPT</button>
+                                <button type="button" onclick="RejectCPLPendaftaran()" class="btn btn-danger onOff">REJECT</button>
+                                <button type="button" onclick="AcceptedCPLPendaftaran()" class="btn btn-warning onOff">ACCEPT</button>
                             </div>
                         </div>
                         <br />
@@ -198,11 +199,29 @@
                                                     <h4>Capaian Pembelajaran &nbsp:</h4>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                    <div class="row" style="padding-bottom:10px">
-                                                        <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">
-                                                            <h4>@Model.CPLAsal</h4>
-                                                        </div>
-                                                    </div>
+                                                    @{
+                                                        if (ViewData["countCPAsal"].Equals(0))
+                                                        {
+                                                            <div class="row" style="padding-bottom:10px">
+                                                                <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">
+                                                                    <h4>Tidak Ada Capaian</h4>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            foreach (var dat in ViewData["capaianAsal"] as IList<MBKM.Entities.Models.MBKM.CPLMatakuliah>)
+                                                            {
+                                                                <div class="row" style="padding-bottom:10px">
+                                                                    <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">
+                                                                        <h4>@dat.MasterCapaianPembelajarans.Capaian</h4>
+                                                                    </div>
+                                                                </div>
+                                                            }
+
+                                                        }
+
+                                                    }
                                                 </div>
                                             </div>
                                         }
@@ -213,7 +232,7 @@
                                                     <h4>Kode Mata Kuliah &nbsp :</h4>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                    <h4>Eksternal</h4>
+                                                    <h4>-</h4>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -221,7 +240,7 @@
                                                     <h4>Nama Mata Kuliah &nbsp :</h4>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                    <h4>Eksternal</h4>
+                                                    <h4>@Model.PendaftaranMataKuliahs.MatkulAsal</h4>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -231,7 +250,7 @@
                                                 <div class="col-sm-8">
                                                     <div class="row" style="padding-bottom:10px">
                                                         <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">
-                                                            <h4>Eksternal</h4>
+                                                            <h4>@Model.CPLAsal</h4>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -48,11 +48,11 @@
     .card-kim {
         border: 3px solid #ff8a04;
         border-radius: 5px;
-        width: 500px;
+        width: 550px;
         display: inline-grid;
         padding: 3rem !important;
         box-shadow: 3px 3px #a2a0a0;
-        margin: 5vh 5vh 18vh 5vh;
+        margin: 4vh 5vh 7vh 5vh;
     }
 
     .row-head {
@@ -79,6 +79,7 @@
         width: 96px;
         height: 111px;
     }
+
     .body-content {
         padding-right: 0px;
         padding-left: 0px;
@@ -86,8 +87,8 @@
 </style>
 
 <div id="kim-content" class="container-fluid" style="padding: 0px">
-    <div class="card center-block" style="background-color: white; width: 100%; padding:0px">
-        <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
+    <div class="card center-block" style="background-color: white; width: 99.6%; padding:0px; max-width:100%">
+        <div class="responsive-content card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
             <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
                 KARTU INDUK MAHASISWA DIGITAL<br />
                 <small class="kim-discribe">
@@ -124,4 +125,42 @@
 
 @section scripts{
     <script src="~/Scripts/Portal/NimDigital/main.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            isZooming();
+        });
+
+
+        $(window).resize(function () {
+            isZooming();
+        });
+
+
+        function isZooming() {
+            var defaultH = 600;
+            var square = $('.responsive-content');
+            var screenH = $(document).height();
+            //console.log("dfH :"+defaultH);
+            //console.log("wnH :"+screenH);
+
+
+                if (defaultH < screenH) {
+
+                    var footer = 60;
+                    var header = 105;
+                    var contentHeight = screenH - header - footer;
+
+                    if (defaultH < contentHeight) {
+                        square.css('height', contentHeight);
+                    } else {
+                        square.css('height', defaultH);
+                    }
+                    
+
+                } else {
+                    square.css('height', defaultH);
+                }
+        }
+    </script>
 }

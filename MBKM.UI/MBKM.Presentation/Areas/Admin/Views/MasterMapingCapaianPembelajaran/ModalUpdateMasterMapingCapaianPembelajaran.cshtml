@@ -1,12 +1,11 @@
 ﻿@{
     Layout = null;
 }
+@model MBKM.Entities.Models.MBKM.CPLMatakuliah
 
 <div class="modal-content data-content-modal" id="update-master-maping-cpl">
     <div class="modal-header" style="background-color: #FF8A04; ">
-        <!--value="@*@Model.ID*@"-->
-        <input type="hidden" id="id_MasterLookup" />
-        <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+        <h5 class="card-title" style="font-weight: bold; font-size: 17px; color: black;">
             UPDATE MAPING CAPAIAN PEMBELAJARAN PER-MATA KULIAH
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -15,29 +14,97 @@
     </div>
     <div class="modal-body">
         <form class="form-horizontal">
-
-            <div class="form-group">
-                <label for="inp_tipeEmail" class="col-sm-3 control-label">Kode Mata Kuliah</label>
+@*            <div class="form-group">
+                <label for="inp_MasterCplID" class="col-sm-3 control-label">ID Master CPL</label>
                 <div class="col-sm-9">
-                    <select class="form-control input-pendaftaran input-data" name="inp_kode_mata_kuliah" id="inp_kode_mata_kuliah" placeholder="Pilih Kode Mata Kuliah">
-                        <option value="value">-</option>
-                        <option value="value">text</option>
-                    </select>
-                    <!--<input type="text">-->
+                    <input type="text" class="form-control input-md" name="inp_id_capaian_pembelajaran" id="inp_id_capaian_pembelajaran" value="@Model.MasterCapaianPembelajaranID" placeholder="Pilih Mata Kuliah" disabled>
                 </div>
             </div>
             <div class="form-group">
-                <label for="inp_tipeEmail" class="col-sm-3 control-label">Mata Kuliah</label>
+                <label for="get_kelompok" class="col-sm-3 control-label">Kelompok</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control input-pendaftaran input-data" name="inp_mata_kuliah" id="inp_mata_kuliah" placeholder="Pilih Mata Kuliah" disabled>
+                    <input type="text" class="form-control input-md" name="get_kelompok" id="get_kelompok" value="@Model.Kelompok" placeholder="Pilih Mata Kuliah" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="get_kode" class="col-sm-3 control-label">Kode</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control input-md" name="get_kode" id="get_kode" value="@Model.MasterCapaianPembelajarans.Kode" placeholder="Pilih Mata Kuliah" disabled>
+                </div>
+            </div>*@
+            
+
+            @*            <div class="form-group">
+            <label for="inp_jenjang" class="col-sm-3 control-label">Jenjang Studi</label>
+            <div class="col-sm-9">
+                <select name="jenjangEdit" id="jenjangEdit" class="form-control input-md">
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inp_fakultas" class="col-sm-3 control-label">Fakultas</label>
+            <div class="col-sm-9">
+                <select name="fakultasEdit" id="fakultasEdit" class="form-control input-md"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inp_prodi" class="col-sm-3 control-label">Program Studi</label>
+            <div class="col-sm-9">
+                <select name="prodiEdit" id="prodiEdit" class="form-control input-md"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inp_lokasi" class="col-sm-3 control-label">Lokasi</label>
+            <div class="col-sm-9">
+                <select name="lokasiEdit" id="lokasiEdit" class="form-control input-md"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inp_matakuliah" class="col-sm-3 control-label">Mata Kuliah</label>
+            <div class="col-sm-9">
+                <select name="matakuliahEdit" id="matakuliahEdit" class="form-control input-md">
+                </select>
+            </div>
+        </div>
+            *@
+
+            <!--<div class="form-group">
+    <label for="inp_tipeEmail" class="col-sm-3 control-label">Kode Mata Kuliah</label>
+    <div class="col-sm-9">
+        <select class="form-control input-pendaftaran input-data" name="inp_kode_mata_kuliah" id="inp_kode_mata_kuliah" placeholder="Pilih Kode Mata Kuliah">
+            <option value="value">-</option>
+            <option value="value">text</option>
+        </select>-->
+            <!--<input type="text">-->
+            <!--</div>
+    </div>-->
+
+            <div class="form-group" hidden>
+                <label for="inp_MatakuliahID" class="col-sm-3 control-label">ID Mata Kuliah</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control input-md" name="inp_id_mata_kuliah" id="inp_id_mata_kuliah" placeholder="Pilih Mata Kuliah" disabled>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inp_MatakuilahKode" class="col-sm-3 control-label">Kode Mata Kuliah</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control input-md" name="inp_kode_mata_kuliah" id="inp_kode_mata_kuliah" placeholder="Pilih Mata Kuliah" disabled>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inp_MatakuiahName" class="col-sm-3 control-label">Mata Kuliah</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control input-md" name="inp_mata_kuliah" id="inp_mata_kuliah" placeholder="Pilih Mata Kuliah" disabled>
                 </div>
             </div>
             <div class="form-group">
                 <label for="inp_email" class="col-sm-3 control-label">Kelompok</label>
                 <div class="col-sm-9">
-                    <select class="form-control input-pendaftaran input-data" name="inp_kelompok" id="inp_kelompok" placeholder="Pilih Kelompok">
-                        <option value="value">-</option>
-                        <option value="value">text</option>
+                    <select class="form-control input-md" name="inp_kelompok" id="inp_kelompok" placeholder="Pilih Kelompok">
+                        <option value="@Model.Kelompok" selected>@Model.Kelompok</option>
                     </select>
                     <!--<input type="text" >-->
                 </div>
@@ -45,9 +112,8 @@
             <div class="form-group">
                 <label for="inp_bodyEmail" class="col-sm-3 control-label">Kode Capian Pembelajaran</label>
                 <div class="col-sm-9">
-                    <select class="form-control input-pendaftaran input-data" name="inp_kode_capaian_pembelajaran" id="inp_kode_capaian_pembelajaran" placeholder="Pilih Kode Capian Pembelajaran">
-                        <option value="value">-</option>
-                        <option value="value">text</option>
+                    <select class="form-control input-md" name="inp_kode_capaian_pembelajaran" id="inp_kode_capaian_pembelajaran" placeholder="Pilih Kode Capian Pembelajaran">
+                        <option value="@Model.MasterCapaianPembelajaranID" selected>@Model.MasterCapaianPembelajarans.Kode</option>
                     </select>
                 </div>
             </div>
@@ -55,23 +121,38 @@
             <div class="form-group">
                 <label for="inp_bodyEmail" class="col-sm-3 control-label">Capaian Pembelajaran</label>
                 <div class="col-sm-9">
-                    <textarea type="text" class="form-control input-pendaftaran input-data" name="inp_nilai" id="inp_nilai" placeholder="Keterangan"></textarea>
+                    <textarea type="text" class="form-control input-pendaftaran input-data" name="inp_capaian" id="inp_capaian" placeholder="Keterangan" disabled>@Model.MasterCapaianPembelajarans.Capaian</textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label for="inp_status" class="col-sm-3 control-label">Status</label>
                 <div class="col-sm-9">
-                    <label class="radio-inline input-pendaftaran">
-                        <input type="radio" name="inp_status" id="inp_status" value="true"> Aktif
-                    </label>
-                    <label class="radio-inline input-pendaftaran">
-                        <input type="radio" name="inp_status" id="inp_status" value="false"> Tidak Aktif
-                    </label>
+                    @{
+                        if (Model.IsActive)
+                        {
+                            <label class="radio-inline input-pendaftaran">
+                                <input type="radio" name="inp_status" id="inp_status" value="true" checked> Aktif
+                            </label>
+                            <label class="radio-inline input-pendaftaran">
+                                <input type="radio" name="inp_status" id="inp_status" value="false"> Tidak Aktif
+                            </label>
+
+                        }
+                        else
+                        {
+                            <label class="radio-inline input-pendaftaran">
+                                <input type="radio" name="inp_status" id="inp_status" value="true"> Aktif
+                            </label>
+                            <label class="radio-inline input-pendaftaran">
+                                <input type="radio" name="inp_status" id="inp_status" value="false" checked> Tidak Aktif
+                            </label>
+                        }
+                    }
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-2 col-md-offset-10">
-                    <button type="button" onclick="PostCreate()" class="btn btn-warning">Simpan</button>
+                    <button type="button" onclick="PostUpdate()" class="btn btn-warning">Simpan</button>
                 </div>
             </div>
         </form>

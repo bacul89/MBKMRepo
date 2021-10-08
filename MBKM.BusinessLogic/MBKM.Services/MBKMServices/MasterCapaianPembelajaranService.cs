@@ -17,7 +17,7 @@ namespace MBKM.Services.MBKMServices
         VMListMasterCPL GetListMasterCPL(DataTableAjaxPostModel model);
         IEnumerable<VMFakultas> GetFakultas(string jenjangStudi, string search);
         IEnumerable<VMProdi> GetProdiByFakultas(string jenjangStudi, string idFakultas, string search);
-        IEnumerable<VMProdi> GetLokasiByProdi(string jenjangStudi, string idProdi, string search);
+        IEnumerable<VMProdi> GetLokasiByProdi(string jenjangStudi, string namaProdi, string search);
         IEnumerable<VMMataKuliah> GetMatkul(int PageNumber, int PageSize, string search);
 
     }
@@ -59,9 +59,9 @@ namespace MBKM.Services.MBKMServices
             return _mcpRepository.GetListMasterCPL(skip, take, searchBy, sortBy, sortDir);
         }
 
-        public IEnumerable<VMProdi> GetLokasiByProdi(string jenjangStudi, string idProdi, string search)
+        public IEnumerable<VMProdi> GetLokasiByProdi(string jenjangStudi, string namaProdi, string search)
         {
-            return _mcpRepository.GetLokasiByProdi(jenjangStudi, idProdi, search);
+            return _mcpRepository.GetLokasiByProdi(jenjangStudi, namaProdi, search);
         }
 
         public IEnumerable<VMProdi> GetProdiByFakultas(string jenjangStudi, string idFakultas, string search)
