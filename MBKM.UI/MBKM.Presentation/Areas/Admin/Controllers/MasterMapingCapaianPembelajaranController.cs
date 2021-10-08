@@ -221,17 +221,37 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             return View(data);
         }
 
-        public ActionResult GetMataKuliah(string search, int skip, int length)
+        public ActionResult GetMataKuliah(DataTableAjaxPostModel model, string search, string idProdi, string idFakultas)
         {
+
+            VMMataKuliah vMListMK = _cplMatakuliah.GetMatkul(model, idProdi, idFakultas);
+
+            return Json(new
+            {
+                // this is what datatables wants sending back
+                draw = model.draw,
+                recordsTotal = vMListMK.TotalCount,
+                recordsFiltered = vMListMK.TotalFilterCount,
+                data = vMListMK.gridDatas
+            });
+        }
+
+        /* public ActionResult GetMataKuliah()
+        {
+            //string search, int skip, int length
+            string search = "";
+            int skip = 10;
+            int length = 10;
 
 
             int pageNumber = skip;
             int pageSize = length;
-            /*string search = "";*/
+            *//*string search = "";*/
             /*string email = Session["email"] as string;*/
-            /*var result = GetMa=takuliah(email);*/
+            /*var result = GetMa=takuliah(email);*//*
             return Json(_mcpService.GetMatkul(pageNumber, pageSize, search), JsonRequestBehavior.AllowGet);
-        }
+        }*/
+
 
         /*        public ActionResult getLookupByValue(string tipe, string value)
                 {
@@ -266,7 +286,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
         public ActionResult GetMataKuliahByProdi(string namaProdi, string lokasi)
         {
-            //return new ContentResult { Content = JsonConvert.SerializeObject(_jkService.Find(jk => jk.NamaProdi == namaProdi && jk.Lokasi == lokasi).ToList()), ContentType = "application/json" };
+            //return new ContentResult { Content = JsonConvert.SerializeObject(_jkService.Find(jk => jk.NamaProdi == namaProdi && jk.Lokasi == lokasi && jk.NamaMataKuliah == search).ToList()), ContentType = "application/json" };
             List<JadwalKuliah> jks = new List<JadwalKuliah>();
             List<string> jadwalKuliahs = new List<string>();
             foreach (var item in _jkService.Find(jk => jk.NamaProdi == namaProdi && jk.Lokasi == lokasi).ToList())
