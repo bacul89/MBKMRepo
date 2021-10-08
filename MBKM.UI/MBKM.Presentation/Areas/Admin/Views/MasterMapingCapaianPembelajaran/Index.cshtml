@@ -23,7 +23,7 @@
 
 <div class="container-fluid" style="padding: 0px">
     <div class="card center-block" style="background-color: white; width: 100%; padding: 0px">
-        <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; padding: 0px">
+        <div class="card-body responsive-content" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; padding: 0px">
             <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
                 MASTER MAPING CAPAIAN PEMBELAJARAN PER-MATA KULIAH<br />
                 <small class="describe">Berikut Table Mapping Capian Pembelajaran dengan Mata Kuliah</small>
@@ -61,7 +61,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group" hidden>
                             <label for="inp_prodiId" class="col-sm-3 control-label">Prodi ID</label>
                             <div class="col-sm-9">
                                 <input name="prodiIdCari" id="prodiIdCari" class="form-control input-md" disabled>
@@ -95,7 +95,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-2 col-md-offset-10">
-                                <button type="button" id="cari" class="btn btn-warning">Cari</button>
+                                <button type="button" id="cari" class="btn btn-warning" style="float: right;" title="Mohon untuk melengkapi form pencarian terlebih dahulu!" disabled><span class="fa fa-search"></span> Cari</button>
                             </div>
                         </div>
                     </form>
@@ -103,7 +103,7 @@
 
 
 
-                <button class="btn btn-success" onclick="IndexCreateMasterMapingCapaianPembelajaran()"><i class="fas fa-plus-circle"></i> Tambah Master Maping</button>
+                <button id="add" class="btn btn-success" onclick="IndexCreateMasterMapingCapaianPembelajaran()" title="Mohon untuk melengkapi form pencarian terlebih dahulu!" disabled><i class="fas fa-plus-circle"></i> Tambah Master Maping</button>
                 <br />
                 <br />
                 <!--table-responsive-->
@@ -143,6 +143,22 @@
             $("#prodiCari").prop("disabled", true);
             $("#lokasiCari").prop("disabled", true);
             $("#matakuliahCari").prop("disabled", true);
+            $("#fakultasCari").select2({
+                placeholder: "-- Pilih Fakultas --"
+            });
+            $("#prodiCari").select2({
+                placeholder: "-- Pilih Program Studi --"
+            });
+            $("#lokasiCari").select2({
+                placeholder: "-- Pilih Lokasi --"
+            });
+            $("#matakuliahCari").select2({
+                placeholder: "-- Pilih Mata Kuliah --"
+            });
+
+
+
+
             loadJenjangStudi("JenjangStudi", "jenjang", "Jenjang Studi");
 
             datatable = $('#table-data-master-mapping-cpl').DataTable();
@@ -158,6 +174,20 @@
             datatable = $('#hasilPencarian').DataTable({
             });*@
         });
+        function buttonHandler(param) {
+            /*title='This is my title'*/
+
+            if (param == "open") {
+                $('#cari, #add').removeAttr("disabled");
+                $('#cari, #add').removeAttr("title");
+            } else if (param == "close") {
+                $('#cari, #add').attr("disabled");
+                $('#cari, #add').attr("title", "Mohon untuk melengkapi form pencarian terlebih dahulu!");
+            } else {
+                console.log("error : button  hanlder");
+            }
+
+        }
 
 
 
@@ -279,7 +309,7 @@
                 //    //hide the second & fourth column
                 //    { 'visible': false, 'targets': [5] }
                 //]
-                
+
             });
 @*            datatable = $('#table-data-master-mapping-cpl').DataTable({
                 ajax: {
@@ -369,9 +399,18 @@
                 }
             });
             $("#" + id + "Cari").change(function () {
+                buttonHandler("close");
+                $("#fakultasCari").empty();
+                $("#prodiCari").empty();
+                $("#prodiIdCari").val('');
+                $("#lokasiCari").empty();
+                $("#matakuliahCari").empty();
+                $("#prodiCari").prop("disabled", true);
+                $("#lokasiCari").prop("disabled", true);
+                $("#matakuliahCari").prop("disabled", true);
                 $("#fakultasCari").prop("disabled", false);
                 $("#fakultasCari").select2({
-                    placeholder: "-- Fakultas --",
+                    placeholder: "-- Pilih Fakultas --",
                     width: "100%",
                     ajax: {
                         url: "/Admin/MasterMapingCapaianPembelajaran/GetFakultas",
@@ -393,6 +432,14 @@
                     }
                 });
                 $("#fakultasCari").change(function () {
+                    buttonHandler("close");
+                    $("#prodiCari").empty();
+                    $("#prodiIdCari").val('');
+                    $("#lokasiCari").empty();
+                    $("#matakuliahCari").empty();
+                    $("#lokasiCari").prop("disabled", true);
+                    $("#matakuliahCari").prop("disabled", true);
+
                     $("#prodiCari").prop("disabled", false);
                     $("#prodiCari").select2({
                         placeholder: "-- Pilih Program Studi --",
@@ -419,10 +466,15 @@
                     });
 
                     $("#prodiCari").change(function () {
+                        buttonHandler("close");
+                        $("#lokasiCari").empty();
+                        $("#prodiIdCari").val('');
+                        $("#matakuliahCari").empty();
+                        $("#matakuliahCari").prop("disabled", true);
 
-                       $("#lokasiCari").prop("disabled", false);
-                       $("#lokasiCari").select2({
-                            placeholder: "-- Lokasi Studi --",
+                        $("#lokasiCari").prop("disabled", false);
+                        $("#lokasiCari").select2({
+                            placeholder: "-- Pilih Lokasi --",
                             width: "100%",
                             ajax: {
                                 url: "/Admin/MasterMapingCapaianPembelajaran/GetLokasiByProdi",
@@ -469,11 +521,12 @@
                                 }
                             })
 
-
+                            buttonHandler("close");
+                            $("#matakuliahCari").empty();
                             $("#matakuliahCari").prop("disabled", false);
-                            
+
                             $("#matakuliahCari").select2({
-                                placeholder: "-- Mata Kuliah Studi --",
+                                placeholder: "-- Pilih Mata Kuliah --",
                                 width: "100%",
                                 ajax: {
                                     url: "/Admin/MasterMapingCapaianPembelajaran/GetMataKuliahByProdi",
@@ -488,7 +541,7 @@
                                             lokasi: $('#lokasiCari').val()
                                         };
                                     },
-                                    processResults: function (data, params) {                                        
+                                    processResults: function (data, params) {
                                         return {
                                             results: $.map(data, function (item) { return { id: item.MataKuliahID, value: item.MataKuliahID, text: item.NamaMataKuliah } })
                                         };
@@ -499,8 +552,10 @@
                                     },
                                 }
                             });
-                            
+
                             $("#matakuliahCari").change(function () {
+                                buttonHandler("open");
+                                
                                 dataParam = {};
 
                                 dataParam.NamaProdi = $('#prodiCari').val();
@@ -531,14 +586,48 @@
                             });
                         });
 
-
-
-
-
                     });
                 });
             });
         }
+
+        $(document).ready(function () {
+
+            isZooming();
+        });
+
+
+        $(window).resize(function () {
+            isZooming();
+        });
+
+
+        function isZooming() {
+            var defaultH = 700;
+            var square = $('.responsive-content');
+            var screenH = $(document).height();
+            //console.log("dfH :"+defaultH);
+            //console.log("wnH :"+screenH);
+
+
+            if (defaultH < screenH) {
+
+                var footer = 39;
+                var header = 105;
+                var contentHeight = screenH - header - footer;
+
+                if (defaultH < contentHeight) {
+                    square.css('height', contentHeight);
+                } else {
+                    square.css('height', defaultH);
+                }
+
+
+            } else {
+                square.css('height', defaultH);
+            }
+        }
+
 
     </script>
 
