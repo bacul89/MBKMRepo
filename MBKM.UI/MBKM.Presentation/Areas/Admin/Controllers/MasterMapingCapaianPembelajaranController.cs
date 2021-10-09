@@ -199,24 +199,39 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
             try
             {
-                CPLMatakuliah data = _cplMatakuliah.Get(cplMatakuliah.ID);
+                var check = _cplMatakuliah.Find(
+                    x => x.IDMataKUliah == cplMatakuliah.IDMataKUliah &&
+                    x.MasterCapaianPembelajaranID == cplMatakuliah.MasterCapaianPembelajaranID
+                );
 
-                data.KodeMataKuliah = cplMatakuliah.KodeMataKuliah;
-                data.IDMataKUliah = cplMatakuliah.IDMataKUliah;
-                data.NamaMataKuliah = cplMatakuliah.NamaMataKuliah;
-                data.IsActive = cplMatakuliah.IsActive;
-                data.MasterCapaianPembelajaranID = cplMatakuliah.MasterCapaianPembelajaranID;
-                data.Kelompok = cplMatakuliah.Kelompok;
-                data.UpdatedBy = Session["username"] as string;
+                if (check.Count() == 0)
+                {
+                    CPLMatakuliah data = _cplMatakuliah.Get(cplMatakuliah.ID);
 
-                _cplMatakuliah.Save(data);
+                    data.KodeMataKuliah = cplMatakuliah.KodeMataKuliah;
+                    data.IDMataKUliah = cplMatakuliah.IDMataKUliah;
+                    data.NamaMataKuliah = cplMatakuliah.NamaMataKuliah;
+                    data.IsActive = cplMatakuliah.IsActive;
+                    data.MasterCapaianPembelajaranID = cplMatakuliah.MasterCapaianPembelajaranID;
+                    data.Kelompok = cplMatakuliah.Kelompok;
+                    data.UpdatedBy = Session["username"] as string;
+                    data.CreatedDate = data.CreatedDate;
+
+                    _cplMatakuliah.Save(data);
+
+                    return Json(new ServiceResponse { status = 200, message = "Update Data Berhasil.." });
+                }
+                else
+                {
+                    return Json(new ServiceResponse { status = 500, message = "Tidak input bisa duplikasi!!!" });
+                }
             }
             catch (Exception e)
             {
-                return Json(new ServiceResponse { status = 500, message = "Data Gagal dihapus!!!" });
+                return Json(new ServiceResponse { status = 500, message = "Update Data Gagal!!!" });
             }
 
-            return Json(new ServiceResponse { status = 200, message = "Data Berhasil dihapus.." });
+            
         }
 
         [HttpPost]
@@ -230,13 +245,14 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 data.UpdatedBy = Session["username"] as string;
 
                 _cplMatakuliah.Save(data);
+                return Json(new ServiceResponse { status = 200, message = "Data Berhasil dihapus.." });
             }
             catch (Exception e)
             {
                 return Json(new ServiceResponse { status = 500, message = "Data Gagal dihapus!!!" });
             }
 
-            return Json(new ServiceResponse { status = 200, message = "Data Berhasil dihapus.." });
+            
 
         }
 
