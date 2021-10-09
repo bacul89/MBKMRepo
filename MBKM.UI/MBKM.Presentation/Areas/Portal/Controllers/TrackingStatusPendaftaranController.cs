@@ -108,7 +108,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             }
             ViewData["capaianTujuan"] = capaianTujuan;
             ViewData["countCPTujuan"] = capaianTujuan.Count();
-            ViewData["catatanBaru"] = _approvalPendaftaranService.Find(x => x.PendaftaranMataKuliahID == data.PendaftaranMataKuliahID && x.StatusPendaftaran.Contains("APPROVED")).FirstOrDefault().Catatan;
+            ViewData["catatanBaru"] = _approvalPendaftaranService.Find(x => x.PendaftaranMataKuliahID == data.PendaftaranMataKuliahID && (x.StatusPendaftaran.Contains("APPROVED") || x.StatusPendaftaran.Contains("REJECTED"))).FirstOrDefault().Catatan;
             return View(data);
         }
 
@@ -186,7 +186,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     ApprovalPendaftaran tempHistoryApproval = new ApprovalPendaftaran();
                     tempHistoryApproval.Approval = "MAHASISWA";
                     tempHistoryApproval.Catatan = "-";
-                    tempHistoryApproval.StatusPendaftaran = "ACCEPTED BY MAHASISWA";
+                    tempHistoryApproval.StatusPendaftaran = "REJECTED BY MAHASISWA";
                     tempHistoryApproval.IsActive = true;
                     tempHistoryApproval.IsDeleted = false;
                     tempHistoryApproval.PendaftaranMataKuliahID = TmpApproval.PendaftaranMataKuliahID;

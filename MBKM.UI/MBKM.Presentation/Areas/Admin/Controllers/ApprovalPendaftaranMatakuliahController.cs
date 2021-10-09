@@ -94,10 +94,31 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             {
                 CPLMKPendaftaran TmpApproval = _cPLMKPendaftaranService.Get(request.ID);
                 PendaftaranMataKuliah pendaftaran = _pendaftaranMataKuliahService.Get(TmpApproval.PendaftaranMataKuliahID);
+                if (request.PendaftaranMataKuliahs.Kesenjangan == null)
+                {
+                    pendaftaran.Kesenjangan = "-";
+                }
+                else
+                {
                     pendaftaran.Kesenjangan = request.PendaftaranMataKuliahs.Kesenjangan;
+                }
+                if (request.PendaftaranMataKuliahs.Hasil == null)
+                {
+                    pendaftaran.Hasil = "-";
+                }
+                else
+                {
                     pendaftaran.Hasil = request.PendaftaranMataKuliahs.Hasil;
+                }
+                if (request.PendaftaranMataKuliahs.Konversi == null)
+                {
+                    pendaftaran.Konversi = "-";
+                }
+                else
+                {
                     pendaftaran.Konversi = request.PendaftaranMataKuliahs.Konversi;
-                    if(request.PendaftaranMataKuliahs.DosenID != 0)
+                }
+                if (request.PendaftaranMataKuliahs.DosenID != 0)
                     {
                         pendaftaran.DosenID = request.PendaftaranMataKuliahs.DosenID;
                         pendaftaran.DosenPembimbing = request.PendaftaranMataKuliahs.DosenPembimbing;
@@ -115,7 +136,14 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
               
                 ApprovalPendaftaran tempHistoryApproval = new ApprovalPendaftaran();
                 tempHistoryApproval.Approval = HttpContext.Session["RoleName"].ToString().ToUpper();
-                tempHistoryApproval.Catatan = request.PendaftaranMataKuliahs.mahasiswas.Catatan;
+                if (request.PendaftaranMataKuliahs.Hasil == null)
+                {
+                    tempHistoryApproval.Catatan = "-";
+                }
+                else
+                {
+                    tempHistoryApproval.Catatan = request.PendaftaranMataKuliahs.mahasiswas.Catatan;
+                }
                 tempHistoryApproval.StatusPendaftaran = "APPROVED BY " + HttpContext.Session["RoleName"].ToString().ToUpper();
                 tempHistoryApproval.IsActive = true;
                 tempHistoryApproval.IsDeleted = false;
@@ -151,9 +179,30 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 CPLMKPendaftaran TmpApproval = _cPLMKPendaftaranService.Get(request.ID);
                 var idPEndaftaran = TmpApproval.PendaftaranMataKuliahID;
                 PendaftaranMataKuliah pendaftaran = _pendaftaranMataKuliahService.Get(TmpApproval.PendaftaranMataKuliahID);
-                pendaftaran.Kesenjangan = request.PendaftaranMataKuliahs.Kesenjangan;
+                if (request.PendaftaranMataKuliahs.Kesenjangan == null)
+                {
+                    pendaftaran.Kesenjangan = "-";
+                }
+                else
+                {
+                    pendaftaran.Kesenjangan = request.PendaftaranMataKuliahs.Kesenjangan;
+                }
+                if(request.PendaftaranMataKuliahs.Hasil == null)
+                {
+                    pendaftaran.Hasil = "-";
+                }
+                else
+                {
                 pendaftaran.Hasil = request.PendaftaranMataKuliahs.Hasil;
-                pendaftaran.Konversi = request.PendaftaranMataKuliahs.Konversi;
+                }
+                if(request.PendaftaranMataKuliahs.Konversi == null) { 
+                    pendaftaran.Konversi = "-";
+                }
+                else
+                {
+                    pendaftaran.Konversi = request.PendaftaranMataKuliahs.Konversi;
+                }
+
                 if (request.PendaftaranMataKuliahs.DosenID != 0)
                 {
                     pendaftaran.DosenID = request.PendaftaranMataKuliahs.DosenID;
@@ -172,7 +221,14 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 }
                 ApprovalPendaftaran tempHistoryApproval = new ApprovalPendaftaran();
                 tempHistoryApproval.Approval = HttpContext.Session["RoleName"].ToString().ToUpper();
-                tempHistoryApproval.Catatan = request.PendaftaranMataKuliahs.mahasiswas.Catatan;
+                if (request.PendaftaranMataKuliahs.mahasiswas.Catatan == null)
+                {
+                    tempHistoryApproval.Catatan = "-";
+                }
+                else
+                {
+                    tempHistoryApproval.Catatan = request.PendaftaranMataKuliahs.mahasiswas.Catatan;
+                }
                 tempHistoryApproval.StatusPendaftaran = "REJECTED BY " + HttpContext.Session["RoleName"].ToString().ToUpper();
                 tempHistoryApproval.IsActive = true;
                 tempHistoryApproval.IsDeleted = false;
