@@ -37,6 +37,9 @@ namespace MBKM.Repository.BaseRepository
         public DbSet<MasterCapaianPembelajaran> MasterCPLS { get; set; }
         public DbSet<JadwalKuliah> jadwalKuliahs { get; set; }
         public DbSet<PendaftaranMataKuliah> PendaftaranMataKuliahs { get; set; }
+        public DbSet<JenisKerjasamaModel> JenisKerjasamaModels { get; set; }
+
+        public DbSet<AttachmentPerjanjianKerjasama> attachmentPerjanjianKerjasamas { get; set; }
         public DbSet<CPLMatakuliah> CPLMatakuliah { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

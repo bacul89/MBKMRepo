@@ -90,6 +90,8 @@
     <Compile Include="Models\MBKM\InformasiPertukaran.cs" />
     <Compile Include="Models\MBKM\JadwalKuliah.cs" />
     <Compile Include="Models\MBKM\JadwalKuliahMahasiswa.cs" />
+    <Compile Include="Models\MBKM\JadwalUjianMBKM.cs" />
+    <Compile Include="Models\MBKM\JadwalUjianMBKMDetail.cs" />
     <Compile Include="Models\MBKM\JenisKerjasamaModel.cs" />
     <Compile Include="Models\MBKM\KRS.cs" />
     <Compile Include="Models\MBKM\Mahasiswa.cs" />
@@ -100,11 +102,14 @@
     <Compile Include="Models\Menu.cs" />
     <Compile Include="Models\MenuRole.cs" />
     <Compile Include="Models\Role.cs" />
+    <Compile Include="ViewModel\VMJenisKerjasama.cs" />
+    <Compile Include="ViewModel\VMJenisPertukaran.cs" />
     <Compile Include="ViewModel\VMListDaftarAllMahasiswa.cs" />
     <Compile Include="ViewModel\VMListMapingCPL.cs" />
     <Compile Include="ViewModel\VMLookUpUser.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />    <Compile Include="ViewModel\VMFakultas.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\VMFakultas.cs" />
     <Compile Include="ViewModel\VMListMahasiswa.cs" />
     <Compile Include="ViewModel\VMListMasterCPL.cs" />
     <Compile Include="ViewModel\VMListMenu.cs" />

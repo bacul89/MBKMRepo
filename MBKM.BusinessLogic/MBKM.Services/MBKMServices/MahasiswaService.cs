@@ -17,6 +17,9 @@ namespace MBKM.Services.MBKMServices
         VMLogin getLoginInternal(string StudentID, string Password);
         List<Mahasiswa> getMahasiswasNotYetVer(string Universitas, string Prodi);
         VMListMahasiswa getMahasiswasNotYetVer(DataTableAjaxPostModel model);
+        string GetNim();
+
+        void UpdateNim(int Nilai);
         //int updateRangeVer(Int64[] listId);
     }
     public class MahasiswaService : EntityService<Mahasiswa>, IMahasiswaService
@@ -60,6 +63,16 @@ namespace MBKM.Services.MBKMServices
                 sortBy = "ID";
             sortBy = sortBy + " " + model.order[0].dir.ToUpper();
             return _mahasiswaRepository.getMahasiswasNotYetVer(skip, take, searchBy, sortBy, sortDir);
+        }
+
+        public string GetNim()
+        {
+            return _mahasiswaRepository.GetNim();
+        }
+
+        public void UpdateNim(int Nilai)
+        {
+             _mahasiswaRepository.UpdateNim(Nilai);
         }
 
         //public int updateRangeVer(long[] listId)

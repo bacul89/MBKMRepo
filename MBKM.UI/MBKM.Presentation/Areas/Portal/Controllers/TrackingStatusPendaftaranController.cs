@@ -15,14 +15,17 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         private IPendaftaranMataKuliahService _pendaftaranMataKuliahService;
         private ICPLMKPendaftaranService _cPLMKPendaftaranService;
         private ICPLMatakuliahService _cPLMatakuliahService;
+        private IMahasiswaService _mahasiswaService;
+        private IApprovalPendaftaranService _approvalPendaftaranService;
 
-        public TrackingStatusPendaftaranController(IPendaftaranMataKuliahService pendaftaranMataKuliahService, ICPLMKPendaftaranService cPLMKPendaftaranService, ICPLMatakuliahService cPLMatakuliahService)
+        public TrackingStatusPendaftaranController(IPendaftaranMataKuliahService pendaftaranMataKuliahService, ICPLMKPendaftaranService cPLMKPendaftaranService, ICPLMatakuliahService cPLMatakuliahService, IMahasiswaService mahasiswaService, IApprovalPendaftaranService approvalPendaftaranService)
         {
             _pendaftaranMataKuliahService = pendaftaranMataKuliahService;
             _cPLMKPendaftaranService = cPLMKPendaftaranService;
             _cPLMatakuliahService = cPLMatakuliahService;
+            _mahasiswaService = mahasiswaService;
+            _approvalPendaftaranService = approvalPendaftaranService;
         }
-
 
 
         // GET: Portal/TrackingStatusPendaftaran
@@ -98,9 +101,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             {
                 ViewData["disabled"] = "";
             }
-
             ViewData["capaianTujuan"] = capaianTujuan;
             ViewData["countCPTujuan"] = capaianTujuan.Count();
+            ViewData["catatanBaru"] = _approvalPendaftaranService.Find(x => x.PendaftaranMataKuliahID == data.PendaftaranMataKuliahID && x.StatusPendaftaran.Contains("APPROVED")).FirstOrDefault().Catatan;
             return View(data);
         }
 
@@ -116,11 +119,43 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 try
                 {
                     _pendaftaranMataKuliahService.Save(pendaftaran);
+                    var NimBaru = _mahasiswaService.GetNim();
+                    
+                    if (pendaftaran.mahasiswas.NIM != pendaftaran.mahasiswas.NIMAsal && !pendaftaran.mahasiswas.NIM.Contains("MBKM"))
+                    {
+                        Mahasiswa tmpMhs = _mahasiswaService.Get(pendaftaran.MahasiswaID);
+                        tmpMhs.NIM = NimBaru;
+                        _mahasiswaService.Save(tmpMhs);
+                        string[] tempNimArray = NimBaru.Split(new string[] { "MBKM" }, StringSplitOptions.None);
+                        int CountNim = Int32.Parse(tempNimArray[1]);
+                        _mahasiswaService.UpdateNim(CountNim);
+                    }
+
+                    ApprovalPendaftaran tempHistoryApproval = new ApprovalPendaftaran();
+                    tempHistoryApproval.Approval = "MAHASISWA";
+                    tempHistoryApproval.Catatan = "-";
+                    tempHistoryApproval.StatusPendaftaran = "ACCEPTED BY MAHASISWA";
+                    tempHistoryApproval.IsActive = true;
+                    tempHistoryApproval.IsDeleted = false;
+                    tempHistoryApproval.PendaftaranMataKuliahID = TmpApproval.PendaftaranMataKuliahID;
+                    tempHistoryApproval.CreatedBy = "MAHASISWA";
+                    tempHistoryApproval.UpdatedBy = "MAHASISWA";
+                    tempHistoryApproval.UpdatedDate = DateTime.Now;
+                    tempHistoryApproval.CreatedDate = DateTime.Now;
+                    try
+                    {
+                        _approvalPendaftaranService.Save(tempHistoryApproval);
+                    }
+                    catch (Exception e)
+                    {
+                        return Json(new ServiceResponse { status = 300, message = "Error Saat Menyimpan Data Pendaftaran" });
+                    }
                 }
                 catch (Exception e)
                 {
                     return Json(new ServiceResponse { status = 300, message = "Terjadi Kesalahan Saat Proses Accepted" });
                 }
+
                 return Json(new ServiceResponse { status = 200, message = "Done" });
             }
             catch (Exception e)
@@ -141,6 +176,27 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 try
                 {
                     _pendaftaranMataKuliahService.Save(pendaftaran);
+                    var NimBaru = _mahasiswaService.GetNim();
+
+                    ApprovalPendaftaran tempHistoryApproval = new ApprovalPendaftaran();
+                    tempHistoryApproval.Approval = "MAHASISWA";
+                    tempHistoryApproval.Catatan = "-";
+                    tempHistoryApproval.StatusPendaftaran = "ACCEPTED BY MAHASISWA";
+                    tempHistoryApproval.IsActive = true;
+                    tempHistoryApproval.IsDeleted = false;
+                    tempHistoryApproval.PendaftaranMataKuliahID = TmpApproval.PendaftaranMataKuliahID;
+                    tempHistoryApproval.CreatedBy = "MAHASISWA";
+                    tempHistoryApproval.UpdatedBy = "MAHASISWA";
+                    tempHistoryApproval.UpdatedDate = DateTime.Now;
+                    tempHistoryApproval.CreatedDate = DateTime.Now;
+                    try
+                    {
+                        _approvalPendaftaranService.Save(tempHistoryApproval);
+                    }
+                    catch (Exception e)
+                    {
+                        return Json(new ServiceResponse { status = 300, message = "Error Saat Menyimpan Data Pendaftaran" });
+                    }
                 }
                 catch (Exception e)
                 {

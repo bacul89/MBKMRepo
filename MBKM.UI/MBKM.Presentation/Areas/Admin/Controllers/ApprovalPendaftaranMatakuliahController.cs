@@ -13,10 +13,9 @@ using MBKM.Services;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
-    [MBKMAuthorize]
     public class ApprovalPendaftaranMatakuliahController : Controller
     {
-
+        IApprovalPendaftaranService _approvalPendaftaranService;
         IPendaftaranMataKuliahService _pendaftaranMataKuliahService;
         ICPLMKPendaftaranService _cPLMKPendaftaranService;
         IInformasiPertukaranService _informasiPertukaranService;
@@ -24,8 +23,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         ICPLMatakuliahService _cPLMatakuliahService;
         IUserService _userService;
 
-        public ApprovalPendaftaranMatakuliahController(IPendaftaranMataKuliahService pendaftaranMataKuliahService, ICPLMKPendaftaranService cPLMKPendaftaranService, IInformasiPertukaranService informasiPertukaranService, IMahasiswaService mahasiswaService, ICPLMatakuliahService cPLMatakuliahService, IUserService userService)
+        public ApprovalPendaftaranMatakuliahController(IApprovalPendaftaranService approvalPendaftaranService, IPendaftaranMataKuliahService pendaftaranMataKuliahService, ICPLMKPendaftaranService cPLMKPendaftaranService, IInformasiPertukaranService informasiPertukaranService, IMahasiswaService mahasiswaService, ICPLMatakuliahService cPLMatakuliahService, IUserService userService)
         {
+            _approvalPendaftaranService = approvalPendaftaranService;
             _pendaftaranMataKuliahService = pendaftaranMataKuliahService;
             _cPLMKPendaftaranService = cPLMKPendaftaranService;
             _informasiPertukaranService = informasiPertukaranService;
@@ -33,7 +33,6 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             _cPLMatakuliahService = cPLMatakuliahService;
             _userService = userService;
         }
-
 
 
         // GET: Admin/ApprovalPendaftaranMatakuliah
@@ -94,7 +93,6 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             try
             {
                 CPLMKPendaftaran TmpApproval = _cPLMKPendaftaranService.Get(request.ID);
-                var idPEndaftaran = TmpApproval.PendaftaranMataKuliahID;
                 PendaftaranMataKuliah pendaftaran = _pendaftaranMataKuliahService.Get(TmpApproval.PendaftaranMataKuliahID);
                     pendaftaran.Kesenjangan = request.PendaftaranMataKuliahs.Kesenjangan;
                     pendaftaran.Hasil = request.PendaftaranMataKuliahs.Hasil;
@@ -114,18 +112,28 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 {
                     return Json(new ServiceResponse { status = 300, message = "Error Saat Menyimpan Data Pendaftaran" });
                 }
-                Mahasiswa tmpMahasiswa = _mahasiswaService.Get(pendaftaran.MahasiswaID);
-                    tmpMahasiswa.Catatan = request.PendaftaranMataKuliahs.mahasiswas.Catatan;
-                    tmpMahasiswa.UpdatedBy = HttpContext.Session["username"].ToString();
-                    tmpMahasiswa.UpdatedDate = DateTime.Now;
+              
+                ApprovalPendaftaran tempHistoryApproval = new ApprovalPendaftaran();
+                tempHistoryApproval.Approval = HttpContext.Session["RoleName"].ToString().ToUpper();
+                tempHistoryApproval.Catatan = request.PendaftaranMataKuliahs.mahasiswas.Catatan;
+                tempHistoryApproval.StatusPendaftaran = "APPROVED BY " + HttpContext.Session["RoleName"].ToString().ToUpper();
+                tempHistoryApproval.IsActive = true;
+                tempHistoryApproval.IsDeleted = false;
+                tempHistoryApproval.PendaftaranMataKuliahID = TmpApproval.PendaftaranMataKuliahID;
+                tempHistoryApproval.CreatedBy = HttpContext.Session["RoleName"].ToString().ToUpper();
+                tempHistoryApproval.UpdatedBy = HttpContext.Session["RoleName"].ToString().ToUpper();
+                tempHistoryApproval.UpdatedDate = DateTime.Now;
+                tempHistoryApproval.CreatedDate = DateTime.Now;
+
                 try
                 {
-                    _mahasiswaService.Save(tmpMahasiswa);
+                    _approvalPendaftaranService.Save(tempHistoryApproval);
                 }
                 catch (Exception e)
                 {
                     return Json(new ServiceResponse { status = 300, message = "Error Saat Menyimpan Data Pendaftaran" });
                 }
+
                 return Json(new ServiceResponse { status = 200, message = "Done" });
             }
             catch(Exception e)
@@ -162,13 +170,20 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 {
                     return Json(new ServiceResponse { status = 300, message = "Error Saat Menyimpan Data Pendaftaran" });
                 }
-                Mahasiswa tmpMahasiswa = _mahasiswaService.Get(pendaftaran.MahasiswaID);
-                tmpMahasiswa.Catatan = request.PendaftaranMataKuliahs.mahasiswas.Catatan;
-                tmpMahasiswa.UpdatedBy = HttpContext.Session["username"].ToString();
-                tmpMahasiswa.UpdatedDate = DateTime.Now;
+                ApprovalPendaftaran tempHistoryApproval = new ApprovalPendaftaran();
+                tempHistoryApproval.Approval = HttpContext.Session["RoleName"].ToString().ToUpper();
+                tempHistoryApproval.Catatan = request.PendaftaranMataKuliahs.mahasiswas.Catatan;
+                tempHistoryApproval.StatusPendaftaran = "REJECTED BY " + HttpContext.Session["RoleName"].ToString().ToUpper();
+                tempHistoryApproval.IsActive = true;
+                tempHistoryApproval.IsDeleted = false;
+                tempHistoryApproval.PendaftaranMataKuliahID = TmpApproval.PendaftaranMataKuliahID;
+                tempHistoryApproval.CreatedBy = HttpContext.Session["RoleName"].ToString().ToUpper();
+                tempHistoryApproval.UpdatedBy = HttpContext.Session["RoleName"].ToString().ToUpper();
+                tempHistoryApproval.UpdatedDate = DateTime.Now;
+                tempHistoryApproval.CreatedDate = DateTime.Now;
                 try
                 {
-                    _mahasiswaService.Save(tmpMahasiswa);
+                    _approvalPendaftaranService.Save(tempHistoryApproval);
                 }
                 catch (Exception e)
                 {
@@ -203,10 +218,14 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetCobaCoba(int id)
+        public JsonResult GetCobaCoba()
         {
-            var data = _userService.getDosenList(0,10,"da");
-            return Json(data);
+            var data1 = _mahasiswaService.GetNim();
+            string[] data = data1.Split(new string[] { "MBKM" }, StringSplitOptions.None);
+            int x = Int32.Parse(data[1]);
+            _mahasiswaService.UpdateNim(x);
+            var data2 = _mahasiswaService.GetNim();
+            return Json(data2);
         }
 
 
