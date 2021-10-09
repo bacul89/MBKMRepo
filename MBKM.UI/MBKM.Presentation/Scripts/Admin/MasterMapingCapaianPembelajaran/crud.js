@@ -48,6 +48,19 @@ function loadFromLookup(tipe, id, nama) {
             },
         }
     });
+    $("#" + id).change(function () {
+        $('#inp_capaian').val('');
+        $('#inp_kode_capaian_pembelajaran').empty();
+
+        $("#fakultasCari").select2({
+            placeholder: "-- Pilih Kode CPL --"
+        });
+
+        loadMasterCPL();
+
+
+    });
+
 }
 
 function loadMasterCPL() {
@@ -269,6 +282,7 @@ function IndexViewMasterMapingCapaianPembelajaran(id) {
 }
 
 function PostCreate() {
+    $.LoadingOverlay("show");
     dMasterMapingCapaianPembelajaran = {}
     getValueOnForm();
 
@@ -284,6 +298,7 @@ function PostCreate() {
             data: JSON.stringify(dMasterMapingCapaianPembelajaran),
             contentType: 'application/json',
             success: function (e) {
+                $.LoadingOverlay("hide");
                 if (e.status == 500) {
                     Swal.fire({
                         title: 'Oppss',
@@ -307,11 +322,12 @@ function PostCreate() {
                     //datatable.ajax.reload(null, false);
                     clearValueOnForm();
                 }
-
+                reloadDatatable();
                 $('.modal').modal('hide');
                 
             },
             error: function (e) {
+                $.LoadingOverlay("hide");
                 Swal.fire({
                     title: 'Oppss',
                     icon: 'error',
@@ -338,10 +354,14 @@ function PostCreate() {
 }
 
 function PostUpdate() {
+    $.LoadingOverlay("show");
     dMasterMapingCapaianPembelajaran = {}
     getValueOnForm();
-    dMasterMapingCapaianPembelajaran.ID = $('#inp_id_capaian_pembelajaran').val();
+    dMasterMapingCapaianPembelajaran.ID = $('#inp_id_mapping_capaian_pembelajaran').val();
     var base_url = window.location.origin;
+
+    console.log(dMasterMapingCapaianPembelajaran);
+
     $.ajax({
         url: base_url + '/Admin/MasterMapingCapaianPembelajaran/PostUpdateMasterMapingCapaianPembelajaran',
         type: 'post',
@@ -349,19 +369,36 @@ function PostUpdate() {
         data: JSON.stringify(dMasterMapingCapaianPembelajaran),
         contentType: 'application/json',
         success: function (e) {
-            Swal.fire({
-                title: 'Berhasil',
-                icon: 'success',
-                html: 'Master Lookup Berhasil Diubah',
-                showCloseButton: true,
-                showCancelButton: false,
-                focusConfirm: false,
-                confirmButtonText: 'OK'
-            })
-            //datatable.ajax.reload(null, false);
+            $.LoadingOverlay("hide");
+            if (e.status == 500) {
+                Swal.fire({
+                    title: 'Oppss',
+                    icon: 'error',
+                    html: e.message,
+                    showCloseButton: true,
+                    showCancelButton: false,
+                    focusConfirm: false,
+                    confirmButtonText: 'OK'
+                })
+            } else {
+                Swal.fire({
+                    title: 'Berhasil',
+                    icon: 'success',
+                    html: 'Data Berhasil Dihapus',
+                    showCloseButton: true,
+                    showCancelButton: false,
+                    focusConfirm: false,
+                    confirmButtonText: 'OK'
+                })
+                //datatable.ajax.reload(null, false);
+                clearValueOnForm();
+                
+            }
             $('.modal').modal('hide');
+            reloadDatatable();
         },
         error: function (e) {
+            $.LoadingOverlay("hide");
             Swal.fire({
                 title: 'Oppss',
                 icon: 'error',
@@ -379,8 +416,66 @@ function PostUpdate() {
 
 }
 
-function DeletedMasterMapingCapaianPembelajaran(id) {
+function DeletedMasterMapingCapaianPembelajaran(idMapping) {
+    swal.fire({
+        title: "Apakah anda yakin?",
+        type: "warning",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, delete it!",
+        closeOnConfirm: false
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.LoadingOverlay("show");
+            $.ajax({
+                url: '/Admin/MasterMapingCapaianPembelajaran/PostDeleteMasterMapingCapaianPembelajaran',
+                type: 'post',
+                data: {
+                    id: idMapping
+                },
+                datatype: 'json',
+                success: function (e) {
+                    $.LoadingOverlay("hide");
+                    if (e.status == 500) {
+                        Swal.fire({
+                            title: 'Oppss',
+                            icon: 'error',
+                            html: e.message,
+                            showCloseButton: true,
+                            showCancelButton: false,
+                            focusConfirm: false,
+                            confirmButtonText: 'OK'
+                        })
+                    } else {
+                        Swal.fire({
+                            title: 'Berhasil',
+                            icon: 'success',
+                            html: 'Data Berhasil Dihapus',
+                            showCloseButton: true,
+                            showCancelButton: false,
+                            focusConfirm: false,
+                            confirmButtonText: 'OK'
+                        })
+                        reloadDatatable();
+                    }
+                }, error: function (e) {
+                    $.LoadingOverlay("hide");
+                    Swal.fire({
+                        title: 'Oppss',
+                        icon: 'error',
+                        html: 'Coba Reload Page',
+                        showCloseButton: true,
+                        showCancelButton: false,
+                        focusConfirm: false,
+                        confirmButtonText: 'OK'
+                    })
+                }
+            })
+        }
+    })
 
+/*
     Swal.fire({
         title: "Apakah anda yakin?",
         text: "warning",
@@ -391,7 +486,7 @@ function DeletedMasterMapingCapaianPembelajaran(id) {
         closeOnConfirm: false
     }).then((result) => {
         $.ajax({
-            url: '/Admin/MasterMapingCapaianPembelajaran/PostDeleteMasterMapingCapaianPembelajaran',
+            
             type: "POST",
             data: { id: id }
             ,
@@ -433,7 +528,7 @@ function DeletedMasterMapingCapaianPembelajaran(id) {
                 })
             }
         });
-    })
+    })*/
 
 }
 
