@@ -19,9 +19,11 @@ namespace MBKM.Services.MBKMServices
 
         VMListMapingCPL GetListMapingCPL(DataTableAjaxPostModel model);
         VMListMapingCPL SearchListMapingCPL(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string idMatakuliah);
+
+        IEnumerable<VMMataKuliah> GetMatkul(int skip, int take, string searchBy, string idProdi, string idFakultas);
+
         //VMMataKuliah GetMatkul(DataTableAjaxPostModel model, string idProdi, string idFakultas);
         //VMMataKuliah GetMatkul(DataTableAjaxPostModel model, string search, string idProdi, string idFakultas);
-        IEnumerable<VMMataKuliah> GetMatkul(int skip, int take, string searchBy, string idProdi, string idFakultas);
     }
     public class CPLMatakuliahService : EntityService<CPLMatakuliah>, ICPLMatakuliahService
     {
