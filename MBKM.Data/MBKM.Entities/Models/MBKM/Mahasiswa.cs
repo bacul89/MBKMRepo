@@ -53,5 +53,6 @@ namespace MBKM.Entities.Models.MBKM
         public virtual ICollection<KRS> KRs { get; set; }
         [JsonIgnore]
         public virtual ICollection<PendaftaranMataKuliah> PendaftaranMataKuliahs { get; set; }
+        public string ProdiAsalID { get; set; }
     }
 }
