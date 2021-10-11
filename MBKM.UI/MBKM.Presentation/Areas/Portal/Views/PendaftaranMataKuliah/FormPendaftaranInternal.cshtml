@@ -83,7 +83,7 @@
                         <tr>
                             <td style="text-align: right;">No. Kerjasama</td>
                             <td style="text-align: center;">:</td>
-                            <td>@Model.NoKerjasama</td>
+                            <td id="noKerjasama"></td>
                         </tr>
                     </table>
                 </div>
@@ -182,6 +182,7 @@
             }).then(function (response) {
                 $('#jenisProgramMBKM').html(response.JenisPertukaran);
                 $('#jenisKegiatanMBKM').html(response.JenisKerjasama);
+                $('#noKerjasama').html(response.NoKerjasama);
             });
         }
     </script>
