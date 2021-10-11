@@ -440,7 +440,7 @@
                     }
                 });
                 $("#jenisKegiatanMBKM").change(function () {
-                    if ($("#jenisProgramMBKM").val() == 'Pertukaran') {
+                    if (!$("#jenisProgramMBKM").val().includes('Non Pertukaran')) {
                         return;
                     }
                     $("#namaInstansi").empty();
@@ -486,7 +486,8 @@
                                 data: function (params) {
                                     return {
                                         Search: params.term || "",
-                                        instansi: $('#namaInstansi').val()
+                                        instansi: $('#namaInstansi').val(),
+                                        idKerjasama: $('#jenisKegiatanMBKM').val()
                                     };
                                 },
                                 processResults: function (data, params) {

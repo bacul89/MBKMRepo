@@ -1,9 +1,11 @@
 ﻿using MBKM.Common.Helpers;
 using MBKM.Entities.Models.MBKM;
 using MBKM.Entities.ViewModel;
+using MBKM.Presentation.Helper;
 using MBKM.Presentation.models;
 using MBKM.Services;
 using MBKM.Services.MBKMServices;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -13,6 +15,7 @@ using System.Web.Mvc;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
+    [MBKMAuthorize]
     public class MasterCPLController : Controller
     {
         private ILookupService _lookupService;
@@ -26,7 +29,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         // GET: Admin/MasterCPL
         public ActionResult Index()
         {
-            Session["username"] = "Smitty Werben Jeger Man Jensen";
+            
             return View();
         }
         [HttpPost]
@@ -56,9 +59,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         model.UpdatedDate = DateTime.Now;
                         model.IsDeleted = false;
                         model.IsActive = model.IsActive;
-                        model.CreatedBy = "admin";
+                        model.CreatedBy = Session["username"] as string;
+                
 
-                        _mcpService.Save(model);
+                _mcpService.Save(model);
                         return Json(new ServiceResponse { status = 200, message = "Pendaftaran CPL Berhasil!" });
                    
 
@@ -69,33 +73,49 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             }
 
         }
-        //public ActionResult ModaladdCPL()
-        //{
-        //    IEnumerable<VMListProdi> listProdi = _lookupService.getListProdi();
-        //    ViewBag.listProdi = new SelectList(listProdi, "IDProdi", "NamaProdi");
+        [HttpPost]
+        public ActionResult PostUpdateCPL(MasterCapaianPembelajaran cpl)
+        {
+            
+
+            MasterCapaianPembelajaran data = _mcpService.Get(cpl.ID);
+            data.Kelompok = cpl.Kelompok;
+            data.Kode = cpl.Kode;
+            data.Capaian = cpl.Capaian;
+            data.IsActive = cpl.IsActive;
+            data.UpdatedBy = Session["username"] as string;
 
 
-        //    return View("ModalCreateCPL");
-        //}
-        //public ActionResult ModalDetailMasterCpl(int id)
-        //{
-        //    var model = _mcpService.Get(id);
 
-        //    return Json(model);
+            _mcpService.Save(data);
+            return Json(new ServiceResponse { status = 200, message = "Update CPL Berhasil!" });
+            //return new ContentResult { Content = JsonConvert.SerializeObject(data), ContentType = "application/json" };
 
-        //    //return View(model);
-        //}
+
+        }
+        [HttpPost]
+        public ActionResult PostDeleteCPL(int id)
+        {
+            var data = _mcpService.Get(id);
+            data.IsDeleted = true;
+            data.UpdatedBy = Session["username"] as string;
+
+            _mcpService.Save(data);
+            return Json(new ServiceResponse { status = 200, message = "Master CPL Dihapus!" });
+        }
         public ActionResult ModalDetailMasterCpl(int id)
         {
             var data = _mcpService.Get(id);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            //return Json(data, JsonRequestBehavior.AllowGet);
+            return new ContentResult { Content = JsonConvert.SerializeObject(data), ContentType = "application/json" };
         }
         public ActionResult ModalEditMasterCpl(int id)
         {
      
 
             var data = _mcpService.Get(id);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            //return Json(data, JsonRequestBehavior.AllowGet);
+            return new ContentResult { Content = JsonConvert.SerializeObject(data), ContentType = "application/json" };
         }
         //public ActionResult ModalUpdateMasterCpl(int id)
         //{
@@ -126,11 +146,11 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             //return Json(_pmkService.GetFakultas(result.JenjangStudi, search), JsonRequestBehavior.AllowGet);
             return Json(_mcpService.GetProdiByFakultas(jenjang,idFakultas, search), JsonRequestBehavior.AllowGet);
         }
-        public ActionResult GetLokasiByProdi(string idProdi, string search,string jenjang)
+        public ActionResult GetLokasiByProdi(string namaProdi, string search,string jenjang)
         {
             //string email = Session["email"] as string;
             //var result = GetMahasiswaByEmail(email);
-            return Json(_mcpService.GetLokasiByProdi( jenjang,idProdi, search), JsonRequestBehavior.AllowGet);
+            return Json(_mcpService.GetLokasiByProdi( jenjang, namaProdi, search), JsonRequestBehavior.AllowGet);
         }
         public ActionResult getLookupByTipe(string tipe)
         {

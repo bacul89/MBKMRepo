@@ -27,7 +27,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         private IPendaftaranMataKuliahService _pendaftaranMataKuliahService;
         private ICPLMKPendaftaranService _cplmkPendaftaranService;
         private ICPLMatakuliahService _cplMatakuliahService;
-        public PendaftaranMataKuliahController(ICPLMatakuliahService cplMatakuliahService, ICPLMKPendaftaranService cplmkPendaftaranService, IPendaftaranMataKuliahService pendaftaranMataKuliahService, IInformasiPertukaranService informasiPertukaranService, IPerjanjianKerjasamaService perjanjianKerjasamaService, IJenisKerjasamaModelService jenisKerjasamaService, IPendaftaranMataKuliahService pmkService, IMahasiswaService mahasiswaService, IJadwalKuliahService jkService)
+        private IApprovalPendaftaranService _approvalPendaftaranService;
+        public PendaftaranMataKuliahController(IApprovalPendaftaranService approvalPendaftaranService, ICPLMatakuliahService cplMatakuliahService, ICPLMKPendaftaranService cplmkPendaftaranService, IPendaftaranMataKuliahService pendaftaranMataKuliahService, IInformasiPertukaranService informasiPertukaranService, IPerjanjianKerjasamaService perjanjianKerjasamaService, IJenisKerjasamaModelService jenisKerjasamaService, IPendaftaranMataKuliahService pmkService, IMahasiswaService mahasiswaService, IJadwalKuliahService jkService)
         {
             _pmkService = pmkService;
             _mahasiswaService = mahasiswaService;
@@ -38,6 +39,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             _pendaftaranMataKuliahService = pendaftaranMataKuliahService;
             _cplmkPendaftaranService = cplmkPendaftaranService;
             _cplMatakuliahService = cplMatakuliahService;
+            _approvalPendaftaranService = approvalPendaftaranService;
         }
         public ActionResult Index()
         {
@@ -104,7 +106,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             string email = Session["email"] as string;
             var result = GetMahasiswaByEmail(email);
-            return Json(_pmkService.GetFakultas(result.JenjangStudi, search), JsonRequestBehavior.AllowGet);
+            return new ContentResult { Content = JsonConvert.SerializeObject(_pmkService.GetFakultas(result.JenjangStudi, search)), ContentType = "application/json" };
         }
         public ActionResult GetMataKuliahByProdi(int idProdi, string lokasi, int strm)
         {
@@ -124,13 +126,13 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             string email = Session["email"] as string;
             var result = GetMahasiswaByEmail(email);
-            return Json(_pmkService.GetProdiByFakultas(result.JenjangStudi, idFakultas, search), JsonRequestBehavior.AllowGet);
+            return new ContentResult { Content = JsonConvert.SerializeObject(_pmkService.GetProdiByFakultas(result.JenjangStudi, idFakultas, search)), ContentType = "application/json" };
         }
         public ActionResult GetLokasiByProdi(string namaProdi, string search)
         {
             string email = Session["email"] as string;
             var result = GetMahasiswaByEmail(email);
-            return Json(_pmkService.GetLokasiByProdi(result.JenjangStudi, namaProdi, search), JsonRequestBehavior.AllowGet);
+            return new ContentResult { Content = JsonConvert.SerializeObject(_pmkService.GetLokasiByProdi(result.JenjangStudi, namaProdi, search)), ContentType = "application/json" };
         }
         public ActionResult GetProgram()
         {
@@ -144,11 +146,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     jkm.Add(item);
                 }
             }
-            return Json(jkm, JsonRequestBehavior.AllowGet);
+            return new ContentResult { Content = JsonConvert.SerializeObject(jkm), ContentType = "application/json" };
         }
         public ActionResult GetKegiatanByProgram(string program)
         {
-            return Json(_jenisKerjasamaService.Find(jk => jk.JenisPertukaran == program).ToList(), JsonRequestBehavior.AllowGet);
+            return new ContentResult { Content = JsonConvert.SerializeObject(_jenisKerjasamaService.Find(jk => jk.JenisPertukaran == program).ToList()), ContentType = "application/json" };
         }
         public ActionResult GetInstansiByJenisKerjasama(string idKerjasama)
         {
@@ -165,16 +167,16 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     pks.Add(tes);
                 }
             }
-            return Json(pks, JsonRequestBehavior.AllowGet);
+            return new ContentResult { Content = JsonConvert.SerializeObject(pks), ContentType = "application/json" };
         }
         public ActionResult GetInstansiByNoKerjasama(string noKerjasama)
         {
             var result = _perjanjianKerjasamaService.Find(pk => pk.NoPerjanjian == noKerjasama).FirstOrDefault();
-            return Json(result, JsonRequestBehavior.AllowGet);
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
-        public ActionResult GetNoKerjasamaByInstansi(string instansi)
+        public ActionResult GetNoKerjasamaByInstansi(string instansi, string idKerjasama)
         {
-            return Json(_perjanjianKerjasamaService.Find(pk => pk.NamaInstansi == instansi).ToList(), JsonRequestBehavior.AllowGet);
+            return new ContentResult { Content = JsonConvert.SerializeObject(_perjanjianKerjasamaService.Find(pk => pk.NamaInstansi == instansi && pk.JenisKerjasama == idKerjasama).ToList()), ContentType = "application/json" };
         }
         public ActionResult GetInformasiPertukaran()
         {
@@ -221,12 +223,12 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 return Json(new ServiceResponse { status = 500, message = e.Message });
             }
         }
-        public ActionResult InsertPendaftaranMK(PendaftaranMataKuliah pendaftaranMataKuliah, CPLMKPendaftaran cplmkPendaftaran)
+        public ActionResult InsertPendaftaranMK(PendaftaranMataKuliah pendaftaranMataKuliah, CPLMKPendaftaran cplmkPendaftaran, ApprovalPendaftaran approvalPendaftaran)
         {
             try
             {
                 Int64 id = GetMahasiswaByEmail(Session["email"] as string).ID;
-                if (_pendaftaranMataKuliahService.Find(pmk => pmk.MahasiswaID == id).FirstOrDefault() == null)
+                if (_pendaftaranMataKuliahService.Find(pmk => pmk.MahasiswaID == id && pmk.JadwalKuliahID == pendaftaranMataKuliah.JadwalKuliahID).FirstOrDefault() == null)
                 {
                     pendaftaranMataKuliah.MahasiswaID = id;
                     pendaftaranMataKuliah.IsActive = true;
@@ -243,6 +245,15 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     cplmkPendaftaran.CreatedDate = DateTime.Now;
                     cplmkPendaftaran.UpdatedDate = DateTime.Now;
                     _cplmkPendaftaranService.Save(cplmkPendaftaran);
+                    approvalPendaftaran.StatusPendaftaran = "MENUNGGU APPROVAL KAPRODI/WR BIDANG AKADEMIK";
+                    approvalPendaftaran.PendaftaranMataKuliahID = ID;
+                    approvalPendaftaran.Approval = "-";
+                    approvalPendaftaran.Catatan = "-";
+                    approvalPendaftaran.IsActive = true;
+                    approvalPendaftaran.IsDeleted = false;
+                    approvalPendaftaran.CreatedDate = DateTime.Now;
+                    approvalPendaftaran.UpdatedDate = DateTime.Now;
+                    _approvalPendaftaranService.Save(approvalPendaftaran);
                     return Json(new ServiceResponse { status = 200, message = "Anda berhasil terdaftar, silahkan cek tracking pendaftaran untuk melihat status pendaftaran!" });
                 }
                 return Json(new ServiceResponse { status = 400, message = "Anda sudah mendaftar matakuliah ini!" });

@@ -12,18 +12,15 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
-
-
-
-using MBKM.Entities.Models;
-using MBKM.Repository.Repositories;
 using MBKM.Presentation.Helper;
+
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
+
+    [MBKMAuthorize]
     public class MasterMapingCapaianPembelajaranController : Controller
     {
-
 
         private ICPLMatakuliahService _cplMatakuliah;
         private ILookupService _lookupService;
@@ -38,20 +35,15 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             _mcpService = mcpService;
         }
 
-        /*        public string arr { get; set; }
-                public string brr { get; set; }
-                public string crr { get; set; }
-                public string drr { get; set; }
-                public string err { get; set; }*/
 
         // GET: Admin/MasterMapingCapaianPembelajaran
         public ActionResult Index()
         {
-            Session["username"] = "Smitty Werben Jeger Man Jensen";
+            //Session["username"] = "Smitty Werben Jeger Man Jensen";
             return View();
         }
 
-        public class MyJsonObject
+/*        public class MyJsonObject
         {
             [Newtonsoft.Json.JsonProperty("ID")]
             public string ID { get; set; }
@@ -71,7 +63,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             [Newtonsoft.Json.JsonProperty("err")]
             public string err { get; set; }
 
-        }
+        }*/
 
 
         public JsonResult GetList(DataTableAjaxPostModel model)
@@ -87,30 +79,58 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             });
         }
 
-
-
-/*        public ActionResult GetDataMasterMapingCapaianPembelajaran()
+        public JsonResult SearchList(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string idMatakuliah)
         {
-            //var jsonString = "[{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"2\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"3\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"4\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"5\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"6\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"7\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"}]";
-            //List<MyJsonObject> myJsonObjects = Newtonsoft.Json.JsonConvert.DeserializeObject<List<MyJsonObject>>(jsonString);
+            VMListMapingCPL vMListCPL = _cplMatakuliah.SearchListMapingCPL(model, idProdi, lokasi, idFakultas, jenjangStudi,idMatakuliah);
+            return Json(new
+            {
+                // this is what datatables wants sending back
+                draw = model.draw,
+                recordsTotal = vMListCPL.TotalCount,
+                recordsFiltered = vMListCPL.TotalFilterCount,
+                data = vMListCPL.gridDatas
+            });
+        }
 
-            var data = _cplMatakuliah.Find(x => x.IsDeleted == false).ToList();
-            *//*return Json(data, JsonRequestBehavior.AllowGet);*/
+        public ActionResult GetSearch(string idProdi, string lokasi, string idFakultas, string jenjangStudi, string idMatakuliah)
+        {
+            List<CPLMatakuliah> MVCpl = new List<CPLMatakuliah>();
+            List<string> mapCPL = new List<string>();
+            foreach (var item in _cplMatakuliah.Find(MapCpl => MapCpl.IDMataKUliah == idMatakuliah && MapCpl.MasterCapaianPembelajarans.Lokasi == lokasi && MapCpl.MasterCapaianPembelajarans.ProdiID == idProdi && MapCpl.MasterCapaianPembelajarans.FakultasID == idFakultas && MapCpl.MasterCapaianPembelajarans.JenjangStudi == jenjangStudi ).ToList())
+            {
+                if (!mapCPL.Contains(item.NamaMataKuliah))
+                {
+                    MVCpl.Add(item);
+                    mapCPL.Add(item.NamaMataKuliah);
+                }
+            }
+            return new ContentResult { Content = JsonConvert.SerializeObject(MVCpl), ContentType = "application/json" };
+        }
 
-            /*            return Json(new
-                        {
-                            KodeMataKuliah = data.MataKuliah,
-                            NamaMataKuliah = data.NamaMataKuliah,
-                            MasterCapaianPembelajaranID = data.MasterCapaianPembelajaranID,
-                            Kelompok = data.Kelompok,
-                            capaian = data.MasterCapaianPembelajaranID.capaian
-                        }, JsonRequestBehavior.AllowGet);
-                        *//*
-
-            return Json(data, JsonRequestBehavior.AllowGet);
 
 
-        }*/
+        /*        public ActionResult GetDataMasterMapingCapaianPembelajaran()
+                {
+                    //var jsonString = "[{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"2\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"3\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"4\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"5\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"6\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"7\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"}]";
+                    //List<MyJsonObject> myJsonObjects = Newtonsoft.Json.JsonConvert.DeserializeObject<List<MyJsonObject>>(jsonString);
+
+                    var data = _cplMatakuliah.Find(x => x.IsDeleted == false).ToList();
+                    *//*return Json(data, JsonRequestBehavior.AllowGet);*/
+
+        /*            return Json(new
+                    {
+                        KodeMataKuliah = data.MataKuliah,
+                        NamaMataKuliah = data.NamaMataKuliah,
+                        MasterCapaianPembelajaranID = data.MasterCapaianPembelajaranID,
+                        Kelompok = data.Kelompok,
+                        capaian = data.MasterCapaianPembelajaranID.capaian
+                    }, JsonRequestBehavior.AllowGet);
+                    *//*
+
+        return Json(data, JsonRequestBehavior.AllowGet);
+
+
+    }*/
 
         /*Modal Created*/
         public ActionResult ModalCreateMasterMapingCapaianPembelajaran()
@@ -121,12 +141,38 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult PostDataMasterMapingCapaianPembelajaran(CPLMatakuliah cpl)
         {
-/*            cpl.CreatedBy = Session["username"] as string;
-            cpl.UpdatedBy = Session["username"] as string;*/
+
+            try
+            {
+
+                var data = _cplMatakuliah.Find(
+                    x => x.IDMataKUliah == cpl.IDMataKUliah &&
+                    x.MasterCapaianPembelajaranID == cpl.MasterCapaianPembelajaranID
+                );
+
+                if (data.Count() == 0)
+                {
+                    cpl.CreatedBy = Session["username"] as string;
+                    cpl.UpdatedBy = Session["username"] as string;
+                    _cplMatakuliah.Save(cpl);
+                    return Json(cpl);
+                }
+                else
+                {
+                    return Json(new ServiceResponse { status = 500, message = "Tidak input bisa duplikasi!!!" });
+                }
+
+                
+            }
+            catch (Exception e)
+            {
+                return Json(new ServiceResponse { status = 500, message = "Tidak input bisa duplikasi!!!" });
+            }
+
+            
 
 
-            _cplMatakuliah.Save(cpl);
-            return Json(cpl);
+
         }
 
         /*Modal Update*/
@@ -135,45 +181,79 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             /*  var data = "";
                       if (id != null)
                         {*/
-            var json = "[{\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"}]";
+            /*var json = "[{\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"}]";
             List<MyJsonObject> myJsonObjects = Newtonsoft.Json.JsonConvert.DeserializeObject<List<MyJsonObject>>(json);
-            var data = myJsonObjects[0];
+            var data = myJsonObjects[0];*/
 
             /* 
           }*/
             /*
                         var myJsonObjects = Newtonsoft.Json.JsonConvert.DeserializeObject(data);*/
-
+            var data = _cplMatakuliah.Get(id);
             return View(data);
         }
 
-        /*        [HttpPost]
-                public ActionResult PostUpdateMasterMapingCapaianPembelajaran(Lookup lookup)
+        [HttpPost]
+        public ActionResult PostUpdateMasterMapingCapaianPembelajaran(CPLMatakuliah cplMatakuliah)
+        {
+
+            try
+            {
+                var check = _cplMatakuliah.Find(
+                    x => x.IDMataKUliah == cplMatakuliah.IDMataKUliah &&
+                    x.MasterCapaianPembelajaranID == cplMatakuliah.MasterCapaianPembelajaranID
+                );
+
+                if (check.Count() == 0)
                 {
+                    CPLMatakuliah data = _cplMatakuliah.Get(cplMatakuliah.ID);
 
-                    Lookup data = _lookupService.Get(lookup.ID);
-                    data.Tipe = lookup.Tipe;
-                    data.Nama = lookup.Nama;
-                    data.Nilai = lookup.Nilai;
-                    data.IsActive = lookup.IsActive;
+                    data.KodeMataKuliah = cplMatakuliah.KodeMataKuliah;
+                    data.IDMataKUliah = cplMatakuliah.IDMataKUliah;
+                    data.NamaMataKuliah = cplMatakuliah.NamaMataKuliah;
+                    data.IsActive = cplMatakuliah.IsActive;
+                    data.MasterCapaianPembelajaranID = cplMatakuliah.MasterCapaianPembelajaranID;
+                    data.Kelompok = cplMatakuliah.Kelompok;
                     data.UpdatedBy = Session["username"] as string;
+                    data.CreatedDate = data.CreatedDate;
 
+                    _cplMatakuliah.Save(data);
 
+                    return Json(new ServiceResponse { status = 200, message = "Update Data Berhasil.." });
+                }
+                else
+                {
+                    return Json(new ServiceResponse { status = 500, message = "Tidak input bisa duplikasi!!!" });
+                }
+            }
+            catch (Exception e)
+            {
+                return Json(new ServiceResponse { status = 500, message = "Update Data Gagal!!!" });
+            }
 
-                    _lookupService.Save(data);
-
-                    return Json(data);
-                }*/
+            
+        }
 
         [HttpPost]
         public ActionResult PostDeleteMasterMapingCapaianPembelajaran(int id)
         {
-            var data = _cplMatakuliah.Get(id);
-            data.IsDeleted = true;
-            /*data.UpdatedBy = Session["username"] as string;*/
 
-            _cplMatakuliah.Save(data);
-            return Json(data);
+            try
+            {
+                var data = _cplMatakuliah.Get(id);
+                data.IsDeleted = true;
+                data.UpdatedBy = Session["username"] as string;
+
+                _cplMatakuliah.Save(data);
+                return Json(new ServiceResponse { status = 200, message = "Data Berhasil dihapus.." });
+            }
+            catch (Exception e)
+            {
+                return Json(new ServiceResponse { status = 500, message = "Data Gagal dihapus!!!" });
+            }
+
+            
+
         }
 
 
@@ -185,17 +265,63 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             return View(data);
         }
 
-        public ActionResult GetMataKuliah(string search, int skip, int length)
+        /*        public ActionResult GetMataKuliah(DataTableAjaxPostModel model, string search, string idProdi, string idFakultas)
+                {
+
+                    VMMataKuliah vMListMK = _cplMatakuliah.GetMatkul(model, search, idProdi, idFakultas);
+
+                    return Json(new
+                    {
+                        // this is what datatables wants sending back
+                        draw = model.draw,
+                        recordsTotal = vMListMK.TotalCount,
+                        recordsFiltered = vMListMK.TotalFilterCount,
+                        data = vMListMK.gridDatas
+                    });
+                }*/
+
+
+        [HttpPost]
+        public ActionResult GetMataKuliah(int skip, int take, string searchBy, string idProdi, string idFakultas)
         {
 
+/*            string searchBy = "BAHASA INDONESIA";
+            int skip = 1;
+            int take = 10;
+            
 
-            int pageNumber = skip;
+            string idProdi = "0101";
+            string idFakultas = "0001";*/
+
+
+/*            int pageNumber = skip;
             int pageSize = length;
-            /*string search = "";*/
-            /*string email = Session["email"] as string;*/
-            /*var result = GetMa=takuliah(email);*/
-            return Json(_mcpService.GetMatkul(pageNumber, pageSize, search), JsonRequestBehavior.AllowGet);
+            string search = "";*/
+            //string email = Session["email"] as string;
+            //var result = GetMa = takuliah(email);
+
+            /*"PageNumber":10,
+            "PageSize":10,
+            "Search":"",
+            "ProdiID":"0001",
+            "FakultasID":"0101"*/
+            //return Json(_cplMatakuliah.GetMatkul(skip, take, searchBy, idProdi, idFakultas), JsonRequestBehavior.AllowGet);
+            var final = _cplMatakuliah.GetMatkul(skip, take, searchBy, idProdi, idFakultas);
+            List<object> data = new List<object>();
+            foreach (var p in final)
+            {
+                var q = new
+                {
+                    id = p.CRSE_ID,
+                    text = p.DESCR,
+                    kode = p.Expr1
+                };
+                data.Add(q);
+            }
+
+            return Json(data);
         }
+
 
         /*        public ActionResult getLookupByValue(string tipe, string value)
                 {
@@ -223,21 +349,33 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             return Json(_mcpService.GetProdiByFakultas(JenjangStudi, idFakultas, search), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetLokasiByProdi(string JenjangStudi, string idProdi, string search)
+        public ActionResult GetLokasiByProdi(string JenjangStudi, string namaProdi, string search)
         {
-            return Json(_mcpService.GetLokasiByProdi(JenjangStudi, idProdi, search), JsonRequestBehavior.AllowGet);
+            return Json(_mcpService.GetLokasiByProdi(JenjangStudi, namaProdi, search), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetMataKuliahByProdi(int idProdi, string lokasi)
+        public ActionResult GetMataKuliahByProdi(string namaProdi, string lokasi)
         {
-            return new ContentResult { Content = JsonConvert.SerializeObject(_jkService.Find(jk => jk.ProdiID == idProdi && jk.Lokasi == lokasi).ToList()), ContentType = "application/json" };
+            //return new ContentResult { Content = JsonConvert.SerializeObject(_jkService.Find(jk => jk.NamaProdi == namaProdi && jk.Lokasi == lokasi && jk.NamaMataKuliah == search).ToList()), ContentType = "application/json" };
+            List<JadwalKuliah> jks = new List<JadwalKuliah>();
+            List<string> jadwalKuliahs = new List<string>();
+            foreach (var item in _jkService.Find(jk => jk.NamaProdi == namaProdi && jk.Lokasi == lokasi).ToList())
+            {
+                if (!jadwalKuliahs.Contains(item.NamaMataKuliah))
+                {
+                    jks.Add(item);
+                    jadwalKuliahs.Add(item.NamaMataKuliah);
+                }
+            }
+            return new ContentResult { Content = JsonConvert.SerializeObject(jks), ContentType = "application/json" };
+
         }
 
-        public ActionResult GetMataKuliahByID(int idProdi, string lokasi, string MataKuliahID)
+        public ActionResult GetMataKuliahByID(string MataKuliahID)
         {
-            return new ContentResult { Content = JsonConvert.SerializeObject(_jkService.Find(jk => jk.ProdiID == idProdi && jk.Lokasi == lokasi && jk.MataKuliahID == MataKuliahID).ToList()), ContentType = "application/json" };
+            return new ContentResult { Content = JsonConvert.SerializeObject(_jkService.Find(jk => jk.MataKuliahID == MataKuliahID).ToList()), ContentType = "application/json" };
         }
-
+        
         public ActionResult GetMasterCPL(string idProdi, string idFakultas, string Kelompok)
         {
 
@@ -249,17 +387,22 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
         public ActionResult GetMasterCPLByID(int id)
         {
-/*
-            var data = _mcpService.Get(id);*/
-            return Json(_mcpService.Get(id), JsonRequestBehavior.AllowGet);
+
+            var data = _mcpService.Get(id);
+            return Json(new
+                    {
+                        Capaian = data.Capaian,
+                        Kelompok = data.Kelompok,
+                        ID = data.ID
+                    }, JsonRequestBehavior.AllowGet);
             /*var vMListCPL = ;*/
-/*            return new ContentResult
-            {
-                Content = JsonConvert.SerializeObject(),
-                ContentType = "application/json"
-            };*/
+            /*            return new ContentResult
+                        {
+                            Content = JsonConvert.SerializeObject(),
+                            ContentType = "application/json"
+                        };*/
         }
-        
+
 
 
     }

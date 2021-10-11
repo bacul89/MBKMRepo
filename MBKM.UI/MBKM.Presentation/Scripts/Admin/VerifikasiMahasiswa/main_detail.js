@@ -11,8 +11,8 @@
                 return {
                     search: params.term,
                     instansi: $('#namaUniversitas').val(),
-                    length: params.length || 10,
-                    skip: params.skip || 0
+                    length: params.length || 0,
+                    skip: params.skip || 10
                 };
             },
             processResults: function (data, page) {

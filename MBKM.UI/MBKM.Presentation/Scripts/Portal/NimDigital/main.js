@@ -15,10 +15,10 @@
                 photoprofile*/
 
                 var photoprofile = base_url+"/"+result.PhotoProfile;
-                console.log(result.nim);
+                //console.log(result.NIM);
 
-                if (typeof (result.nim) != "undefined") {
-                    $("#NIM").text(result.nim);
+                if (typeof (result.NIM) != "undefined") {
+                    $("#NIM").text(result.NIM);
                 } else {
                     $("#NIM").text("NIM tidak tersedia..");
                 }

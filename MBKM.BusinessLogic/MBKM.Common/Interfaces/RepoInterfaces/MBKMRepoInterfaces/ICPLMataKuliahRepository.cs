@@ -12,5 +12,7 @@ namespace MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces
     public interface ICPLMataKuliahRepository : IGenericRepository<CPLMatakuliah>
     {
         VMListMapingCPL GetListMapingCPL(int Skip, int Length, string SearchParam, string SortBy, bool SortDir);
+        VMListMapingCPL SearchListMapingCPL(int Skip, int Length, string SearchParam, string SortBy, bool SortDir, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string idMatakuliah);
+        IEnumerable<VMMataKuliah> GetMatkul(int skip, int take, string searchBy, string idProdi, string idFakultas);
     }
 }

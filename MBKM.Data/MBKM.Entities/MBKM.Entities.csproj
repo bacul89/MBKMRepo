@@ -90,6 +90,8 @@
     <Compile Include="Models\MBKM\InformasiPertukaran.cs" />
     <Compile Include="Models\MBKM\JadwalKuliah.cs" />
     <Compile Include="Models\MBKM\JadwalKuliahMahasiswa.cs" />
+    <Compile Include="Models\MBKM\JadwalUjianMBKM.cs" />
+    <Compile Include="Models\MBKM\JadwalUjianMBKMDetail.cs" />
     <Compile Include="Models\MBKM\JenisKerjasamaModel.cs" />
     <Compile Include="Models\MBKM\KRS.cs" />
     <Compile Include="Models\MBKM\Mahasiswa.cs" />

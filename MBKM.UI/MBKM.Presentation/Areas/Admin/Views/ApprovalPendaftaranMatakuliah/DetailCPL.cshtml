@@ -13,7 +13,7 @@
     <div class="card center-block" style="background-color: white; width: 100%;">
         <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
             <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
-                TRACKING STATUS PENDAFTARAN MATA KULIAH
+                FORM CAPAIAN PEMBELAJARAN MATAKULIAH
             </h4>
             <hr />
             <div class="container-fluid">
@@ -196,11 +196,29 @@
                                                     <h4>Capaian Pembelajaran &nbsp:</h4>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                    <div class="row" style="padding-bottom:10px">
-                                                        <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">
-                                                            <h4>@Model.CPLAsal</h4>
-                                                        </div>
-                                                    </div>
+                                                    @{
+                                                        if (ViewData["countCPAsal"].Equals(0))
+                                                        {
+                                                            <div class="row" style="padding-bottom:10px">
+                                                                <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">
+                                                                    <h4>Tidak Ada Capaian</h4>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            foreach (var dat in ViewData["capaianAsal"] as IList<MBKM.Entities.Models.MBKM.CPLMatakuliah>)
+                                                            {
+                                                                <div class="row" style="padding-bottom:10px">
+                                                                    <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">
+                                                                        <h4>@dat.MasterCapaianPembelajarans.Capaian</h4>
+                                                                    </div>
+                                                                </div>
+                                                            }
+
+                                                        }
+
+                                                    }
                                                 </div>
                                             </div>
                                         }
@@ -211,7 +229,7 @@
                                                     <h4>Kode Mata Kuliah &nbsp :</h4>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                    <h4>Eksternal</h4>
+                                                    <h4>-</h4>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -219,7 +237,7 @@
                                                     <h4>Nama Mata Kuliah &nbsp :</h4>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                    <h4>Eksternal</h4>
+                                                    <h4>@Model.PendaftaranMataKuliahs.MatkulAsal</h4>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -229,7 +247,7 @@
                                                 <div class="col-sm-8">
                                                     <div class="row" style="padding-bottom:10px">
                                                         <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">
-                                                            <h4>Eksternal</h4>
+                                                            <h4>@Model.CPLAsal</h4>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -304,6 +322,7 @@
 @section scripts{
     <script src="~/Scripts/Admin/ApprovalPendaftaranMakul/detailApproval.js"></script>
     <script src="~/Scripts/loading/loadingoverlay.min.js"></script>
+    <script src="~/Scripts/MaxLength.min.js"></script>
 }
 
 
