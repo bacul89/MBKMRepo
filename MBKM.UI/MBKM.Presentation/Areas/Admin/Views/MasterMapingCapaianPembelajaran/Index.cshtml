@@ -60,6 +60,13 @@
                                 <select name="lokasiCari" id="lokasiCari" class="form-control input-md"></select>
                             </div>
                         </div>
+                        <div class="form-group" hidden>
+                            <label for="inp_prodiId" class="col-sm-3 control-label">Kampus</label>
+                            <div class="col-sm-9">
+                                <input name="kampusCari" id="kampusCari" class="form-control input-md" disabled>
+                            </div>
+                        </div>
+
 
                         <div class="form-group" hidden>
                             <label for="inp_prodiId" class="col-sm-3 control-label">Prodi ID</label>
@@ -174,6 +181,27 @@
         function buttonHandler(param) {
             /*title='This is my title'*/
             //console.log(param);
+@*            if (access == "cari") {
+                if (param == "open") {
+                    $('#cari').removeAttr("disabled");
+                    $('#cari').removeAttr("title");
+                } else if (param == "close") {
+                    $('#cari, #add').attr("disabled", "disabled");
+                    $('#cari').attr("title", "Mohon untuk melengkapi form pencarian terlebih dahulu!");
+                    $('#add').attr("title", "Mohon untuk melengkapi form pencarian terlebih dahulu!");
+                } else {
+                    console.log("error : param");
+                }
+
+
+
+            } elseif (access == "action") {
+                
+            } else {
+                console.log("error : access");
+            }
+*@
+
             if (param == "open") {
                 $('#cari, #add').removeAttr("disabled");
                 $('#cari, #add').removeAttr("title");
@@ -183,7 +211,7 @@
                 $('#cari').attr("title", "Mohon untuk melengkapi form pencarian terlebih dahulu!");
                 $('#add').attr("title", "Mohon untuk melengkapi form pencarian terlebih dahulu!");
             } else {
-                console.log("error : button  hanlder");
+                console.log("error : access");
             }
 
         }
@@ -202,7 +230,7 @@
         function reloadDatatable() {
             var variable =
                 'idProdi=' + $('#prodiIdCari').val() +
-                '&lokasi=' + $('#lokasiCari').val() +
+                '&lokasi=' + $('#kampusCari').val() +
                 '&idFakultas=' + $('#fakultasCari').val() +
                 '&jenjangStudi=' + $('#jenjangCari').val() +
                 '&idMatakuliah=' + $('#matakuliahCari').val();
@@ -477,6 +505,8 @@
                         $("#matakuliahCari").prop("disabled", true);
 
                         $("#lokasiCari").prop("disabled", false);
+
+                        //$("#kampusCari").val('');
                         $("#lokasiCari").select2({
                             placeholder: "-- Pilih Lokasi --",
                             width: "100%",
@@ -495,24 +525,26 @@
                                 },
                                 processResults: function (data, params) {
                                     return {
-                                        results: $.map(data, function (item) { return { id: item.Kampus, value: item.Kampus, text: item.Kampus } })
+                                        results: $.map(data, function (item) { return { id: item.ID, value: item.Kampus, text: item.Kampus} })
                                     };
                                 },
                             }
                         });
                         $("#lokasiCari").change(function () {
                             clearValueOnForm();
-                           
-
-
-
+                            $("#prodiIdCari").val($("#lokasiCari").val());
                             
+                            $("#kampusCari").removeAttr('value');
+                            var kampus = $(this).find(":selected").text();
+                            console.log(kampus);
+                            $("#kampusCari").val(kampus);
 
                             buttonHandler("close");
                             $("#matakuliahCari").empty();
                             $("#matakuliahCari").prop("disabled", false);
+                            //$("#matakuliahNamaCari").val('');
 
-                            getLocationByPodiID();
+                            //getLocationByPodiID();
 
 
                             $('#matakuliahCari').select2({
@@ -522,48 +554,58 @@
                                 width: "100%",
                                 ajax: {
                                     url: "/Admin/MasterMapingCapaianPembelajaran/GetMataKuliah",
-                                    type: 'GET',
+                                    type: 'POST',
                                     dataType: 'json',
                                     data: function (params) {
                                         return {
-                                           @* search: params.term,
+                                            @*
+                                            search: params.term,
                                             instansi: $('#namaUniversitas').val(),
                                             length: params.length || 10,
-                                            skip: params.skip || 0*@
+                                            skip: params.skip || 0
+                                            *@
 
                                             skip: params.skip || 1,
-                                            take: params.length || 10,                                            
-                                            searchBy: params.term || "",
+                                            take: params.length || 100000,                                            
+                                            searchBy: params.term ,
                                             idProdi: $('#prodiIdCari').val(),
                                             idFakultas: $('#fakultasCari').val()
 
                                         };
                                     },
-                                        processResults: function (data, params) {
+                                    processResults: function (data, page) {
+                                        return {
+                                            results: $.map(data, function (item) { return { id: item.id, value: item.id, text: item.text, title:item.kode} }),
+                                            @*pagination: {
+                                                more: true
+                                            }
+                                            processResults: function (data, params) {
                                             return {
-                                                results: $.map(data, function (item) { return { id: item.CRSE_ID, value: item.CRSE_ID, text: item.DESCR } })
-                                            };
-
-                                            //console.log(data);
-                                            //console.log(data[0].ID);
-                                            //getProdiId.val(data);
-                                        },
-                                    
+                                                results: $.map(data, function (item) { return { id: item.CRSE_ID, value: item.CRSE_ID, text: item.DESCR } }),
+                                                *@
+                                        };
+                                    },
                                 }
                             });
 
 
 
                             $("#matakuliahCari").change(function () {
-                                //clearValueOnForm();
-                                
-                                
-                                dataParam = {};
-                                
+
+                                @*
                                 dataParam.NamaProdi = $('#prodiCari').val();
                                 dataParam.lokasi = $('#lokasiCari').val();
-                                dataParam.MataKuliahID = $('#matakuliahCari').val();
+                                dataParam.MataKuliahID = $('#matakuliahCari').val();*@
 
+                                $("#matakuliahNamaCari").removeAttr('value');
+                                var matakuliah = $(this).find(":selected").text();
+                                $("#matakuliahNamaCari").val(matakuliah);
+                            
+                                
+                                
+                                $("#matakuliahKodeCari").val($(this).find(":selected").prop("title"));
+                                $("#matakuliahIdCari").val($(this).val());
+@*
 
                                 $.ajax({
                                     url: "/Admin/MasterMapingCapaianPembelajaran/GetMataKuliahByID",
@@ -576,14 +618,14 @@
                                     success: function (e) {
                                         //console.log(e[0]);
                                         $("#matakuliahNamaCari").val(e[0].NamaMataKuliah);
-                                        $("#matakuliahKodeCari").val(e[0].KodeMataKuliah);
+                                        //$("#matakuliahKodeCari").val(e[0].KodeMataKuliah);
                                         $("#matakuliahIdCari").val(e[0].MataKuliahID);
                                         //console.log("MK");
                                     },
                                     error: function (e) {
                                         console.log("matakuliah not found...");
                                     }
-                                })
+                                })*@
                                 buttonHandler("open");
 
 
@@ -622,7 +664,6 @@
         }
 
         $(document).ready(function () {
-
             isZooming();
         });
 
@@ -647,14 +688,14 @@
                 var contentHeight = screenH - header - footer;
 
                 if (defaultH < contentHeight) {
-                    square.css('height', contentHeight);
+                    square.css('min-height', contentHeight);
                 } else {
-                    square.css('height', defaultH);
+                    square.css('min-height', defaultH);
                 }
 
 
             } else {
-                square.css('height', defaultH);
+                square.css('min-height', defaultH);
             }
         }
 

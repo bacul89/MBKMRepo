@@ -280,6 +280,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     });
                 }*/
 
+
+        [HttpPost]
         public ActionResult GetMataKuliah(int skip, int take, string searchBy, string idProdi, string idFakultas)
         {
 
@@ -303,7 +305,21 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             "Search":"",
             "ProdiID":"0001",
             "FakultasID":"0101"*/
-            return Json(_cplMatakuliah.GetMatkul(skip, take, searchBy, idProdi, idFakultas), JsonRequestBehavior.AllowGet);
+            //return Json(_cplMatakuliah.GetMatkul(skip, take, searchBy, idProdi, idFakultas), JsonRequestBehavior.AllowGet);
+            var final = _cplMatakuliah.GetMatkul(skip, take, searchBy, idProdi, idFakultas);
+            List<object> data = new List<object>();
+            foreach (var p in final)
+            {
+                var q = new
+                {
+                    id = p.CRSE_ID,
+                    text = p.DESCR,
+                    kode = p.Expr1
+                };
+                data.Add(q);
+            }
+
+            return Json(data);
         }
 
 

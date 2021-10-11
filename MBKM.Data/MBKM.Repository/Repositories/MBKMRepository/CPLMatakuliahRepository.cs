@@ -154,7 +154,27 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                     x.FakultasID == idFakultas).ToList();
                 return result;
             }
+
+
+
+/*
+            using (var context = new MBKMContext())
+            {
+                var PageNumberParam = new SqlParameter("@PageNumber", skip);
+                var PageSizeParam = new SqlParameter("@PageSize", take);//
+                var searchParam = new SqlParameter("@Search", searchBy);
+
+                var result = context.Database
+                    .SqlQuery<VMMataKuliah>("GetMatkul @PageNumber, @PageSize, @Search", PageNumberParam, PageSizeParam, searchParam).Where(x =>
+                    x.ProdiID == idProdi &&
+                    x.FakultasID == idFakultas).OrderBy("DESCR").Skip(skip).Take(take).ToList();
+                return result;
+            }*/
+
         }
+
+
+
 
 
     }
