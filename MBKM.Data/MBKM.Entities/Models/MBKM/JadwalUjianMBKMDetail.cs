@@ -9,5 +9,6 @@ namespace MBKM.Entities.Models.MBKM
 {
     public class JadwalUjianMBKMDetail : BaseEntity
     {
+        public bool Present { get; set; }
     }
 }

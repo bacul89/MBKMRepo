@@ -193,8 +193,66 @@ function PostUpdate() {
 }
 
 function DeletedMasterLookup(idLookup) {
+    swal.fire({
+        title: "Apakah anda yakin?",
+        type: "warning",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, delete it!",
+        closeOnConfirm: false
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.LoadingOverlay("show");
+            $.ajax({
+                url: '/Admin/MasterLookup/PostDeleteMasterLookup',
+                type: 'post',
+                data: {
+                    id: idLookup
+                },
+                datatype: 'json',
+                success: function (e) {
+                    $.LoadingOverlay("hide");
+                    if (e.status == 500) {
+                        Swal.fire({
+                            title: 'Oppss',
+                            icon: 'error',
+                            html: e.message,
+                            showCloseButton: true,
+                            showCancelButton: false,
+                            focusConfirm: false,
+                            confirmButtonText: 'OK'
+                        })
+                    } else {
+                        Swal.fire({
+                            title: 'Berhasil',
+                            icon: 'success',
+                            html: 'Data Berhasil Dihapus',
+                            showCloseButton: true,
+                            showCancelButton: false,
+                            focusConfirm: false,
+                            confirmButtonText: 'OK'
+                        })
+                        dataTable.ajax.reload(null, false);
+                    }
+                }, error: function (e) {
+                    $.LoadingOverlay("hide");
+                    Swal.fire({
+                        title: 'Oppss',
+                        icon: 'error',
+                        html: 'Coba Reload Page',
+                        showCloseButton: true,
+                        showCancelButton: false,
+                        focusConfirm: false,
+                        confirmButtonText: 'OK'
+                    })
+                }
+            })
+        }
+    })
 
-    Swal.fire({
+
+/*    Swal.fire({
         title: "Apakah anda yakin?",
         text: "warning",
         type: "warning",
@@ -233,6 +291,6 @@ function DeletedMasterLookup(idLookup) {
                 })
             }
         });
-    })
+    })*/
 
 }

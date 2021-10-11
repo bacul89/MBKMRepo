@@ -39,7 +39,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         // GET: Admin/MasterMapingCapaianPembelajaran
         public ActionResult Index()
         {
-            Session["username"] = "Smitty Werben Jeger Man Jensen";
+            //Session["username"] = "Smitty Werben Jeger Man Jensen";
             return View();
         }
 
@@ -141,10 +141,38 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult PostDataMasterMapingCapaianPembelajaran(CPLMatakuliah cpl)
         {
-            cpl.CreatedBy = Session["username"] as string;
-            cpl.UpdatedBy = Session["username"] as string;
-            _cplMatakuliah.Save(cpl);
-            return Json(cpl);
+
+            try
+            {
+
+                var data = _cplMatakuliah.Find(
+                    x => x.IDMataKUliah == cpl.IDMataKUliah &&
+                    x.MasterCapaianPembelajaranID == cpl.MasterCapaianPembelajaranID
+                );
+
+                if (data.Count() == 0)
+                {
+                    cpl.CreatedBy = Session["username"] as string;
+                    cpl.UpdatedBy = Session["username"] as string;
+                    _cplMatakuliah.Save(cpl);
+                    return Json(cpl);
+                }
+                else
+                {
+                    return Json(new ServiceResponse { status = 500, message = "Tidak input bisa duplikasi!!!" });
+                }
+
+                
+            }
+            catch (Exception e)
+            {
+                return Json(new ServiceResponse { status = 500, message = "Tidak input bisa duplikasi!!!" });
+            }
+
+            
+
+
+
         }
 
         /*Modal Update*/
@@ -171,24 +199,39 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
             try
             {
-                CPLMatakuliah data = _cplMatakuliah.Get(cplMatakuliah.ID);
+                var check = _cplMatakuliah.Find(
+                    x => x.IDMataKUliah == cplMatakuliah.IDMataKUliah &&
+                    x.MasterCapaianPembelajaranID == cplMatakuliah.MasterCapaianPembelajaranID
+                );
 
-                data.KodeMataKuliah = cplMatakuliah.KodeMataKuliah;
-                data.IDMataKUliah = cplMatakuliah.IDMataKUliah;
-                data.NamaMataKuliah = cplMatakuliah.NamaMataKuliah;
-                data.IsActive = cplMatakuliah.IsActive;
-                data.MasterCapaianPembelajaranID = cplMatakuliah.MasterCapaianPembelajaranID;
-                data.Kelompok = cplMatakuliah.Kelompok;
-                data.UpdatedBy = Session["username"] as string;
+                if (check.Count() == 0)
+                {
+                    CPLMatakuliah data = _cplMatakuliah.Get(cplMatakuliah.ID);
 
-                _cplMatakuliah.Save(data);
+                    data.KodeMataKuliah = cplMatakuliah.KodeMataKuliah;
+                    data.IDMataKUliah = cplMatakuliah.IDMataKUliah;
+                    data.NamaMataKuliah = cplMatakuliah.NamaMataKuliah;
+                    data.IsActive = cplMatakuliah.IsActive;
+                    data.MasterCapaianPembelajaranID = cplMatakuliah.MasterCapaianPembelajaranID;
+                    data.Kelompok = cplMatakuliah.Kelompok;
+                    data.UpdatedBy = Session["username"] as string;
+                    data.CreatedDate = data.CreatedDate;
+
+                    _cplMatakuliah.Save(data);
+
+                    return Json(new ServiceResponse { status = 200, message = "Update Data Berhasil.." });
+                }
+                else
+                {
+                    return Json(new ServiceResponse { status = 500, message = "Tidak input bisa duplikasi!!!" });
+                }
             }
             catch (Exception e)
             {
-                return Json(new ServiceResponse { status = 500, message = "Data Gagal dihapus!!!" });
+                return Json(new ServiceResponse { status = 500, message = "Update Data Gagal!!!" });
             }
 
-            return Json(new ServiceResponse { status = 200, message = "Data Berhasil dihapus.." });
+            
         }
 
         [HttpPost]
@@ -202,13 +245,14 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 data.UpdatedBy = Session["username"] as string;
 
                 _cplMatakuliah.Save(data);
+                return Json(new ServiceResponse { status = 200, message = "Data Berhasil dihapus.." });
             }
             catch (Exception e)
             {
                 return Json(new ServiceResponse { status = 500, message = "Data Gagal dihapus!!!" });
             }
 
-            return Json(new ServiceResponse { status = 200, message = "Data Berhasil dihapus.." });
+            
 
         }
 
@@ -221,17 +265,63 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             return View(data);
         }
 
-        public ActionResult GetMataKuliah(string search, int skip, int length)
+        /*        public ActionResult GetMataKuliah(DataTableAjaxPostModel model, string search, string idProdi, string idFakultas)
+                {
+
+                    VMMataKuliah vMListMK = _cplMatakuliah.GetMatkul(model, search, idProdi, idFakultas);
+
+                    return Json(new
+                    {
+                        // this is what datatables wants sending back
+                        draw = model.draw,
+                        recordsTotal = vMListMK.TotalCount,
+                        recordsFiltered = vMListMK.TotalFilterCount,
+                        data = vMListMK.gridDatas
+                    });
+                }*/
+
+
+        [HttpPost]
+        public ActionResult GetMataKuliah(int skip, int take, string searchBy, string idProdi, string idFakultas)
         {
 
+/*            string searchBy = "BAHASA INDONESIA";
+            int skip = 1;
+            int take = 10;
+            
 
-            int pageNumber = skip;
+            string idProdi = "0101";
+            string idFakultas = "0001";*/
+
+
+/*            int pageNumber = skip;
             int pageSize = length;
-            /*string search = "";*/
-            /*string email = Session["email"] as string;*/
-            /*var result = GetMa=takuliah(email);*/
-            return Json(_mcpService.GetMatkul(pageNumber, pageSize, search), JsonRequestBehavior.AllowGet);
+            string search = "";*/
+            //string email = Session["email"] as string;
+            //var result = GetMa = takuliah(email);
+
+            /*"PageNumber":10,
+            "PageSize":10,
+            "Search":"",
+            "ProdiID":"0001",
+            "FakultasID":"0101"*/
+            //return Json(_cplMatakuliah.GetMatkul(skip, take, searchBy, idProdi, idFakultas), JsonRequestBehavior.AllowGet);
+            var final = _cplMatakuliah.GetMatkul(skip, take, searchBy, idProdi, idFakultas);
+            List<object> data = new List<object>();
+            foreach (var p in final)
+            {
+                var q = new
+                {
+                    id = p.CRSE_ID,
+                    text = p.DESCR,
+                    kode = p.Expr1
+                };
+                data.Add(q);
+            }
+
+            return Json(data);
         }
+
 
         /*        public ActionResult getLookupByValue(string tipe, string value)
                 {
@@ -266,7 +356,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
         public ActionResult GetMataKuliahByProdi(string namaProdi, string lokasi)
         {
-            //return new ContentResult { Content = JsonConvert.SerializeObject(_jkService.Find(jk => jk.NamaProdi == namaProdi && jk.Lokasi == lokasi).ToList()), ContentType = "application/json" };
+            //return new ContentResult { Content = JsonConvert.SerializeObject(_jkService.Find(jk => jk.NamaProdi == namaProdi && jk.Lokasi == lokasi && jk.NamaMataKuliah == search).ToList()), ContentType = "application/json" };
             List<JadwalKuliah> jks = new List<JadwalKuliah>();
             List<string> jadwalKuliahs = new List<string>();
             foreach (var item in _jkService.Find(jk => jk.NamaProdi == namaProdi && jk.Lokasi == lokasi).ToList())

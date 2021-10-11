@@ -6,33 +6,33 @@
 <div class="modal-content data-content-modal" id="update-master-maping-cpl">
     <div class="modal-header" style="background-color: #FF8A04; ">
         <h5 class="card-title" style="font-weight: bold; font-size: 17px; color: black;">
-            UPDATE MAPING CAPAIAN PEMBELAJARAN PER-MATA KULIAH
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
+            <center>UPDATE MAPING CAPAIAN PEMBELAJARAN PER-MATA KULIAH</center>
         </h5>
     </div>
     <div class="modal-body">
         <form class="form-horizontal">
-@*            <div class="form-group">
-                <label for="inp_MasterCplID" class="col-sm-3 control-label">ID Master CPL</label>
+            <div class="form-group">
+                <label for="inp_MapingCPLID" class="col-sm-3 control-label">ID Maping CPL</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control input-md" name="inp_id_capaian_pembelajaran" id="inp_id_capaian_pembelajaran" value="@Model.MasterCapaianPembelajaranID" placeholder="Pilih Mata Kuliah" disabled>
+                    <input type="text" class="form-control input-md" name="inp_id_mapping_capaian_pembelajaran" id="inp_id_mapping_capaian_pembelajaran" value="@Model.ID" placeholder="Pilih Mata Kuliah" disabled>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="get_kelompok" class="col-sm-3 control-label">Kelompok</label>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control input-md" name="get_kelompok" id="get_kelompok" value="@Model.Kelompok" placeholder="Pilih Mata Kuliah" disabled>
-                </div>
+            @*<div class="form-group">
+            <label for="get_kelompok" class="col-sm-3 control-label">Kelompok</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control input-md" name="get_kelompok" id="get_kelompok" value="@Model.Kelompok" placeholder="Pilih Mata Kuliah" disabled>
             </div>
-            <div class="form-group">
-                <label for="get_kode" class="col-sm-3 control-label">Kode</label>
-                <div class="col-sm-9">
-                    <input type="text" class="form-control input-md" name="get_kode" id="get_kode" value="@Model.MasterCapaianPembelajarans.Kode" placeholder="Pilih Mata Kuliah" disabled>
-                </div>
-            </div>*@
-            
+        </div>
+        <div class="form-group">
+            <label for="get_kode" class="col-sm-3 control-label">Kode</label>
+            <div class="col-sm-9">
+                <input type="text" class="form-control input-md" name="get_kode" id="get_kode" value="@Model.MasterCapaianPembelajarans.Kode" placeholder="Pilih Mata Kuliah" disabled>
+            </div>
+        </div>*@
+
 
             @*            <div class="form-group">
             <label for="inp_jenjang" class="col-sm-3 control-label">Jenjang Studi</label>
@@ -80,24 +80,24 @@
             <!--</div>
     </div>-->
 
-            <div class="form-group" hidden>
+            <div class="form-group">
                 <label for="inp_MatakuliahID" class="col-sm-3 control-label">ID Mata Kuliah</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control input-md" name="inp_id_mata_kuliah" id="inp_id_mata_kuliah" placeholder="Pilih Mata Kuliah" disabled>
+                    <input type="text" class="form-control input-md" name="inp_id_mata_kuliah" id="inp_id_mata_kuliah" value="@Model.IDMataKUliah" placeholder="Pilih Mata Kuliah" disabled>
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="inp_MatakuilahKode" class="col-sm-3 control-label">Kode Mata Kuliah</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control input-md" name="inp_kode_mata_kuliah" id="inp_kode_mata_kuliah" placeholder="Pilih Mata Kuliah" disabled>
+                    <input type="text" class="form-control input-md" name="inp_kode_mata_kuliah" id="inp_kode_mata_kuliah" value="@Model.KodeMataKuliah" placeholder="Pilih Mata Kuliah" disabled>
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="inp_MatakuiahName" class="col-sm-3 control-label">Mata Kuliah</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control input-md" name="inp_mata_kuliah" id="inp_mata_kuliah" placeholder="Pilih Mata Kuliah" disabled>
+                    <input type="text" class="form-control input-md" name="inp_mata_kuliah" id="inp_mata_kuliah" value="@Model.KodeMataKuliah" placeholder="Pilih Mata Kuliah" disabled>
                 </div>
             </div>
             <div class="form-group">

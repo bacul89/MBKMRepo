@@ -2,8 +2,6 @@
 var dMasterMapingCapaianPembelajaran = {}
 
 function getValueOnForm() {
-    var hllo = $('#inp_kode_capaian_pembelajaran').val();
-    console.log(hllo);
     dMasterMapingCapaianPembelajaran.IDMataKUliah = $('input[name=inp_id_mata_kuliah]').val();
     dMasterMapingCapaianPembelajaran.NamaMataKuliah = $('input[name=inp_mata_kuliah]').val();
     dMasterMapingCapaianPembelajaran.KodeMataKuliah = $('input[name=inp_kode_mata_kuliah]').val();
@@ -11,10 +9,21 @@ function getValueOnForm() {
     dMasterMapingCapaianPembelajaran.Kelompok = $('#inp_kelompok').val();
     dMasterMapingCapaianPembelajaran.IsActive = $('input[name=inp_status]:checked').val();
 
-    console.log(dMasterMapingCapaianPembelajaran);
-    /*dMasterMapingCapaianPembelajaran.IsDeleted =*/
+    //console.log(dMasterMapingCapaianPembelajaran);
+    //dMasterMapingCapaianPembelajaran.IsDeleted =
 
 }
+
+function clearValueOnForm() {
+/*    $('input[name=inp_id_mata_kuliah]').val('');
+    $('input[name=inp_mata_kuliah]').val('');
+    $('input[name=inp_kode_mata_kuliah]').val('');*/
+    $('#inp_kode_capaian_pembelajaran').empty();
+    $('#inp_kelompok').empty();
+    $('#inp_capaian').val('');
+    $('input[name=inp_status]').prop('checked', false);
+}
+
 
 function loadFromLookup(tipe, id, nama) {
     console.log(id);
@@ -39,6 +48,19 @@ function loadFromLookup(tipe, id, nama) {
             },
         }
     });
+    $("#" + id).change(function () {
+        $('#inp_capaian').val('');
+        $('#inp_kode_capaian_pembelajaran').empty();
+
+        $("#fakultasCari").select2({
+            placeholder: "-- Pilih Kode CPL --"
+        });
+
+        loadMasterCPL();
+
+
+    });
+
 }
 
 function loadMasterCPL() {
@@ -47,6 +69,7 @@ function loadMasterCPL() {
         placeholder: "-- Pilih Kode CPL --",
         "proccessing": true,
         "serverSide": true,
+        width: "100%",
         ajax: {
             url: '/Admin/MasterMapingCapaianPembelajaran/GetMasterCPL',
             type: 'post',
@@ -108,6 +131,9 @@ function loadControl(param) {
     var inp_kode_mata_kuliah = $("#matakuliahKodeCari").val();
     var inp_id_mata_kuliah = $("#matakuliahCari").val();
 
+/*    console.log(inp_mata_kuliah);
+    console.log(inp_kode_mata_kuliah);
+    console.log(inp_id_mata_kuliah);*/
 
 
     $('#inp_id_mata_kuliah').val(inp_id_mata_kuliah);
@@ -119,31 +145,44 @@ function loadControl(param) {
         var getKelompok = $('#get_kelompok').val();
         console.log(getKelompok);
         $('#inp_kelompok').select2('data', { id: getKelompok, value: getKelompok, text: getKelompok });
-/*        var ID = parseInt($('#inp_id_capaian_pembelajaran').val());
-        console.log(ID);
-        $.ajax({
-            url: '/Admin/MasterMapingCapaianPembelajaran/GetMasterCPLByID',
-            dataType: 'json',
-            method: "GET",
-            delay: 250,
-            cache: false,
-            contentType: 'application/json',
-            data: { id: ID },
-            success: function (e) {
+        /*        var ID = parseInt($('#inp_id_capaian_pembelajaran').val());
+                console.log(ID);
+                $.ajax({
+                    url: '/Admin/MasterMapingCapaianPembelajaran/GetMasterCPLByID',
+                    dataType: 'json',
+                    method: "GET",
+                    delay: 250,
+                    cache: false,
+                    contentType: 'application/json',
+                    data: { id: ID },
+                    success: function (e) {
+        
+                        console.log(e);
+        *//*                $('#inp_capaian').val(e.Capaian);
+                        $('#inp_kode_capaian_pembelajaran').select2("val", e.ID);
+                        $("#inp_kelompok").select2("val", e.Kelompok);*//*
+        $('#inp_kelompok').select2('data', { id: e.Kelompok, value: e.Kelompok, text: e.Kelompok });
+    },
+    error: function (e) {
+        console.log("matakuliah not found...");
+    }
+})*/
+    } else {
+        var inp_mata_kuliah = $("#matakuliahNamaCari").val();
+        var inp_kode_mata_kuliah = $("#matakuliahKodeCari").val();
+        var inp_id_mata_kuliah = $("#matakuliahCari").val();
 
-                console.log(e);
-*//*                $('#inp_capaian').val(e.Capaian);
-                $('#inp_kode_capaian_pembelajaran').select2("val", e.ID);
-                $("#inp_kelompok").select2("val", e.Kelompok);*//*
-                $('#inp_kelompok').select2('data', { id: e.Kelompok, value: e.Kelompok, text: e.Kelompok });
-            },
-            error: function (e) {
-                console.log("matakuliah not found...");
-            }
-        })*/
+/*        console.log(inp_mata_kuliah);
+        console.log(inp_kode_mata_kuliah);
+        console.log(inp_id_mata_kuliah);*/
+
+
+        $('#inp_id_mata_kuliah').val(inp_id_mata_kuliah);
+        $('#inp_kode_mata_kuliah').val(inp_kode_mata_kuliah);
+        $('#inp_mata_kuliah').val(inp_mata_kuliah);
     }
 
-    console.log("hello");
+    //console.log("hello");
 
 
 
@@ -155,6 +194,7 @@ function loadControl(param) {
 function IndexCreateMasterMapingCapaianPembelajaran() {
     if ($('#created-master-maping-cpl').length) {
         $('#TambahMasterMapingCapaianPembelajaran').modal('show');
+        loadControl("Add");
     } else {
         $.ajax({
             url: '/Admin/MasterMapingCapaianPembelajaran/ModalCreateMasterMapingCapaianPembelajaran',
@@ -242,6 +282,7 @@ function IndexViewMasterMapingCapaianPembelajaran(id) {
 }
 
 function PostCreate() {
+    $.LoadingOverlay("show");
     dMasterMapingCapaianPembelajaran = {}
     getValueOnForm();
 
@@ -257,19 +298,36 @@ function PostCreate() {
             data: JSON.stringify(dMasterMapingCapaianPembelajaran),
             contentType: 'application/json',
             success: function (e) {
-                Swal.fire({
-                    title: 'Berhasil',
-                    icon: 'success',
-                    html: 'Data Berhasil Ditambahkan',
-                    showCloseButton: true,
-                    showCancelButton: false,
-                    focusConfirm: false,
-                    confirmButtonText: 'OK'
-                })
-                dataTable.ajax.reload(null, false);
+                $.LoadingOverlay("hide");
+                if (e.status == 500) {
+                    Swal.fire({
+                        title: 'Oppss',
+                        icon: 'error',
+                        html: e.message,
+                        showCloseButton: true,
+                        showCancelButton: false,
+                        focusConfirm: false,
+                        confirmButtonText: 'OK'
+                    })
+                } else {
+                    Swal.fire({
+                        title: 'Berhasil',
+                        icon: 'success',
+                        html: 'Data Berhasil Dihapus',
+                        showCloseButton: true,
+                        showCancelButton: false,
+                        focusConfirm: false,
+                        confirmButtonText: 'OK'
+                    })
+                    //datatable.ajax.reload(null, false);
+                    clearValueOnForm();
+                }
+                reloadDatatable();
                 $('.modal').modal('hide');
+                
             },
             error: function (e) {
+                $.LoadingOverlay("hide");
                 Swal.fire({
                     title: 'Oppss',
                     icon: 'error',
@@ -296,10 +354,14 @@ function PostCreate() {
 }
 
 function PostUpdate() {
+    $.LoadingOverlay("show");
     dMasterMapingCapaianPembelajaran = {}
     getValueOnForm();
-    dMasterMapingCapaianPembelajaran.ID = $('#inp_id_capaian_pembelajaran').val();
+    dMasterMapingCapaianPembelajaran.ID = $('#inp_id_mapping_capaian_pembelajaran').val();
     var base_url = window.location.origin;
+
+    console.log(dMasterMapingCapaianPembelajaran);
+
     $.ajax({
         url: base_url + '/Admin/MasterMapingCapaianPembelajaran/PostUpdateMasterMapingCapaianPembelajaran',
         type: 'post',
@@ -307,19 +369,36 @@ function PostUpdate() {
         data: JSON.stringify(dMasterMapingCapaianPembelajaran),
         contentType: 'application/json',
         success: function (e) {
-            Swal.fire({
-                title: 'Berhasil',
-                icon: 'success',
-                html: 'Master Lookup Berhasil Diubah',
-                showCloseButton: true,
-                showCancelButton: false,
-                focusConfirm: false,
-                confirmButtonText: 'OK'
-            })
-            dataTable.ajax.reload(null, false);
+            $.LoadingOverlay("hide");
+            if (e.status == 500) {
+                Swal.fire({
+                    title: 'Oppss',
+                    icon: 'error',
+                    html: e.message,
+                    showCloseButton: true,
+                    showCancelButton: false,
+                    focusConfirm: false,
+                    confirmButtonText: 'OK'
+                })
+            } else {
+                Swal.fire({
+                    title: 'Berhasil',
+                    icon: 'success',
+                    html: 'Data Berhasil Dihapus',
+                    showCloseButton: true,
+                    showCancelButton: false,
+                    focusConfirm: false,
+                    confirmButtonText: 'OK'
+                })
+                //datatable.ajax.reload(null, false);
+                clearValueOnForm();
+                
+            }
             $('.modal').modal('hide');
+            reloadDatatable();
         },
         error: function (e) {
+            $.LoadingOverlay("hide");
             Swal.fire({
                 title: 'Oppss',
                 icon: 'error',
@@ -337,8 +416,66 @@ function PostUpdate() {
 
 }
 
-function DeletedMasterMapingCapaianPembelajaran(id) {
+function DeletedMasterMapingCapaianPembelajaran(idMapping) {
+    swal.fire({
+        title: "Apakah anda yakin?",
+        type: "warning",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "Yes, delete it!",
+        closeOnConfirm: false
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.LoadingOverlay("show");
+            $.ajax({
+                url: '/Admin/MasterMapingCapaianPembelajaran/PostDeleteMasterMapingCapaianPembelajaran',
+                type: 'post',
+                data: {
+                    id: idMapping
+                },
+                datatype: 'json',
+                success: function (e) {
+                    $.LoadingOverlay("hide");
+                    if (e.status == 500) {
+                        Swal.fire({
+                            title: 'Oppss',
+                            icon: 'error',
+                            html: e.message,
+                            showCloseButton: true,
+                            showCancelButton: false,
+                            focusConfirm: false,
+                            confirmButtonText: 'OK'
+                        })
+                    } else {
+                        Swal.fire({
+                            title: 'Berhasil',
+                            icon: 'success',
+                            html: 'Data Berhasil Dihapus',
+                            showCloseButton: true,
+                            showCancelButton: false,
+                            focusConfirm: false,
+                            confirmButtonText: 'OK'
+                        })
+                        reloadDatatable();
+                    }
+                }, error: function (e) {
+                    $.LoadingOverlay("hide");
+                    Swal.fire({
+                        title: 'Oppss',
+                        icon: 'error',
+                        html: 'Coba Reload Page',
+                        showCloseButton: true,
+                        showCancelButton: false,
+                        focusConfirm: false,
+                        confirmButtonText: 'OK'
+                    })
+                }
+            })
+        }
+    })
 
+/*
     Swal.fire({
         title: "Apakah anda yakin?",
         text: "warning",
@@ -349,22 +486,35 @@ function DeletedMasterMapingCapaianPembelajaran(id) {
         closeOnConfirm: false
     }).then((result) => {
         $.ajax({
-            url: '/Admin/MasterMapingCapaianPembelajaran/PostDeleteMasterMapingCapaianPembelajaran',
+            
             type: "POST",
             data: { id: id }
             ,
-            dataType: "json",
-            success: function () {
-                Swal.fire({
-                    title: 'Berhasil',
-                    icon: 'success',
-                    html: 'Data Berhasil Terhapus',
-                    showCloseButton: true,
-                    showCancelButton: false,
-                    focusConfirm: false,
-                    confirmButtonText: 'OK'
-                })
-                dataTable.ajax.reload(null, false);
+            datatype: 'json',
+            success: function (e) {
+                $.LoadingOverlay("hide");
+                if (e.status == 500) {
+                    Swal.fire({
+                        title: 'Oppss',
+                        icon: 'error',
+                        html: e.message,
+                        showCloseButton: true,
+                        showCancelButton: false,
+                        focusConfirm: false,
+                        confirmButtonText: 'OK'
+                    })
+                } else {
+                    Swal.fire({
+                        title: 'Berhasil',
+                        icon: 'success',
+                        html: 'Data Berhasil Dihapus',
+                        showCloseButton: true,
+                        showCancelButton: false,
+                        focusConfirm: false,
+                        confirmButtonText: 'OK'
+                    })
+                    reloadDatatable();
+                }
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 Swal.fire({
@@ -378,7 +528,7 @@ function DeletedMasterMapingCapaianPembelajaran(id) {
                 })
             }
         });
-    })
+    })*/
 
 }
 

@@ -7,9 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MBKM.Presentation.Helper;
 
 namespace MBKM.Presentation.Areas.Portal.Controllers
 {
+    [MBKMAuthorize]
     public class TrackingStatusPendaftaranController : Controller
     {
         private IPendaftaranMataKuliahService _pendaftaranMataKuliahService;
@@ -62,6 +64,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 ViewData["disabled"] = "";
             }
 
+            IList<ApprovalPendaftaran> dataApproval = _approvalPendaftaranService.Find(x => x.PendaftaranMataKuliahID == id).OrderByDescending(x => x.ID).ToList();
+            ViewData["lastStatus"] = _approvalPendaftaranService.Find(x => x.PendaftaranMataKuliahID == id).Last().StatusPendaftaran;
+            ViewData["status"] = dataApproval;
             return View(data);
         }
 
@@ -103,7 +108,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             }
             ViewData["capaianTujuan"] = capaianTujuan;
             ViewData["countCPTujuan"] = capaianTujuan.Count();
-            ViewData["catatanBaru"] = _approvalPendaftaranService.Find(x => x.PendaftaranMataKuliahID == data.PendaftaranMataKuliahID && x.StatusPendaftaran.Contains("APPROVED")).FirstOrDefault().Catatan;
+            ViewData["catatanBaru"] = _approvalPendaftaranService.Find(x => x.PendaftaranMataKuliahID == data.PendaftaranMataKuliahID && (x.StatusPendaftaran.Contains("APPROVED") || x.StatusPendaftaran.Contains("REJECTED"))).FirstOrDefault().Catatan;
             return View(data);
         }
 
@@ -121,7 +126,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     _pendaftaranMataKuliahService.Save(pendaftaran);
                     var NimBaru = _mahasiswaService.GetNim();
                     
-                    if (pendaftaran.mahasiswas.NIM != pendaftaran.mahasiswas.NIMAsal && !pendaftaran.mahasiswas.NIM.Contains("MBKM"))
+                    if (pendaftaran.mahasiswas.NIM == null || (pendaftaran.mahasiswas.NIM != pendaftaran.mahasiswas.NIMAsal && !pendaftaran.mahasiswas.NIM.Contains("MBKM")))
                     {
                         Mahasiswa tmpMhs = _mahasiswaService.Get(pendaftaran.MahasiswaID);
                         tmpMhs.NIM = NimBaru;
@@ -181,7 +186,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     ApprovalPendaftaran tempHistoryApproval = new ApprovalPendaftaran();
                     tempHistoryApproval.Approval = "MAHASISWA";
                     tempHistoryApproval.Catatan = "-";
-                    tempHistoryApproval.StatusPendaftaran = "ACCEPTED BY MAHASISWA";
+                    tempHistoryApproval.StatusPendaftaran = "REJECTED BY MAHASISWA";
                     tempHistoryApproval.IsActive = true;
                     tempHistoryApproval.IsDeleted = false;
                     tempHistoryApproval.PendaftaranMataKuliahID = TmpApproval.PendaftaranMataKuliahID;
