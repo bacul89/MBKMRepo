@@ -82,7 +82,7 @@
                         @{
                             foreach (var data in ViewData["listKerjasama"] as IEnumerable<MBKM.Entities.ViewModel.VMJenisKerjasama>)
                             {
-                                <option value="@data.Nama" class="@data.JenisPertukaran">@data.Nama</option>
+                                <option value="@data.ID" class="@data.JenisPertukaran">@data.Nama</option>
                             }
                         }
                     </select>
