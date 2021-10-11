@@ -199,9 +199,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             var result = _jkService.Get(idMatkul);
             string prodiIDAsal = Session["prodiIDAsal"] as string;
+            //string prodiIDAsal = "0700";
             List<string> kodeNama = new List<string>();
             List<CPLMatakuliah> cplmks = new List<CPLMatakuliah>();
-            foreach (var item in _cplMatakuliahService.Find(cplmk => cplmk.MasterCapaianPembelajarans.IsActive && !cplmk.MasterCapaianPembelajarans.IsDeleted && cplmk.IsActive && !cplmk.IsDeleted && cplmk.MasterCapaianPembelajarans.ProdiID == prodiIDAsal).ToList())
+            var list = _cplMatakuliahService.Find(cplmk => cplmk.MasterCapaianPembelajarans.IsActive && !cplmk.MasterCapaianPembelajarans.IsDeleted && cplmk.IsActive && !cplmk.IsDeleted && cplmk.MasterCapaianPembelajarans.ProdiID == prodiIDAsal).ToList();
+            foreach (var item in list)
             {
                 if (!kodeNama.Contains(item.KodeMataKuliah + " - " + item.NamaMataKuliah))
                 {
@@ -255,6 +257,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     {
                         string kodeMatkul = cplmkPendaftaran.CPLMatakuliah.Split(new string[] { " - " }, StringSplitOptions.None)[0];
                         string prodiId = Session["prodiIDAsal"] as string;
+                        //string prodiId = "0700";
                         var list = _cplMatakuliahService.Find(cplmk => cplmk.MasterCapaianPembelajarans.IsActive && !cplmk.MasterCapaianPembelajarans.IsDeleted && cplmk.IsActive && !cplmk.IsDeleted && cplmk.KodeMataKuliah == kodeMatkul && cplmk.MasterCapaianPembelajarans.ProdiID == prodiId).ToList();
                         foreach (var item in list)
                         {
