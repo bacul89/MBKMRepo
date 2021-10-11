@@ -132,7 +132,7 @@
             data.DosenID = $('#idDosen').val();
             data.JadwalKuliahID = $('#idMatkul').val();
             if ($('#jenisProgramMBKM').html() != 'Non Pertukaran') {
-                data.CPLMatakuliahID = $('#mataKuliahAsal').select2('data')[0].idMatkul;
+                data.CPLMatakuliah = $('#mataKuliahAsal').select2('data')[0].text;
                 var string = $('#mataKuliahAsal').select2('data')[0].text.split(' - ');
                 data.MatkulAsal = string[1];
                 data.MatkulKodeAsal = string[0];

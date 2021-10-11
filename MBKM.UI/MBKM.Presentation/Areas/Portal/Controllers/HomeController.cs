@@ -140,6 +140,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     mahasiswa2.IsActive = true;
                     mahasiswa2.IsDeleted = false;
                     _mahasiswaService.Save(mahasiswa2);
+                    Session["prodiIDAsal"] = a.ProdiIDAsal;
                     PopulateSession(true, mahasiswa2.Email, mahasiswa2.Nama);
                 } else
                 {

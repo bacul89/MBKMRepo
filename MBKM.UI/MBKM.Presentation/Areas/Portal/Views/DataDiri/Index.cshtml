@@ -382,6 +382,9 @@
             $("#upload").show();
             $("#edit").hide();
             $("#universitasAsal").attr("disabled", true);
+            if ($("#universitasAsal").val() == 'UNIKA Atma Jaya') {
+                $("#programStudi").attr("disabled", true);
+            }
         });
         $("#simpan").click(function () {
             $.ajax({

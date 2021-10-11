@@ -102,6 +102,7 @@
     <Compile Include="Models\Menu.cs" />
     <Compile Include="Models\MenuRole.cs" />
     <Compile Include="Models\Role.cs" />
+    <Compile Include="ViewModel\VMCPLMKPendaftaran.cs" />
     <Compile Include="ViewModel\VMJenisKerjasama.cs" />
     <Compile Include="ViewModel\VMJenisPertukaran.cs" />
     <Compile Include="ViewModel\VMListDaftarAllMahasiswa.cs" />
