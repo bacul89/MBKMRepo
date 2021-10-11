@@ -55,7 +55,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                         Instansi = z.Instansi,
                         NamaUnit = z.NamaUnit,
                         NamaInstansi = z.NamaInstansi,
-                        JenisKerjasama = z.JenisKerjasama,
+                        JenisKerjasama = context.JenisKerjasamaModels.Where(x => x.ID.ToString() == z.JenisKerjasama).Select(x => x.JenisKerjasama).FirstOrDefault(),
                         JenisPertukaran = z.JenisPertukaran,
                         NoKerjasama = z.NoPerjanjian,
                         Inputer = z.CreatedBy,
