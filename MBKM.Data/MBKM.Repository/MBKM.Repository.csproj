@@ -114,6 +114,10 @@
     <Compile Include="Migrations\202110110652299_addklmprodiidmahasiswa.designer.cs">
       <DependentUpon>202110110652299_addklmprodiidmahasiswa.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110130516225_tambahsp3.cs" />
+    <Compile Include="Migrations\202110130516225_tambahsp3.designer.cs">
+      <DependentUpon>202110130516225_tambahsp3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EmailTemplateRepository.cs" />
@@ -128,6 +132,8 @@
     <Compile Include="Repositories\MBKMRepository\InformasiPertukaranRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\JadwalKuliahMahasiswaRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\JadwalKuliahRepository.cs" />
+    <Compile Include="Repositories\MBKMRepository\JadwalUjianMBKMDetailRepository.cs" />
+    <Compile Include="Repositories\MBKMRepository\JadwalUjianMBKMRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\JenisKerjasamaModelRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\KRSRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\MahasiswaRepository.cs" />
@@ -196,6 +202,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202110110652299_addklmprodiidmahasiswa.resx">
       <DependentUpon>202110110652299_addklmprodiidmahasiswa.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110130516225_tambahsp3.resx">
+      <DependentUpon>202110130516225_tambahsp3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
