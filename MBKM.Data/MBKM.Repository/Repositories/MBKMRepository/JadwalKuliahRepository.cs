@@ -18,7 +18,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
         }
 
 
-
+        
         public IEnumerable<VMSemester> GetSemesterAll(int skip, int take)
         {
             using (var context = new MBKMContext())
@@ -27,7 +27,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                     .SqlQuery<VMSemester>("GetSemesterALL").Skip(skip).Take(take)
                      .Select(z => new VMSemester
                      {
-                         ID = z.ID,
+                         ID = z.Nilai,
                          Nama = z.Nama
                      })
                     .ToList();

@@ -152,7 +152,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
 
 
                 var result = context.Database
-                    .SqlQuery<VMMataKuliah>("GetMatkul @PageNumber, @PageSize, @Search, @ProdiID, @FakultasID", PageNumberParam, PageSizeParam, searchParam, idProdi, idFakultas).ToList();
+                    .SqlQuery<VMMataKuliah>("GetMatkul @PageNumber, @PageSize, @Search, @ProdiID, @FakultasID", PageNumberParam, PageSizeParam, searchParam, idProdiParam, idFakultasParam).ToList();
                     //x.FakultasID == idFakultas).Skip(skip).Take(take).ToList();
                 return result;
             }

@@ -549,8 +549,8 @@
 
                             //getLocationByPodiID();
 
-                            var start = 0;
-                            var end = 0;
+                            //var start = 0;
+                            //var end = 0;
                             $('#matakuliahCari').select2({
                                 placeholder: "-- Pilih Mata Kuliah --",
                                 "proccessing": true,
@@ -561,30 +561,41 @@
                                     url: "/Admin/MasterMapingCapaianPembelajaran/GetMataKuliah",
                                     type: 'POST',
                                     dataType: 'json',
-                                     @*
+
                                     data: function (params) {
-                                       return {
+                                        // console.log('page : ' + params.page);
+                                        // console.log('p number : ' + (params.page - 1) * 10);
+
+                                        return {
                                             take: 10,
                                             searchBy: params.term || "",
-                                            skip: (params.page - 1) * 10 || 0,
+                                            skip: params.page || 1,
                                             idProdi: $('#prodiIdCari').val(),
                                             idFakultas: $('#fakultasCari').val()
                                         };
                                     },
-                                   
+
                                     processResults: function (data, params) {
-                                            //console.log(data);
+
                                         var page = params.page - 1 || 1;
+                                        var pageLength = pageLength + data.length;
+
+                                        @*console.log('page : ' + params.page );
+                                        console.log(page);
+                                        console.log('');
+                                        console.log(page * 10);
+                                        console.log(pageLength);*@
 
                                             return {
                                                 results: $.map(data, function (item) { return { id: item.id, value: item.id, text: item.text, title: item.kode } }),
                                                 pagination: {
-                                                    more: (page * 10) <= data.length
+                                                    more: pageLength  > 0
                                                 }
                                             }
                                     },
-                                    *@
-                                    data: function (params) {
+
+                                    @*
+                                       data: function (params) {
 
 
                                         params.length = 10;
@@ -616,7 +627,7 @@
                                     },
                                     processResults: function (data, page) {
 
-                                        
+
                                         //console.log(data);
                                         //console.log(data[0]);
                                         //console.log(data.slice(start, end));
@@ -631,7 +642,7 @@
                                             }
                                         }
 
-                                    },
+                                    },*@
                                 }
                             });
 

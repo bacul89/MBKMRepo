@@ -7,6 +7,12 @@ using System.Web.Mvc;
 using MBKM.Services;
 using MBKM.Services.MBKMServices;
 
+
+using MBKM.Entities.Models;
+using MBKM.Repository.Repositories;
+
+using MBKM.Presentation.Helper;
+
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
     public class JadwalKuliahController : Controller
@@ -59,7 +65,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             return Json(_mcpService.GetLokasiByProdi(JenjangStudi, namaProdi, search), JsonRequestBehavior.AllowGet);
         }
 
-
+        [HttpPost]
         public ActionResult GetSemesterAll(int skip, int take)
         {
             return Json(_jkService.GetSemesterAll(skip, take), JsonRequestBehavior.AllowGet);
