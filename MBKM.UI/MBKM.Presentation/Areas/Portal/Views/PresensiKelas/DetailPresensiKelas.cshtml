@@ -69,6 +69,14 @@
         padding-right: 0px !important;
         padding-left: 0px !important;
     }
+    .table-borderless > tbody > tr > td,
+    .table-borderless > tbody > tr > th,
+    .table-borderless > tfoot > tr > td,
+    .table-borderless > tfoot > tr > th,
+    .table-borderless > thead > tr > td,
+    .table-borderless > thead > tr > th {
+        border: none;
+    }
 </style>
 
 <form action="@Url.Action("FormPendaftaran","PendaftaranMataKuliah")" method="post" id="daftarMatkul">
@@ -78,38 +86,73 @@
 <div class="card center-block" style="background-color: white; margin: 15px;">
     <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
         <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; padding-left: 15px; font-weight: bold; font-size: 20px; color: black; ">
-            JADWAL PERKULIAHAN MBKM<br />
-            <p style="font-weight: normal; font-size: 15px; color: #c1baba;">Isi kehadiran untuk setiap mata kuliah yang diikuti sesuai jadwal yang tersedia</p>
+            DAFTAR KEHADIRAN MATA KULIAH<br />
+            <p style="font-weight: normal; font-size: 15px; color: #c1baba;" id="subtitle"></p>
         </h5>
         <hr />
+        <p style=" padding-right: 15px; padding-left: 15px; font-size: 18px; font-weight: bold; color: black; " >DETAIL MATA KULIAH</p>
         <div class="container" style="width: 100%; padding-bottom: 15px;">
-            <table class="table" style="width: auto;">
+            <table class="table table-borderless" style="width: auto;">
                 <tr>
-                    <td style="text-align: right">Tahun Semester</td>
-                    <td style="width: 400px;">
-                        <select name="tahunSemester" id="tahunSemester" class="form-control input-md"></select>
-                    </td>
+                    <td style="text-align: right;">Fakultas</td>
+                    <td style="text-align: center;">:</td>
+                    <td id="fakultas"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">Program Studi</td>
+                    <td style="text-align: center;">:</td>
+                    <td id="prodi"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">Kode Mata Kuliah</td>
+                    <td style="text-align: center;">:</td>
+                    <td id="kodeMataKuliah"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">Nama Mata Kuliah</td>
+                    <td style="text-align: center;">:</td>
+                    <td id="namaMataKuliah"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">Seksi</td>
+                    <td style="text-align: center;">:</td>
+                    <td id="seksi"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">Lokasi</td>
+                    <td style="text-align: center;">:</td>
+                    <td id="lokasi"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">Hari</td>
+                    <td style="text-align: center;">:</td>
+                    <td id="hari"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">Waktu</td>
+                    <td style="text-align: center;">:</td>
+                    <td id="waktu"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">Ruang Kelas</td>
+                    <td style="text-align: center;">:</td>
+                    <td id="ruangKelas"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">Nama Dosen</td>
+                    <td style="text-align: center;">:</td>
+                    <td id="namaDosen"></td>
                 </tr>
             </table>
             <hr />
             <div style="overflow-x: auto;">
-                <table id="jadwalKuliah" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
+                <table id="dataAbsen" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
                     <thead>
                         <tr>
                             <th class="zero-padding no-border vertical-center sorting">Action</th>
                             <th class="zero-padding no-border vertical-center sorting">No.</th>
-                            <th class="zero-padding no-border vertical-center sorting">Tahun Semester</th>
-                            <th class="zero-padding no-border vertical-center sorting">Fakultas</th>
-                            <th class="zero-padding no-border vertical-center sorting">Program Studi</th>
-                            <th class="zero-padding no-border vertical-center sorting">Kode Mata Kuliah</th>
-                            <th class="zero-padding no-border vertical-center sorting">Nama Mata Kuliah</th>
-                            <th class="zero-padding no-border vertical-center sorting">SKS</th>
-                            <th class="zero-padding no-border vertical-center sorting">Hari</th>
+                            <th class="zero-padding no-border vertical-center sorting">Tanggal</th>
                             <th class="zero-padding no-border vertical-center sorting">Waktu</th>
-                            <th class="zero-padding no-border vertical-center sorting">Seksi</th>
-                            <th class="zero-padding no-border vertical-center sorting">Ruang Kelas</th>
-                            <th class="zero-padding no-border vertical-center sorting">Lokasi</th>
-                            <th class="zero-padding no-border vertical-center sorting">Nama Dosen</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -122,15 +165,32 @@
 
 @section Scripts{
     <script>
-        var model = @Html.Raw(Json.Encode(Model));
+        var mataKuliah = null;
         $(document).ready(function () {
-            console.log(model);
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetJadwalKuliahById", "PresensiKelas")?id=" + @Model
+            }).then(function (response) {
+                mataKuliah = response;
+                $('#subtitle').html('Isi daftar kehadiran mata kuliah ' + response.JadwalKuliahs.NamaMataKuliah.toUpperCase() + ' sesuai dengan jadwal yang tersedia')
+                $('#fakultas').html(response.JadwalKuliahs.NamaFakultas);
+                $('#prodi').html(response.JadwalKuliahs.NamaProdi);
+                $('#kodeMataKuliah').html(response.JadwalKuliahs.KodeMataKuliah);
+                $('#namaMataKuliah').html(response.JadwalKuliahs.NamaMataKuliah);
+                $('#seksi').html(response.JadwalKuliahs.ClassSection);
+                $('#lokasi').html(response.JadwalKuliahs.Lokasi);
+                $('#hari').html(response.JadwalKuliahs.Hari);
+                $('#waktu').html(response.JadwalKuliahs.JamMasuk + ' - ' + response.JadwalKuliahs.JamSelesai);
+                $('#ruangKelas').html(response.JadwalKuliahs.RuangKelas);
+                $('#namaDosen').html(response.JadwalKuliahs.NamaDosen);
+                loadTable(response.ID);
+            });
         });
 
-        function loadTable(strm) {
+        function loadTable(id) {
             $('#jadwalKuliah').DataTable({
                 ajax: {
-                    url: '@Url.Action("GetJadwalKuliah", "PresensiKelas")?strm=' + strm,
+                    url: '@Url.Action("GetAbsensi", "PresensiKelas")?jadwalKuliahId=' + id,
                     dataSrc: ''
                 },
                 "columns": [
@@ -147,73 +207,13 @@
                         }
                     },
                     {
-                        "data": "JadwalKuliahs.STRM",
+                        "data": "TanggalAbsen",
                         "render": function (data, type, row, meta) {
                             return '<div style="text-align:center; vertical-align: middle;">' + semesters[data] + '</div>';
                         }
                     },
                     {
                         "data": "JadwalKuliahs.NamaFakultas",
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
-                        }
-                    },
-                    {
-                        "data": "JadwalKuliahs.NamaProdi",
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
-                        }
-                    },
-                    {
-                        "data": "JadwalKuliahs.KodeMataKuliah",
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
-                        }
-                    },
-                    {
-                        "data": "JadwalKuliahs.NamaMataKuliah",
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
-                        }
-                    },
-                    {
-                        "data": "JadwalKuliahs.SKS",
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
-                        }
-                    },
-                    {
-                        "data": "JadwalKuliahs.Hari",
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
-                        }
-                    },
-                    {
-                        "data": "JadwalKuliahs.JamMasuk",
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + ' - ' + row.JadwalKuliahs.JamSelesai + '</div>';
-                        }
-                    },
-                    {
-                        "data": "JadwalKuliahs.ClassSection",
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
-                        }
-                    },
-                    {
-                        "data": "JadwalKuliahs.RuangKelas",
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
-                        }
-                    },
-                    {
-                        "data": "JadwalKuliahs.Lokasi",
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
-                        }
-                    },
-                    {
-                        "data": "JadwalKuliahs.NamaDosen",
                         "render": function (data, type, row, meta) {
                             return '<div class="center">' + data + '</div>';
                         }

@@ -40,7 +40,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult DetailPresensiKelas(int id)
         {
-            return View(JsonConvert.SerializeObject(_pendaftaranMataKuliahService.Get(id)));
+            return View(id);
         }
         public ActionResult GetJadwalKuliah(int strm)
         {
@@ -55,6 +55,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             }
             
             return new ContentResult { Content = JsonConvert.SerializeObject(pmks), ContentType = "application/json" };
+        }
+        public ActionResult GetJadwalKuliahById(int id)
+        {
+            var result = _pendaftaranMataKuliahService.Get(id);
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
 
         public Mahasiswa GetMahasiswaByEmail(string email)
