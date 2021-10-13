@@ -118,6 +118,14 @@
     <Compile Include="Migrations\202110130516225_tambahsp3.designer.cs">
       <DependentUpon>202110130516225_tambahsp3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110130757187_rubahtblabssp3.cs" />
+    <Compile Include="Migrations\202110130757187_rubahtblabssp3.designer.cs">
+      <DependentUpon>202110130757187_rubahtblabssp3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202110131018316_tmbhdosenabsensp3.cs" />
+    <Compile Include="Migrations\202110131018316_tmbhdosenabsensp3.designer.cs">
+      <DependentUpon>202110131018316_tmbhdosenabsensp3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EmailTemplateRepository.cs" />
@@ -205,6 +213,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202110130516225_tambahsp3.resx">
       <DependentUpon>202110130516225_tambahsp3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110130757187_rubahtblabssp3.resx">
+      <DependentUpon>202110130757187_rubahtblabssp3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110131018316_tmbhdosenabsensp3.resx">
+      <DependentUpon>202110131018316_tmbhdosenabsensp3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
