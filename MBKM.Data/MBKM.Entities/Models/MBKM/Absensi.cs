@@ -17,5 +17,7 @@ namespace MBKM.Entities.Models.MBKM
         public virtual JadwalKuliah JadwalKuliahs { get; set; }
         public Int64 MahasiswaID { get; set; }
         public virtual Mahasiswa Mahasiswas { get; set; }
+        public string InstructorId { get; set; }
+        public string NamaDosen { get; set; }
     }
 }
