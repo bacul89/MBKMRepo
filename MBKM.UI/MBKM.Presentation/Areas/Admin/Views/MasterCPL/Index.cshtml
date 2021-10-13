@@ -20,7 +20,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content data-content-modal">
                 <div class="modal-header" style="background-color: #FF8A04; ">
-                    <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+                    <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black; text-align: center;">
                         DETAIL CAPAIAN BELAJAR
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -29,6 +29,14 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-horizontal" id="frmSave">
+                        <div class="form-group ">
+                            <label class="col-sm-3 control-label">Jenjang Studi</label>
+                            <div class="col-sm-9">
+                                @Html.EditorFor(model => model.JenjangStudi, new { htmlAttributes = new { @class = "form-control input-pendaftaran input-data", maxlength = 100, disabled = "disabled", @id = "jenjangDetail" } })
+                                @*<select name="jenjang" id="jenjangEdit" class="form-control input-pendaftaran input-data"></select>*@
+                            </div>
+
+                        </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Fakultas</label>
                             <div class="col-sm-9">
@@ -42,6 +50,14 @@
                                 <input type="text" value="" class="form-control input-pendaftaran input-data" disabled="disabled" id="prodiDetail" name="kelompokDetail">
                                 @*@Html.EditorFor(model => model.NamaProdi, new { htmlAttributes = new { @class = "form-control input-pendaftaran", maxlength = 100, disabled = "disabled" } })*@
                             </div>
+                        </div>
+                        <div class="form-group ">
+                            <label for="lokasi" class="col-sm-3 control-label">Lokasi</label>
+                            <div class="col-sm-9">
+                                @Html.EditorFor(model => model.Lokasi, new { htmlAttributes = new { @class = "form-control input-pendaftaran input-data", maxlength = 100, disabled = "disabled", @id = "lokasiDetail" } })
+                                @*<select name="lokasiEdit" id="lokasiEdit" class="form-control input-md input-pendaftaran input-data"></select>*@
+                            </div>
+
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Kelompok</label>
@@ -89,7 +105,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #FF8A04; ">
-                    <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+                    <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black; text-align: center;">
                         TAMBAH CAPAIAN BELAJAR
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -187,7 +203,7 @@
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #FF8A04; ">
                     <input type="hidden" id="id_cpl" value="" />
-                    <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+                    <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black; text-align: center;">
                         EDIT CAPAIAN BELAJAR
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -500,9 +516,11 @@
                     $.LoadingOverlay("hide");
                     console.log(data);
 
+                    $('#jenjangDetail').val(data.JenjangStudi);
                     $('#fakultasDetail').val(data.NamaFakultas);
                     $('#kodeDetail').val(data.Kode);
                     $('#prodiDetail').val(data.NamaProdi);
+                    $('#lokasiDetail').val(data.Lokasi);
                     $('#kelompokDetail').val(data.Kelompok);
                     $('#cplDetail').val(data.Capaian);
                     if (data.IsActive == true) {

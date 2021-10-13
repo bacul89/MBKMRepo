@@ -66,6 +66,8 @@
     <Compile Include="Map\MBKMMap\InformasiPertukaranMap.cs" />
     <Compile Include="Map\MBKMMap\JadwalKuliahMahasiswaMap.cs" />
     <Compile Include="Map\MBKMMap\JadwalKuliahMap.cs" />
+    <Compile Include="Map\MBKMMap\JadwalUjianMBKMDetailMap.cs" />
+    <Compile Include="Map\MBKMMap\JadwalUjianMBKMMap.cs" />
     <Compile Include="Map\MBKMMap\JenisKerjasamaModelMap.cs" />
     <Compile Include="Map\MBKMMap\KRSMap.cs" />
     <Compile Include="Map\MBKMMap\MahasiswaMap.cs" />

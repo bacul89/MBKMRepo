@@ -33,10 +33,10 @@ namespace MBKM.Entities.Models.MBKM
         public virtual ICollection<PendaftaranMataKuliah> PendaftaranMataKuliahs { get; set; }
 
         #region sprint3
-        //public string LinkMoodle { get; set; }
-        //public string LinkAtmaZeds { get; set; }
-        //public string LinkTeams { get; set; }
-        //public string LinkOthers { get; set; }
+        public string LinkMoodle { get; set; }
+        public string LinkAtmaZeds { get; set; }
+        public string LinkTeams { get; set; }
+        public string LinkOthers { get; set; }
         #endregion
 
     }

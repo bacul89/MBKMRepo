@@ -35,6 +35,10 @@ namespace MBKM.Entities.Map.MBKMMap
             Property(t => t.TglAwalKuliah).IsRequired();
             Property(t => t.TglAkhirKuliah).IsRequired();
             Property(t => t.RuangKelas).HasMaxLength(150).IsRequired();
+            Property(t => t.LinkAtmaZeds).HasMaxLength(350);
+            Property(t => t.LinkMoodle).HasMaxLength(350);
+            Property(t => t.LinkOthers).HasMaxLength(350);
+            Property(t => t.LinkTeams).HasMaxLength(350);
         }
     }
 }

@@ -196,7 +196,7 @@
 
 
             } elseif (access == "action") {
-                
+
             } else {
                 console.log("error : access");
             }
@@ -530,13 +530,16 @@
                                 },
                             }
                         });
+
+
+
                         $("#lokasiCari").change(function () {
                             clearValueOnForm();
                             $("#prodiIdCari").val($("#lokasiCari").val());
-                            
+
                             $("#kampusCari").removeAttr('value');
                             var kampus = $(this).find(":selected").text();
-                            console.log(kampus);
+                            //console.log(kampus);
                             $("#kampusCari").val(kampus);
 
                             buttonHandler("close");
@@ -546,67 +549,106 @@
 
                             //getLocationByPodiID();
 
-
+                            var start = 0;
+                            var end = 0;
                             $('#matakuliahCari').select2({
                                 placeholder: "-- Pilih Mata Kuliah --",
                                 "proccessing": true,
-                                "serverSide": true,                                
+                                "serverSide": true,
+                                //multiple: true,
                                 width: "100%",
                                 ajax: {
                                     url: "/Admin/MasterMapingCapaianPembelajaran/GetMataKuliah",
                                     type: 'POST',
                                     dataType: 'json',
                                     data: function (params) {
-                                        return {
-                                            @*
-                                            search: params.term,
-                                            instansi: $('#namaUniversitas').val(),
-                                            length: params.length || 10,
-                                            skip: params.skip || 0
-                                            *@
 
-                                            skip: params.skip || 1,
-                                            take: params.length || 100000,                                            
-                                            searchBy: params.term ,
+                                        //console.log(params);
+                                        params.length = 10;
+                                        if (params.page > 1) {
+                                            params.skip = params.page * params.length - (params.length - 1);
+                                            start = params.skip - 1;
+                                            end = params.skip - 1 + params.length;
+                                        } else {
+                                            start = 0;
+                                            end = 10;
+                                        }
+
+                                        @*return {
+                                            take: 10,
+                                            searchBy: params.term || "",
+                                            skip: (params.page - 1) * 10 || 1,
                                             idProdi: $('#prodiIdCari').val(),
                                             idFakultas: $('#fakultasCari').val()
+                                        };*@
+
+                                        return {
+
+                                            @*search: params.term,
+                                            instansi: $('#namaUniversitas').val(),
+                                            length: params.length || 10,
+                                            skip: params.skip || 0*@
+
+
+                                             page: params.page || 0,
+                                             skip: params.skip || 10,
+                                             take: params.length || 10,
+                                             searchBy: params.term,
+                                             idProdi: $('#prodiIdCari').val(),
+                                             idFakultas: $('#fakultasCari').val()
 
                                         };
-                                    },
+                                },
                                     processResults: function (data, page) {
+                                    //console.log(data);
+                                    //var page = params.page - 1 || 1;
+                                    @*
+                                        console.log(data);
+                                        console.log(data[0]);
+                                        console.log(data.slice(start, end));*@
+                                        //console.log("st"+start);
+                                        //console.log("ed"+end);
+                                        //console.log(data.slice(start, end));
+
+
+
+                                    return {
+
+                                        //.range(1, 20000)
+                                        results: $.map(data.slice(start, end), function (item) { return { id: item.id, value: item.id, text: item.text, title: item.kode } }),
+                                            pagination: {
+                                                more: true 
+                                        }
+
+                                            //(page * 10) <= data.length
+                                            @* processResults: function (data, params) {
                                         return {
-                                            results: $.map(data, function (item) { return { id: item.id, value: item.id, text: item.text, title:item.kode} }),
-                                            @*pagination: {
-                                                more: true
-                                            }
-                                            processResults: function (data, params) {
-                                            return {
-                                                results: $.map(data, function (item) { return { id: item.CRSE_ID, value: item.CRSE_ID, text: item.DESCR } }),
-                                                *@
+                                            results: $.map(data, function (item) { return { id: item.CRSE_ID, value: item.CRSE_ID, text: item.DESCR } }),
+                                            *@
                                         };
-                                    },
-                                }
+                                },
+                            }
                             });
 
 
 
-                            $("#matakuliahCari").change(function () {
+                        $("#matakuliahCari").change(function () {
 
-                                @*
+                            @*
                                 dataParam.NamaProdi = $('#prodiCari').val();
-                                dataParam.lokasi = $('#lokasiCari').val();
-                                dataParam.MataKuliahID = $('#matakuliahCari').val();*@
+                            dataParam.lokasi = $('#lokasiCari').val();
+                            dataParam.MataKuliahID = $('#matakuliahCari').val();*@
 
-                                $("#matakuliahNamaCari").removeAttr('value');
-                                var matakuliah = $(this).find(":selected").text();
-                                $("#matakuliahNamaCari").val(matakuliah);
-                            
-                                
-                                
-                                $("#matakuliahKodeCari").val($(this).find(":selected").prop("title"));
-                                $("#matakuliahIdCari").val($(this).val());
-@*
+                            $("#matakuliahNamaCari").removeAttr('value');
+                            var matakuliah = $(this).find(":selected").text();
+                            $("#matakuliahNamaCari").val(matakuliah);
 
+
+
+                            $("#matakuliahKodeCari").val($(this).find(":selected").prop("title"));
+                            $("#matakuliahIdCari").val($(this).val());
+
+                            @*
                                 $.ajax({
                                     url: "/Admin/MasterMapingCapaianPembelajaran/GetMataKuliahByID",
                                     dataType: 'json',
@@ -625,12 +667,11 @@
                                     error: function (e) {
                                         console.log("matakuliah not found...");
                                     }
-                                })*@
+                                }) *@
                                 buttonHandler("open");
 
-
-                            });
                         });
+                    });
 
                     });
                 });

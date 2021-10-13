@@ -173,7 +173,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Asset\default-photo-profile.png" />
     <Content Include="Asset\kampus-universitas-katolik-atmajaya-jakarta-_131002231109-118.jpg" />
+    <Content Include="Asset\Lambang_Atma_Jaya.png" />
     <Content Include="Asset\Lambang_Unika_Atma_Jaya.png" />
     <Content Include="Content\Admin\AdminCostumeBS4.css" />
     <Content Include="Content\Admin\inputResponsive.css" />

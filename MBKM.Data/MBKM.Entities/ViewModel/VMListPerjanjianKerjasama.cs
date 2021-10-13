@@ -15,7 +15,7 @@ namespace MBKM.Entities.ViewModel
     public class GridDataPerjanjian
     {
         public Int64 ID { get; set; }
-        public string NoKerjasama { get; set; }
+        public string NoPerjanjian { get; set; }
         public DateTime TanggalMulai { get; set; }
         public DateTime TanggalAkhir { get; set; }
         public string Instansi { get; set; }
@@ -23,6 +23,6 @@ namespace MBKM.Entities.ViewModel
         public string NamaInstansi { get; set; }
         public string JenisKerjasama { get; set; }
         public string JenisPertukaran { get; set; }
-        public string Inputer { get; set; }
+        public string CreatedBy { get; set; }
     }
 }
