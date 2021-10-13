@@ -9,5 +9,6 @@ namespace MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces
 {
     public interface IAbsensiRepository : IGenericRepository<Absensi>
     {
+        string GetSemesterBySTRM(int strm);
     }
 }

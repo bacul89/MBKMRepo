@@ -12,6 +12,7 @@ namespace MBKM.Services.MBKMServices
 {
     public interface IAbsensiService : IEntityService<Absensi>
     {
+        string GetSemesterBySTRM(int strm);
     }
     public class AbsensiService : EntityService<Absensi>, IAbsensiService
     {
@@ -23,6 +24,10 @@ namespace MBKM.Services.MBKMServices
         {
             _unitOfWork = unitOfWork;
             _absensiRepository = AbsensiRepository;
+        }
+        public string GetSemesterBySTRM(int strm)
+        {
+            return _absensiRepository.GetSemesterBySTRM(strm);
         }
     }
 }

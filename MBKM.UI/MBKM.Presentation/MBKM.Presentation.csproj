@@ -148,6 +148,8 @@
     <Compile Include="Areas\Admin\Controllers\TemplateEmail\TemplateEmailController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserManageController.cs" />
     <Compile Include="Areas\Admin\Controllers\VerifikasiMahasiswaController.cs" />
+    <Compile Include="Areas\Portal\Controllers\PresensiKelasController.cs" />
+    <Compile Include="Areas\Portal\Controllers\PresensiUjianController.cs" />
     <Compile Include="Areas\Portal\Controllers\DataDiriController.cs" />
     <Compile Include="Areas\Portal\Controllers\PendaftaranMataKuliahController.cs" />
     <Compile Include="Areas\Portal\Controllers\HomeController.cs" />
@@ -450,6 +452,9 @@
     <Content Include="Areas\Admin\Views\ApprovalPendaftaranMatakuliah\Index.cshtml" />
     <Content Include="Areas\Admin\Views\MenuRole\ModalUpdateMenuRole.cshtml" />
     <Content Include="Areas\Portal\Views\TrackingStatusPendaftaran\IndexDetailPendaftaran.cshtml" />
+    <Content Include="Areas\Portal\Views\PresensiKelas\Index.cshtml" />
+    <Content Include="Areas\Portal\Views\PresensiUjian\Index.cshtml" />
+    <Content Include="Areas\Portal\Views\PresensiKelas\DetailPresensiKelas.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
