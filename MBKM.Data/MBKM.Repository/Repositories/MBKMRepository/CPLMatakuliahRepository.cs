@@ -150,11 +150,12 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 //var PageSizeParam = new SqlParameter("@PageSize", take);
                 var searchParam = new SqlParameter("@Search", searchBy);
 
-                // .Skip(skip).Take(take)
+
                 var result = context.Database
                     .SqlQuery<VMMataKuliah>("GetMatkul @PageNumber, @PageSize, @Search", PageNumberParam, PageSizeParam, searchParam).Where(x =>
                     x.ProdiID == idProdi &&
                     x.FakultasID == idFakultas).ToList();
+                    //x.FakultasID == idFakultas).Skip(skip).Take(take).ToList();
                 return result;
             }
 

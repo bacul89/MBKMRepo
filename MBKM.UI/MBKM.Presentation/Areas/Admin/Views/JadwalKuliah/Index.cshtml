@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "MASTER MAPING CAPAIAN PEMBELAJARAN PER-MATA KULIAH";
+    ViewBag.Title = "JADWAL PERKULIAHAN MBKM";
     Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
 }
 
@@ -13,24 +13,24 @@
     @Scripts.Render("~/bundles/jquery")
     <script src="~/Scripts/sweetalert2.all.min.js"></script>
 }
-@section modal{
-    <div class="modal fade" id="TambahMasterMapingCapaianPembelajaran" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document" id="modal-inner">
 
-        </div>
-    </div>
-}
 
 <div class="container-fluid" style="padding: 0px">
     <div class="card center-block" style="background-color: white; width: 100%; padding: 0px">
         <div class="card-body responsive-content" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; padding: 0px">
             <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
-                MASTER MAPING CAPAIAN PEMBELAJARAN PER-MATA KULIAH<br />
-                <small class="describe">Berikut Table Mapping Capian Pembelajaran dengan Mata Kuliah</small>
+                JADWAL PERKULIAHAN MBKM <br />
+                <small class="describe">Jadwal Perkuliahaan Pada Program MBKM</small>
             </h4>
             <hr />
             <div class="container" style="width: 100%;">
-
+                @*
+                    Jenjang Studi
+                    Fakultas
+                    ProgtamStudi
+                    Lokasi
+                    Tahun Ajaran
+                *@
                 <div class="col-md-12">
                     <form class="form-horizontal col-md-7">
                         <div class="form-group">
@@ -75,31 +75,13 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inp_matakuliah" class="col-sm-3 control-label">Mata Kuliah</label>
+                            <label for="inp_tahunAjaran" class="col-sm-3 control-label">Tahun Ajaran</label>
                             <div class="col-sm-9">
-                                <select name="matakuliahCari" id="matakuliahCari" class="form-control input-md">
+                                <select name="tahunAjaranCari" id="tahunAjaranCari" class="form-control input-md">
                                 </select>
                             </div>
                         </div>
 
-                        <div class="form-group" hidden>
-                            <label for="inp_matakuliahId" class="col-sm-3 control-label">Nama Mata Kuliah</label>
-                            <div class="col-sm-9">
-                                <input name="matakuliahNamaCari" id="matakuliahNamaCari" class="form-control input-md">
-                            </div>
-                        </div>
-                        <div class="form-group" hidden>
-                            <label for="inp_matakuliahKode" class="col-sm-3 control-label">Kode Mata Kuliah</label>
-                            <div class="col-sm-9">
-                                <input name="matakuliahKodeCari" id="matakuliahKodeCari" class="form-control input-md">
-                            </div>
-                        </div>
-                        <div class="form-group" hidden>
-                            <label for="inp_matakuliahId" class="col-sm-3 control-label">Id Mata Kuliah</label>
-                            <div class="col-sm-9">
-                                <input name="matakuliahIdCari" id="matakuliahIdCari" class="form-control input-md">
-                            </div>
-                        </div>
                         <div class="form-group">
                             <div class="col-sm-2 col-md-offset-10">
                                 <button type="button" id="cari" class="btn btn-warning" style="float: right;" title="Mohon untuk melengkapi form pencarian terlebih dahulu!" disabled><span class="fa fa-search"></span> Cari</button>
@@ -110,20 +92,39 @@
 
 
 
-                <button id="add" class="btn btn-success" onclick="IndexCreateMasterMapingCapaianPembelajaran()" title="Mohon untuk melengkapi form pencarian terlebih dahulu!" disabled><i class="fas fa-plus-circle"></i> Tambah Master Maping</button>
-                <br />
-                <br />
+                <!--
+                    No
+                    Kode Mata Kuliah
+                    Nama Mata Kuliah
+                    SKS
+                    Seksi
+                    Hari
+                    Waktu
+                    Ruang Kelas
+                    Lokasi
+                    Nama Dosen
+                -->
+                <!--
+                    <button id="add" class="btn btn-success" onclick="IndexCreateMasterMapingCapaianPembelajaran()" title="Mohon untuk melengkapi form pencarian terlebih dahulu!" disabled><i class="fas fa-plus-circle"></i> Tambah Master Maping</button>
+                    <br />
+                    <br />
+                -->
                 <!--table-responsive-->
+                <h3><b>Jadwal Perkuliahan</b></h3>
                 <table id="table-data-master-mapping-cpl" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
                     <thead>
                         <tr>
-                            <th class="zero-padding no-border vertical-center sorting">Action</th>
+                            <!--<th class="zero-padding no-border vertical-center sorting">Action</th>-->
                             <th class="zero-padding no-border vertical-center sorting">No.</th>
                             <th class="zero-padding no-border vertical-center sorting">Kode Mata Kuliah</th>
                             <th class="zero-padding no-border vertical-center sorting">Nama Mata Kuliah</th>
-                            <th class="zero-padding no-border vertical-center sorting">Kode CPL</th>
-                            <th class="zero-padding no-border vertical-center sorting">Kelompok</th>
-                            <th class="zero-padding no-border vertical-center sorting">Capaian Pembelajaran</th>
+                            <th class="zero-padding no-border vertical-center sorting">SKS</th>
+                            <th class="zero-padding no-border vertical-center sorting">Seksi</th>
+                            <th class="zero-padding no-border vertical-center sorting">Hari</th>
+                            <th class="zero-padding no-border vertical-center sorting">Waktu</th>
+                            <th class="zero-padding no-border vertical-center sorting">Ruang Kelas</th>
+                            <th class="zero-padding no-border vertical-center sorting">Lokasi</th>
+                            <th class="zero-padding no-border vertical-center sorting">Nama Dosen</th>
 
                         </tr>
                     </thead>
@@ -136,9 +137,10 @@
     </div>
 </div>
 
+
 @section scripts{
-    <script src="~/Scripts/Admin/MasterMapingCapaianPembelajaran/main.js"></script>
-    <script src="~/Scripts/Admin/MasterMapingCapaianPembelajaran/crud.js"></script>
+    <script src="~/Scripts/Admin/JadwalKuliah/main.js"></script>
+    <script src="~/Scripts/Admin/JadwalKuliah/crud.js"></script>
     <script src="~/Scripts/loading/loadingoverlay.min.js"></script>
 
 
@@ -427,7 +429,7 @@
                 }
             });
             $("#" + id + "Cari").change(function () {
-                clearValueOnForm();
+                
                 buttonHandler("close");
                 $("#fakultasCari").empty();
                 $("#prodiCari").empty();
@@ -461,7 +463,7 @@
                     }
                 });
                 $("#fakultasCari").change(function () {
-                    clearValueOnForm();
+                    
                     buttonHandler("close");
                     $("#prodiCari").empty();
                     $("#prodiIdCari").val('');
@@ -497,7 +499,7 @@
 
                     $("#prodiCari").change(function () {
                         //console.log("select2");
-                        clearValueOnForm();
+                        
                         buttonHandler("close");
                         $("#lokasiCari").empty();
                         $("#prodiIdCari").val('');
@@ -534,7 +536,7 @@
 
 
                         $("#lokasiCari").change(function () {
-                            clearValueOnForm();
+                            
                             $("#prodiIdCari").val($("#lokasiCari").val());
 
                             $("#kampusCari").removeAttr('value');
@@ -571,7 +573,7 @@
                                             idFakultas: $('#fakultasCari').val()
                                         };
                                     },
-                                   
+
                                     processResults: function (data, params) {
                                             //console.log(data);
                                         var page = params.page - 1 || 1;
@@ -616,7 +618,7 @@
                                     },
                                     processResults: function (data, page) {
 
-                                        
+
                                         //console.log(data);
                                         //console.log(data[0]);
                                         //console.log(data.slice(start, end));
@@ -749,4 +751,3 @@
     </script>
 
 }
-

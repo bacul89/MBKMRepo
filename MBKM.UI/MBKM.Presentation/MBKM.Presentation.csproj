@@ -137,6 +137,7 @@
     <Compile Include="Areas\Admin\Controllers\DaftarSeluruhMahasiswaController.cs" />
     <Compile Include="Areas\Admin\Controllers\ApprovalPendaftaranMatakuliahController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\JadwalKuliahController.cs" />
     <Compile Include="Areas\Admin\Controllers\MasterCPLController.cs" />
     <Compile Include="Areas\Admin\Controllers\MasterLookupController.cs" />
     <Compile Include="Areas\Admin\Controllers\MasterMapingCapaianPembelajaranController.cs" />
@@ -189,6 +190,7 @@
     <Content Include="Scripts\Admin\DaftarSeluruhMhs\main.js" />
     <Content Include="Scripts\Admin\ApprovalPendaftaranMakul\main.js" />
     <Content Include="Scripts\Admin\DaftarSeluruhMhs\main_detail.js" />
+    <Content Include="Scripts\Admin\JadwalKuliah\main.js" />
     <Content Include="Scripts\Admin\MasterCPL\crud.js" />
     <Content Include="Scripts\Admin\MasterCPL\main.js" />
     <Content Include="Scripts\Admin\MasterMapingCapaianPembelajaran\crud.js" />
@@ -450,6 +452,7 @@
     <Content Include="Areas\Admin\Views\ApprovalPendaftaranMatakuliah\Index.cshtml" />
     <Content Include="Areas\Admin\Views\MenuRole\ModalUpdateMenuRole.cshtml" />
     <Content Include="Areas\Portal\Views\TrackingStatusPendaftaran\IndexDetailPendaftaran.cshtml" />
+    <Content Include="Areas\Admin\Views\JadwalKuliah\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
