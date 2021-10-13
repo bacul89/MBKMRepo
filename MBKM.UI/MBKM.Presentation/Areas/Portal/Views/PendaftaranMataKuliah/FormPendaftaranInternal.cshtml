@@ -83,7 +83,7 @@
                         <tr>
                             <td style="text-align: right;">No. Kerjasama</td>
                             <td style="text-align: center;">:</td>
-                            <td>@Model.NoKerjasama</td>
+                            <td id="noKerjasama"></td>
                         </tr>
                     </table>
                 </div>
@@ -132,7 +132,7 @@
             data.DosenID = $('#idDosen').val();
             data.JadwalKuliahID = $('#idMatkul').val();
             if ($('#jenisProgramMBKM').html() != 'Non Pertukaran') {
-                data.CPLMatakuliahID = $('#mataKuliahAsal').select2('data')[0].idMatkul;
+                data.CPLMatakuliah = $('#mataKuliahAsal').select2('data')[0].text;
                 var string = $('#mataKuliahAsal').select2('data')[0].text.split(' - ');
                 data.MatkulAsal = string[1];
                 data.MatkulKodeAsal = string[0];
@@ -182,6 +182,7 @@
             }).then(function (response) {
                 $('#jenisProgramMBKM').html(response.JenisPertukaran);
                 $('#jenisKegiatanMBKM').html(response.JenisKerjasama);
+                $('#noKerjasama').html(response.NoKerjasama);
             });
         }
     </script>

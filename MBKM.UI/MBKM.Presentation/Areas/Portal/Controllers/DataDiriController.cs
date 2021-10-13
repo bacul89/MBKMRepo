@@ -97,7 +97,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 if (!res.NamaUniversitas.Equals("UNIKA Atma Jaya"))
                 {
                     res.StatusVerifikasi = "MENUNGGU VERIFIKASI";
-                }
+                }   
                 res.UpdatedDate = DateTime.Now;
                 UploadFilePendukung(filePendukung, res.ID);
                 _mahasiswaService.Save(res);

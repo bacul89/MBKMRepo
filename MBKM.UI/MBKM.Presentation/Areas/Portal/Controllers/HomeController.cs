@@ -131,6 +131,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     mahasiswa2.TempatLahir = "Jakarta";
                     mahasiswa2.Gender = a.Gender;
                     mahasiswa2.ProdiAsal = a.Prodi;
+                    mahasiswa2.ProdiAsalID = a.ProdiIDAsal;
                     mahasiswa2.NIM = a.NIM;
                     mahasiswa2.NIMAsal = a.NIM;
                     mahasiswa2.JenjangStudi = a.JenjangStudi;
@@ -140,12 +141,14 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     mahasiswa2.IsActive = true;
                     mahasiswa2.IsDeleted = false;
                     _mahasiswaService.Save(mahasiswa2);
+                    Session["prodiIDAsal"] = a.ProdiIDAsal;
                     PopulateSession(true, mahasiswa2.Email, mahasiswa2.Nama);
                 } else
                 {
                     mahasiswa.Email = a.Email;
                     mahasiswa.Password = hp(a.PasswordData);
                     _mahasiswaService.Save(mahasiswa);
+                    Session["prodiIDAsal"] = a.ProdiIDAsal;
                     PopulateSession(true, mahasiswa.Email, mahasiswa.Nama);
                 }
                 return RedirectToAction("Index", "DataDiri");

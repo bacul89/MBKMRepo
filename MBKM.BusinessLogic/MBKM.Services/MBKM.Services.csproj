@@ -67,6 +67,8 @@
     <Compile Include="MBKMServices\InformasiPertukaranService.cs" />
     <Compile Include="MBKMServices\JadwalKuliahMahasiswaService.cs" />
     <Compile Include="MBKMServices\JadwalKuliahService.cs" />
+    <Compile Include="MBKMServices\JadwalUjianMBKMDetailService.cs" />
+    <Compile Include="MBKMServices\JadwalUjianMBKMService.cs" />
     <Compile Include="MBKMServices\JenisKerjasamaModelService.cs" />
     <Compile Include="MBKMServices\KRSService.cs" />
     <Compile Include="MBKMServices\MahasiswaService.cs" />
