@@ -46,7 +46,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 mListmodel.TotalCount = result.Count();
                 var gridfilter = result.AsQueryable().Where(y => y.NamaInstansi.Contains(SearchParam) ||
                                         y.JenisKerjasama.Contains(SearchParam) || y.JenisPertukaran.Contains(SearchParam) || y.NamaUnit.Contains(SearchParam)
-                                        || y.NamaInstansi.Contains(SearchParam) || y.NoPerjanjian.Contains(SearchParam))
+                                        || y.NamaInstansi.Contains(SearchParam) || y.NoPerjanjian.Contains(SearchParam)||y.CreatedBy.Contains(SearchParam))
                     .OrderBy(SortBy, SortDir);                    
                 mListmodel.gridDatas = gridfilter.Skip(Skip).Take(Length)
                     .Select(z => new GridDataPerjanjian
@@ -57,8 +57,8 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                         NamaInstansi = z.NamaInstansi,
                         JenisKerjasama = context.JenisKerjasamaModels.Where(x => x.ID.ToString() == z.JenisKerjasama).Select(x => x.JenisKerjasama).FirstOrDefault(),
                         JenisPertukaran = z.JenisPertukaran,
-                        NoKerjasama = z.NoPerjanjian,
-                        Inputer = z.CreatedBy,
+                        NoPerjanjian = z.NoPerjanjian,
+                        CreatedBy = z.CreatedBy,
                         TanggalAkhir = z.TanggalAkhir,
                         TanggalMulai = z.TanggalMulai
                     }).ToList();

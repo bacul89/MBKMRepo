@@ -37,6 +37,7 @@
         {
             //"title": "No",
             "data": null,
+            "orderable": "false",
             "render": function (data, type, full, meta) {
                 return meta.row + 1;
             }

@@ -26,21 +26,21 @@
             }
         },
         {
-            "title":"No",
+            //"title":"No",
             "data": null,
             "render": function (data, type, full, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + (meta.row + 1) + '</div>';
             }
         },
         {
-            "title": "No Kerjasama",
-            "data": "NoKerjasama",
+            //"title": "No Kerjasama",
+            "data": "NoPerjanjian",
             "render": function (data, type, row, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
-            "title": "Tanggal Mulai",
+            //"title": "Tanggal Mulai",
             "data": "TanggalMulai",
             "render": function (data, type, row, meta) {
                 if (data === null) return "";
@@ -48,7 +48,7 @@
             }
         },
         {
-            "title": "Tanggal Akhir",
+            //"title": "Tanggal Akhir",
             "data": "TanggalAkhir",
             "render": function (data, type, row, meta) {
                 if (data === null) return "";
@@ -56,43 +56,43 @@
             }
         },
         {
-            "title": "Instansi",
+            //"title": "Instansi",
             "data": "Instansi",
             "render": function (data, type, row, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
-            "title": "Nama Unit",
+            //"title": "Nama Unit",
             "data": "NamaUnit",
             "render": function (data, type, row, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
-            "title": "Nama Instansi",
+            //"title": "Nama Instansi",
             "data": "NamaInstansi",
             "render": function (data, type, row, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
-            "title": "Jenis Pertukaran",
+            //"title": "Jenis Pertukaran",
             "data": "JenisPertukaran",
             "render": function (data, type, row, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
-            "title": "Jenis Kerjasama",
+            //"title": "Jenis Kerjasama",
             "data": "JenisKerjasama",
             "render": function (data, type, row, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
-            "title": "Inputer",
-            "data": "Inputer",
+            //"title": "Inputer",
+            "data": "CreatedBy",
             "render": function (data, type, row, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
