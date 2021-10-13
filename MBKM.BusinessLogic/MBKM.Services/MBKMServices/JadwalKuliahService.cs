@@ -1,6 +1,7 @@
 ﻿using MBKM.Common.Interfaces;
 using MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces;
 using MBKM.Entities.Models.MBKM;
+using MBKM.Entities.ViewModel;
 using MBKM.Services.BaseServices;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ namespace MBKM.Services.MBKMServices
 {
     public interface IJadwalKuliahService : IEntityService<JadwalKuliah>
     {
+        IEnumerable<VMSemester> GetSemesterAll(int skip, int take);
     }
     public class JadwalKuliahService : EntityService<JadwalKuliah>, IJadwalKuliahService
     {
@@ -23,6 +25,11 @@ namespace MBKM.Services.MBKMServices
         {
             _unitOfWork = unitOfWork;
             _jadwalKuliahRepository = JadwalKuliahRepository;
+        }
+
+        public IEnumerable<VMSemester> GetSemesterAll(int skip, int take)
+        {
+            return _jadwalKuliahRepository.GetSemesterAll(skip, take);
         }
     }
 }

@@ -60,5 +60,21 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
 
 
+        public ActionResult GetSemesterAll(int skip, int take)
+        {
+            return Json(_jkService.GetSemesterAll(skip, take), JsonRequestBehavior.AllowGet);
+
+
+            /*  
+                var data = _mcpService.Get(id);
+                return Json(new
+                {
+                    Capaian = data.Capaian,
+                    Kelompok = data.Kelompok,
+                    ID = data.ID
+                }, JsonRequestBehavior.AllowGet);*/
+
+        }
+
     }
 }

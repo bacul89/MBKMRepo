@@ -144,17 +144,15 @@ namespace MBKM.Repository.Repositories.MBKMRepository
 
             using (var context = new MBKMContext())
             {
-                var PageNumberParam = new SqlParameter("@PageNumber", 1);
-                var PageSizeParam = new SqlParameter("@PageSize", 1000000);
-                //var PageNumberParam = new SqlParameter("@PageNumber", skip);
-                //var PageSizeParam = new SqlParameter("@PageSize", take);
+                var PageNumberParam = new SqlParameter("@PageNumber", skip);
+                var PageSizeParam = new SqlParameter("@PageSize", take);
+                var idProdiParam = new SqlParameter("@ProdiID", idProdi);
+                var idFakultasParam = new SqlParameter("@FakultasID", idFakultas);
                 var searchParam = new SqlParameter("@Search", searchBy);
 
 
                 var result = context.Database
-                    .SqlQuery<VMMataKuliah>("GetMatkul @PageNumber, @PageSize, @Search", PageNumberParam, PageSizeParam, searchParam).Where(x =>
-                    x.ProdiID == idProdi &&
-                    x.FakultasID == idFakultas).ToList();
+                    .SqlQuery<VMMataKuliah>("GetMatkul @PageNumber, @PageSize, @Search, @ProdiID, @FakultasID", PageNumberParam, PageSizeParam, searchParam, idProdi, idFakultas).ToList();
                     //x.FakultasID == idFakultas).Skip(skip).Take(take).ToList();
                 return result;
             }

@@ -1,4 +1,5 @@
 ﻿using MBKM.Entities.Models.MBKM;
+using MBKM.Entities.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces
 {
-    public interface IJadwalKuliahRepository: IGenericRepository<JadwalKuliah>
+    public interface IJadwalKuliahRepository : IGenericRepository<JadwalKuliah>
     {
-
+        IEnumerable<VMSemester> GetSemesterAll(int skip, int take);
     }
 }
