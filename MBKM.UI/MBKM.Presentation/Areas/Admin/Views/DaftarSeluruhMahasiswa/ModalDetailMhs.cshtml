@@ -4,7 +4,7 @@
 @model MBKM.Entities.Models.MBKM.Mahasiswa
 <div class="modal-content data-content-modal" id="detail-seluruhMHS-template">
     <div class="modal-header" style="background-color: #FF8A04; ">
-        <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+        <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black; text-align: center;">
             DETAIL MAHASISWA
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -57,7 +57,7 @@
                         }
                         else
                         {
-                            <input type="text" value="Pria" class="form-control input-pendaftaran input-data"style="border:none" disabled="disabled" id="genderl" name="gl" >
+                            <input type="text" value="Laki-Laki" class="form-control input-pendaftaran input-data"style="border:none" disabled="disabled" id="genderl" name="gl" >
                         }
                     }
                     @*@Html.EditorFor(model => model.Gender, new { htmlAttributes = new { @class = "form-control input-md", maxlength = 100, disabled = "disabled", @style = "border: none" } })*@

@@ -144,10 +144,13 @@ namespace MBKM.Repository.Repositories.MBKMRepository
 
             using (var context = new MBKMContext())
             {
-                var PageNumberParam = new SqlParameter("@PageNumber", skip);
-                var PageSizeParam = new SqlParameter("@PageSize", take);
+                var PageNumberParam = new SqlParameter("@PageNumber", 1);
+                var PageSizeParam = new SqlParameter("@PageSize", 1000000);
+                //var PageNumberParam = new SqlParameter("@PageNumber", skip);
+                //var PageSizeParam = new SqlParameter("@PageSize", take);
                 var searchParam = new SqlParameter("@Search", searchBy);
 
+                // .Skip(skip).Take(take)
                 var result = context.Database
                     .SqlQuery<VMMataKuliah>("GetMatkul @PageNumber, @PageSize, @Search", PageNumberParam, PageSizeParam, searchParam).Where(x =>
                     x.ProdiID == idProdi &&

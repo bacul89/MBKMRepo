@@ -48,6 +48,8 @@ namespace MBKM.Services.MBKMServices
             {
                 // in this example we just default sort on the 1st column
                 sortBy = model.columns[model.order[0].column].data;
+                if (sortBy == "Inputer")
+                    sortBy = "CreatedBy";
                 sortDir = model.order[0].dir.ToLower() == "asc";
             }
             if (sortBy == null)

@@ -85,7 +85,6 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var model = _pmkService.getOngoingSemester(mahasiswa.JenjangStudi);
             return View(model);
         }
-
         public ActionResult FormPendaftaran(int idMatkul)
         {
             var matkul = GetJadwalKuliah(idMatkul);
@@ -196,9 +195,23 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var informasiPertukaran = _informasiPertukaranService.Find(ip => ip.MahasiswaID == id).FirstOrDefault();
             return new ContentResult { Content = JsonConvert.SerializeObject(informasiPertukaran), ContentType = "application/json" };
         }
-        public ActionResult GetMataKuliahAsal(string idMatkul)
+        public ActionResult GetMataKuliahAsal(int idMatkul)
         {
-            return new ContentResult { Content = JsonConvert.SerializeObject(_cplMatakuliahService.Find(cplmk => cplmk.IDMataKUliah == idMatkul).ToList()), ContentType = "application/json" };
+            var result = _jkService.Get(idMatkul);
+            string prodiIDAsal = Session["prodiIDAsal"] as string;
+            //string prodiIDAsal = "0700";
+            List<string> kodeNama = new List<string>();
+            List<CPLMatakuliah> cplmks = new List<CPLMatakuliah>();
+            var list = _cplMatakuliahService.Find(cplmk => cplmk.MasterCapaianPembelajarans.IsActive && !cplmk.MasterCapaianPembelajarans.IsDeleted && cplmk.IsActive && !cplmk.IsDeleted && cplmk.MasterCapaianPembelajarans.ProdiID == prodiIDAsal).ToList();
+            foreach (var item in list)
+            {
+                if (!kodeNama.Contains(item.KodeMataKuliah + " - " + item.NamaMataKuliah))
+                {
+                    kodeNama.Add(item.KodeMataKuliah + " - " + item.NamaMataKuliah);
+                    cplmks.Add(item);
+                }
+            }
+            return new ContentResult { Content = JsonConvert.SerializeObject(cplmks), ContentType = "application/json" };
         }
         public ActionResult InsertInformasiPertukaran(InformasiPertukaran informasiPertukaran)
         {
@@ -223,7 +236,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 return Json(new ServiceResponse { status = 500, message = e.Message });
             }
         }
-        public ActionResult InsertPendaftaranMK(PendaftaranMataKuliah pendaftaranMataKuliah, CPLMKPendaftaran cplmkPendaftaran, ApprovalPendaftaran approvalPendaftaran)
+        public ActionResult InsertPendaftaranMK(PendaftaranMataKuliah pendaftaranMataKuliah, VMCPLMKPendaftaran cplmkPendaftaran, ApprovalPendaftaran approvalPendaftaran)
         {
             try
             {
@@ -239,12 +252,35 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     //pendaftaranMataKuliah.Hasil += "a";
                     _pendaftaranMataKuliahService.Save(pendaftaranMataKuliah);
                     Int64 ID = pendaftaranMataKuliah.ID;
-                    cplmkPendaftaran.PendaftaranMataKuliahID = ID;
-                    cplmkPendaftaran.IsActive = true;
-                    cplmkPendaftaran.IsDeleted = false;
-                    cplmkPendaftaran.CreatedDate = DateTime.Now;
-                    cplmkPendaftaran.UpdatedDate = DateTime.Now;
-                    _cplmkPendaftaranService.Save(cplmkPendaftaran);
+
+                    if (cplmkPendaftaran.CPLMatakuliah != null)
+                    {
+                        string kodeMatkul = cplmkPendaftaran.CPLMatakuliah.Split(new string[] { " - " }, StringSplitOptions.None)[0];
+                        string prodiId = Session["prodiIDAsal"] as string;
+                        //string prodiId = "0700";
+                        var list = _cplMatakuliahService.Find(cplmk => cplmk.MasterCapaianPembelajarans.IsActive && !cplmk.MasterCapaianPembelajarans.IsDeleted && cplmk.IsActive && !cplmk.IsDeleted && cplmk.KodeMataKuliah == kodeMatkul && cplmk.MasterCapaianPembelajarans.ProdiID == prodiId).ToList();
+                        foreach (var item in list)
+                        {
+                            CPLMKPendaftaran res = new CPLMKPendaftaran();
+                            res.CPLMatakuliahID = item.ID;
+                            res.PendaftaranMataKuliahID = ID;
+                            res.IsActive = true;
+                            res.IsDeleted = false;
+                            res.CreatedDate = DateTime.Now;
+                            res.UpdatedDate = DateTime.Now;
+                            _cplmkPendaftaranService.Save(res);
+                        }
+                    } else
+                    {
+                        CPLMKPendaftaran res = new CPLMKPendaftaran();
+                        res.PendaftaranMataKuliahID = ID;
+                        res.IsActive = true;
+                        res.IsDeleted = false;
+                        res.CreatedDate = DateTime.Now;
+                        res.UpdatedDate = DateTime.Now;
+                        _cplmkPendaftaranService.Save(res);
+                    }
+
                     approvalPendaftaran.StatusPendaftaran = "MENUNGGU APPROVAL KAPRODI/WR BIDANG AKADEMIK";
                     approvalPendaftaran.PendaftaranMataKuliahID = ID;
                     approvalPendaftaran.Approval = "-";
