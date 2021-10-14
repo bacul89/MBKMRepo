@@ -18,8 +18,8 @@ namespace MBKM.Services.MBKMServices
         List<Mahasiswa> getMahasiswasNotYetVer(string Universitas, string Prodi);
         VMListMahasiswa getMahasiswasNotYetVer(DataTableAjaxPostModel model);
         string GetNim();
-
         void UpdateNim(int Nilai);
+        IEnumerable<VMSemester> GetDataSemester(string jenjangStudi);
         //int updateRangeVer(Int64[] listId);
     }
     public class MahasiswaService : EntityService<Mahasiswa>, IMahasiswaService
@@ -32,6 +32,11 @@ namespace MBKM.Services.MBKMServices
         {
             _unitOfWork = unitOfWork;
             _mahasiswaRepository = MahasiswaRepository;
+        }
+
+        public IEnumerable<VMSemester> GetDataSemester(string jenjangStudi)
+        {
+            return _mahasiswaRepository.GetDataSemester(jenjangStudi);
         }
 
         public VMLogin getLoginInternal(string StudentID, string Password)
