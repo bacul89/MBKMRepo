@@ -62,6 +62,8 @@ function buttonHandler(param) {
 }
 
 $('#cari').click(function () {
+
+    console.log("comeback to live");
     reloadDatatable();
 });
 function convertMilisecondToDate(value) {
@@ -73,15 +75,17 @@ function convertMilisecondToDate(value) {
 }
 
 function reloadDatatable() {
+
+    console.log("hello");
     var variable =
         'idProdi=' + $('#prodiIdCari').val() +
         '&lokasi=' + $('#kampusCari').val() +
         '&idFakultas=' + $('#fakultasCari').val() +
         '&jenjangStudi=' + $('#jenjangCari').val() +
-        '&idMatakuliah=' + $('#matakuliahCari').val();
+        '&strm=' + $('#tahunAjaranCari').val();
 
     datatable.destroy();
-    datatable = $('#table-data-master-mapping-cpl').DataTable({
+    datatable = $('#table-data-jadwal-kuliah').DataTable({
         "columnDefs": [{
             "searchable": false,
             "orderable": false,
@@ -107,7 +111,7 @@ function reloadDatatable() {
             "searchPlaceholder": ""
         },
         "columns": [
-            {
+            /*{
                 "title": "Action",
                 "data": "ID",
                 "render": function (data, type, row, meta) {
@@ -124,7 +128,7 @@ function reloadDatatable() {
                         </div>`;//<a href="javascript:void(0)" style="color:black" onclick="DeleteUserGetID('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
                     //<a href="javascript:void(0)" style="color:black" onclick="DetailMasterCPL('${data}')"> <i class="fas fa-file-search coral"></i></a>
                 }
-            },
+            },*/
             {
                 //"title": "No",
                 "data": null,
@@ -166,15 +170,52 @@ function reloadDatatable() {
             },
             {
                 //"title": "Email",
-                "data": "Capaian",
-                "name": "Capaian",
+                "data": "SKS",
+                "name": "SKS",
                 "render": function (data, type, row, meta) {
                     return '<div class="center">' + data + '</div>';
                 }
             },
-
-
-
+            {
+                //"title": "Email",
+                "data": "Hari",
+                "name": "Hari",
+                "render": function (data, type, row, meta) {
+                    return '<div class="center">' + data + '</div>';
+                }
+            },
+            {
+                //"title": "Email",
+                "data": "JamMasuk",
+                "name": "Hari",
+                "render": function (data, type, row, meta) {
+                    return '<div class="center">' + data + '</div>';
+                }
+            },
+            {
+                //"title": "Email",
+                "data": "RuangKelas",
+                "name": "RuangKelas",
+                "render": function (data, type, row, meta) {
+                    return '<div class="center">' + data + '</div>';
+                }
+            },
+            {
+                //"title": "Email",
+                "data": "Lokasi",
+                "name": "Lokasi",
+                "render": function (data, type, row, meta) {
+                    return '<div class="center">' + data + '</div>';
+                }
+            },
+            {
+                //"title": "Email",
+                "data": "NamaDosen",
+                "name": "NamaDosen",
+                "render": function (data, type, row, meta) {
+                    return '<div class="center">' + data + '</div>';
+                }
+            },
 
         ],
         "createdRow": function (row, data, index) {
