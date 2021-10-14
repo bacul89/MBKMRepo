@@ -6,12 +6,13 @@ using System.Web;
 using System.Web.Mvc;
 using MBKM.Services;
 using MBKM.Services.MBKMServices;
-
-
+using MBKM.Entities.ViewModel;
+using MBKM.Presentation.models;
 using MBKM.Entities.Models;
 using MBKM.Repository.Repositories;
 
 using MBKM.Presentation.Helper;
+using MBKM.Common.Helpers;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
@@ -45,6 +46,20 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult getLookupByTipe(string tipe)
         {
             return Json(_lookupService.getLookupByTipe(tipe), JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult SearchList(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm)
+        {
+            VMListJadwalKuliah vmList = _jkService.SearchListJadwalKuliah(model, idProdi, lokasi, idFakultas, jenjangStudi, strm);
+            return Json(new
+            {
+                // this is what datatables wants sending back
+                draw = model.draw,
+                recordsTotal = vmList.TotalCount,
+                recordsFiltered = vmList.TotalFilterCount,
+                data = vmList.gridDatas
+            });
         }
 
 
