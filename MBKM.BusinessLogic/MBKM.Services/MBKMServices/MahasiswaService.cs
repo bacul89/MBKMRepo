@@ -19,6 +19,7 @@ namespace MBKM.Services.MBKMServices
         VMListMahasiswa getMahasiswasNotYetVer(DataTableAjaxPostModel model);
         string GetNim();
         void UpdateNim(int Nilai);
+        void GenerateAbsence(long jadwalKuliahId, long mahasiswaId, string kodeMk, string classSection, string strm, string fakultasId);
         IEnumerable<VMSemester> GetDataSemester(string jenjangStudi);
         //int updateRangeVer(Int64[] listId);
     }
@@ -32,6 +33,11 @@ namespace MBKM.Services.MBKMServices
         {
             _unitOfWork = unitOfWork;
             _mahasiswaRepository = MahasiswaRepository;
+        }
+
+        public void GenerateAbsence(long jadwalKuliahId, long mahasiswaId, string kodeMk, string classSection, string strm, string fakultasId)
+        {
+             _mahasiswaRepository.GenerateAbsence(jadwalKuliahId, mahasiswaId, kodeMk, classSection, strm, fakultasId);
         }
 
         public IEnumerable<VMSemester> GetDataSemester(string jenjangStudi)

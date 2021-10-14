@@ -119,6 +119,29 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             }
         }
 
+        public void GenerateAbsence(long jadwalKuliahId, long mahasiswaId, string kodeMk, string classSection, string strm, string fakultasId)
+        {
+            try
+            {
+                using (var context = new MBKMContext())
+                {
+                    var tempjadwalKuliahID = new SqlParameter("@JadwalKuliahID", jadwalKuliahId);
+                    var tempmahasiswaId = new SqlParameter("@MahasiswaID", mahasiswaId);
+                    var tempkodeMk = new SqlParameter("@Kodemk", kodeMk);
+                    var tempclassSection = new SqlParameter("@ClassSection", classSection);
+                    var tempstrm = new SqlParameter("@STRM", strm);
+                    var tempfakultasId = new SqlParameter("@FakultasID", fakultasId);
+                    var result = context.Database
+                        .ExecuteSqlCommand("MahasiswaAccepetedDaftar @JadwalKuliahID, @MahasiswaID, @Kodemk, @ClassSection, @STRM, @FakultasID",
+                        tempjadwalKuliahID, tempmahasiswaId, tempkodeMk, tempclassSection, tempstrm, tempfakultasId);
+                }
+            }catch(Exception e)
+            {
+
+            }
+        }
+
+
         //public int updateRangeVer(Int64[] listId)
         //{
         //    using (var context = new MBKMContext())

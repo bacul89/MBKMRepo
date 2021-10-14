@@ -16,7 +16,7 @@ namespace MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces
         VMListMahasiswa getMahasiswasNotYetVer(int Skip, int Length, string SearchParam, string SortBy, bool SortDir);
         string GetNim();
         void UpdateNim(int Nilai);
-
+        void GenerateAbsence(long jadwalKuliahId, long mahasiswaId, string kodeMk, string classSection, string strm, string fakultasId);
         IEnumerable<VMSemester> GetDataSemester(string jenjangStudi);
         //int updateRangeVer(Int64[] listId);
     }
