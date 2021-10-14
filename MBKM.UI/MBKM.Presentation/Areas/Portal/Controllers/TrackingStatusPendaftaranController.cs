@@ -156,7 +156,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
 
                         try
                         {
-                            _mahasiswaService.GenerateAbsence(pendaftaran.JadwalKuliahID, pendaftaran.MahasiswaID, "FHK 213", pendaftaran.JadwalKuliahs.ClassSection, "2110", "5");
+                            _mahasiswaService.GenerateAbsence(pendaftaran.JadwalKuliahID, pendaftaran.MahasiswaID, pendaftaran.JadwalKuliahs.KodeMataKuliah, pendaftaran.JadwalKuliahs.ClassSection, pendaftaran.JadwalKuliahs.STRM.ToString(),pendaftaran.JadwalKuliahs.FakultasID.ToString());
                         }catch(Exception e)
                         {
                             return Json(new ServiceResponse { status = 300, message = "Error Saat Menyimpan Data Absensi" });
