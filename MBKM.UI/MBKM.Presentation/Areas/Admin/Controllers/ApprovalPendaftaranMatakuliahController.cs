@@ -44,16 +44,19 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult DetailCPL(int id)
         {
             var data = _cPLMKPendaftaranService.Find(x => x.IsDeleted == false && x.PendaftaranMataKuliahID == id).First();
-            if(data.PendaftaranMataKuliahs.mahasiswas.NIM != data.PendaftaranMataKuliahs.mahasiswas.NIMAsal)
+            var tempInternal = _informasiPertukaranService.Find(x => x.JenisKerjasama.Contains("Internal") && x.MahasiswaID == data.PendaftaranMataKuliahs.MahasiswaID).Count();
+            var tempMagang = _informasiPertukaranService.Find(x => x.JenisKerjasama.Contains("Magang") && x.MahasiswaID == data.PendaftaranMataKuliahs.MahasiswaID).Count();
+
+            if (data.PendaftaranMataKuliahs.mahasiswas.NIM != data.PendaftaranMataKuliahs.mahasiswas.NIMAsal)
             {
                 ViewData["jenisProgram"] = "Pertukaran";
                 ViewData["jenisKegiatan"] = "Eksternal";
             }
-            else if(data.PendaftaranMataKuliahs.mahasiswas.NoKerjasama != null)
+            else if(tempInternal != 0)
             {
                 ViewData["jenisProgram"] = "Pertukaran";
                 ViewData["jenisKegiatan"] = "Internal";
-            }else if (data.PendaftaranMataKuliahs.mahasiswas.NoKerjasama == null)
+            }else if (tempMagang != 0)
             {
                 ViewData["jenisProgram"] = "Non-Pertukaran";
                 ViewData["jenisKegiatan"] = "Internal";
