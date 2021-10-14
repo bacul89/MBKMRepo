@@ -314,15 +314,18 @@
             if (!$('#absen').is(':selected')) {
                 return;
             }
+            if (!confirm("APAKAH ANDA AKAN SUBMIT DAFTAR KEHARDIRAN?")) {
+                return;
+            }
             $.ajax({
                 type: "GET",
-                url: "@Url.Action("SubmitAbsensi", "PresensiKelas")?idAbsensi=" + $('#absen').val();
+                url: "@Url.Action("SubmitAbsensi", "PresensiKelas")?idAbsensi=" + $('#absen').val()
             }).then(function (response) {
                 alert(response.message);
                 if (response.status == 200) {
                     window.history.back();
                 }
             });
-        }
+        });
     </script>
 }

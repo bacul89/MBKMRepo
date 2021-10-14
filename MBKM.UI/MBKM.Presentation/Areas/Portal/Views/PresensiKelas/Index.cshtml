@@ -142,6 +142,9 @@
         });
 
         function loadTable(strm) {
+            if (!strm) {
+                strm = 0;
+            }
             $('#jadwalKuliah').DataTable({
                 ajax: {
                     url: '@Url.Action("GetJadwalKuliah", "PresensiKelas")?strm=' + strm,

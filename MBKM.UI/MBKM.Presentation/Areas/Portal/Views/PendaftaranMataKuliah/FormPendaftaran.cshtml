@@ -142,6 +142,7 @@
                 data: data
             }).then(function (response2) {
                 if (response2.status == 200) {
+                    alert(response2.message);
                     window.history.back();
                 } else {
                     alert(response2.message);
