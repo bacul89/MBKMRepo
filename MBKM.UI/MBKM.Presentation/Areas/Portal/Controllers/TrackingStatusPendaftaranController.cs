@@ -149,14 +149,24 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     tempHistoryApproval.UpdatedBy = "MAHASISWA";
                     tempHistoryApproval.UpdatedDate = DateTime.Now;
                     tempHistoryApproval.CreatedDate = DateTime.Now;
+
                     try
                     {
                         _approvalPendaftaranService.Save(tempHistoryApproval);
+
+                        try
+                        {
+                            _mahasiswaService.GenerateAbsence(pendaftaran.JadwalKuliahID, pendaftaran.MahasiswaID, pendaftaran.JadwalKuliahs.KodeMataKuliah, pendaftaran.JadwalKuliahs.ClassSection, pendaftaran.JadwalKuliahs.STRM.ToString(),pendaftaran.JadwalKuliahs.FakultasID.ToString());
+                        }catch(Exception e)
+                        {
+                            return Json(new ServiceResponse { status = 300, message = "Error Saat Menyimpan Data Absensi" });
+                        }
                     }
                     catch (Exception e)
                     {
                         return Json(new ServiceResponse { status = 300, message = "Error Saat Menyimpan Data Pendaftaran" });
                     }
+
                 }
                 catch (Exception e)
                 {

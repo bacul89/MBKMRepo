@@ -4,19 +4,10 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
 }
 @section css{
-
     <link rel="stylesheet" type="text/css" href="~/Content/Admin/inputResponsive.css">
     @Scripts.Render("~/bundles/jquery")
     <script src="~/Scripts/sweetalert2.all.min.js"></script>
 }
-@section modal{
-    <div class="modal fade" id="TambahMasterMapingCapaianPembelajaran" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document" id="modal-inner">
-
-        </div>
-    </div>
-}
-
 <div class="container-fluid" style="padding: 0px">
     <div class="card center-block" style="background-color: white; width: 100%; padding: 0px">
         <div class="card-body responsive-content" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; padding: 0px">
@@ -35,6 +26,21 @@
                             <div class="col-sm-7">
                                 <select name="inp_jenjang" id="inp_jenjang" class="form-control input-md input-data">
                                     <option value="" selected disabled>-- Pilih Jenjang Studi --</option>
+                                    @{
+                                        foreach (var d in ViewData["Jenjang"] as IEnumerable<MBKM.Entities.ViewModel.VMLookup>)
+                                        {
+                                            <option value="@d.Nilai">@d.Nama</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="inp_fakultas" class="col-sm-3 control-label">Fakultas</label>
+                            <div class="col-sm-7">
+                                <select name="inp_fakultas" id="inp_fakultas" class="form-control input-md input-data">
+                                    <option value="" selected disabled>-- Pilih Fakultas --</option>
                                 </select>
                             </div>
                         </div>
@@ -44,15 +50,12 @@
                             <div class="col-sm-7">
                                 <select name="inp_jenis" id="inp_jenis" class="form-control input-md input-data">
                                     <option value="" selected disabled>-- Pilih Jenis Ujian --</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inp_fakultas" class="col-sm-3 control-label">Fakultas</label>
-                            <div class="col-sm-7">
-                                <select name="inp_fakultas" id="inp_fakultas" class="form-control input-md input-data">
-                                    <option value="" selected disabled>-- Pilih Fakultas --</option>
+                                    @{
+                                        foreach (var d in ViewData["JenisUjian"] as IEnumerable<MBKM.Entities.ViewModel.VMLookup>)
+                                        {
+                                        <option value="@d.Nilai">@d.Nama</option>
+                                        }
+                                    }
                                 </select>
                             </div>
                         </div>
@@ -67,7 +70,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-2 col-md-offset-8">
-                                <button type="button" id="cari" class="btn btn-warning" style="float: right;" title="Mohon untuk melengkapi form pencarian terlebih dahulu!" disabled><span class="fa fa-search"></span> Cari</button>
+                                <button type="button" id="cari" class="btn btn-warning" style="float: right;" onclick="GenerateDataTable()"><span class="fa fa-search"></span> Cari</button>
                             </div>
                         </div>
                     </form>
@@ -85,14 +88,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td class="zero-padding no-border vertical-center center sorting">Action</td>
-                            <td class="zero-padding no-border vertical-center center sorting">Kode Mata Kuliah</td>
-                            <td class="zero-padding no-border vertical-center center sorting">Mata Kuliah</td>
-                            <td class="zero-padding no-border vertical-center center sorting">Seksi</td>
-                            <td class="zero-padding no-border vertical-center center sorting">Tanggal</td>
-                            <td class="zero-padding no-border vertical-center center sorting">Jam</td>
-                        </tr>
                     </tbody>
                 </table>
                 <br />
