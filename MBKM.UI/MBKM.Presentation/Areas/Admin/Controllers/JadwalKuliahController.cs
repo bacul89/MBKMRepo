@@ -18,14 +18,14 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
     public class JadwalKuliahController : Controller
     {
 
-        private IJadwalKuliahRepository _jkService;
+        private IJadwalKuliahService _jkService;
         private ILookupService _lookupService;
         private IMasterCapaianPembelajaranService _mcpService;
 
 
 
 
-        public JadwalKuliahController(IJadwalKuliahRepository jkService, ILookupService lookupService, IMasterCapaianPembelajaranService mcpService)
+        public JadwalKuliahController(IJadwalKuliahService jkService, ILookupService lookupService, IMasterCapaianPembelajaranService mcpService)
         {
             _jkService = jkService;
             _lookupService = lookupService;            
@@ -66,19 +66,26 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetSemesterAll(int skip, int take)
+        public ActionResult GetSemesterAll(int skip, int take, string search)
         {
-            return Json(_jkService.GetSemesterAll(skip, take), JsonRequestBehavior.AllowGet);
+            //return Json(, JsonRequestBehavior.AllowGet);
 
 
-            /*  
-                var data = _mcpService.Get(id);
-                return Json(new
+
+            var final = _jkService.GetSemesterAll(skip, take, search);
+            List<object> data = new List<object>();
+            foreach (var p in final)
+            {
+                var q = new
                 {
-                    Capaian = data.Capaian,
-                    Kelompok = data.Kelompok,
-                    ID = data.ID
-                }, JsonRequestBehavior.AllowGet);*/
+                    Nama = p.Nama,
+                    ID = p.ID
+                };
+                data.Add(q);
+            }
+
+            return Json(data);
+
 
         }
 

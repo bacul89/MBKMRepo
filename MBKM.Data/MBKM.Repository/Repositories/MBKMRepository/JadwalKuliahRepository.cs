@@ -19,19 +19,37 @@ namespace MBKM.Repository.Repositories.MBKMRepository
 
 
         
-        public IEnumerable<VMSemester> GetSemesterAll(int skip, int take)
+        public IEnumerable<VMSemester> GetSemesterAll(int skip, int take, string search)
         {
+
             using (var context = new MBKMContext())
             {
-                var result = context.Database
-                    .SqlQuery<VMSemester>("GetSemesterALL").Skip(skip).Take(take)
-                     .Select(z => new VMSemester
-                     {
-                         ID = z.Nilai,
-                         Nama = z.Nama
-                     })
-                    .ToList();
-                return result;
+                if (String.IsNullOrEmpty(search))
+                {
+                    var result = context.Database
+                        .SqlQuery<VMSemester>("GetSemesterALL").Skip(skip).Take(take)
+                        .Select(z => new VMSemester
+                        {
+                            ID = z.Nilai,
+                            Nama = z.Nama
+                        })
+                        .ToList();
+                    return result;
+                }
+                else
+                {
+                    var result = context.Database
+                        .SqlQuery<VMSemester>("GetSemesterALL").Skip(skip).Take(take).Where(x => x.Nama.Contains(search))
+                        .Select(z => new VMSemester
+                        {
+                            ID = z.Nilai,
+                            Nama = z.Nama
+                        })
+                        .ToList();
+                    return result;
+                }
+
+
             }
 
         }

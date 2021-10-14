@@ -13,7 +13,7 @@ namespace MBKM.Services.MBKMServices
 {
     public interface IJadwalKuliahService : IEntityService<JadwalKuliah>
     {
-        IEnumerable<VMSemester> GetSemesterAll(int skip, int take);
+        IEnumerable<VMSemester> GetSemesterAll(int skip, int take, string search);
     }
     public class JadwalKuliahService : EntityService<JadwalKuliah>, IJadwalKuliahService
     {
@@ -27,9 +27,9 @@ namespace MBKM.Services.MBKMServices
             _jadwalKuliahRepository = JadwalKuliahRepository;
         }
 
-        public IEnumerable<VMSemester> GetSemesterAll(int skip, int take)
+        public IEnumerable<VMSemester> GetSemesterAll(int skip, int take, string search)
         {
-            return _jadwalKuliahRepository.GetSemesterAll(skip, take);
+            return _jadwalKuliahRepository.GetSemesterAll(skip, take, search);
         }
     }
 }

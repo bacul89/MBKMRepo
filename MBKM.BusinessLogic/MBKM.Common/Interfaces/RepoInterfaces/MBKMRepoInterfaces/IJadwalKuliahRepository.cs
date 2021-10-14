@@ -10,6 +10,6 @@ namespace MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces
 {
     public interface IJadwalKuliahRepository : IGenericRepository<JadwalKuliah>
     {
-        IEnumerable<VMSemester> GetSemesterAll(int skip, int take);
+        IEnumerable<VMSemester> GetSemesterAll(int skip, int take, string search);
     }
 }
