@@ -1,0 +1,204 @@
+﻿
+@{
+    ViewBag.Title = "DetailJadwalUjian";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
+}
+
+@section css{
+
+    <link rel="stylesheet" type="text/css" href="~/Content/Admin/inputResponsive.css">
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/sweetalert2.all.min.js"></script>
+}
+@section modal{
+    <div class="modal fade" id="TambahMasterMapingCapaianPembelajaran" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" id="modal-inner">
+
+        </div>
+    </div>
+}
+
+<div class="container-fluid" style="padding: 0px">
+    <div class="card center-block" style="background-color: white; width: 100%; padding: 0px">
+        <div class="card-body responsive-content" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; padding: 0px">
+            <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
+                DETAIL JADWAL UJIAN<br />
+                <small class="describe">Berikut Adalah Informasi Jadwal Ujian</small>
+            </h4>
+            <hr />
+            <div class="container" style="width: 85%;">
+                <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
+                    <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">Informasi Ujian</h5>
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Tahun Semester &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>ODD 2021</h4>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Jenis Ujian &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>MID Semester</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Fakultas &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>Ekonomi Atas</h4>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Tanggal Ujian &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>30/30/2121</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Matakuliah &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>Management Akuntansi</h4>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Jam Mulai&nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>02:00</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Seksi &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>Seksi sekali</h4>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Jam Berakhir &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>09:00</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Lokasi &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>Simanggi</h4>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Ruang Ujian &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>A3 001213298</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Program Studi &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>Pendidikan Bahasa Indonesia</h4>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Kapasitas Ruangan &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>100</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Jenjang Studi &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>S3</h4>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Kursi Tersedia &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>20</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                        <br />
+                    </form>
+                </div>
+                <br />
+                <hr />
+                <br />
+                <form class="form-horizontal center">
+                    <div class="row center-block">
+                        <div class="col-sm-12">
+                            <table id="table-data-manage-ujian-mahasiswa" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
+                                <thead>
+                                    <tr>
+                                        <th class="zero-padding no-border vertical-center center sorting">No. </th>
+                                        <th class="zero-padding no-border vertical-center center sorting">Nomor Induk</th>
+                                        <th class="zero-padding no-border vertical-center center sorting">Nama</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="zero-padding no-border vertical-center center sorting">Kode Mata Kuliah</td>
+                                        <td class="zero-padding no-border vertical-center center sorting">Mata Kuliah</td>
+                                        <td class="zero-padding no-border vertical-center center sorting">Jam</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                </form>
+                <br />
+            </div>
+            <br />
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/Admin/ManageUjian/main.js"></script>
+    <script src="~/Scripts/loading/loadingoverlay.min.js"></script>
+}
+
+
