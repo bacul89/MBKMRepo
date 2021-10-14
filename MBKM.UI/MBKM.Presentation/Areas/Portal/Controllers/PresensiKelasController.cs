@@ -42,6 +42,27 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             return View(id);
         }
+        public ActionResult SubmitAbsensi(int idAbsensi)
+        {
+            try
+            {
+                var absensis = _absensiService.Get(idAbsensi);
+                absensis.Present = true;
+                absensis.UpdatedDate = DateTime.Now;
+                _absensiService.Save(absensis);
+                return Json(new ServiceResponse { status = 200, message = "TERIMA KASIH SUDAH MENGISI DAFTAR HADIR!" });
+            }
+            catch (Exception e)
+            {
+                return Json(new ServiceResponse { status = 500, message = e.Message });
+            }
+        }
+        public ActionResult GetAbsensi(int jadwalKuliahId)
+        {
+            var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
+            List<Absensi> absensis = _absensiService.Find(a => a.JadwalKuliahID == jadwalKuliahId).OrderBy(a => a.TanggalAbsen).ToList();
+            return new ContentResult { Content = JsonConvert.SerializeObject(absensis), ContentType = "application/json" };
+        }
         public ActionResult GetJadwalKuliah(int strm)
         {
             var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
@@ -53,7 +74,6 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             {
                 pmks = _pendaftaranMataKuliahService.Find(pmk => pmk.MahasiswaID == mahasiswa.ID && pmk.StatusPendaftaran == "ACCEPTED BY MAHASISWA").ToList();
             }
-            
             return new ContentResult { Content = JsonConvert.SerializeObject(pmks), ContentType = "application/json" };
         }
         public ActionResult GetJadwalKuliahById(int id)
