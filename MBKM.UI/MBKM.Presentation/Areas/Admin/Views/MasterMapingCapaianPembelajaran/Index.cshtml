@@ -327,7 +327,14 @@
                             return '<div class="center">' + data + '</div>';
                         }
                     },
-
+                    {
+                        //"title": "Email",
+                        "data": "Capaian",
+                        "name": "Capaian",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
 
 
 
@@ -402,7 +409,7 @@
         }
 
 
-        @* search *@
+        @* -- search *@
         function loadJenjangStudi(tipe, id, nama) {
             $("#" + id+"Cari").select2({
                 placeholder: "-- Pilih " + nama + " --",
@@ -551,6 +558,7 @@
 
                             //var start = 0;
                             //var end = 0;
+                            var pageLength = 0;
                             $('#matakuliahCari').select2({
                                 placeholder: "-- Pilih Mata Kuliah --",
                                 "proccessing": true,
@@ -578,18 +586,18 @@
                                     processResults: function (data, params) {
 
                                         var page = params.page - 1 || 1;
-                                        var pageLength = pageLength + data.length;
+                                        pageLength = pageLength + data.length;
 
-                                        @*console.log('page : ' + params.page );
+                                        console.log('page : ' + params.page );
                                         console.log(page);
                                         console.log('');
                                         console.log(page * 10);
-                                        console.log(pageLength);*@
+                                        console.log(pageLength);
 
                                             return {
                                                 results: $.map(data, function (item) { return { id: item.id, value: item.id, text: item.text, title: item.kode } }),
                                                 pagination: {
-                                                    more: pageLength  > 0
+                                                    more: data.length > 0 && data.length == 10
                                                 }
                                             }
                                     },
@@ -694,7 +702,6 @@
             });
         }
 
-
         function getLocationByPodiID() {
             //console.log("ajax");
             var dataParam = {};
@@ -720,15 +727,15 @@
             });
         }
 
+
+        @* -- responsive *@
         $(document).ready(function () {
             isZooming();
         });
 
-
         $(window).resize(function () {
             isZooming();
         });
-
 
         function isZooming() {
             var defaultH = 700;
