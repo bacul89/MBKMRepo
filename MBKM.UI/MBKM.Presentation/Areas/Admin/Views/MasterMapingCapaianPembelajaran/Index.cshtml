@@ -327,7 +327,14 @@
                             return '<div class="center">' + data + '</div>';
                         }
                     },
-
+                    {
+                        //"title": "Email",
+                        "data": "Capaian",
+                        "name": "Capaian",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
 
 
 
@@ -722,7 +729,6 @@
 
 
         @* -- responsive *@
-
         $(document).ready(function () {
             isZooming();
         });
