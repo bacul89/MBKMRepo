@@ -148,6 +148,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             string folder = ConfigurationManager.AppSettings["PathAttachmentMahasiswa"];
             Attachment attachment = new Attachment();
+            var cek = _attachmentService.Find(a => a.MahasiswaID == id && a.FileType == tipe).FirstOrDefault();
+            if (cek != null)
+            {
+                attachment = cek;
+            }
             attachment.CreatedDate = DateTime.Now;
             attachment.UpdatedDate = DateTime.Now;
             attachment.IsActive = true;
