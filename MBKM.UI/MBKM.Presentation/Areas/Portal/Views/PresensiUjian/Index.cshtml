@@ -82,6 +82,78 @@
         padding-right: 0px !important;
         padding-left: 0px !important;
     }
+    /* The container */
+    .container2 {
+        left: 40%;
+        display: block;
+        position: relative;
+        cursor: pointer;
+        font-size: 22px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+        /* Hide the browser's default checkbox */
+        .container2 input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+    /* Create a custom checkbox */
+    .checkmark {
+        align-content: center;
+        position: absolute;
+        height: 25px;
+        width: 25px;
+        background-color: #fff;
+        border: solid;
+        border-width: 1px;
+    }
+
+    /* On mouse-over, add a grey background color */
+    .container2:hover input ~ .checkmark {
+        background-color: #ccc;
+    }
+
+    /* When the checkbox is checked, add a blue background */
+    .container2 input:checked ~ .checkmark {
+        background-color: #FF8A04;
+    }
+
+    /* Create the checkmark/indicator (hidden when not checked) */
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    /* Show the checkmark when checked */
+    .container2 input:checked ~ .checkmark:after {
+        display: block;
+    }
+
+    /* Style the checkmark/indicator */
+    .container2 .checkmark:after {
+        left: 9px;
+        top: 5px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+
+    .disable {
+        background-color: #ccc;
+        pointer-events: none;
+    }
 </style>
 
 <div class="card center-block" style="background-color: white; margin: 15px; display: none;" id="alert">
@@ -99,7 +171,7 @@
     <input type="hidden" id="id" name="id" />
 </form>
 
-<div class="card center-block" style="background-color: white; margin: 15px;">
+<div class="card center-block" style="background-color: white; margin: 15px; display: none;" id="body">
     <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
         <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; padding-left: 15px; font-weight: bold; font-size: 20px; color: black; ">
             JADWAL PERKULIAHAN MBKM<br />
@@ -120,26 +192,24 @@
                 <table id="jadwalKuliah" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
                     <thead>
                         <tr>
-                            <th class="zero-padding no-border vertical-center sorting">Action</th>
+                            <th class="zero-padding no-border vertical-center sorting">Present</th>
                             <th class="zero-padding no-border vertical-center sorting">No.</th>
                             <th class="zero-padding no-border vertical-center sorting">Tahun Semester</th>
-                            <th class="zero-padding no-border vertical-center sorting">Fakultas</th>
-                            <th class="zero-padding no-border vertical-center sorting">Program Studi</th>
-                            <th class="zero-padding no-border vertical-center sorting">Kode Mata Kuliah</th>
                             <th class="zero-padding no-border vertical-center sorting">Nama Mata Kuliah</th>
                             <th class="zero-padding no-border vertical-center sorting">SKS</th>
-                            <th class="zero-padding no-border vertical-center sorting">Hari</th>
+                            <th class="zero-padding no-border vertical-center sorting">Tanggal</th>
                             <th class="zero-padding no-border vertical-center sorting">Waktu</th>
-                            <th class="zero-padding no-border vertical-center sorting">Seksi</th>
-                            <th class="zero-padding no-border vertical-center sorting">Ruang Kelas</th>
                             <th class="zero-padding no-border vertical-center sorting">Lokasi</th>
-                            <th class="zero-padding no-border vertical-center sorting">Nama Dosen</th>
+                            <th class="zero-padding no-border vertical-center sorting">Ruang Ujian</th>
+                            <th class="zero-padding no-border vertical-center sorting">Seksi</th>
+                            <th class="zero-padding no-border vertical-center sorting">Program Studi</th>
                         </tr>
                     </thead>
                     <tbody>
                     </tbody>
                 </table>
             </div>
+            <button id="submit" class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; ">SUBMIT</button>
         </div>
     </div>
 </div>
@@ -148,6 +218,8 @@
     <script>
         var semesters = @Html.Raw(Json.Encode(Model));
         var semestersAsList = [];
+        var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         $(document).ready(function () {
             for (var key in semesters) {
                 var tmp = new Object();
@@ -155,14 +227,19 @@
                 tmp.text = semesters[key];
                 semestersAsList.push(tmp);
             }
-            $("#tahunSemester").select2({
-                placeholder: "-- Pilih Semester --",
-                data: semestersAsList
-            });
-            $("#tahunSemester").change(function () {
+            if (semestersAsList.length == 0) {
+                $('#alert').show();
+            } else {
+                $('#body').show();
+                $("#tahunSemester").select2({
+                    placeholder: "-- Pilih Semester --",
+                    data: semestersAsList
+                });
+                $("#tahunSemester").change(function () {
+                    loadTable($("#tahunSemester").val());
+                });
                 loadTable($("#tahunSemester").val());
-            });
-            loadTable($("#tahunSemester").val());
+            }
         });
 
         function loadTable(strm) {
@@ -178,13 +255,24 @@
                     {
                         "data": "Present",
                         "render": function (data, type, row, meta) {
-                            var jamMasuk = row.JadwalKuliahs.JamMasuk.split(':');
-                            var jamKeluar = row.JadwalKuliahs.JamSelesai.split(':');
+                            var jamMulai = row.JadwalUjianMBKMs.JamMulai.split(':');
+                            var jamKeluar = row.JadwalUjianMBKMs.JamAkhir.split(':');
+                            var menitMasuk = parseInt(jamMulai[0]) * 60 + parseInt(jamMulai[1]);
+                            var menitKeluar = parseInt(jamKeluar[0]) * 60 + parseInt(jamKeluar[1]);
+                            var menitSekarang = now.getHours() * 60 + now.getMinutes();
+                            var tanggalAbsen = new Date(row.JadwalUjianMBKMs.TanggalUjian);
                             var now = new Date();
                             if (data) {
                                 return '<label class="container2"><input type="checkbox" checked disabled><span class="checkmark"></span></label>';
                             }
-                            if (parseInt(jamMasuk[0]) < now.getHours() && parseInt(jamMasuk[1]) < now.getMinutes() && parseInt(jamKeluar[0]) > now.getHours() && parseInt(jamKeluar[1]) > now.getMinutes() && days[now.getDay()] == response.JadwalKuliahs.Hari) {
+                            if (
+                                menitMasuk <= menitSekarang
+                                && menitKeluar >= menitSekarang
+                                && days[now.getDay()] == row.JadwalUjianMBKMs.Hari
+                                && tanggalAbsen.getDate() == now.getDate()
+                                && tanggalAbsen.getMonth() == now.getMonth()
+                                && tanggalAbsen.getFullYear() == now.getFullYear()
+                            ) {
                                 return '<label class="container2"><input type="checkbox" id="absen" value="' + row.ID + '"><span class="checkmark"></span></label>'
                             }
                             return '<label class="container2"><input type="checkbox" disabled><span class="checkmark disable"></span></label>';
@@ -197,73 +285,57 @@
                         }
                     },
                     {
-                        "data": "JadwalKuliahs.STRM",
+                        "data": "JadwalUjianMBKMs.STRM",
                         "render": function (data, type, row, meta) {
                             return '<div style="text-align:center; vertical-align: middle;">' + semesters[data] + '</div>';
                         }
                     },
                     {
-                        "data": "JadwalKuliahs.NamaFakultas",
+                        "data": "JadwalUjianMBKMs.NamaMatkul",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + row.JadwalUjianMBKMs.KodeMatkul + ' - ' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "JadwalUjianMBKMs.NamaMatkul",
                         "render": function (data, type, row, meta) {
                             return '<div class="center">' + data + '</div>';
                         }
                     },
                     {
-                        "data": "JadwalKuliahs.NamaProdi",
+                        "data": "JadwalUjianMBKMs.TanggalUjian",
+                        "render": function (data, type, row, meta) {
+                            var data = new Date(data);
+                            var string = months[data.getMonth()] + ', ' + data.getDate() + ' ' + data.getFullYear();
+                            return '<div style="text-align:center; vertical-align: middle;">' + string + '</div>';
+                        }
+                    },
+                    {
+                        "data": "JadwalUjianMBKMs.JamMulai",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + ' - ' + row.JadwalUjianMBKMs.JamAkhir + '</div>';
+                        }
+                    },
+                    {
+                        "data": "JadwalUjianMBKMs.Lokasi",
                         "render": function (data, type, row, meta) {
                             return '<div class="center">' + data + '</div>';
                         }
                     },
                     {
-                        "data": "JadwalKuliahs.KodeMataKuliah",
+                        "data": "JadwalUjianMBKMs.RuangUjian",
                         "render": function (data, type, row, meta) {
                             return '<div class="center">' + data + '</div>';
                         }
                     },
                     {
-                        "data": "JadwalKuliahs.NamaMataKuliah",
+                        "data": "JadwalUjianMBKMs.ClassSection",
                         "render": function (data, type, row, meta) {
                             return '<div class="center">' + data + '</div>';
                         }
                     },
                     {
-                        "data": "JadwalKuliahs.SKS",
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
-                        }
-                    },
-                    {
-                        "data": "JadwalKuliahs.Hari",
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
-                        }
-                    },
-                    {
-                        "data": "JadwalKuliahs.JamMasuk",
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + ' - ' + row.JadwalKuliahs.JamSelesai + '</div>';
-                        }
-                    },
-                    {
-                        "data": "JadwalKuliahs.ClassSection",
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
-                        }
-                    },
-                    {
-                        "data": "JadwalKuliahs.RuangKelas",
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
-                        }
-                    },
-                    {
-                        "data": "JadwalKuliahs.Lokasi",
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
-                        }
-                    },
-                    {
-                        "data": "JadwalKuliahs.NamaDosen",
+                        "data": "JadwalUjianMBKMs.NamaProdi",
                         "render": function (data, type, row, meta) {
                             return '<div class="center">' + data + '</div>';
                         }
@@ -271,46 +343,20 @@
                 ]
             });
         }
-        function submitRegistrasi() {
+        $('#submit').click(function () {
+            if (!$('#absen').is(':checked')) {
+                return;
+            }
+            if (!confirm("APAKAH ANDA AKAN SUBMIT DAFTAR KEHARDIRAN?")) {
+                return;
+            }
             $.ajax({
-                type: "POST",
-                url: "@Url.Action("registerExternal", "Home")",
-                data: mahasiswa
+                type: "GET",
+                url: "@Url.Action("SubmitAbsensiUjian", "PresensiUjian")?idAbsensiUjian=" + $('#absen').val()
             }).then(function (response) {
                 alert(response.message);
-                if (response.status == 200) {
-                    location.reload();
-                }
+                location.reload();
             });
-        }
-        function loadNamaUniversitas() {
-            $("#namaUniversitas").select2({
-                placeholder: "-- Pilih Universitas --",
-                width: "100%",
-                ajax: {
-                    url: "@Url.Action("GetNamaInstansi", "Home")",
-                    dataType: 'json',
-                    method: "POST",
-                    delay: 250,
-                    cache: false,
-                    data: function (params) {
-                        return {
-                            Length: "10",
-                            Search: params.term || "",
-                            Skip: (params.page - 1) * 10 || 0,
-                        };
-                    },
-                    processResults: function (data, params) {
-                        var page = params.page - 1 || 1;
-                        return {
-                            results: $.map(data, function (item) { return { id: item.NoKerjasama, value: item.NoKerjasama, nama: item.NamaInstansi, text: item.NamaInstansi } }),
-                            pagination: {
-                                more: (page * 10) <= data.length
-                            }
-                        };
-                    },
-                }
-            });
-        }
+        });
     </script>
 }

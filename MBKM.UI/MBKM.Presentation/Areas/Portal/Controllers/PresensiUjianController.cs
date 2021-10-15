@@ -41,12 +41,27 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult GetPresensiUjian(int strm)
         {
             var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
-            var result = _jadwalUjianMBKMDetailService.Find(_ => _.MahasiswaID == mahasiswa.ID && _.IsActive && !_.IsDeleted).ToList();
+            var result = _jadwalUjianMBKMDetailService.Find(_ => _.MahasiswaID == mahasiswa.ID && _.IsActive && !_.IsDeleted && DateTime.Today.AddDays(7) == _.JadwalUjianMBKMs.TanggalUjian).ToList();
             if (strm != 0)
             {
-                result = _jadwalUjianMBKMDetailService.Find(_ => _.MahasiswaID == mahasiswa.ID && _.IsActive && !_.IsDeleted && int.Parse(_.JadwalUjianMBKMs.STRM) == strm ).ToList();
+                result = _jadwalUjianMBKMDetailService.Find(_ => _.MahasiswaID == mahasiswa.ID && _.IsActive && !_.IsDeleted && int.Parse(_.JadwalUjianMBKMs.STRM) == strm && DateTime.Today.AddDays(7) == _.JadwalUjianMBKMs.TanggalUjian).ToList();
             }
             return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
+        }
+        public ActionResult SubmitAbsensiUjian(int idAbsensiUjian)
+        {
+            try
+            {
+                var absensis = _jadwalUjianMBKMDetailService.Get(idAbsensiUjian);
+                absensis.Present = true;
+                absensis.UpdatedDate = DateTime.Now;
+                _jadwalUjianMBKMDetailService.Save(absensis);
+                return Json(new ServiceResponse { status = 200, message = "TERIMA KASIH SUDAH MENGISI DAFTAR HADIR!" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new ServiceResponse { status = 500, message = e.Message }, JsonRequestBehavior.AllowGet);
+            }
         }
         public Mahasiswa GetMahasiswaByEmail(string email)
         {

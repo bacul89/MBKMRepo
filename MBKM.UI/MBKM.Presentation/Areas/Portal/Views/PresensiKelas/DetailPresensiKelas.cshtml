@@ -272,10 +272,10 @@
                     {
                         "data": "Present",
                         "render": function (data, type, row, meta) {
-                            //var jamMasuk = row.JadwalKuliahs.JamMasuk.split(':');
-                            //var jamKeluar = row.JadwalKuliahs.JamSelesai.split(':');
-                            var jamMasuk = '14:03'.split(':');
-                            var jamKeluar = '15:00'.split(':');
+                            var jamMasuk = row.JadwalKuliahs.JamMasuk.split(':');
+                            var jamKeluar = row.JadwalKuliahs.JamSelesai.split(':');
+                            //var jamMasuk = '14:03'.split(':');
+                            //var jamKeluar = '15:00'.split(':');
                             var now = new Date();
                             var menitMasuk = parseInt(jamMasuk[0]) * 60 + parseInt(jamMasuk[1]);
                             var menitKeluar = parseInt(jamKeluar[0]) * 60 + parseInt(jamKeluar[1]);
