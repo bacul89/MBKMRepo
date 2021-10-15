@@ -34,7 +34,10 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             Dictionary<string, string> result = new Dictionary<string, string>();
             foreach (var item in list)
             {
-                result.Add(item.JadwalKuliahs.STRM + "", _absensiService.GetSemesterBySTRM(item.JadwalKuliahs.STRM));
+                if (!result.ContainsKey(item.JadwalKuliahs.STRM + ""))
+                {
+                    result.Add(item.JadwalKuliahs.STRM + "", _absensiService.GetSemesterBySTRM(item.JadwalKuliahs.STRM));
+                }
             }
             return View(result);
         }
@@ -50,11 +53,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 absensis.Present = true;
                 absensis.UpdatedDate = DateTime.Now;
                 _absensiService.Save(absensis);
-                return Json(new ServiceResponse { status = 200, message = "TERIMA KASIH SUDAH MENGISI DAFTAR HADIR!" });
+                return Json(new ServiceResponse { status = 200, message = "TERIMA KASIH SUDAH MENGISI DAFTAR HADIR!" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
             {
-                return Json(new ServiceResponse { status = 500, message = e.Message });
+                return Json(new ServiceResponse { status = 500, message = e.Message }, JsonRequestBehavior.AllowGet);
             }
         }
         public ActionResult GetAbsensi(int jadwalKuliahId)
@@ -81,7 +84,6 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var result = _pendaftaranMataKuliahService.Get(id);
             return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
-
         public Mahasiswa GetMahasiswaByEmail(string email)
         {
             return _mahasiswaService.Find(m => m.Email == email).FirstOrDefault();
