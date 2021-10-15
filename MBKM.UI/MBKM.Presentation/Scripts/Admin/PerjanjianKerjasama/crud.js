@@ -117,6 +117,21 @@ function DeletedFiles(id) {
 
 
 function SubmitPerjanjian() {
+    var TanggalMulai = $("#TanggalMulai").val();
+    var TanggalAkhir = $("#TanggalAkhir").val();
+    if (TanggalAkhir < TanggalMulai) {
+        Swal.fire({
+
+            title: 'Tanggal Error',
+            icon: 'error',
+            html: 'Tanggal Akhir tidak boleh lebih besar dari tanggal mulai',
+            showCloseButton: true,
+            showCancelButton: false,
+            focusConfirm: false,
+            confirmButtonText: 'OK'
+        })
+        return;
+    }
     var data = new FormData($('#createPerjanjian')[0]);
     var fileInput = document.getElementById('file');
     for (i = 0; i < fileInput.files.length; i++) {
@@ -132,19 +147,7 @@ function SubmitPerjanjian() {
         data: data,
         success: function (response) {
             Swal.fire({
-                title: 'Oppss',
-                icon: 'error',
-                html: 'Data Gagal Ditambahkan, Periksa Field dan Ukuran File',
-                showCloseButton: true,
-                showCancelButton: false,
-                focusConfirm: false,
-                confirmButtonText: 'OK'
-            })
-            table.ajax.reload(null, false),
-                $('.modal').modal('hide');
-        },
-        error: function (response) {
-            Swal.fire({
+                
                 title: 'Berhasil',
                 icon: 'success',
                 html: 'Data Berhasil Ditambahkan',
@@ -155,7 +158,20 @@ function SubmitPerjanjian() {
             })
             table.ajax.reload(null, false),
                 $('.modal').modal('hide');
-            location.reload();
+        },
+        error: function (response) {
+            Swal.fire({
+                title: 'Oppss',
+                icon: 'error',
+                html: 'Data Gagal Ditambahkan, Periksa Field dan Ukuran File atau inputan lain',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText: 'OK'
+            })
+            //table.ajax.reload(null, false),
+            //    $('.modal').modal('hide');
+            //location.reload();
         }
 
     })
@@ -231,10 +247,10 @@ function UpdatePerjanjian() {
         processData: false,
         data: data,
         success: function (response) {
-            Swal.fire({
-                title: 'Oppss',
-                icon: 'error',
-                html: 'Data Gagal Diupdate',
+            Swal.fire({                
+                title: 'Berhasil',
+                icon: 'success',
+                html: 'Data Berhasil Diupdate',
                 showCloseButton: true,
                 showCancelButton: false,
                 focusConfirm: false,
@@ -245,9 +261,9 @@ function UpdatePerjanjian() {
         },
         error: function (response) {
             Swal.fire({
-                title: 'Berhasil',
-                icon: 'success',
-                html: 'Data Berhasil Diupdate',
+                title: 'Oppss',
+                icon: 'error',
+                html: 'Data Gagal Diupdate',
                 showCloseButton: true,
                 showCancelButton: false,
                 focusConfirm: false,

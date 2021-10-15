@@ -1,4 +1,5 @@
-﻿var table = $('#TableList').DataTable({
+﻿
+var table = $('#TableList').DataTable({
     "proccessing": true,
     "serverSide": true,
     "ajax": {
@@ -16,6 +17,7 @@
         {
             "title": "Action",
             "data": "ID",
+            "orderable": false,
             "render": function (data, type, row, meta) {
                 return `<div class="row justify-content-center">
                             <div class="col" style="text-align:center">
@@ -27,9 +29,11 @@
         },
         {
             //"title":"No",
+            "orderable": false,
             "data": null,
             "render": function (data, type, full, meta) {
-                return '<div class="center vertical-center" style="font-size: 0.8vw">' + (meta.row + 1) + '</div>';
+                //return '<div class="center vertical-center" style="font-size: 0.8vw">' + (meta.row + 1) + '</div>';
+                return meta.row + meta.settings._iDisplayStart + 1;
             }
         },
         {
@@ -104,8 +108,17 @@
             'border-collapse': 'collapse',
             'vertical-align': 'center',
         });
+        var d = new Date();
+        d.setDate(d.getDate() + 30);
+        var tglakhir = moment(data.TanggalAkhir).format('YYYY-MM-DD');
+        tglakhir = new Date(tglakhir);
+        if (tglakhir < d) {
+            $(row).css("background-color", "#ee2400");
+
+        }
     },
 });
+var info = table.page.info();
 function validationCustom2() {
     var isValid;
     $(".input-data").each(function () {

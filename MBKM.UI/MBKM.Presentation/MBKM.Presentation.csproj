@@ -137,6 +137,7 @@
     <Compile Include="Areas\Admin\Controllers\DaftarSeluruhMahasiswaController.cs" />
     <Compile Include="Areas\Admin\Controllers\ApprovalPendaftaranMatakuliahController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LinkFasilitasAdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\JadwalUjianController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManageJadwalUjianController.cs" />
     <Compile Include="Areas\Admin\Controllers\JadwalKuliahController.cs" />
@@ -154,6 +155,7 @@
     <Compile Include="Areas\Portal\Controllers\PresensiKelasController.cs" />
     <Compile Include="Areas\Portal\Controllers\PresensiUjianController.cs" />
     <Compile Include="Areas\Portal\Controllers\DataDiriController.cs" />
+    <Compile Include="Areas\Portal\Controllers\LinkFasilitasMahasiswaController.cs" />
     <Compile Include="Areas\Portal\Controllers\JadwalUjianController.cs" />
     <Compile Include="Areas\Portal\Controllers\PendaftaranMataKuliahController.cs" />
     <Compile Include="Areas\Portal\Controllers\HomeController.cs" />
@@ -461,6 +463,8 @@
     <Content Include="Areas\Admin\Views\ApprovalPendaftaranMatakuliah\Index.cshtml" />
     <Content Include="Areas\Admin\Views\MenuRole\ModalUpdateMenuRole.cshtml" />
     <Content Include="Areas\Portal\Views\TrackingStatusPendaftaran\IndexDetailPendaftaran.cshtml" />
+    <Content Include="Areas\Portal\Views\LinkFasilitasMahasiswa\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\LinkFasilitasAdmin\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ManageJadwalUjian\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ManageJadwalUjian\DetailManageUjian.cshtml" />
     <Content Include="Areas\Admin\Views\JadwalUjian\Index.cshtml" />
@@ -486,6 +490,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\MaxLength.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\Portal\LinkFasilitasMahasiswa\main.js" />
     <Content Include="Scripts\Portal\JadwalUjian\main.js" />
     <Content Include="Scripts\Portal\NimDigital\main.js" />
     <Content Include="Scripts\Portal\TrackingStatus\main.js" />
