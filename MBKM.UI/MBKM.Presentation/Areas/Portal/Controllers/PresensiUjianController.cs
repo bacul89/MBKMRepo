@@ -19,19 +19,34 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
     public class PresensiUjianController : Controller
     {
         private IMahasiswaService _mahasiswaService;
-        private ILookupService _lookupService;
-        private IAttachmentService _attachmentService;
-        private IPerjanjianKerjasamaService _perjanjianKerjasamaService;
-        public PresensiUjianController(IMahasiswaService mahasiswaService, ILookupService lookupService, IAttachmentService attachmentService, IPerjanjianKerjasamaService perjanjianKerjasamaService)
+        private IJadwalUjianMBKMDetailService _jadwalUjianMBKMDetailService;
+        private IAbsensiService _absensiService;
+        public PresensiUjianController(IAbsensiService absensiService, IJadwalUjianMBKMDetailService jadwalUjianMBKMDetailService, IMahasiswaService mahasiswaService, ILookupService lookupService, IAttachmentService attachmentService, IPerjanjianKerjasamaService perjanjianKerjasamaService)
         {
             _mahasiswaService = mahasiswaService;
-            _lookupService = lookupService;
-            _attachmentService = attachmentService;
-            _perjanjianKerjasamaService = perjanjianKerjasamaService;
+            _jadwalUjianMBKMDetailService = jadwalUjianMBKMDetailService;
+            _absensiService = absensiService;
         }
         public ActionResult Index()
         {
-            return View();
+            var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
+            var list = _jadwalUjianMBKMDetailService.Find(_ => _.MahasiswaID == mahasiswa.ID && _.IsActive && !_.IsDeleted);
+            Dictionary<string, string> result = new Dictionary<string, string>();
+            foreach (var item in list)
+            {
+                result.Add(item.JadwalUjianMBKMs.STRM + "", _absensiService.GetSemesterBySTRM(int.Parse(item.JadwalUjianMBKMs.STRM)));
+            }
+            return View(result);
+        }
+        public ActionResult GetPresensiUjian(int strm)
+        {
+            var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
+            var result = _jadwalUjianMBKMDetailService.Find(_ => _.MahasiswaID == mahasiswa.ID && _.IsActive && !_.IsDeleted).ToList();
+            if (strm != 0)
+            {
+                result = _jadwalUjianMBKMDetailService.Find(_ => _.MahasiswaID == mahasiswa.ID && _.IsActive && !_.IsDeleted && int.Parse(_.JadwalUjianMBKMs.STRM) == strm ).ToList();
+            }
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
         public Mahasiswa GetMahasiswaByEmail(string email)
         {

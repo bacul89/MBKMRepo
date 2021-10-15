@@ -11,10 +11,8 @@ namespace MBKM.Entities.Models.MBKM
     public class JadwalUjianMBKMDetail : BaseEntity
     {
         public Int64 JadwalUjianMBKMID { get; set; }
-        [JsonIgnore]
         public virtual JadwalUjianMBKM JadwalUjianMBKMs { get; set; }
         public Int64 MahasiswaID { get; set; }
-        [JsonIgnore]
         public virtual Mahasiswa Mahasiswas { get; set; }
         public bool Present { get; set; }
     }

@@ -4,11 +4,313 @@
     ViewBag.Title = "MBKM";
 }
 
+<style>
+    table.center {
+        margin-left: auto;
+        margin-right: auto;
+    }
 
+    .table-borderless > tbody > tr > td,
+    .table-borderless > tbody > tr > th,
+    .table-borderless > tfoot > tr > td,
+    .table-borderless > tfoot > tr > th,
+    .table-borderless > thead > tr > td,
+    .table-borderless > thead > tr > th {
+        border: none;
+    }
+
+    .coral {
+        color: coral;
+    }
+
+    .center {
+        align-content: center;
+        align-items: center;
+        vertical-align: unset;
+        align-self: center;
+        text-align: center
+    }
+
+    .zero-padding {
+        padding: 10px 15px !important;
+    }
+
+    .vertical-center {
+        vertical-align: middle !important;
+    }
+
+    .no-border {
+        border: 0px !important;
+    }
+
+    .table-responsive {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+
+    table.dataTable.no-footer {
+        border: none;
+    }
+
+    .dataTables_wrapper .dataTables_processing {
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        width: 30%;
+        height: 40px;
+        margin-left: -20%;
+        margin-top: -25px;
+        padding-top: 20px;
+        text-align: center;
+        font-size: 1.2em;
+        background: none;
+    }
+
+    thead tr {
+        background-color: #FF8A04;
+        border: 0;
+    }
+
+    .table-spacing {
+        border-spacing: 0px 0.5rem !important;
+    }
+
+    .body-content {
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+    }
+</style>
+
+<div class="card center-block" style="background-color: white; margin: 15px; display: none;" id="alert">
+    <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+        <table class="table center table-borderless" id="empty" style="width: auto;">
+            <tr>
+                <td><img src="~/Asset/SeekPng.com_megaphone-png_311331.png" style="height: 100px; width: auto;" /></td>
+                <td style="font-weight: bold;"><br />JADWAL UJIAN BELUM TERSEDIA<br />SILAHKAN CEK SECARA BERKALA</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<form action="@Url.Action("DetailPresensiKelas","PresensiKelas")" method="post" id="presensi">
+    <input type="hidden" id="id" name="id" />
+</form>
+
+<div class="card center-block" style="background-color: white; margin: 15px;">
+    <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+        <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; padding-left: 15px; font-weight: bold; font-size: 20px; color: black; ">
+            JADWAL PERKULIAHAN MBKM<br />
+            <p style="font-weight: normal; font-size: 15px; color: #c1baba;">Isi kehadiran untuk setiap mata kuliah yang diikuti sesuai jadwal yang tersedia</p>
+        </h5>
+        <hr />
+        <div class="container" style="width: 100%; padding-bottom: 15px;">
+            <table class="table" style="width: auto;">
+                <tr>
+                    <td style="text-align: right">Tahun Semester</td>
+                    <td style="width: 400px;">
+                        <select name="tahunSemester" id="tahunSemester" class="form-control input-md"></select>
+                    </td>
+                </tr>
+            </table>
+            <hr />
+            <div style="overflow-x: auto;">
+                <table id="jadwalKuliah" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
+                    <thead>
+                        <tr>
+                            <th class="zero-padding no-border vertical-center sorting">Action</th>
+                            <th class="zero-padding no-border vertical-center sorting">No.</th>
+                            <th class="zero-padding no-border vertical-center sorting">Tahun Semester</th>
+                            <th class="zero-padding no-border vertical-center sorting">Fakultas</th>
+                            <th class="zero-padding no-border vertical-center sorting">Program Studi</th>
+                            <th class="zero-padding no-border vertical-center sorting">Kode Mata Kuliah</th>
+                            <th class="zero-padding no-border vertical-center sorting">Nama Mata Kuliah</th>
+                            <th class="zero-padding no-border vertical-center sorting">SKS</th>
+                            <th class="zero-padding no-border vertical-center sorting">Hari</th>
+                            <th class="zero-padding no-border vertical-center sorting">Waktu</th>
+                            <th class="zero-padding no-border vertical-center sorting">Seksi</th>
+                            <th class="zero-padding no-border vertical-center sorting">Ruang Kelas</th>
+                            <th class="zero-padding no-border vertical-center sorting">Lokasi</th>
+                            <th class="zero-padding no-border vertical-center sorting">Nama Dosen</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts{
     <script>
+        var semesters = @Html.Raw(Json.Encode(Model));
+        var semestersAsList = [];
         $(document).ready(function () {
+            for (var key in semesters) {
+                var tmp = new Object();
+                tmp.id = key;
+                tmp.text = semesters[key];
+                semestersAsList.push(tmp);
+            }
+            $("#tahunSemester").select2({
+                placeholder: "-- Pilih Semester --",
+                data: semestersAsList
+            });
+            $("#tahunSemester").change(function () {
+                loadTable($("#tahunSemester").val());
+            });
+            loadTable($("#tahunSemester").val());
         });
+
+        function loadTable(strm) {
+            if (!strm) {
+                strm = 0;
+            }
+            $('#jadwalKuliah').DataTable({
+                ajax: {
+                    url: '@Url.Action("GetPresensiUjian", "PresensiUjian")?strm=' + strm,
+                    dataSrc: ''
+                },
+                "columns": [
+                    {
+                        "data": "Present",
+                        "render": function (data, type, row, meta) {
+                            var jamMasuk = row.JadwalKuliahs.JamMasuk.split(':');
+                            var jamKeluar = row.JadwalKuliahs.JamSelesai.split(':');
+                            var now = new Date();
+                            if (data) {
+                                return '<label class="container2"><input type="checkbox" checked disabled><span class="checkmark"></span></label>';
+                            }
+                            if (parseInt(jamMasuk[0]) < now.getHours() && parseInt(jamMasuk[1]) < now.getMinutes() && parseInt(jamKeluar[0]) > now.getHours() && parseInt(jamKeluar[1]) > now.getMinutes() && days[now.getDay()] == response.JadwalKuliahs.Hari) {
+                                return '<label class="container2"><input type="checkbox" id="absen" value="' + row.ID + '"><span class="checkmark"></span></label>'
+                            }
+                            return '<label class="container2"><input type="checkbox" disabled><span class="checkmark disable"></span></label>';
+                        }
+                    },
+                    {
+                        "data": null,
+                        "render": function (data, type, full, meta) {
+                            return '<div style="text-align:center; vertical-align: middle;">' + (meta.row + 1) + '</div>';
+                        }
+                    },
+                    {
+                        "data": "JadwalKuliahs.STRM",
+                        "render": function (data, type, row, meta) {
+                            return '<div style="text-align:center; vertical-align: middle;">' + semesters[data] + '</div>';
+                        }
+                    },
+                    {
+                        "data": "JadwalKuliahs.NamaFakultas",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "JadwalKuliahs.NamaProdi",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "JadwalKuliahs.KodeMataKuliah",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "JadwalKuliahs.NamaMataKuliah",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "JadwalKuliahs.SKS",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "JadwalKuliahs.Hari",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "JadwalKuliahs.JamMasuk",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + ' - ' + row.JadwalKuliahs.JamSelesai + '</div>';
+                        }
+                    },
+                    {
+                        "data": "JadwalKuliahs.ClassSection",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "JadwalKuliahs.RuangKelas",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "JadwalKuliahs.Lokasi",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "JadwalKuliahs.NamaDosen",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    }
+                ]
+            });
+        }
+        function submitRegistrasi() {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("registerExternal", "Home")",
+                data: mahasiswa
+            }).then(function (response) {
+                alert(response.message);
+                if (response.status == 200) {
+                    location.reload();
+                }
+            });
+        }
+        function loadNamaUniversitas() {
+            $("#namaUniversitas").select2({
+                placeholder: "-- Pilih Universitas --",
+                width: "100%",
+                ajax: {
+                    url: "@Url.Action("GetNamaInstansi", "Home")",
+                    dataType: 'json',
+                    method: "POST",
+                    delay: 250,
+                    cache: false,
+                    data: function (params) {
+                        return {
+                            Length: "10",
+                            Search: params.term || "",
+                            Skip: (params.page - 1) * 10 || 0,
+                        };
+                    },
+                    processResults: function (data, params) {
+                        var page = params.page - 1 || 1;
+                        return {
+                            results: $.map(data, function (item) { return { id: item.NoKerjasama, value: item.NoKerjasama, nama: item.NamaInstansi, text: item.NamaInstansi } }),
+                            pagination: {
+                                more: (page * 10) <= data.length
+                            }
+                        };
+                    },
+                }
+            });
+        }
     </script>
 }
