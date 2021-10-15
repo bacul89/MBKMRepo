@@ -239,6 +239,7 @@
 @section Scripts{
     <script>
         var mataKuliah = null;
+        var datatable;
         var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         $(document).ready(function () {
@@ -263,11 +264,19 @@
         });
 
         function loadTable(id) {
-            $('#dataAbsen').DataTable({
+            datatable = $('#dataAbsen').DataTable({
                 ajax: {
                     url: '@Url.Action("GetAbsensi", "PresensiKelas")?jadwalKuliahId=' + id,
                     dataSrc: ''
                 },
+                "columnDefs": [{
+                    "searchable": false,
+                    "orderable": false,
+                    "targets": 1
+                }],
+                "order": [
+                    [1, 'asc']
+                ],
                 "columns": [
                     {
                         "data": "Present",
@@ -298,10 +307,7 @@
                         }
                     },
                     {
-                        "data": null,
-                        "render": function (data, type, full, meta) {
-                            return '<div style="text-align:center; vertical-align: middle;">' + (meta.row + 1) + '</div>';
-                        }
+                        "data": null
                     },
                     {
                         "data": "TanggalAbsen",
@@ -319,6 +325,11 @@
                     }
                 ]
             });
+            datatable.on('order.dt search.dt', function () {
+                datatable.column(1, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            }).draw();
         }
         $('#submit').click(function () {
             if (!$('#absen').is(':checked')) {
