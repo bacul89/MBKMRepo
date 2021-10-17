@@ -9,7 +9,7 @@ namespace MBKM.Entities.ViewModel
     public class VMListProdi
     {
         public string IDProdi { get; set; }
-        public string NamaProdi { get; set; }
+        public string NamProdi { get; set; }
         public string Lokasi { get; set; }
     }
 }

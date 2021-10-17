@@ -17,7 +17,6 @@ using MBKM.Presentation.Helper;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
-
     [MBKMAuthorize]
     public class MasterMapingCapaianPembelajaranController : Controller
     {
@@ -342,6 +341,11 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
 
             return Json(_mcpService.GetFakultas(JenjangStudi, search), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetProdiLocByFakultas(string JenjangStudi, string idFakultas, string search)
+        {
+            return Json(_cplMatakuliah.GetProdiLocByFakultas(JenjangStudi, idFakultas, search), JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetProdiByFakultas(string JenjangStudi, string idFakultas, string search)

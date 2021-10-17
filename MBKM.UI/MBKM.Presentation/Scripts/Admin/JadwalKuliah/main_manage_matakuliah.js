@@ -22,30 +22,39 @@ function reloadDatatable() {
 
     datatable.destroy();
     datatable = $('#table-data-jadwal-kuliah').DataTable({
-        "columnDefs": [{
+        /*"columnDefs": [{
             "searchable": false,
             "orderable": false,
             "paging": false,
             "targets": 0,
             //"visible": false, 'targets': [4, 6]
         }],
+
+        $('#example').DataTable({
+            "paging": false,
+            "ordering": false,
+            "info": false
+        });*/
         //"order": [[1, 'asc']],
-        "proccessing": true,
-        "serverSide": true,
-        "order": [[1, 'asc']],
+        paging : false,
+        ordering : false,
+        info : false,
+        /*"proccessing": true,
+        "serverSide": true,*/
+        //"order": [[1, 'asc']],
         //"aaSorting": [[0, "asc"]],
-        "ajax": {
-            url: '/JadwalKuliah/SearchList?' + variable,
-            //dataSrc: ''
+        ajax: {
+            url: '/JadwalKuliah/GetMataKuliah?' + variable,
+            dataSrc: '',
             type: 'POST'
         },
-        "language": {
+/*        "language": {
             "emptyTable": "No record found.",
             "processing":
                 '<i class="fa fa-spinner fa-spin fa-3x fa-fw" style="color:#2a2b2b;"></i><span class="sr-only">Loading...</span> ',
             "search": "Search:",
             "searchPlaceholder": ""
-        },
+        },*/
         "columns": [
             /*{
                 "title": "Action",
@@ -105,114 +114,102 @@ function reloadDatatable() {
                     return '<div class="center">' + data + '</div>';
                 }
             },
-
             {
-                //"title": "Email",
-                "data": "Hari",
-                "name": "Hari",
+                "title": "MBKM",
+                "data": "ID",
                 "render": function (data, type, row, meta) {
-                    return '<div class="center">' + data + '</div>';
-                }
-            },
-            {
-                //"title": "Email",
-                "data": "JamMasuk",
-                "name": "JamMasuk",
-                "render": function (data, type, row, meta) {
-                    return '<div class="center">' + data + '</div>';
-                }
-            },
-            {
-                //"title": "Email",
-                "data": "RuangKelas",
-                "name": "RuangKelas",
-                "render": function (data, type, row, meta) {
-                    return '<div class="center">' + data + '</div>';
-                }
-            },
-            {
-                //"title": "Email",
-                "data": "Lokasi",
-                "name": "Lokasi",
-                "render": function (data, type, row, meta) {
-                    return '<div class="center">' + data + '</div>';
-                }
-            },
-            {
-                //"title": "Email",
-                "data": "NamaDosen",
-                "name": "NamaDosen",
-                "render": function (data, type, row, meta) {
-                    return '<div class="center">' + data + '</div>';
+                    return `<div class="row justify-content-center">
+                            <div class="col" style="text-align:center">
+                                <input type="checkbox" id="mbkm-flag" value="${data}">
+                            </div>
+                        </div>`;//<a href="javascript:void(0)" style="color:black" onclick="DeleteUserGetID('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
+                    //<a href="javascript:void(0)" style="color:black" onclick="DetailMasterCPL('${data}')"> <i class="fas fa-file-search coral"></i></a>
                 }
             },
 
         ],
-        "createdRow": function (row, data, index) {
+/*        "createdRow": function (row, data, index) {
             $('td', row).css({
                 'border': '1px solid coral',
                 'border-collapse': 'collapse',
                 'vertical-align': 'center',
             });
 
-        }//,
-        //'columnDefs': [
-        //    //hide the second & fourth column
-        //    { 'visible': false, 'targets': [5] }
-        //]
-
+        }*/
     });
-    /* datatable = $('#table-data-master-mapping-cpl').DataTable({
-        ajax: {
-            url: '@Url.Action("SearchList", "JadwalKuliah")?' + varibale,
-            dataSrc: ''
-        },
-        "columns": [
-            {
-                "data": "ID",
-                "render": function (data, type, row, meta) {
-                    return `<div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick="javascript:$('#idMatkul').val(${data}); $('#daftarMatkul').submit();"><i class="fas fa-edit"></i></a></div>`;
-                }
-            },
-            {
-                "data": null,
-                "render": function (data, type, full, meta) {
-                    return '<div style="text-align:center; vertical-align: middle;">' + (meta.row + 1) + '</div>';
-                }
-            },
-            {
-                "data": "KodeMataKuliah",
-                "render": function (data, type, row, meta) {
-                    return '<div style="text-align:center; vertical-align: middle;">' + data + '</div>';
-                }
-            },
-            {
-                "data": "NamaMataKuliah",
-                "render": function (data, type, row, meta) {
-                    return '<div class="center">' + data + '</div>';
-                }
-            },
-            {
-                "data": null,
-                "render": function (data, type, full, meta) {
-                    return meta.row + 1;
-                }
-            },
-            {
-                "data": null,
-                "render": function (data, type, full, meta) {
-                    return meta.row + 1;
-                }
-            },
-            {
-                "data": null,
-                "render": function (data, type, full, meta) {
-                    return meta.row + 1;
-                }
-            }
 
-        ]
-    });*/
 }
 
 
+$('#add').click(function () {
+    var list = [];
+    $("#mbkm-flag").each(function () {
+        if ($(this).attr("id") == "mbkm-flag") {
+            // do something
+            var id = parseInt($(this).val());
+            list.push(id);
+        }
+    });
+
+    console.log(list);
+    swal.fire({
+        title: "Apakah Anda Yakin \n Submit Jadwal Untuk Perkuliah MBKM ?",
+        type: "warning",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#06a956",
+        confirmButtonText: "Yes",
+        closeOnConfirm: false
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.LoadingOverlay("show");
+            $.ajax({
+                url: '/Admin/JadwalKuliah/Publish',
+                type: 'post',
+                data: {
+                    list: list
+                },
+                datatype: 'json',
+                success: function (e) {
+                    $.LoadingOverlay("hide");
+                    if (e.status == 500) {
+                        Swal.fire({
+                            title: 'Oppss',
+                            icon: 'error',
+                            html: e.message,
+                            showCloseButton: true,
+                            showCancelButton: false,
+                            focusConfirm: false,
+                            confirmButtonText: 'OK'
+                        })
+                    } else {
+                        Swal.fire({
+                            title: 'Berhasil',
+                            icon: 'success',
+                            html: 'Data Berhasil Tersubmit',
+                            showCloseButton: true,
+                            showCancelButton: false,
+                            focusConfirm: false,
+                            confirmButtonText: 'OK'
+                        })
+                        reloadDatatable();
+                    }
+                }, error: function (e) {
+                    $.LoadingOverlay("hide");
+                    Swal.fire({
+                        title: 'Oppss',
+                        icon: 'error',
+                        html: 'Coba Reload Page',
+                        showCloseButton: true,
+                        showCancelButton: false,
+                        focusConfirm: false,
+                        confirmButtonText: 'OK'
+                    })
+                }
+            })
+        }
+    })
+
+
+
+});
