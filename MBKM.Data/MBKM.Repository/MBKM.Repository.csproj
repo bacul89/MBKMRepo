@@ -144,6 +144,7 @@
     <Compile Include="Repositories\MBKMRepository\JadwalUjianMBKMRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\JenisKerjasamaModelRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\KRSRepository.cs" />
+    <Compile Include="Repositories\MBKMRepository\LinkFasilitasRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\MahasiswaRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\MasterCapaianPembelajaranRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\NilaiKuliahRepository.cs" />
