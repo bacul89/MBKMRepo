@@ -14,6 +14,7 @@ namespace MBKM.Services.MBKMServices
 {
     public interface IJadwalUjianMBKMService : IEntityService<JadwalUjianMBKM>
     {
+        VMListJadwalUjian GetListJadwalUjian(DataTableAjaxPostModel model, string jenjangStudi, string fakultas, string jenisUjian, string tahunSemester);
         VMListJadwalUjian GetListManageUjian(DataTableAjaxPostModel model, string jenjangStudi, string fakultas, string jenisUjian, string tahunSemester);
     }
     public class JadwalUjianMBKMService : EntityService<JadwalUjianMBKM>, IJadwalUjianMBKMService
@@ -26,6 +27,26 @@ namespace MBKM.Services.MBKMServices
         {
             _unitOfWork = unitOfWork;
             _jadwalRepository = JadwalRepository;
+        }
+
+        public VMListJadwalUjian GetListJadwalUjian(DataTableAjaxPostModel model, string jenjangStudi, string fakultas, string jenisUjian, string tahunSemester)
+        {
+            var searchBy = (model.search != null) ? model.search.value : null;
+            var take = model.length;
+            var skip = model.start;
+            string sortBy = "";
+            bool sortDir = true;
+
+            if (model.order != null)
+            {
+                // in this example we just default sort on the 1st column
+                sortBy = model.columns[model.order[0].column].data;
+                sortDir = model.order[0].dir.ToLower() == "asc";
+            }
+            if (sortBy == null)
+                sortBy = "ID";
+            sortBy = sortBy + " " + model.order[0].dir.ToUpper();
+            return _jadwalRepository.GetListJadwalUjian(skip, take, searchBy, sortBy, sortDir, jenjangStudi, fakultas, jenisUjian, tahunSemester);
         }
 
         public VMListJadwalUjian GetListManageUjian(DataTableAjaxPostModel model, string jenjangStudi, string fakultas, string jenisUjian, string tahunSemester)

@@ -55,7 +55,7 @@ var dataTable = $('#table-data-email-template').DataTable({
         {
             "data": null,
             "render": function (data, type, full, meta) {
-                return '<div class="center">' + (meta.row + 1) + '</div>';
+                return '<div class="center">' + (meta.row + meta.settings._iDisplayStart + 1) + '</div>';
             }
         },
         {

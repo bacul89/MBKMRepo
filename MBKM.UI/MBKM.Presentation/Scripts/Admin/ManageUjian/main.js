@@ -56,6 +56,14 @@ $(document).ready(function () {
 
 })
 
+function convertMilisecondToDate(value) {
+    var num = parseInt(value.match(/\d+/), 10)
+    var date = new Date(num);
+    var result = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()
+    return result;
+
+}
+
 function CustomValidation() {
     var isValid;
     $(".input-data :selected").each(function () {
@@ -112,19 +120,9 @@ function GenerateDataTable() {
                     "render": function (data, type, row, meta) {
                         return `<div class="row justify-content-center">
                             <div class="col" style="text-align:center">
-                                <a href="javascript:void(0)" style="color:black" onclick="IndexUpdateMasterMapingCapaianPembelajaran('${data}')"> <i class="fas fa-edit coral" ></i></a>
-                                <a href="javascript:void(0)" style="color:black" onclick="IndexViewMasterMapingCapaianPembelajaran('${data}')"> <i class="fas fa-file-search coral"></i></a>
-                                <a href="javascript:void(0)" style="color:black" onclick="DeletedMasterMapingCapaianPembelajaran('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
-
+                                <a href="javascript:void(0)" style="color:black" onclick="PopUpModal('${row.KodeMatkul}','${row.NamaMatkul}','${row.ClassSection}','${row.TanggalUjian}','${row.JamMulai}',)"> <i class="fas fa-file-search coral"></i></a>
                             </div>
                         </div>`;
-                    }
-                },
-                {
-                    //"title": "No",
-                    "data": null,
-                    "render": function (data, type, full, meta) {
-                        return meta.row + 1;
                     }
                 },
                 {
@@ -150,9 +148,16 @@ function GenerateDataTable() {
                 },
                 {
                     //"title": "Nomor Induk Pegawai",
+                    "data": "TanggalUjian",
+                    "render": function (data, type, row, meta) {
+                        return '<div class="center">' + convertMilisecondToDate(data) + '</div>';
+                    }
+                },
+                {
+                    //"title": "Nomor Induk Pegawai",
                     "data": "JamMulai",
                     "render": function (data, type, row, meta) {
-                        return '<div class="center">' + data + '</div>';
+                        return '<div class="center">' + row.JamMulai + ' - ' + row.JamAkhir + '</div>';
                     }
                 },
 
@@ -163,12 +168,47 @@ function GenerateDataTable() {
                     'border-collapse': 'collapse',
                     'vertical-align': 'center',
                 });
-
             }
-
         });
-
-
-
     }
+}
+
+function indexDetailManageJadwalUjian(idManageUjian) {
+    window.location.href = "/Admin/ManageJadwalUjian/DetailManageUjian/" + idManageUjian;
+}
+
+function PopUpModal(tempKodeMatkul, tempNamaMatkul, tempClassSection, tempTanggalUjian, tempJamMulai) {
+    $.LoadingOverlay("show");
+    $.ajax({
+        url: '/Admin/ManageJadwalUjian/_getIndexModal',
+        type: 'post',
+        data: {
+            KodeMatkul      : tempKodeMatkul,
+            NamaMatkul      : tempNamaMatkul,
+            ClassSection    : tempClassSection,
+            TanggalUjian    : tempTanggalUjian,
+            JamMulai        : tempJamMulai,
+        },
+        datatype: 'html',
+        success: function (e) {
+            $.LoadingOverlay("hide");
+            if ($('.data-content-modal').length) {
+                $('.data-content-modal').remove();
+            }
+            $('#modal-inner').append(e);
+            $('.modal').modal('show');
+        }, error: function (e) {
+            $.LoadingOverlay("hide");
+            Swal.fire({
+                title: 'Oppss',
+                icon: 'error',
+                html: 'Coba Reload Page',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText: 'OK'
+            })
+            $('.modal').modal('hide');
+        }
+    })
 }
