@@ -8,12 +8,14 @@ using MBKM.Services.MBKMServices;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using MBKM.Presentation.Helper;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
+    [MBKMAuthorize]
     public class ManageJadwalUjianController : Controller
     {
 
@@ -60,10 +62,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult GetDataTableMahasiswa(int dataID)
         {
             var data = _jadwalUjianMBKMService.Get(dataID);
-            var tempProdi = int.Parse(data.ProdiID);
+            /*var tempProdi = int.Parse(data.ProdiID);*/
             var tempJadwalUjian = _pendaftaranMataKuliahService.Find(x => x.JadwalKuliahs.MataKuliahID == data.IDMatkul 
-            && x.JadwalKuliahs.Lokasi == data.Lokasi
-            && x.JadwalKuliahs.ProdiID == tempProdi
+            /*&& x.JadwalKuliahs.Lokasi == data.Lokasi*/
+            /*&& x.JadwalKuliahs.ProdiID == tempProdi*/
             && x.StatusPendaftaran.Contains("ACCEPTED")
             
             ).ToList();

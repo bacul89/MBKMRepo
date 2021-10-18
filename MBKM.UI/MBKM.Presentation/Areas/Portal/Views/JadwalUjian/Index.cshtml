@@ -37,8 +37,14 @@
                                     <h5><b>Pilih Semester</b></h5>
                                 </div>
                                 <div class="col-sm-8">
-                                    <select name="inp_jenjang" id="inp_jenjang" class="form-control input-md input-data">
+                                    <select name="inp_semester" id="inp_semester" class="form-control input-md input-data">
                                         <option value="" selected disabled>-- Pilih Tahun Semester --</option>
+                                        @{ 
+                                            foreach(var dt in ViewData["semester"] as IEnumerable<MBKM.Entities.ViewModel.VMSemester>)
+                                            {
+                                                <option value="@dt.Nilai">@dt.Nama</option>
+                                            }
+                                        }
                                     </select>
                                 </div>
                             </div>

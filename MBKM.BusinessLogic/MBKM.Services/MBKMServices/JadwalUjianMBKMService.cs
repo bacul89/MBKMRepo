@@ -16,6 +16,7 @@ namespace MBKM.Services.MBKMServices
     {
         VMListJadwalUjian GetListJadwalUjian(DataTableAjaxPostModel model, string jenjangStudi, string fakultas, string jenisUjian, string tahunSemester);
         VMListJadwalUjian GetListManageUjian(DataTableAjaxPostModel model, string jenjangStudi, string fakultas, string jenisUjian, string tahunSemester);
+        IEnumerable<VMSemester> getAllSemester();
     }
     public class JadwalUjianMBKMService : EntityService<JadwalUjianMBKM>, IJadwalUjianMBKMService
     {
@@ -27,6 +28,11 @@ namespace MBKM.Services.MBKMServices
         {
             _unitOfWork = unitOfWork;
             _jadwalRepository = JadwalRepository;
+        }
+
+        public IEnumerable<VMSemester> getAllSemester()
+        {
+            return _jadwalRepository.getAllSemester();
         }
 
         public VMListJadwalUjian GetListJadwalUjian(DataTableAjaxPostModel model, string jenjangStudi, string fakultas, string jenisUjian, string tahunSemester)
