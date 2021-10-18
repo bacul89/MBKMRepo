@@ -490,6 +490,7 @@
     <Content Include="Areas\Portal\Views\PresensiKelas\DetailPresensiKelas.cshtml" />
     <Content Include="Areas\Portal\Views\JadwalKuliahMahasiswa\Index.cshtml" />
     <Content Include="Areas\Admin\Views\JadwalKuliah\Manage.cshtml" />
+    <Content Include="Areas\Portal\Views\LinkFasilitasMahasiswa\ModalDetailLinkMahasiswa.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
@@ -507,6 +508,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\MaxLength.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\Portal\LinkFasilitasMahasiswa\crud.js" />
     <Content Include="Scripts\Portal\LinkFasilitasMahasiswa\main.js" />
     <Content Include="Scripts\Portal\JadwalUjian\main.js" />
     <Content Include="Scripts\Portal\JadwalKuliahMahasiswa\main.js" />
