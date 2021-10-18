@@ -88,13 +88,13 @@
                                 <input name="matakuliahNamaCari" id="matakuliahNamaCari" class="form-control input-md">
                             </div>
                         </div>
-                        <div class="form-group" hidden>
+                        <div class="form-group">
                             <label for="inp_matakuliahKode" class="col-sm-3 control-label">Kode Mata Kuliah</label>
                             <div class="col-sm-9">
                                 <input name="matakuliahKodeCari" id="matakuliahKodeCari" class="form-control input-md">
                             </div>
                         </div>
-                        <div class="form-group" hidden>
+                        <div class="form-group">
                             <label for="inp_matakuliahId" class="col-sm-3 control-label">Id Mata Kuliah</label>
                             <div class="col-sm-9">
                                 <input name="matakuliahIdCari" id="matakuliahIdCari" class="form-control input-md">
@@ -104,6 +104,24 @@
                             <label for="seksi" class="col-sm-3 control-label">Seksi</label>
                             <div class="col-sm-9">
                                 <select name="matakuliahCari" id="seksi" class="form-control input-md">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pertukaran" class="col-sm-3 control-label">
+                                Seksi
+                            </label>
+                            <div class="col-sm-9">
+                                <select name="ClassSection" id="ClassSection" class="form-control input-data" required>
+                                    <option value="" disabled selected>
+                                        --Pilih Jenis Kegiatan MBKM--
+                                    </option>
+                                    @{
+                                        foreach (var data in ViewData["listSection"] as IEnumerable<MBKM.Entities.ViewModel.VMClassSection>)
+                                        {
+                                            <option value="@data.Nama">@data.Nama</option>
+                                        }
+                                    }
                                 </select>
                             </div>
                         </div>
@@ -127,9 +145,11 @@
                             <th class="zero-padding no-border vertical-center sorting">No.</th>
                             <th class="zero-padding no-border vertical-center sorting">Kode Mata Kuliah</th>
                             <th class="zero-padding no-border vertical-center sorting">Nama Mata Kuliah</th>
-                            <th class="zero-padding no-border vertical-center sorting">Kode CPL</th>
-                            <th class="zero-padding no-border vertical-center sorting">Kelompok</th>
-                            <th class="zero-padding no-border vertical-center sorting">Capaian Pembelajaran</th>
+                            <th class="zero-padding no-border vertical-center sorting">SKS</th>
+                            <th class="zero-padding no-border vertical-center sorting">Seksi</th>
+                            <th class="zero-padding no-border vertical-center sorting">Hari</th>
+                            <th class="zero-padding no-border vertical-center sorting">Waktu</th>
+                            <th class="zero-padding no-border vertical-center sorting">Ruang Kelas</th>
 
                         </tr>
                     </thead>
@@ -234,12 +254,21 @@
         }
 
         function reloadDatatable() {
+            //var variable =
+            //    'idProdi=' + $('#prodiIdCari').val() +
+            //    '&lokasi=' + $('#kampusCari').val() +
+            //    '&idFakultas=' + $('#fakultasCari').val() +
+            //    '&jenjangStudi=' + $('#jenjangCari').val() +
+            //    '&idMatakuliah=' + $('#matakuliahCari').val()+
+            //    '&seksi=' + $('#ClassSection').val();
+
             var variable =
-                'idProdi=' + $('#prodiIdCari').val() +
-                '&lokasi=' + $('#kampusCari').val() +
-                '&idFakultas=' + $('#fakultasCari').val() +
-                '&jenjangStudi=' + $('#jenjangCari').val() +
-                '&idMatakuliah=' + $('#matakuliahCari').val();
+                'idProdi=' + '500' +
+                '&lokasi=' + 'Semanggi' +
+                '&idFakultas=' + '5' +
+                '&jenjangStudi=' + 'S1' +
+                '&idMatakuliah=' + '003398' +
+                '&seksi=' + 'Z';
 
             datatable.destroy();
             datatable = $('#table-data-master-mapping-cpl').DataTable({
@@ -256,7 +285,7 @@
                 "order": [[1, 'asc']],
                 //"aaSorting": [[0, "asc"]],
                 "ajax": {
-                    url: '/Admin/MasterMapingCapaianPembelajaran/SearchList?' + variable,
+                    url: '/Admin/LinkFasilitasAdmin/SearchList?' + variable,
                     //dataSrc: ''
                     type: 'POST'
                 },
@@ -311,24 +340,32 @@
                     },
                     {
                         //"title": "Nomor Induk Pegawai",
-                        "data": "Kode",
-                        "name": "Kode",
+                        "data": "ClassSection",
+                        "name": "ClassSection",
                         "render": function (data, type, row, meta) {
                             return '<div class="center">' + data + '</div>';
                         }
                     },
                     {
                         //"title": "Nama",
-                        "data": "Kelompok",
-                        "name": "Kelompok",
+                        "data": "Hari",
+                        "name": "Hari",
                         "render": function (data, type, row, meta) {
                             return '<div class="center">' + data + '</div>';
                         }
                     },
                     {
                         //"title": "Email",
-                        "data": "Capaian",
-                        "name": "Capaian",
+                        "data": "JamMasuk",
+                        "name": "JamMasuk",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        //"title": "Email",
+                        "data": "RuangKelas",
+                        "name": "RuangKelas",
                         "render": function (data, type, row, meta) {
                             return '<div class="center">' + data + '</div>';
                         }
@@ -414,7 +451,7 @@
                 placeholder: "-- Pilih " + nama + " --",
                 width: "100%",
                 ajax: {
-                    url: "@Url.Action("getLookupByTipe", "MasterMapingCapaianPembelajaran")",
+                    url: "@Url.Action("getLookupByTipe", "LinkFasilitasAdmin")",
                     dataType: 'json',
                     method: "POST",
                     delay: 250,
@@ -448,7 +485,7 @@
                     placeholder: "-- Pilih Fakultas --",
                     width: "100%",
                     ajax: {
-                        url: "/Admin/MasterMapingCapaianPembelajaran/GetFakultas",
+                        url: "/Admin/LinkFasilitasAdmin/GetFakultas",
                         dataType: 'json',
                         method: "POST",
                         delay: 250,
@@ -481,7 +518,7 @@
                         placeholder: "-- Pilih Program Studi --",
                         width: "100%",
                         ajax: {
-                            url: "/Admin/MasterMapingCapaianPembelajaran/GetProdiByFakultas",
+                            url: "/Admin/LinkFasilitasAdmin/GetProdiByFakultas",
                             dataType: 'json',
                             method: "POST",
                             delay: 250,
@@ -517,7 +554,7 @@
                             placeholder: "-- Pilih Lokasi --",
                             width: "100%",
                             ajax: {
-                                url: "/Admin/MasterMapingCapaianPembelajaran/GetLokasiByProdi",
+                                url: "/Admin/LinkFasilitasAdmin/GetLokasiByProdi",
                                 dataType: 'json',
                                 method: "POST",
                                 delay: 250,
@@ -541,9 +578,9 @@
 
                         $("#lokasiCari").change(function () {
                             clearValueOnForm();
-                            var tes = $("#lokasiCari").val();
-                            //$("#prodiIdCari").val($("#lokasiCari").val());
-                            $("#prodiIdCari").val(tes.substring(1));
+                            //var tes = $("#lokasiCari").val();
+                            $("#prodiIdCari").val($("#lokasiCari").val());
+                            //$("#prodiIdCari").val(tes.substring(1));
 
                             $("#kampusCari").removeAttr('value');
                             var kampus = $(this).find(":selected").text();
@@ -559,6 +596,7 @@
 
                             var start = 0;
                             var end = 0;
+                            var pageLength = 0;
                             $('#matakuliahCari').select2({
                                 placeholder: "-- Pilih Mata Kuliah --",
                                 "proccessing": true,
@@ -566,76 +604,31 @@
                                 //multiple: true,
                                 width: "100%",
                                 ajax: {
-                                    url: "/Admin/MasterMapingCapaianPembelajaran/GetMataKuliah",
+                                    url: "/Admin/LinkFasilitasAdmin/GetMataKuliah",
                                     type: 'POST',
                                     dataType: 'json',
                                     data: function (params) {
-
-                                        //console.log(params);
-                                        params.length = 10;
-                                        if (params.page > 1) {
-                                            params.skip = params.page * params.length - (params.length - 1);
-                                            start = params.skip - 1;
-                                            end = params.skip - 1 + params.length;
-                                        } else {
-                                            start = 0;
-                                            end = 10;
-                                        }
-
-                                        @*return {
+                                        return {
                                             take: 10,
                                             searchBy: params.term || "",
-                                            skip: (params.page - 1) * 10 || 1,
+                                           // skip: (params.page - 1) * 10 || 0,
+                                            skip: params.page || 1,
                                             idProdi: $('#prodiIdCari').val(),
                                             idFakultas: $('#fakultasCari').val()
-                                        };*@
-
-                                        return {
-
-                                            @*search: params.term,
-                                            instansi: $('#namaUniversitas').val(),
-                                            length: params.length || 10,
-                                            skip: params.skip || 0*@
-
-
-                                             page: params.page || 0,
-                                             skip: params.skip || 10,
-                                             take: params.length || 10,
-                                             searchBy: params.term,
-                                             idProdi: $('#prodiIdCari').val(),
-                                             idFakultas: $('#fakultasCari').val()
-
                                         };
-                                },
+                                    },
                                     processResults: function (data, page) {
                                     //console.log(data);
-                                    //var page = params.page - 1 || 1;
-                                    @*
-                                        console.log(data);
-                                        console.log(data[0]);
-                                        console.log(data.slice(start, end));*@
-                                        //console.log("st"+start);
-                                        //console.log("ed"+end);
-                                        //console.log(data.slice(start, end));
-
-
-
-                                    return {
-
-                                        //.range(1, 20000)
-                                        results: $.map(data.slice(start, end), function (item) { return { id: item.id, value: item.id, text: item.text, title: item.kode } }),
-                                            pagination: {
-                                                more: true
-                                        }
-
-                                            //(page * 10) <= data.length
-                                            @* processResults: function (data, params) {
+                                         pageLength = pageLength + data.length;
                                         return {
-                                            results: $.map(data, function (item) { return { id: item.CRSE_ID, value: item.CRSE_ID, text: item.DESCR } }),
-                                            *@
-                                        };
-                                },
-                            }
+                                            results: $.map(data, function (item) { return { id: item.id, value: item.id, text: item.text, title: item.kode } }),
+                                            pagination: {
+                                               // more: (page * 10) <= data.length
+                                                more: data.length > 0 && data.length == 10
+                                            }
+                                        }
+                                    },
+                                }
                             });
 
 
@@ -697,7 +690,7 @@
             //console.log(dataParam);
 
             $.ajax({
-                url: "/Admin/MasterMapingCapaianPembelajaran/GetLokasiByProdi",
+                url: "/Admin/LinkFasilitasAdmin/GetLokasiByProdi",
                 dataType: 'json',
                 method: "POST",
                 //delay: 250,
