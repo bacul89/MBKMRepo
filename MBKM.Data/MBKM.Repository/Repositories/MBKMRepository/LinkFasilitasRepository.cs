@@ -32,7 +32,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                    
                     
                     Nama = x.ClassSection
-                });
+                }).GroupBy(x => x.Nama).Select(y => y.FirstOrDefault()).OrderBy(x => x.Nama);
                 return result.ToList();
             }
         }
