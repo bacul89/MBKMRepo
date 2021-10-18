@@ -15,7 +15,7 @@ using Newtonsoft.Json;
 namespace MBKM.Presentation.Areas.Portal.Controllers
 {
 
-    [MBKMAuthorize]
+    //[MBKMAuthorize]
     public class JadwalKuliahMahasiswaController : Controller
     {
 
@@ -35,8 +35,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         // GET: Portal/JadwalKuliahMahasiswa
         public ActionResult Index()
         {
-            //Session["nama"] = "Smitty Swagger Werben Jeger Man Jensen";
-            //Session["email"] = "sabangsasabana@gmail.com";
+            Session["nama"] = "Smitty Swagger Werben Jeger Man Jensen";
+            Session["email"] = "sabangsasabana@gmail.com";
             var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
 
 
@@ -109,7 +109,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             foreach (var item in _pmkService.Find(dataMap =>
                 dataMap.MahasiswaID == mahasiswa.ID &&
 
-                //dataMap.JenjangStudi == mahasiswa.JenjangStudi &&
+                dataMap.StatusPendaftaran == "ACCEPTED BY MAHASISWA" &&
                 dataMap.JadwalKuliahs.STRM == strmInt
 
             ).ToList())
