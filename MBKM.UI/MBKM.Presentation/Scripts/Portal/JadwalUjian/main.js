@@ -62,9 +62,9 @@ $(document).ready(function () {
                             },
                             {
                                 /*SKS*/
-                                "data": 3,
+                                "data": 6,
                                 "render": function (data, type, row, meta) {
-                                    return '<div class="center vertical-center" style="font-size: 0.8vw">' + 3 + '</div>';
+                                    return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
                                 }
                             },
                             {

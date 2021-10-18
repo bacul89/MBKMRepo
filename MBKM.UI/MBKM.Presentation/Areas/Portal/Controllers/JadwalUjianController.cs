@@ -16,13 +16,14 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
     {
         private IJadwalUjianMBKMDetailService _jadwalUjianMBKMDetailService;
         private IJadwalUjianMBKMService _jadwalUjianMBKMService;
+        private IJadwalKuliahService _jadwalKuliahService;
 
-        public JadwalUjianController(IJadwalUjianMBKMDetailService jadwalUjianMBKMDetailService, IJadwalUjianMBKMService jadwalUjianMBKMService)
+        public JadwalUjianController(IJadwalUjianMBKMDetailService jadwalUjianMBKMDetailService, IJadwalUjianMBKMService jadwalUjianMBKMService, IJadwalKuliahService jadwalKuliahService)
         {
             _jadwalUjianMBKMDetailService = jadwalUjianMBKMDetailService;
             _jadwalUjianMBKMService = jadwalUjianMBKMService;
+            _jadwalKuliahService = jadwalKuliahService;
         }
-
 
 
         // GET: Portal/JadwalUjian
@@ -58,13 +59,14 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 x => x.Mahasiswas.Email == email
                 && x.JadwalUjianMBKMs.STRM == semester
                 ).ToList();
-
+            IList<JadwalKuliah> dataSks = _jadwalKuliahService.GetAll().ToList();
+            
             List<String[]> final = new List<String[]>();
 
             foreach (var dt in data)
             {
                 var ddd = dt.MahasiswaID.ToString();
-
+                var sks = dataSks.Where(x => x.MataKuliahID == dt.JadwalUjianMBKMs.IDMatkul).First().SKS;
                 final.Add(new String[]
                 {
                     ddd,
@@ -73,7 +75,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     dt.JadwalUjianMBKMs.TanggalUjian.ToString("dd/MM/yyyy"),
                     dt.JadwalUjianMBKMs.JamMulai,
                     dt.JadwalUjianMBKMs.JamAkhir,
-                    dt.JadwalUjianMBKMs.JamAkhir,
+                    sks,
                     dt.JadwalUjianMBKMs.Lokasi,
                     dt.JadwalUjianMBKMs.RuangUjian,
                     dt.JadwalUjianMBKMs.ClassSection,
