@@ -138,6 +138,7 @@
     <Compile Include="Areas\Admin\Controllers\ApprovalPendaftaranMatakuliahController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\MasterCPLController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PresensiKelasController.cs" />
     <Compile Include="Areas\Admin\Controllers\MasterLookupController.cs" />
     <Compile Include="Areas\Admin\Controllers\MasterMapingCapaianPembelajaranController.cs" />
     <Compile Include="Areas\Admin\Controllers\MenuController.cs" />
@@ -458,6 +459,7 @@
     <Content Include="Areas\Portal\Views\PresensiKelas\Index.cshtml" />
     <Content Include="Areas\Portal\Views\PresensiUjian\Index.cshtml" />
     <Content Include="Areas\Portal\Views\PresensiKelas\DetailPresensiKelas.cshtml" />
+    <Content Include="Areas\Admin\Views\PresensiKelas\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />

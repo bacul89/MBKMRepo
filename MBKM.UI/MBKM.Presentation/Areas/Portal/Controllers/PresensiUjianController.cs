@@ -41,7 +41,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult GetPresensiUjian(int strm)
         {
             var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
-            var result = _jadwalUjianMBKMDetailService.Find(_ => _.MahasiswaID == mahasiswa.ID && _.IsActive && !_.IsDeleted && DateTime.Today.AddDays(7) == _.JadwalUjianMBKMs.TanggalUjian).ToList();
+            var result = _jadwalUjianMBKMDetailService.Find(_ => _.MahasiswaID == mahasiswa.ID && _.IsActive && !_.IsDeleted && DateTime.Today.AddDays(7) >= _.JadwalUjianMBKMs.TanggalUjian && DateTime.Today <= _.JadwalUjianMBKMs.TanggalUjian).ToList();
             if (strm != 0)
             {
                 result = _jadwalUjianMBKMDetailService.Find(_ => _.MahasiswaID == mahasiswa.ID && _.IsActive && !_.IsDeleted && int.Parse(_.JadwalUjianMBKMs.STRM) == strm && DateTime.Today.AddDays(7) == _.JadwalUjianMBKMs.TanggalUjian).ToList();

@@ -313,7 +313,7 @@
                         "data": "TanggalAbsen",
                         "render": function (data, type, row, meta) {
                             var data = new Date(data);
-                            var string = months[data.getMonth()] + ', ' + data.getDate() + ' ' + data.getFullYear();
+                            var string = data.getDate() + '/' + (data.getMonth()+1) + '/' + data.getFullYear();
                             return '<div style="text-align:center; vertical-align: middle;">' + string + '</div>';
                         }
                     },

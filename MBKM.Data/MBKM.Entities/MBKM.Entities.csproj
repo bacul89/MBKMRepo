@@ -128,6 +128,7 @@
     <Compile Include="ViewModel\VMMataKuliah.cs" />
     <Compile Include="ViewModel\VMMenu.cs" />
     <Compile Include="ViewModel\VMPendaftaranJadwalKuliah.cs" />
+    <Compile Include="ViewModel\VMPresensi.cs" />
     <Compile Include="ViewModel\VMProdi.cs" />
     <Compile Include="ViewModel\VMSemester.cs" />
   </ItemGroup>
