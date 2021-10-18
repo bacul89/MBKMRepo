@@ -240,7 +240,8 @@ function UpdatePerjanjian() {
     data.append("ID", $("#idKerjasama").val());
     data.append("JenisPertukaran", $("#JenisPertukaran").val());
     data.append("JenisKerjasama", $("#JenisKerjasama").val());
-    var TanggalAkhir = $("#TanggalAkhir").val();
+    var TanggalAkhir = $("#tanggalAkhir").val();
+    var TanggalMulai = $("#tanggalMulai").val();
     if (TanggalAkhir < TanggalMulai) {
         Swal.fire({
 
@@ -254,6 +255,7 @@ function UpdatePerjanjian() {
         })
         return;
     }
+    
     $.ajax({
         type: "POST",
         url: "/Admin/PerjanjianKerjasama/UpdateKerjasama",
