@@ -180,6 +180,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Asset\atmajayapoto.jpg" />
     <Content Include="Asset\default-photo-profile.png" />
     <Content Include="Asset\kampus-universitas-katolik-atmajaya-jakarta-_131002231109-118.jpg" />
     <Content Include="Asset\Lambang_Atma_Jaya.png" />
