@@ -1,0 +1,111 @@
+﻿@{
+    Layout = null;
+}
+@model MBKM.Entities.Models.MBKM.JadwalKuliah
+
+<div class="modal-content data-content-modal" id="update-master-maping-cpl">
+    <div class="modal-header" style="background-color: #FF8A04; ">
+        <h5 class="card-title" style="font-weight: bold; font-size: 17px; color: black;">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <center>DETAIL LINK FASILITAS PERKULIAHAN</center>
+        </h5>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal">
+            @*<div class="form-group" >
+                <label for="inp_MapingCPLID" class="col-sm-3 control-label">ID JadwalKuliah</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control input-md" name="inp_id_mapping_capaian_pembelajaran" id="inp_id_jadwal_kuliah" value="@Model.ID" placeholder="Pilih Mata Kuliah" disabled>
+                </div>
+            </div>
+
+
+
+
+            <div class="form-group">
+                <label for="inp_MatakuilahKode" class="col-sm-3 control-label">Kode Mata Kuliah</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control input-md" name="inp_kode_mata_kuliah" id="inp_kode_mata_kuliah" value="@Model.KodeMataKuliah" placeholder="Pilih Mata Kuliah" disabled>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="inp_MatakuiahName" class="col-sm-3 control-label">Nama Mata Kuliah</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control input-md" name="inp_mata_kuliah" id="inp_mata_kuliah" value="@Model.NamaMataKuliah" placeholder="Pilih Mata Kuliah" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inp_SKS" class="col-sm-3 control-label">SKS</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control input-md" name="inp_SKS" id="inp_SKS" value="@Model.SKS" placeholder="Pilih Mata Kuliah" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inp_SKS" class="col-sm-3 control-label">Seksi</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control input-md" name="inp_seksi" id="inp_seksi" value="@Model.ClassSection" placeholder="Pilih Mata Kuliah" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inp_SKS" class="col-sm-3 control-label">Hari</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control input-md" name="inp_hari" id="inp_hari" value="@Model.Hari" placeholder="Pilih Mata Kuliah" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inp_SKS" class="col-sm-3 control-label">Waktu</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control input-md" name="inp_waktu" id="inp_waktu" value="@Model.JamMasuk - @Model.JamSelesai" placeholder="Pilih Mata Kuliah" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inp_SKS" class="col-sm-3 control-label">Kelas</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control input-md" name="inp_kelas" id="inp_kelas" value="@Model.RuangKelas" placeholder="Pilih Mata Kuliah" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inp_SKS" class="col-sm-3 control-label">Nama Dosen</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control input-md" name="inp_dosen" id="inp_dosen" value="@Model.NamaDosen" placeholder="Pilih Mata Kuliah" disabled>
+                </div>
+            </div>*@
+            <div class="form-group">
+                <label for="inp_SKS" class="col-sm-3 control-label">E-Learning Moodle</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control input-md input-pendaftaran input-data" name="inp_moodle" id="inp_moodle" value="@Model.LinkMoodle" placeholder="-" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inp_SKS" class="col-sm-3 control-label">AtmaZeds</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control input-md input-pendaftaran input-data" name="inp_zeds" id="inp_zeds" value="@Model.LinkAtmaZeds" placeholder="-" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inp_SKS" class="col-sm-3 control-label">Microsoft Teams</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control input-md input-pendaftaran input-data" name="inp_teams" id="inp_teams" value="@Model.LinkTeams" placeholder="-" disabled>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inp_SKS" class="col-sm-3 control-label">Others</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control input-md input-pendaftaran input-data" name="inp_other" id="inp_other" value="@Model.LinkOthers" placeholder="-" disabled>
+                </div>
+            </div>
+
+            @*<div class="form-group">
+                <div class="col-sm-2 col-md-offset-10">
+                    <button type="button" id="edit-button" onclick="" class="btn btn-warning">Edit</button>
+                    <button type="button" id="update-button" onclick="" class="btn btn-success">Update</button>
+                </div>
+            </div>*@
+
+        </form>
+    </div>
+</div>
+
