@@ -61,8 +61,6 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 ).ToList();
             IList<JadwalKuliah> dataSks = _jadwalKuliahService.GetAll().ToList();
             
-
-
             List<String[]> final = new List<String[]>();
 
             foreach (var dt in data)
