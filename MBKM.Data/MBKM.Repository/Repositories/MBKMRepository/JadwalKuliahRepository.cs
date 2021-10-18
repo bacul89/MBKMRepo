@@ -81,7 +81,8 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                     x.FakultasID == FakultasIDInt &&
                     x.JenjangStudi == jenjangStudi &&
                     x.Lokasi == lokasi &&
-                    x.STRM == strmInt
+                    x.STRM == strmInt &&
+                    x.FlagOpen == true
                 );
                 mListJadwalKuliah.TotalCount = result.Count();
                 var gridfilter = result.AsQueryable().Where(
@@ -93,6 +94,94 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                     y.NamaFakultas.Contains(searchBy) ||
                     y.NamaProdi.Contains(searchBy) ||
                     y.NamaDosen.Contains(searchBy) */                   
+                    )
+                    .Select(z => new GridDataJadwalKuliah
+                    {
+                        /*ID = z.ID,
+                        IDMataKUliah = z.IDMataKUliah,
+                        NamaMataKuliah = z.NamaMataKuliah,
+                        KodeMataKuliah = z.KodeMataKuliah,
+                        Capaian = z.MasterCapaianPembelajarans.Capaian,
+                        Kelompok = z.MasterCapaianPembelajarans.Kelompok,
+                        Kode = z.MasterCapaianPembelajarans.Kode*/
+
+                        ID = z.ID,
+                        DosenID = z.DosenID,
+                        NamaDosen = z.NamaDosen,
+                        KodeMataKuliah = z.KodeMataKuliah,
+                        Hari = z.Hari,
+                        FlagOpen = z.FlagOpen,
+                        CreatedBy = z.CreatedBy,
+                        CreatedDate = z.CreatedDate,
+                        UpdatedBy = z.UpdatedBy,
+                        UpdatedDate = z.UpdatedDate,
+                        IsActive = z.IsActive,
+                        IsDeleted = z.IsDeleted,
+                        MataKuliahID = z.MataKuliahID,
+                        NamaMataKuliah = z.NamaMataKuliah,
+                        JamMasuk = z.JamMasuk,
+                        JamSelesai = z.JamSelesai,
+                        TglAwalKuliah = z.TglAwalKuliah,
+                        TglAkhirKuliah = z.TglAkhirKuliah,
+                        RuangKelas = z.RuangKelas,
+                        Lokasi = z.Lokasi,
+                        STRM = z.STRM,
+                        SKS = z.SKS,
+                        ClassSection = z.ClassSection,
+                        JenjangStudi = z.JenjangStudi,
+                        FakultasID = z.FakultasID,
+                        NamaFakultas = z.NamaFakultas,
+                        ProdiID = z.ProdiID,
+                        NamaProdi = z.NamaProdi,
+                        LinkMoodle = z.LinkMoodle,
+                        LinkAtmaZeds = z.LinkAtmaZeds,
+                        LinkTeams = z.LinkTeams,
+                        LinkOthers = z.LinkOthers
+                    }).OrderBy(sortBy, sortDir);
+                mListJadwalKuliah.gridDatas = gridfilter.Skip(skip).Take(take).ToList();
+                mListJadwalKuliah.TotalFilterCount = gridfilter.Count();
+                return mListJadwalKuliah;
+            }
+        }
+
+        public VMListJadwalKuliah SearchListMataKuliah(int skip, int take, string searchBy, string sortBy, bool sortDir, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm)
+        {
+            VMListJadwalKuliah mListJadwalKuliah = new VMListJadwalKuliah();
+            if (String.IsNullOrEmpty(searchBy))
+            {
+                // if we have an empty search then just order the results by Id ascending
+                sortBy = "ID";
+                sortDir = true;
+                searchBy = "";
+            }
+            using (var context = new MBKMContext())
+            {
+
+                int ProdiIDInt = Int32.Parse(idProdi);
+                int FakultasIDInt = Int32.Parse(idFakultas);
+                //int IDMataKUliahInt = Int32.Parse(idMatakuliah);
+                int strmInt = Int32.Parse(strm);
+
+                var result = context.jadwalKuliahs.Where(
+                    x =>
+                    x.IsDeleted == false &&
+                    x.ProdiID == ProdiIDInt &&
+                    x.FakultasID == FakultasIDInt &&
+                    x.JenjangStudi == jenjangStudi &&
+                    x.Lokasi == lokasi &&
+                    x.STRM == strmInt &&
+                    x.FlagOpen == false
+                );
+                mListJadwalKuliah.TotalCount = result.Count();
+                var gridfilter = result.AsQueryable().Where(
+                    y => y.NamaMataKuliah.Contains(searchBy)
+                    /*|| 
+                    y.KodeMataKuliah.Contains(searchBy) ||
+                    y.Lokasi.Contains(searchBy) ||
+                    y.JenjangStudi.Contains(searchBy) ||
+                    y.NamaFakultas.Contains(searchBy) ||
+                    y.NamaProdi.Contains(searchBy) ||
+                    y.NamaDosen.Contains(searchBy) */
                     )
                     .Select(z => new GridDataJadwalKuliah
                     {

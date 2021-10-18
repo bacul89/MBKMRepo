@@ -13,9 +13,13 @@ using MBKM.Repository.Repositories;
 
 using MBKM.Presentation.Helper;
 using MBKM.Common.Helpers;
+using MBKM.Entities.Models.MBKM;
+using Newtonsoft.Json;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
+
+    [MBKMAuthorize]
     public class JadwalKuliahController : Controller
     {
 
@@ -37,17 +41,15 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         // GET: Admin/JadwalKuliah
         public ActionResult Index()
         {
-            Session["username"] = "Smitty Werben Jeger Man Jensen";
+            //Session["username"] = "Smitty Werben Jeger Man Jensen";
             return View();
         }
 
-
-        /* Lookup --<> */
-        public ActionResult getLookupByTipe(string tipe)
+        public ActionResult Manage()
         {
-            return Json(_lookupService.getLookupByTipe(tipe), JsonRequestBehavior.AllowGet);
+            //Session["username"] = "Smitty Werben Jeger Man Jensen";
+            return View();
         }
-
 
         public JsonResult SearchList(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm)
         {
@@ -62,6 +64,80 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             });
         }
 
+        public JsonResult SearchMataKuliah(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm)
+        {
+            VMListJadwalKuliah vmList = _jkService.SearchListMataKuliah(model, idProdi, lokasi, idFakultas, jenjangStudi, strm);
+            return Json(new
+            {
+                // this is what datatables wants sending back
+                draw = model.draw,
+                recordsTotal = vmList.TotalCount,
+                recordsFiltered = vmList.TotalFilterCount,
+                data = vmList.gridDatas
+            });
+        }
+
+        [HttpPost]
+        public ActionResult Publish(int[] list)
+        {
+
+            var id = 0;
+            try
+            {
+                for (int i = 0; i < list.Length; i++)
+                {
+                    id = list[i];
+                }
+
+                var data = _jkService.Get(id);
+                data.FlagOpen = true;
+                data.UpdatedBy = Session["username"] as string;
+
+                _jkService.Save(data);
+                return Json(new ServiceResponse { status = 200, message = "Data Berhasil Tersubmit" });
+            }
+            catch (Exception e)
+            {
+                return Json(new ServiceResponse { status = 500, message = "Data Gagal disumbit!!!" });
+            }
+
+        }
+
+
+        public ActionResult GetMataKuliah(string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm)
+        {
+            List <JadwalKuliah> MVJadwal = new List<JadwalKuliah>();
+            List<string> mapJadwal = new List<string>();
+
+            int idProdiInt = Int32.Parse(idProdi);
+            int idFakultasInt = Int32.Parse(idFakultas);
+            int strmInt = Int32.Parse(strm);
+
+            foreach (var item in _jkService.Find(dataMap => 
+                dataMap.ProdiID == idProdiInt && 
+                dataMap.FakultasID == idFakultasInt && 
+                dataMap.Lokasi == lokasi &&
+                dataMap.JenjangStudi == jenjangStudi &&
+                dataMap.STRM == strmInt &&
+                dataMap.FlagOpen == false
+
+            ).ToList())
+            {
+                if (!mapJadwal.Contains(item.NamaMataKuliah))
+                {
+                    MVJadwal.Add(item);
+                    mapJadwal.Add(item.NamaMataKuliah);
+                }
+            }
+            return new ContentResult { Content = JsonConvert.SerializeObject(MVJadwal), ContentType = "application/json" };
+        }
+
+
+        /* Lookup --<> */
+        public ActionResult getLookupByTipe(string tipe)
+        {
+            return Json(_lookupService.getLookupByTipe(tipe), JsonRequestBehavior.AllowGet);
+        }
 
         /* Attribute Kuliah --<> */
         public ActionResult GetFakultas(string search, string JenjangStudi)
@@ -83,9 +159,6 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult GetSemesterAll(int skip, int take, string search)
         {
-            //return Json(, JsonRequestBehavior.AllowGet);
-
-
 
             var final = _jkService.GetSemesterAll(skip, take, search);
             List<object> data = new List<object>();
@@ -100,8 +173,6 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             }
 
             return Json(data);
-
-
         }
 
     }

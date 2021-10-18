@@ -159,25 +159,40 @@ namespace MBKM.Repository.Repositories.MBKMRepository
 
 
 
-/*
-            using (var context = new MBKMContext())
-            {
-                var PageNumberParam = new SqlParameter("@PageNumber", skip);
-                var PageSizeParam = new SqlParameter("@PageSize", take);//
-                var searchParam = new SqlParameter("@Search", searchBy);
+            /*
+                        using (var context = new MBKMContext())
+                        {
+                            var PageNumberParam = new SqlParameter("@PageNumber", skip);
+                            var PageSizeParam = new SqlParameter("@PageSize", take);//
+                            var searchParam = new SqlParameter("@Search", searchBy);
 
-                var result = context.Database
-                    .SqlQuery<VMMataKuliah>("GetMatkul @PageNumber, @PageSize, @Search", PageNumberParam, PageSizeParam, searchParam).Where(x =>
-                    x.ProdiID == idProdi &&
-                    x.FakultasID == idFakultas).OrderBy("DESCR").Skip(skip).Take(take).ToList();
-                return result;
-            }*/
+                            var result = context.Database
+                                .SqlQuery<VMMataKuliah>("GetMatkul @PageNumber, @PageSize, @Search", PageNumberParam, PageSizeParam, searchParam).Where(x =>
+                                x.ProdiID == idProdi &&
+                                x.FakultasID == idFakultas).OrderBy("DESCR").Skip(skip).Take(take).ToList();
+                            return result;
+                        }*/
 
         }
 
+        public IEnumerable<VMListProdi> GetProdiLocByFakultas(string jenjangStudi, string idFakultas, string search)
+        {
+            if (String.IsNullOrEmpty(search))
+            {
+                search = "";
+            }
+            using (var context = new MBKMContext())
+            {
+                var jenjangStudiParam = new SqlParameter("@JenjangStudi", jenjangStudi);
+                var idFakultasParam = new SqlParameter("@IdFakultas", idFakultas);
+                var searchParam = new SqlParameter("@Search", search);
 
 
-
-
+                var result = context.Database
+                    .SqlQuery<VMListProdi>("GetProdiLocByFakultas @JenjangStudi, @IdFakultas, @Search", searchParam, jenjangStudiParam, idFakultasParam).ToList();
+                //x.FakultasID == idFakultas).Skip(skip).Take(take).ToList();
+                return result;
+            }
+        }
     }
 }

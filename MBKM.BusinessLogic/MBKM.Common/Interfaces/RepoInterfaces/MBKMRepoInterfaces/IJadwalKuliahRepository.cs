@@ -12,5 +12,6 @@ namespace MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces
     {
         IEnumerable<VMSemester> GetSemesterAll(int skip, int take, string search);
         VMListJadwalKuliah SearchListJadwalKuliah(int skip, int take, string searchBy, string sortBy, bool sortDir, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm);
+        VMListJadwalKuliah SearchListMataKuliah(int skip, int take, string searchBy, string sortBy, bool sortDir, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm);
     }
 }

@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "JADWAL PERKULIAHAN MBKM";
+    ViewBag.Title = "MANAGE MATA KULIAH MBKM";
     Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
 }
 
@@ -14,23 +14,16 @@
     <script src="~/Scripts/sweetalert2.all.min.js"></script>
 }
 
-
 <div class="container-fluid" style="padding: 0px">
     <div class="card center-block" style="background-color: white; width: 100%; padding: 0px">
         <div class="card-body responsive-content" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; padding: 0px">
             <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
-                JADWAL PERKULIAHAN MBKM <br />
-                <small class="describe">Jadwal Perkuliahaan Pada Program MBKM</small>
+                MANAGE MATA KULIAH MBKM <br />
+                <small class="describe">Manage Mata Kuliah yang akan dibuka untuk program MBKM</small>
             </h4>
             <hr />
             <div class="container" style="width: 100%;">
-                @*
-                    Jenjang Studi
-                    Fakultas
-                    ProgtamStudi
-                    Lokasi
-                    Tahun Ajaran
-                *@
+
                 <div class="col-md-12">
                     <form class="form-horizontal col-md-7">
                         <div class="form-group">
@@ -92,6 +85,7 @@
 
 
 
+
                 <!--
                     No
                     Kode Mata Kuliah
@@ -104,27 +98,17 @@
                     Lokasi
                     Nama Dosen
                 -->
-                <!--
-                    <button id="add" class="btn btn-success" onclick="IndexCreateMasterMapingCapaianPembelajaran()" title="Mohon untuk melengkapi form pencarian terlebih dahulu!" disabled><i class="fas fa-plus-circle"></i> Tambah Master Maping</button>
-                    <br />
-                    <br />
-                -->
                 <!--table-responsive-->
-                <h3><b>Jadwal Perkuliahan</b></h3>
+                <h3><b>JADWAL MATA KULIAH</b></h3>
                 <table id="table-data-jadwal-kuliah" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
                     <thead>
                         <tr>
-                            <!--<th class="zero-padding no-border vertical-center sorting">Action</th>-->
                             <th class="zero-padding no-border vertical-center sorting">No.</th>
                             <th class="zero-padding no-border vertical-center sorting">Kode Mata Kuliah</th>
-                            <th class="zero-padding no-border vertical-center sorting">Nama Mata Kuliah</th>
+                            <th class="zero-padding no-border vertical-center sorting">Mata Kuliah</th>
                             <th class="zero-padding no-border vertical-center sorting">SKS</th>
                             <th class="zero-padding no-border vertical-center sorting">Seksi</th>
-                            <th class="zero-padding no-border vertical-center sorting">Hari</th>
-                            <th class="zero-padding no-border vertical-center sorting">Waktu</th>
-                            <th class="zero-padding no-border vertical-center sorting">Ruang Kelas</th>
-                            <th class="zero-padding no-border vertical-center sorting">Lokasi</th>
-                            <th class="zero-padding no-border vertical-center sorting">Nama Dosen</th>
+                            <th class="zero-padding no-border vertical-center sorting">MBKM</th>
 
                         </tr>
                     </thead>
@@ -132,14 +116,24 @@
                     </tbody>
                 </table>
 
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <div class="col-sm-2 col-md-offset-10">
+                            <button type="button" id="add" class="btn btn-warning" style="float: right;" title="Mohon untuk melengkapi form pencarian terlebih dahulu!" disabled><span class=""></span> Submit</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
 </div>
 
 
+
 @section scripts{
     <script src="~/Scripts/Admin/JadwalKuliah/search.js"></script>
-    <script src="~/Scripts/Admin/JadwalKuliah/main.js"></script>
+    <script src="~/Scripts/Admin/JadwalKuliah/main_manage_matakuliah.js"></script>
     <script src="~/Scripts/Admin/JadwalKuliah/crud.js"></script>
+    <script src="~/Scripts/loading/loadingoverlay.min.js"></script>
 }

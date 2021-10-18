@@ -20,7 +20,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
     {
         private ILookupService _lookupService;
         private IMasterCapaianPembelajaranService _mcpService;
-        public MasterCPLController(ILookupService lookupService,IMasterCapaianPembelajaranService mcpService)
+        public MasterCPLController(ILookupService lookupService, IMasterCapaianPembelajaranService mcpService)
         {
             _lookupService = lookupService;
             _mcpService = mcpService;
@@ -29,7 +29,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         // GET: Admin/MasterCPL
         public ActionResult Index()
         {
-            
+
             return View();
         }
         [HttpPost]
@@ -52,19 +52,19 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
             try
             {
-               
-                        //model.NoTelp = "123";
-                       
-                        model.CreatedDate = DateTime.Now;
-                        model.UpdatedDate = DateTime.Now;
-                        model.IsDeleted = false;
-                        model.IsActive = model.IsActive;
-                        model.CreatedBy = Session["username"] as string;
-                
+
+                //model.NoTelp = "123";
+
+                model.CreatedDate = DateTime.Now;
+                model.UpdatedDate = DateTime.Now;
+                model.IsDeleted = false;
+                model.IsActive = model.IsActive;
+                model.CreatedBy = Session["username"] as string;
+
 
                 _mcpService.Save(model);
-                        return Json(new ServiceResponse { status = 200, message = "Pendaftaran CPL Berhasil!" });
-                   
+                return Json(new ServiceResponse { status = 200, message = "Pendaftaran CPL Berhasil!" });
+
 
             }
             catch (Exception e)
@@ -76,7 +76,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult PostUpdateCPL(MasterCapaianPembelajaran cpl)
         {
-            
+
 
             MasterCapaianPembelajaran data = _mcpService.Get(cpl.ID);
             data.Kelompok = cpl.Kelompok;
@@ -111,7 +111,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
         public ActionResult ModalEditMasterCpl(int id)
         {
-     
+
 
             var data = _mcpService.Get(id);
             //return Json(data, JsonRequestBehavior.AllowGet);
@@ -133,7 +133,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
         //    return View(data);
         //}
-        public ActionResult GetFakultas(string search,string jenjang)
+        public ActionResult GetFakultas(string search, string jenjang)
         {
             //string email = Session["email"] as string;
             //var result = GetMahasiswaByEmail(email);
@@ -144,13 +144,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             //string email = Session["email"] as string;
             //var result = GetMahasiswaByEmail(email);
             //return Json(_pmkService.GetFakultas(result.JenjangStudi, search), JsonRequestBehavior.AllowGet);
-            return Json(_mcpService.GetProdiByFakultas(jenjang,idFakultas, search), JsonRequestBehavior.AllowGet);
+            return Json(_mcpService.GetProdiByFakultas(jenjang, idFakultas, search), JsonRequestBehavior.AllowGet);
         }
-        public ActionResult GetLokasiByProdi(string namaProdi, string search,string jenjang)
+        public ActionResult GetLokasiByProdi(string namaProdi, string search, string jenjang)
         {
             //string email = Session["email"] as string;
             //var result = GetMahasiswaByEmail(email);
-            return Json(_mcpService.GetLokasiByProdi( jenjang, namaProdi, search), JsonRequestBehavior.AllowGet);
+            return Json(_mcpService.GetLokasiByProdi(jenjang, namaProdi, search), JsonRequestBehavior.AllowGet);
         }
         public ActionResult getLookupByTipe(string tipe)
         {

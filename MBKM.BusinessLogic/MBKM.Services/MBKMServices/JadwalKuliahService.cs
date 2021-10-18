@@ -17,6 +17,7 @@ namespace MBKM.Services.MBKMServices
     {
         IEnumerable<VMSemester> GetSemesterAll(int skip, int take, string search);
         VMListJadwalKuliah SearchListJadwalKuliah(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm);
+        VMListJadwalKuliah SearchListMataKuliah(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm);
     }
     public class JadwalKuliahService : EntityService<JadwalKuliah>, IJadwalKuliahService
     {
@@ -55,6 +56,27 @@ namespace MBKM.Services.MBKMServices
             sortBy = sortBy + " " + model.order[0].dir.ToUpper();
 
             return _jadwalKuliahRepository.SearchListJadwalKuliah(skip, take, searchBy, sortBy, sortDir, idProdi, lokasi, idFakultas, jenjangStudi, strm);
+        }
+
+        public VMListJadwalKuliah SearchListMataKuliah(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm)
+        {
+            var searchBy = (model.search != null) ? model.search.value : null;
+            var take = model.length;
+            var skip = model.start;
+            string sortBy = "";
+            bool sortDir = true;
+
+            if (model.order != null)
+            {
+                // in this example we just default sort on the 1st column
+                sortBy = model.columns[model.order[0].column].data;
+                sortDir = model.order[0].dir.ToLower() == "asc";
+            }
+            if (sortBy == null)
+                sortBy = "ID";
+            sortBy = sortBy + " " + model.order[0].dir.ToUpper();
+
+            return _jadwalKuliahRepository.SearchListMataKuliah(skip, take, searchBy, sortBy, sortDir, idProdi, lokasi, idFakultas, jenjangStudi, strm);
         }
     }
 }

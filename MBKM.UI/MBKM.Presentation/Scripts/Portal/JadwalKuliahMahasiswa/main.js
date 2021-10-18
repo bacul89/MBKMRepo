@@ -1,51 +1,119 @@
 ﻿
+var datatable = null;
 
+$(document).ready(function () {
 
-$('#cari').click(function () {
+    $('#tahunAjaranCari').select2({
+
+        placeholder: "-- Pilih Tahun Ajaran --",
+        "proccessing": true,
+        "serverSide": true,
+        width: "100%",
+        ajax: {
+            url: "/JadwalKuliah/GetSemesterAll",
+            type: 'POST',
+            dataType: 'json',
+            //quietMillis: 50,
+            data: function (params) {
+
+                return {
+
+                    //search: params.term,
+                    //instansi: $('#namaUniversitas').val(),
+                    //length: params.length || 10,
+                    //skip: params.skip || 0
+
+                    take: 10,
+                    search: params.term || "",
+                    skip: (params.page - 1) * 10 || 0,
+                    // searchBy: params.term,
+
+                };
+            },
+            processResults: function (data, params) {
+
+                var page = params.page - 1 || 1;
+                //var pageLength = pageLength + data.length || 10;
+                /* console.log('page : ' + params.page);
+                console.log(page);
+                console.log('------------------------');
+                console.log(page * 10);*/
+                //console.log(pageLength);
+
+                return {
+                    results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } }),
+                    pagination: {
+                        more: (page * 10) <= data.length
+                    }
+                }
+
+            },
+        }
+    });
+    $("#tahunAjaranCari").change(function () {
+        reloadDatatable();
+        /*
+        dataParam.NamaProdi = $('#prodiCari').val();
+        dataParam.lokasi = $('#lokasiCari').val();
+        dataParam.MataKuliahID = $('#matakuliahCari').val();
+        *//*
+    
+        $("#matakuliahNamaCari").removeAttr('value');
+        var matakuliah = $(this).find(":selected").text();
+        $("#matakuliahNamaCari").val(matakuliah);
+    
+    
+    
+        $("#matakuliahKodeCari").val($(this).find(":selected").prop("title"));
+        $("#matakuliahIdCari").val($(this).val());
+    
+        buttonHandler("open");*/
+
+    });
+
+    datatable = $('#table-data-jadwal-kuliah').DataTable();
     reloadDatatable();
-});
-function convertMilisecondToDate(value) {
-    var num = parseInt(value.match(/\d+/), 10)
-    var date = new Date(num);
-    var result = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()
-    return result;
 
-}
+});
+
 
 function reloadDatatable() {
     var variable =
-        'idProdi=' + $('#prodiIdCari').val() +
+        /*'idProdi=' + $('#prodiIdCari').val() +
         '&lokasi=' + $('#kampusCari').val() +
         '&idFakultas=' + $('#fakultasCari').val() +
-        '&jenjangStudi=' + $('#jenjangCari').val() +
-        '&strm=' + $('#tahunAjaranCari').val();
+        '&jenjangStudi=' + $('#jenjangCari').val() +*/
+        'strm=' + $('#tahunAjaranCari').val();
 
     datatable.destroy();
     datatable = $('#table-data-jadwal-kuliah').DataTable({
-        "columnDefs": [{
+        paging: false,
+        ordering: false,
+        info: false,
+        /*"columnDefs": [{
             "searchable": false,
             "orderable": false,
             "paging": false,
             "targets": 0,
             //"visible": false, 'targets': [4, 6]
-        }],
+        }],*/
         //"order": [[1, 'asc']],
-        "proccessing": true,
-        "serverSide": true,
-        "order": [[1, 'asc']],
+        //"proccessing": true,
+        //"serverSide": true,
+        //"order": [[1, 'asc']],
         //"aaSorting": [[0, "asc"]],
         "ajax": {
-            url: '/JadwalKuliah/SearchList?' + variable,
-            //dataSrc: ''
+            url: '/Portal/JadwalKuliahMahasiswa/GetJadwalKuliah?' + variable,
+            dataSrc: '',
             type: 'POST'
         },
-        "language": {
+        /*"language": {
             "emptyTable": "No record found.",
             "processing":
                 '<i class="fa fa-spinner fa-spin fa-3x fa-fw" style="color:#2a2b2b;"></i><span class="sr-only">Loading...</span> ',
             "search": "Search:",
             "searchPlaceholder": ""
-        },
+        },*/
         "columns": [
             /*{
                 "title": "Action",
@@ -70,6 +138,30 @@ function reloadDatatable() {
                 "data": null,
                 "render": function (data, type, full, meta) {
                     return meta.row + 1;
+                }
+            },
+            {
+                //"title": "Nomor Induk Pegawai",
+                "data": "STRM",
+                "name": "STRM",
+                "render": function (data, type, row, meta) {
+                    return '<div class="center">' + $('#tahunAjaranCari').select2('data')[0].text + '</div>';
+                }
+            },
+            {
+                //"title": "Nomor Induk Pegawai",
+                "data": "NamaProdi",
+                "name": "NamaProdi",
+                "render": function (data, type, row, meta) {
+                    return '<div class="center">' + data + '</div>';
+                }
+            },
+            {
+                //"title": "Nomor Induk Pegawai",
+                "data": "NamaFakultas",
+                "name": "NamaFakultas",
+                "render": function (data, type, row, meta) {
+                    return '<div class="center">' + data + '</div>';
                 }
             },
             {
@@ -148,71 +240,50 @@ function reloadDatatable() {
             },
 
         ],
-        "createdRow": function (row, data, index) {
+        /*"createdRow": function (row, data, index) {
             $('td', row).css({
                 'border': '1px solid coral',
                 'border-collapse': 'collapse',
                 'vertical-align': 'center',
             });
 
-        }//,
-        //'columnDefs': [
-        //    //hide the second & fourth column
-        //    { 'visible': false, 'targets': [5] }
-        //]
-
+        }*/
     });
-    /* datatable = $('#table-data-master-mapping-cpl').DataTable({
-        ajax: {
-            url: '@Url.Action("SearchList", "JadwalKuliah")?' + varibale,
-            dataSrc: ''
-        },
-        "columns": [
-            {
-                "data": "ID",
-                "render": function (data, type, row, meta) {
-                    return `<div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick="javascript:$('#idMatkul').val(${data}); $('#daftarMatkul').submit();"><i class="fas fa-edit"></i></a></div>`;
-                }
-            },
-            {
-                "data": null,
-                "render": function (data, type, full, meta) {
-                    return '<div style="text-align:center; vertical-align: middle;">' + (meta.row + 1) + '</div>';
-                }
-            },
-            {
-                "data": "KodeMataKuliah",
-                "render": function (data, type, row, meta) {
-                    return '<div style="text-align:center; vertical-align: middle;">' + data + '</div>';
-                }
-            },
-            {
-                "data": "NamaMataKuliah",
-                "render": function (data, type, row, meta) {
-                    return '<div class="center">' + data + '</div>';
-                }
-            },
-            {
-                "data": null,
-                "render": function (data, type, full, meta) {
-                    return meta.row + 1;
-                }
-            },
-            {
-                "data": null,
-                "render": function (data, type, full, meta) {
-                    return meta.row + 1;
-                }
-            },
-            {
-                "data": null,
-                "render": function (data, type, full, meta) {
-                    return meta.row + 1;
-                }
-            }
 
-        ]
-    });*/
 }
 
 
+/* --responsive */
+$(document).ready(function () {
+    isZooming();
+});
+
+$(window).resize(function () {
+    isZooming();
+});
+
+function isZooming() {
+    var defaultH = 700;
+    var square = $('.responsive-content');
+    var screenH = $(document).height();
+    //console.log("dfH :"+defaultH);
+    //console.log("wnH :"+screenH);
+
+
+    if (defaultH < screenH) {
+
+        var footer = 39;
+        var header = 105;
+        var contentHeight = screenH - header - footer;
+
+        if (defaultH < contentHeight) {
+            square.css('min-height', contentHeight);
+        } else {
+            square.css('min-height', defaultH);
+        }
+
+
+    } else {
+        square.css('min-height', defaultH);
+    }
+}

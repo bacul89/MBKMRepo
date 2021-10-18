@@ -21,6 +21,7 @@ namespace MBKM.Services.MBKMServices
         VMListMapingCPL SearchListMapingCPL(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string idMatakuliah);
 
         IEnumerable<VMMataKuliah> GetMatkul(int skip, int take, string searchBy, string idProdi, string idFakultas);
+        IEnumerable<VMListProdi> GetProdiLocByFakultas(string jenjangStudi, string idFakultas, string search);
 
         //VMMataKuliah GetMatkul(DataTableAjaxPostModel model, string idProdi, string idFakultas);
         //VMMataKuliah GetMatkul(DataTableAjaxPostModel model, string search, string idProdi, string idFakultas);
@@ -64,6 +65,11 @@ namespace MBKM.Services.MBKMServices
         public IEnumerable<VMMataKuliah> GetMatkul(int skip, int take, string searchBy, string idProdi, string idFakultas)
         {
             return _cplRepository.GetMatkul(skip, take, searchBy, idProdi, idFakultas);
+        }
+
+        public IEnumerable<VMListProdi> GetProdiLocByFakultas(string jenjangStudi, string idFakultas, string search)
+        {
+            return _cplRepository.GetProdiLocByFakultas(jenjangStudi, idFakultas, search);
         }
 
         /*        public VMMataKuliah GetMatkul(DataTableAjaxPostModel model, string search, string idProdi, string idFakultas)

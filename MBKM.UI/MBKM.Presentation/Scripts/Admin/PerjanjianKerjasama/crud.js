@@ -158,6 +158,7 @@ function SubmitPerjanjian() {
             })
             table.ajax.reload(null, false),
                 $('.modal').modal('hide');
+            location.reload();
         },
         error: function (response) {
             Swal.fire({
@@ -239,6 +240,20 @@ function UpdatePerjanjian() {
     data.append("ID", $("#idKerjasama").val());
     data.append("JenisPertukaran", $("#JenisPertukaran").val());
     data.append("JenisKerjasama", $("#JenisKerjasama").val());
+    var TanggalAkhir = $("#TanggalAkhir").val();
+    if (TanggalAkhir < TanggalMulai) {
+        Swal.fire({
+
+            title: 'Tanggal Error',
+            icon: 'error',
+            html: 'Tanggal Akhir tidak boleh lebih besar dari tanggal mulai',
+            showCloseButton: true,
+            showCancelButton: false,
+            focusConfirm: false,
+            confirmButtonText: 'OK'
+        })
+        return;
+    }
     $.ajax({
         type: "POST",
         url: "/Admin/PerjanjianKerjasama/UpdateKerjasama",
@@ -258,6 +273,7 @@ function UpdatePerjanjian() {
             })
             table.ajax.reload(null, false),
                 $('.modal').modal('hide');
+            location.reload();
         },
         error: function (response) {
             Swal.fire({
@@ -271,7 +287,7 @@ function UpdatePerjanjian() {
             })
             table.ajax.reload(null, false),
                 $('.modal').modal('hide');
-            location.reload();
+            //location.reload();
         }
     })
 }
