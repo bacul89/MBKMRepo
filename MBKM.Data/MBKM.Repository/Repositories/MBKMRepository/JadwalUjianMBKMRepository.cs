@@ -20,23 +20,23 @@ namespace MBKM.Repository.Repositories.MBKMRepository
 
         public VMListJadwalUjian GetListManageUjian(int Skip, int Length, string SearchParam, string SortBy, bool SortDir, string jenjangStudi, string fakultas, string jenisUjian, string tahunSemester)
         {
+
             VMListJadwalUjian mListJadwalUjian = new VMListJadwalUjian();
             if (String.IsNullOrEmpty(SearchParam))
             {
-                // if we have an empty search then just order the results by Id ascending
-                //SortBy = "ID";
-                //SortDir = true;
                 SearchParam = "";
             }
             using (var context = new MBKMContext())
             {
 
-                var result = context.jadwalUjians.Where(x => x.IsDeleted == false &&
+                var result1 = context.jadwalUjians.Where(x => x.IsDeleted == false &&
                 x.JenjangStudi == jenjangStudi &&
-                x.FakultasID == fakultas &&
                 x.KodeTipeUjian == jenisUjian &&
                 x.STRM == tahunSemester);
-                
+
+                var result = result1.AsEnumerable()
+                 .Where(p => int.Parse(p.FakultasID) == int.Parse(fakultas));
+
 
                 mListJadwalUjian.TotalCount = result.Count();
 
@@ -48,34 +48,28 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                         || y.JamMulai.Contains(SearchParam)
                         || y.JamAkhir.Contains(SearchParam)
                     )
-                    .GroupBy(x => new { x.KodeMatkul, x.NamaMatkul, x.ClassSection, x.TanggalUjian, x.JamMulai }, (key, group) => 
+                    .GroupBy(x => new { x.ID, x.KodeMatkul, x.NamaMatkul, x.ClassSection, x.TanggalUjian, x.JamMulai, x.JamAkhir }, (key, group) => 
                     new {
+                        ID = key.ID,
                         KodeMatkul = key.KodeMatkul,
                         NamaMatkul = key.NamaMatkul,
                         ClassSection = key.ClassSection,
                         TanggalUjian = key.TanggalUjian,
                         JamMulai = key.JamMulai,
+                        JamAkhir = key.JamAkhir,
                         Result = group.ToList() })
                     .OrderBy(SortBy, SortDir);
 
                 mListJadwalUjian.gridDatas = gridfilter.Skip(Skip).Take(Length)
                     .Select(z => new GridDataJadwalUjian
                     {
-                        /* KodeMatkul = z.Key1,
-                         NamaMatkul = z.FirstOrDefault().NamaMatkul,
-                         FakultasID = z.FirstOrDefault().FakultasID,
-                         NamaFakultas = z.FirstOrDefault().NamaFakultas,
-                         ClassSection = z.FirstOrDefault().ClassSection,
-                         TanggalUjian = z.FirstOrDefault().TanggalUjian,
-                         JamMulai = z.FirstOrDefault().JamMulai,
-                         JamAkhir = z.FirstOrDefault().JamAkhir,
-                         TipeUjian = z.FirstOrDefault().TipeUjian,*/
-
+                        ID = z.ID,
                         KodeMatkul = z.KodeMatkul,
                         NamaMatkul = z.NamaMatkul,
                         ClassSection = z.ClassSection,
                         TanggalUjian = z.TanggalUjian,
                         JamMulai = z.JamMulai,
+                        JamAkhir = z.JamAkhir,
                     })
                     .ToList();
                 mListJadwalUjian.TotalFilterCount = gridfilter.Count();
@@ -93,11 +87,14 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             using (var context = new MBKMContext())
             {
 
-                var result = context.jadwalUjians.Where(x => x.IsDeleted == false &&
+                var result1 = context.jadwalUjians.Where(x => x.IsDeleted == false &&
                 x.JenjangStudi == jenjangStudi &&
-                x.FakultasID == fakultas &&
+                /*x.FakultasID == fakultas &&*/
                 x.KodeTipeUjian == jenisUjian &&
                 x.STRM == tahunSemester);
+
+                var result = result1.AsEnumerable()
+                 .Where(p => int.Parse(p.FakultasID) == int.Parse(fakultas));
 
                 mListJadwalUjian.TotalCount = result.Count();
 
@@ -132,6 +129,14 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return mListJadwalUjian;
             }
         }
-
+        public IEnumerable<VMSemester> getAllSemester()
+        {
+            using (var context = new MBKMContext())
+            {
+                var result = context.Database
+                    .SqlQuery<VMSemester>("GetSemesterALL").ToList();
+                return result;
+            }
+        }
     }
 }

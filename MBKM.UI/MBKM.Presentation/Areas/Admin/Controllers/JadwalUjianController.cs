@@ -6,11 +6,13 @@ using MBKM.Services.MBKMServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MBKM.Presentation.Helper;
 using System.Web;
 using System.Web.Mvc;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
+    [MBKMAuthorize]
     public class JadwalUjianController : Controller
     {
 
