@@ -257,7 +257,7 @@
                     {
                         "data": "ID",
                         "render": function (data, type, row, meta) {
-                            return '<label class="container2"><input type="checkbox" id="checkDosen' + mahasiswaCount++ + '" value="' + data + '"><span class="checkmark"></span></label>';
+                            return '<label class="container2"><input class="checkFlag" type="checkbox" id="checkDosen' + mahasiswaCount++ + '" value="' + data + '"><span class="checkmark"></span></label>';
                         }
                     },
                     {
@@ -296,14 +296,10 @@
             }).draw();
         }
         $('#check').click(function () {
-            for (var i = 0; i < mahasiswaCount; i++) {
-                $('#checkDosen' + i).prop('checked', true);
-            }
+            $('.checkFlag').prop('checked', true);
         }
         $('#uncheck').click(function () {
-            for (var i = 0; i < mahasiswaCount; i++) {
-                $('#checkDosen' + i).prop('checked', false);
-            }
+            $('.checkFlag').prop('checked', false);
         }
         $('#submit').click(function () {
             var list = [];
