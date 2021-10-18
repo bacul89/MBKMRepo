@@ -273,6 +273,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     } else
                     {
                         CPLMKPendaftaran res = new CPLMKPendaftaran();
+                        res.CPLAsal = cplmkPendaftaran.CPLAsal;
                         res.PendaftaranMataKuliahID = ID;
                         res.IsActive = true;
                         res.IsDeleted = false;

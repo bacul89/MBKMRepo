@@ -12,6 +12,7 @@ using MBKM.Common.Helpers;
 using System.IO;
 using MBKM.Presentation.Helper;
 using MBKM.Repository.BaseRepository;
+using MBKM.Presentation.models;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
 {
@@ -141,8 +142,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
                     perjanjianKerjasama.IsActive = true;
                     _perjanjianKerjasamaService.Save(perjanjianKerjasama);
                 }
-        }
-            return Json(perjanjianKerjasama);
+                return Json(new ServiceResponse { status = 200, message = "Save Berhasil!" });
+            }
+            else
+            {
+                return Json(new ServiceResponse { status = 500, message = "Save Gagal!" });
+            }
+            //return Json(perjanjianKerjasama);
 
         }
 
@@ -237,8 +243,12 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
                     //perjanjianKerjasama.UniversitasID = 0;
                     _perjanjianKerjasamaService.Save(data);
                 }
+                return Json(new ServiceResponse { status = 200, message = "Save Berhasil!" });
             }
-            return Json(data);
+            else
+            {
+                return Json(new ServiceResponse { status = 500, message = "Save Error!" });
+            }
 
         }
 

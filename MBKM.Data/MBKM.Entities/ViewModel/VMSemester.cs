@@ -10,5 +10,6 @@ namespace MBKM.Entities.ViewModel
     {
         public double ID { get; set; }
         public string Nama { get; set; }
+        public double Nilai { get; set; }
     }
 }

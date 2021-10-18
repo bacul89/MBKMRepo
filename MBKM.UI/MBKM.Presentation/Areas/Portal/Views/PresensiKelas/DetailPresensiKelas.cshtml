@@ -1,0 +1,352 @@
+﻿
+@{
+    Layout = "~/Areas/Portal/Views/shared/_LayoutHome.cshtml";
+    ViewBag.Title = "MBKM";
+}
+
+
+<style>
+    .coral {
+        color: coral;
+    }
+
+    .center {
+        align-content: center;
+        align-items: center;
+        vertical-align: unset;
+        align-self: center;
+        text-align: center
+    }
+
+    .zero-padding {
+        padding: 10px 15px !important;
+    }
+
+    .vertical-center {
+        vertical-align: middle !important;
+    }
+
+    .no-border {
+        border: 0px !important;
+    }
+
+    .table-responsive {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+
+    table.dataTable.no-footer {
+        border: none;
+    }
+
+    .dataTables_wrapper .dataTables_processing {
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        width: 30%;
+        height: 40px;
+        margin-left: -20%;
+        margin-top: -25px;
+        padding-top: 20px;
+        text-align: center;
+        font-size: 1.2em;
+        background: none;
+    }
+
+    thead tr {
+        background-color: #FF8A04;
+        border: 0;
+    }
+
+    .table-spacing {
+        border-spacing: 0px 0.5rem !important;
+    }
+
+    .body-content {
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+    }
+    .table-borderless > tbody > tr > td,
+    .table-borderless > tbody > tr > th,
+    .table-borderless > tfoot > tr > td,
+    .table-borderless > tfoot > tr > th,
+    .table-borderless > thead > tr > td,
+    .table-borderless > thead > tr > th {
+        border: none;
+    }
+    /* The container */
+    .container2 {
+        left: 40%;
+        display: block;
+        position: relative;
+        cursor: pointer;
+        font-size: 22px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+        /* Hide the browser's default checkbox */
+        .container2 input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+    /* Create a custom checkbox */
+    .checkmark {
+        align-content:center;
+        position: absolute;
+        height: 25px;
+        width: 25px;
+        background-color: #fff;
+        border: solid;
+        border-width: 1px;
+    }
+
+    /* On mouse-over, add a grey background color */
+    .container2:hover input ~ .checkmark {
+        background-color: #ccc;
+    }
+
+    /* When the checkbox is checked, add a blue background */
+    .container2 input:checked ~ .checkmark {
+        background-color: #FF8A04;
+    }
+
+    /* Create the checkmark/indicator (hidden when not checked) */
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    /* Show the checkmark when checked */
+    .container2 input:checked ~ .checkmark:after {
+        display: block;
+    }
+
+    /* Style the checkmark/indicator */
+    .container2 .checkmark:after {
+        left: 9px;
+        top: 5px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+    .disable {
+        background-color: #ccc;
+        pointer-events: none;
+    }
+</style>
+
+<form action="@Url.Action("FormPendaftaran","PendaftaranMataKuliah")" method="post" id="daftarMatkul">
+    <input type="hidden" id="idMatkul" name="idMatkul" />
+</form>
+
+<div class="card center-block" style="background-color: white; margin: 15px;">
+    <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+        <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; padding-left: 15px; font-weight: bold; font-size: 20px; color: black; ">
+            DAFTAR KEHADIRAN MATA KULIAH<br />
+            <p style="font-weight: normal; font-size: 15px; color: #c1baba;" id="subtitle"></p>
+        </h5>
+        <hr />
+        
+        <p style=" padding-right: 15px; padding-left: 15px; font-size: 18px; font-weight: bold; color: black; ">DETAIL MATA KULIAH</p>
+        <div class="container" style="width: 100%; padding-bottom: 15px;">
+            <table class="table table-borderless" style="width: auto;">
+                <tr>
+                    <td style="text-align: right;">Fakultas</td>
+                    <td style="text-align: center;">:</td>
+                    <td id="fakultas"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">Program Studi</td>
+                    <td style="text-align: center;">:</td>
+                    <td id="prodi"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">Kode Mata Kuliah</td>
+                    <td style="text-align: center;">:</td>
+                    <td id="kodeMataKuliah"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">Nama Mata Kuliah</td>
+                    <td style="text-align: center;">:</td>
+                    <td id="namaMataKuliah"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">Seksi</td>
+                    <td style="text-align: center;">:</td>
+                    <td id="seksi"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">Lokasi</td>
+                    <td style="text-align: center;">:</td>
+                    <td id="lokasi"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">Hari</td>
+                    <td style="text-align: center;">:</td>
+                    <td id="hari"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">Waktu</td>
+                    <td style="text-align: center;">:</td>
+                    <td id="waktu"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">Ruang Kelas</td>
+                    <td style="text-align: center;">:</td>
+                    <td id="ruangKelas"></td>
+                </tr>
+                <tr>
+                    <td style="text-align: right;">Nama Dosen</td>
+                    <td style="text-align: center;">:</td>
+                    <td id="namaDosen"></td>
+                </tr>
+            </table>
+            <hr />
+            <div style="overflow-x: auto;">
+                <table id="dataAbsen" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
+                    <thead>
+                        <tr>
+                            <th class="zero-padding no-border vertical-center sorting text-center">Action</th>
+                            <th class="zero-padding no-border vertical-center sorting text-center">No.</th>
+                            <th class="zero-padding no-border vertical-center sorting text-center">Tanggal</th>
+                            <th class="zero-padding no-border vertical-center sorting text-center">Waktu</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <button id="submit" class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; ">SUBMIT</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        var mataKuliah = null;
+        var datatable;
+        var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetJadwalKuliahById", "PresensiKelas")?id=" + @Model
+            }).then(function (response) {
+                mataKuliah = response;
+                $('#subtitle').html('Isi daftar kehadiran mata kuliah ' + response.JadwalKuliahs.NamaMataKuliah.toUpperCase() + ' sesuai dengan jadwal yang tersedia')
+                $('#fakultas').html(response.JadwalKuliahs.NamaFakultas);
+                $('#prodi').html(response.JadwalKuliahs.NamaProdi);
+                $('#kodeMataKuliah').html(response.JadwalKuliahs.KodeMataKuliah);
+                $('#namaMataKuliah').html(response.JadwalKuliahs.NamaMataKuliah);
+                $('#seksi').html(response.JadwalKuliahs.ClassSection); 
+                $('#lokasi').html(response.JadwalKuliahs.Lokasi);
+                $('#hari').html(response.JadwalKuliahs.Hari);
+                $('#waktu').html(response.JadwalKuliahs.JamMasuk + ' - ' + response.JadwalKuliahs.JamSelesai);
+                $('#ruangKelas').html(response.JadwalKuliahs.RuangKelas);
+                $('#namaDosen').html(response.JadwalKuliahs.NamaDosen);
+                loadTable(response.JadwalKuliahs.ID);
+            });
+        });
+
+        function loadTable(id) {
+            datatable = $('#dataAbsen').DataTable({
+                ajax: {
+                    url: '@Url.Action("GetAbsensi", "PresensiKelas")?jadwalKuliahId=' + id,
+                    dataSrc: ''
+                },
+                "columnDefs": [{
+                    "searchable": false,
+                    "orderable": false,
+                    "targets": 1
+                }],
+                "order": [
+                    [1, 'asc']
+                ],
+                "columns": [
+                    {
+                        "data": "Present",
+                        "render": function (data, type, row, meta) {
+                            var jamMasuk = row.JadwalKuliahs.JamMasuk.split(':');
+                            var jamKeluar = row.JadwalKuliahs.JamSelesai.split(':');
+                            //var jamMasuk = '14:03'.split(':');
+                            //var jamKeluar = '15:00'.split(':');
+                            var now = new Date();
+                            var menitMasuk = parseInt(jamMasuk[0]) * 60 + parseInt(jamMasuk[1]);
+                            var menitKeluar = parseInt(jamKeluar[0]) * 60 + parseInt(jamKeluar[1]);
+                            var menitSekarang = now.getHours() * 60 + now.getMinutes();
+                            var tanggalAbsen = new Date(row.TanggalAbsen);
+                            if (data) {
+                                return '<label class="container2"><input type="checkbox" checked disabled><span class="checkmark"></span></label>';
+                            }
+                            if (
+                                menitMasuk <= menitSekarang
+                                && menitKeluar >= menitSekarang
+                                && days[now.getDay()] == row.JadwalKuliahs.Hari
+                                && tanggalAbsen.getDate() == now.getDate()
+                                && tanggalAbsen.getMonth() == now.getMonth()
+                                && tanggalAbsen.getFullYear() == now.getFullYear()
+                            ) {
+                                return '<label class="container2"><input type="checkbox" id="absen" value="' + row.ID + '"><span class="checkmark"></span></label>'
+                            }
+                            return '<label class="container2"><input type="checkbox" disabled><span class="checkmark disable"></span></label>';
+                        }
+                    },
+                    {
+                        "data": null
+                    },
+                    {
+                        "data": "TanggalAbsen",
+                        "render": function (data, type, row, meta) {
+                            var data = new Date(data);
+                            var string = months[data.getMonth()] + ', ' + data.getDate() + ' ' + data.getFullYear();
+                            return '<div style="text-align:center; vertical-align: middle;">' + string + '</div>';
+                        }
+                    },
+                    {
+                        "data": "JadwalKuliahs.JamMasuk",
+                        "render": function (data, type, row, meta) {
+                            return '<div style="text-align:center; vertical-align: middle;">' + data + ' - ' + row.JadwalKuliahs.JamSelesai + '</div>';
+                        }
+                    }
+                ]
+            });
+            datatable.on('order.dt search.dt', function () {
+                datatable.column(1, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            }).draw();
+        }
+        $('#submit').click(function () {
+            if (!$('#absen').is(':checked')) {
+                return;
+            }
+            if (!confirm("APAKAH ANDA AKAN SUBMIT DAFTAR KEHARDIRAN?")) {
+                return;
+            }
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("SubmitAbsensi", "PresensiKelas")?idAbsensi=" + $('#absen').val()
+            }).then(function (response) {
+                alert(response.message);
+                if (response.status == 200) {
+                    window.history.back();
+                }
+            });
+        });
+    </script>
+}

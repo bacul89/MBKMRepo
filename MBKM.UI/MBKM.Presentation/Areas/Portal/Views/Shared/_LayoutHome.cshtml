@@ -4,6 +4,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="~/Content/Admin/AdminCostumeBS4.css">
     <link href="~/Content/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.1/css/jquery.dataTables.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
@@ -82,6 +83,13 @@
                         <li><a href="@Url.Action("Index","PendaftaranMataKuliah")">Pendaftaran Mata Kuliah</a></li>
                         <li><a href="@Url.Action("Index","TrackingStatusPendaftaran")">Tracking Pendaftaran</a></li>
                         <li><a href="@Url.Action("Index","NimDigital")">Nomor Induk Mahasiswa</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" id="btn" data-toggle="collapse" data-target="#submenu2" aria-expanded="false">Perkuliahan MBKM</a>
+                    <ul class="nav" id="submenu2" role="menu" aria-labelledby="btn-1">
+                        <li><a href="@Url.Action("Index","PresensiKelas")">Presensi Kelas</a></li>
+                        <li><a href="@Url.Action("Index","PresensiUjian")">Presensi Ujian</a></li>
                     </ul>
                 </li>
             </ul>

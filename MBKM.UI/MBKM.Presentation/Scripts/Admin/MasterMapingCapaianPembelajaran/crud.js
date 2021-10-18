@@ -77,7 +77,7 @@ function loadMasterCPL() {
             data: function (params) {
                 return {
                     //search: params.term,
-                    IDProdi: $('#prodiIdCari').val(),
+                    IDProdi: $('#prodiCari').val(),
                     IDFakultas: $('#fakultasCari').val(),
                     Kelompok: $('#inp_kelompok').val()
                     

@@ -1,7 +1,7 @@
 ﻿
 @{
     Layout = "~/Areas/Portal/Views/shared/_LayoutHome.cshtml";
-    ViewBag.Title = "SIMBKM";
+    ViewBag.Title = "MBKM";
 }
 
 <style>
@@ -350,6 +350,7 @@
 
 @section Scripts{
     <script>
+        var files = {};
         $(document).ready(function () {
             var alertMessage = '@TempData["alertMessage"]';
             if (alertMessage.length != 0) {
@@ -444,24 +445,57 @@
             $('#tblPendukung').html('<table class="table" id="tablePendukung"><thead><tr><td>No.</td><td>Tipe File</td><td>Nama File</td><td style="text-align: center;">Download</td></tr></thead></table>');
             var index = 1;
             if ($('#fotoDiri')[0].files.length == 1) {
-                $('#tablePendukung tr:last').after('<tr><td>' + index++ + '.</td><td>Foto Diri</td><td>' + $('#fotoDiri')[0].files[0].name + '</td><td style="text-align: center;"><a href="' + URL.createObjectURL($('#fotoDiri')[0].files[0]) + '" target="_blank"><i class="fas fa-file-download"></i></a></td></tr>');
+                var tmp = new Object();
+                tmp.FileType = "FotoDiri";
+                tmp.FileName = $('#fotoDiri')[0].files[0].name;
+                tmp.URL = URL.createObjectURL($('#fotoDiri')[0].files[0]);
+                files["FotoDiri"] = tmp;
+                index++;
             }
             if ($('#fotoKTP')[0].files.length == 1) {
-                $('#tablePendukung tr:last').after('<tr><td>' + index++ + '.</td><td>Foto KTP</td><td>' + $('#fotoKTP')[0].files[0].name + '</td><td style="text-align: center;"><a href="' + URL.createObjectURL($('#fotoKTP')[0].files[0]) + '" target="_blank"><i class="fas fa-file-download"></i></a></td></tr>');
+                var tmp = new Object();
+                tmp.FileType = "KTP";
+                tmp.FileName = $('#fotoKTP')[0].files[0].name;
+                tmp.URL = URL.createObjectURL($('#fotoKTP')[0].files[0]);
+                files["KTP"] = tmp;
+                index++;
             }
             if ($('#fotoKIM')[0].files.length == 1) {
-                $('#tablePendukung tr:last').after('<tr><td>' + index++ + '.</td><td>Foto KIM</td><td>' + $('#fotoKIM')[0].files[0].name + '</td><td style="text-align: center;"><a href="' + URL.createObjectURL($('#fotoKIM')[0].files[0]) + '" target="_blank"><i class="fas fa-file-download"></i></a></td></tr>');
+                var tmp = new Object();
+                tmp.FileType = "FotoKIM";
+                tmp.FileName = $('#fotoKIM')[0].files[0].name;
+                tmp.URL = URL.createObjectURL($('#fotoKIM')[0].files[0]);
+                files["FotoKIM"] = tmp;
+                index++;
             }
             if ($('#transkripNilai')[0].files.length == 1) {
-                $('#tablePendukung tr:last').after('<tr><td>' + index++ + '.</td><td>Transkrip Nilai</td><td>' + $('#transkripNilai')[0].files[0].name + '</td><td style="text-align: center;"><a href="' + URL.createObjectURL($('#transkripNilai')[0].files[0]) + '" target="_blank"><i class="fas fa-file-download"></i></a></td></tr>');
+                var tmp = new Object();
+                tmp.FileType = "TranskripNilai";
+                tmp.FileName = $('#transkripNilai')[0].files[0].name;
+                tmp.URL = URL.createObjectURL($('#transkripNilai')[0].files[0]);
+                files["TranskripNilai"] = tmp;
+                index++;
             }
             if ($('#suratKeterangan')[0].files.length == 1) {
-                $('#tablePendukung tr:last').after('<tr><td>' + index++ + '.</td><td>Surat Keterangan</td><td>' + $('#suratKeterangan')[0].files[0].name + '</td><td style="text-align: center;"><a href="' + URL.createObjectURL($('#suratKeterangan')[0].files[0]) + '" target="_blank"><i class="fas fa-file-download"></i></a></td></tr>');
+                var tmp = new Object();
+                tmp.FileType = "SuratKeterangan";
+                tmp.FileName = $('#suratKeterangan')[0].files[0].name;
+                tmp.URL = URL.createObjectURL($('#suratKeterangan')[0].files[0]);
+                files["SuratKeterangan"] = tmp;
+                index++;
             }
             if (index == 1) {
                 $("#dokumenPendukung").hide();
+            } else {
+                generateRow();
             }
         };
+        function generateRow() {
+            var i = 1;
+            for (var key in files) {
+                $('#tablePendukung tr:last').after('<tr><td>' + i++ + '.</td><td>' + key + '</td><td>' + files[key].FileName + '</td><td style="text-align: center;"><a href="' + files[key].URL + '" target="_blank"><i class="fas fa-file-download"></i></a></td></tr>');
+            }
+        }
         function generateTableFromDB(id) {
             $("#dokumenPendukung").show();
             $('#tblPendukung').html('<table class="table" id="tablePendukung"><thead><tr><td>No.</td><td>Tipe File</td><td>Nama File</td><td style="text-align: center;">Download</td></tr></thead></table>');
@@ -470,6 +504,11 @@
                 url: "@Url.Action("GetAllAttachment", "DataDiri")?id=" + id
             }).then(function (response) {
                 for (var i = 0; i < response.length; i++) {
+                    var tmp = new Object();
+                    tmp.FileType = response[i].FileType;
+                    tmp.FileName = response[i].FileName;
+                    tmp.URL = '@Url.Action("DownloadFile", "DataDiri")?id=' + response[i].ID;
+                    files[response[i].FileType] = tmp;
                     $('#tablePendukung tr:last').after('<tr><td>' + (i + 1) + '.</td><td>' + response[i].FileType + '</td><td>' + response[i].FileName + '</td><td style="text-align: center;"><a href="@Url.Action("DownloadFile", "DataDiri")?id=' + response[i].ID + '" ><i class="fas fa-file-download"></i></a></td></tr>');
                 }
             });

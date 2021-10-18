@@ -90,7 +90,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                     || y.JadwalKuliahs.NamaMataKuliah.Contains(SearchParam)
                     ).OrderBy(SortBy, SortDir)
                     ;
-                mListPendaftaranMataKuliah.gridDatas = gridfilter.Take(Length)
+                mListPendaftaranMataKuliah.gridDatas = gridfilter.Skip(Skip).Take(Length)
                     .Select(z => new GridListPendaftaranMataKuliah
                     {
                         ID = z.ID,
@@ -135,7 +135,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                     || y.JadwalKuliahs.NamaMataKuliah.Contains(SearchParam)
                     ).OrderBy(SortBy, SortDir)
                     ;
-                mListPendaftaranMataKuliah.gridDatas = gridfilter.Take(Length)
+                mListPendaftaranMataKuliah.gridDatas = gridfilter.Skip(Skip).Take(Length)
                     .Select(z => new GridListPendaftaranMataKuliah
                     {
                         ID = z.ID,

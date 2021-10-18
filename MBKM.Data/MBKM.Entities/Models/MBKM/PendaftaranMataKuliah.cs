@@ -17,10 +17,8 @@ namespace MBKM.Entities.Models.MBKM
         public Int64 DosenID { get; set; }
         public string DosenPembimbing { get; set; }
         public Int64 MahasiswaID { get; set; }
-        [JsonIgnore]
         public virtual Mahasiswa mahasiswas { get; set; }
         public Int64 JadwalKuliahID { get; set; }
-        [JsonIgnore]
         public virtual JadwalKuliah JadwalKuliahs { get; set; }
         [JsonIgnore]
         public virtual ICollection<ApprovalPendaftaran> ApprovalPendaftarans { get; set; }

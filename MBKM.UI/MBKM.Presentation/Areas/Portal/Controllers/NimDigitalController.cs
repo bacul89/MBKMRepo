@@ -7,11 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-/*using MBKM.Presentation.Helper;*/
+using MBKM.Presentation.Helper;
 
 namespace MBKM.Presentation.Areas.Portal.Controllers
 {
-/*    [MBKMAuthorize]*/
+    [MBKMAuthorize]
     public class NimDigitalController : Controller
     {
 
@@ -26,8 +26,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
 
         public ActionResult Index()
         {
-/*            Session["nama"] = "smitty werben man jensen";
-            Session["email"] = "armandadimas@live.com";*/
+            //Session["nama"] = "smitty werben man jensen";
+            //Session["email"] = "abayyina@gmail.com";
             return View();
         }
 

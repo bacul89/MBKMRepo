@@ -117,6 +117,21 @@ function DeletedFiles(id) {
 
 
 function SubmitPerjanjian() {
+    var TanggalMulai = $("#TanggalMulai").val();
+    var TanggalAkhir = $("#TanggalAkhir").val();
+    if (TanggalAkhir < TanggalMulai) {
+        Swal.fire({
+
+            title: 'Tanggal Error',
+            icon: 'error',
+            html: 'Tanggal Akhir tidak boleh lebih besar dari tanggal mulai',
+            showCloseButton: true,
+            showCancelButton: false,
+            focusConfirm: false,
+            confirmButtonText: 'OK'
+        })
+        return;
+    }
     var data = new FormData($('#createPerjanjian')[0]);
     var fileInput = document.getElementById('file');
     for (i = 0; i < fileInput.files.length; i++) {
@@ -132,19 +147,7 @@ function SubmitPerjanjian() {
         data: data,
         success: function (response) {
             Swal.fire({
-                title: 'Oppss',
-                icon: 'error',
-                html: 'Data Gagal Ditambahkan, Periksa Field dan Ukuran File',
-                showCloseButton: true,
-                showCancelButton: false,
-                focusConfirm: false,
-                confirmButtonText: 'OK'
-            })
-            table.ajax.reload(null, false),
-                $('.modal').modal('hide');
-        },
-        error: function (response) {
-            Swal.fire({
+                
                 title: 'Berhasil',
                 icon: 'success',
                 html: 'Data Berhasil Ditambahkan',
@@ -156,6 +159,20 @@ function SubmitPerjanjian() {
             table.ajax.reload(null, false),
                 $('.modal').modal('hide');
             location.reload();
+        },
+        error: function (response) {
+            Swal.fire({
+                title: 'Oppss',
+                icon: 'error',
+                html: 'Data Gagal Ditambahkan, Periksa Field dan Ukuran File atau inputan lain',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText: 'OK'
+            })
+            //table.ajax.reload(null, false),
+            //    $('.modal').modal('hide');
+            //location.reload();
         }
 
     })
@@ -223,6 +240,22 @@ function UpdatePerjanjian() {
     data.append("ID", $("#idKerjasama").val());
     data.append("JenisPertukaran", $("#JenisPertukaran").val());
     data.append("JenisKerjasama", $("#JenisKerjasama").val());
+    var TanggalAkhir = $("#tanggalAkhir").val();
+    var TanggalMulai = $("#tanggalMulai").val();
+    if (TanggalAkhir < TanggalMulai) {
+        Swal.fire({
+
+            title: 'Tanggal Error',
+            icon: 'error',
+            html: 'Tanggal Akhir tidak boleh lebih besar dari tanggal mulai',
+            showCloseButton: true,
+            showCancelButton: false,
+            focusConfirm: false,
+            confirmButtonText: 'OK'
+        })
+        return;
+    }
+    
     $.ajax({
         type: "POST",
         url: "/Admin/PerjanjianKerjasama/UpdateKerjasama",
@@ -231,20 +264,7 @@ function UpdatePerjanjian() {
         processData: false,
         data: data,
         success: function (response) {
-            Swal.fire({
-                title: 'Oppss',
-                icon: 'error',
-                html: 'Data Gagal Diupdate',
-                showCloseButton: true,
-                showCancelButton: false,
-                focusConfirm: false,
-                confirmButtonText: 'OK'
-            })
-            table.ajax.reload(null, false),
-                $('.modal').modal('hide');
-        },
-        error: function (response) {
-            Swal.fire({
+            Swal.fire({                
                 title: 'Berhasil',
                 icon: 'success',
                 html: 'Data Berhasil Diupdate',
@@ -256,6 +276,20 @@ function UpdatePerjanjian() {
             table.ajax.reload(null, false),
                 $('.modal').modal('hide');
             location.reload();
+        },
+        error: function (response) {
+            Swal.fire({
+                title: 'Oppss',
+                icon: 'error',
+                html: 'Data Gagal Diupdate',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText: 'OK'
+            })
+            table.ajax.reload(null, false),
+                $('.modal').modal('hide');
+            //location.reload();
         }
     })
 }

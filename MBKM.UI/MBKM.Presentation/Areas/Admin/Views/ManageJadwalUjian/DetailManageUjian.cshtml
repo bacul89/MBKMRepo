@@ -1,0 +1,216 @@
+﻿
+@{
+    ViewBag.Title = "DetailManageUjian";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
+}
+@section css{
+
+    <link rel="stylesheet" type="text/css" href="~/Content/Admin/inputResponsive.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/dataTables.checkboxes.css">
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/sweetalert2.all.min.js"></script>
+}
+@model MBKM.Entities.Models.MBKM.JadwalUjianMBKM
+
+@section modal{
+    <div class="modal fade" id="TambahMasterMapingCapaianPembelajaran" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" id="modal-inner">
+
+        </div>
+    </div>
+}
+
+<div class="container-fluid" style="padding: 0px">
+    <div class="card center-block" style="background-color: white; width: 100%; padding: 0px">
+        <div class="card-body responsive-content" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; padding: 0px">
+            <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
+                DETAIL JADWAL UJIAN<br />
+                <small class="describe">Berikut Adalah Informasi Jadwal Ujian</small>
+            </h4>
+            <hr />
+            <div class="container" style="width: 85%;">
+                <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
+                    <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">Informasi Ujian</h5>
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Tahun Semester &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>@Model.STRM</h4>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Jenis Ujian &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>@Model.TipeUjian</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Fakultas &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>@Model.NamaFakultas</h4>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Lokasi &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>@Model.Lokasi</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Mata Kuliah &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>@Model.NamaMatkul</h4>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Program Studi &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>@Model.NamaProdi</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Seksi &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>@Model.ClassSection</h4>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Jenjang Studi &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>@Model.JenjangStudi</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                    </form>
+                </div>
+                <br />
+                <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
+                    <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">Detail Ujian</h5>
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-sm-3 text-right">
+                                <h4>Tanggal Ujian &nbsp:</h4>
+                            </div>
+                            <div class="col-sm-8">
+                                <h4>@Model.TanggalUjian</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 text-right">
+                                <h4>Jam Mulai &nbsp:</h4>
+                            </div>
+                            <div class="col-sm-8">
+                                <h4>@Model.JamMulai WIB</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 text-right">
+                                <h4>Jam Berakhir &nbsp:</h4>
+                            </div>
+                            <div class="col-sm-8">
+                                <h4>@Model.JamAkhir WIB</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 text-right">
+                                <h4>Ruang Ujian &nbsp:</h4>
+                            </div>
+                            <div class="col-sm-8">
+                                <h4>@Model.RuangUjian</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 text-right">
+                                <h4>Kapasitas Ruang Ujian &nbsp:</h4>
+                            </div>
+                            <div class="col-sm-8">
+                                <h4>@Model.KapasitasRuangan</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3 text-right">
+                                <h4>Kursi Tersedia &nbsp:</h4>
+                            </div>
+                            <div class="col-sm-8">
+                                <h4>@Model.Tersedia</h4>
+                            </div>
+                        </div>
+                    </form>
+                    <hr />
+                    <div class="container" style="width: 98%;">
+                        <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
+                            <h5 class="card-title" style="padding: 15px; font-weight: bold; font-size: 24px; color: black;">MAHASISWA UJIAN <br />
+                                <small class="describe">Berikut Adalah Daftar Calon Mahasiswa Yang Mengikuti Ujian</small>
+                            </h5>
+                            <hr />
+                            <form id="frm-example" action="/path/to/your/script.php" method="POST" class="form-horizontal center">
+                                <br />
+                                <div class="row center-block">
+                                    <div class="col-sm-12">
+                                        <table id="table-data-list-mahasiswa" class="table table-spacing table-striped dataTable display">
+                                            <thead>
+                                                <tr>
+                                                    <th></th>
+                                                    <th class="zero-padding no-border vertical-center center sorting">Nomor Induk</th>
+                                                    <th class="zero-padding no-border vertical-center center sorting">Nama</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <div class="row bottom-right">
+                                    <div class="col-sm-offset-9">
+                                        <div class="col-sm-7">
+                                            <button type="submit" id="submitDataMahasiswa" class="btn btn-warning btn-block">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                            </form>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+                <br />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/dataCheckBox/dataTables.checkboxes.min.js"></script>
+    <script src="~/Scripts/Admin/ManageUjian/detailManageUjian.js"></script>
+    <script src="~/Scripts/loading/loadingoverlay.min.js"></script>
+}
+
