@@ -109,7 +109,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             foreach (var item in _pmkService.Find(dataMap =>
                 dataMap.MahasiswaID == mahasiswa.ID &&
 
-                //dataMap.JenjangStudi == mahasiswa.JenjangStudi &&
+                dataMap.StatusPendaftaran == "ACCEPTED BY MAHASISWA" &&
                 dataMap.JadwalKuliahs.STRM == strmInt
 
             ).ToList())
