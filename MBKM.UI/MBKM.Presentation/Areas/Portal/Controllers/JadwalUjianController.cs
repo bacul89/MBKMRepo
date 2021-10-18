@@ -13,5 +13,6 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             return View();
         }
+
     }
 }

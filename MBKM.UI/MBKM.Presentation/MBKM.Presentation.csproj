@@ -196,12 +196,15 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\dataTables.checkboxes.css" />
     <Content Include="Content\Portal\TrackingStatus\main.css" />
     <Content Include="Scripts\Admin\ApprovalPendaftaranMakul\detailApproval.js" />
     <Content Include="Scripts\Admin\DaftarSeluruhMhs\main.js" />
     <Content Include="Scripts\Admin\ApprovalPendaftaranMakul\main.js" />
     <Content Include="Scripts\Admin\DaftarSeluruhMhs\main_detail.js" />
+    <Content Include="Scripts\Admin\JadwalUjian\detailJadwalUjian.js" />
     <Content Include="Scripts\Admin\JadwalUjian\main.js" />
+    <Content Include="Scripts\Admin\ManageUjian\detailManageUjian.js" />
     <Content Include="Scripts\Admin\ManageUjian\main.js" />
     <Content Include="Scripts\Admin\JadwalKuliah\crud.js" />
     <Content Include="Scripts\Admin\JadwalKuliah\main.js" />
@@ -217,6 +220,8 @@
     <Content Include="Scripts\Admin\Menu\main.js" />
     <Content Include="Scripts\Admin\Role\crud.js" />
     <Content Include="Scripts\Admin\Role\main.js" />
+    <Content Include="Scripts\dataCheckBox\dataTables.checkboxes.js" />
+    <Content Include="Scripts\dataCheckBox\dataTables.checkboxes.min.js" />
     <Content Include="Scripts\easy-number-separator.js" />
     <Content Include="Scripts\jquery.mask.min.js" />
     <Content Include="Scripts\loading\loadingoverlay.min.js" />
@@ -475,6 +480,7 @@
     <Content Include="Areas\Admin\Views\JadwalUjian\Index.cshtml" />
     <Content Include="Areas\Admin\Views\JadwalUjian\DetailJadwalUjian.cshtml" />
     <Content Include="Areas\Portal\Views\JadwalUjian\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageJadwalUjian\_getIndexModal.cshtml" />
     <Content Include="Areas\Admin\Views\JadwalKuliah\Index.cshtml" />
     <Content Include="Areas\Portal\Views\PresensiKelas\Index.cshtml" />
     <Content Include="Areas\Portal\Views\PresensiUjian\Index.cshtml" />
@@ -485,6 +491,7 @@
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
     <Content Include="Areas\Portal\Views\TrackingStatusPendaftaran\Index.cshtml" />
+    <Content Include="Scripts\dataCheckBox\dataTables.checkboxes.min.js.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
