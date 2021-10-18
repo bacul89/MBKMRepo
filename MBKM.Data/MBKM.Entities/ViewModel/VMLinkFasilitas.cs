@@ -20,8 +20,8 @@ namespace MBKM.Entities.ViewModel
         public string KodeMataKuliah { get; set; }
         public string Hari { get; set; }
         public bool FlagOpen { get; set; }
-        //public string CreatedBy { get; set; }
-       // public DateTime CreatedDate { get; set; }
+        public string CreatedBy { get; set; }
+        public DateTime CreatedDate { get; set; }
         public string UpdatedBy { get; set; }
         public DateTime UpdatedDate { get; set; }
         public bool IsActive { get; set; }
@@ -30,8 +30,8 @@ namespace MBKM.Entities.ViewModel
         public string NamaMataKuliah { get; set; }
         public string JamMasuk { get; set; }
         public string JamSelesai { get; set; }
-       // public DateTime TglAwalKuliah { get; set; }
-       // public DateTime TglAkhirKuliah { get; set; }
+        public DateTime TglAwalKuliah { get; set; }
+        public DateTime TglAkhirKuliah { get; set; }
         public string RuangKelas { get; set; }
         public string Lokasi { get; set; }
         public int STRM { get; set; }

@@ -60,7 +60,7 @@
                                 <select name="lokasiCari" id="lokasiCari" class="form-control input-md"></select>
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" hidden>
                             <label for="inp_prodiId" class="col-sm-3 control-label">Kampus</label>
                             <div class="col-sm-9">
                                 <input name="kampusCari" id="kampusCari" class="form-control input-md" disabled>
@@ -68,7 +68,7 @@
                         </div>
 
 
-                        <div class="form-group">
+                        <div class="form-group" hidden>
                             <label for="inp_prodiId" class="col-sm-3 control-label">Prodi ID</label>
                             <div class="col-sm-9">
                                 <input name="prodiIdCari" id="prodiIdCari" class="form-control input-md" disabled>
@@ -88,25 +88,25 @@
                                 <input name="matakuliahNamaCari" id="matakuliahNamaCari" class="form-control input-md">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group"hidden>
                             <label for="inp_matakuliahKode" class="col-sm-3 control-label">Kode Mata Kuliah</label>
                             <div class="col-sm-9">
                                 <input name="matakuliahKodeCari" id="matakuliahKodeCari" class="form-control input-md">
                             </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group"hidden>
                             <label for="inp_matakuliahId" class="col-sm-3 control-label">Id Mata Kuliah</label>
                             <div class="col-sm-9">
                                 <input name="matakuliahIdCari" id="matakuliahIdCari" class="form-control input-md">
                             </div>
                         </div>
-                        <div class="form-group">
+                        @*<div class="form-group">
                             <label for="seksi" class="col-sm-3 control-label">Seksi</label>
                             <div class="col-sm-9">
                                 <select name="matakuliahCari" id="seksi" class="form-control input-md">
                                 </select>
                             </div>
-                        </div>
+                        </div>*@
                         <div class="form-group">
                             <label for="pertukaran" class="col-sm-3 control-label">
                                 Seksi
@@ -114,7 +114,7 @@
                             <div class="col-sm-9">
                                 <select name="ClassSection" id="ClassSection" class="form-control input-data" required>
                                     <option value="" disabled selected>
-                                        --Pilih Jenis Kegiatan MBKM--
+                                        --Pilih Seksi Kelas--
                                     </option>
                                     @{
                                         foreach (var data in ViewData["listSection"] as IEnumerable<MBKM.Entities.ViewModel.VMClassSection>)
@@ -164,7 +164,7 @@
 
 @section scripts{
     <script src="~/Scripts/Admin/MasterMapingCapaianPembelajaran/main.js"></script>
-    <script src="~/Scripts/Admin/MasterMapingCapaianPembelajaran/crud.js"></script>
+    <script src="~/Scripts/Admin/LinkFasilitasAdmin/crud.js"></script>
     <script src="~/Scripts/loading/loadingoverlay.min.js"></script>
 
 
@@ -254,21 +254,22 @@
         }
 
         function reloadDatatable() {
-            //var variable =
-            //    'idProdi=' + $('#prodiIdCari').val() +
-            //    '&lokasi=' + $('#kampusCari').val() +
-            //    '&idFakultas=' + $('#fakultasCari').val() +
-            //    '&jenjangStudi=' + $('#jenjangCari').val() +
-            //    '&idMatakuliah=' + $('#matakuliahCari').val()+
-            //    '&seksi=' + $('#ClassSection').val();
-
             var variable =
-                'idProdi=' + '500' +
-                '&lokasi=' + 'Semanggi' +
-                '&idFakultas=' + '5' +
-                '&jenjangStudi=' + 'S1' +
-                '&idMatakuliah=' + '003398' +
-                '&seksi=' + 'Z';
+                'idProdi=' + $('#prodiIdCari').val() +
+                '&lokasi=' + $('#kampusCari').val() +
+                '&idFakultas=' + $('#fakultasCari').val() +
+                '&jenjangStudi=' + $('#jenjangCari').val() +
+                '&idMatakuliah=' + $('#matakuliahCari').val()+
+                '&seksi=' + $('#ClassSection').val();
+
+            //var variable =
+            //    'idProdi=' + '500' +
+            //    '&lokasi=' + 'Semanggi' +
+            //    '&idFakultas=' + '5' +
+            //    '&jenjangStudi=' + 'S1' +
+            //    '&idMatakuliah=' + '003398' +
+            //    '&seksi=' + 'Z';
+            //console.log($('#ClassSection').val());
 
             datatable.destroy();
             datatable = $('#table-data-master-mapping-cpl').DataTable({
@@ -304,9 +305,8 @@
                             return `<div class="row justify-content-center">
                             <div class="col" style="text-align:center">
 
-                                <a href="javascript:void(0)" style="color:black" onclick="IndexUpdateMasterMapingCapaianPembelajaran('${data}')"> <i class="fas fa-edit coral" ></i></a>
-                                <a href="javascript:void(0)" style="color:black" onclick="IndexViewMasterMapingCapaianPembelajaran('${data}')"> <i class="fas fa-file-search coral"></i></a>
-                                <a href="javascript:void(0)" style="color:black" onclick="DeletedMasterMapingCapaianPembelajaran('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="IndexUpdateLinkFasilitas('${data}')"> <i class="fas fa-edit coral" ></i></a>
+                               
 
 
 
@@ -334,6 +334,14 @@
                         //"title": "Nama",
                         "data": "NamaMataKuliah",
                         "name": "NamaMataKuliah",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        //"title": "Nama",
+                        "data": "SKS",
+                        "name": "SKS",
                         "render": function (data, type, row, meta) {
                             return '<div class="center">' + data + '</div>';
                         }
@@ -470,7 +478,7 @@
                 }
             });
             $("#" + id + "Cari").change(function () {
-                clearValueOnForm();
+                //clearValueOnForm();
                 buttonHandler("close");
                 $("#fakultasCari").empty();
                 $("#prodiCari").empty();
@@ -504,7 +512,7 @@
                     }
                 });
                 $("#fakultasCari").change(function () {
-                    clearValueOnForm();
+                    //clearValueOnForm();
                     buttonHandler("close");
                     $("#prodiCari").empty();
                     $("#prodiIdCari").val('');
@@ -540,7 +548,7 @@
 
                     $("#prodiCari").change(function () {
                         //console.log("select2");
-                        clearValueOnForm();
+                        //clearValueOnForm();
                         buttonHandler("close");
                         $("#lokasiCari").empty();
                         $("#prodiIdCari").val('');
@@ -577,7 +585,7 @@
 
 
                         $("#lokasiCari").change(function () {
-                            clearValueOnForm();
+                            //clearValueOnForm();
                             //var tes = $("#lokasiCari").val();
                             $("#prodiIdCari").val($("#lokasiCari").val());
                             //$("#prodiIdCari").val(tes.substring(1));

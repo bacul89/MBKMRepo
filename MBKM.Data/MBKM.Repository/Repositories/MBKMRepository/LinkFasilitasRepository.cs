@@ -32,7 +32,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                    
                     
                     Nama = x.ClassSection
-                });
+                }).GroupBy(x => x.Nama).Select(y => y.FirstOrDefault()).OrderBy(x => x.Nama);
                 return result.ToList();
             }
         }
@@ -85,21 +85,24 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             if (String.IsNullOrEmpty(SearchParam))
             {
                 // if we have an empty search then just order the results by Id ascending
-                //SortBy = "ID";
-                //SortDir = true;
+                SortBy = "ID";
+                SortDir = true;
                 SearchParam = "";
             }
             using (var context = new MBKMContext())
             {
+                int ProdiIDInt = Int32.Parse(idProdi);
+                int FakultasIDInt = Int32.Parse(idFakultas);
 
                 var result = context.jadwalKuliahs.Where(
                     x =>
                     x.IsDeleted == false &&
-                    x.ProdiID == Convert.ToInt64(idProdi) &&
-                    x.FakultasID == Convert.ToInt64(idFakultas) &&
+                    x.ProdiID == ProdiIDInt &&
+                    x.FakultasID == FakultasIDInt &&
                     x.JenjangStudi == jenjangStudi &&
                     x.Lokasi == lokasi &&
                     x.MataKuliahID == idMatakuliah &&
+                    x.FlagOpen == true &&
                     x.ClassSection == seksi
                    
                 );
@@ -108,14 +111,46 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                )
                     .Select(z => new GridDataLinkFasilitas
                     {
+                        //ID = z.ID,
+                        //SKS = z.SKS,
+                        //NamaMataKuliah = z.NamaMataKuliah,
+                        //KodeMataKuliah = z.KodeMataKuliah,
+                        //ClassSection = z.ClassSection,
+                        //Hari = z.Hari,
+                        //JamMasuk = z.JamMasuk,
+                        //RuangKelas = z.RuangKelas 
                         ID = z.ID,
-                        SKS = z.SKS,
-                        NamaMataKuliah = z.NamaMataKuliah,
+                        DosenID = z.DosenID,
+                        NamaDosen = z.NamaDosen,
                         KodeMataKuliah = z.KodeMataKuliah,
-                        ClassSection = z.ClassSection,
                         Hari = z.Hari,
+                        FlagOpen = z.FlagOpen,
+                        CreatedBy = z.CreatedBy,
+                        CreatedDate = z.CreatedDate,
+                        UpdatedBy = z.UpdatedBy,
+                        UpdatedDate = z.UpdatedDate,
+                        IsActive = z.IsActive,
+                        IsDeleted = z.IsDeleted,
+                        MataKuliahID = z.MataKuliahID,
+                        NamaMataKuliah = z.NamaMataKuliah,
                         JamMasuk = z.JamMasuk,
-                        RuangKelas = z.RuangKelas 
+                        JamSelesai = z.JamSelesai,
+                        TglAwalKuliah = z.TglAwalKuliah,
+                        TglAkhirKuliah = z.TglAkhirKuliah,
+                        RuangKelas = z.RuangKelas,
+                        Lokasi = z.Lokasi,
+                        STRM = z.STRM,
+                        SKS = z.SKS,
+                        ClassSection = z.ClassSection,
+                        JenjangStudi = z.JenjangStudi,
+                        FakultasID = z.FakultasID,
+                        NamaFakultas = z.NamaFakultas,
+                        ProdiID = z.ProdiID,
+                        NamaProdi = z.NamaProdi,
+                        LinkMoodle = z.LinkMoodle,
+                        LinkAtmaZeds = z.LinkAtmaZeds,
+                        LinkTeams = z.LinkTeams,
+                        LinkOthers = z.LinkOthers
                     }).OrderBy(SortBy, SortDir);
                 mListCPL.gridDatas = gridfilter.Skip(Skip).Take(Length).ToList();
                 mListCPL.TotalFilterCount = gridfilter.Count();

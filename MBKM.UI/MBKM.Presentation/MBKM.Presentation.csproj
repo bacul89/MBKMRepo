@@ -202,6 +202,7 @@
     <Content Include="Scripts\Admin\DaftarSeluruhMhs\main.js" />
     <Content Include="Scripts\Admin\ApprovalPendaftaranMakul\main.js" />
     <Content Include="Scripts\Admin\DaftarSeluruhMhs\main_detail.js" />
+    <Content Include="Scripts\Admin\LinkFasilitasAdmin\crud.js" />
     <Content Include="Scripts\Admin\JadwalUjian\detailJadwalUjian.js" />
     <Content Include="Scripts\Admin\JadwalUjian\main.js" />
     <Content Include="Scripts\Admin\ManageUjian\detailManageUjian.js" />
@@ -475,6 +476,7 @@
     <Content Include="Areas\Portal\Views\TrackingStatusPendaftaran\IndexDetailPendaftaran.cshtml" />
     <Content Include="Areas\Portal\Views\LinkFasilitasMahasiswa\Index.cshtml" />
     <Content Include="Areas\Admin\Views\LinkFasilitasAdmin\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\LinkFasilitasAdmin\ModalUpdateLinkFasilitas.cshtml" />
     <Content Include="Areas\Admin\Views\ManageJadwalUjian\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ManageJadwalUjian\DetailManageUjian.cshtml" />
     <Content Include="Areas\Admin\Views\JadwalUjian\Index.cshtml" />
