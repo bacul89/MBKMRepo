@@ -122,5 +122,12 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 data = vMLinkFasilitas.gridDatas
             });
         }
+
+        public ActionResult ModalUpdateLinkFasilitas(int id)
+        {
+           
+            var data = _linkFasilitasService.Get(id);
+            return View(data);
+        }
     }
 }

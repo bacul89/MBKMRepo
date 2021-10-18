@@ -193,6 +193,7 @@
     <Content Include="Scripts\Admin\DaftarSeluruhMhs\main.js" />
     <Content Include="Scripts\Admin\ApprovalPendaftaranMakul\main.js" />
     <Content Include="Scripts\Admin\DaftarSeluruhMhs\main_detail.js" />
+    <Content Include="Scripts\Admin\LinkFasilitasAdmin\crud.js" />
     <Content Include="Scripts\Admin\MasterCPL\crud.js" />
     <Content Include="Scripts\Admin\MasterCPL\main.js" />
     <Content Include="Scripts\Admin\MasterMapingCapaianPembelajaran\crud.js" />
@@ -456,6 +457,7 @@
     <Content Include="Areas\Portal\Views\TrackingStatusPendaftaran\IndexDetailPendaftaran.cshtml" />
     <Content Include="Areas\Portal\Views\LinkFasilitasMahasiswa\Index.cshtml" />
     <Content Include="Areas\Admin\Views\LinkFasilitasAdmin\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\LinkFasilitasAdmin\ModalUpdateLinkFasilitas.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
