@@ -282,7 +282,7 @@
 
             $.ajax({
                 type: "GET",
-                url: "@Url.Action("GetJadwalKuliahById", "PresensiKelas")?id=" + @Model
+                url: "@Url.Action("GetJadwalKuliahById", "SummaryPresensi")?id=" + @Model
             }).then(function (response) {
                 mataKuliah = response;
                 $('#subtitle').html('Daftar hadir pada Mata Kuliah ' + response.JadwalKuliahs.NamaMataKuliah.toUpperCase())
@@ -342,7 +342,11 @@
                 ],
                 "columns": [
                     {
-                        "data": null
+                        "data": "ID",
+                        "render": function (data, type, row, meta) {
+                            return `<div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick=""><i class="fas fa-file-download coral"></i></i></a></div>`;
+                            //BAP belum bingung ~_~
+                        }
 
 
                     },
@@ -438,7 +442,7 @@
                     var jdwl = $('#jdw').text();
                     var mhs = $('#mhsID').text();
                     $.ajax({
-                        
+                        //timeout: 900,
                         url: '@Url.Action("GetPresentase", "SummaryPresensi")?MahasiswaID=' + mhs +
                             '&JadwalKuliahID=' + jdwl,
 
@@ -464,7 +468,7 @@
                 });
             }).draw();
         }
-        $('#submit').click(function () {
+        @*$('#submit').click(function () {
             if (!$('#absen').is(':checked')) {
                 return;
             }
@@ -482,6 +486,6 @@
             });
             //batas
 
-        });
+        });*@
     </script>
 }

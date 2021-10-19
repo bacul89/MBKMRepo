@@ -81,6 +81,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             return _mahasiswaService.Find(m => m.Email == email).FirstOrDefault();
         }
+        public ActionResult GetJadwalKuliahById(int id)
+        {
+            var result = _pendaftaranMataKuliahService.Get(id);
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
+        }
         public string GetPresentase(Int64 MahasiswaID, Int64 JadwalKuliahID)
         {
             int CountData = _absensiService.Find(x => x.MahasiswaID == MahasiswaID && x.JadwalKuliahID == JadwalKuliahID).Count();
