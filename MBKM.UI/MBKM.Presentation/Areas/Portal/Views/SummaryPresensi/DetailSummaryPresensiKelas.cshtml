@@ -159,7 +159,7 @@
 <div class="card center-block" style="background-color: white; margin: 15px;">
     <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
         <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; padding-left: 15px; font-weight: bold; font-size: 20px; color: black; ">
-            DAFTAR KEHADIRAN MATA KULIAH<br />
+            RANGKUMAN KEHADIRAN<br />
             <p style="font-weight: normal; font-size: 15px; color: #c1baba;" id="subtitle"></p>
         </h5>
         <hr />
@@ -217,7 +217,7 @@
                     <td style="text-align: center;">:</td>
                     <td id="namaDosen"></td>
                 </tr>
-            </table>
+            </table>    
             <hr />
             <!--<p>
                 People with more than 20 years old:--> @*<span id="result"></span>*@
@@ -236,6 +236,12 @@
                     </thead>
                     <tbody>
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="5" style="text-align:right">Total:</th>
+                            <th></th>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
             @*<button id="submit" class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; ">SUBMIT</button>*@
@@ -246,19 +252,22 @@
 @section Scripts{
     <script>
         
-        
+        var counter = 0;
+
+       
         //batas
         var mataKuliah = null;
         var datatable;
         var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         $(document).ready(function () {
+
             $.ajax({
                 type: "GET",
                 url: "@Url.Action("GetJadwalKuliahById", "PresensiKelas")?id=" + @Model
             }).then(function (response) {
                 mataKuliah = response;
-                $('#subtitle').html('Isi daftar kehadiran mata kuliah ' + response.JadwalKuliahs.NamaMataKuliah.toUpperCase() + ' sesuai dengan jadwal yang tersedia')
+                $('#subtitle').html('Daftar hadir pada Mata Kuliah ' + response.JadwalKuliahs.NamaMataKuliah.toUpperCase())
                 $('#fakultas').html(response.JadwalKuliahs.NamaFakultas);
                 $('#prodi').html(response.JadwalKuliahs.NamaProdi);
                 $('#kodeMataKuliah').html(response.JadwalKuliahs.KodeMataKuliah);
@@ -270,21 +279,31 @@
                 $('#ruangKelas').html(response.JadwalKuliahs.RuangKelas);
                 $('#namaDosen').html(response.JadwalKuliahs.NamaDosen);
                 loadTable(response.JadwalKuliahs.ID);
+                $("#dataAbsen_filter").hide();
             });
         });
         
         function loadTable(id) {
                 //showResult();
+           
             datatable = $('#dataAbsen').DataTable({
+                "paging": false,
+                //batasatas
+               
+                
+                //batasbawah
                 ajax: {
-                    url: '@Url.Action("GetAbsensi", "PresensiKelas")?jadwalKuliahId=' + id,
+                    url: '@Url.Action("GetSumAbsensi", "SummaryPresensi")?jadwalKuliahId=' + id,
                     dataSrc: ''
                 },
-                "columnDefs": [{
-                    "searchable": false,
-                    "orderable": false,
-                    "targets": 1
-                }],
+                "columnDefs": [
+                    //"searchable": false,
+                    //"orderable": false,
+                    //"targets": 1
+                    { targets: '_all', orderable: false },
+                  
+                ],
+                
                 "order": [
                     [1, 'asc']
                 ],
@@ -341,15 +360,50 @@
                                 && tanggalAbsen.getMonth() == now.getMonth()
                                 && tanggalAbsen.getFullYear() == now.getFullYear()
                             ) {
-                                return '<label class="container2">-</label>'
+                                //return '<label class="container2">0</label>'
+                                return parseInt(0);
                                 //return '<label class="container2"><input type="checkbox" id="absen" value="' + row.ID + '"><span class="checkmark"></span></label>'
                             }
-                            return '<label class="container2">-</label>';
+                            return parseInt(0);
                             //return '<label class="container2"><input type="checkbox" disabled><span class="checkmark disable"></span></label>';
                         }
                     }
 
-                ]
+                ],
+                //batas atas +coma nya
+                "footerCallback": function (row, data, start, end, display) {
+                    var api = this.api(), data;
+
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function (i) {
+                        return typeof i === 'string' ?
+                            i.replace(/P/g, '') * 1 :
+                            typeof i === 'number' ?
+                                i : 1;
+                    };
+
+                    // Total over all pages
+                    total = api
+                        .column(5)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+
+                    // Total over this page
+                    pageTotal = api
+                        .column(5, { page: 'current' })
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+
+                    // Update footer
+                    $(api.column(5).footer()).html(
+                        'Total Pertemuan' + pageTotal + ' ( Kehadiran:' + total + ' Present)'
+                    );
+                }
+                //batasbawah
             });
             datatable.on('order.dt search.dt', function () {
                 datatable.column(1, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
@@ -373,6 +427,8 @@
                     window.history.back();
                 }
             });
+            //batas
+
         });
     </script>
 }
