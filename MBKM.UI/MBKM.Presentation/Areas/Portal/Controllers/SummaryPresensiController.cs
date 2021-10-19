@@ -66,6 +66,10 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             });
             return new ContentResult { Content = JsonConvert.SerializeObject(list), ContentType = "application/json" };
         }
+        public ActionResult DetailSummaryPresensiKelas(int id)
+        {
+            return View(id);
+        }
         public Mahasiswa GetMahasiswaByEmail(string email)
         {
             return _mahasiswaService.Find(m => m.Email == email).FirstOrDefault();
