@@ -134,7 +134,7 @@
                                 </div>
 
                             </div>
-                            <div class="form-group ">
+                            <div class="form-group "hidden>
                                 <label for="prodi" class="col-sm-3 control-label">Program Studi</label>
                                 <div class="col-sm-9">
 
@@ -143,6 +143,14 @@
 
                             </div>
                             <div class="form-group ">
+                                <label for="prodi" class="col-sm-3 control-label">Program Studi</label>
+                                <div class="col-sm-9">
+
+                                    <select name="prodi2" id="prodi2" class="form-control input-pendaftaran input-data"></select>
+                                </div>
+
+                            </div>
+                            <div class="form-group "hidden>
                                 <label for="lokasi" class="col-sm-3 control-label">Lokasi</label>
                                 <div class="col-sm-9">
 
@@ -179,7 +187,7 @@
                                 <label for="inp_status" class="col-sm-3 control-label">Status</label>
                                 <div class="col-sm-9">
                                     <label class="radio-inline input-pendaftaran">
-                                        <input type="radio" name="inpStatus" id="inp_status" value="1"checked> Aktif
+                                        <input type="radio" name="inpStatus" id="inp_status" value="1" checked> Aktif
                                     </label>
                                     <label class="radio-inline input-pendaftaran">
                                         <input type="radio" name="inpStatus" id="inp_status" value="0"> Tidak Aktif
@@ -394,6 +402,7 @@
         });
         function loadFakultas() {
             $("#prodi").prop("disabled", true);
+            $("#prodi2").prop("disabled", true);
             $("#lokasi").prop("disabled", true);
             $("#fakultas").prop("disabled", true);
 
@@ -431,17 +440,47 @@
                 $("#lokasi").empty();
                 $("#lokasi").prop("disabled", true);
                 $("#prodi").empty();
+                $("#prodi2").empty();
                 $("#prodi").prop("disabled", true);
+                $("#prodi2").prop("disabled", true);
                 //$("#lokasi").prop("disabled", true);
             });
             $("#fakultas").change(function () {
                 //$('#fakultas').val(null).trigger('change');
                 var latest_value = $("option:selected:first", this).text();
                 //alert(latest_value);
+                $("#prodi2").empty();
                 $("#prodi").empty();
+                $("#prodi2").prop("disabled", false);
                 $("#prodi").prop("disabled", false);
                 $("#lokasi").prop("disabled", true);
                 $("#lokasi").empty();
+                //-----------------------------------------------------------------------------
+                $("#prodi2").select2({
+                    placeholder: "-- Pilih Program Studi --",
+                    width: "100%",
+                    ajax: {
+                        url: "/Admin/MasterCPL/GetProdiLocByFakultas",
+                        dataType: 'json',
+                        method: "POST",
+                        delay: 250,
+                        cache: false,
+                        data: function (params) {
+                            return {
+                                Search: params.term || "",
+                                //JenjangStudi: $('#' + id + "Cari").val(),
+                                JenjangStudi: $('#jenjang').val(),
+                                IdFakultas: $('#fakultas').val()
+                            };
+                        },
+                        processResults: function (data, params) {
+                            return {
+                                results: $.map(data, function (item) { return { id: item.IDProdi, value: item.NamProdi, text: item.NamProdi + '-' + item.Lokasi, lokasi: item.Lokasi } })
+                            };
+                        },
+                    }
+                });
+                //============================================================================================
                 $("#prodi").select2({
                     multiple: false,
                     placeholder: "-- Pilih Program Studi --",
@@ -560,7 +599,15 @@
             var latest_valueJenjang = $("option:selected:first", "#jenjang").text();
             //var latest_valueFakultas = $("option:selected:first", "#fakultas").val();
             var latest_valueProdi = $("option:selected:first", "#prodi").text();
+            var latest_valueProdi2 = $("option:selected:first", "#prodi2").val(); //idprodi
+            var latest_valueProdi3 = ($("option:selected:first", "#prodi2").text()); //concated prodi-lokasi
+            var getNamaProd = latest_valueProdi3.substring(0, latest_valueProdi3.indexOf("-"));
+            var getLok = latest_valueProdi3.substring(latest_valueProdi3.indexOf('-') + 1) //split concated item //note kurang nama prodi
             var latest_valueLokasi = $("option:selected:first", "#lokasi").text();
+            console.log(latest_valueProdi2);
+            console.log(latest_valueProdi3);
+            console.log(getLok);
+            console.log(getNamaProd);
 
             formInputUser.FakultasID = $('#fakultas').val();
             //var asd = $('#fakultas').on('select2:select');
@@ -568,10 +615,10 @@
             //$('#select2').on('select2:select', function (e: any) {
             //    console.log(e.params.data.id);
             //});
-            formInputUser.ProdiID = $('#lokasi').val();
-            formInputUser.NamaProdi = latest_valueProdi;
+            formInputUser.ProdiID = latest_valueProdi2;
+            formInputUser.NamaProdi = getNamaProd;
             formInputUser.JenjangStudi = latest_valueJenjang;
-            formInputUser.Lokasi = latest_valueLokasi;
+            formInputUser.Lokasi = getLok;
             formInputUser.Kelompok = $('#kelompok').val();
             formInputUser.Kode = $('#kode').val();
 
@@ -585,7 +632,7 @@
             else { formInputUser.IsActive = "false"; }
            // console.log(formInputUser);
             console.log(formInputUser);
-            if ((($('#jenjang').text()) && (latest_valueProdi) && (latest_valueFakultas) && (latest_valueLokasi) && ($('#kode').val()) && (formInputUser.Kelompok = $('#kelompok').val()) && ($('textarea[name=txtCPL]').val()) != null)) {
+            if ((($('#jenjang').text()) && (latest_valueProdi2) && (latest_valueFakultas) && (getLok) && ($('#kode').val()) && (formInputUser.Kelompok = $('#kelompok').val()) && ($('textarea[name=txtCPL]').val()) != null)) {
 
                 var base_url = window.location.origin;
                 $.ajax({
@@ -629,7 +676,9 @@
                             $("#fakultas").empty();
                             $("#fakultas").prop("disabled",true);
                             $("#prodi").empty();
+                            $("#prodi2").empty();
                             $("#prodi").prop("disabled", true);
+                            $("#prodi2").prop("disabled", true);
                             $("#jenjang").empty();
                             $("#lokasi").empty();
                             $("#lokasi").prop("disabled", true);
