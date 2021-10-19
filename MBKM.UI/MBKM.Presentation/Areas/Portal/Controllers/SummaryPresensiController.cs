@@ -51,6 +51,12 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             }
             return new ContentResult { Content = JsonConvert.SerializeObject(pmks), ContentType = "application/json" };
         }
+        public ActionResult GetSumAbsensi(int jadwalKuliahId)
+        {
+            var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
+            List<Absensi> absensis = _absensiService.Find(a => a.JadwalKuliahID == jadwalKuliahId).OrderBy(a => a.TanggalAbsen).ToList();
+            return new ContentResult { Content = JsonConvert.SerializeObject(absensis), ContentType = "application/json" };
+        }
         public ActionResult DetailSummaryPresensiKelas(int id)
         {
             return View(id);
