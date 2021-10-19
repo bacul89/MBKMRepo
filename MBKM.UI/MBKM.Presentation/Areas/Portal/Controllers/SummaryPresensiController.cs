@@ -1,5 +1,6 @@
 ﻿using MBKM.Entities.Models.MBKM;
 using MBKM.Presentation.Helper;
+using MBKM.Presentation.Models;
 using MBKM.Services.MBKMServices;
 using Newtonsoft.Json;
 using System;
@@ -41,6 +42,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
             List<PendaftaranMataKuliah> pmks = new List<PendaftaranMataKuliah>();
+            
             if (strm != 0)
             {
                 pmks = _pendaftaranMataKuliahService.Find(pmk => pmk.MahasiswaID == mahasiswa.ID && pmk.StatusPendaftaran == "ACCEPTED BY MAHASISWA" && pmk.JadwalKuliahs.STRM == strm).ToList();
@@ -49,11 +51,37 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             {
                 pmks = _pendaftaranMataKuliahService.Find(pmk => pmk.MahasiswaID == mahasiswa.ID && pmk.StatusPendaftaran == "ACCEPTED BY MAHASISWA").ToList();
             }
-            return new ContentResult { Content = JsonConvert.SerializeObject(pmks), ContentType = "application/json" };
+            var list = pmks.Select(x => new 
+            {
+                Lokasi = x.JadwalKuliahs.Lokasi,
+                NamaFakultas = x.JadwalKuliahs.NamaFakultas,
+                NamaProdi = x.JadwalKuliahs.NamaProdi,
+                NamaMataKuliah = x.JadwalKuliahs.NamaMataKuliah,
+                KodeMataKuliah = x.JadwalKuliahs.KodeMataKuliah,
+                SKS = x.JadwalKuliahs.SKS,
+                NamaDosen = x.JadwalKuliahs.NamaDosen,
+                STRM = x.JadwalKuliahs.STRM.ToString(),
+                Presetanse = GetPresentase(mahasiswa.ID, x.JadwalKuliahID),
+                JadwalKuliahID = x.JadwalKuliahID
+            });
+            return new ContentResult { Content = JsonConvert.SerializeObject(list), ContentType = "application/json" };
         }
         public Mahasiswa GetMahasiswaByEmail(string email)
         {
             return _mahasiswaService.Find(m => m.Email == email).FirstOrDefault();
+        }
+        public string GetPresentase(Int64 MahasiswaID, Int64 JadwalKuliahID)
+        {
+            int CountData = _absensiService.Find(x => x.MahasiswaID == MahasiswaID && x.JadwalKuliahID == JadwalKuliahID).Count();
+            int CountDataPresent = _absensiService.Find(x => x.MahasiswaID == MahasiswaID && x.JadwalKuliahID == JadwalKuliahID
+                                    && x.Present == true).Count();
+            double persen = 0;
+            if (CountData > 0)
+            {
+                persen = (CountDataPresent * 100)/ CountData;
+            }
+            return persen.ToString() + "%";
+
         }
     }
 }
