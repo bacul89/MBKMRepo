@@ -102,7 +102,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                     x.JenjangStudi == jenjangStudi &&
                     x.Lokasi == lokasi &&
                     x.MataKuliahID == idMatakuliah &&
-                   // x.FlagOpen == true &&
+                    x.FlagOpen == true &&
                     x.ClassSection == seksi
                    
                 );
