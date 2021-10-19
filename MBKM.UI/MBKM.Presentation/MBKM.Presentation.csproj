@@ -176,7 +176,6 @@
     <Compile Include="Models\FilePendukung.cs" />
     <Compile Include="Models\LoginVMAdmin.cs" />
     <Compile Include="Models\ServiceResponse.cs" />
-    <Compile Include="Models\SummaryPresensiVM.cs" />
     <Compile Include="Modules\EFModule.cs" />
     <Compile Include="Modules\RepositoryModule.cs" />
     <Compile Include="Modules\ServiceModule.cs" />
@@ -497,7 +496,6 @@
     <Content Include="Areas\Admin\Views\PresensiKelas\Index.cshtml" />
     <Content Include="Areas\Admin\Views\PresensiKelas\DetailPresensi.cshtml" />
     <Content Include="Areas\Portal\Views\SummaryPresensi\Index.cshtml" />
-    <Content Include="Areas\Portal\Views\SummaryPresensi\DetailSummaryPresensiKelas.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
