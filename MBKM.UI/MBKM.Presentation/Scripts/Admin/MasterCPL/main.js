@@ -1,11 +1,11 @@
 ﻿var tableUser = $('#TableList').DataTable({
-    "columnDefs": [{
-        "searchable": false,
-        "orderable": false,
-        "paging": false,
-        "targets": 0,
-        //"visible": false, 'targets': [4, 6]
-    }],
+    //"columnDefs": [{
+    //    "searchable": false,
+    //    "orderable": false,
+    //    "paging": false,
+    //    "targets": 0,
+    //    //"visible": false, 'targets': [4, 6]
+    //}],
     //"order": [[1, 'asc']],
     //"proccessing": true,
     //"serverSide": true,
@@ -43,9 +43,11 @@
         },
         {
             //"title": "No",
+            "orderable": false,
             "data": null,
             "render": function (data, type, full, meta) {
-                return meta.row + 1;
+                //return '<div class="center vertical-center" style="font-size: 0.8vw">' + (meta.row + 1) + '</div>';
+                return meta.row + meta.settings._iDisplayStart + 1;
             }
         },
         {

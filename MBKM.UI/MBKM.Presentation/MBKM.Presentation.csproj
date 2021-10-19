@@ -162,6 +162,7 @@
     <Compile Include="Areas\Portal\Controllers\PendaftaranMataKuliahController.cs" />
     <Compile Include="Areas\Portal\Controllers\HomeController.cs" />
     <Compile Include="Areas\Portal\Controllers\NimDigitalController.cs" />
+    <Compile Include="Areas\Portal\Controllers\SummaryPresensiController.cs" />
     <Compile Include="Areas\Portal\Controllers\TrackingStatusPendaftaranController.cs" />
     <Compile Include="Areas\Portal\PortalAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -494,6 +495,7 @@
     <Content Include="Areas\Portal\Views\LinkFasilitasMahasiswa\ModalDetailLinkMahasiswa.cshtml" />
     <Content Include="Areas\Admin\Views\PresensiKelas\Index.cshtml" />
     <Content Include="Areas\Admin\Views\PresensiKelas\DetailPresensi.cshtml" />
+    <Content Include="Areas\Portal\Views\SummaryPresensi\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
