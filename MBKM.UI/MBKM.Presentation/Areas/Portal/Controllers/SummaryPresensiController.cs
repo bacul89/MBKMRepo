@@ -69,7 +69,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult GetSumAbsensi(int jadwalKuliahId)
         {
             var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
-            List<Absensi> absensis = _absensiService.Find(a => a.JadwalKuliahID == jadwalKuliahId).OrderBy(a => a.TanggalAbsen).ToList();
+            List<Absensi> absensis = _absensiService.Find(a => a.JadwalKuliahID == jadwalKuliahId && a.MahasiswaID== mahasiswa.ID).OrderBy(a => a.TanggalAbsen).ToList();
             return new ContentResult { Content = JsonConvert.SerializeObject(absensis), ContentType = "application/json" };
         }
         public ActionResult DetailSummaryPresensiKelas(int id)
