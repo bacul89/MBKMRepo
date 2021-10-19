@@ -62,7 +62,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 NamaDosen = x.JadwalKuliahs.NamaDosen,
                 STRM = x.JadwalKuliahs.STRM.ToString(),
                 Presetanse = GetPresentase(mahasiswa.ID, x.JadwalKuliahID),
-                JadwalKuliahID = x.JadwalKuliahID
+                JadwalKuliahID = x.JadwalKuliahID,
+                ID = x.ID
             });
             return new ContentResult { Content = JsonConvert.SerializeObject(list), ContentType = "application/json" };
         }
