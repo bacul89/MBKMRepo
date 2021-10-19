@@ -20,6 +20,11 @@ namespace MBKM.Entities.Map.MBKMMap
             Property(t => t.NoKerjasama).HasMaxLength(150);
             Property(t => t.MahasiswaID).IsRequired();
             Property(t => t.STRM).IsRequired();
+       // TODO: sprint 4
+            //Property(t => t.JudulAktivitas).HasMaxLength(350);
+            //Property(t => t.LokasiTugas).HasMaxLength(150);
+            //Property(t => t.NoSK).HasMaxLength(150);
+            //Property(t => t.TanggalSK).IsOptional();
         }        
     }
 }
