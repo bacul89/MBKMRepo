@@ -1,0 +1,324 @@
+﻿
+@{
+    Layout = "~/Areas/Portal/Views/shared/_Layout2.cshtml";
+    ViewBag.Title = "MBKM";
+}
+
+
+<style>
+    .coral {
+        color: coral;
+    }
+
+    .center {
+        align-content: center;
+        align-items: center;
+        vertical-align: unset;
+        align-self: center;
+        text-align: center
+    }
+
+    .zero-padding {
+        padding: 10px 15px !important;
+    }
+
+    .vertical-center {
+        vertical-align: middle !important;
+    }
+
+    .no-border {
+        border: 0px !important;
+    }
+
+    .table-responsive {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+
+    table.dataTable.no-footer {
+        border: none;
+    }
+
+    .dataTables_wrapper .dataTables_processing {
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        width: 30%;
+        height: 40px;
+        margin-left: -20%;
+        margin-top: -25px;
+        padding-top: 20px;
+        text-align: center;
+        font-size: 1.2em;
+        background: none;
+    }
+
+    thead tr {
+        background-color: #FF8A04;
+        border: 0;
+    }
+
+    .table-spacing {
+        border-spacing: 0px 0.5rem !important;
+    }
+
+    .body-content {
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+    }
+
+    .table-borderless > tbody > tr > td,
+    .table-borderless > tbody > tr > th,
+    .table-borderless > tfoot > tr > td,
+    .table-borderless > tfoot > tr > th,
+    .table-borderless > thead > tr > td,
+    .table-borderless > thead > tr > th {
+        border: none;
+    }
+    /* The container */
+    .container2 {
+        left: 40%;
+        display: block;
+        position: relative;
+        cursor: pointer;
+        font-size: 22px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+        /* Hide the browser's default checkbox */
+        .container2 input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+    /* Create a custom checkbox */
+    .checkmark {
+        align-content: center;
+        position: absolute;
+        height: 25px;
+        width: 25px;
+        background-color: #fff;
+        border: solid;
+        border-width: 1px;
+    }
+
+    /* On mouse-over, add a grey background color */
+    .container2:hover input ~ .checkmark {
+        background-color: #ccc;
+    }
+
+    /* When the checkbox is checked, add a blue background */
+    .container2 input:checked ~ .checkmark {
+        background-color: #FF8A04;
+    }
+
+    /* Create the checkmark/indicator (hidden when not checked) */
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    /* Show the checkmark when checked */
+    .container2 input:checked ~ .checkmark:after {
+        display: block;
+    }
+
+    /* Style the checkmark/indicator */
+    .container2 .checkmark:after {
+        left: 9px;
+        top: 5px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+
+    .disable {
+        background-color: #ccc;
+        pointer-events: none;
+    }
+</style>
+
+<div class="card center-block" style="background-color: white; margin-bottom: 15px;">
+    <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+        <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; padding-left: 15px; font-weight: bold; font-size: 20px; color: black; ">
+            PRESENSI MAHASISWA<br />
+            <p style="font-weight: normal; font-size: 15px; color: #c1baba;">Berikut daftar hadir mahasiswa</p>
+        </h5>
+        <hr />
+        <div class="container" style="width: 100%; padding-bottom: 15px;">
+
+            <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+                <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 18px; color: black;">DETAIL MATA KULIAH</h5>
+
+                <div class="container" style="width: 100%;">
+                    <table class="table">
+                        <tr>
+                            <td style="text-align: right; width: 20%;">Tanggal</td>
+                            <td style="text-align: center;">:</td>
+                            <td id="tanggal"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Waktu</td>
+                            <td style="text-align: center;">:</td>
+                            <td>@Model.JamMasuk2 - @Model.JamKeluar2</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Mata Kuliah</td>
+                            <td style="text-align: center;">:</td>
+                            <td>@Model.KodeMataKuliah - @Model.NamaMataKuliah</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Seksi</td>
+                            <td style="text-align: center;">:</td>
+                            <td>@Model.Seksi</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Ruang Kelas</td>
+                            <td style="text-align: center;">:</td>
+                            <td>@Model.RuangKelas</td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right;">Dosen</td>
+                            <td style="text-align: center;">:</td>
+                            <td>@Model.NamaDosen</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+                <button id="check" name="check" class="btn" style="float: right; background-color: lawngreen; color: white; padding: 2px 30px; font-weight: bold; font-size: 16px;">CHECK ALL</button>
+                <button id="uncheck" name="uncheck" class="btn" style="float: right; background-color: red; color: white; padding: 2px 30px; font-weight: bold; font-size: 16px;">UNCHECK ALL</button>
+
+                <div style="overflow-x: auto;">
+                    <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; font-weight: bold; font-size: 18px; color: black; ">
+                        DAFTAR MAHASISWA
+                    </h5>
+                    <table id="hasilPencarian" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
+                        <thead>
+                            <tr>
+                                <th class="zero-padding no-border vertical-center sorting">Dosen Check</th>
+                                <th class="zero-padding no-border vertical-center sorting">No.</th>
+                                <th class="zero-padding no-border vertical-center sorting">Nomor Induk Mahasiswa</th>
+                                <th class="zero-padding no-border vertical-center sorting">Nama</th>
+                                <th class="zero-padding no-border vertical-center sorting">Mahasiswa Present</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <button id="submit" class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; ">SUBMIT</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        var mahasiswaCount = 0;
+        var datatable;
+        $(document).ready(function () {
+            var tanggal = new Date('@Model.TanggalAbsen');
+            $('#tanggal').html(tanggal.getDate() + '/' + (tanggal.getMonth() + 1) + '/' + tanggal.getFullYear());
+            loadTable();
+        });
+
+        function loadTable() {
+            datatable = $('#dataAbsen').DataTable({
+                ajax: {
+                    url: '@Url.Action("GetPresensiMahasiswa", "PresensiKelas")?idJadwal=' + @Model.IDJadwalKuliah,
+                    dataSrc: ''
+                },
+                "columnDefs": [{
+                    "searchable": false,
+                    "orderable": false,
+                    "targets": 1
+                }],
+                "order": [
+                    [1, 'asc']
+                ],
+                "columns": [
+                    {
+                        "data": "ID",
+                        "render": function (data, type, row, meta) {
+                            return '<label class="container2"><input class="checkFlag" type="checkbox" id="checkDosen' + mahasiswaCount++ + '" value="' + data + '"><span class="checkmark"></span></label>';
+                        }
+                    },
+                    {
+                        "data": null
+                    },
+                    {
+                        "data": "Mahasiswas.NIM",
+                        "render": function (data, type, row, meta) {
+                            return '<div style="text-align:center; vertical-align: middle;">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "Mahasiswas.Nama",
+                        "render": function (data, type, row, meta) {
+                            return '<div style="text-align:center; vertical-align: middle;">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "Present",
+                        "render": function (data, type, row, meta) {
+                            var data2;
+                            if (data) {
+                                data2 = 'P';
+                            } else {
+                                data2 = 'N';
+                            }
+                            return '<div style="text-align:center; vertical-align: middle;">' + data2 + '</div>';
+                        }
+                    }
+                ]
+            });
+            datatable.on('order.dt search.dt', function () {
+                datatable.column(1, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            }).draw();
+        }
+        $('#check').click(function () {
+            $('.checkFlag').prop('checked', true);
+        }
+        $('#uncheck').click(function () {
+            $('.checkFlag').prop('checked', false);
+        }
+        $('#submit').click(function () {
+            var list = [];
+            for (var i = 0; i < mahasiswaCount; i++) {
+                if (!$('#checkDosen' + i).is(':checked')) {
+                    continue;
+                }
+                list.push($('#checkDosen' + i).val());
+            }
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("SubmitCheckDosen", "PresensiKelas")",
+                data: list
+            }).then(function (response) {
+                alert(response.message);
+                if (response.status == 200) {
+                    window.history.back();
+                }
+            });
+        })
+    </script>
+}

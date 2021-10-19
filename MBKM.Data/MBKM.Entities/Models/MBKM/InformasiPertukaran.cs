@@ -18,5 +18,12 @@ namespace MBKM.Entities.Models.MBKM
         [JsonIgnore]
         public virtual Mahasiswa Mahasiswas { get; set; }
         //public virtual ICollection<PendaftaranMataKuliah> PendaftaranMataKuliahs { get; set; }
+        // TODO: sprint 4
+        #region sprint 4
+        //public string JudulAktivitas { get; set; }
+        //public string LokasiTugas { get; set; }
+        //public DateTime TanggalSK { get; set; }
+        //public string NoSK { get; set; }
+        #endregion 
     }
 }

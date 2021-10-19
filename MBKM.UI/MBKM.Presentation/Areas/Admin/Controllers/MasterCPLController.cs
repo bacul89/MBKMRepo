@@ -20,8 +20,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
     {
         private ILookupService _lookupService;
         private IMasterCapaianPembelajaranService _mcpService;
-        public MasterCPLController(ILookupService lookupService, IMasterCapaianPembelajaranService mcpService)
+        private ICPLMatakuliahService _cplMatakuliah;
+        public MasterCPLController(ICPLMatakuliahService cplMatakuliah, ILookupService lookupService, IMasterCapaianPembelajaranService mcpService)
         {
+            _cplMatakuliah = cplMatakuliah;
             _lookupService = lookupService;
             _mcpService = mcpService;
         }
@@ -155,6 +157,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult getLookupByTipe(string tipe)
         {
             return Json(_lookupService.getLookupByTipe(tipe), JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetProdiLocByFakultas(string JenjangStudi, string idFakultas, string search)
+        {
+            return Json(_cplMatakuliah.GetProdiLocByFakultas(JenjangStudi, idFakultas, search), JsonRequestBehavior.AllowGet);
         }
     }
 }

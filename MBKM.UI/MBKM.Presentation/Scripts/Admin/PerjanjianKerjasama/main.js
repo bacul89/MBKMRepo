@@ -109,12 +109,16 @@ var table = $('#TableList').DataTable({
             'vertical-align': 'center',
         });
         var d = new Date();
+        var d2 = new Date();
         d.setDate(d.getDate() + 30);
         var tglakhir = moment(data.TanggalAkhir).format('YYYY-MM-DD');
         tglakhir = new Date(tglakhir);
-        if (tglakhir < d) {
+        
+        if (tglakhir > d2 && tglakhir < d) {
             $(row).css("background-color", "#ee2400");
-
+        }
+        if (tglakhir < d2) {
+            $(row).css("background-color", "grey");
         }
     },
 });

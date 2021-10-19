@@ -2,6 +2,7 @@
 using MBKM.Entities.Models.MBKM;
 using MBKM.Entities.ViewModel;
 using MBKM.Presentation.Helper;
+using MBKM.Presentation.models;
 using MBKM.Services;
 using MBKM.Services.MBKMServices;
 using Newtonsoft.Json;
@@ -128,6 +129,25 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
            
             var data = _linkFasilitasService.Get(id);
             return View(data);
+        }
+        [HttpPost]
+        public ActionResult UpdateLink(JadwalKuliah jdw)
+        {
+            JadwalKuliah data = _jkService.Get(jdw.ID);
+            data.LinkMoodle = jdw.LinkMoodle;
+            data.LinkAtmaZeds = jdw.LinkAtmaZeds;
+            data.LinkTeams = jdw.LinkTeams;
+            data.LinkOthers = jdw.LinkOthers;
+            data.UpdatedDate = DateTime.Now;
+            data.UpdatedBy = Session["username"] as string;
+
+
+
+
+            _jkService.Save(data);
+
+            //return Json(data);
+            return Json(new ServiceResponse { status = 200, message = "Link Berhasil Di Update" });
         }
     }
 }

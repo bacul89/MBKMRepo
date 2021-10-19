@@ -1,60 +1,183 @@
 ﻿
 @{
-    ViewBag.Title = "TRACKING STATUS PENDAFTARAN MATA KULIAH";
+    ViewBag.Title = "LINK PERKULIAHAN MBKM";
     Layout = "~/Areas/Portal/Views/Shared/_LayoutHome.cshtml";
 }
 
+@model MBKM.Entities.ViewModel.VMSemester
+
+<style>
+
+    .coral {
+        color: coral;
+    }
+
+    .center {
+        align-content: center;
+        align-items: center;
+        vertical-align: unset;
+        align-self: center;
+        text-align: center
+    }
+
+    .zero-padding {
+        padding: 10px 15px !important;
+    }
+
+    .vertical-center {
+        vertical-align: middle !important;
+    }
+
+    .no-border {
+        border: 0px !important;
+    }
+
+    table.dataTable.no-footer {
+        border: none;
+    }
+
+    .dataTables_wrapper .dataTables_processing {
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        width: 30%;
+        height: 40px;
+        margin-left: -20%;
+        margin-top: -25px;
+        padding-top: 20px;
+        text-align: center;
+        font-size: 1.2em;
+        background: none;
+    }
+
+    thead tr {
+        background-color: #FF8A04;
+        border: 0;
+    }
+
+    .table-spacing {
+        border-spacing: 0px 0.5rem !important;
+    }
+
+    .body-content {
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+    }
+</style>
+
+
+
 @section css{
+
     <link rel="stylesheet" type="text/css" href="~/Content/Admin/inputResponsive.css">
-    <link rel="stylesheet" type="text/css" href="~/Content/Admin/AdminCostumeBS4.css">
-    <link rel="stylesheet" type="text/css" href="~/Content/Portal/TrackingStatus/main.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.1/css/jquery.dataTables.css">
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    @Scripts.Render("~/bundles/jquery")
+
+
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/sweetalert2.all.min.js"></script>
 }
 @section modal{
-    <div class="modal fade" id="LinkFasilitasMhs" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document" id="modal-inner">
+    <div class="modal fade" id="TambahMasterMapingCapaianPembelajaran" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" id="modal-inner">
 
         </div>
     </div>
 }
-<div class="container-fluid" style="margin-bottom:100px;">
-    <input type="hidden" value="@HttpContext.Current.Session["email"].ToString()" id="getEmail" disabled />
-    <div class="card center-block" style="background-color: white; width: 100%; margin-top: 30px; margin-bottom: 50px;">
-        <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
+
+
+<div class="container-fluid" style="padding: 0px">
+    <div class="card center-block" style="background-color: white; width: 100%; padding: 0px">
+        <div class="card-body responsive-content" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; padding: 0px">
             <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
-                Link Fasilitas Perkuliahan
+                LINK FASILITAS PERKULIAHAN<br />
+                @*<small class="describe">Berikut Jadwal Perkuliahaan Pada Program MBKM anda :</small>*@
             </h4>
             <hr />
-            <div class="container-fluid">
-                <br />
-                <table id="table-data-tracking-pendaftaran-makul" class="table row-border hover dt-responsive responsive" style="border-spacing: 0 15px; border:0">
-                    <thead class="text-center">
-                        <tr style="background-color: #FF8A04; border: 0 ">
-                            <th class="zero-padding no-border vertical-center" style="text-align: center; font-size: 0.8vw">Action</th>
-                            <th class="zero-padding no-border vertical-center" style="text-align:center; font-size:0.8vw">No.</th>
-                            <th class="zero-padding no-border vertical-center" style="text-align:center; font-size:0.8vw">Tahun Semester</th>
-                            <th class="zero-padding no-border vertical-center" style="text-align:center; font-size:0.8vw">Fakultas</th>
-                            <th class="zero-padding no-border vertical-center" style="text-align:center; font-size:0.8vw">Program Studi</th>
-                            <th class="zero-padding no-border vertical-center" style="text-align:center; font-size:0.8vw">Kode Mata Kuliah</th>
-                            <th class="zero-padding no-border vertical-center" style="text-align:center; font-size:0.8vw">Nama Mata Kuliah</th>
-                            <th class="zero-padding no-border vertical-center" style="text-align:center; font-size:0.8vw">SKS</th>
-                            <th class="zero-padding no-border vertical-center" style="text-align:center; font-size:0.8vw">Hari</th>
-                            <th class="zero-padding no-border vertical-center" style="text-align:center; font-size:0.8vw">Waktu</th>
-                            <th class="zero-padding no-border vertical-center" style="text-align:center; font-size:0.8vw">Seksi</th>
-                            <th class="zero-padding no-border vertical-center" style="text-align:center; font-size:0.8vw">Ruang Kelas</th>
-                            <th class="zero-padding no-border vertical-center" style="text-align:center; font-size:0.8vw">Lokasi</th>
-                            <th class="zero-padding no-border vertical-center" style="text-align:center; font-size:0.8vw">Nama Dosen</th>
-                        </tr>
-                    </thead>
-                </table>
+            <div class="container" style="width: 100%;">
+                @*
+                    Jenjang Studi
+                    Fakultas
+                    ProgtamStudi
+                    Lokasi
+                    Tahun Ajaran
+                *@
+                <div class="col-md-12">
+                    <form class="form-horizontal col-md-7">
+
+                        <div class="form-group">
+                            <label for="inp_tahunAjaran" class="col-sm-3 control-label">Tahun Semester</label>
+                            <div class="col-sm-9">
+                                <select name="tahunAjaranCari" id="tahunAjaranCari" class="form-control input-md">
+                                    <option value="@Model.ID" selected>@Model.Nama</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!--<div class="form-group">
+                            <div class="col-sm-2 col-md-offset-10">
+                                <button type="button" id="cari" class="btn btn-warning" style="float: right;" title="Mohon untuk melengkapi form pencarian terlebih dahulu!" disabled><span class="fa fa-search"></span> Cari</button>
+                            </div>
+                        </div>-->
+
+                    </form>
+                </div>
+
+
+
+                <!--
+                    No
+                    Kode Mata Kuliah
+                    Nama Mata Kuliah
+                    SKS
+                    Seksi
+                    Hari
+                    Waktu
+                    Ruang Kelas
+                    Lokasi
+                    Nama Dosen
+                -->
+                <!--
+                    <button id="add" class="btn btn-success" onclick="IndexCreateMasterMapingCapaianPembelajaran()" title="Mohon untuk melengkapi form pencarian terlebih dahulu!" disabled><i class="fas fa-plus-circle"></i> Tambah Master Maping</button>
+                    <br />
+                    <br />
+                -->
+                <!--table-responsive-->
+                <h3><b>Jadwal Perkuliahan</b></h3>
+                <div id="table-data-jadwal-kuliah-overflow">
+                    <table id="table-data-jadwal-kuliah" class="table table-bordered table-spacing js-basic-example dataTable table-responsive display nowrap">
+                        <thead>
+                            <tr>
+                                <th class="zero-padding no-border vertical-center sorting">Action</th>
+                                <th class="zero-padding no-border vertical-center sorting">No.</th>
+                                <th class="zero-padding no-border vertical-center sorting">Tahun Semester</th>
+                                <th class="zero-padding no-border vertical-center sorting">Program Studi</th>
+                                <th class="zero-padding no-border vertical-center sorting">Fakultas</th>
+                                <th class="zero-padding no-border vertical-center sorting">Kode Mata Kuliah</th>
+                                <th class="zero-padding no-border vertical-center sorting">Nama Mata Kuliah</th>
+                                <th class="zero-padding no-border vertical-center sorting">SKS</th>
+                                <th class="zero-padding no-border vertical-center sorting">Hari</th>
+                                <th class="zero-padding no-border vertical-center sorting">Waktu</th>
+                                <th class="zero-padding no-border vertical-center sorting">Seksi</th>
+                                <th class="zero-padding no-border vertical-center sorting">Ruang Kelas</th>
+                                <th class="zero-padding no-border vertical-center sorting">Lokasi</th>
+                                <th class="zero-padding no-border vertical-center sorting">Nama Dosen</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-@section scripts{
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.js"></script>
-    <script src="~/Scripts/Portal/LinkFasilitasMahasiswa/main.js"></script>
-    <script src="~/Scripts/loading/loadingoverlay.min.js"></script>
-}
+
+
+
+
+    @section scripts{
+        <script src="~/Scripts/Portal/LinkFasilitasMahasiswa/main.js"></script>
+        <script src="~/Scripts/Portal/LinkFasilitasMahasiswa/crud.js"></script>
+        <script src="~/Scripts/loading/loadingoverlay.min.js"></script>
+    }
