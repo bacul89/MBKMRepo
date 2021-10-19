@@ -21,7 +21,11 @@ $(document).ready(function () {
 
     loadJenjangStudi("JenjangStudi", "jenjang", "Jenjang Studi");
 
-    datatable = $('#table-data-jadwal-kuliah').DataTable();
+    datatable = $('#table-data-jadwal-kuliah').DataTable({
+        paging : false,
+        ordering : false,
+        info : false
+    });
     //$("#table-data-master-mapping-cpl_filter").hide();
 
 
