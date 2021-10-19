@@ -143,13 +143,18 @@ function reloadDatatable() {
 
 $('#add').click(function () {
     var list = [];
-    $("#mbkm-flag").each(function () {
-        if ($(this).attr("id") == "mbkm-flag") {
-            // do something
-            var id = parseInt($(this).val());
-            list.push(id);
-        }
+
+    //var n = $('input:checkbox[id^="mbkm-flag"]:checked').length;
+
+    $('input:checkbox[id^="mbkm-flag"]:checked').each(function () {
+        //var num = $(this).attr("id");
+
+        var id = parseInt($(this).val());
+        //console.log(id);
+        list.push(id);
+        //console.log(num);
     });
+
 
     console.log(list);
     swal.fire({
