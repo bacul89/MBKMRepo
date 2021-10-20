@@ -167,6 +167,16 @@
         <p style=" padding-right: 15px; padding-left: 15px; font-size: 18px; font-weight: bold; color: black; ">DETAIL MATA KULIAH</p>
         <div class="container" style="width: 100%; padding-bottom: 15px;">
             <table class="table table-borderless" style="width: auto;">
+                <tr hidden>
+                    <td style="text-align: right;">JadwalKuliahID</td>
+                    <td style="text-align: center;">:</td>
+                    <td id="jdw"></td>
+                </tr>
+                <tr hidden>
+                    <td style="text-align: right;">MhsID</td>
+                    <td style="text-align: center;">:</td>
+                    <td id="mhsID"></td>
+                </tr>
                 <tr>
                     <td style="text-align: right;">Fakultas</td>
                     <td style="text-align: center;">:</td>
@@ -238,7 +248,7 @@
                     </tbody>
                     <tfoot>
                         <tr>
-                            <th colspan="5" style="text-align:right">Total:</th>
+                            <th colspan="5" style="text-align:right">Presentase Kehadiran:</th>
                             <th></th>
                         </tr>
                     </tfoot>
@@ -251,20 +261,28 @@
 
 @section Scripts{
     <script>
-        
+
         var counter = 0;
 
-       
+
         //batas
         var mataKuliah = null;
         var datatable;
         var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
         var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         $(document).ready(function () {
+            @*$.ajax({
+                url: '@Url.Action("GetPresentase", "SummaryPresensi")?MahasiswaID=' + 111 +
+                    '&JadwalKuliahID=' + 292,
+
+                success: function (data) {
+                    console.log(data) // this is your response obj that you can work with
+                }
+            });*@
 
             $.ajax({
                 type: "GET",
-                url: "@Url.Action("GetJadwalKuliahById", "PresensiKelas")?id=" + @Model
+                url: "@Url.Action("GetJadwalKuliahById", "SummaryPresensi")?id=" + @Model
             }).then(function (response) {
                 mataKuliah = response;
                 $('#subtitle').html('Daftar hadir pada Mata Kuliah ' + response.JadwalKuliahs.NamaMataKuliah.toUpperCase())
@@ -277,20 +295,35 @@
                 $('#hari').html(response.JadwalKuliahs.Hari);
                 $('#waktu').html(response.JadwalKuliahs.JamMasuk + ' - ' + response.JadwalKuliahs.JamSelesai);
                 $('#ruangKelas').html(response.JadwalKuliahs.RuangKelas);
+               // $('#namaDosen').html(response.JadwalKuliahs.NamaDosen);
                 $('#namaDosen').html(response.JadwalKuliahs.NamaDosen);
+
+                $('#jdw').html(response.JadwalKuliahs.ID);
+                //bartas
+                $.ajax({
+                   
+                type: "GET",
+                     url: '@Url.Action("GetSumAbsensi", "SummaryPresensi")?jadwalKuliahId=' + $('#jdw').text()
+            }).then(function (response) {
+                $('#mhsID').html(response[0].Mahasiswas.ID);
+                //console.log(response[0].Mahasiswas.ID);
+            });
+                //batas
                 loadTable(response.JadwalKuliahs.ID);
                 $("#dataAbsen_filter").hide();
             });
         });
-        
+
         function loadTable(id) {
-                //showResult();
-           
+                //showResult(); batas
+
+
+
             datatable = $('#dataAbsen').DataTable({
                 "paging": false,
                 //batasatas
-               
-                
+
+
                 //batasbawah
                 ajax: {
                     url: '@Url.Action("GetSumAbsensi", "SummaryPresensi")?jadwalKuliahId=' + id,
@@ -301,17 +334,21 @@
                     //"orderable": false,
                     //"targets": 1
                     { targets: '_all', orderable: false },
-                  
+
                 ],
-                
+
                 "order": [
                     [1, 'asc']
                 ],
                 "columns": [
                     {
-                        "data": null
-                        
-                        
+                        "data": "ID",
+                        "render": function (data, type, row, meta) {
+                            return `<div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick=""><i class="fas fa-file-download coral"></i></i></a></div>`;
+                            //BAP belum bingung ~_~
+                        }
+
+
                     },
                     {
                         "data": null
@@ -339,32 +376,36 @@
                     {
                         "data": "Present",
                         "render": function (data, type, row, meta) {
-                            var jamMasuk = row.JadwalKuliahs.JamMasuk.split(':');
-                            var jamKeluar = row.JadwalKuliahs.JamSelesai.split(':');
-                            //var jamMasuk = '14:03'.split(':');
-                            //var jamKeluar = '15:00'.split(':');
-                            var now = new Date();
-                            var menitMasuk = parseInt(jamMasuk[0]) * 60 + parseInt(jamMasuk[1]);
-                            var menitKeluar = parseInt(jamKeluar[0]) * 60 + parseInt(jamKeluar[1]);
-                            var menitSekarang = now.getHours() * 60 + now.getMinutes();
-                            var tanggalAbsen = new Date(row.TanggalAbsen);
+                            //var jamMasuk = row.JadwalKuliahs.JamMasuk.split(':');
+                            //var jamKeluar = row.JadwalKuliahs.JamSelesai.split(':');
+                            ////var jamMasuk = '14:03'.split(':');
+                            ////var jamKeluar = '15:00'.split(':');
+                            //var now = new Date();
+                            //var menitMasuk = parseInt(jamMasuk[0]) * 60 + parseInt(jamMasuk[1]);
+                            //var menitKeluar = parseInt(jamKeluar[0]) * 60 + parseInt(jamKeluar[1]);
+                            //var menitSekarang = now.getHours() * 60 + now.getMinutes();
+                            //var tanggalAbsen = new Date(row.TanggalAbsen);
                             if (data) {
                                 //return '<label class="container2"><input type="checkbox" checked disabled><span class="checkmark"></span></label>';
-                                return '<label class="container2">P</label>';
+                                //return '<label style="text-align:center; vertical-align: middle;">Hadir</label>'
+                                return '<div style="text-align:center; vertical-align: middle;"> <label> Hadir</label > </div>';
+
+                                //'<div style="text-align:center; vertical-align: middle;">' Hadir '</div>';
                             }
-                            if (
-                                menitMasuk <= menitSekarang
-                                && menitKeluar >= menitSekarang
-                                && days[now.getDay()] == row.JadwalKuliahs.Hari
-                                && tanggalAbsen.getDate() == now.getDate()
-                                && tanggalAbsen.getMonth() == now.getMonth()
-                                && tanggalAbsen.getFullYear() == now.getFullYear()
-                            ) {
-                                //return '<label class="container2">0</label>'
-                                return parseInt(0);
-                                //return '<label class="container2"><input type="checkbox" id="absen" value="' + row.ID + '"><span class="checkmark"></span></label>'
-                            }
-                            return parseInt(0);
+                            //if (
+                            //    menitMasuk <= menitSekarang
+                            //    && menitKeluar >= menitSekarang
+                            //    && days[now.getDay()] == row.JadwalKuliahs.Hari
+                            //    && tanggalAbsen.getDate() == now.getDate()
+                            //    && tanggalAbsen.getMonth() == now.getMonth()
+                            //    && tanggalAbsen.getFullYear() == now.getFullYear()
+                            //) {
+                            //    return '<label class="container2">-</label>'
+                            //    //return '<div style="text-align:center; vertical-align: middle;">' <label class="container2">Hadir</label>  '</div>';
+                            //    //return '<label class="container2"><input type="checkbox" id="absen" value="' + row.ID + '"><span class="checkmark"></span></label>'
+                            //}
+                            //return -;
+                            return '<div style="text-align:center; vertical-align: middle;"> <label>-</label > </div>'
                             //return '<label class="container2"><input type="checkbox" disabled><span class="checkmark disable"></span></label>';
                         }
                     }
@@ -375,33 +416,49 @@
                     var api = this.api(), data;
 
                     // Remove the formatting to get integer data for summation
-                    var intVal = function (i) {
-                        return typeof i === 'string' ?
-                            i.replace(/P/g, '') * 1 :
-                            typeof i === 'number' ?
-                                i : 1;
-                    };
+                    //var intVal = function (i) {
+                    //    return typeof i === 'string' ?
+                    //        i.replace(/P/g, '') * 1 :
+                    //        typeof i === 'number' ?
+                    //            i : 1;
+                    //};
 
-                    // Total over all pages
-                    total = api
-                        .column(5)
-                        .data()
-                        .reduce(function (a, b) {
-                            return intVal(a) + intVal(b);
-                        }, 0);
+                    //// Total over all pages
+                    //total = api
+                    //    .column(5)
+                    //    .data()
+                    //    .reduce(function (a, b) {
+                    //        return intVal(a) + intVal(b);
+                    //    }, 0);
 
-                    // Total over this page
-                    pageTotal = api
-                        .column(5, { page: 'current' })
-                        .data()
-                        .reduce(function (a, b) {
-                            return intVal(a) + intVal(b);
-                        }, 0);
+                    //// Total over this page
+                    //pageTotal = api
+                    //    .column(5, { page: 'current' })
+                    //    .data()
+                    //    .reduce(function (a, b) {
+                    //        return intVal(a) + intVal(b);
+                    //    }, 0);
+                    //batas tes var presentase
+                    var jdwl = $('#jdw').text();
+                    var mhs = $('#mhsID').text();
+                    $.ajax({
+                        //timeout: 900,
+                        url: '@Url.Action("GetPresentase", "SummaryPresensi")?MahasiswaID=' + mhs +
+                            '&JadwalKuliahID=' + jdwl,
 
-                    // Update footer
+                success: function (data) {
+                    //console.log(data); // this is your response obj that you can work with
+                    //console.log(jdwl); // this is your response obj that you can work with
+                    //console.log($('#idMatkul').val());
                     $(api.column(5).footer()).html(
-                        'Total Pertemuan' + pageTotal + ' ( Kehadiran:' + total + ' Present)'
+                        data
                     );
+                }
+            });
+                    // Update footer
+                    //$(api.column(5).footer()).html(
+                    //    'Total Pertemuan' + pageTotal + ' ( Kehadiran:' + total + ' Present)'
+                    //);
                 }
                 //batasbawah
             });
@@ -411,7 +468,7 @@
                 });
             }).draw();
         }
-        $('#submit').click(function () {
+        @*$('#submit').click(function () {
             if (!$('#absen').is(':checked')) {
                 return;
             }
@@ -429,6 +486,6 @@
             });
             //batas
 
-        });
+        });*@
     </script>
 }
