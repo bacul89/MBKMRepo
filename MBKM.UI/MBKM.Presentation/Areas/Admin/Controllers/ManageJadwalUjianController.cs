@@ -74,7 +74,12 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
             foreach(var dt in tempJadwalUjian)
             {
-                var check = _jadwalUjianMBKMDetailService.Find(s => s.MahasiswaID == dt.MahasiswaID && s.JadwalUjianMBKMID == data.ID).Count();
+                var check = _jadwalUjianMBKMDetailService.Find(
+                    s => s.MahasiswaID == dt.MahasiswaID 
+                    && s.JadwalUjianMBKMs.IDMatkul == data.IDMatkul
+                    && s.JadwalUjianMBKMs.STRM == data.STRM
+                ).Count();
+
                 if(check == 0)
                 {
                     var ddd = dt.MahasiswaID.ToString();
