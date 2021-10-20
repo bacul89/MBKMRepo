@@ -99,5 +99,41 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             return persen.ToString() + "%";
 
         }
+        //public ActionResult PrintDetailgagal(int id)
+        //{
+        //    var report = new Rotativa.ActionAsPdf("DetailSummaryPresensiKelas", new { id = id });
+        //    return report;
+        //}
+        [AllowAnonymous]
+        public ActionResult PrintDetail()
+        {
+            var report = new Rotativa.ViewAsPdf("BAP")
+            { FileName = "Name.pdf" };
+            return report;
+        }
+        //[AllowAnonymous]
+        //public ActionResult PrintDetail()
+        //{
+        //    //var report = new Rotativa.ActionAsPdf("BAP");
+        //    //return report;
+        //    Dictionary<string, string> cookieCollection = new Dictionary<string, string>();
+
+        //    foreach (var key in Request.Cookies.AllKeys)
+        //    {
+        //        cookieCollection.Add(key, Request.Cookies.Get(key).Value);
+        //    }
+
+        //    return new Rotativa.ActionAsPdf("BAP")
+        //    {
+        //        FileName = "Name.pdf",
+        //        Cookies = cookieCollection
+        //    };
+        //}
+
+        public ActionResult Bap()
+        {
+            //var report = new Rotativa.ActionAsPdf("Index");
+            return View();
+        }
     }
 }
