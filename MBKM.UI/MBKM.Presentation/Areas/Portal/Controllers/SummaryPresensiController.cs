@@ -99,11 +99,12 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             return persen.ToString() + "%";
 
         }
-        //public ActionResult PrintBAP()
-        //{
-        //    var report = new Rotativa.ActionAsPdf("PrintBAP");
-        //    return report;
-        //}
+        [AllowAnonymous]
+        public ActionResult PrintBAP()
+        {
+            var report = new Rotativa.ViewAsPdf("PrintBAP");
+            return report;
+        }
     }
 
 }
