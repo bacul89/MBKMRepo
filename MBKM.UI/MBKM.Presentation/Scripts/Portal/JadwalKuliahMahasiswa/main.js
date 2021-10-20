@@ -52,6 +52,16 @@ $(document).ready(function () {
     });
     $("#tahunAjaranCari").change(function () {
         reloadDatatable();
+
+        /*.done(function () {
+            sks();
+        }).promise();*/
+
+/*        $.when(reloadDatatable).done(function () {
+            sks();
+        }).promise();*/
+
+
         /*
         dataParam.NamaProdi = $('#prodiCari').val();
         dataParam.lokasi = $('#lokasiCari').val();
@@ -73,7 +83,16 @@ $(document).ready(function () {
 
     datatable = $('#table-data-jadwal-kuliah').DataTable();
     reloadDatatable();
+/*    reloadDatatable().done(function () {
+        sks();
+    }).promise();*/
 
+    //console.log(access);
+
+
+    /*$.when(reloadDatatable).done(function () {
+        sks();
+    }).promise();*/
 });
 
 
@@ -186,7 +205,7 @@ function reloadDatatable() {
                 "data": "SKS",
                 "name": "SKS",
                 "render": function (data, type, row, meta) {
-                    return '<div class="center">' + data + '</div>';
+                    return '<div id="sks" class="center">' + data + '</div>';
                 }
             },
             {
@@ -240,6 +259,52 @@ function reloadDatatable() {
             },
 
         ],
+
+        "footerCallback": function (row, data, start, end, display) {
+            var api = this.api(), data;
+
+            // Remove the formatting to get integer data for summation
+            var intVal = function (i) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '') * 1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+
+
+            // Total over all pages
+            total = api
+                .column(6)
+                .data()
+                .reduce(function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0);
+
+
+            // Update footer
+            $(api.column(6).footer()).html(
+                total+'.00'
+            );
+
+
+            //console.log(total);
+            //sks();
+            //var sksTotal = 0;
+            //var sksBody = "<tr><td colspan='6'><b>Total SKS</b></td><td colspan='7'>" + sksTotal + ".00</td></tr>";
+            //console.log(sksBody);
+
+            //$('#table-data-jadwal-kuliah').append(sksBody);
+        },
+            /*var api = this.api(), data;
+
+            // Remove the formatting to get integer data for summation
+            var intVal = function (i) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '') * 1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };*/
+
         /*"createdRow": function (row, data, index) {
             $('td', row).css({
                 'border': '1px solid coral',
@@ -250,7 +315,40 @@ function reloadDatatable() {
         }*/
     });
 
+    //setTimeout(, 5000)
+/*    setTimeout(function () {
+        sks();
+    }, 800);*/
+    //sks(true);
 }
+
+
+/*function sks() {
+
+    //if (access == true) {
+        var sksTotal = 0;
+
+        var n = $('div[id^="sks"]').length;
+        //console.log(n);
+
+        $('div[id^="sks"]').each(function () {
+            //var num = $(this).attr("id");
+
+            var value = parseInt($(this).text());
+            //console.log("herro : " + value);
+            //list.push(value);
+            sksTotal = sksTotal + value;
+            //console.log(num);
+
+        });
+
+        var sksBody = "<tr><td colspan='6'><b>Total SKS</b></td><td colspan='7'>" + sksTotal + ".00</td></tr>";
+        //console.log(sksBody);
+
+        $('#table-data-jadwal-kuliah').append(sksBody);
+    //}
+
+}*/
 
 
 /* --responsive */
