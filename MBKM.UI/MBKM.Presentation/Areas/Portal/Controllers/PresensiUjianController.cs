@@ -30,7 +30,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult Index()
         {
             var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
-            var list = _jadwalUjianMBKMDetailService.Find(_ => _.MahasiswaID == mahasiswa.ID && _.IsActive && !_.IsDeleted);
+            var date1WeekAhead = DateTime.Today.AddDays(7);
+            var date = DateTime.Today;
+            var list = _jadwalUjianMBKMDetailService.Find(_ => _.MahasiswaID == mahasiswa.ID && _.IsActive && !_.IsDeleted && date1WeekAhead >= _.JadwalUjianMBKMs.TanggalUjian && date <= _.JadwalUjianMBKMs.TanggalUjian);
             Dictionary<string, string> result = new Dictionary<string, string>();
             foreach (var item in list)
             {
@@ -41,10 +43,13 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult GetPresensiUjian(int strm)
         {
             var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
-            var result = _jadwalUjianMBKMDetailService.Find(_ => _.MahasiswaID == mahasiswa.ID && _.IsActive && !_.IsDeleted && DateTime.Today.AddDays(7) >= _.JadwalUjianMBKMs.TanggalUjian && DateTime.Today <= _.JadwalUjianMBKMs.TanggalUjian).ToList();
+            var date1WeekAhead = DateTime.Today.AddDays(7);
+            var date = DateTime.Today;
+            var result = _jadwalUjianMBKMDetailService.Find(_ => _.MahasiswaID == mahasiswa.ID && _.IsActive && !_.IsDeleted && date1WeekAhead >= _.JadwalUjianMBKMs.TanggalUjian && date <= _.JadwalUjianMBKMs.TanggalUjian).ToList();
             if (strm != 0)
             {
-                result = _jadwalUjianMBKMDetailService.Find(_ => _.MahasiswaID == mahasiswa.ID && _.IsActive && !_.IsDeleted && int.Parse(_.JadwalUjianMBKMs.STRM) == strm && DateTime.Today.AddDays(7) == _.JadwalUjianMBKMs.TanggalUjian).ToList();
+                var tmp = strm + "";
+                result = _jadwalUjianMBKMDetailService.Find(_ => _.MahasiswaID == mahasiswa.ID && _.IsActive && !_.IsDeleted && _.JadwalUjianMBKMs.STRM == tmp && date1WeekAhead >= _.JadwalUjianMBKMs.TanggalUjian && date <= _.JadwalUjianMBKMs.TanggalUjian).ToList();
             }
             return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
