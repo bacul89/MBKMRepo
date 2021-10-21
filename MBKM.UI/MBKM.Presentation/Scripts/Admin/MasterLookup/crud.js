@@ -12,7 +12,7 @@ function clearValueOnForm() {
     $('input[name=inp_tipe]').val('');
     $('input[name=inp_nama]').val('');
     $('input[name=inp_nilai]').val('');
-    $('input[name=inp_status]').prop('checked', false);
+    //$('input[name=inp_status]').prop('checked', false);
 }
 
 function IndexCreateMasterLookup() {
