@@ -347,7 +347,8 @@
                     {
                         "data": "ID",
                         "render": function (data, type, row, meta) {
-                            return `<div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick="DetailBAP()"><i class="fas fa-file-download coral"></i></i></a></div>`;
+                            return `<div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick="DetailBAP()"><i class="fas fa-file-download coral"></i></i></a></div>
+                             <div class="col" style="text-align:center"><a target="_blank" href="@Url.Action("BAP","SummaryPresensi")" style="color:black"><i class="fas fa-file-download"></i></i></a></div>`;
                             //BAP belum bingung ~_~
                         }
 

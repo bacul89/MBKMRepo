@@ -5,6 +5,7 @@ using MBKM.Services.MBKMServices;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -107,6 +108,12 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult BAP()
         {
             //var report = new Rotativa.ActionAsPdf("Index");
+            //dynamic mymodel = new ExpandoObject();
+            string email = Session["email"] as string;
+            Mahasiswa mahasiswa = GetMahasiswaByEmail(email);
+            ViewData["nama"] = mahasiswa.Nama;
+            ViewData["nim"] = mahasiswa.NIM;
+            ViewData["univ"] = mahasiswa.NamaUniversitas;
 
             return View();
         }
@@ -114,6 +121,12 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         [AllowAnonymous]
         public ActionResult PrintDetail()
         {
+            string email = Session["email"] as string;
+            Mahasiswa mahasiswa = GetMahasiswaByEmail(email);
+            ViewData["nama"] = mahasiswa.Nama;
+            ViewData["nim"] = mahasiswa.NIM;
+            ViewData["univ"] = mahasiswa.NamaUniversitas;
+
             var report = new Rotativa.ViewAsPdf("BAP")
             { FileName = "Name.pdf" };
             return report;

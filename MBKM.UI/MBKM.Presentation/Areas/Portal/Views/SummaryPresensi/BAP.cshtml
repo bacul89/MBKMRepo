@@ -1,7 +1,7 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Bap";
 }
+
 <html>
 <head>
     <style>
@@ -36,30 +36,54 @@
     <table style="width:100%">
         <tr>
             <th>NIM:</th>
-            <td>NIMNIMNIM</td>
+            <td id="nim"></td>
 
             <th>Program Studi:</th>
-            <td>prodi prodi</td>
+            <td id="prodi"></td>
         </tr>
         <tr>
             <th>Nama Mahasiswa:</th>
             <td id="nama"></td>
 
             <th>Nama Mata Kuliah:</th>
-            <td>MK</td>
+            <td id="namaMK"></td>
         </tr>
         <tr>
             <th>Universitas Asal:</th>
-            <td>Univ</td>
+            <td id="univ"></td>
 
             <th>Kode Mata Kuliah:</th>
-            <td>Kode MK</td>
+            <td id="kodeMK"></td>
         </tr>
         <tr>
             <th></th>
             <td></td>
             <th>Seksi:</th>
-            <td>ABCD</td>
+            <td id="seksi"></td>
+        </tr>
+    </table>
+    <br>
+    <br>
+    <br>
+
+    <table style="width:100%">
+        <tr>
+            <th>Tanggal Pertemuan</th>
+            <th>Topik Perkuliahan Sesuai RPS</th>
+            <th>Penyesuaian Bentuk Pembelajaran dengan online learning (metode dan aktivitas)</th>
+            <th>Platform/aplikasi yang digunakan</th>
+            <th>Kehadiran Mahasiswa</th>
+            <th>Evaluasi Perkuliahan online</th>
+            <th>Dosen</th>
+        </tr>
+        <tr>
+            <td></td>@*tanggal pertemuan*@
+            <td></td>@*topik perkuliahan*@
+            <td></td>@*metode dan aktivitas*@
+            <td></td>@*platform yangdigunakan*@
+            <td></td>@*status kehadira*@
+            <td></td>@*evaluasi perkuliahan*@
+            <td></td>@*Dosen pengajar*@
         </tr>
     </table>
 </body>
@@ -68,26 +92,12 @@
 @section Scripts{
     <script>
         var mataKuliah = null;
-     $(document).ready(function () {
-    $.ajax({
-                type: "GET",
-                url: "@Url.Action("GetJadwalKuliahById", "SummaryPresensi")?id=53"
-    }).then(function (response) {
-        console.log(response);
-                //mataKuliah = response;
-                //$('#nama').html('Daftar hadir pada Mata Kuliah ' + response.JadwalKuliahs.NamaMataKuliah.toUpperCase())
-       // $('#nama').html(response.JadwalKuliahs.NamaFakultas);
-         $.ajax({
-
-                type: "GET",
-                     url: '@Url.Action("GetSumAbsensi", "SummaryPresensi")?jadwalKuliahId=292'
-            }).then(function (response) {
-                $('#nama').html(response[0].Mahasiswas.Nama);
-                //console.log(response[0].Mahasiswas.ID);
-            });
-
-            });
+        $(document).ready(function () {
+            $('#nama').html("@ViewData["nama"].ToString()");
+            $('#nim').html("@ViewData["nim"].ToString()");
+            $('#univ').html("@ViewData["univ"].ToString()");
+   
         });
     </script>
-   
-    }
+
+}
