@@ -54,24 +54,24 @@
                             </div>
                         </div>
                         <!--<div class="form-group">
-                                <label for="inp_lokasi" class="col-sm-3 control-label">Lokasi</label>
-                                <div class="col-sm-9">
-                                    <select name="lokasiCari" id="lokasiCari" class="form-control input-md"></select>
-                                </div>
-                            </div>
-                            <div class="form-group" >
-                                <label for="inp_prodiId" class="col-sm-3 control-label">Kampus</label>
-                                <div class="col-sm-9">
-                                    <input name="kampusCari" id="kampusCari" class="form-control input-md" disabled>
-                                </div>
-                            </div>
+                <label for="inp_lokasi" class="col-sm-3 control-label">Lokasi</label>
+                <div class="col-sm-9">
+                    <select name="lokasiCari" id="lokasiCari" class="form-control input-md"></select>
+                </div>
+            </div>
+            <div class="form-group" >
+                <label for="inp_prodiId" class="col-sm-3 control-label">Kampus</label>
+                <div class="col-sm-9">
+                    <input name="kampusCari" id="kampusCari" class="form-control input-md" disabled>
+                </div>
+            </div>
 
-                            <div class="form-group" >
-                                <label for="inp_prodiId" class="col-sm-3 control-label">Prodi ID</label>
-                                <div class="col-sm-9">
-                                    <input name="prodiIdCari" id="prodiIdCari" class="form-control input-md" disabled>
-                                </div>
-                            </div>-->
+            <div class="form-group" >
+                <label for="inp_prodiId" class="col-sm-3 control-label">Prodi ID</label>
+                <div class="col-sm-9">
+                    <input name="prodiIdCari" id="prodiIdCari" class="form-control input-md" disabled>
+                </div>
+            </div>-->
                         <div class="form-group">
                             <label for="inp_matakuliah" class="col-sm-3 control-label">Mata Kuliah</label>
                             <div class="col-sm-9">
@@ -112,7 +112,8 @@
                 <br />
                 <br />
                 <!--table-responsive-->
-                <table id="table-data-master-mapping-cpl" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
+                <!--<div id="table-data-master-mapping-cpl-overflow">-->
+                <table id="table-data-master-mapping-cpl" class="table table-bordered table-spacing dataTable table-responsive display nowrap">
                     <thead>
                         <tr>
                             <th class="zero-padding no-border vertical-center sorting">Action</th>
@@ -121,7 +122,7 @@
                             <th class="zero-padding no-border vertical-center sorting">Nama Mata Kuliah</th>
                             <th class="zero-padding no-border vertical-center sorting">Kode CPL</th>
                             <th class="zero-padding no-border vertical-center sorting">Kelompok</th>
-                            <th class="zero-padding no-border vertical-center sorting">Capaian Pembelajaran</th>
+                            <th class="zero-padding no-border vertical-center sorting" style="width: 100%;">Capaian Pembelajaran</th>
 
                         </tr>
                     </thead>
@@ -129,8 +130,8 @@
                     </tbody>
                 </table>
 
+            <!--</div>-->
             </div>
-        </div>
     </div>
 </div>
 
@@ -176,6 +177,7 @@
             datatable = $('#hasilPencarian').DataTable({
             });*@
         });
+
         function buttonHandler(param) {
             /*title='This is my title'*/
             //console.log(param);
@@ -322,7 +324,7 @@
                         "data": "Capaian",
                         "name": "Capaian",
                         "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
+                            return '<div>' + data + '</div>';
                         }
                     },
                 ],
@@ -491,7 +493,6 @@
 
                     $("#prodiCari").change(function () {
 
-                        console.log();
                         //console.log("select2");
                         clearValueOnForm();
                         buttonHandler("close");
@@ -551,11 +552,11 @@
                                         var page = params.page - 1 || 1;
                                         pageLength = pageLength + data.length;
 
-                                        console.log('page : ' + params.page );
+                                        @*console.log('page : ' + params.page );
                                         console.log(page);
                                         console.log('');
                                         console.log(page * 10);
-                                        console.log(pageLength);
+                                        console.log(pageLength);*@
 
                                             return {
                                                 results: $.map(data, function (item) { return { id: item.id, value: item.id, text: item.kode + ' - ' + item.text, name: item.text, kode: item.kode } }),
