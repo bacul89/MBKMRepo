@@ -148,8 +148,10 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             ViewData["seksi"] = jdwl.ClassSection;
             ViewData["tanggal"] = absensi.TanggalAbsen;
 
+            var tgl = absensi.TanggalAbsen.ToString("dd/MM/yyyy");
+            
             var report = new Rotativa.ViewAsPdf("BAP")
-            { FileName = DateTime.Now+"-BAP.pdf" };
+            { FileName = tgl +"-"+ jdwl.KodeMataKuliah + "-BAP.pdf" };
             return report;
         }
         //[AllowAnonymous]
