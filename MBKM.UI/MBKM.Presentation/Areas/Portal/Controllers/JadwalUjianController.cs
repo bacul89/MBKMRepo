@@ -17,18 +17,26 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         private IJadwalUjianMBKMDetailService _jadwalUjianMBKMDetailService;
         private IJadwalUjianMBKMService _jadwalUjianMBKMService;
         private IJadwalKuliahService _jadwalKuliahService;
+        private IMahasiswaService _mahasiswaService;
 
-        public JadwalUjianController(IJadwalUjianMBKMDetailService jadwalUjianMBKMDetailService, IJadwalUjianMBKMService jadwalUjianMBKMService, IJadwalKuliahService jadwalKuliahService)
+        public JadwalUjianController(IJadwalUjianMBKMDetailService jadwalUjianMBKMDetailService, IJadwalUjianMBKMService jadwalUjianMBKMService, IJadwalKuliahService jadwalKuliahService, IMahasiswaService mahasiswaService)
         {
             _jadwalUjianMBKMDetailService = jadwalUjianMBKMDetailService;
             _jadwalUjianMBKMService = jadwalUjianMBKMService;
             _jadwalKuliahService = jadwalKuliahService;
+            _mahasiswaService = mahasiswaService;
         }
+
+
 
 
         // GET: Portal/JadwalUjian
         public ActionResult Index()
         {
+            var email = HttpContext.Session["email"].ToString();
+            var jenjang = _mahasiswaService.Find(x => x.Email == email).First().JenjangStudi;
+            var dataSemester =  _mahasiswaService.GetDataSemester(jenjang).First().ID;
+            ViewData["firstSemester"] = dataSemester.ToString();
             IEnumerable<VMSemester> data = _jadwalUjianMBKMService.getAllSemester();
             ViewData["semester"] = data;
             return View();

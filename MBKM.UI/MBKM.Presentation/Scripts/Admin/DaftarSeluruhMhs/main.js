@@ -46,7 +46,8 @@
             //"title": "No",
             "data": null,
             "render": function (data, type, full, meta) {
-                return'<div class="center vertical-center">' + (meta.row + 1) + '</div>';
+                //return'<div class="center vertical-center">' + (meta.row + 1) + '</div>';
+                return meta.row + meta.settings._iDisplayStart + 1;
             }
         },
         {
@@ -54,7 +55,12 @@
             "data": "NamaUniversitas",
             "name": "NamaUniversitas",
             "render": function (data, type, row, meta) {
-                return '<div class="center">' + data + '</div>';
+                if (data != null) {
+                    return '<div class="center">' + data + '</div>';
+                }
+                else {
+                    return '<div class="center"> - </div>';
+                }
             }
         },
         {
@@ -62,7 +68,12 @@
             "data": "JenjangStudi",
             "name": "JenjangStudi",
             "render": function (data, type, row, meta) {
-                return '<div class="center">' + data + '</div>';
+                if (data != null) {
+                    return '<div class="center">' + data + '</div>';
+                }
+                else {
+                    return '<div class="center"> - </div>';
+                }
             }
         },
         {
@@ -70,7 +81,12 @@
             "data": "ProdiAsal",
             "name": "ProdiAsal",
             "render": function (data, type, row, meta) {
-                return '<div class="center">' + data + '</div>';
+                if (data != null) {
+                    return '<div class="center">' + data + '</div>';
+                }
+                else {
+                    return '<div class="center"> - </div>';
+                }
             }
         },
         {
@@ -78,7 +94,12 @@
             "data": "NIMAsal",
             "name": "NIMAsal",
             "render": function (data, type, row, meta) {
-                return '<div class="center">' + data + '</div>';
+                if (data != null) {
+                    return '<div class="center">' + data + '</div>';
+                }
+                else {
+                    return '<div class="center"> - </div>';
+                }
             }
         },
         
@@ -105,7 +126,12 @@
             "data": "NoKerjasama",
             "name": "NoKerjasama",
             "render": function (data, type, row, meta) {
-                return '<div class="center">' + data + '</div>';
+                if (data != null) {
+                    return '<div class="center">' + data + '</div>';
+                }
+                else {
+                    return '<div class="center"> - </div>';
+                }
             }
         },
         {
@@ -113,7 +139,12 @@
             "data": "StatusKerjasama",
             "name": "StatusKerjasama",
             "render": function (data, type, row, meta) {
-                return '<div class="center">' + data + '</div>';
+                if (data != null) {
+                    return '<div class="center">' + data + '</div>';
+                }
+                else {
+                    return '<div class="center"> - </div>';
+                }
             }
         },
         {

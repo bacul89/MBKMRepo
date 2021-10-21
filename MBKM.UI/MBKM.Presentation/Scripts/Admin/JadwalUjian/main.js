@@ -127,6 +127,9 @@ function GenerateDataTable() {
                     //"title": "kode matakuliah",
                     "data": "KodeMatkul",
                     "render": function (data, type, row, meta) {
+                        if (data == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                        }
                         return '<div class="center">' + data + '</div>';
                     }
                 },
@@ -134,6 +137,9 @@ function GenerateDataTable() {
                     //"title": "nama matakuliah",
                     "data": "NamaMatkul",
                     "render": function (data, type, row, meta) {
+                        if (data == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                        }
                         return '<div class="center">' + data + '</div>';
                     }
                 },
@@ -141,6 +147,9 @@ function GenerateDataTable() {
                     //"title": "seksi",
                     "data": "ClassSection",
                     "render": function (data, type, row, meta) {
+                        if (data == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                        }
                         return '<div class="center">' + data + '</div>';
                     }
                 },
@@ -148,6 +157,9 @@ function GenerateDataTable() {
                     //"title": "Tanggal",
                     "data": "TanggalUjian",
                     "render": function (data, type, row, meta) {
+                        if (data == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                        }
                         return '<div class="center">' + convertMilisecondToDate(data) + '</div>';
                     }
                 },
@@ -162,6 +174,9 @@ function GenerateDataTable() {
                     //"title": Ruang Ujian",
                     "data": "RuangUjian",
                     "render": function (data, type, row, meta) {
+                        if (data == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                        }
                         return '<div class="center">' + data + '</div>';
                     }
                 },
@@ -169,6 +184,9 @@ function GenerateDataTable() {
                     //"title": Lokasi",
                     "data": "Lokasi",
                     "render": function (data, type, row, meta) {
+                        if (data == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                        }
                         return '<div class="center">' + data + '</div>';
                     }
                 },

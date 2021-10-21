@@ -65,6 +65,10 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Rotativa.1.7.4-rc\lib\net45\Rotativa.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -201,6 +205,10 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dataTables.checkboxes.css" />
     <Content Include="Content\Portal\TrackingStatus\main.css" />
+    <Content Include="Rotativa\help-wkhtmltoimage.txt" />
+    <Content Include="Rotativa\help-wkhtmltopdf.txt" />
+    <Content Include="Rotativa\wkhtmltoimage.exe" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\Admin\ApprovalPendaftaranMakul\detailApproval.js" />
     <Content Include="Scripts\Admin\DaftarSeluruhMhs\main.js" />
     <Content Include="Scripts\Admin\ApprovalPendaftaranMakul\main.js" />
@@ -497,6 +505,8 @@
     <Content Include="Areas\Admin\Views\PresensiKelas\DetailPresensi.cshtml" />
     <Content Include="Areas\Portal\Views\SummaryPresensi\Index.cshtml" />
     <Content Include="Areas\Portal\Views\SummaryPresensi\DetailSummaryPresensiKelas.cshtml" />
+    <Content Include="App_Browsers\qt.browser" />
+    <Content Include="Areas\Portal\Views\SummaryPresensi\BAP.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />

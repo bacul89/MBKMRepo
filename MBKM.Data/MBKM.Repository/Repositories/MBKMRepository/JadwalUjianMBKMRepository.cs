@@ -48,9 +48,9 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                         || y.JamMulai.Contains(SearchParam)
                         || y.JamAkhir.Contains(SearchParam)
                     )
-                    .GroupBy(x => new { x.ID, x.KodeMatkul, x.NamaMatkul, x.ClassSection, x.TanggalUjian, x.JamMulai, x.JamAkhir }, (key, group) => 
+                    .GroupBy(x => new { /*x.ID,*/ x.KodeMatkul, x.NamaMatkul, x.ClassSection, x.TanggalUjian, x.JamMulai, x.JamAkhir }, (key, group) => 
                     new {
-                        ID = key.ID,
+                        /*ID = key.ID,*/
                         KodeMatkul = key.KodeMatkul,
                         NamaMatkul = key.NamaMatkul,
                         ClassSection = key.ClassSection,
@@ -63,7 +63,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 mListJadwalUjian.gridDatas = gridfilter.Skip(Skip).Take(Length)
                     .Select(z => new GridDataJadwalUjian
                     {
-                        ID = z.ID,
+                        /*ID = z.ID,*/
                         KodeMatkul = z.KodeMatkul,
                         NamaMatkul = z.NamaMatkul,
                         ClassSection = z.ClassSection,
