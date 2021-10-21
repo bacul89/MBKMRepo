@@ -33,6 +33,9 @@
             "title": "Universitas Asal",
             "data": "NamaUniversitas",
             "render": function (data, type, row, meta) {
+                if (data == null) {
+                    return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                }
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
@@ -40,6 +43,9 @@
             "title": "Jenjang Studi",
             "data": "JenjangStudi",
             "render": function (data, type, row, meta) {
+                if (data == null) {
+                    return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                }
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
@@ -47,6 +53,9 @@
             "title": "Program Studi Asal",
             "data": "ProdiAsal",
             "render": function (data, type, row, meta) {
+                if (data == null) {
+                    return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                }
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
@@ -54,6 +63,9 @@
             "title": "NIM Asal",
             "data": "NIMAsal",
             "render": function (data, type, row, meta) {
+                if (data == null) {
+                    return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                }
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
@@ -61,6 +73,9 @@
             "title": "Nama Mahasiswa",
             "data": "Nama",
             "render": function (data, type, row, meta) {
+                if (data == null) {
+                    return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                }
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
@@ -68,6 +83,9 @@
             "title": "Jenis Kelamin",
             "data": "Gender",
             "render": function (data, type, row, meta) {
+                if (data == null) {
+                    return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                }
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
@@ -75,6 +93,9 @@
             "title": "Email",
             "data": "Email",
             "render": function (data, type, row, meta) {
+                if (data == null) {
+                    return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                }
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
@@ -82,6 +103,9 @@
             "title": "No. Hp",
             "data": "NoHp",
             "render": function (data, type, row, meta) {
+                if (data == null) {
+                    return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                }
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
@@ -89,6 +113,9 @@
             "title": "Status Verifikasi",
             "data": "StatusVerifikasi",
             "render": function (data, type, row, meta) {
+                if (data == null) {
+                    return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                }
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },

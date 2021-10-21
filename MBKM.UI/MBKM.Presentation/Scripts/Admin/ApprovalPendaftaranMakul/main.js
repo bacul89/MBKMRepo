@@ -26,13 +26,16 @@
         {
             "data": null,
             "render": function (data, type, full, meta) {
-                return '<div class="center vertical-center" style="font-size: 0.8vw">' + (meta.row + 1) + '</div>';
+                return '<div class="center vertical-center" style="font-size: 0.8vw">' + (meta.row + meta.settings._iDisplayStart + 1) + '</div>';
             }
         },
         {
             "title": "Universitas Asal",
             "data": "mahasiswas.NamaUniversitas",
             "render": function (data, type, row, meta) {
+                if (data == null) {
+                    return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                }
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
@@ -40,6 +43,9 @@
             "title": "Prodi Asal",
             "data": "mahasiswas.ProdiAsal",
             "render": function (data, type, row, meta) {
+                if (data == null) {
+                    return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                }
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
@@ -47,6 +53,9 @@
             "title": "NIM Asal",
             "data": "mahasiswas.NIMAsal",
             "render": function (data, type, row, meta) {
+                if (data == null) {
+                    return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                }
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
@@ -54,6 +63,9 @@
             "title": "Nama Mahasiswa",
             "data": "mahasiswas.Nama",
             "render": function (data, type, row, meta) {
+                if (data == null) {
+                    return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                }
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
@@ -61,6 +73,9 @@
             "title": "Tahun Semester",
             "data": "mahasiswas.Semester",
             "render": function (data, type, row, meta) {
+                if (data == null) {
+                    return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                }
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
@@ -68,6 +83,9 @@
             "title": "Kode Mata Kuliah Asal",
             "data": "MatkulKodeAsal",
             "render": function (data, type, row, meta) {
+                if (data == null) {
+                    return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                }
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
@@ -75,6 +93,9 @@
             "title": "Nama Mata Kuliah Asal",
             "data": "MatkulAsal",
             "render": function (data, type, row, meta) {
+                if (data == null) {
+                    return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                }
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
@@ -82,6 +103,9 @@
             "title": "Program Studi Tujuan",
             "data": "JadwalKuliahs.NamaProdi",
             "render": function (data, type, row, meta) {
+                if (data == null) {
+                    return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                }
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
@@ -89,6 +113,9 @@
             "title": "Kode Mata Kuliah Dituju",
             "data": "JadwalKuliahs.KodeMataKuliah",
             "render": function (data, type, row, meta) {
+                if (data == null) {
+                    return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                }
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
@@ -96,6 +123,9 @@
             "title": "Nama Mata Kuliah Dituju",
             "data": "JadwalKuliahs.NamaMataKuliah",
             "render": function (data, type, row, meta) {
+                if (data == null) {
+                    return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                }
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
@@ -103,6 +133,9 @@
             "title": "No. Kerjasama",
             "data": "mahasiswas.NoKerjasama",
             "render": function (data, type, row, meta) {
+                if (data == null) {
+                    return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                }
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
