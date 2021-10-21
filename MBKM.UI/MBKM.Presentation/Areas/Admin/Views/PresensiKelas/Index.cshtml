@@ -202,7 +202,7 @@
                         "render": function (data, type, row, meta) {
                             var data = new Date(row.TanggalAbsen);
                             var now = new Date();
-                            if (data.getDate() == now.getDate() && data.getMonth() == now.getMonth() && data.getFullYear() == now.getFullYear) {
+                            if (data.getDate() == now.getDate() && data.getMonth() == now.getMonth() && data.getFullYear() == now.getFullYear()) {
                                 return `<div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick="javascript:$('#idJadwal').val(${data}); $('#detailPresensi').submit();"><i class="fas fa-edit"></i></a></div>`;
                             }
                             return `<div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick="javascript:alert('DATA ABSEN HANYA BISA DIAKSES PADA TANGGAL ABSEN!');"><i class="fas fa-edit"></i></a></div>`;
