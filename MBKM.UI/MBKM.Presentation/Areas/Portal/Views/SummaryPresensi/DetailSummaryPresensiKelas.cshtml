@@ -163,7 +163,7 @@
             <p style="font-weight: normal; font-size: 15px; color: #c1baba;" id="subtitle"></p>
         </h5>
         <hr />
-        <div style="text-align:right">@Html.ActionLink("Print Employee", "PrintDetail")</div>
+        @*<div style="text-align:right">@Html.ActionLink("Print Employee", "PrintDetail")</div>*@
         <br />
 
         <p style=" padding-right: 15px; padding-left: 15px; font-size: 18px; font-weight: bold; color: black; ">DETAIL MATA KULIAH</p>
@@ -282,6 +282,7 @@
                     console.log(data) // this is your response obj that you can work with
                 }
             });*@
+           
 
             $.ajax({
                 type: "GET",
@@ -300,6 +301,7 @@
                 $('#ruangKelas').html(response.JadwalKuliahs.RuangKelas);
                // $('#namaDosen').html(response.JadwalKuliahs.NamaDosen);
                 $('#namaDosen').html(response.JadwalKuliahs.NamaDosen);
+               
 
                 $('#jdw').html(response.JadwalKuliahs.ID);
                 //bartas
@@ -347,7 +349,8 @@
                     {
                         "data": "ID",
                         "render": function (data, type, row, meta) {
-                            return `<div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick="DetailBAP()"><i class="fas fa-file-download coral"></i></i></a></div>`;
+                            return `<div hidden class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick="DetailBAP('${data}')"><i class="fas fa-file-download coral"></i></i></a></div>
+                             <div class="col" style="text-align:center"><a target="_blank"  onclick="location.href='@Url.Action("PrintDetail", "SummaryPresensi")?id='+'${data}'" style="color:black"><i class="fas fa-file-download coral"></i></i></a></div>`
                             //BAP belum bingung ~_~
                         }
 
@@ -491,20 +494,21 @@
 
         });*@
         //tombol bap
-        function DetailBAP() {
+        function DetailBAP(id) {
 
             //console.log();
            // @Url.Action("detailBAP", "SummaryPresensiKelas")
             //$.LoadingOverlay("show");
            // window.
             $.ajax({
-                url: "@Url.Action("BAP", "SummaryPresensi")",
+                url: '@Url.Action("BAP", "SummaryPresensi")?id=' + id,
+                //url: '@Url.Action("GetJadwalKuliah", "PresensiKelas")?strm=' + strm,
                 type: 'get',
                 datatype: 'html',
                 success: function (data) {
                     //$.LoadingOverlay("hide");
                     //console.log(data);
-                    window.location = "/Portal/SummaryPresensi/BAP"
+                    window.location = "/Portal/SummaryPresensi/BAP/?id="+id
 
 
 
