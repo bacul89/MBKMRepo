@@ -38,6 +38,7 @@
                                     <h5><b>Pilih Semester</b></h5>
                                 </div>
                                 <div class="col-sm-8">
+                                    <input class="hide" type="hidden" value="@ViewData["firstSemester"].ToString()" id="firstSemester" disabled/>
                                     <select name="inp_semester" id="inp_semester" class="form-control input-md input-data">
                                         <option value="" selected disabled>-- Pilih Tahun Semester --</option>
                                         @{
@@ -53,7 +54,7 @@
                     </div>
                 </div>
                 <br />
-                <div class="row hidden"  id="data_table">
+                <div class="row"  id="data_table">
                     <div class="col-lg-12">
                         <table id="table-data-jadwal-ujian-mahasiswa" class="table row-border hover dt-responsive responsive" style="border-spacing: 0 15px; border:0">
                             <thead class="text-center">
@@ -73,7 +74,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="row" id="announced">
+                <div class="row hidden" id="announced" >
                     <div class="col-lg-12 center">
                         <div class="row">
                             <div class="col-lg-4" style="text-align:right">
