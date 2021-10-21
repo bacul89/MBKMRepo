@@ -75,6 +75,7 @@
 
     <table style="width:100%">
         <tr>
+            <th hidden>Tanggal Pertemuan</th>
             <th>Tanggal Pertemuan</th>
             <th>Topik Perkuliahan Sesuai RPS</th>
             <th>Penyesuaian Bentuk Pembelajaran dengan online learning (metode dan aktivitas)</th>
@@ -84,7 +85,8 @@
             <th>Dosen</th>
         </tr>
         <tr>
-            <td id="tanggal"></td>
+            <td hidden id="tanggal"></td>
+            <td id="tanggal2"></td>
             @*tanggal pertemuan*@
             <td></td>
             @*topik perkuliahan*@
@@ -117,8 +119,12 @@
             $('#namaMK').html("@ViewData["namaMK"].ToString()");
             $('#kodeMK').html("@ViewData["kodeMK"].ToString()");
             $('#seksi').html("@ViewData["seksi"].ToString()");
+
             $('#tanggal').html("@ViewData["tanggal"].ToString()");
-           
+            var tglPertemuan = $('#tanggal').text();
+            var tglSplit = tglPertemuan.split(' 00:')[0];
+            $('#tanggal2').html(tglSplit);
+        
             if ("@ViewData["present"].ToString()" == "True") {
 
                 $('#present').html("Hadir");
