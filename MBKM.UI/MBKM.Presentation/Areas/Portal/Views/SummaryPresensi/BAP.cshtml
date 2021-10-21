@@ -36,7 +36,7 @@
     <div style="text-align:right">
         
         @*<button onclick="@Url.Action("PrintDetail", "SummaryPresensi")" ;class="btn btn-success"><i class="fas fa-plus-circle"></i> Download pdf</button>*@
-        <input type="button" value="Download PDF" onclick="location.href='@Url.Action("PrintDetail", "SummaryPresensi")?id='+ @Model" />
+        @*<input type="button" value="Download PDF" onclick="location.href='@Url.Action("PrintDetail", "SummaryPresensi")?id='+ @Model" />*@
         @*<a href="javascript:void(0)" style="color:black" onclick="@Url.Action("PrintDetail", "SummaryPresensi")"><i class="fas fa-edit"></i></a>*@
     </div>
 
@@ -84,7 +84,7 @@
             <th>Dosen</th>
         </tr>
         <tr>
-            <td></td>
+            <td id="tanggal"></td>
             @*tanggal pertemuan*@
             <td></td>
             @*topik perkuliahan*@
@@ -117,6 +117,7 @@
             $('#namaMK').html("@ViewData["namaMK"].ToString()");
             $('#kodeMK').html("@ViewData["kodeMK"].ToString()");
             $('#seksi').html("@ViewData["seksi"].ToString()");
+            $('#tanggal').html("@ViewData["tanggal"].ToString()");
            
             if ("@ViewData["present"].ToString()" == "True") {
 

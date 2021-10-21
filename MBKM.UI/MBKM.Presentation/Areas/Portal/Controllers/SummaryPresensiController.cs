@@ -125,6 +125,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             ViewData["namaMK"] = jdwl.NamaMataKuliah;
             ViewData["kodeMK"] = jdwl.KodeMataKuliah;
             ViewData["seksi"] = jdwl.ClassSection;
+            ViewData["tanggal"] = absensi.TanggalAbsen;
             return View(id);
         }
         
@@ -145,6 +146,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             ViewData["namaMK"] = jdwl.NamaMataKuliah;
             ViewData["kodeMK"] = jdwl.KodeMataKuliah;
             ViewData["seksi"] = jdwl.ClassSection;
+            ViewData["tanggal"] = absensi.TanggalAbsen;
 
             var report = new Rotativa.ViewAsPdf("BAP")
             { FileName = DateTime.Now+"-BAP.pdf" };
