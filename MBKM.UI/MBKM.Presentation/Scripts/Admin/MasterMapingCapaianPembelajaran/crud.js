@@ -21,7 +21,7 @@ function clearValueOnForm() {
     $('#inp_kode_capaian_pembelajaran').empty();
     $('#inp_kelompok').empty();
     $('#inp_capaian').val('');
-    $('input[name=inp_status]').prop('checked', false);
+    //$('input[name=inp_status]').prop('checked', false);
 }
 
 
