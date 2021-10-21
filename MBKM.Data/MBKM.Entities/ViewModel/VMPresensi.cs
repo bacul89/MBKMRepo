@@ -11,6 +11,7 @@ namespace MBKM.Entities.ViewModel
         public DateTime TanggalAbsen { get; set; }
         public DateTime JamMasuk { get; set; }
         public DateTime JamKeluar { get; set; }
+        public string TanggalAbsen2 { get; set; }
         public string JamMasuk2 { get; set; }
         public string JamKeluar2 { get; set; }
         public string KodeMataKuliah { get; set; }

@@ -33,11 +33,11 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             return View();
         }
-        public ActionResult DetailPresensi(Int64 idJadwal, DateTime tanggalAbsen)
+        public ActionResult DetailPresensi(Int64 idJadwal, string tanggalAbsen)
         {
             var result = _jadwalKuliahService.Get(idJadwal);
             var model = new VMPresensi();
-            model.TanggalAbsen = tanggalAbsen;
+            model.TanggalAbsen2 = tanggalAbsen;
             model.JamMasuk2 = result.JamMasuk;
             model.JamKeluar2 = result.JamSelesai;
             model.KodeMataKuliah = result.KodeMataKuliah;
@@ -74,7 +74,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
         public ActionResult GetPresensiMahasiswa(Int64 idJadwal)
         {
-            return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.Find(_ => _.JadwalKuliahID == idJadwal).ToList()), ContentType = "application/json" };
+            var now = DateTime.Now;
+            TimeSpan ts = new TimeSpan(0, 0, 0);
+            now = now.Date + ts;
+            return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.Find(_ => _.JadwalKuliahID == idJadwal && _.TanggalAbsen == now).ToList()), ContentType = "application/json" };
         }
         public ActionResult GetPresensi(string jenjangStudi, string fakultas, string lokasi, string prodi, string matkul, string seksi)
         {
