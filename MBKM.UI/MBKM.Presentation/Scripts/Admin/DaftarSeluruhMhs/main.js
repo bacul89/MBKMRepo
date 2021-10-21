@@ -44,9 +44,11 @@
         },
         {
             //"title": "No",
+            "orderable": false,
             "data": null,
             "render": function (data, type, full, meta) {
-                return'<div class="center vertical-center">' + (meta.row + 1) + '</div>';
+                //return '<div class="center vertical-center" style="font-size: 0.8vw">' + (meta.row + 1) + '</div>';
+                return '<div class="center">' + (meta.row + meta.settings._iDisplayStart + 1) + '</div>';
             }
         },
         {
