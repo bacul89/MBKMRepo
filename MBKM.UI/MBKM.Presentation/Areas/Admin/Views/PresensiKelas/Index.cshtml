@@ -74,6 +74,7 @@
 
 <form action="@Url.Action("DetailPresensi","PresensiKelas")" method="post" id="detailPresensi">
     <input type="hidden" id="idJadwal" name="idJadwal" />
+    <input type="hidden" id="tanggalAbsen" name="tanggalAbsen" />
 </form>
 
 <div class="card center-block" style="background-color: white; margin: 15px;">
@@ -200,10 +201,11 @@
                     {
                         "data": "IDJadwalKuliah",
                         "render": function (data, type, row, meta) {
-                            var data = new Date(row.TanggalAbsen);
+                            var date = new Date(row.TanggalAbsen);
                             var now = new Date();
-                            if (data.getDate() == now.getDate() && data.getMonth() == now.getMonth() && data.getFullYear() == now.getFullYear()) {
-                                return `<div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick="javascript:$('#idJadwal').val(${data}); $('#detailPresensi').submit();"><i class="fas fa-edit"></i></a></div>`;
+                            if (date.getDate() == now.getDate() && date.getMonth() == now.getMonth() && date.getFullYear() == now.getFullYear()) {
+                                var tanggal = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+                                return '<div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick="javascript:$(\'#idJadwal\').val(\'' + data + '\'); $(\'#tanggalAbsen\').val(\'' + tanggal + '\'); $(\'#detailPresensi\').submit();"><i class="fas fa-edit"></i></a></div>';
                             }
                             return `<div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick="javascript:alert('DATA ABSEN HANYA BISA DIAKSES PADA TANGGAL ABSEN!');"><i class="fas fa-edit"></i></a></div>`;
                         }
