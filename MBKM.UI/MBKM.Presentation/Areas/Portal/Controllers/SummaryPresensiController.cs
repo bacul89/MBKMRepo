@@ -104,6 +104,13 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         //    var report = new Rotativa.ActionAsPdf("DetailSummaryPresensiKelas", new { id = id });
         //    return report;
         //}
+        public ActionResult BAP()
+        {
+            //var report = new Rotativa.ActionAsPdf("Index");
+
+            return View();
+        }
+        
         [AllowAnonymous]
         public ActionResult PrintDetail()
         {
@@ -130,10 +137,6 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         //    };
         //}
 
-        public ActionResult Bap()
-        {
-            //var report = new Rotativa.ActionAsPdf("Index");
-            return View();
-        }
+       
     }
 }

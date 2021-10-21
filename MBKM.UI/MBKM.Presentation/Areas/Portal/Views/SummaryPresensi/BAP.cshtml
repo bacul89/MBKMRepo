@@ -2,6 +2,92 @@
 @{
     ViewBag.Title = "Bap";
 }
+<html>
+<head>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
 
-<h2>Bap</h2>
+        th, td {
+            padding: 5px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; padding-left: 0px; font-weight: bold; font-size: 20px; color: black; ">
+        FORMULIR
 
+
+
+
+    </h5>
+    <h5 class="card-title" style="padding-top: 0px; padding-right: 15px; padding-left: 0px; font-weight: bold; font-size: 20px; color: black; ">
+
+
+
+        DOKUMENTASI KEGIATAN PERKULIAHAN ONLINE
+        <p style="font-weight: normal; font-size: 15px;font-style:italic; ">Sebagai Pengganti Perkuliahan Tatap Muka</p>
+    </h5>
+    <div style="text-align:right">@Html.ActionLink("Print BAP", "PrintDetail")</div>
+
+    <table style="width:100%">
+        <tr>
+            <th>NIM:</th>
+            <td>NIMNIMNIM</td>
+
+            <th>Program Studi:</th>
+            <td>prodi prodi</td>
+        </tr>
+        <tr>
+            <th>Nama Mahasiswa:</th>
+            <td id="nama"></td>
+
+            <th>Nama Mata Kuliah:</th>
+            <td>MK</td>
+        </tr>
+        <tr>
+            <th>Universitas Asal:</th>
+            <td>Univ</td>
+
+            <th>Kode Mata Kuliah:</th>
+            <td>Kode MK</td>
+        </tr>
+        <tr>
+            <th></th>
+            <td></td>
+            <th>Seksi:</th>
+            <td>ABCD</td>
+        </tr>
+    </table>
+</body>
+</html>
+
+@section Scripts{
+    <script>
+        var mataKuliah = null;
+     $(document).ready(function () {
+    $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetJadwalKuliahById", "SummaryPresensi")?id=53"
+    }).then(function (response) {
+        console.log(response);
+                //mataKuliah = response;
+                //$('#nama').html('Daftar hadir pada Mata Kuliah ' + response.JadwalKuliahs.NamaMataKuliah.toUpperCase())
+       // $('#nama').html(response.JadwalKuliahs.NamaFakultas);
+         $.ajax({
+
+                type: "GET",
+                     url: '@Url.Action("GetSumAbsensi", "SummaryPresensi")?jadwalKuliahId=292'
+            }).then(function (response) {
+                $('#nama').html(response[0].Mahasiswas.Nama);
+                //console.log(response[0].Mahasiswas.ID);
+            });
+
+            });
+        });
+    </script>
+   
+    }
