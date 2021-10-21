@@ -224,8 +224,8 @@
                         "render": function (data, type, row, meta) {
                             var jamMasuk = new Date(data);
                             var jamKeluar = new Date(row.JamKeluar);
-                            var string1 = jamMasuk.getHours() + ':' + jamMasuk.getMinutes();
-                            var string2 = jamKeluar.getHours() + ':' + jamKeluar.getMinutes();
+                            var string1 = appendZero(jamMasuk.getHours() + '', 2) + ':' + appendZero(jamMasuk.getMinutes() + '', 2);
+                            var string2 = appendZero(jamKeluar.getHours() + '', 2) + ':' + appendZero(jamKeluar.getMinutes() + '', 2);
                             return '<div style="text-align:center; vertical-align: middle;">' + string1 + ' - ' + string2 + '</div>';
                         }
                     },
@@ -459,6 +459,13 @@
                     });
                 });
             });
+        }
+        function appendZero(string, length) {
+            string += "";
+            while (string.length < length) {
+                string = "0" + string;
+            }
+            return string;
         }
     </script>
 }
