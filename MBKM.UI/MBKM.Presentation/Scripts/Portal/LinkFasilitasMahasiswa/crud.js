@@ -12,6 +12,10 @@
             }
             $('#modal-inner').append(e);
             $('.modal').modal('show');
+            //alert("aaa");
+            //var a = e.LinkTeams;
+            //console.log(e);
+           // alert(e);
         }, error: function (e) {
             console.log(e);
             $.LoadingOverlay("hide");
