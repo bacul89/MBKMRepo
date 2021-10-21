@@ -163,6 +163,8 @@
             <p style="font-weight: normal; font-size: 15px; color: #c1baba;" id="subtitle"></p>
         </h5>
         <hr />
+        <div style="text-align:right">@Html.ActionLink("Print Employee", "PrintDetail")</div>
+        <br />
 
         <p style=" padding-right: 15px; padding-left: 15px; font-size: 18px; font-weight: bold; color: black; ">DETAIL MATA KULIAH</p>
         <div class="container" style="width: 100%; padding-bottom: 15px;">
@@ -227,10 +229,11 @@
                     <td style="text-align: center;">:</td>
                     <td id="namaDosen"></td>
                 </tr>
-            </table>    
+            </table>
             <hr />
             <!--<p>
-                People with more than 20 years old:--> @*<span id="result"></span>*@
+            People with more than 20 years old:-->
+            @*<span id="result"></span>*@
             <!--</p>-->
             <div style="overflow-x: auto;">
                 <table id="dataAbsen" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">

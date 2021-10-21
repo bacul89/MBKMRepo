@@ -42,7 +42,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
             List<PendaftaranMataKuliah> pmks = new List<PendaftaranMataKuliah>();
-
+            
             if (strm != 0)
             {
                 pmks = _pendaftaranMataKuliahService.Find(pmk => pmk.MahasiswaID == mahasiswa.ID && pmk.StatusPendaftaran == "ACCEPTED BY MAHASISWA" && pmk.JadwalKuliahs.STRM == strm).ToList();
@@ -51,7 +51,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             {
                 pmks = _pendaftaranMataKuliahService.Find(pmk => pmk.MahasiswaID == mahasiswa.ID && pmk.StatusPendaftaran == "ACCEPTED BY MAHASISWA").ToList();
             }
-            var list = pmks.Select(x => new
+            var list = pmks.Select(x => new 
             {
                 Lokasi = x.JadwalKuliahs.Lokasi,
                 NamaFakultas = x.JadwalKuliahs.NamaFakultas,
@@ -70,7 +70,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult GetSumAbsensi(int jadwalKuliahId)
         {
             var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
-            List<Absensi> absensis = _absensiService.Find(a => a.JadwalKuliahID == jadwalKuliahId && a.MahasiswaID == mahasiswa.ID).OrderBy(a => a.TanggalAbsen).ToList();
+            List<Absensi> absensis = _absensiService.Find(a => a.JadwalKuliahID == jadwalKuliahId && a.MahasiswaID== mahasiswa.ID).OrderBy(a => a.TanggalAbsen).ToList();
             return new ContentResult { Content = JsonConvert.SerializeObject(absensis), ContentType = "application/json" };
         }
         public ActionResult DetailSummaryPresensiKelas(int id)
@@ -94,17 +94,46 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             double persen = 0;
             if (CountData > 0)
             {
-                persen = (CountDataPresent * 100) / CountData;
+                persen = (CountDataPresent * 100)/ CountData;
             }
             return persen.ToString() + "%";
 
         }
+        //public ActionResult PrintDetailgagal(int id)
+        //{
+        //    var report = new Rotativa.ActionAsPdf("DetailSummaryPresensiKelas", new { id = id });
+        //    return report;
+        //}
         [AllowAnonymous]
-        public ActionResult PrintBAP()
+        public ActionResult PrintDetail()
         {
-            var report = new Rotativa.ViewAsPdf("PrintBAP");
+            var report = new Rotativa.ViewAsPdf("BAP")
+            { FileName = "Name.pdf" };
             return report;
         }
-    }
+        //[AllowAnonymous]
+        //public ActionResult PrintDetail()
+        //{
+        //    //var report = new Rotativa.ActionAsPdf("BAP");
+        //    //return report;
+        //    Dictionary<string, string> cookieCollection = new Dictionary<string, string>();
 
+        //    foreach (var key in Request.Cookies.AllKeys)
+        //    {
+        //        cookieCollection.Add(key, Request.Cookies.Get(key).Value);
+        //    }
+
+        //    return new Rotativa.ActionAsPdf("BAP")
+        //    {
+        //        FileName = "Name.pdf",
+        //        Cookies = cookieCollection
+        //    };
+        //}
+
+        public ActionResult Bap()
+        {
+            //var report = new Rotativa.ActionAsPdf("Index");
+            return View();
+        }
+    }
 }
