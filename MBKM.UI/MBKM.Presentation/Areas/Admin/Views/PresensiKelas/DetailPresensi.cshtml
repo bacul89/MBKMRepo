@@ -300,6 +300,7 @@
             $('.checkFlag').prop('checked', false);
         });
         $('#submit').click(function () {
+            var data = new Object();
             var list = [];
             for (var i = 0; i < mahasiswaCount; i++) {
                 if (!$('#checkDosen' + i).is(':checked')) {
@@ -307,10 +308,11 @@
                 }
                 list.push($('#checkDosen' + i).val());
             }
+            data.idAbsensis = list;
             $.ajax({
                 type: "POST",
                 url: "@Url.Action("SubmitCheckDosen", "PresensiKelas")",
-                data: list
+                data: data
             }).then(function (response) {
                 alert(response.message);
                 if (response.status == 200) {
