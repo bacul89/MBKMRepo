@@ -43,30 +43,30 @@
     <table style="width:100%">
         <tr>
             <th>NIM:</th>
-            <td id="nim"></td>
+            <td id="nim">@Model.NIM</td>
 
             <th>Program Studi:</th>
-            <td id="prodi"></td>
+            <td id="prodi">@Model.NamaProdi</td>
         </tr>
         <tr>
             <th>Nama Mahasiswa:</th>
-            <td id="nama"></td>
+            <td id="nama">@Model.Nama</td>
 
             <th>Nama Mata Kuliah:</th>
-            <td id="namaMK"></td>
+            <td id="namaMK">@Model.NamaMatakuliah</td>
         </tr>
         <tr>
             <th>Universitas Asal:</th>
-            <td id="univ"></td>
+            <td id="univ">@Model.NamaUniversitas</td>
 
             <th>Kode Mata Kuliah:</th>
-            <td id="kodeMK"></td>
+            <td id="kodeMK">@Model.KodeMataKuliah</td>
         </tr>
         <tr>
             <th></th>
             <td></td>
             <th>Seksi:</th>
-            <td id="seksi"></td>
+            <td id="seksi">@Model.ClassSection</td>
         </tr>
     </table>
     <br>
@@ -86,7 +86,7 @@
         </tr>
         <tr>
             <td hidden id="tanggal"></td>
-            <td id="tanggal2"></td>
+            <td id="tanggal2">@Model.TANGGAL</td>
             @*tanggal pertemuan*@
             @{
                 //Model.AdminPractice == null || Model.AdminPractice.TimeNotes == null
@@ -127,10 +127,21 @@
 
             @*<td id="platform">@Model.PLATFORM</td>*@
             @*platform yangdigunakan*@
-            <td id="present"></td>
+            @{
+                //Model.AdminPractice == null || Model.AdminPractice.TimeNotes == null
+                if (Model.Present == true)
+                {
+                    <td id="present">Hadir</td>
+                }
+                else
+                {
+                    <td id="platform"style="color:red">Tidak Hadir</td>
+                }
+            }
+            
             @*status kehadira*@
 
-            <td id="dosen"></td>
+            <td id="dosen">@Model.NamaDosen</td>
             @*Dosen pengajar*@
         </tr>
     </table>
@@ -141,39 +152,7 @@
 
 @section Scripts{
     <script>
-        var mataKuliah = null;
-        $(document).ready(function () {
-            $('#nama').html("@ViewData["nama"].ToString()");
-            $('#nim').html("@ViewData["nim"].ToString()");
-            $('#univ').html("@ViewData["univ"].ToString()");
-            $('#dosen').html("@ViewData["dosen"].ToString()");
-            $('#prodi').html("@ViewData["prodi"].ToString()");
-            $('#namaMK').html("@ViewData["namaMK"].ToString()");
-            $('#kodeMK').html("@ViewData["kodeMK"].ToString()");
-            $('#seksi').html("@ViewData["seksi"].ToString()");
-            
-
-            @*if (@Model.PLATFORM== null) {
-                $('#platform').html(" ");
-            }*@
-
-
-
-
-            $('#tanggal').html("@ViewData["tanggal"].ToString()");
-            var tglPertemuan = $('#tanggal').text();
-            var tglSplit = tglPertemuan.split(' 00:')[0];
-            $('#tanggal2').html(tglSplit);
-
-            if ("@ViewData["present"].ToString()" == "True") {
-
-                $('#present').html("Hadir");
-            }
-            else {
-                $('#present').html("Tidak Hadir");
-            }
-
-        });
+        
     </script>
 
 }

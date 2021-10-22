@@ -19,6 +19,7 @@ namespace MBKM.Entities.ViewModel
         public string BENTUK { get; set; }
         public string PLATFORM { get; set; }
         public string COMMENTS { get; set; }
+        public string NamaDosen { get; set; }
         public bool Present { get; set; }
        
     }
