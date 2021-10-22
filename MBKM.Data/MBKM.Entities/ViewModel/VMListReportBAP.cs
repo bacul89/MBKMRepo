@@ -20,5 +20,6 @@ namespace MBKM.Entities.ViewModel
         public string PLATFORM { get; set; }
         public string COMMENTS { get; set; }
         public bool Present { get; set; }
+       
     }
 }

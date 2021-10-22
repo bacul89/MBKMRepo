@@ -137,22 +137,23 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             ViewData["seksi"] = jdwl.ClassSection;
             ViewData["tanggal"] = absensi.TanggalAbsen;
            
-            var nullObj = " ";
+            //var nullObj = " ";
 
             //BATAS coba REPORT BAP SP BY ABSENSI ID
             //IEnumerable<VMListReportBAP> tempJadwalUjian = GetReportBAPByAbsensiID(id);
             VMListReportBAP bap = _reportBAPService.GetBAPBYAbsenID(id).FirstOrDefault();
             //ViewData["platform"] = bap.PLATFORM;
+           
 
-            if (bap.PLATFORM == null)
-            {
-                ViewData["platform"] = nullObj;
+            //    if (bap.PLATFORM == null)
+            //{
+            //    //ViewData["platform"] = nullObj;
 
-            }
-            else
-            {
-                ViewData["platform"] = bap.PLATFORM;
-            }
+            //}
+            //else
+            //{
+            //    ViewData["platform"] = bap.PLATFORM;
+            //}
             //ViewData["metode"] = bap.BENTUK;
             //List<VMListReportBAP> bap = new List<VMListReportBAP>()
             //{
@@ -163,7 +164,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
 
             //ViewData["platform"] = bap.;
 
-            return View(id);
+            return View(bap);
         }
         
         [AllowAnonymous]
@@ -186,25 +187,25 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             ViewData["seksi"] = jdwl.ClassSection;
             ViewData["tanggal"] = absensi.TanggalAbsen;
             VMListReportBAP bap = _reportBAPService.GetBAPBYAbsenID(id).FirstOrDefault();
-            var nullObj = " ";
+            //var nullObj = " ";
             //ViewData["platform"] = bap.PLATFORM;
 
             //ViewData["platform"] = bap.PLATFORM;
             //ViewData["metode"] = bap.BENTUK;
-            if (bap.PLATFORM == null)
-            {
-                ViewData["platform"] = nullObj;
+            //if (bap.PLATFORM == null)
+            //{
+            //   // ViewData["platform"] = nullObj;
 
-            }
-            else
-            {
-                ViewData["platform"] = bap.PLATFORM;
-            }
+            //}
+            //else
+            //{
+            //    ViewData["platform"] = bap.PLATFORM;
+            //}
 
             //penamaan pdf
             var tgl = absensi.TanggalAbsen.ToString("dd/MM/yyyy");
             
-            var report = new Rotativa.ViewAsPdf("BAP")
+            var report = new Rotativa.ViewAsPdf("BAP",bap)
             { FileName = tgl +"-"+ jdwl.KodeMataKuliah + "-BAP.pdf" };
             return report;
         }
