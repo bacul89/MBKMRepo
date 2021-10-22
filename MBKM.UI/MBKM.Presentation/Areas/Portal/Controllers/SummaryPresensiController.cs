@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -119,23 +120,23 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult BAP(int id)
         {
             
-            string email = Session["email"] as string;
+            //string email = Session["email"] as string;
             //VMListReportBAP bap = _reportBAPService.Find(a => a.ID == id).FirstOrDefault();
             
-            Mahasiswa mahasiswa = GetMahasiswaByEmail(email);
-            Absensi absensi = _absensiService.Find(a => a.ID == id).FirstOrDefault();
-            ViewData["nama"] = mahasiswa.Nama;
-            ViewData["nim"] = mahasiswa.NIM;
-            ViewData["univ"] = mahasiswa.NamaUniversitas;
-            ViewData["dosen"] = absensi.NamaDosen;
-            ViewData["present"] = absensi.Present;
-            var jdwlID = absensi.JadwalKuliahID;
-            JadwalKuliah jdwl = _jdwlService.Find(j => j.ID == jdwlID).FirstOrDefault();
-            ViewData["prodi"] = jdwl.NamaProdi;
-            ViewData["namaMK"] = jdwl.NamaMataKuliah;
-            ViewData["kodeMK"] = jdwl.KodeMataKuliah;
-            ViewData["seksi"] = jdwl.ClassSection;
-            ViewData["tanggal"] = absensi.TanggalAbsen;
+            //Mahasiswa mahasiswa = GetMahasiswaByEmail(email);
+            //Absensi absensi = _absensiService.Find(a => a.ID == id).FirstOrDefault();
+            //ViewData["nama"] = mahasiswa.Nama;
+            //ViewData["nim"] = mahasiswa.NIM;
+            //ViewData["univ"] = mahasiswa.NamaUniversitas;
+            //ViewData["dosen"] = absensi.NamaDosen;
+            //ViewData["present"] = absensi.Present;
+            //var jdwlID = absensi.JadwalKuliahID;
+            //JadwalKuliah jdwl = _jdwlService.Find(j => j.ID == jdwlID).FirstOrDefault();
+            //ViewData["prodi"] = jdwl.NamaProdi;
+            //ViewData["namaMK"] = jdwl.NamaMataKuliah;
+            //ViewData["kodeMK"] = jdwl.KodeMataKuliah;
+            //ViewData["seksi"] = jdwl.ClassSection;
+            //ViewData["tanggal"] = absensi.TanggalAbsen;
            
             //var nullObj = " ";
 
@@ -170,22 +171,22 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         [AllowAnonymous]
         public ActionResult PrintDetail(int id)
         {
-            string email = Session["email"] as string;
-            Mahasiswa mahasiswa = GetMahasiswaByEmail(email);
-            Absensi absensi = _absensiService.Find(a => a.ID == id).FirstOrDefault();
-            VMListReportBAP model = new VMListReportBAP();
-            ViewData["nama"] = mahasiswa.Nama;
-            ViewData["nim"] = mahasiswa.NIM;
-            ViewData["univ"] = mahasiswa.NamaUniversitas;
-            ViewData["dosen"] = absensi.NamaDosen;
-            ViewData["present"] = absensi.Present;
-            var jdwlID = absensi.JadwalKuliahID;
-            JadwalKuliah jdwl = _jdwlService.Find(j => j.ID == jdwlID).FirstOrDefault();
-            ViewData["prodi"] = jdwl.NamaProdi;
-            ViewData["namaMK"] = jdwl.NamaMataKuliah;
-            ViewData["kodeMK"] = jdwl.KodeMataKuliah;
-            ViewData["seksi"] = jdwl.ClassSection;
-            ViewData["tanggal"] = absensi.TanggalAbsen;
+            //string email = Session["email"] as string;
+            //Mahasiswa mahasiswa = GetMahasiswaByEmail(email);
+            //Absensi absensi = _absensiService.Find(a => a.ID == id).FirstOrDefault();
+            //VMListReportBAP model = new VMListReportBAP();
+            //ViewData["nama"] = mahasiswa.Nama;
+            //ViewData["nim"] = mahasiswa.NIM;
+            //ViewData["univ"] = mahasiswa.NamaUniversitas;
+            //ViewData["dosen"] = absensi.NamaDosen;
+            //ViewData["present"] = absensi.Present;
+            //var jdwlID = absensi.JadwalKuliahID;
+            //JadwalKuliah jdwl = _jdwlService.Find(j => j.ID == jdwlID).FirstOrDefault();
+            //ViewData["prodi"] = jdwl.NamaProdi;
+            //ViewData["namaMK"] = jdwl.NamaMataKuliah;
+            //ViewData["kodeMK"] = jdwl.KodeMataKuliah;
+            //ViewData["seksi"] = jdwl.ClassSection;
+            //ViewData["tanggal"] = absensi.TanggalAbsen;
             VMListReportBAP bap = _reportBAPService.GetBAPBYAbsenID(id).FirstOrDefault();
             //var nullObj = " ";
             //ViewData["platform"] = bap.PLATFORM;
@@ -203,10 +204,14 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             //}
 
             //penamaan pdf
-            var tgl = absensi.TanggalAbsen.ToString("dd/MM/yyyy");
-            
+            var tgl = bap.TANGGAL.ToString();
+            var tgl1 = Convert.ToDateTime(tgl);
+            var formattgl = tgl1.ToString("yyyyMMdd");
+            var trim = Regex.Replace(formattgl, @"s", "_");
+           // var tgl2 = tgl1.ToString("");
+           //var namatrim = Regex.Replace(bap.Nama, @"s", "_");
             var report = new Rotativa.ViewAsPdf("BAP",bap)
-            { FileName = tgl +"-"+ jdwl.KodeMataKuliah + "-BAP.pdf" };
+            { FileName = trim +"_"+ bap.Nama+"_"+bap.KodeMataKuliah + "-BAP.pdf" };
             return report;
         }
         //[AllowAnonymous]
