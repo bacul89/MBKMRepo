@@ -223,8 +223,13 @@ function reloadDatatable() {
                 "data": "JamMasuk",
                 "name": "JamMasuk",
                 "render": function (data, type, row, meta) {
-                    return '<div class="center">' + data + '</div>';
+                    //console.log(row.JamMasuk);
+                    //console.log(data);
+                    //console.log(type);
+
+                    return '<div class="center">' + row.JamMasuk + ' - ' + row.JamSelesai +'</div>';
                 }
+
             },
 
             {
