@@ -81,7 +81,7 @@
             <th>Penyesuaian Bentuk Pembelajaran dengan online learning (metode dan aktivitas)</th>
             <th>Platform/aplikasi yang digunakan</th>
             <th>Kehadiran Mahasiswa</th>
-            <th>Evaluasi Perkuliahan online</th>
+            @*<th>Evaluasi Perkuliahan online</th>*@
             <th>Dosen</th>
         </tr>
         <tr>
@@ -90,14 +90,13 @@
             @*tanggal pertemuan*@
             <td></td>
             @*topik perkuliahan*@
-            <td></td>
+            <td id="metode"></td>
             @*metode dan aktivitas*@
-            <td></td>
+            <td id="platform"></td>
             @*platform yangdigunakan*@
             <td id="present"></td>
             @*status kehadira*@
-            <td></td>
-            @*evaluasi perkuliahan*@
+            
             <td id="dosen"></td>
             @*Dosen pengajar*@
         </tr>
@@ -119,12 +118,17 @@
             $('#namaMK').html("@ViewData["namaMK"].ToString()");
             $('#kodeMK').html("@ViewData["kodeMK"].ToString()");
             $('#seksi').html("@ViewData["seksi"].ToString()");
+            
+  
+            $('#platform').html("@ViewData["platform"].ToString()");
+          
+
 
             $('#tanggal').html("@ViewData["tanggal"].ToString()");
             var tglPertemuan = $('#tanggal').text();
             var tglSplit = tglPertemuan.split(' 00:')[0];
             $('#tanggal2').html(tglSplit);
-        
+
             if ("@ViewData["present"].ToString()" == "True") {
 
                 $('#present').html("Hadir");
