@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Bap";
 }
-
+@model MBKM.Entities.ViewModel.VMListReportBAP
 <html>
 <head>
     <style>
@@ -21,20 +21,20 @@
         FORMULIR
 
 
-        
+
 
     </h5>
     <h5 class="card-title" style="padding-top: 0px; padding-right: 15px; padding-left: 0px; font-weight: bold; font-size: 20px; color: black; ">
 
-        
+
 
         DOKUMENTASI KEGIATAN PERKULIAHAN ONLINE
         <p style="font-weight: normal; font-size: 15px;font-style:italic; ">Sebagai Pengganti Perkuliahan Tatap Muka</p>
     </h5>
     @*<div style="text-align:right">@Html.ActionLink("Print BAP", "PrintDetail")</div>*@
-   
+
     <div style="text-align:right">
-        
+
         @*<button onclick="@Url.Action("PrintDetail", "SummaryPresensi")" ;class="btn btn-success"><i class="fas fa-plus-circle"></i> Download pdf</button>*@
         @*<input type="button" value="Download PDF" onclick="location.href='@Url.Action("PrintDetail", "SummaryPresensi")?id='+ @Model" />*@
         @*<a href="javascript:void(0)" style="color:black" onclick="@Url.Action("PrintDetail", "SummaryPresensi")"><i class="fas fa-edit"></i></a>*@
@@ -81,23 +81,55 @@
             <th>Penyesuaian Bentuk Pembelajaran dengan online learning (metode dan aktivitas)</th>
             <th>Platform/aplikasi yang digunakan</th>
             <th>Kehadiran Mahasiswa</th>
-            <th>Evaluasi Perkuliahan online</th>
+            @*<th>Evaluasi Perkuliahan online</th>*@
             <th>Dosen</th>
         </tr>
         <tr>
             <td hidden id="tanggal"></td>
             <td id="tanggal2"></td>
             @*tanggal pertemuan*@
-            <td></td>
+            @{
+                //Model.AdminPractice == null || Model.AdminPractice.TimeNotes == null
+                if (Model == null || Model.COMMENTS == null)
+                {
+                    <td id="topik"></td>
+                }
+                else
+                {
+                    <td id="topik">@Model.COMMENTS</td>
+                }
+            }
             @*topik perkuliahan*@
-            <td></td>
+            @{
+                //Model.AdminPractice == null || Model.AdminPractice.TimeNotes == null
+                if (Model == null || Model.BENTUK == null)
+                {
+                    <td id="metode"></td>
+                }
+                else
+                {
+                    <td id="metode">@Model.BENTUK</td>
+                }
+            }
+
             @*metode dan aktivitas*@
-            <td></td>
+            @{
+                //Model.AdminPractice == null || Model.AdminPractice.TimeNotes == null
+                if (Model == null || Model.PLATFORM == null)
+                {
+                    <td id="platform"></td>
+                }
+                else
+                {
+                    <td id="platform">@Model.PLATFORM</td>
+                }
+            }
+
+            @*<td id="platform">@Model.PLATFORM</td>*@
             @*platform yangdigunakan*@
             <td id="present"></td>
             @*status kehadira*@
-            <td></td>
-            @*evaluasi perkuliahan*@
+
             <td id="dosen"></td>
             @*Dosen pengajar*@
         </tr>
@@ -119,12 +151,20 @@
             $('#namaMK').html("@ViewData["namaMK"].ToString()");
             $('#kodeMK').html("@ViewData["kodeMK"].ToString()");
             $('#seksi').html("@ViewData["seksi"].ToString()");
+            
+
+            @*if (@Model.PLATFORM== null) {
+                $('#platform').html(" ");
+            }*@
+
+
+
 
             $('#tanggal').html("@ViewData["tanggal"].ToString()");
             var tglPertemuan = $('#tanggal').text();
             var tglSplit = tglPertemuan.split(' 00:')[0];
             $('#tanggal2').html(tglSplit);
-        
+
             if ("@ViewData["present"].ToString()" == "True") {
 
                 $('#present').html("Hadir");
