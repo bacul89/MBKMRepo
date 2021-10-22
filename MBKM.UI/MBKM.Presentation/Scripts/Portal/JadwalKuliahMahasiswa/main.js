@@ -208,14 +208,7 @@ function reloadDatatable() {
                     return '<div id="sks" class="center">' + data + '</div>';
                 }
             },
-            {
-                //"title": "Nomor Induk Pegawai",
-                "data": "ClassSection",
-                "name": "ClassSection",
-                "render": function (data, type, row, meta) {
-                    return '<div class="center">' + data + '</div>';
-                }
-            },
+
 
             {
                 //"title": "Email",
@@ -229,6 +222,15 @@ function reloadDatatable() {
                 //"title": "Email",
                 "data": "JamMasuk",
                 "name": "JamMasuk",
+                "render": function (data, type, row, meta) {
+                    return '<div class="center">' + data + '</div>';
+                }
+            },
+
+            {
+                //"title": "Nomor Induk Pegawai",
+                "data": "ClassSection",
+                "name": "ClassSection",
                 "render": function (data, type, row, meta) {
                     return '<div class="center">' + data + '</div>';
                 }
