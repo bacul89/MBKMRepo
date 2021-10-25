@@ -1,4 +1,5 @@
 ﻿using MBKM.Entities.Models.MBKM;
+using MBKM.Entities.ViewModel;
 using MBKM.Presentation.Helper;
 using MBKM.Presentation.Models;
 using MBKM.Services.MBKMServices;
@@ -7,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -20,12 +22,14 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         private IPendaftaranMataKuliahService _pendaftaranMataKuliahService;
         private IAbsensiService _absensiService;
         private IJadwalKuliahService _jdwlService;
-        public SummaryPresensiController(IAbsensiService absensiService, IMahasiswaService mahasiswaService, IPendaftaranMataKuliahService pendaftaranMataKuliahService, IJadwalKuliahService jdwlService)
+        private IReportBAPService _reportBAPService;
+        public SummaryPresensiController(IAbsensiService absensiService, IMahasiswaService mahasiswaService, IPendaftaranMataKuliahService pendaftaranMataKuliahService, IJadwalKuliahService jdwlService, IReportBAPService reportBAPService)
         {
             _mahasiswaService = mahasiswaService;
             _pendaftaranMataKuliahService = pendaftaranMataKuliahService;
             _absensiService = absensiService;
             _jdwlService = jdwlService;
+            _reportBAPService = reportBAPService;
         }
         public ActionResult Index()
         {
@@ -107,51 +111,107 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         //    var report = new Rotativa.ActionAsPdf("DetailSummaryPresensiKelas", new { id = id });
         //    return report;
         //}
+        public ActionResult GetReportBAPByAbsensiID(int id)
+        {
+            var result = _reportBAPService.GetBAPBYAbsenID(id);
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
+        }
+      
         public ActionResult BAP(int id)
         {
-            //var report = new Rotativa.ActionAsPdf("Index");
-            //dynamic mymodel = new ExpandoObject();
-            string email = Session["email"] as string;
-            Mahasiswa mahasiswa = GetMahasiswaByEmail(email);
-            Absensi absensi = _absensiService.Find(a => a.ID == id).FirstOrDefault();
-            ViewData["nama"] = mahasiswa.Nama;
-            ViewData["nim"] = mahasiswa.NIM;
-            ViewData["univ"] = mahasiswa.NamaUniversitas;
-            ViewData["dosen"] = absensi.NamaDosen;
-            ViewData["present"] = absensi.Present;
-            var jdwlID = absensi.JadwalKuliahID;
-            JadwalKuliah jdwl = _jdwlService.Find(j => j.ID == jdwlID).FirstOrDefault();
-            ViewData["prodi"] = jdwl.NamaProdi;
-            ViewData["namaMK"] = jdwl.NamaMataKuliah;
-            ViewData["kodeMK"] = jdwl.KodeMataKuliah;
-            ViewData["seksi"] = jdwl.ClassSection;
-            ViewData["tanggal"] = absensi.TanggalAbsen;
-            return View(id);
+            
+            //string email = Session["email"] as string;
+            //VMListReportBAP bap = _reportBAPService.Find(a => a.ID == id).FirstOrDefault();
+            
+            //Mahasiswa mahasiswa = GetMahasiswaByEmail(email);
+            //Absensi absensi = _absensiService.Find(a => a.ID == id).FirstOrDefault();
+            //ViewData["nama"] = mahasiswa.Nama;
+            //ViewData["nim"] = mahasiswa.NIM;
+            //ViewData["univ"] = mahasiswa.NamaUniversitas;
+            //ViewData["dosen"] = absensi.NamaDosen;
+            //ViewData["present"] = absensi.Present;
+            //var jdwlID = absensi.JadwalKuliahID;
+            //JadwalKuliah jdwl = _jdwlService.Find(j => j.ID == jdwlID).FirstOrDefault();
+            //ViewData["prodi"] = jdwl.NamaProdi;
+            //ViewData["namaMK"] = jdwl.NamaMataKuliah;
+            //ViewData["kodeMK"] = jdwl.KodeMataKuliah;
+            //ViewData["seksi"] = jdwl.ClassSection;
+            //ViewData["tanggal"] = absensi.TanggalAbsen;
+           
+            //var nullObj = " ";
+
+            //BATAS coba REPORT BAP SP BY ABSENSI ID
+            //IEnumerable<VMListReportBAP> tempJadwalUjian = GetReportBAPByAbsensiID(id);
+            VMListReportBAP bap = _reportBAPService.GetBAPBYAbsenID(id).FirstOrDefault();
+            //ViewData["platform"] = bap.PLATFORM;
+           
+
+            //    if (bap.PLATFORM == null)
+            //{
+            //    //ViewData["platform"] = nullObj;
+
+            //}
+            //else
+            //{
+            //    ViewData["platform"] = bap.PLATFORM;
+            //}
+            //ViewData["metode"] = bap.BENTUK;
+            //List<VMListReportBAP> bap = new List<VMListReportBAP>()
+            //{
+            //    bap.
+            //};
+            //bap = _reportBAPService.GetBAPByAbsensiID(id).ToList();
+            //List<VMListReportBAP> bap = _reportBAPService.GetBAPByAbsensiID(id).FirstOrDefault();
+
+            //ViewData["platform"] = bap.;
+
+            return View(bap);
         }
         
         [AllowAnonymous]
         public ActionResult PrintDetail(int id)
         {
-            string email = Session["email"] as string;
-            Mahasiswa mahasiswa = GetMahasiswaByEmail(email);
-            Absensi absensi = _absensiService.Find(a => a.ID == id).FirstOrDefault();
-            ViewData["nama"] = mahasiswa.Nama;
-            ViewData["nim"] = mahasiswa.NIM;
-            ViewData["univ"] = mahasiswa.NamaUniversitas;
-            ViewData["dosen"] = absensi.NamaDosen;
-            ViewData["present"] = absensi.Present;
-            var jdwlID = absensi.JadwalKuliahID;
-            JadwalKuliah jdwl = _jdwlService.Find(j => j.ID == jdwlID).FirstOrDefault();
-            ViewData["prodi"] = jdwl.NamaProdi;
-            ViewData["namaMK"] = jdwl.NamaMataKuliah;
-            ViewData["kodeMK"] = jdwl.KodeMataKuliah;
-            ViewData["seksi"] = jdwl.ClassSection;
-            ViewData["tanggal"] = absensi.TanggalAbsen;
+            //string email = Session["email"] as string;
+            //Mahasiswa mahasiswa = GetMahasiswaByEmail(email);
+            //Absensi absensi = _absensiService.Find(a => a.ID == id).FirstOrDefault();
+            //VMListReportBAP model = new VMListReportBAP();
+            //ViewData["nama"] = mahasiswa.Nama;
+            //ViewData["nim"] = mahasiswa.NIM;
+            //ViewData["univ"] = mahasiswa.NamaUniversitas;
+            //ViewData["dosen"] = absensi.NamaDosen;
+            //ViewData["present"] = absensi.Present;
+            //var jdwlID = absensi.JadwalKuliahID;
+            //JadwalKuliah jdwl = _jdwlService.Find(j => j.ID == jdwlID).FirstOrDefault();
+            //ViewData["prodi"] = jdwl.NamaProdi;
+            //ViewData["namaMK"] = jdwl.NamaMataKuliah;
+            //ViewData["kodeMK"] = jdwl.KodeMataKuliah;
+            //ViewData["seksi"] = jdwl.ClassSection;
+            //ViewData["tanggal"] = absensi.TanggalAbsen;
+            VMListReportBAP bap = _reportBAPService.GetBAPBYAbsenID(id).FirstOrDefault();
+            //var nullObj = " ";
+            //ViewData["platform"] = bap.PLATFORM;
 
-            var tgl = absensi.TanggalAbsen.ToString("dd/MM/yyyy");
-            
-            var report = new Rotativa.ViewAsPdf("BAP")
-            { FileName = tgl +"-"+ jdwl.KodeMataKuliah + "-BAP.pdf" };
+            //ViewData["platform"] = bap.PLATFORM;
+            //ViewData["metode"] = bap.BENTUK;
+            //if (bap.PLATFORM == null)
+            //{
+            //   // ViewData["platform"] = nullObj;
+
+            //}
+            //else
+            //{
+            //    ViewData["platform"] = bap.PLATFORM;
+            //}
+
+            //penamaan pdf
+            var tgl = bap.TANGGAL.ToString();
+            var tgl1 = Convert.ToDateTime(tgl);
+            var formattgl = tgl1.ToString("yyyyMMdd");
+            var trim = Regex.Replace(formattgl, @"s", "_");
+           // var tgl2 = tgl1.ToString("");
+           //var namatrim = Regex.Replace(bap.Nama, @"s", "_");
+            var report = new Rotativa.ViewAsPdf("BAP",bap)
+            { FileName = trim +"_"+ bap.Nama+"_"+bap.KodeMataKuliah + "-BAP.pdf" };
             return report;
         }
         //[AllowAnonymous]
@@ -173,6 +233,55 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         //    };
         //}
 
-       
+        //public ActionResult BAP(int id)
+        //{
+        //    //var report = new Rotativa.ActionAsPdf("Index");
+        //    //dynamic mymodel = new ExpandoObject();
+        //    string email = Session["email"] as string;
+        //    //VMListReportBAP bap = _reportBAPService.Find(a => a.ID == id).FirstOrDefault();
+        //    VMListReportBAP model = new VMListReportBAP();
+        //    Mahasiswa mahasiswa = GetMahasiswaByEmail(email);
+        //    Absensi absensi = _absensiService.Find(a => a.ID == id).FirstOrDefault();
+        //    ViewData["nama"] = mahasiswa.Nama;
+        //    ViewData["nim"] = mahasiswa.NIM;
+        //    ViewData["univ"] = mahasiswa.NamaUniversitas;
+        //    ViewData["dosen"] = absensi.NamaDosen;
+        //    ViewData["present"] = absensi.Present;
+        //    var jdwlID = absensi.JadwalKuliahID;
+        //    JadwalKuliah jdwl = _jdwlService.Find(j => j.ID == jdwlID).FirstOrDefault();
+        //    ViewData["prodi"] = jdwl.NamaProdi;
+        //    ViewData["namaMK"] = jdwl.NamaMataKuliah;
+        //    ViewData["kodeMK"] = jdwl.KodeMataKuliah;
+        //    ViewData["seksi"] = jdwl.ClassSection;
+        //    ViewData["tanggal"] = absensi.TanggalAbsen;
+        //    return View(id);
+        //}
+
+        //[AllowAnonymous]
+        //public ActionResult PrintDetail(int id)
+        //{
+        //    string email = Session["email"] as string;
+        //    Mahasiswa mahasiswa = GetMahasiswaByEmail(email);
+        //    Absensi absensi = _absensiService.Find(a => a.ID == id).FirstOrDefault();
+        //    ViewData["nama"] = mahasiswa.Nama;
+        //    ViewData["nim"] = mahasiswa.NIM;
+        //    ViewData["univ"] = mahasiswa.NamaUniversitas;
+        //    ViewData["dosen"] = absensi.NamaDosen;
+        //    ViewData["present"] = absensi.Present;
+        //    var jdwlID = absensi.JadwalKuliahID;
+        //    JadwalKuliah jdwl = _jdwlService.Find(j => j.ID == jdwlID).FirstOrDefault();
+        //    ViewData["prodi"] = jdwl.NamaProdi;
+        //    ViewData["namaMK"] = jdwl.NamaMataKuliah;
+        //    ViewData["kodeMK"] = jdwl.KodeMataKuliah;
+        //    ViewData["seksi"] = jdwl.ClassSection;
+        //    ViewData["tanggal"] = absensi.TanggalAbsen;
+
+        //    var tgl = absensi.TanggalAbsen.ToString("dd/MM/yyyy");
+
+        //    var report = new Rotativa.ViewAsPdf("BAP")
+        //    { FileName = tgl + "-" + jdwl.KodeMataKuliah + "-BAP.pdf" };
+        //    return report;
+        //}
+
     }
 }

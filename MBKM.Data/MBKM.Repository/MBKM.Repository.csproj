@@ -150,6 +150,7 @@
     <Compile Include="Repositories\MBKMRepository\NilaiKuliahRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\PendaftaranMataKuliahRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\PerjanjianKerjasamaRepository.cs" />
+    <Compile Include="Repositories\MBKMRepository\ReportBAPRepository.cs" />
     <Compile Include="Repositories\MenuRepository.cs" />
     <Compile Include="Repositories\MenuRoleRepository.cs" />
     <Compile Include="Repositories\RoleRepository.cs" />
