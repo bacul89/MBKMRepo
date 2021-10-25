@@ -155,6 +155,7 @@
     <Compile Include="Areas\Admin\Controllers\RegisMhsByAdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\TemplateEmail\TemplateEmailController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TranskripController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserManageController.cs" />
     <Compile Include="Areas\Admin\Controllers\VerifikasiMahasiswaController.cs" />
     <Compile Include="Areas\Portal\Controllers\PresensiKelasController.cs" />
@@ -168,6 +169,7 @@
     <Compile Include="Areas\Portal\Controllers\NimDigitalController.cs" />
     <Compile Include="Areas\Portal\Controllers\SummaryPresensiController.cs" />
     <Compile Include="Areas\Portal\Controllers\TrackingStatusPendaftaranController.cs" />
+    <Compile Include="Areas\Portal\Controllers\TranskripMahasiswaController.cs" />
     <Compile Include="Areas\Portal\PortalAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UnAuthorizedController.cs" />
@@ -232,6 +234,7 @@
     <Content Include="Scripts\Admin\Menu\main.js" />
     <Content Include="Scripts\Admin\Role\crud.js" />
     <Content Include="Scripts\Admin\Role\main.js" />
+    <Content Include="Scripts\Admin\Transkrip\main.js" />
     <Content Include="Scripts\dataCheckBox\dataTables.checkboxes.js" />
     <Content Include="Scripts\dataCheckBox\dataTables.checkboxes.min.js" />
     <Content Include="Scripts\easy-number-separator.js" />
@@ -507,6 +510,8 @@
     <Content Include="Areas\Portal\Views\SummaryPresensi\DetailSummaryPresensiKelas.cshtml" />
     <Content Include="App_Browsers\qt.browser" />
     <Content Include="Areas\Portal\Views\SummaryPresensi\BAP.cshtml" />
+    <Content Include="Areas\Admin\Views\Transkrip\Index.cshtml" />
+    <Content Include="Areas\Portal\Views\TranskripMahasiswa\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
@@ -531,6 +536,7 @@
     <Content Include="Scripts\Portal\NimDigital\main.js" />
     <Content Include="Scripts\Portal\TrackingStatus\main.js" />
     <Content Include="Scripts\Portal\TrackingStatus\trackingDetail.js" />
+    <Content Include="Scripts\Portal\Transkrip\main.js" />
     <Content Include="Scripts\script.js" />
     <Content Include="Scripts\scriptDropdown.js" />
     <Content Include="Scripts\select2.min.js" />
@@ -568,6 +574,7 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\EmailTemplate\" />
     <Folder Include="Areas\Portal\Data\" />
+    <Folder Include="Areas\Portal\Views\Transkrip\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

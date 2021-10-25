@@ -1,0 +1,162 @@
+﻿
+@{
+    ViewBag.Title = "TRANSKRIP NILAI";
+    Layout = "~/Areas/Portal/Views/Shared/_LayoutHome.cshtml";
+}
+
+@model MBKM.Entities.Models.MBKM.Mahasiswa
+<style>
+    .box {
+        border: solid 1px coral;
+        padding: 15px 25px;
+        margin: 15px 0px;
+    }
+
+    .footnote {
+        margin: 0 20%;
+    }
+
+    table.footer tr td {
+        text-align: center;
+    }
+
+    th {
+        background: #fff;
+        padding: 15px 0px;
+        font-size: 13px;
+    }
+</style>
+
+<div class="container-fluid" style="padding: 0px">
+    <div class="card center-block" style="background-color: white; width: 100%; padding: 0px">
+        <div class="card-body responsive-content" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; padding: 0px">
+            <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
+                TRANSKRIP NILAI<br />
+            </h4>
+            <hr />
+
+            <div class="container" style="width: 100%;">
+                <button class="btn btn-success"> Cetak <span class="fa fa-download"></span></button>
+
+                <br />
+                <br />
+
+                <div class="box col-md-12">
+                    <table>
+                        <tr>
+                            <td>Nama</td>
+                            <td style="padding:5px"> : </td>
+                            <td id="name">@Model.Nama</td>
+                        </tr>
+                        <tr>
+@*                            <td>N.I.M.</td>
+                            <td style="padding:5px"> : </td>
+                            <td id="nim">@Model.NIMAsal</td>
+                        </tr>
+                        <tr>
+                            <td>Tempat / Tanggal Lahir</td>
+                            <td style="padding:5px"> : </td>
+                            <td id="ttl">@Model.TempatLahir / @Model.TanggalLahir</td>*@
+                        </tr>
+                        <tr>
+                            <td>Jenjang Studi</td>
+                            <td style="padding:5px"> : </td>
+                            <td id="jenjangStudi"></td>
+                        </tr>
+                        <tr>
+                            <td>Nomor Keputusan Pendirian Perguruan Tinggi</td>
+                            <td style="padding:5px"> : </td>
+                            <td id="noKeputusan"></td>
+                        </tr>
+                    </table>
+
+                    <hr />
+
+                    <table width="100%">
+                        <thead>
+                            <tr>
+                                <th width="10%">Kode</th>
+                                <th width="50%">Mata Kuliah</th>
+                                <th width="20%">KC</th>
+                                <th width="20%">NG</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>MK100</td>
+                                <td>BAHASA INDONESIA</td>
+                                <td>800</td>
+                                <td>A</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
+
+                <div class="box col-md-12">
+                    <table width="100%">
+                        @*<thead>
+                                <tr>
+                                    <th width="10%">Kode</th>
+                                    <th width="50%">Mata Kuliah</th>
+                                    <th width="20%">KC</th>
+                                    <th width="20%">NG</th>
+                                </tr>
+                            </thead>*@
+                        <tbody>
+                            <tr>
+                                <td colspan="2" width="60%"></td>
+                                <td width="20%">80</td>
+                                <td width="20%">A</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="box col-md-12">
+                    <div class="col-md-12">
+
+                        <div style=" float: right; margin-bottom: 20px;">
+                            Jakarta, date<br />
+                            Kepala Biro Admisitrasi Akasemik
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            Helena Nataly Tapoona, S.E., M.M.
+                            <br />
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-12">
+
+                        <table class="footer" width="100%">
+                            <tr>
+                                <td><b>Address:</b> Jl. Jendral Sudirman 51, Jakarta Selatan 12930, Indonesia</td>
+                                <td><b>Telephone:</b> +62 21 5703306</td>
+                                <td><b>Fax:</b> +62 21 5708811</td>
+                                <td><b>Website:</b> http://aatmajaya.ac.id</td>
+                                <td><b>E-mail:</b> bba@atmajaya.ac.id</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section scripts{
+    <script src="~/Scripts/Portal/Transkrip/main.js"></script>
+}
