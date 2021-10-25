@@ -64,6 +64,8 @@
     <Compile Include="MBKMServices\CPLMatakuliahService.cs" />
     <Compile Include="MBKMServices\CPLMKPendaftaranService.cs" />
     <Compile Include="MBKMServices\DaftarAllMahasiswaService.cs" />
+    <Compile Include="MBKMServices\FeedbackMatkulDetailService.cs" />
+    <Compile Include="MBKMServices\FeedbackMatkulService.cs" />
     <Compile Include="MBKMServices\InformasiPertukaranService.cs" />
     <Compile Include="MBKMServices\JadwalKuliahMahasiswaService.cs" />
     <Compile Include="MBKMServices\JadwalKuliahService.cs" />
