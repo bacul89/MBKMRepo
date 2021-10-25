@@ -60,6 +60,8 @@
     <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\ICPLMataKuliahRepository.cs" />
     <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\ICPLMKPendaftaranRepository.cs" />
     <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IDaftarAllMahasiswaRepository.cs" />
+    <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IFeedbackMatkulDetailRepository.cs" />
+    <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IFeedbackMatkulRepository.cs" />
     <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IInformasiPertukaranRepository.cs" />
     <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IJadwalKuliahMahasiswaRepository.cs" />
     <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IJadwalKuliahRepository.cs" />
