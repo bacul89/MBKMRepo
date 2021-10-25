@@ -85,6 +85,26 @@
                             <td style="text-align: center;">:</td>
                             <td id="noKerjasama"></td>
                         </tr>
+                        <tr id="trNoSKTugas" hidden>
+                            <td style="text-align: right">No. SK Tugas</td>
+                            <td style="text-align: center;">:</td>
+                            <td id="noSKTugas">
+                        </tr>
+                        <tr id="trTanggalSKTugas" hidden>
+                            <td style="text-align: right">Tanggal SK Tugas</td>
+                            <td style="text-align: center;">:</td>
+                            <td id="tanggalSKTugas">
+                        </tr>
+                        <tr id="trJudulAktivitas" hidden>
+                            <td style="text-align: right">Judul Aktivitas</td>
+                            <td style="text-align: center;">:</td>
+                            <td id="judulAktivitas">
+                        </tr>
+                        <tr id="trLokasi" hidden>
+                            <td style="text-align: right">Lokasi</td>
+                            <td style="text-align: center;">:</td>
+                            <td id="lokasiTugas">
+                        </tr>
                     </table>
                 </div>
             </div>
@@ -115,13 +135,9 @@
 
 @section Scripts{
     <script>
+        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         $(document).ready(function () {
             getJenisKerjasama();
-            if ($('#jenisProgramMBKM').html() == 'Non Pertukaran') {
-                $('#matkulAsal').hide();
-            } else {
-                loadMataKuliahAsal();
-            }
         });
         $('#simpan').click(function () {
             if (!confirm("Apakah anda yakin akan mendaftar mata kuliah ini?")) {
@@ -183,7 +199,30 @@
                 $('#jenisProgramMBKM').html(response.JenisPertukaran);
                 $('#jenisKegiatanMBKM').html(response.JenisKerjasama);
                 $('#noKerjasama').html(response.NoKerjasama);
+                if (response.JenisPertukaran.includes('Non Pertukaran')) {
+                    $('#matkulAsal').hide();
+
+                    $("#trNoSKTugas").show();
+                    $("#trTanggalSKTugas").show();
+                    $("#trJudulAktivitas").show();
+                    $("#trLokasi").show();
+
+                    $("#noSKTugas").html(response.NoSK);
+                    var date = new Date(response.TanggalSK)
+                    $("#tanggalSKTugas").html(appendZero(date.getDate(), 2) + "-" + months[date.getMonth()] + "-" + date.getFullYear());
+                    $("#judulAktivitas").html(response.JudulAktivitas);
+                    $("#lokasiTugas").html(response.LokasiTugas);
+                } else {
+                    loadMataKuliahAsal();
+                }
             });
+        }
+        function appendZero(string, length) {
+            string += "";
+            while (string.length < length) {
+                string = "0" + string;
+            }
+            return string;
         }
     </script>
 }

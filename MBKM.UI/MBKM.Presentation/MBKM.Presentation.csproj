@@ -155,6 +155,7 @@
     <Compile Include="Areas\Admin\Controllers\RegisMhsByAdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\TemplateEmail\TemplateEmailController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PenilaianController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserManageController.cs" />
     <Compile Include="Areas\Admin\Controllers\VerifikasiMahasiswaController.cs" />
     <Compile Include="Areas\Portal\Controllers\PresensiKelasController.cs" />
@@ -507,6 +508,8 @@
     <Content Include="Areas\Portal\Views\SummaryPresensi\DetailSummaryPresensiKelas.cshtml" />
     <Content Include="App_Browsers\qt.browser" />
     <Content Include="Areas\Portal\Views\SummaryPresensi\BAP.cshtml" />
+    <Content Include="Areas\Admin\Views\Penilaian\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Penilaian\DetailPenilaian.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
