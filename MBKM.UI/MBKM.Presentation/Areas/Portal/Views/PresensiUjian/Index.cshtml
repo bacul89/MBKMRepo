@@ -233,7 +233,6 @@
             } else {
                 $('#body').show();
                 $("#tahunSemester").select2({
-                    placeholder: "-- Pilih Semester --",
                     data: semestersAsList
                 });
                 $("#tahunSemester").change(function () {
@@ -268,16 +267,15 @@
                             var jamKeluar = row.JadwalUjianMBKMs.JamAkhir.split(':');
                             var menitMasuk = parseInt(jamMulai[0]) * 60 + parseInt(jamMulai[1]);
                             var menitKeluar = parseInt(jamKeluar[0]) * 60 + parseInt(jamKeluar[1]);
+                            var now = new Date();
                             var menitSekarang = now.getHours() * 60 + now.getMinutes();
                             var tanggalAbsen = new Date(row.JadwalUjianMBKMs.TanggalUjian);
-                            var now = new Date();
                             if (data) {
                                 return '<label class="container2"><input type="checkbox" checked disabled><span class="checkmark"></span></label>';
                             }
                             if (
                                 menitMasuk <= menitSekarang
                                 && menitKeluar >= menitSekarang
-                                && days[now.getDay()] == row.JadwalUjianMBKMs.Hari
                                 && tanggalAbsen.getDate() == now.getDate()
                                 && tanggalAbsen.getMonth() == now.getMonth()
                                 && tanggalAbsen.getFullYear() == now.getFullYear()
