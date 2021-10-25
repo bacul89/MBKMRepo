@@ -9,7 +9,7 @@ namespace MBKM.Entities.Models.MBKM
     {
         public bool FlagBayar { get; set; } = false;
         public DateTime? TanggalBayar { get; set; }
-        public Int64 MahasiswaID { get; set; }
-        public virtual Mahasiswa Mahasiswas { get; set; }
+        //public Int64 MahasiswaID { get; set; }
+        //public virtual Mahasiswa Mahasiswas { get; set; }
     }
 }
