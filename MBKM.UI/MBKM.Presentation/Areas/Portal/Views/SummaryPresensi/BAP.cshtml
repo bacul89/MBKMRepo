@@ -43,30 +43,99 @@
     <table style="width:100%">
         <tr>
             <th>NIM:</th>
-            <td id="nim">@Model.NIM</td>
+            @{
+                if (Model == null || Model.NIM == null)
+                {
+                    <td id="nim"></td>
+                }
+                else
+                {
+                    <td id="nim">@Model.NIM</td>
+                }
+            }
 
             <th>Program Studi:</th>
-            <td id="prodi">@Model.NamaProdi</td>
+            @{
+                if (Model == null || Model.NamaProdi == null)
+                {
+                    <td id="prodi"></td>
+                }
+                else
+                {
+                    <td id="prodi">@Model.NamaProdi</td>
+                }
+            }
+            
         </tr>
         <tr>
             <th>Nama Mahasiswa:</th>
-            <td id="nama">@Model.Nama</td>
+            @{
+                if (Model == null || Model.Nama == null)
+                {
+                    <td id="nama"></td>
+                }
+                else
+                {
+                    <td id="nama">@Model.Nama</td>
+                }
+            }
+
 
             <th>Nama Mata Kuliah:</th>
-            <td id="namaMK">@Model.NamaMatakuliah</td>
+            @{
+                if (Model == null || Model.Nama == null)
+                {
+                    <td id="namaMK"></td>
+                }
+                else
+                {
+                    <td id="namaMK">@Model.NamaMatakuliah</td>
+                }
+            }
+            
         </tr>
         <tr>
             <th>Universitas Asal:</th>
-            <td id="univ">@Model.NamaUniversitas</td>
+            @{
+                if (Model == null || Model.Nama == null)
+                {
+                    <td id="univ"></td>
+                }
+                else
+                {
+                    <td id="univ">@Model.NamaUniversitas</td>
+                }
+            }
+
 
             <th>Kode Mata Kuliah:</th>
-            <td id="kodeMK">@Model.KodeMataKuliah</td>
+            @{
+                if (Model == null || Model.Nama == null)
+                {
+                    <td id="kodeMK"></td>
+                }
+                else
+                {
+        <td id="kodeMK">@Model.KodeMataKuliah</td>
+                }
+            }
+            
         </tr>
         <tr>
             <th></th>
             <td></td>
             <th>Seksi:</th>
-            <td id="seksi">@Model.ClassSection</td>
+            @{
+                if (Model == null || Model.Nama == null)
+                {
+                    <td id="seksi"></td>
+                }
+                else
+                {
+                    <td id="seksi">@Model.ClassSection</td>
+                }
+            }
+
         </tr>
     </table>
     <br>
@@ -86,7 +155,17 @@
         </tr>
         <tr>
             <td hidden id="tanggal"></td>
-            <td id="tanggal2">@Model.TANGGAL</td>
+            @{
+                if (Model == null || Model.Nama == null)
+                {
+                    <td id="tanggal2"></td>
+                }
+                else
+                {
+                    <td id="tanggal2">@Model.TANGGAL</td>
+                }
+            }
+
             @*tanggal pertemuan*@
             @{
                 //Model.AdminPractice == null || Model.AdminPractice.TimeNotes == null
@@ -129,19 +208,33 @@
             @*platform yangdigunakan*@
             @{
                 //Model.AdminPractice == null || Model.AdminPractice.TimeNotes == null
-                if (Model.Present == true)
+                
+                
+                    if (Model.Present == true)
+                    {
+                        <td id="present">Hadir</td>
+                    }
+                    else
+                    {
+                        <td id="present" style="color:red">Tidak Hadir</td>
+                    }
+                
+
+            }
+
+            @*status kehadira*@
+            @{
+                //Model.AdminPractice == null || Model.AdminPractice.TimeNotes == null
+                if (Model == null || Model.PLATFORM == null)
                 {
-                    <td id="present">Hadir</td>
+                    <td id="dosen"></td>
                 }
                 else
                 {
-                    <td id="platform"style="color:red">Tidak Hadir</td>
+                    <td id="dosen">@Model.NamaDosen</td>
                 }
             }
-            
-            @*status kehadira*@
 
-            <td id="dosen">@Model.NamaDosen</td>
             @*Dosen pengajar*@
         </tr>
     </table>
