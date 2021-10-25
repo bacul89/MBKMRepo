@@ -52,8 +52,8 @@ namespace MBKM.Repository.BaseRepository
             modelBuilder.Configurations.Add(new MahasiswaMap());
             modelBuilder.Configurations.Add(new UserMap());
             modelBuilder.Configurations.Add(new JadwalKuliahMap());
-            modelBuilder.Configurations.Add(new KRSMap());
-            modelBuilder.Configurations.Add(new JadwalKuliahMahasiswaMap());
+            //modelBuilder.Configurations.Add(new KRSMap());
+            //modelBuilder.Configurations.Add(new JadwalKuliahMahasiswaMap());
             modelBuilder.Configurations.Add(new NilaiMap());
             modelBuilder.Configurations.Add(new AbsensiMap());
             modelBuilder.Configurations.Add(new AttachmentMap());
@@ -70,6 +70,8 @@ namespace MBKM.Repository.BaseRepository
             modelBuilder.Configurations.Add(new JadwalUjianMBKMMap());
             modelBuilder.Configurations.Add(new JadwalUjianMBKMDetailMap());
             modelBuilder.Configurations.Add(new NilaiSubCWMap());
+            modelBuilder.Configurations.Add(new FeedbackMataKuliahMap());
+            modelBuilder.Configurations.Add(new FeedbackMatkulDetailMap());
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
