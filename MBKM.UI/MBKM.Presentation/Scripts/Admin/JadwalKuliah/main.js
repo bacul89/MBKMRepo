@@ -119,7 +119,7 @@ function reloadDatatable() {
                 "data": "JamMasuk",
                 "name": "JamMasuk",
                 "render": function (data, type, row, meta) {
-                    return '<div class="center">' + data + '</div>';
+                    return '<div class="center">' + row.JamMasuk + ' - ' + row.JamSelesai + '</div>';
                 }
             },
             {
