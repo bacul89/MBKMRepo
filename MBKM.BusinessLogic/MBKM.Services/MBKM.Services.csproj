@@ -73,6 +73,7 @@
     <Compile Include="MBKMServices\KRSService.cs" />
     <Compile Include="MBKMServices\LinkFasilitasService.cs" />
     <Compile Include="MBKMServices\MahasiswaService.cs" />
+    <Compile Include="MBKMServices\NilaiSubCWService.cs" />
     <Compile Include="MBKMServices\PendaftaranMataKuliahService.cs" />
     <Compile Include="MBKMServices\MasterCapaianPembelajaranService.cs" />
     <Compile Include="MBKMServices\NilaiKuliahService.cs" />
