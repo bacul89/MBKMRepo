@@ -71,8 +71,10 @@
     <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IMahasiswaRepository.cs" />
     <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IMasterCapaianPembelajaranRepository.cs" />
     <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\INilaiKuliahRepository.cs" />
+    <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\INilaiSubCWRepository.cs" />
     <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IPendaftaranMataKuliahRepository.cs" />
     <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IPerjanjianKerjasamaRepository.cs" />
+    <Compile Include="Interfaces\RepoInterfaces\MBKMRepoInterfaces\IReportBAPRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

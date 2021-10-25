@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Bap";
 }
-
+@model MBKM.Entities.ViewModel.VMListReportBAP
 <html>
 <head>
     <style>
@@ -21,20 +21,20 @@
         FORMULIR
 
 
-        
+
 
     </h5>
     <h5 class="card-title" style="padding-top: 0px; padding-right: 15px; padding-left: 0px; font-weight: bold; font-size: 20px; color: black; ">
 
-        
+
 
         DOKUMENTASI KEGIATAN PERKULIAHAN ONLINE
         <p style="font-weight: normal; font-size: 15px;font-style:italic; ">Sebagai Pengganti Perkuliahan Tatap Muka</p>
     </h5>
     @*<div style="text-align:right">@Html.ActionLink("Print BAP", "PrintDetail")</div>*@
-   
+
     <div style="text-align:right">
-        
+
         @*<button onclick="@Url.Action("PrintDetail", "SummaryPresensi")" ;class="btn btn-success"><i class="fas fa-plus-circle"></i> Download pdf</button>*@
         @*<input type="button" value="Download PDF" onclick="location.href='@Url.Action("PrintDetail", "SummaryPresensi")?id='+ @Model" />*@
         @*<a href="javascript:void(0)" style="color:black" onclick="@Url.Action("PrintDetail", "SummaryPresensi")"><i class="fas fa-edit"></i></a>*@
@@ -43,30 +43,99 @@
     <table style="width:100%">
         <tr>
             <th>NIM:</th>
-            <td id="nim"></td>
+            @{
+                if (Model == null || Model.NIM == null)
+                {
+                    <td id="nim"></td>
+                }
+                else
+                {
+                    <td id="nim">@Model.NIM</td>
+                }
+            }
 
             <th>Program Studi:</th>
-            <td id="prodi"></td>
+            @{
+                if (Model == null || Model.NamaProdi == null)
+                {
+                    <td id="prodi"></td>
+                }
+                else
+                {
+                    <td id="prodi">@Model.NamaProdi</td>
+                }
+            }
+            
         </tr>
         <tr>
             <th>Nama Mahasiswa:</th>
-            <td id="nama"></td>
+            @{
+                if (Model == null || Model.Nama == null)
+                {
+                    <td id="nama"></td>
+                }
+                else
+                {
+                    <td id="nama">@Model.Nama</td>
+                }
+            }
+
 
             <th>Nama Mata Kuliah:</th>
-            <td id="namaMK"></td>
+            @{
+                if (Model == null || Model.Nama == null)
+                {
+                    <td id="namaMK"></td>
+                }
+                else
+                {
+                    <td id="namaMK">@Model.NamaMatakuliah</td>
+                }
+            }
+            
         </tr>
         <tr>
             <th>Universitas Asal:</th>
-            <td id="univ"></td>
+            @{
+                if (Model == null || Model.Nama == null)
+                {
+                    <td id="univ"></td>
+                }
+                else
+                {
+                    <td id="univ">@Model.NamaUniversitas</td>
+                }
+            }
+
 
             <th>Kode Mata Kuliah:</th>
-            <td id="kodeMK"></td>
+            @{
+                if (Model == null || Model.Nama == null)
+                {
+                    <td id="kodeMK"></td>
+                }
+                else
+                {
+        <td id="kodeMK">@Model.KodeMataKuliah</td>
+                }
+            }
+            
         </tr>
         <tr>
             <th></th>
             <td></td>
             <th>Seksi:</th>
-            <td id="seksi"></td>
+            @{
+                if (Model == null || Model.Nama == null)
+                {
+                    <td id="seksi"></td>
+                }
+                else
+                {
+                    <td id="seksi">@Model.ClassSection</td>
+                }
+            }
+
         </tr>
     </table>
     <br>
@@ -81,24 +150,91 @@
             <th>Penyesuaian Bentuk Pembelajaran dengan online learning (metode dan aktivitas)</th>
             <th>Platform/aplikasi yang digunakan</th>
             <th>Kehadiran Mahasiswa</th>
-            <th>Evaluasi Perkuliahan online</th>
+            @*<th>Evaluasi Perkuliahan online</th>*@
             <th>Dosen</th>
         </tr>
         <tr>
             <td hidden id="tanggal"></td>
-            <td id="tanggal2"></td>
+            @{
+                if (Model == null || Model.Nama == null)
+                {
+                    <td id="tanggal2"></td>
+                }
+                else
+                {
+                    <td id="tanggal2">@Model.TANGGAL</td>
+                }
+            }
+
             @*tanggal pertemuan*@
-            <td></td>
+            @{
+                //Model.AdminPractice == null || Model.AdminPractice.TimeNotes == null
+                if (Model == null || Model.COMMENTS == null)
+                {
+                    <td id="topik"></td>
+                }
+                else
+                {
+                    <td id="topik">@Model.COMMENTS</td>
+                }
+            }
             @*topik perkuliahan*@
-            <td></td>
+            @{
+                //Model.AdminPractice == null || Model.AdminPractice.TimeNotes == null
+                if (Model == null || Model.BENTUK == null)
+                {
+                    <td id="metode"></td>
+                }
+                else
+                {
+                    <td id="metode">@Model.BENTUK</td>
+                }
+            }
+
             @*metode dan aktivitas*@
-            <td></td>
+            @{
+                //Model.AdminPractice == null || Model.AdminPractice.TimeNotes == null
+                if (Model == null || Model.PLATFORM == null)
+                {
+                    <td id="platform"></td>
+                }
+                else
+                {
+                    <td id="platform">@Model.PLATFORM</td>
+                }
+            }
+
+            @*<td id="platform">@Model.PLATFORM</td>*@
             @*platform yangdigunakan*@
-            <td id="present"></td>
+            @{
+                //Model.AdminPractice == null || Model.AdminPractice.TimeNotes == null
+                
+                
+                    if (Model.Present == true)
+                    {
+                        <td id="present">Hadir</td>
+                    }
+                    else
+                    {
+                        <td id="present" style="color:red">Tidak Hadir</td>
+                    }
+                
+
+            }
+
             @*status kehadira*@
-            <td></td>
-            @*evaluasi perkuliahan*@
-            <td id="dosen"></td>
+            @{
+                //Model.AdminPractice == null || Model.AdminPractice.TimeNotes == null
+                if (Model == null || Model.PLATFORM == null)
+                {
+                    <td id="dosen"></td>
+                }
+                else
+                {
+                    <td id="dosen">@Model.NamaDosen</td>
+                }
+            }
+
             @*Dosen pengajar*@
         </tr>
     </table>
@@ -109,31 +245,7 @@
 
 @section Scripts{
     <script>
-        var mataKuliah = null;
-        $(document).ready(function () {
-            $('#nama').html("@ViewData["nama"].ToString()");
-            $('#nim').html("@ViewData["nim"].ToString()");
-            $('#univ').html("@ViewData["univ"].ToString()");
-            $('#dosen').html("@ViewData["dosen"].ToString()");
-            $('#prodi').html("@ViewData["prodi"].ToString()");
-            $('#namaMK').html("@ViewData["namaMK"].ToString()");
-            $('#kodeMK').html("@ViewData["kodeMK"].ToString()");
-            $('#seksi').html("@ViewData["seksi"].ToString()");
-
-            $('#tanggal').html("@ViewData["tanggal"].ToString()");
-            var tglPertemuan = $('#tanggal').text();
-            var tglSplit = tglPertemuan.split(' 00:')[0];
-            $('#tanggal2').html(tglSplit);
         
-            if ("@ViewData["present"].ToString()" == "True") {
-
-                $('#present').html("Hadir");
-            }
-            else {
-                $('#present').html("Tidak Hadir");
-            }
-
-        });
     </script>
 
 }
