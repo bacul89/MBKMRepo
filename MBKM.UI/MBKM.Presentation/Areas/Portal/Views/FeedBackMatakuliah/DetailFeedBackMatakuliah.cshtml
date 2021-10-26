@@ -1,0 +1,146 @@
+﻿
+@{
+    ViewBag.Title = "DetailFeedBackMatakuliah";
+    Layout = "~/Areas/Portal/Views/Shared/_LayoutHome.cshtml";
+}
+
+
+
+@section css{
+
+    <link rel="stylesheet" type="text/css" href="~/Content/Admin/inputResponsive.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/Admin/AdminCostumeBS4.css">
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/sweetalert2.all.min.js"></script>
+}
+@section modal{
+    <div class="modal fade" id="TambahMasterMapingCapaianPembelajaran" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" id="modal-inner">
+
+        </div>
+    </div>
+}
+
+<br />
+<div class="container-fluid" style="padding: 0px">
+    <div class="card center-block" style="background-color: white; width: 98%; padding: 0px">
+        <div class="card-body responsive-content" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; padding: 0px">
+            <h6 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 25px; color: black;">
+                FEEDBACK MATA KULIAH<br />
+                <small class="describe">Isikan Feedback Untuk Seluruh Dosen Yang Mengajar Mata Kuliah</small>
+            </h6>
+            <hr />
+            <div class="left" style="width: 30%; margin-left:10px">
+                <div style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; ">
+                    <div class="container" style="width: 100%;">
+                        <h5><b>FAKULTAS ILMU HITAM</b></h5>
+                        <h5><b>FAKULTAS ILMU HITAM</b></h5>
+                        <h5><b>FAKULTAS ILMU HITAM</b></h5>
+                        <h5><b>FAKULTAS ILMU HITAM</b></h5>
+                        <h5><b>FAKULTAS ILMU HITAM</b></h5>
+                    </div>
+                    <div class="container" style="width: 100%; background-color:coral">
+                        <h5><b>FAKULTAS ILMU HITAM</b></h5>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="container" style="width: 100%;">
+                <table class="spacing-table">
+                    <tr style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate; border-spacing: 0 15px; margin-bottom:10px">
+                        <td style="width:3%; padding-left:10px"><h5>11</h5></td>
+                        <td style="width:55%">
+                            <h5>asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw </span></h5>
+                        </td>
+                        <td style="width:30%" padding-left:10px">
+                            <label class="radio-inline" style="margin-top:5px; margin-bottom:5px">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> Sangat Tidak Sesuai
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Tidak Sesuai
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> Sesuai
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> Sangat Sesuai
+                            </label>
+                        </td>
+                    </tr>
+                    <tr style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">
+                        <td style="width:2%; padding-left:10px"><h5>1</h5></td>
+                        <td style="width:50%">
+                            <h5>asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw </span></h5>
+                        </td>
+                        <td style="width:30%">
+                            <label class="radio-inline" style="margin-top:5px; margin-bottom:5px">
+                                <input type="radio" name="inlineRadioOptionss" id="inlineRadio1" value="option1"> Sangat Tidak Sesuai
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="inlineRadioOptionss" id="inlineRadio2" value="option2"> Tidak Sesuai
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="inlineRadioOptionss" id="inlineRadio3" value="option3"> Sesuai
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="inlineRadioOptionss" id="inlineRadio3" value="option3"> Sangat Sesuai
+                            </label>
+                        </td>
+                    </tr>
+                    <tr style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">
+                        <td style="width:2%; padding-left:10px"><h5>1</h5></td>
+                        <td style="width:50%">
+                            <h5>asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw </span></h5>
+                        </td>
+                        <td style="width:30%">
+                            <label class="radio-inline" style="margin-top:5px; margin-bottom:5px">
+                                <input type="radio" name="inlineRadioOptionsd" id="inlineRadio1" value="option1"> Sangat Tidak Sesuai
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="inlineRadioOptionsd" id="inlineRadio2" value="option2"> Tidak Sesuai
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="inlineRadioOptionsd" id="inlineRadio3" value="option3"> Sesuai
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="inlineRadioOptionsd" id="inlineRadio3" value="option3"> Sangat Sesuai
+                            </label>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <br />
+            <div class="container" style="width: 100%;">
+                <form class="form">
+                    <div class="form-group">
+                        <label for="inp_kritik">KRITIK DAN SARAN</label>
+                        <textarea class="form-control input-data" id="inp_kritik" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2 col-md-offset-10">
+                            <button type="button" id="cari" class="btn btn-warning" style="float: right;" onclick="GenerateDataTable()">SUBMIT</button>
+                        </div>
+                    </div>
+                </form>
+                <br />
+                <br />
+                <br />
+                <div class="col-md-6 col-md-offset-10">
+                    <div class="col-md-2">
+                        <button type="button" id="cari" class="btn btn-danger" style="float: right; width:5vw" onclick="GenerateDataTable()">PREVIOUS</button>
+                    </div><div class="col-md-2">
+                        <button type="button" id="cari" class="btn btn-success" style="float: right; width: 5vw" onclick="GenerateDataTable()">NEXT</button>
+                    </div>
+                </div>
+            </div>
+            <br />
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/Admin/JadwalUjian/main.js"></script>
+    <script src="~/Scripts/loading/loadingoverlay.min.js"></script>
+}
+

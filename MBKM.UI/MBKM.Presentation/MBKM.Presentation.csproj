@@ -154,9 +154,11 @@
     <Compile Include="Areas\Admin\Controllers\PerjanjianKerjasama\PerjanjianKerjasamaController.cs" />
     <Compile Include="Areas\Admin\Controllers\RegisMhsByAdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SummaryFeedbackController.cs" />
     <Compile Include="Areas\Admin\Controllers\TemplateEmail\TemplateEmailController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserManageController.cs" />
     <Compile Include="Areas\Admin\Controllers\VerifikasiMahasiswaController.cs" />
+    <Compile Include="Areas\Portal\Controllers\FeedBackMatakuliahController.cs" />
     <Compile Include="Areas\Portal\Controllers\PresensiKelasController.cs" />
     <Compile Include="Areas\Portal\Controllers\PresensiUjianController.cs" />
     <Compile Include="Areas\Portal\Controllers\DataDiriController.cs" />
@@ -507,6 +509,9 @@
     <Content Include="Areas\Portal\Views\SummaryPresensi\DetailSummaryPresensiKelas.cshtml" />
     <Content Include="App_Browsers\qt.browser" />
     <Content Include="Areas\Portal\Views\SummaryPresensi\BAP.cshtml" />
+    <Content Include="Areas\Admin\Views\SummaryFeedback\Index.cshtml" />
+    <Content Include="Areas\Portal\Views\FeedBackMatakuliah\Index.cshtml" />
+    <Content Include="Areas\Portal\Views\FeedBackMatakuliah\DetailFeedBackMatakuliah.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
