@@ -111,9 +111,34 @@
                             <select name="noKerjasama" id="noKerjasama" class="form-control input-md"></select>
                         </td>
                     </tr>
+                    <tr id="trNoSKTugas" hidden>
+                        <td style="text-align: right">No. SK Tugas</td>
+                        <td style="width: 400px;">
+                            <input type="text" name="noSKTugas" id="noSKTugas" class="form-control input-md"></input type="text">
+                        </td>
+                    </tr>
+                    <tr id="trTanggalSKTugas" hidden>
+                        <td style="text-align: right">Tanggal SK Tugas</td>
+                        <td style="width: 400px;">
+                            <input type="date" name="tanggalSKTugas" id="tanggalSKTugas" class="form-control input-md"></input type="text">
+                        </td>
+                    </tr>
+                    <tr id="trJudulAktivitas" hidden>
+                        <td style="text-align: right">Judul Aktivitas</td>
+                        <td style="width: 400px;">
+                            <input type="text" name="judulAktivitas" id="judulAktivitas" class="form-control input-md"></input type="text">
+                        </td>
+                    </tr>
+                    <tr id="trLokasi" hidden>
+                        <td style="text-align: right">Lokasi</td>
+                        <td style="width: 400px;">
+                            <input type="text" name="lokasiTugas" id="lokasiTugas" class="form-control input-md"></input type="text">
+                        </td>
+                    </tr>
                     <tr>
                         <td colspan="2">
                             <button id="submit" name="submit" class="btn" style="float: right; background-color: #FF8A04; color: white; padding: 2px 30px; font-weight: bold; font-size: 16px;">SUBMIT</button>
+                            <button id="edit" name="edit" class="btn" style="display: none; float: right; background-color: rgb(0,166,81); color: white; padding: 2px 30px; font-weight: bold; font-size: 16px;">EDIT</button>
                         </td>
                     </tr>
                 </table>
@@ -201,8 +226,10 @@
             $("#noKerjasama").select2({
                 placeholder: "-- Pilih No. Kerjasama --"
             });
+            $('#edit').hide();
             datatable = $('#hasilPencarian').DataTable();
         });
+
         $('#cari').click(function () {
             if (!$('#submit').is(":hidden")) {
                 alert('Tolong input informasi pertukan terlebih dahulu!');
@@ -292,6 +319,15 @@
                 });
             }).draw();
         });
+
+        $('#edit').click(function () {
+            $("#noSKTugas").prop("disabled", false);
+            $("#tanggalSKTugas").prop("disabled", false);
+            $("#judulAktivitas").prop("disabled", false);
+            $("#lokasiTugas").prop("disabled", false);
+            $('#submit').show();
+            $('#edit').hide();
+        });
         $('#submit').click(function () {
             var data = new Object();
             data.JenisPertukaran = $('#jenisProgramMBKM').select2('data')[0].text;
@@ -299,6 +335,12 @@
             data.STRM = $('#strm').val();
             if ($('#noKerjasama').val()) {
                 data.NoKerjasama = $('#noKerjasama').select2('data')[0].text;
+            }
+            if ($("#jenisProgramMBKM").val().includes('Non Pertukaran')) {
+                data.JudulAktivitas = $('#judulAktivitas').val();
+                data.LokasiTugas = $('#lokasiTugas').val();
+                data.TanggalSK = $('#tanggalSKTugas').val();
+                data.NoSK = $('#noSKTugas').val();
             }
             $.ajax({
                 type: "POST",
@@ -308,10 +350,17 @@
                 alert(response.message);
                 if (response.status == 200) {
                     $('#submit').hide();
+                    if ($("#jenisProgramMBKM").val().includes('Non Pertukaran')) {
+                        $('#edit').show();
+                    }
                     $("#jenisProgramMBKM").prop("disabled", true);
                     $("#jenisKegiatanMBKM").prop("disabled", true);
                     $("#namaInstansi").prop("disabled", true);
                     $("#noKerjasama").prop("disabled", true);
+                    $("#noSKTugas").prop("disabled", true);
+                    $("#tanggalSKTugas").prop("disabled", true);
+                    $("#judulAktivitas").prop("disabled", true);
+                    $("#lokasiTugas").prop("disabled", true);
                 }
             });
         });
@@ -420,6 +469,17 @@
                 }
             });
             $("#jenisProgramMBKM").change(function () {
+                if (!$("#jenisProgramMBKM").val().includes('Non Pertukaran')) {
+                    $("#trNoSKTugas").hide();
+                    $("#trTanggalSKTugas").hide();
+                    $("#trJudulAktivitas").hide();
+                    $("#trLokasi").hide();
+                } else {
+                    $("#trNoSKTugas").show();
+                    $("#trTanggalSKTugas").show();
+                    $("#trJudulAktivitas").show();
+                    $("#trLokasi").show();
+                }
                 $("#jenisKegiatanMBKM").empty();
                 $("#namaInstansi").empty();
                 $("#noKerjasama").empty();
@@ -455,8 +515,10 @@
                     }
                     $("#namaInstansi").empty();
                     $("#noKerjasama").empty();
+                    
                     $("#namaInstansi").prop("disabled", false);
                     $("#noKerjasama").prop("disabled", true);
+
 
                     $("#namaInstansi").select2({
                         placeholder: "-- Pilih Nama Instansi --",
@@ -536,9 +598,34 @@
                             $("#noKerjasama").prop("disabled", true);
                         });
                     }
+                    if (response.JenisPertukaran.includes('Non Pertukaran')) {
+                        $('#edit').show();
+                        $("#trNoSKTugas").show();
+                        $("#trTanggalSKTugas").show();
+                        $("#trJudulAktivitas").show();
+                        $("#trLokasi").show();
+
+                        $("#noSKTugas").val(response.NoSK);
+                        var date = new Date(response.TanggalSK)
+                        $("#tanggalSKTugas").val(date.getFullYear() + "-" + appendZero(date.getMonth() + 1, 2) + "-" + appendZero(date.getDate(), 2));
+                        $("#judulAktivitas").val(response.JudulAktivitas);
+                        $("#lokasiTugas").val(response.LokasiTugas);
+
+                        $("#noSKTugas").prop("disabled", true);
+                        $("#tanggalSKTugas").prop("disabled", true);
+                        $("#judulAktivitas").prop("disabled", true);
+                        $("#lokasiTugas").prop("disabled", true);
+                    }
                     $('#submit').hide();
                 }
             });
+        }
+        function appendZero(string, length) {
+            string += "";
+            while (string.length < length) {
+                string = "0" + string;
+            }
+            return string;
         }
     </script>
 }

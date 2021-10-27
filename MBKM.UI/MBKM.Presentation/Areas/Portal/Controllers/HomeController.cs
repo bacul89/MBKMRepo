@@ -54,7 +54,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     {
                         _mahasiswaService.Save(mahasiswa);
                         return Json(new ServiceResponse { status = 200, message = "Pendaftaran mahasiswa berhasil, tolong cek email dan konfirmasi akunmu!" });
-                    }
+                    } 
                     return Json(new ServiceResponse { status = 500, message = "Email tidak terkirim!" });
                 }
                 else
@@ -103,8 +103,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 mahasiswa.Token = null;
                 _mahasiswaService.Save(mahasiswa);
                 return Json(new ServiceResponse { status = 200, message = "Akun telah berhasil diaktivasi, silahkan login!" });
-            }
-            else
+            } else
             {
                 return Json(new ServiceResponse { status = 400, message = "Token invalid!" });
             }
@@ -148,8 +147,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     _mahasiswaService.Save(mahasiswa2);
                     Session["prodiIDAsal"] = a.ProdiIDAsal;
                     PopulateSession(true, mahasiswa2.Email, mahasiswa2.Nama);
-                }
-                else
+                } else
                 {
                     mahasiswa.Email = a.Email;
                     mahasiswa.Password = hp(a.PasswordData);
@@ -172,7 +170,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             {
                 TempData["alertMessage"] = "Silahkan aktivasi akun anda terlebih dahulu!";
                 return RedirectToAction("Index", "Home");
-            }
+            } 
             PopulateSession(true, res.Email, res.Nama);
             return RedirectToAction("Index", "DataDiri");
         }

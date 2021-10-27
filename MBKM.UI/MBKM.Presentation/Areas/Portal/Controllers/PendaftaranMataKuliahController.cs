@@ -218,7 +218,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             try
             {
                 Int64 id = GetMahasiswaByEmail(Session["email"] as string).ID;
-                if (_informasiPertukaranService.Find(ip => ip.MahasiswaID == id).FirstOrDefault() == null)
+                var ip = _informasiPertukaranService.Find(_ => _.MahasiswaID == id).FirstOrDefault();
+                if (ip == null)
                 {
                     informasiPertukaran.STRM = (int) _pmkService.getOngoingSemester(GetMahasiswaByEmail(Session["email"] as string).JenjangStudi).ID;
                     informasiPertukaran.MahasiswaID = id;
@@ -226,13 +227,37 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     informasiPertukaran.IsDeleted = false;
                     informasiPertukaran.CreatedDate = DateTime.Now;
                     informasiPertukaran.UpdatedDate = DateTime.Now;
-                    _informasiPertukaranService.Save(informasiPertukaran);
-                    return Json(new ServiceResponse { status = 200, message = "Data berhasil tersimpan!" });
+                    try
+                    {
+                        _informasiPertukaranService.Save(informasiPertukaran);
+                    }
+                    catch (Exception)
+                    {
+                        informasiPertukaran.TanggalSK = null;
+                        _informasiPertukaranService.Save(informasiPertukaran);
+                    }
+                } else
+                {
+                    ip.JudulAktivitas = informasiPertukaran.JudulAktivitas;
+                    ip.LokasiTugas = informasiPertukaran.LokasiTugas;
+                    ip.TanggalSK = informasiPertukaran.TanggalSK;
+                    ip.NoSK = informasiPertukaran.NoSK;
+                    ip.UpdatedDate = DateTime.Now;
+                    try
+                    {
+                        _informasiPertukaranService.Save(ip);
+                    }
+                    catch (Exception)
+                    {
+                        ip.TanggalSK = null;
+                        _informasiPertukaranService.Save(ip);
+                    }
                 }
-                return Json(new ServiceResponse { status = 400, message = "Data sudah pernah disubmit!" });
+                return Json(new ServiceResponse { status = 200, message = "Data berhasil tersimpan!" });
             }
             catch (Exception e)
             {
+
                 return Json(new ServiceResponse { status = 500, message = e.Message });
             }
         }
