@@ -16,6 +16,7 @@ namespace MBKM.Services
     {
         IEnumerable<VMLookup> getLookupByTipe(string tipe);
         List<VMListProdi> getListProdi();
+        List<VMUserProdi> getUserProdi();
     }
 
     public class LookupService : EntityService<Lookup>, ILookupService
@@ -33,6 +34,11 @@ namespace MBKM.Services
         public List<VMListProdi> getListProdi()
         {
             return _lookupRepository.getListProdi();
+        }
+
+        public List<VMUserProdi> getUserProdi()
+        {
+            return _lookupRepository.getUserProdi();
         }
 
         public IEnumerable<VMLookup> getLookupByTipe(string tipe)

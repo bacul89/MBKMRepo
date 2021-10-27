@@ -142,6 +142,7 @@
     <Compile Include="ViewModel\VMPresensi.cs" />
     <Compile Include="ViewModel\VMProdi.cs" />
     <Compile Include="ViewModel\VMSemester.cs" />
+    <Compile Include="ViewModel\VMUserProdi.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
