@@ -38,7 +38,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             IEnumerable<VMLookup> listJabatan = _roleService.getLookupRole();
             ViewBag.listJabatan = new SelectList(listJabatan, "Nilai", "Nama");
 
-            IEnumerable<VMListProdi> listProdi = _lookupService.getListProdi();
+            IEnumerable<VMUserProdi> listProdi = _lookupService.getUserProdi();
             ViewBag.listProdi = new SelectList(listProdi, "IDProdi", "NamaProdi");
 
 
@@ -51,7 +51,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             IEnumerable<VMLookup> listJabatan = _roleService.getLookupRole();
             ViewBag.listJabatan = new SelectList(listJabatan, "Nilai", "Nama");
-            IEnumerable<VMListProdi> listProdi = _lookupService.getListProdi();
+            IEnumerable<VMUserProdi> listProdi = _lookupService.getUserProdi();
             ViewBag.listProdi = new SelectList(listProdi, "IDProdi", "NamaProdi");
 
             var model = _userService.Get(id);
@@ -59,7 +59,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
         public ActionResult ModalDetailUser(int id)
         {
-            IEnumerable<VMListProdi> listProdi = _lookupService.getListProdi();
+            IEnumerable<VMUserProdi> listProdi = _lookupService.getUserProdi();
             ViewBag.listProdi = new SelectList(listProdi, "IDProdi", "NamaProdi");
             var model = _userService.Get(id);
 
