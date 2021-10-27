@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "MBKM";
 }
 
@@ -98,6 +97,32 @@
     </div>
 </div>
 
+<div class="modal fade" id="token" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #FF8A04; ">
+                <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+                    Aktivasi Akun
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </h5>
+            </div>
+            <div class="modal-body" style="padding-bottom: 50px;">
+                <div id="Aktivasi">
+                    <div class="form-group">
+                        <label>Token<h style="color: red;"> *</h></label>
+                        <input type="text" name="token" id="tokenVal" class="form-control input-md" />
+                    </div>
+                    <div class="form-group">
+                        <input onclick="submitToken()" type="submit" value="Submit" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div style="padding: 5%;" class="row">
     <div class="col-sm-7 col-md-7 col-lg-7">
         <img style="max-width: 100%;" src="~/Asset/atmajayapoto.jpg" />
@@ -140,12 +165,16 @@
         </div>
     </div>
 </div>
+<a data-toggle="modal" data-target="#token" style="display: none;" id="test"></a>
 
 @section Scripts{
     <script>
         $(document).ready(function () {
             var alertMessage = '@TempData["alertMessage"]';
-            if (alertMessage.length != 0) {
+            if (alertMessage == 'Verify') {
+                $('#test').click();
+            }
+            else if (alertMessage.length != 0) {
                 alert(alertMessage);
             }
             loadNamaUniversitas();
@@ -170,7 +199,6 @@
             loadFromLookup("Agama", "agama", "Agama");
             loadFromLookup("Gender", "gender", "Gender");
         });
-
         $("#kerjasama").change(function () {
             if ($("#kerjasama").val() == "y") {
                 $("#univAsal").html("<div class= 'form-group'><label>Universitas Asal</label><select name='NamaUniversitas' id='namaUniversitas' class='form-control input-lg' required></select></div><div id='noKS'><div class='form-group'><label>No. Kerjasama</label><select name='noKerjasama' id='noKerjasama' class='form-control input-lg' required></select></div></div>");
@@ -181,7 +209,6 @@
                 $("#univAsal").html("<div class= 'form-group'><label>Universitas Asal</label><input type='text' name='NamaUniversitas' id='NamaUniversitas' placeholder='Nama Universitas' class='form-control input-lg' /></div>");
             }
         });
-
         function namaUnivOnChange() {
             if ($("#kerjasama").val() == "y") {
                 $("#namaUniversitas").change(function () {
@@ -217,6 +244,23 @@
                 type: "POST",
                 url: "@Url.Action("registerExternal", "Home")",
                 data: mahasiswa
+            }).then(function (response) {
+                alert(response.message);
+                if (response.status == 200) {
+                    location.reload();
+                }
+            });
+        }
+        function submitToken() {
+            if (isEmpty("tokenVal", "Token")) {
+                return;
+            }
+            var data = new Object;
+            data.token = $("#tokenVal").val();
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("VerifyAccount", "Home")",
+                data: data
             }).then(function (response) {
                 alert(response.message);
                 if (response.status == 200) {
@@ -284,7 +328,6 @@
             });
         }
         function loadFromLookup(tipe, id, nama) {
-
             $("#" + id).select2({
                 placeholder: "-- Pilih " + nama + " --",
                 width: "100%",

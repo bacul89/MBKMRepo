@@ -50,11 +50,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     mahasiswa.UpdatedDate = DateTime.Now;
                     mahasiswa.StatusVerifikasi = "DAFTAR";
                     mahasiswa.Password = HashPasswordService.HashPassword(mahasiswa.Password);
-                    _mahasiswaService.Save(mahasiswa);
                     if (SendEmail(mahasiswa.Email, token))
                     {
+                        _mahasiswaService.Save(mahasiswa);
                         return Json(new ServiceResponse { status = 200, message = "Pendaftaran mahasiswa berhasil, tolong cek email dan konfirmasi akunmu!" });
-                    } 
+                    }
                     return Json(new ServiceResponse { status = 500, message = "Email tidak terkirim!" });
                 }
                 else
@@ -89,7 +89,12 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             return new ContentResult { Content = JsonConvert.SerializeObject(_lookupService.getLookupByTipe(tipe)), ContentType = "application/json" };
         }
-        public ActionResult VerifyPage(string token)
+        public ActionResult VerifyPage()
+        {
+            TempData["alertMessage"] = "Verify";
+            return RedirectToAction("Index", "Home");
+        }
+        public ActionResult VerifyAccount(string token)
         {
             Mahasiswa mahasiswa = GetMahasiswaByToken(token);
             if (mahasiswa != null)
@@ -97,12 +102,12 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 mahasiswa.IsActive = true;
                 mahasiswa.Token = null;
                 _mahasiswaService.Save(mahasiswa);
-                TempData["alertMessage"] = "Akun telah berhasil diaktivasi, silahkan login!";
-            } else
-            {
-                TempData["alertMessage"] = "Token invalid!";
+                return Json(new ServiceResponse { status = 200, message = "Akun telah berhasil diaktivasi, silahkan login!" });
             }
-            return RedirectToAction("Index", "Home");
+            else
+            {
+                return Json(new ServiceResponse { status = 400, message = "Token invalid!" });
+            }
         }
         public ActionResult LoginInternal(string username, string password)
         {
@@ -143,7 +148,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     _mahasiswaService.Save(mahasiswa2);
                     Session["prodiIDAsal"] = a.ProdiIDAsal;
                     PopulateSession(true, mahasiswa2.Email, mahasiswa2.Nama);
-                } else
+                }
+                else
                 {
                     mahasiswa.Email = a.Email;
                     mahasiswa.Password = hp(a.PasswordData);
@@ -166,7 +172,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             {
                 TempData["alertMessage"] = "Silahkan aktivasi akun anda terlebih dahulu!";
                 return RedirectToAction("Index", "Home");
-            } 
+            }
             PopulateSession(true, res.Email, res.Nama);
             return RedirectToAction("Index", "DataDiri");
         }
@@ -193,7 +199,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             string domain = ConfigurationManager.AppSettings["Domain"];
             string url = this.Url.Action("VerifyPage", "Home", null);
             string subject = "Verify your email";
-            string body = "Thanks for Registering your account.<br> please verify your email by clicking the link <br> <a href='" + domain + url + "?token=" + token + "'>verify</a>";
+            string body = "Thanks for Registering your account.<br> Here is your token <br><br> " + token + " <br><br>Please verify your email by entering your token in the link <br> <a href='" + domain + url + "'>here</a><br>";
             List<string> tos = new List<string>();
             tos.Add(email);
             return emailHelper.SendMail(subject, body, ConfigurationManager.AppSettings["EmailFrom"], tos, null, null, true);
