@@ -3,7 +3,7 @@
     ViewBag.Title = "DetailFeedBackMatakuliah";
     Layout = "~/Areas/Portal/Views/Shared/_LayoutHome.cshtml";
 }
-
+@model MBKM.Entities.Models.MBKM.JadwalKuliah
 
 
 @section css{
@@ -32,15 +32,19 @@
             <hr />
             <div class="left" style="width: 30%; margin-left:10px">
                 <div style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; ">
+                    <input type="hidden" name="inp_listDosen" id="inp_listDosen" value="@ViewData["listDosen"].ToString()" />
+                    <input type="hidden" name="inp_dosenID" id="inp_dosenID" value="@ViewData["idDosen"].ToString()" />
+                    <input type="hidden" name="inp_namaDosen" id="inp_namaDosen" value="@ViewData["namaDosen"].ToString()" />
+                    <input type="hidden" name="inp_jadwalID" id="inp_jadwalID" value="@ViewData["jadwalID"].ToString()" />
                     <div class="container" style="width: 100%;">
-                        <h5><b>FAKULTAS ILMU HITAM</b></h5>
-                        <h5><b>FAKULTAS ILMU HITAM</b></h5>
-                        <h5><b>FAKULTAS ILMU HITAM</b></h5>
-                        <h5><b>FAKULTAS ILMU HITAM</b></h5>
-                        <h5><b>FAKULTAS ILMU HITAM</b></h5>
+                        <h5><b>FAKULTAS @Model.NamaFakultas.ToUpper()</b></h5>
+                        <h5><b>PROGRAM STUDI @Model.NamaProdi.ToUpper()</b></h5>
+                        <h5><b>@Model.KodeMataKuliah.ToUpper() -  @Model.NamaMataKuliah.ToUpper()</b></h5>
+                        <h5><b>SEKSI @Model.ClassSection.ToUpper()</b></h5>
+                        <h5><b>@Model.STRM</b></h5>
                     </div>
                     <div class="container" style="width: 100%; background-color:coral">
-                        <h5><b>FAKULTAS ILMU HITAM</b></h5>
+                        <h5><b>@ViewData["namaDosen"].ToString().ToUpper()</b></h5>
                     </div>
                 </div>
             </div>
@@ -48,66 +52,28 @@
             <br />
             <div class="container" style="width: 100%;">
                 <table class="spacing-table">
-                    <tr style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate; border-spacing: 0 15px; margin-bottom:10px">
-                        <td style="width:3%; padding-left:10px"><h5>11</h5></td>
-                        <td style="width:55%">
-                            <h5>asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw </span></h5>
-                        </td>
-                        <td style="width:30%" padding-left:10px">
-                            <label class="radio-inline" style="margin-top:5px; margin-bottom:5px">
-                                <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> Sangat Tidak Sesuai
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Tidak Sesuai
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> Sesuai
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> Sangat Sesuai
-                            </label>
-                        </td>
-                    </tr>
-                    <tr style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">
-                        <td style="width:2%; padding-left:10px"><h5>1</h5></td>
-                        <td style="width:50%">
-                            <h5>asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw </span></h5>
-                        </td>
-                        <td style="width:30%">
-                            <label class="radio-inline" style="margin-top:5px; margin-bottom:5px">
-                                <input type="radio" name="inlineRadioOptionss" id="inlineRadio1" value="option1"> Sangat Tidak Sesuai
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="inlineRadioOptionss" id="inlineRadio2" value="option2"> Tidak Sesuai
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="inlineRadioOptionss" id="inlineRadio3" value="option3"> Sesuai
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="inlineRadioOptionss" id="inlineRadio3" value="option3"> Sangat Sesuai
-                            </label>
-                        </td>
-                    </tr>
-                    <tr style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">
-                        <td style="width:2%; padding-left:10px"><h5>1</h5></td>
-                        <td style="width:50%">
-                            <h5>asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw asdaknd awdaiudaiu daddw </span></h5>
-                        </td>
-                        <td style="width:30%">
-                            <label class="radio-inline" style="margin-top:5px; margin-bottom:5px">
-                                <input type="radio" name="inlineRadioOptionsd" id="inlineRadio1" value="option1"> Sangat Tidak Sesuai
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="inlineRadioOptionsd" id="inlineRadio2" value="option2"> Tidak Sesuai
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="inlineRadioOptionsd" id="inlineRadio3" value="option3"> Sesuai
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="inlineRadioOptionsd" id="inlineRadio3" value="option3"> Sangat Sesuai
-                            </label>
-                        </td>
-                    </tr>
+                    @{ 
+                        var i = 1;
+                        foreach(var d in ViewData["pertanyaan"] as IEnumerable<MBKM.Entities.ViewModel.VMPertanyaanFeedback>) {
+                            <tr style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate; border-spacing: 0 15px; margin-bottom:10px">
+                                <td style="width:3%; padding-left:10px"><h5>@i</h5></td>
+                                <td style="width:55%">
+                                    <h5>@d.Pertanyaan</h5>
+                                </td>
+                                <td style="width:30%; padding-left:10px" class="data_radio">
+                                     @{
+                                        foreach (var q in ViewData["jawaban"] as IEnumerable<MBKM.Entities.ViewModel.VMJawabanFeedback>){
+                                            <label class="radio-inline" style="margin-top:5px; margin-bottom:5px">
+                                                <input class="quistionare" type="radio" name="@i" id="@d.IdPertanyaan$@d.Pertanyaan$@d.KategoriPertanyaan" value="@q.N_ANS_POINT"> @q.N_ANS_DESC
+                                            </label>
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                            i = i + 1;
+                        }
+                        <input type="hidden" name="inp_count" id="inp_count" value="@i" />
+                    }
                 </table>
             </div>
             <br />
@@ -119,7 +85,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-sm-2 col-md-offset-10">
-                            <button type="button" id="cari" class="btn btn-warning" style="float: right;" onclick="GenerateDataTable()">SUBMIT</button>
+                            <button type="button" id="cari" class="btn btn-warning" style="float: right;" onclick="postDataQuitionare()">SUBMIT</button>
                         </div>
                     </div>
                 </form>
@@ -140,7 +106,7 @@
 </div>
 
 @section scripts{
-    <script src="~/Scripts/Admin/JadwalUjian/main.js"></script>
+    <script src="~/Scripts/Portal/FeedbackMatkul/DetailFeedback.js"></script>
     <script src="~/Scripts/loading/loadingoverlay.min.js"></script>
 }
 

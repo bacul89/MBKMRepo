@@ -112,6 +112,8 @@
     <Compile Include="Models\Role.cs" />
     <Compile Include="ViewModel\VMClassSection.cs" />
     <Compile Include="ViewModel\VMCPLMKPendaftaran.cs" />
+    <Compile Include="ViewModel\VMDosenMakulPertemuan.cs" />
+    <Compile Include="ViewModel\VMJawabanFeedback.cs" />
     <Compile Include="ViewModel\VMListJadwalKuliah.cs" />
     <Compile Include="ViewModel\VMJenisKerjasama.cs" />
     <Compile Include="ViewModel\VMJenisPertukaran.cs" />
@@ -139,6 +141,7 @@
     <Compile Include="ViewModel\VMMataKuliah.cs" />
     <Compile Include="ViewModel\VMMenu.cs" />
     <Compile Include="ViewModel\VMPendaftaranJadwalKuliah.cs" />
+    <Compile Include="ViewModel\VMPertanyaanFeedback.cs" />
     <Compile Include="ViewModel\VMPresensi.cs" />
     <Compile Include="ViewModel\VMProdi.cs" />
     <Compile Include="ViewModel\VMSemester.cs" />
