@@ -52,3 +52,41 @@ thead tr {
 
 /*--Datatable--*/
 
+
+
+
+/*data table grid costume*/
+
+.spacing-table {
+    border-collapse: separate;
+    border-spacing: 0 5px; /* this is the ultimate fix */
+}
+
+.spacing-table th {
+    text-align: left;
+    padding: 5px 15px;
+}
+
+.spacing-table td {
+    border-width: 1px 0;
+    width: 50%;
+    border-color: coral;
+    border-style: solid;
+}
+
+.spacing-table td:first-child {
+    border-left-width: 1px;
+    border-radius: 1px 0 0 1px;
+}
+
+.spacing-table td:last-child {
+    border-right-width: 1px;
+    border-radius: 0 1px 1px 0;
+}
+
+.spacing-table tbody {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    border-spacing: 0 7px;
+}
