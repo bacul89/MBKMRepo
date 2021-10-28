@@ -71,6 +71,8 @@
 
 <form action="@Url.Action("FormPendaftaranInternal","PendaftaranMataKuliah")" method="post" id="daftarMatkul"> 
     <input type="hidden" id="idMatkul" name="idMatkul" />
+    <input type="hidden" id="jenisKegiatan" name="jenisKegiatan" />
+    <input type="hidden" id="noKerjasama2" name="noKerjasama" />
 </form>
 <input type="hidden" name="strm" id="strm" value="@Model.ID" />
 
@@ -257,7 +259,7 @@
                     {
                         "data": "ID",
                         "render": function (data, type, row, meta) {
-                            return `<div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick="javascript:$('#idMatkul').val(${data}); $('#daftarMatkul').submit();"><i class="fas fa-edit"></i></a></div>`;
+                            return `<div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick="javascript:$('#idMatkul').val(${data}); $('#jenisKegiatan').val('` + $("#jenisKegiatanMBKM").val() + `'); $('#noKerjasama2').val('` + $("#noKerjasama").val() + `'); $('#daftarMatkul').submit();"><i class="fas fa-edit"></i></a></div>`;
                         }
                     },
                     {
@@ -510,7 +512,7 @@
                     }
                 });
                 $("#jenisKegiatanMBKM").change(function () {
-                    if (!$("#jenisProgramMBKM").val().includes('Non Pertukaran')) {
+                    if (!$("#jenisKegiatanMBKM").val().toLowerCase().includes('internal ke luar atma jaya')) {
                         return;
                     }
                     $("#namaInstansi").empty();
