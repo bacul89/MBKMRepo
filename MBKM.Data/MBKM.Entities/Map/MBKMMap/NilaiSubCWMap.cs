@@ -15,6 +15,7 @@ namespace MBKM.Entities.Map.MBKMMap
         {
             ToTable("NilaiSubCW");
             HasKey(t => t.ID).Property(t => t.ID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            Property(t => t.HeadCW).HasMaxLength(10).IsRequired();
         }
     }
 }

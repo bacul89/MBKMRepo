@@ -39,5 +39,9 @@ namespace MBKM.Entities.Models.MBKM
         public string LinkOthers { get; set; }
         #endregion
 
+        //#region sprint4
+        //public bool SubmitNilai { get; set; } = false;
+        //#endregion
+
     }
 }

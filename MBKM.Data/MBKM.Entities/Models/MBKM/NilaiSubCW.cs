@@ -24,6 +24,7 @@ namespace MBKM.Entities.Models.MBKM
         public Int64 NilaiKuliahID { get; set; }
         [JsonIgnore]
         public virtual NilaiKuliah NilaiKuliahs { get; set; }
+        public string HeadCW { get; set; }
 
     }
 }
