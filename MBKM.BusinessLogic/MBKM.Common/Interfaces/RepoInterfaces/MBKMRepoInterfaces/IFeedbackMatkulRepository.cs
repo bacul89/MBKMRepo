@@ -13,5 +13,6 @@ namespace MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces
         IEnumerable<VMDosenMakulPertemuan> GetDosenMakulPertemuans(string KodeMK, string ClassSection, string strm, string fakulId);
         IEnumerable<VMPertanyaanFeedback> GetPertanyaanFeedbacks(string jenjangStudi, string strm);
         IEnumerable<VMJawabanFeedback> GetJawabanFeedback(string KodeJawaban);
+        VMSemester GetSemesterByStrm(string strm);
     }
 }

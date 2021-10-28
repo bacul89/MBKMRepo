@@ -16,6 +16,7 @@ namespace MBKM.Services.MBKMServices
         IEnumerable<VMDosenMakulPertemuan> GetDosenMakulPertemuans(string KodeMK, string ClassSection, string strm, string fakulId);
         IEnumerable<VMPertanyaanFeedback> GetPertanyaanFeedbacks(string jenjangStudi, string strm);
         IEnumerable<VMJawabanFeedback> GetJawabanFeedback(string KodeJawaban);
+        VMSemester GetSemesterByStrm(string strm);
     }
     public class FeedbackMatkulService : EntityService<FeedbackMatkul>, IFeedbackMatkulService
     {
@@ -42,6 +43,11 @@ namespace MBKM.Services.MBKMServices
         public IEnumerable<VMPertanyaanFeedback> GetPertanyaanFeedbacks(string jenjangStudi, string strm)
         {
             return _feedbackRepository.GetPertanyaanFeedbacks(jenjangStudi, strm);
+        }
+
+        public VMSemester GetSemesterByStrm(string strm)
+        {
+            return _feedbackRepository.GetSemesterByStrm(strm);
         }
     }
 }
