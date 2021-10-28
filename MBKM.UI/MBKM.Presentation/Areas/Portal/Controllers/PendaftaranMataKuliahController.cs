@@ -93,12 +93,20 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             model.NoKerjasama = GetMahasiswaByEmail(Session["email"] as string).NoKerjasama;
             return View(model);
         }
-        public ActionResult FormPendaftaranInternal(int idMatkul)
+        public ActionResult FormPendaftaranInternalKeLuarAtma()
+        {
+            return View();
+        }
+        public ActionResult FormPendaftaranInternal(int idMatkul, string jenisKegiatan)
         {
             var matkul = GetJadwalKuliah(idMatkul);
             VMPendaftaranJadwalKuliah model = new VMPendaftaranJadwalKuliah(matkul);
             model.ID = idMatkul;
-            model.NoKerjasama = GetMahasiswaByEmail(Session["email"] as string).NoKerjasama;
+            if (jenisKegiatan.ToLower().Contains("internal ke luar atma jaya"))
+            {
+                ViewData["Model"] = model;
+                return RedirectToAction("FormPendaftaranInternalKeLuarAtma");
+            }
             return View(model);
         }
         public ActionResult GetFakultas(string search)
