@@ -1,0 +1,48 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+<div class="modal-content data-content-modal" id="created-email-template">
+    <div class="modal-header" style="background-color: #FF8A04; ">
+        <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+            Hasil Perhitungan Kuisioner
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </h5>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal">
+            <table id="table-data-manage-ujian-mahasiswa" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
+                <thead>
+                    <tr>
+                        <th class="zero-padding no-border vertical-center center sorting">No. </th>
+                        <th class="zero-padding no-border vertical-center center sorting">Nama Kategori</th>
+                        <th class="zero-padding no-border vertical-center center sorting">Nilai</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var i = 1;
+                        foreach (var dat in ViewData["dataResult"] as List<String[]>)
+                        {
+                            <tr>
+                                <td class="zero-padding no-border vertical-center center sorting">@i</td>
+                                <td class="zero-padding no-border vertical-center center sorting">@dat[0]</td>
+                                <td class="zero-padding no-border vertical-center center sorting">@dat[1]</td>
+                            </tr>
+                            i = i + 1;
+                        }
+                        <tr style="border: 1px solid coral; background-color:lightgrey">
+                            <td class="zero-padding no-border vertical-center center sorting" colspan="2"><b>TOTAL</b></td>
+                            <td class="zero-padding no-border vertical-center center sorting"><b>@ViewData["rata"]</b></td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </form>
+    </div>
+</div>
