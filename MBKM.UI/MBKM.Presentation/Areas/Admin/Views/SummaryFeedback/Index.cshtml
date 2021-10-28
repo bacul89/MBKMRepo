@@ -21,162 +21,177 @@
 <br />
 <div class="container-fluid" style="padding: 0px">
     <div class="card center-block" style="background-color: white; width: 98%; padding: 0px">
-        <div class="card-body responsive-content hidden" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; padding: 0px">
-            <h6 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 25px; color: black;">
-                SUMMARY FEEDBACK SELURUH DOSEN<br />
-                <small class="describe">Berikut Daftar Jadwal Ujian MBKM</small>
-            </h6>
-            <hr />
-            <div class="container" style="width: 100%;">
+        @{ 
+            if(ViewData["role"].ToString() == "Admin")
+            {
+                <div class="card-body responsive-content" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; padding: 0px">
+                    <h6 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 25px; color: black;">
+                        SUMMARY FEEDBACK SELURUH DOSEN<br />
+                        <small class="describe">Berikut Daftar Jadwal Ujian MBKM</small>
+                    </h6>
+                    <hr />
+                    <div class="container" style="width: 100%;">
 
-                <div class="col-md-12">
-                    <form class="form-horizontal col-md-7">
+                        <div class="col-md-12">
+                            <form class="form-horizontal col-md-7">
 
-                        <div class="form-group">
-                            <label for="inp_semester" class="col-sm-3 control-label">Tahun Semester</label>
-                            <div class="col-sm-7">
-                                <select name="inp_semester" id="inp_semester" class="form-control input-md input-data">
-                                    <option value="" selected disabled>-- Pilih Tahun Semester --</option>
-                                </select>
-                            </div>
+
+                                <div class="form-group">
+                                    <label for="inp_jenjang" class="col-sm-3 control-label">Jenjang Studi</label>
+                                    <div class="col-sm-7">
+                                        <select name="inp_jenjang" id="inp_jenjang" class="form-control input-md input-data">
+                                            <option value="" selected disabled>-- Pilih Jenjang Studi --</option>
+                                            @{
+                                                foreach (var d in ViewData["Jenjang"] as IEnumerable<MBKM.Entities.ViewModel.VMLookup>)
+                                                {
+                                                    <option value="@d.Nilai">@d.Nama</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inp_fakultas" class="col-sm-3 control-label">Fakultas</label>
+                                    <div class="col-sm-7">
+                                        <select name="inp_fakultas" id="inp_fakultas" class="form-control input-md input-data">
+                                            <option value="" selected disabled>-- Pilih Fakultas --</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inp_semester" class="col-sm-3 control-label">Tahun Semester</label>
+                                    <div class="col-sm-7">
+                                        <select name="inp_semester" id="inp_semester" class="form-control select2 input-md input-data">
+                                            <option value="" selected disabled>-- Pilih Tahun Semester --</option>
+                                            @{
+                                                foreach (var dt in ViewData["semester"] as IEnumerable<MBKM.Entities.ViewModel.VMSemester>)
+                                                {
+                                                    <option value="@dt.Nilai">@dt.Nama</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-sm-2 col-md-offset-8">
+                                        <button type="button" id="cari" class="btn btn-warning" style="float: right;" onclick="GenerateDataTable()"><span class="fa fa-search"></span> Cari</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-
-                        <div class="form-group">
-                            <label for="inp_jenjang" class="col-sm-3 control-label">Jenjang Studi</label>
-                            <div class="col-sm-7">
-                                <select name="inp_jenjang" id="inp_jenjang" class="form-control input-md input-data">
-                                    <option value="" selected disabled>-- Pilih Jenjang Studi --</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inp_fakultas" class="col-sm-3 control-label">Fakultas</label>
-                            <div class="col-sm-7">
-                                <select name="inp_fakultas" id="inp_fakultas" class="form-control input-md input-data">
-                                    <option value="" selected disabled>-- Pilih Fakultas --</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-sm-2 col-md-offset-8">
-                                <button type="button" id="cari" class="btn btn-warning" style="float: right;" onclick="GenerateDataTable()"><span class="fa fa-search"></span> Cari</button>
-                            </div>
-                        </div>
-                    </form>
+                        <!--table-responsive-->
+                        <table id="table-data-summary-feedback-admin" class="table row-border hover dt-responsive responsive" style="border-spacing: 0 15px; border:0">
+                            <thead>
+                                <tr>
+                                    <th class="zero-padding2 small-text no-border vertical-center center sorting">Action</th>
+                                    <th class="zero-padding2 small-text no-border vertical-center center sorting">No</th>
+                                    <th class="zero-padding2 small-text no-border vertical-center center sorting">Tahun Semester</th>
+                                    <th class="zero-padding2 small-text no-border vertical-center center sorting">NIP</th>
+                                    <th class="zero-padding2 small-text no-border vertical-center center sorting">Nama Dosen</th>
+                                    <th class="zero-padding2 small-text no-border vertical-center center sorting">Kode MK</th>
+                                    <th class="zero-padding2 small-text no-border vertical-center center sorting">Nama Mata Kuliah</th>
+                                    <th class="zero-padding2 small-text no-border vertical-center center sorting">Seksi</th>
+                                    <th class="zero-padding2 small-text no-border vertical-center center sorting">Jumlah Mahasiswa</th>
+                                    @*<th class="zero-padding2 small-text no-border vertical-center center sorting">Keterandalan</th>
+                                    <th class="zero-padding2 small-text no-border vertical-center center sorting">Daya Tanggap</th>
+                                    <th class="zero-padding2 small-text no-border vertical-center center sorting">Keajegan</th>
+                                    <th class="zero-padding2 small-text no-border vertical-center center sorting">Empati</th>
+                                    <th class="zero-padding2 small-text no-border vertical-center center sorting">Tangible</th>
+                                    <th class="zero-padding2 small-text no-border vertical-center center sorting">Total Skor</th>*@
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            </tbody>
+                        </table>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                    </div>
                 </div>
-                <!--table-responsive-->
-                <table id="table-data-jadwal-ujian-mahasiswa" class="table row-border hover dt-responsive responsive" style="border-spacing: 0 15px; border:0">
-                    <thead>
-                        <tr>
-                            <th class="zero-padding2 small-text no-border vertical-center center sorting">No</th>
-                            <th class="zero-padding2 small-text no-border vertical-center center sorting">Tahun Semester</th>
-                            <th class="zero-padding2 small-text no-border vertical-center center sorting">NIP</th>
-                            <th class="zero-padding2 small-text no-border vertical-center center sorting">Nama Dosen</th>
-                            <th class="zero-padding2 small-text no-border vertical-center center sorting">Kode MK</th>
-                            <th class="zero-padding2 small-text no-border vertical-center center sorting">Nama Mata Kuliah</th>
-                            <th class="zero-padding2 small-text no-border vertical-center center sorting">Seksi</th>
-                            <th class="zero-padding2 small-text no-border vertical-center center sorting">Jumlah Mahasiswa</th>
-                            <th class="zero-padding2 small-text no-border vertical-center center sorting">Keterandalan</th>
-                            <th class="zero-padding2 small-text no-border vertical-center center sorting">Daya Tanggap</th>
-                            <th class="zero-padding2 small-text no-border vertical-center center sorting">Keajegan</th>
-                            <th class="zero-padding2 small-text no-border vertical-center center sorting">Empati</th>
-                            <th class="zero-padding2 small-text no-border vertical-center center sorting">Tangible</th>
-                            <th class="zero-padding2 small-text no-border vertical-center center sorting">Total Skor</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="zero-padding2 small-text no-border vertical-center center sorting">No</td>
-                            <td class="zero-padding2 small-text no-border vertical-center center sorting">sadsadasdwadsadawdasda</td>
-                            <td class="zero-padding2 small-text no-border vertical-center center sorting">09090982109298</td>
-                            <td class="zero-padding2 small-text no-border vertical-center center sorting">a.s,dkawidaidsdoj</td>
-                            <td class="zero-padding2 small-text no-border vertical-center center sorting">0980</td>
-                            <td class="zero-padding2 small-text no-border vertical-center center sorting">asd,masdkansjdna</td>
-                            <td class="zero-padding2 small-text no-border vertical-center center sorting">A</td>
-                            <td class="zero-padding2 small-text no-border vertical-center center sorting">99</td>
-                            <td class="zero-padding2 small-text no-border vertical-center center sorting">a</td>
-                            <td class="zero-padding2 small-text no-border vertical-center center sorting">ap</td>
-                            <td class="zero-padding2 small-text no-border vertical-center center sorting">a</td>
-                            <td class="zero-padding2 small-text no-border vertical-center center sorting">a</td>
-                            <td class="zero-padding2 small-text no-border vertical-center center sorting">a</td>
-                            <td class="zero-padding2 small-text no-border vertical-center center sorting">3,2</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br />
-                <br />
-                <br />
-                <br />
-            </div>
-        </div>
+            }
+            else
+            {
+                <div class="card-body responsive-content" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; padding: 0px">
+                    <h6 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 25px; color: black;">
+                        SUMMARY FEEDBACK<br />
+                        <small class="describe">Berikut Daftar Jadwal Ujian MBKM</small>
+                    </h6>
+                    <hr />
+                    <div class="container" style="width: 100%;">
 
-        <div class="card-body responsive-content" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; padding: 0px">
-            <h6 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 25px; color: black;">
-                SUMMARY FEEDBACK<br />
-                <small class="describe">Berikut Daftar Jadwal Ujian MBKM</small>
-            </h6>
-            <hr />
-            <div class="container" style="width: 100%;">
-
-                <div class="col-md-12">
-                    <form class="form-horizontal col-md-5">
-                        <div class="form-group">
-                            <label for="inp_semester" class="col-sm-3 control-label">Tahun Semester</label>
-                            <div class="col-sm-7">
-                                <select name="inp_semester" id="inp_semester" class="form-control input-md input-data">
-                                    <option value="" selected disabled>-- Pilih Tahun Semester --</option>
-                                </select>
-                            </div>
+                        <div class="col-md-12">
+                            <form class="form-horizontal col-md-5">
+                                <div class="form-group">
+                                    <label for="inp_semester" class="col-sm-3 control-label">Tahun Semester</label>
+                                    <div class="col-sm-7">
+                                        <select name="inp_semester" id="inp_semester" class="form-control select2 input-md input-data">
+                                            <option value="" selected disabled>-- Pilih Tahun Semester --</option>
+                                            @{
+                                                foreach (var dt in ViewData["semester"] as IEnumerable<MBKM.Entities.ViewModel.VMSemester>)
+                                                {
+                                                    <option value="@dt.Nilai">@dt.Nama</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                        <!--table-responsive-->
+                        <table id="table-data-summary-feedback-dosen" class="table row-border hover dt-responsive responsive" style="border-spacing: 0 15px; border:0">
+                            <thead>
+                                <tr>
+                                    <th class="zero-padding2 small-text no-border vertical-center center sorting">No</th>
+                                    <th class="zero-padding2 small-text no-border vertical-center center sorting">Tahun Semester</th>
+                                    <th class="zero-padding2 small-text no-border vertical-center center sorting">Kode MK</th>
+                                    <th class="zero-padding2 small-text no-border vertical-center center sorting">Nama Mata Kuliah</th>
+                                    <th class="zero-padding2 small-text no-border vertical-center center sorting">Seksi</th>
+                                    <th class="zero-padding2 small-text no-border vertical-center center sorting">Jumlah Mahasiswa</th>
+                                    <th class="zero-padding2 small-text no-border vertical-center center sorting">Keterandalan</th>
+                                    <th class="zero-padding2 small-text no-border vertical-center center sorting">Daya Tanggap</th>
+                                    <th class="zero-padding2 small-text no-border vertical-center center sorting">Keajegan</th>
+                                    <th class="zero-padding2 small-text no-border vertical-center center sorting">Empati</th>
+                                    <th class="zero-padding2 small-text no-border vertical-center center sorting">Tangible</th>
+                                    <th class="zero-padding2 small-text no-border vertical-center center sorting">Total Skor</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="zero-padding2 small-text no-border vertical-center center sorting">No</td>
+                                    <td class="zero-padding2 small-text no-border vertical-center center sorting">sadsadasdwadsadawdasda</td>
+                                    <td class="zero-padding2 small-text no-border vertical-center center sorting">0980</td>
+                                    <td class="zero-padding2 small-text no-border vertical-center center sorting">asd,masdkansjdna</td>
+                                    <td class="zero-padding2 small-text no-border vertical-center center sorting">A</td>
+                                    <td class="zero-padding2 small-text no-border vertical-center center sorting">99</td>
+                                    <td class="zero-padding2 small-text no-border vertical-center center sorting">a</td>
+                                    <td class="zero-padding2 small-text no-border vertical-center center sorting">ap</td>
+                                    <td class="zero-padding2 small-text no-border vertical-center center sorting">a</td>
+                                    <td class="zero-padding2 small-text no-border vertical-center center sorting">a</td>
+                                    <td class="zero-padding2 small-text no-border vertical-center center sorting">a</td>
+                                    <td class="zero-padding2 small-text no-border vertical-center center sorting">3,2</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                    </div>
                 </div>
-                <!--table-responsive-->
-                <table id="table-data-jadwal-ujian-mahasiswa" class="table row-border hover dt-responsive responsive" style="border-spacing: 0 15px; border:0">
-                    <thead>
-                        <tr>
-                            <th class="zero-padding2 small-text no-border vertical-center center sorting">No</th>
-                            <th class="zero-padding2 small-text no-border vertical-center center sorting">Tahun Semester</th>
-                            <th class="zero-padding2 small-text no-border vertical-center center sorting">Kode MK</th>
-                            <th class="zero-padding2 small-text no-border vertical-center center sorting">Nama Mata Kuliah</th>
-                            <th class="zero-padding2 small-text no-border vertical-center center sorting">Seksi</th>
-                            <th class="zero-padding2 small-text no-border vertical-center center sorting">Jumlah Mahasiswa</th>
-                            <th class="zero-padding2 small-text no-border vertical-center center sorting">Keterandalan</th>
-                            <th class="zero-padding2 small-text no-border vertical-center center sorting">Daya Tanggap</th>
-                            <th class="zero-padding2 small-text no-border vertical-center center sorting">Keajegan</th>
-                            <th class="zero-padding2 small-text no-border vertical-center center sorting">Empati</th>
-                            <th class="zero-padding2 small-text no-border vertical-center center sorting">Tangible</th>
-                            <th class="zero-padding2 small-text no-border vertical-center center sorting">Total Skor</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="zero-padding2 small-text no-border vertical-center center sorting">No</td>
-                            <td class="zero-padding2 small-text no-border vertical-center center sorting">sadsadasdwadsadawdasda</td>
-                            <td class="zero-padding2 small-text no-border vertical-center center sorting">0980</td>
-                            <td class="zero-padding2 small-text no-border vertical-center center sorting">asd,masdkansjdna</td>
-                            <td class="zero-padding2 small-text no-border vertical-center center sorting">A</td>
-                            <td class="zero-padding2 small-text no-border vertical-center center sorting">99</td>
-                            <td class="zero-padding2 small-text no-border vertical-center center sorting">a</td>
-                            <td class="zero-padding2 small-text no-border vertical-center center sorting">ap</td>
-                            <td class="zero-padding2 small-text no-border vertical-center center sorting">a</td>
-                            <td class="zero-padding2 small-text no-border vertical-center center sorting">a</td>
-                            <td class="zero-padding2 small-text no-border vertical-center center sorting">a</td>
-                            <td class="zero-padding2 small-text no-border vertical-center center sorting">3,2</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <br />
-                <br />
-                <br />
-                <br />
-            </div>
-        </div>
+            }
+        }
+        
+
+        
     </div>
 </div>
 
 @section scripts{
-    <script src="~/Scripts/Admin/JadwalUjian/main.js"></script>
+    <script src="~/Scripts/Admin/SummaryFeedback/main.js"></script>
     <script src="~/Scripts/loading/loadingoverlay.min.js"></script>
 }

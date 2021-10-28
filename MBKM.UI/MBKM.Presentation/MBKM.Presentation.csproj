@@ -235,6 +235,7 @@
     <Content Include="Scripts\Admin\Menu\main.js" />
     <Content Include="Scripts\Admin\Role\crud.js" />
     <Content Include="Scripts\Admin\Role\main.js" />
+    <Content Include="Scripts\Admin\SummaryFeedback\main.js" />
     <Content Include="Scripts\dataCheckBox\dataTables.checkboxes.js" />
     <Content Include="Scripts\dataCheckBox\dataTables.checkboxes.min.js" />
     <Content Include="Scripts\easy-number-separator.js" />
