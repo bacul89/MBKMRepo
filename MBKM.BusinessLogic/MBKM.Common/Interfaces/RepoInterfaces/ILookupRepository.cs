@@ -12,5 +12,6 @@ namespace MBKM.Common.Interfaces.RepoInterfaces
     {
         IEnumerable<VMLookup> getLookupByTipe(string tipe);
         List<VMListProdi> getListProdi();
+        List<VMUserProdi> getUserProdi();
     }
 }

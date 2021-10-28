@@ -121,6 +121,7 @@
     <Compile Include="ViewModel\VMListDaftarAllMahasiswa.cs" />
     <Compile Include="ViewModel\VMListJadwalUjian.cs" />
     <Compile Include="ViewModel\VMListMapingCPL.cs" />
+    <Compile Include="ViewModel\VMListNilaiKuliah.cs" />
     <Compile Include="ViewModel\VMListReportBAP.cs" />
     <Compile Include="ViewModel\VMLookUpUser.cs" />
     <Compile Include="Models\User.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="ViewModel\VMPresensi.cs" />
     <Compile Include="ViewModel\VMProdi.cs" />
     <Compile Include="ViewModel\VMSemester.cs" />
+    <Compile Include="ViewModel\VMUserProdi.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

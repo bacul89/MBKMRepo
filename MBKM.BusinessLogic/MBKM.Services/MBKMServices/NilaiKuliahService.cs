@@ -1,6 +1,7 @@
 ﻿using MBKM.Common.Interfaces;
 using MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces;
 using MBKM.Entities.Models.MBKM;
+using MBKM.Entities.ViewModel;
 using MBKM.Services.BaseServices;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,8 @@ namespace MBKM.Services.MBKMServices
 {
     public interface INilaiKuliahService : IEntityService<NilaiKuliah>
     {
+        VMListNilaiKuliah GetNilaiMahasiswa();
+
     }
     public class NilaiKuliahService : EntityService<NilaiKuliah>, INilaiKuliahService
     {
@@ -23,6 +26,16 @@ namespace MBKM.Services.MBKMServices
         {
             _unitOfWork = unitOfWork;
             _nilaiKuliahRepository = NilaiKuliahRepository;
+        }
+
+/*        public NilaiKuliah GetNilaiMahasiswa()
+        {
+            return _nilaiKuliahRepository.GetNilaiMahasiswa();
+        }*/
+
+        public VMListNilaiKuliah GetNilaiMahasiswa()
+        {
+            return _nilaiKuliahRepository.GetNilaiMahasiswa();
         }
     }
 }
