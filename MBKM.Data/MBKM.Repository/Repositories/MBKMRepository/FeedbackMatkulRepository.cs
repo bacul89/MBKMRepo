@@ -51,6 +51,16 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return result;
             }
         }
+        public VMSemester GetSemesterByStrm(string strm)
+        {
+            using (var context = new MBKMContext())
+            {
+                var Strm = new SqlParameter("@STRM", strm);
+                var result = context.Database
+                    .SqlQuery<VMSemester>("GetSemesterBySTRM @STRM", Strm).First();
+                return result;
+            }
+        }
     }
 
 
