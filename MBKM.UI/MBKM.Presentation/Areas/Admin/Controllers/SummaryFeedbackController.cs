@@ -37,7 +37,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         // GET: Admin/SummaryFeedback
         public ActionResult Index()
         {
-            ViewData["role"] = /*HttpContext.Session["RoleName"].ToString()*/"Admin";
+            ViewData["role"] = HttpContext.Session["RoleName"].ToString();
             IEnumerable<VMLookup> tempJenjang = _lookupService.getLookupByTipe("JenjangStudi");
             ViewData["Jenjang"] = tempJenjang;
             IEnumerable<VMSemester> data = _jadwalUjianMBKMService.getAllSemester();
@@ -95,7 +95,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult GetDataTableDosen(int tahunSemester)
         {
-            var idDosen = /*HttpContext.Session["nopegawai"].ToString()*/"120131524";
+            var idDosen = HttpContext.Session["nopegawai"].ToString();
             var data1 = _feedbackMatkulService.Find(x => x.JadwalKuliahs.STRM == tahunSemester && x.DosenID == idDosen)
                 .GroupBy(g => new
                 {
@@ -135,7 +135,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             if(dosenId == "")
             {
-                dosenId = /*HttpContext.Session["nopegawai"].ToString()*/"120131524";
+                dosenId = HttpContext.Session["nopegawai"].ToString();
             }
             var countRespondent = _feedbackMatkulService.Find(x => x.DosenID == dosenId && x.JadwalKuliahID == idData).Count();
             var data = _feedbackMatkulDetailService.Find(x => x.FeedbackMatkuls.JadwalKuliahID == idData && x.FeedbackMatkuls.DosenID == dosenId)
