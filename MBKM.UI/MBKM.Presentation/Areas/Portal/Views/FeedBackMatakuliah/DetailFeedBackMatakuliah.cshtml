@@ -13,17 +13,10 @@
     @Scripts.Render("~/bundles/jquery")
     <script src="~/Scripts/sweetalert2.all.min.js"></script>
 }
-@section modal{
-    <div class="modal fade" id="TambahMasterMapingCapaianPembelajaran" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document" id="modal-inner">
-
-        </div>
-    </div>
-}
 
 <br />
-<div class="container-fluid" style="padding: 0px">
-    <div class="card center-block" style="background-color: white; width: 98%; padding: 0px">
+<div class="container-fluid" style="padding: 0px" id="modal-inner">
+    <div class="card center-block data_masukk" id="data_masukk" style="background-color: white; width: 98%; padding: 0px">
         <div class="card-body responsive-content" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; padding: 0px">
             <h6 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 25px; color: black;">
                 FEEDBACK MATA KULIAH<br />
@@ -36,6 +29,8 @@
                     <input type="hidden" name="inp_dosenID" id="inp_dosenID" value="@ViewData["idDosen"].ToString()" />
                     <input type="hidden" name="inp_namaDosen" id="inp_namaDosen" value="@ViewData["namaDosen"].ToString()" />
                     <input type="hidden" name="inp_jadwalID" id="inp_jadwalID" value="@ViewData["jadwalID"].ToString()" />
+                    <input type="hidden" name="inp_urutan" id="inp_urutan" value="@ViewData["urutan"].ToString()" />
+
                     <div class="container" style="width: 100%;">
                         <h5><b>FAKULTAS @Model.NamaFakultas.ToUpper()</b></h5>
                         <h5><b>PROGRAM STUDI @Model.NamaProdi.ToUpper()</b></h5>
@@ -94,9 +89,9 @@
                 <br />
                 <div class="col-md-6 col-md-offset-10">
                     <div class="col-md-2">
-                        <button type="button" id="cari" class="btn btn-danger" style="float: right; width:5vw" onclick="GenerateDataTable()">PREVIOUS</button>
+                        <button type="button" id="cari" class="btn btn-danger" style="float: right; width:5vw" onclick="PreviousDosenFeedback()">PREVIOUS</button>
                     </div><div class="col-md-2">
-                        <button type="button" id="cari" class="btn btn-success" style="float: right; width: 5vw" onclick="GenerateDataTable()">NEXT</button>
+                        <button type="button" id="cari" class="btn btn-success" style="float: right; width: 5vw" onclick="NextDosenFeedback()">NEXT</button>
                     </div>
                 </div>
             </div>
