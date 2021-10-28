@@ -25,6 +25,14 @@
         padding: 15px 0px;
         font-size: 13px;
     }
+
+    .foot {
+        font-size: 12px;
+    }
+
+    td {
+        vertical-align: top;
+    }
 </style>
 
 <div class="container-fluid" style="padding: 0px">
@@ -36,6 +44,7 @@
             <hr />
 
             <div class="container" style="width: 100%;">
+                
                 <button class="btn btn-success"> Cetak <span class="fa fa-download"></span></button>
 
                 <br />
@@ -45,28 +54,34 @@
                     <table>
                         <tr>
                             <td>Nama</td>
-                            <td style="padding:5px"> : </td>
+                            <td style="padding: 0px 5px"> : </td>
                             <td id="name">@Model.Nama</td>
                         </tr>
                         <tr>
-@*                            <td>N.I.M.</td>
-                            <td style="padding:5px"> : </td>
+
+                          <td>N.I.M.</td>
+                            <td style="padding: 0px 5px"> : </td>
                             <td id="nim">@Model.NIMAsal</td>
                         </tr>
                         <tr>
                             <td>Tempat / Tanggal Lahir</td>
-                            <td style="padding:5px"> : </td>
-                            <td id="ttl">@Model.TempatLahir / @Model.TanggalLahir</td>*@
+                            <td style="padding: 0px 5px"> : </td>
+                            <td id="ttl">@Model.TempatLahir / @Model.TanggalLahir</td>
                         </tr>
                         <tr>
                             <td>Jenjang Studi</td>
-                            <td style="padding:5px"> : </td>
-                            <td id="jenjangStudi"></td>
+                            <td style="padding: 0px 5px"> : </td>
+                            <td id="jenjangStudi">@Model.JenjangStudi</td>
                         </tr>
                         <tr>
                             <td>Nomor Keputusan Pendirian Perguruan Tinggi</td>
-                            <td style="padding:5px"> : </td>
-                            <td id="noKeputusan"></td>
+                            <td style="padding: 0px 5px"> : </td>
+                            <td id="noKeputusan">
+                                Akte Notaris No. 3 tanggal 1 Juni 1960 Notarial Deed No. 3 dated 1 June 1960
+                                <br />& No. 17/B.S.T/P/62 tanggal dated 21 Januari January 1963
+
+
+                            </td>
                         </tr>
                     </table>
 
@@ -77,17 +92,17 @@
                             <tr>
                                 <th width="10%">Kode</th>
                                 <th width="50%">Mata Kuliah</th>
-                                <th width="20%">KC</th>
-                                <th width="20%">NG</th>
+                                <th width="20%" style="text-align:right">KC</th>
+                                <th width="20%" style="text-align:right">NG</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
+                        <tbody id="data">
+                            <!--<tr>
                                 <td>MK100</td>
                                 <td>BAHASA INDONESIA</td>
                                 <td>800</td>
                                 <td>A</td>
-                            </tr>
+                            </tr>-->
                         </tbody>
                     </table>
 
@@ -107,24 +122,26 @@
                         <tbody>
                             <tr>
                                 <td colspan="2" width="60%"></td>
-                                <td width="20%">80</td>
-                                <td width="20%">A</td>
+                                <td width="20%" id="totalSks" style="text-align:right;"></td>
+                                <td width="20%" id="totalGrade" style="text-align:right;"></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
 
-                <div class="box col-md-12">
+                <div class="box col-md-12 foot">
                     <div class="col-md-12">
 
                         <div style=" float: right; margin-bottom: 20px;">
-                            Jakarta, date<br />
-                            Kepala Biro Admisitrasi Akasemik
+                            Jakarta, <span id="currentDate"></span><br />
+                            Kepala Biro Admisitrasi Akademik
+                            <br />
                             <br />
                             <br />
                             <br />
                             <br />
                             Helena Nataly Tapoona, S.E., M.M.
+                            <br />
                             <br />
                         </div>
 
