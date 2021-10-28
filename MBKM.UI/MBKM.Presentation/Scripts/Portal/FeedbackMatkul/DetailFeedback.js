@@ -130,3 +130,72 @@ function postDataQuitionare() {
    
 
 }
+
+
+function NextDosenFeedback() {
+    $.LoadingOverlay("show");
+    var tmpData = {};
+    tmpData.listDosen = $('#inp_listDosen').val();
+    tmpData.urutan = $('#inp_urutan').val();
+    tmpData.idJadwalKuliah = $('#inp_jadwalID').val();
+    $.ajax({
+        url: '/Portal/FeedBackMatakuliah/NextPageFeedBack',
+        data: JSON.stringify(tmpData),
+        type: 'post',
+        contentType: 'application/json',
+        dataType: 'html',
+        success: function (e) {
+            $('.data_masukk').remove();
+            $('#modal-inner').append(e);
+            $.LoadingOverlay("hide");
+        },
+        error: function (e) {
+            $.LoadingOverlay("hide");
+            Swal.fire({
+                title: 'Oppss',
+                icon: 'error',
+                html: 'Sudah Paling Akhir',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText: 'OK'
+            })
+
+        }
+
+    })
+}
+
+
+function PreviousDosenFeedback() {
+    $.LoadingOverlay("show");
+    var tmpData = {};
+    tmpData.listDosen = $('#inp_listDosen').val();
+    tmpData.urutan = $('#inp_urutan').val();
+    tmpData.idJadwalKuliah = $('#inp_jadwalID').val();
+    $.ajax({
+        url: '/Portal/FeedBackMatakuliah/PreviousPageFeedback',
+        data: JSON.stringify(tmpData),
+        type: 'post',
+        contentType: 'application/json',
+        dataType: 'html',
+        success: function (e) {
+            $('.data_masukk').remove();
+            $('#modal-inner').append(e);
+            $.LoadingOverlay("hide");
+        },
+        error: function (e) {
+            $.LoadingOverlay("hide");
+            Swal.fire({
+                title: 'Oppss',
+                icon: 'error',
+                html: 'Sudah Paling Awal',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText: 'OK'
+            })
+
+        }
+    })
+}

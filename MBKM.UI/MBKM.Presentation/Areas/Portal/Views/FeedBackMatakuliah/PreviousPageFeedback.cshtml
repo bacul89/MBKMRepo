@@ -1,0 +1,91 @@
+﻿
+@{
+    Layout = null;
+}
+
+@model MBKM.Entities.Models.MBKM.JadwalKuliah
+
+<div class="card center-block" id="data-masuk" style="background-color: white; width: 98%; padding: 0px">
+    <div class="card-body responsive-content" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; padding: 0px">
+        <h6 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 25px; color: black;">
+            FEEDBACK MATA KULIAH<br />
+            <small class="describe">Isikan Feedback Untuk Seluruh Dosen Yang Mengajar Mata Kuliah</small>
+        </h6>
+        <hr />
+        <div class="left" style="width: 30%; margin-left:10px">
+            <div style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; ">
+                <input type="hidden" name="inp_listDosen" id="inp_listDosen" value="@ViewData["listDosen"].ToString()" />
+                <input type="hidden" name="inp_dosenID" id="inp_dosenID" value="@ViewData["idDosen"].ToString()" />
+                <input type="hidden" name="inp_namaDosen" id="inp_namaDosen" value="@ViewData["namaDosen"].ToString()" />
+                <input type="hidden" name="inp_jadwalID" id="inp_jadwalID" value="@ViewData["jadwalID"].ToString()" />
+                <input type="hidden" name="inp_urutan" id="inp_urutan" value="@ViewData["urutan"].ToString()" />
+
+                <div class="container" style="width: 100%;">
+                    <h5><b>FAKULTAS @Model.NamaFakultas.ToUpper()</b></h5>
+                    <h5><b>PROGRAM STUDI @Model.NamaProdi.ToUpper()</b></h5>
+                    <h5><b>@Model.KodeMataKuliah.ToUpper() -  @Model.NamaMataKuliah.ToUpper()</b></h5>
+                    <h5><b>SEKSI @Model.ClassSection.ToUpper()</b></h5>
+                    <h5><b>@Model.STRM</b></h5>
+                </div>
+                <div class="container" style="width: 100%; background-color:coral">
+                    <h5><b>@ViewData["namaDosen"].ToString().ToUpper()</b></h5>
+                </div>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div class="container" style="width: 100%;">
+            <table class="spacing-table">
+                @{
+                    var i = 1;
+                    foreach (var d in ViewData["pertanyaan"] as IEnumerable<MBKM.Entities.ViewModel.VMPertanyaanFeedback>)
+                    {
+                        <tr style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate; border-spacing: 0 15px; margin-bottom:10px">
+                            <td style="width:3%; padding-left:10px"><h5>@i</h5></td>
+                            <td style="width:55%">
+                                <h5>@d.Pertanyaan</h5>
+                            </td>
+                            <td style="width:30%; padding-left:10px" class="data_radio">
+                                @{
+                                    foreach (var q in ViewData["jawaban"] as IEnumerable<MBKM.Entities.ViewModel.VMJawabanFeedback>)
+                                    {
+                                        <label class="radio-inline" style="margin-top:5px; margin-bottom:5px">
+                                            <input class="quistionare" type="radio" name="@i" id="@d.IdPertanyaan$@d.Pertanyaan$@d.KategoriPertanyaan" value="@q.N_ANS_POINT"> @q.N_ANS_DESC
+                                        </label>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                        i = i + 1;
+                    }
+                    <input type="hidden" name="inp_count" id="inp_count" value="@i" />
+                }
+            </table>
+        </div>
+        <br />
+        <div class="container" style="width: 100%;">
+            <form class="form">
+                <div class="form-group">
+                    <label for="inp_kritik">KRITIK DAN SARAN</label>
+                    <textarea class="form-control input-data" id="inp_kritik" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-2 col-md-offset-10">
+                        <button type="button" id="cari" class="btn btn-warning" style="float: right;" onclick="postDataQuitionare()">SUBMIT</button>
+                    </div>
+                </div>
+            </form>
+            <br />
+            <br />
+            <br />
+            <div class="col-md-6 col-md-offset-10">
+                <div class="col-md-2">
+                    <button type="button" id="cari" class="btn btn-danger" style="float: right; width:5vw" onclick="PreviousDosenFeedback()">PREVIOUS</button>
+                </div><div class="col-md-2">
+                    <button type="button" id="cari" class="btn btn-success" style="float: right; width: 5vw" onclick="NextDosenFeedback()">NEXT</button>
+                </div>
+            </div>
+        </div>
+        <br />
+    </div>
+</div>
