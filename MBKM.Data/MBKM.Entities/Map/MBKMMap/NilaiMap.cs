@@ -15,8 +15,18 @@ namespace MBKM.Entities.Map.MBKMMap
         {
             ToTable("Nilai");
             HasKey(t => t.ID).Property(t => t.ID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-            Property(t => t.Nilai).IsRequired();
-            Property(t => t.Persentase).IsRequired();
+            //Property(t => t.Nilai).IsRequired();
+            //Property(t => t.Persentase).IsRequired();
+            Property(t => t.UTS).HasPrecision(3,2).IsRequired();
+            Property(t => t.CW1).HasPrecision(3, 2).IsRequired();
+            Property(t => t.CW2).HasPrecision(3, 2).IsRequired();
+            Property(t => t.CW3).HasPrecision(3, 2).IsRequired();
+            Property(t => t.CW4).HasPrecision(3, 2).IsRequired();
+            Property(t => t.CW5).HasPrecision(3, 2).IsRequired();
+            Property(t => t.Final).HasPrecision(3, 2).IsRequired();
+            Property(t => t.NilaiTotal).HasPrecision(3, 2).IsRequired();
+            Property(t => t.Grade).HasMaxLength(3).IsRequired();
+
         }
     }
 }
