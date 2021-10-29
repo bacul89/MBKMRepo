@@ -41,32 +41,6 @@
     td {
         vertical-align: top;
     }
-
-
-
-    .box-print-foot {
-        border-bottom: 1px solid
-    }
-
-    .box-print {
-        padding: 10px 20px;
-        border-top: solid 1px;
-        border-right: solid 1px;
-        border-left: solid 1px;
-    }
-
-    .en {
-        padding-left: 10px;
-        font-size: 12px;
-    }
-
-    .no-padding {
-        padding: 0px !important
-    }
-
-    .header div{
-        line-height:22px;
-    }
 </style>
 
 <div class="container-fluid" style="padding: 0px">
@@ -86,6 +60,8 @@
                 <br />
                 <br />
                 <div id="view">
+
+
                     <div class="box col-md-12">
                         <table>
                             <tr>
@@ -190,69 +166,95 @@
 
 
                 <div id="print" style="display:none">
+                    <style>
+                        .box-print-foot {
+                            border-bottom: 1px solid
+                        }
+
+                        .box-print {
+                            padding: 10px 20px;
+                            border-top: solid 1px;
+                            border-right: solid 1px;
+                            border-left: solid 1px;
+                        }
+
+                        .en {
+                            padding-left: 10px;
+                            font-size: 12px;
+                        }
+
+                        .no-padding {
+                            padding: 0px !important
+                        }
+
+                        .header div {
+                            line-height: 22px;
+                        }
+                    </style>
+
                     <div class="box-print col-md-12">
-                        <div width="100%">
-                            <div class="header" style="float:left">
-                                <div>Nama <i class="en">Name</i></div>
-                                <div>N.I.M. <i class="en">Student Identity Number</i></div>
-                                <div>Tempat / Tanggal Lahir <i class="en">Place & Date of Birth</i></div>
-                                <div>Jenjang Studi <i class="en">Program of Education</i></div>
-                                <div>Nomor Keputusan Pendirian Perguruan Tinggi <div><i class="en no-padding">University Constitutional Document Number</i></div></div>
-                            </div>
-                            <div class="header" style="float:left">
-                                <div style="padding: 0px 5px"> : </div>
-                                <div style="padding: 0px 5px"> : </div>
-                                <div style="padding: 0px 5px"> : </div>
-                                <div style="padding: 0px 5px"> : </div>
-                                <div style="padding: 0px 5px"> : </div>
-                            </div>
-                            <div class="header" style="float:left">
-                                <div> @Model.Nama </div>
-                                <div> @Model.NIMAsal </div>
-                                <div> @Model.TempatLahir / <span id="birthdayView"> @Model.TanggalLahir</span></div>
-                                <div> @Model.JenjangStudi </div>
-                                <div>
-                                    Akte Notaris No. 3 tanggal 1 Juni 1960 <i class="en">Notarial Deed No. 3 dated 1 June 1960</i>
-                                    <div>& No. 17/B.S.T/P/62 tanggal <i class="en">dated 21 Januari January 1963</i></div>
+                        @*<div width="100%">
+                                <div class="header" style="float:left">
+                                    <div>Nama <i class="en">Name</i></div>
+                                    <div>N.I.M. <i class="en">Student Identity Number</i></div>
+                                    <div>Tempat / Tanggal Lahir <i class="en">Place & Date of Birth</i></div>
+                                    <div>Jenjang Studi <i class="en">Program of Education</i></div>
+                                    <div>Nomor Keputusan Pendirian Perguruan Tinggi <div><i class="en no-padding">University Constitutional Document Number</i></div></div>
                                 </div>
-                            </div>
-                        </div>
-                        @*<table width="100%">
-                <tr>*@
+                                <div class="header" style="float:left">
+                                    <div style="padding: 0px 5px"> : </div>
+                                    <div style="padding: 0px 5px"> : </div>
+                                    <div style="padding: 0px 5px"> : </div>
+                                    <div style="padding: 0px 5px"> : </div>
+                                    <div style="padding: 0px 5px"> : </div>
+                                </div>
+                                <div class="header" style="float:left">
+                                    <div> @Model.Nama </div>
+                                    <div> @Model.NIMAsal </div>
+                                    <div> @Model.TempatLahir / <span id="birthdayView"> @Model.TanggalLahir</span></div>
+                                    <div> @Model.JenjangStudi </div>
+                                    <div>
+                                        Akte Notaris No. 3 tanggal 1 Juni 1960 <i class="en">Notarial Deed No. 3 dated 1 June 1960</i>
+                                        <div>& No. 17/B.S.T/P/62 tanggal <i class="en">dated 21 Januari January 1963</i></div>
+                                    </div>
+                                </div>
+                            </div>*@
+                        <table width="100%">
+                            <tr>
 
-                        <!--Faculty
-                Program of Study-->
-                        @*                                <td width="15%">Nama <i class="en">Name</i></td>
-                        <td width="2%" style="padding: 0px 5px"> : </td>
-                        <td id="name" width="80%">@Model.Nama</td>
-                    </tr>
-                    <tr>
+                                <!--Faculty
+                                Program of Study-->
+                                <td width="25%">Nama <i class="en">Name</i></td>
+                                <td width="2%" style="padding: 0px 5px"> : </td>
+                                <td id="name" width="80%">@Model.Nama</td>
+                            </tr>
+                            <tr>
 
-                        <td>N.I.M. <i class="en">Student Identity Number</i></td>
-                        <td style="padding: 0px 5px"> : </td>
-                        <td id="nim">@Model.NIMAsal</td>
-                    </tr>
-                    <tr>
-                        <td>Tempat / Tanggal Lahir <i class="en">Place & Date of Birth</i></td>
-                        <td style="padding: 0px 5px"> : </td>
-                        <td id="ttl">@Model.TempatLahir / <span id="birthdayView"> @Model.TanggalLahir</span></td>
-                    </tr>
-                    <tr>
-                        <td>Jenjang Studi <i class="en">Program of Education</i></td>
-                        <td style="padding: 0px 5px"> : </td>
-                        <td id="jenjangStudi">@Model.JenjangStudi</td>
-                    </tr>
-                    <tr>
-                        <td>Nomor Keputusan Pendirian Perguruan Tinggi <br /><i class="en no-padding">University Constitutional Document Number</i></td>
-                        <td style="padding: 0px 5px"> : </td>
-                        <td id="noKeputusan">
-                            Akte Notaris No. 3 tanggal 1 Juni 1960 <i class="en">Notarial Deed No. 3 dated 1 June 1960</i>
-                            <br />& No. 17/B.S.T/P/62 tanggal <i class="en">dated 21 Januari January 1963</i>
+                                <td>N.I.M. <i class="en">Student Identity Number</i></td>
+                                <td style="padding: 0px 5px"> : </td>
+                                <td id="nim">@Model.NIMAsal</td>
+                            </tr>
+                            <tr>
+                                <td>Tempat / Tanggal Lahir <i class="en">Place & Date of Birth</i></td>
+                                <td style="padding: 0px 5px"> : </td>
+                                <td id="ttl">@Model.TempatLahir / <span id="birthdayView"> @Model.TanggalLahir</span></td>
+                            </tr>
+                            <tr>
+                                <td>Jenjang Studi <i class="en">Program of Education</i></td>
+                                <td style="padding: 0px 5px"> : </td>
+                                <td id="jenjangStudi">@Model.JenjangStudi</td>
+                            </tr>
+                            <tr>
+                                <td>Nomor Keputusan Pendirian Perguruan Tinggi <br /><i class="en no-padding">University Constitutional Document Number</i></td>
+                                <td style="padding: 0px 5px"> : </td>
+                                <td id="noKeputusan">
+                                    Akte Notaris No. 3 tanggal 1 Juni 1960 <i class="en">Notarial Deed No. 3 dated 1 June 1960</i>
+                                    <br />& No. 17/B.S.T/P/62 tanggal <i class="en">dated 21 Januari January 1963</i>
 
 
-                        </td>
-                    </tr>
-                </table>*@
+                                </td>
+                            </tr>
+                        </table>
 
 
 
@@ -331,13 +333,6 @@
                 </div>
             </div>
 
-
-
-
-
-
-
-
         </div>
     </div>
 </div>
@@ -349,5 +344,4 @@
 @section scripts{
     <script src="~/Scripts/Portal/Transkrip/main.js"></script>
     <script src="~/Scripts/loading/loadingoverlay.min.js"></script>
-    <script src="~/Scripts/xepOnline.jqPlugin.js"></script>
 }

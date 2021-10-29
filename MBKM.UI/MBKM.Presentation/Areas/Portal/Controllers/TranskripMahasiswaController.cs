@@ -135,6 +135,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
 
         public ActionResult PrintTranskrip()
         {
+            Session["email"] = "sabangsasabana@gmail.com";
             string email = Session["email"] as string;
 
             Mahasiswa model = GetMahasiswaByEmail(email);
@@ -163,6 +164,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             };
 
 
+
+
             /*return new ActionAsPdf("Index")
             {
                 FileName = Server.MapPath("~/Content/Relato.pdf"),
@@ -171,6 +174,20 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             };*/
         }
 
+
+/*        public async Task<IActionResult> Tes()
+        {
+            var pdf = new Rotativa.ViewAsPdf("Tes")
+            {
+                FileName = "C:\\Test.pdf",
+                PageSize = Rotativa.Options.Size.A4,
+                PageOrientation = Rotativa.Options.Orientation.Portrait,
+                PageHeight = 20,
+            };
+
+            var byteArray = await pdf.BuildFile(ControllerContext);
+            return File(byteArray, "application/pdf");
+        }*/
 
 
     }

@@ -242,8 +242,6 @@ function print(id, nim) {
 
     var idMahasiswa = parseInt(id);
 
-
-
     swal.fire({
         title: "Transkrip Nilai Hanya Dapat Tercetak Satu Kali \n Hubungi Pihak BAA Jika Terjadi Gagal Cetak",
         type: "warning",
@@ -280,25 +278,27 @@ function print(id, nim) {
                     } else {
                         $("#view").hide();
                         $("#print").show();
-
+                        print();
                         Swal.fire({
                             title: 'Berhasil',
                             icon: 'success',
-                            html: 'Data Berhasil Tersubmit',
+                            html: 'Cetak Berhasil',
                             showCloseButton: true,
                             showCancelButton: false,
                             focusConfirm: false,
                             confirmButtonText: 'OK'
                         })
-                        var options = {
-                            render: 'download', // force to download fix for IE
-                            embedLocalImages: 'true', // enable images in PDF
-                            filename: 'Transkrip_' + nim, // filename changed
-                            orientation: 'Landscape',
-                            sizes : 'A4' 
-                        }
-                        xepOnline.Formatter.Format('print', options);
+                        var data =  $("#print").html();
+                        var mywindow = window.open('', 'height=auto,width=auto,_blank');
+                        mywindow.document.write('<html><head><title>Transkrip</title>');
+                        /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+                        mywindow.document.write('</head><body >');
+                        mywindow.document.write(data);
+                        mywindow.document.write('</body></html>');
 
+                       
+                        mywindow.print();
+                        mywindow.close();
 
                         $("#view").show();
                         $("#print").hide();
