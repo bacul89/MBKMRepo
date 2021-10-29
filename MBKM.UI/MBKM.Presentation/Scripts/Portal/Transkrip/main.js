@@ -1,4 +1,6 @@
-﻿Date.prototype.toShortFormat = function () {
+﻿console.log("hallo");
+
+Date.prototype.toShortFormat = function () {
 
     let monthNames = ["Januari", "Februari", "Maret", "April",
         "Mei", "Juni", "Juli", "Augustus",
@@ -14,21 +16,18 @@
     return `${day} ${monthName} ${year}`;
 }
 
+var getBirtDay = $('#birthday').text();
+var date = getBirtDay.split(" ")[0];
+var parts = date.split('/');
+var mydate = new Date(parts[2], parts[1] - 1, parts[0]);
+
+var result = mydate.toShortFormat();
+
+
 function convertBirthday() {
     var getBirtDay = $('#birthday').text();
-
-    //console.log(getBirtDay);
-    //console.log(getBirtDay.split(" ")[0]);
-
     var date = getBirtDay.split(" ")[0];
-    //var d = new Date('');
-
-    //console.log(date);
-    //console.log(d);
-
     var parts = date.split('/');
-    // Please pay attention to the month (parts[1]); JavaScript counts months from 0:
-    // January - 0, February - 1, etc.
     var mydate = new Date(parts[2], parts[1] - 1, parts[0]);
 
     var result = mydate.toShortFormat();
@@ -229,11 +228,11 @@ function showValue(result) {
 
         $("#data").html(html);
         $("#totalSks").html(sksTotal);
-        $("#totalGrade").html(gradeFinal);
+        $("#totalGrade").html(gradeTotal);
 
         $("#dataPrint").html(html);
         $("#totalSksPrint").html(sksTotal);
-        $("#totalGradePrint").html(gradeFinal);
+        $("#totalGradePrint").html(gradeTotal);
 
 }
 

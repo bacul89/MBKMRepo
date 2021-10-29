@@ -53,7 +53,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
             Console.WriteLine(getNilaiMahasiswa);
 
-/*            foreach (var item in getNilaiMahasiswa)
+            /*foreach (var item in getNilaiMahasiswa)
             {
                 var q = new
                 {

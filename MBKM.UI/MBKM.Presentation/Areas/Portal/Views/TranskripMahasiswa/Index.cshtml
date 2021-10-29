@@ -81,114 +81,116 @@
 
                 <button class="btn btn-success" onclick="print(@Model.ID, '@Model.NIM')"> Cetak <span class="fa fa-download"></span></button>
 
+                <a href="@Url.Action("ExportPDF","TranskripMahasiswa")" class="hidden-print" ﻿>EXPORT PDF</a>
+
                 <br />
                 <br />
                 <div id="view">
-                        <div class="box col-md-12">
-                            <table>
+                    <div class="box col-md-12">
+                        <table>
+                            <tr>
+                                <td>Nama <i class="en">Name</i></td>
+                                <td style="padding: 0px 5px"> : </td>
+                                <td id="name">@Model.Nama</td>
+                            </tr>
+                            <tr>
+
+                                <td>N.I.M. <i class="en">Student Identity Number</i></td>
+                                <td style="padding: 0px 5px"> : </td>
+                                <td id="nim">@Model.NIMAsal</td>
+                            </tr>
+                            <tr>
+                                <td>Tempat / Tanggal Lahir <i class="en">Place & Date of Birth</i></td>
+                                <td style="padding: 0px 5px"> : </td>
+                                <td id="ttl">@Model.TempatLahir / <span id="birthday">@Model.TanggalLahir</span></td>
+                            </tr>
+                            <tr>
+                                <td>Jenjang Studi <i class="en">Program of Education</i></td>
+                                <td style="padding: 0px 5px"> : </td>
+                                <td id="jenjangStudi">@Model.JenjangStudi</td>
+                            </tr>
+                            <tr>
+                                <td>Nomor Keputusan Pendirian Perguruan Tinggi <br><i class="en no-padding">University Constitutional Document Number</i></td>
+                                <td style="padding: 0px 5px"> : </td>
+                                <td id="noKeputusan">
+                                    Akte Notaris No. 3 tanggal 1 Juni 1960 <i class="en">Notarial Deed No. 3 dated 1 June 1960</i>
+                                    <br />& No. 17/B.S.T/P/62 tanggal <i class="en">dated 21 Januari January 1963</i>
+
+
+                                </td>
+                            </tr>
+                        </table>
+
+                        <hr />
+
+                        <table width="100%">
+                            <thead>
                                 <tr>
-                                    <td>Nama <i class="en">Name</i></td>
-                                    <td style="padding: 0px 5px"> : </td>
-                                    <td id="name">@Model.Nama</td>
+                                    <th width="10%">Kode <i class="en">Code</i></th>
+                                    <th width="50%">Mata Kuliah <i class="en">Course Title</i></th>
+                                    <th width="20%" style="text-align:right">KC</th>
+                                    <th width="20%" style="text-align:right">NG</th>
                                 </tr>
+                            </thead>
+                            <tbody id="data">
+                            </tbody>
+                        </table>
+
+
+                    </div>
+
+                    <div class="box col-md-12">
+                        <table width="100%">
+
+                            <tbody>
                                 <tr>
-
-                                    <td>N.I.M. <i class="en">Student Identity Number</i></td>
-                                    <td style="padding: 0px 5px"> : </td>
-                                    <td id="nim">@Model.NIMAsal</td>
+                                    <td colspan="2" width="60%"></td>
+                                    <td width="20%" id="totalSks" style="text-align:right;"></td>
+                                    <td width="20%" id="totalGrade" style="text-align:right;"></td>
                                 </tr>
-                                <tr>
-                                    <td>Tempat / Tanggal Lahir <i class="en">Place & Date of Birth</i></td>
-                                    <td style="padding: 0px 5px"> : </td>
-                                    <td id="ttl">@Model.TempatLahir / <span id="birthday">@Model.TanggalLahir</span></td>
-                                </tr>
-                                <tr>
-                                    <td>Jenjang Studi <i class="en">Program of Education</i></td>
-                                    <td style="padding: 0px 5px"> : </td>
-                                    <td id="jenjangStudi">@Model.JenjangStudi</td>
-                                </tr>
-                                <tr>
-                                    <td>Nomor Keputusan Pendirian Perguruan Tinggi <br><i class="en no-padding">University Constitutional Document Number</i></td>
-                                    <td style="padding: 0px 5px"> : </td>
-                                    <td id="noKeputusan">
-                                        Akte Notaris No. 3 tanggal 1 Juni 1960 <i class="en">Notarial Deed No. 3 dated 1 June 1960</i>
-                                        <br />& No. 17/B.S.T/P/62 tanggal <i class="en">dated 21 Januari January 1963</i>
+                            </tbody>
+                        </table>
+                    </div>
 
+                    <div class="box col-md-12 foot">
+                        <div class="col-md-12">
 
-                                    </td>
-                                </tr>
-                            </table>
-
-                            <hr />
-
-                            <table width="100%">
-                                <thead>
-                                    <tr>
-                                        <th width="10%">Kode <i class="en">Code</i></th>
-                                        <th width="50%">Mata Kuliah <i class="en">Course Title</i></th>
-                                        <th width="20%" style="text-align:right">KC</th>
-                                        <th width="20%" style="text-align:right">NG</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="data">
-                                </tbody>
-                            </table>
-
+                            <div style=" float: right; margin-bottom: 20px;">
+                                Jakarta, <span id="currentDate"></span><br />
+                                Kepala Biro Admisitrasi Akademik<br>
+                                <i class="en no-padding">Head of Academic Administration Bureau</i>
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <span id="baaName">Helena Nataly Tapoona, S.E., M.M.</span>
+                                <br />
+                                <br />
+                            </div>
 
                         </div>
 
-                        <div class="box col-md-12">
-                            <table width="100%">
 
-                                <tbody>
-                                    <tr>
-                                        <td colspan="2" width="60%"></td>
-                                        <td width="20%" id="totalSks" style="text-align:right;"></td>
-                                        <td width="20%" id="totalGrade" style="text-align:right;"></td>
-                                    </tr>
-                                </tbody>
+                        <div class="col-md-12">
+
+                            <table class="footer" width="100%">
+                                <tr>
+                                    <td><b>Address:</b> Jl. Jendral Sudirman 51, Jakarta Selatan 12930, Indonesia</td>
+                                    <td><b>Telephone:</b> +62 21 5703306</td>
+                                    <td><b>Fax:</b> +62 21 5708811</td>
+                                    <td><b>Website:</b> http://aatmajaya.ac.id</td>
+                                    <td><b>E-mail:</b> bba@atmajaya.ac.id</td>
+                                </tr>
                             </table>
-                        </div>
-
-                        <div class="box col-md-12 foot">
-                            <div class="col-md-12">
-
-                                <div style=" float: right; margin-bottom: 20px;">
-                                    Jakarta, <span id="currentDate"></span><br />
-                                    Kepala Biro Admisitrasi Akademik<br>
-                                    <i class="en no-padding">Head of Academic Administration Bureau</i>
-                                    <br />
-                                    <br />
-                                    <br />
-                                    <br />
-                                    <br />
-                                    <span id="baaName">Helena Nataly Tapoona, S.E., M.M.</span>
-                                    <br />
-                                    <br />
-                                </div>
-
-                            </div>
-
-
-                            <div class="col-md-12">
-
-                                <table class="footer" width="100%">
-                                    <tr>
-                                        <td><b>Address:</b> Jl. Jendral Sudirman 51, Jakarta Selatan 12930, Indonesia</td>
-                                        <td><b>Telephone:</b> +62 21 5703306</td>
-                                        <td><b>Fax:</b> +62 21 5708811</td>
-                                        <td><b>Website:</b> http://aatmajaya.ac.id</td>
-                                        <td><b>E-mail:</b> bba@atmajaya.ac.id</td>
-                                    </tr>
-                                </table>
-                            </div>
                         </div>
                     </div>
+                </div>
 
 
 
                 <div id="print" style="display:none">
-                    <div class="box-print col-md-12" >
+                    <div class="box-print col-md-12">
                         <div width="100%">
                             <div class="header" style="float:left">
                                 <div>Nama <i class="en">Name</i></div>
@@ -216,42 +218,41 @@
                             </div>
                         </div>
                         @*<table width="100%">
-                            <tr>*@
+                <tr>*@
 
-                                <!--Faculty
-                                    Program of Study-->
+                        <!--Faculty
+                Program of Study-->
+                        @*                                <td width="15%">Nama <i class="en">Name</i></td>
+                        <td width="2%" style="padding: 0px 5px"> : </td>
+                        <td id="name" width="80%">@Model.Nama</td>
+                    </tr>
+                    <tr>
 
-@*                                <td width="15%">Nama <i class="en">Name</i></td>
-                                <td width="2%" style="padding: 0px 5px"> : </td>
-                                <td id="name" width="80%">@Model.Nama</td>
-                            </tr>
-                            <tr>
-
-                                <td>N.I.M. <i class="en">Student Identity Number</i></td>
-                                <td style="padding: 0px 5px"> : </td>
-                                <td id="nim">@Model.NIMAsal</td>
-                            </tr>
-                            <tr>
-                                <td>Tempat / Tanggal Lahir <i class="en">Place & Date of Birth</i></td>
-                                <td style="padding: 0px 5px"> : </td>
-                                <td id="ttl">@Model.TempatLahir / <span id="birthdayView"> @Model.TanggalLahir</span></td>
-                            </tr>
-                            <tr>
-                                <td>Jenjang Studi <i class="en">Program of Education</i></td>
-                                <td style="padding: 0px 5px"> : </td>
-                                <td id="jenjangStudi">@Model.JenjangStudi</td>
-                            </tr>
-                            <tr>
-                                <td>Nomor Keputusan Pendirian Perguruan Tinggi <br /><i class="en no-padding">University Constitutional Document Number</i></td>
-                                <td style="padding: 0px 5px"> : </td>
-                                <td id="noKeputusan">
-                                    Akte Notaris No. 3 tanggal 1 Juni 1960 <i class="en">Notarial Deed No. 3 dated 1 June 1960</i>
-                                    <br />& No. 17/B.S.T/P/62 tanggal <i class="en">dated 21 Januari January 1963</i>
+                        <td>N.I.M. <i class="en">Student Identity Number</i></td>
+                        <td style="padding: 0px 5px"> : </td>
+                        <td id="nim">@Model.NIMAsal</td>
+                    </tr>
+                    <tr>
+                        <td>Tempat / Tanggal Lahir <i class="en">Place & Date of Birth</i></td>
+                        <td style="padding: 0px 5px"> : </td>
+                        <td id="ttl">@Model.TempatLahir / <span id="birthdayView"> @Model.TanggalLahir</span></td>
+                    </tr>
+                    <tr>
+                        <td>Jenjang Studi <i class="en">Program of Education</i></td>
+                        <td style="padding: 0px 5px"> : </td>
+                        <td id="jenjangStudi">@Model.JenjangStudi</td>
+                    </tr>
+                    <tr>
+                        <td>Nomor Keputusan Pendirian Perguruan Tinggi <br /><i class="en no-padding">University Constitutional Document Number</i></td>
+                        <td style="padding: 0px 5px"> : </td>
+                        <td id="noKeputusan">
+                            Akte Notaris No. 3 tanggal 1 Juni 1960 <i class="en">Notarial Deed No. 3 dated 1 June 1960</i>
+                            <br />& No. 17/B.S.T/P/62 tanggal <i class="en">dated 21 Januari January 1963</i>
 
 
-                                </td>
-                            </tr>
-                        </table>*@
+                        </td>
+                    </tr>
+                </table>*@
 
 
 
