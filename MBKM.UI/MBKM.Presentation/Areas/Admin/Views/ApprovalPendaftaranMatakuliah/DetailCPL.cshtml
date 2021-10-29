@@ -115,7 +115,7 @@
                         </div>
                         <br />
                         @{
-                            if (ViewData["jenisKegiatan"] != "Eksternal" || ViewData["jenisKegiatan"] != "Internal Ke Luar")
+                            if (!ViewData["jenisKegiatan"].ToString().ToLower().Contains("eksternal") || ViewData["jenisKegiatan"].ToString().ToLower().Contains("luar"))
                             {
                                 <div class="row">
                                     <div class="col-sm-3 text-right">
@@ -142,7 +142,7 @@
                         </div>
                         <br />
                         @{
-                            if (ViewData["jenisKegiatan"] == "Internal" && ViewData["jenisProgram"] != "Pertukaran")
+                            if (ViewData["jenisKegiatan"].ToString().ToLower().Contains("internal") && !ViewData["jenisProgram"].ToString().ToLower().Contains("Pertukaran"))
                             {
                                 <div class="row">
                                     <div class="col-sm-3 text-right">
