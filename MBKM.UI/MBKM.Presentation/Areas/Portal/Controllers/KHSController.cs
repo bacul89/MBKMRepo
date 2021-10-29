@@ -1,4 +1,5 @@
 ﻿using MBKM.Entities.Models.MBKM;
+using MBKM.Entities.ViewModel;
 using MBKM.Presentation.Helper;
 using MBKM.Services.MBKMServices;
 using Newtonsoft.Json;
@@ -53,7 +54,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
             List<PendaftaranMataKuliah> pmks = new List<PendaftaranMataKuliah>();
-            List<NilaiKuliah> nilaiKuliahs = new List<NilaiKuliah>();
+            //List<NilaiKuliah> nilaiKuliahs = new List<NilaiKuliah>();
             //nilaiKuliahs = _nilaiKuliahService.Find(nilaiKuliah => nilaiKuliah.MahasiswaID == 98).ToList();
 
             if (strm != 0)
@@ -99,9 +100,29 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 var hasil = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length)) * 4.00;
                 return hasil.ToString();
             }
+            if (n == "A-")
+            {
+                var hasil = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length)) * 3.70;
+                return hasil.ToString();
+            }
             if (n == "B+")
             {
                 var hasil = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length)) * 3.30;
+                return hasil.ToString();
+            }
+            if (n == "B")
+            {
+                var hasil = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length)) * 3.00;
+                return hasil.ToString();
+            }
+            if (n == "B-")
+            {
+                var hasil = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length)) * 2.70;
+                return hasil.ToString();
+            }
+            if (n == "C+")
+            {
+                var hasil = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length)) * 2.30;
                 return hasil.ToString();
             }
             if (n == "C")
@@ -109,10 +130,103 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 var hasil = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length)) * 2.00;
                 return hasil.ToString();
             }
+            if (n == "D")
+            {
+                var hasil = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length)) * 1.00;
+                return hasil.ToString();
+            }
             var cek = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length));
+            var E = 0;
+            return E.ToString();
 
-            return cek.ToString();
+        }
+        public ActionResult KHS(string strmT, int strmID)
+        {
 
+            var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
+            ViewData["nama"] = mahasiswa.Nama;
+            ViewData["nim"] = mahasiswa.NIM;
+            ViewData["univ"] = mahasiswa.NamaUniversitas;
+            ViewData["semester"] = strmT;
+            //var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
+            List<PendaftaranMataKuliah> pmks = new List<PendaftaranMataKuliah>();
+            //List<NilaiKuliah> nilaiKuliahs = new List<NilaiKuliah>();
+            //nilaiKuliahs = _nilaiKuliahService.Find(nilaiKuliah => nilaiKuliah.MahasiswaID == 98).ToList();
+
+            if (strmID != 0)
+            {
+                pmks = _pendaftaranMataKuliahService.Find(pmk => pmk.MahasiswaID == mahasiswa.ID && pmk.StatusPendaftaran == "ACCEPTED BY MAHASISWA" && pmk.JadwalKuliahs.STRM == strmID).ToList();
+            }
+            else
+            {
+                pmks = _pendaftaranMataKuliahService.Find(pmk => pmk.MahasiswaID == mahasiswa.ID && pmk.StatusPendaftaran == "ACCEPTED BY MAHASISWA").ToList();
+            }
+            var list = pmks.Select(x => new VMKHS()
+            {
+                Seksi = x.JadwalKuliahs.ClassSection,
+                //NamaMataKuliah = x.JadwalKuliahs.NamaMataKuliah,
+                NamaMatakuliah = x.JadwalKuliahs.NamaMataKuliah,
+                KodeMataKuliah = x.JadwalKuliahs.KodeMataKuliah,
+                SKS = x.JadwalKuliahs.SKS,
+                //NamaDosen = x.JadwalKuliahs.NamaDosen,
+                //STRM = x.JadwalKuliahs.STRM.ToString(),
+                Nilai = //x.JadwalKuliahID,
+                             GetPresentase(mahasiswa.ID, x.JadwalKuliahID),
+                //JadwalKuliahID = x.JadwalKuliahID,
+                Hasil = GetHasil(mahasiswa.ID, x.JadwalKuliahID, x.JadwalKuliahs.SKS)
+                //ID = x.ID
+            });
+            //List<VMKHS> khsmodel = new List<VMKHS>();
+            //VMKHS khsModel = list;
+            //ViewBag.pmk1 = list;
+            ViewData["EmployeeList2"] = list;
+
+            return View();
+        }
+        [AllowAnonymous]
+        public ActionResult PrintKHS(string strmT, int strmID)
+        {
+            var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
+            ViewData["nama"] = mahasiswa.Nama;
+            ViewData["nim"] = mahasiswa.NIM;
+            ViewData["univ"] = mahasiswa.NamaUniversitas;
+            ViewData["semester"] = strmT;
+            //var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
+            List<PendaftaranMataKuliah> pmks = new List<PendaftaranMataKuliah>();
+            //List<NilaiKuliah> nilaiKuliahs = new List<NilaiKuliah>();
+            //nilaiKuliahs = _nilaiKuliahService.Find(nilaiKuliah => nilaiKuliah.MahasiswaID == 98).ToList();
+
+            if (strmID != 0)
+            {
+                pmks = _pendaftaranMataKuliahService.Find(pmk => pmk.MahasiswaID == mahasiswa.ID && pmk.StatusPendaftaran == "ACCEPTED BY MAHASISWA" && pmk.JadwalKuliahs.STRM == strmID).ToList();
+            }
+            else
+            {
+                pmks = _pendaftaranMataKuliahService.Find(pmk => pmk.MahasiswaID == mahasiswa.ID && pmk.StatusPendaftaran == "ACCEPTED BY MAHASISWA").ToList();
+            }
+            var list = pmks.Select(x => new VMKHS()
+            {
+                Seksi = x.JadwalKuliahs.ClassSection,
+                //NamaMataKuliah = x.JadwalKuliahs.NamaMataKuliah,
+                NamaMatakuliah = x.JadwalKuliahs.NamaMataKuliah,
+                KodeMataKuliah = x.JadwalKuliahs.KodeMataKuliah,
+                SKS = x.JadwalKuliahs.SKS,
+                //NamaDosen = x.JadwalKuliahs.NamaDosen,
+                //STRM = x.JadwalKuliahs.STRM.ToString(),
+                Nilai = //x.JadwalKuliahID,
+                             GetPresentase(mahasiswa.ID, x.JadwalKuliahID),
+                //JadwalKuliahID = x.JadwalKuliahID,
+                Hasil = GetHasil(mahasiswa.ID, x.JadwalKuliahID, x.JadwalKuliahs.SKS)
+                //ID = x.ID
+            });
+            //List<VMKHS> khsmodel = new List<VMKHS>();
+            //VMKHS khsModel = list;
+            //ViewBag.pmk1 = list;
+            ViewData["EmployeeList2"] = list;
+
+            var report = new Rotativa.ViewAsPdf("KHS")
+            { FileName = "-KHS.pdf" };
+            return report;
         }
         public Mahasiswa GetMahasiswaByEmail(string email)
         {

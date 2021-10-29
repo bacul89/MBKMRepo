@@ -34,8 +34,9 @@
             <hr />
 
             <div class="container" style="width: 100%;">
-                @*<button class="btn btn-success"> Cetak <span class="fa fa-download"></span></button>*@
-
+                <button target="_blank" class="btn btn-success" onclick="KHSPage($('#tahunSemester').text(),$('#tahunSemester').val())"> Cetak <span class="fa fa-download"></span></button>
+                @*<div class="col" style="text-align:center"><a target="_blank" href="javascript:void(0)" style="color:black" onclick="PrintKHS($('#tahunSemester').text(),$('#tahunSemester').val())"><span class="fa fa-download"></span></a></div>*@
+                <div class="col" style="text-align:center"><a target="_blank" onclick="location.href='@Url.Action("PrintKHS", "KHS")?strmT=' + $('#tahunSemester').text() + '&strmID=' + $('#tahunSemester').val()" style="color:black"><i class="fas fa-file-download coral"></i></i></a></div>
                 <br />
                 <br />
 
@@ -258,7 +259,7 @@
                     [0, 'asc']
                 ],
                 "columns": [
-                    
+
                     {
                         "data": null
                     },
@@ -322,7 +323,7 @@
                     //        return '<div class="center">' + data + '</div>';
                     //    }
                     //},
-                    
+
                 ]
             });
             datatable.on('order.dt search.dt', function () {
@@ -330,6 +331,34 @@
                     cell.innerHTML = i + 1;
                 });
             }).draw();
+        }
+
+        //batas
+        function KHSPage(strmT,strmID) {
+
+            //console.log();
+           // @Url.Action("detailBAP", "SummaryPresensiKelas")
+            //$.LoadingOverlay("show");
+           // window.
+            $.ajax({
+                url: '@Url.Action("KHS", "KHS")?strmT=' + strmT + '&strmID=' + strmID,
+                //url: '@Url.Action("GetJadwalKuliah", "PresensiKelas")?strm=' + strm,
+                type: 'get',
+                datatype: 'html',
+                success: function (data) {
+                    //$.LoadingOverlay("hide");
+                    //console.log(data);
+                    window.location = "/Portal/KHS/KHS?strmT=" + strmT + '&strmID=' + strmID
+
+
+
+                }, error: function (e) {
+                   // $.LoadingOverlay("hide");
+                   alert("error")
+
+                }
+            })
+
         }
     </script>
 

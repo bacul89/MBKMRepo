@@ -525,6 +525,7 @@
     <Content Include="Areas\Admin\Views\Penilaian\DetailPenilaian.cshtml" />
     <Content Include="Areas\Portal\Views\FeedBackMatakuliah\NextPageFeedBack.cshtml" />
     <Content Include="Areas\Portal\Views\FeedBackMatakuliah\PreviousPageFeedback.cshtml" />
+    <Content Include="Areas\Portal\Views\KHS\KHS.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
