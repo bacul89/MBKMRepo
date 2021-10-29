@@ -44,8 +44,38 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult DetailCPL(int id)
         {
             var data = _cPLMKPendaftaranService.Find(x => x.IsDeleted == false && x.PendaftaranMataKuliahID == id).First();
-            var tempInternal = _informasiPertukaranService.Find(x => x.JenisKerjasama.Contains("Internal") && x.MahasiswaID == data.PendaftaranMataKuliahs.MahasiswaID).Count();
-            var tempMagang = _informasiPertukaranService.Find(x => x.JenisKerjasama.Contains("Magang") && x.MahasiswaID == data.PendaftaranMataKuliahs.MahasiswaID).Count();
+            var tempInternal = _informasiPertukaranService.Find(x => x.MahasiswaID == data.PendaftaranMataKuliahs.MahasiswaID && x.JenisKerjasama.ToLower().Contains("internal")).Count();
+            var tempMagang = _informasiPertukaranService.Find(x => x.MahasiswaID == data.PendaftaranMataKuliahs.MahasiswaID && x.JenisKerjasama.ToLower().Contains("magang")).Count();
+            var tempKeluar = _informasiPertukaranService.Find(x => x.MahasiswaID == data.PendaftaranMataKuliahs.MahasiswaID && x.JenisKerjasama.ToLower().Contains("ke luar")).Count();
+
+            IList<CPLMatakuliah> tempId = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.PendaftaranMataKuliahs.JadwalKuliahs.MataKuliahID).ToList();
+            IList<CPLMatakuliah> capaianTujuan = tempId.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == data.PendaftaranMataKuliahs.JadwalKuliahs.ProdiID).ToList();
+            
+            if (data.CPLMatakuliahID != null)
+            {
+                IList<CPLMatakuliah> tempIDAsal = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.CPLMatakuliahs.IDMataKUliah).ToList();
+                IList<CPLMatakuliah> capaianAsal = tempIDAsal.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == data.PendaftaranMataKuliahs.JadwalKuliahs.ProdiID).ToList();
+                ViewData["capaianAsal"] = capaianAsal;
+                ViewData["countCPAsal"] = capaianAsal.Count();
+
+                ViewData["capaianTujuan"] = capaianTujuan;
+                ViewData["countCPTujuan"] = capaianTujuan.Count();
+            }else if(tempKeluar != 0)
+            {
+                IList<CPLMatakuliah> tempIDAsal = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.CPLMatakuliahs.IDMataKUliah).ToList();
+                IList<CPLMatakuliah> capaianAsal = tempIDAsal.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == data.PendaftaranMataKuliahs.JadwalKuliahs.ProdiID).ToList();
+                ViewData["capaianTujuan"] = capaianAsal;
+                ViewData["countCPTujuan"] = capaianAsal.Count();
+
+                ViewData["capaianAsal"] = capaianTujuan;
+                ViewData["countCPAsal"] = capaianTujuan.Count();
+            }
+            else
+            {
+                ViewData["capaianTujuan"] = capaianTujuan;
+                ViewData["countCPTujuan"] = capaianTujuan.Count();
+            }
+
 
             if (data.PendaftaranMataKuliahs.mahasiswas.NIM != data.PendaftaranMataKuliahs.mahasiswas.NIMAsal)
             {
@@ -60,20 +90,12 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             {
                 ViewData["jenisProgram"] = "Non-Pertukaran";
                 ViewData["jenisKegiatan"] = "Internal";
-            }
-            var IDMakul = data.PendaftaranMataKuliahs.JadwalKuliahs.MataKuliahID;
-            IList<CPLMatakuliah> tempId = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.PendaftaranMataKuliahs.JadwalKuliahs.MataKuliahID).ToList();
-            IList<CPLMatakuliah> capaianTujuan = tempId.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == data.PendaftaranMataKuliahs.JadwalKuliahs.ProdiID).ToList();
-            if (data.CPLMatakuliahID != null)
+            }else if(tempKeluar != 0)
             {
-                IList<CPLMatakuliah> tempIDAsal = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.CPLMatakuliahs.IDMataKUliah).ToList();
-                IList<CPLMatakuliah> capaianAsal = tempIDAsal.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == data.PendaftaranMataKuliahs.JadwalKuliahs.ProdiID).ToList();
-                ViewData["capaianAsal"] = capaianAsal;
-                ViewData["countCPAsal"] = capaianAsal.Count();
-
+                ViewData["jenisProgram"] = "Pertukaran";
+                ViewData["jenisKegiatan"] = "Internal Ke Luar";
             }
-            ViewData["capaianTujuan"] = capaianTujuan;
-            ViewData["countCPTujuan"] = capaianTujuan.Count();
+
             return View(data);
         }
         

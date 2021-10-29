@@ -22,7 +22,7 @@ namespace MBKM.Entities.Models.MBKM
         #region sprint 4
         public string JudulAktivitas { get; set; }
         public string LokasiTugas { get; set; }
-        public DateTime TanggalSK { get; set; }
+        public DateTime? TanggalSK { get; set; }
         public string NoSK { get; set; }
         #endregion 
     }

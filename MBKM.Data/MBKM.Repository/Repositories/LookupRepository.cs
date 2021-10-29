@@ -41,5 +41,15 @@ namespace MBKM.Repository.Repositories
                 return listmodel.ToList();
             }
         }
+
+        public List<VMUserProdi> getUserProdi()
+        {
+            using (var context = new MBKMContext())
+            {
+                var result = context.Database
+                    .SqlQuery<VMUserProdi>("GetListProdi");
+                return result.ToList();
+            }
+        }
     }
 }

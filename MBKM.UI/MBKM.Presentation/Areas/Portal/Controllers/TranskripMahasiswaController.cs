@@ -74,7 +74,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     KodeMataKuliah = item.JadwalKuliahs.KodeMataKuliah,
                     NamaMataKuliah = item.NamaMatakuliah,
                     SKS = item.JadwalKuliahs.SKS,
-                    Nilai = item.Nilai,
+                    //Nilai = item.Nilai,
                     Grade = item.Grade
                 };
                 data.Add(row);
