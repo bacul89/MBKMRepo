@@ -1,7 +1,9 @@
 ﻿﻿
 @{ ViewBag.Title = "KHS"; }
 
-@*@model MBKM.Entities.ViewModel.VMKHS*@
+@model MBKM.Entities.ViewModel.VMKHS
+
+@*@model List<MBKM.Entities.ViewModel.VMKHS>*@
 @{ var total = 0; }
 <style>
     .box {
@@ -151,7 +153,7 @@
                 <div>
 
                 </div>
-                <table width="100%" class="table table-bordered table-striped hover dt-responsive responsive">
+                <table id="countit" width="100%" class="table table-bordered table-striped hover dt-responsive responsive">
                     <thead>
                         <tr>
                             @*<th width="10%">NO</th>*@
@@ -170,18 +172,19 @@
                             <td>@employee.KodeMataKuliah</td>
                             <td>@employee.NamaMatakuliah</td>
                             <td>@employee.Seksi</td>
-                            <td>@employee.SKS</td>
+                            <td class="count-me">@employee.SKS</td>
                             <td>@employee.Nilai</td>
-                            <td>@employee.Hasil</td>
-                            @total += parseFloat(@employee.SKS);
+                            <td class="count-hasil">@employee.Hasil</td>
+                            @*@{total += @employee.SKS;}*@
 
-                        </tr>}
+                        </tr>
+}
 
                     </tbody>
                     <tfoot>
                         <tr>
                             <td>Total</td>
-                            <td>@total</td>
+                            @*<td>@Model.Sum(i => i.SKS)</td>*@
                         </tr>
 
                     </tfoot>
@@ -212,7 +215,26 @@
              $('#univ').html("@ViewData["univ"].ToString()");
              $('#semester').html("@ViewData["semester"].ToString()");
             // console.log(@Model);
+             var tds = document.getElementById('countit').getElementsByTagName('td');
+             var sum = 0;
+             for (var i = 0; i < tds.length; i++) {
+                 if (tds[i].className == 'count-me') {
+                     sum += isNaN(tds[i].innerHTML) ? 0 : parseInt(tds[i].innerHTML);
+                 }
+             }
+             document.getElementById('countit').innerHTML += '<tr><td>' + sum + '</td><td>total SKS</td></tr>';
 
+            // var tds2 = document.getElementById('countit').getElementsByTagName('td');
+             var sum2 = 0;
+             for (var i = 0; i < tds.length; i++) {
+                 if (tds[i].className == 'count-hasil') {
+                     sum2 += isNaN(tds[i].innerHTML) ? 0 : parseFloat(tds[i].innerHTML);
+                     //sum2 += isNaN(tds[i].innerHTML) ? 0 : parseInt(tds[i].innerHTML);
+                 }
+             }
+             document.getElementById('countit').innerHTML += '<tr><td>' + sum2 + '</td><td>total hasil</td></tr>';
+             document.getElementById('countit').innerHTML += '<tr><td>' + (sum2/sum) + '</td><td>IPS</td></tr>';
+             console.log(tds[5].innerHTML);
 
         });
 
