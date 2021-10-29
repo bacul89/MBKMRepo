@@ -10,6 +10,6 @@ namespace MBKM.Entities.ViewModel
     {
         public string Nama { get; set; }
         public string Jenis { get; set; }
-        public float Persentase { get; set; }
+        public double Persentase { get; set; }
     }
 }

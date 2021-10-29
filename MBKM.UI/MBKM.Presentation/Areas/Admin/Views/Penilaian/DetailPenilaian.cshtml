@@ -395,8 +395,8 @@
                             </tbody>
                         </table>
                     </div>
-                    <button id="cancel" class="btn" style="margin: 30px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: rgb(209,2,2); color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; ">RESET</button>
-                    <button id="submit" class="btn" style="margin: 30px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; ">SIMPAN</button>
+                    <button id="reset" class="btn" style="margin: 30px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: rgb(209,2,2); color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; ">RESET</button>
+                    <button id="simpan" class="btn" style="margin: 30px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; ">SIMPAN</button>
                     <button id="submit" class="btn" style="margin: 30px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: rgb(0,166,81); color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; ">SUBMIT</button>
                 </div>
         </div>
@@ -410,24 +410,27 @@
         var ids = [];
         var subTables = [];
         var bobot;
+        var subBobot;
+        var tmpMain;
+        var tmpSub = {};
 
         $(document).ready(function () {
-            console.log('@Model.IsActive');
             getSemester();
             getBobot();
+            getSubBobot();
             loadTable();
         });
         function loadTmpMainTable() {
             var data = new Object();
             data.ids = ids;
             data.idJadwalKuliah = @Model.ID;
-            console.log(data);
             $.ajax({
                 type: "POST",
                 url: "@Url.Action("GetNilai", "Penilaian")",
                 data: data
             }).then(function (response) {
                 if (!response) return;
+                tmpMain = response;
                 for (var i = 0; i < response.length; i++) {
                     $('#MT' + response[i].MahasiswaID).val(response[i].UTS);
                     $('#CW1' + response[i].MahasiswaID).val(response[i].CW1);
@@ -438,6 +441,33 @@
                     $('#FE' + response[i].MahasiswaID).val(response[i].Final);
                     $('#Total' + response[i].MahasiswaID).html(response[i].NilaiTotal);
                     $('#Grade' + response[i].MahasiswaID).html(response[i].Grade);
+                }
+            })
+        }
+        function loadTmpSubTable(flag) {
+            var data = new Object();
+            data.ids = ids;
+            data.idJadwalKuliah = @Model.ID;
+            data.headCW = flag;
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("GetNilaiSubCW", "Penilaian")",
+                data: data
+            }).then(function (response) {
+                if (!response) return;
+                tmpSub[flag] = response;
+                for (var i = 0; i < response.length; i++) {
+                    $('#' + flag + '.1' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub1);
+                    $('#' + flag + '.2' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub2);
+                    $('#' + flag + '.3' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub3);
+                    $('#' + flag + '.4' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub4);
+                    $('#' + flag + '.5' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub5);
+                    $('#' + flag + '.6' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub6);
+                    $('#' + flag + '.7' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub7);
+                    $('#' + flag + '.8' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub8);
+                    $('#' + flag + '.9' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub9);
+                    $('#' + flag + '.10' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub10);
+                    $('#Total' + flag + response[i].NilaiKuliahs.MahasiswaID).val(response[i].NilaiTotal);
                 }
             });
         }
@@ -508,7 +538,20 @@
                 type: "GET",
                 url: "@Url.Action("GetSubBobot", "Penilaian")?idMatkul=" + @Model.MataKuliahID
             }).then(function (response) {
-                //action
+                subBobot = response;
+                if (response.length > 0) {
+                    loadTableSub('CW1');
+                    loadTableSub('CW2');
+                    loadTableSub('CW3');
+                    loadTableSub('CW4');
+                    loadTableSub('CW5');
+
+                    loadTmpSubTable('CW1');
+                    loadTmpSubTable('CW2');
+                    loadTmpSubTable('CW3');
+                    loadTmpSubTable('CW4');
+                    loadTmpSubTable('CW5');
+                }
             });
         }
         function loadTable() {
@@ -603,11 +646,6 @@
                     cell.innerHTML = '<div style="text-align:center;">' + (i + 1) + '</div>';
                 });
             }).draw();
-            loadTableSub('CW1');
-            loadTableSub('CW2');
-            loadTableSub('CW3');
-            loadTableSub('CW4');
-            loadTableSub('CW5');
         }
         function loadTableSub(flag) {
             $('#data' + flag).DataTable({
@@ -644,57 +682,57 @@
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '.1' + row.MahasiswaID + '"></div>';
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '1' + row.MahasiswaID + '"></div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '.2' + row.MahasiswaID + '"></div>';
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '2' + row.MahasiswaID + '"></div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '.3' + row.MahasiswaID + '"></div>';
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '3' + row.MahasiswaID + '"></div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '.4' + row.MahasiswaID + '"></div>';
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '4' + row.MahasiswaID + '"></div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '.5' + row.MahasiswaID + '"></div>';
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '5' + row.MahasiswaID + '"></div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '.6' + row.MahasiswaID + '"></div>';
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '6' + row.MahasiswaID + '"></div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '.7' + row.MahasiswaID + '"></div>';
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '7' + row.MahasiswaID + '"></div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '.8' + row.MahasiswaID + '"></div>';
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '8' + row.MahasiswaID + '"></div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '.9' + row.MahasiswaID + '"></div>';
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '9' + row.MahasiswaID + '"></div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '.10' + row.MahasiswaID + '"></div>';
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '10' + row.MahasiswaID + '"></div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center; vertical-align: middle;" id="Total' + row.MahasiswaID + '">0</div>';
+                            return '<div style="text-align:center; vertical-align: middle;" id="Total' + flag + row.MahasiswaID + '">0</div>';
                         }
                     }
                 ]
@@ -707,14 +745,15 @@
         }
         $('input[type=radio][name=jenisNilai]').change(function () {
             $('.divNilai').hide();
-            if (this.value == 'MT' || this.value == 'FE') {
+            if (this.value == 'MT' || this.value == 'FE' || subBobot.length == 0) {
                 $('#divDataNilai').show();
                 $(".inputNilai").attr("disabled", true);
+                if (!mahasiswa && '@Model.IsActive'.toLowerCase == 'false') return;
                 for (var i = 0; i < mahasiswa.length; i++) {
-                    console.log('#' + this.value + mahasiswa[i].MahasiswaID);
                     $('#' + this.value + mahasiswa[i].MahasiswaID).attr("disabled", false);
                 }
             } else {
+                if ('@Model.IsActive'.toLowerCase == 'false') $(".inputNilai2").attr("disabled", true);
                 $('#div' + this.value).show();
             }
         });
@@ -737,6 +776,163 @@
                 if (response.status == 200) {
                     window.history.back();
                 }
+            });
+        });
+        $('#reset').click(function () {
+            if (!mahasiswa) return;
+            var data = new Object();
+            data.ids = ids;
+            data.idJadwalKuliah = @Model.ID;
+                data.flag = $('input[name=jenisNilai]:checked').val();
+            if ($('input[name=jenisNilai]:checked').val() == 'MT' || $('input[name=jenisNilai]:checked').val() == 'FE' || subBobot.length == 0) {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("ResetNilaiMahasiswa", "Penilaian")",
+                    data: data
+                }).then(function (response) {
+                    if (response.status == 200) {
+                        for (var i = 0; i < mahasiswa.length; i++) {
+                            $('#' + $('input[name=jenisNilai]:checked').val() + mahasiswa[i].MahasiswaID).val('');
+                        }
+                    }
+                    alert(response.message);
+                });
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("ResetSubNilaiMahasiswa", "Penilaian")",
+                    data: data
+                }).then(function (response) {
+                    if (response.status == 200) {
+                        for (var j = 0; j < mahasiswa.length; j++) {
+                            for (var i = 1; i <= 10; i++) {
+                                $('#' + $('input[name=jenisNilai]:checked').val() + i + '' + mahasiswa[j].MahasiswaID).val('');
+                            }
+                        }
+                    }
+                    alert(response.message);
+                });
+            }
+        })
+        $('#simpan').click(function () {
+            if (!mahasiswa) return;
+            var data = new Object();
+            var listNilai = [];
+            var CW1 = [];
+            var CW2 = [];
+            var CW3 = [];
+            var CW4 = [];
+            var CW5 = [];
+            var isSub = subBobot.length > 0;
+
+            for (var i = 0; i < mahasiswa.length; i++) {
+                var tmp = new Object();
+                tmp.MahasiswaID = mahasiswa[i].MahasiswaID;
+                tmp.JadwalKuliahID = @Model.ID;
+                tmp.NamaMatakuliah = '@Model.NamaMataKuliah';
+                tmp.UTS = $('#MT' + mahasiswa[i].MahasiswaID).val();
+                tmp.CW1 = $('#CW1' + mahasiswa[i].MahasiswaID).val();
+                tmp.CW2 = $('#CW2' + mahasiswa[i].MahasiswaID).val();
+                tmp.CW3 = $('#CW3' + mahasiswa[i].MahasiswaID).val();
+                tmp.CW4 = $('#CW4' + mahasiswa[i].MahasiswaID).val();
+                tmp.CW5 = $('#CW5' + mahasiswa[i].MahasiswaID).val();
+                tmp.Final = $('#FE' + mahasiswa[i].MahasiswaID).val();
+                tmp.NilaiTotal = $('#Total' + mahasiswa[i].MahasiswaID).html();
+                tmp.Grade = $('#Grade' + mahasiswa[i].MahasiswaID).html();
+                listNilai.push(tmp);
+                if (isSub) {
+                    var tmp2 = new Object();
+                    tmp2.CWSub1 = $('#CW11' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub2 = $('#CW12' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub3 = $('#CW13' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub4 = $('#CW14' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub5 = $('#CW15' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub6 = $('#CW16' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub7 = $('#CW17' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub8 = $('#CW18' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub9 = $('#CW19' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub10 = $('#CW110' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.NilaiTotal = $('#TotalCW1' + mahasiswa[i].MahasiswaID).html();
+                    tmp2.HeadCW = 'CW1';
+                    CW1.push(tmp2);
+
+                    tmp2 = new Object();
+                    tmp2.CWSub1 = $('#CW21' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub2 = $('#CW22' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub3 = $('#CW23' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub4 = $('#CW24' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub5 = $('#CW25' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub6 = $('#CW26' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub7 = $('#CW27' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub8 = $('#CW28' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub9 = $('#CW29' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub10 = $('#CW210' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.NilaiTotal = $('#TotalCW2' + mahasiswa[i].MahasiswaID).html();
+                    tmp2.HeadCW = 'CW2';
+                    CW2.push(tmp2);
+
+                    tmp2 = new Object();
+                    tmp2.CWSub1 = $('#CW31' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub2 = $('#CW32' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub3 = $('#CW33' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub4 = $('#CW34' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub5 = $('#CW35' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub6 = $('#CW36' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub7 = $('#CW37' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub8 = $('#CW38' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub9 = $('#CW39' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub10 = $('#CW310' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.NilaiTotal = $('#TotalCW3' + mahasiswa[i].MahasiswaID).html();
+                    tmp2.HeadCW = 'CW3';
+                    CW3.push(tmp2);
+
+                    tmp2 = new Object();
+                    tmp2.CWSub1 = $('#CW41' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub2 = $('#CW42' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub3 = $('#CW43' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub4 = $('#CW44' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub5 = $('#CW45' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub6 = $('#CW46' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub7 = $('#CW47' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub8 = $('#CW48' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub9 = $('#CW49' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub10 = $('#CW410' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.NilaiTotal = $('#TotalCW4' + mahasiswa[i].MahasiswaID).html();
+                    tmp2.HeadCW = 'CW4';
+                    CW4.push(tmp2);
+
+                    tmp2 = new Object();
+                    tmp2.CWSub1 = $('#CW51' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub2 = $('#CW52' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub3 = $('#CW53' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub4 = $('#CW54' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub5 = $('#CW55' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub6 = $('#CW56' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub7 = $('#CW57' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub8 = $('#CW58' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub9 = $('#CW59' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub10 = $('#CW510' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.NilaiTotal = $('#TotalCW5' + mahasiswa[i].MahasiswaID).html();
+                    tmp2.HeadCW = 'CW5';
+                    CW5.push(tmp2);
+
+                }
+            }
+            data.listNilai = listNilai;
+            data.CW1 = CW1;
+            data.CW2 = CW2;
+            data.CW3 = CW3;
+            data.CW4 = CW4;
+            data.CW5 = CW5;
+            data.isSub = isSub;
+            console.log(data);
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("InsertNilai", "Penilaian")",
+                dataType: "json",
+                data: data
+            }).then(function (response) {
+                alert(response.message);
             });
         })
     </script>

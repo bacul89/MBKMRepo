@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "MBKM";
 }
 
@@ -200,7 +199,6 @@
             loadFromLookup("Agama", "agama", "Agama");
             loadFromLookup("Gender", "gender", "Gender");
         });
-
         $("#kerjasama").change(function () {
             if ($("#kerjasama").val() == "y") {
                 $("#univAsal").html("<div class= 'form-group'><label>Universitas Asal</label><select name='NamaUniversitas' id='namaUniversitas' class='form-control input-lg' required></select></div><div id='noKS'><div class='form-group'><label>No. Kerjasama</label><select name='noKerjasama' id='noKerjasama' class='form-control input-lg' required></select></div></div>");
@@ -211,7 +209,6 @@
                 $("#univAsal").html("<div class= 'form-group'><label>Universitas Asal</label><input type='text' name='NamaUniversitas' id='NamaUniversitas' placeholder='Nama Universitas' class='form-control input-lg' /></div>");
             }
         });
-
         function namaUnivOnChange() {
             if ($("#kerjasama").val() == "y") {
                 $("#namaUniversitas").change(function () {
@@ -331,7 +328,6 @@
             });
         }
         function loadFromLookup(tipe, id, nama) {
-
             $("#" + id).select2({
                 placeholder: "-- Pilih " + nama + " --",
                 width: "100%",

@@ -113,6 +113,8 @@
     <Compile Include="ViewModel\VMSubBobot .cs" />
     <Compile Include="ViewModel\VMClassSection.cs" />
     <Compile Include="ViewModel\VMCPLMKPendaftaran.cs" />
+    <Compile Include="ViewModel\VMDosenMakulPertemuan.cs" />
+    <Compile Include="ViewModel\VMJawabanFeedback.cs" />
     <Compile Include="ViewModel\VMListJadwalKuliah.cs" />
     <Compile Include="ViewModel\VMJenisKerjasama.cs" />
     <Compile Include="ViewModel\VMJenisPertukaran.cs" />
@@ -121,6 +123,7 @@
     <Compile Include="ViewModel\VMListJadwalUjian.cs" />
     <Compile Include="ViewModel\VMListMapingCPL.cs" />
     <Compile Include="ViewModel\VMBobot.cs" />
+    <Compile Include="ViewModel\VMListNilaiKuliah.cs" />
     <Compile Include="ViewModel\VMListReportBAP.cs" />
     <Compile Include="ViewModel\VMLookUpUser.cs" />
     <Compile Include="Models\User.cs" />
@@ -141,9 +144,11 @@
     <Compile Include="ViewModel\VMMataKuliah.cs" />
     <Compile Include="ViewModel\VMMenu.cs" />
     <Compile Include="ViewModel\VMPendaftaranJadwalKuliah.cs" />
+    <Compile Include="ViewModel\VMPertanyaanFeedback.cs" />
     <Compile Include="ViewModel\VMPresensi.cs" />
     <Compile Include="ViewModel\VMProdi.cs" />
     <Compile Include="ViewModel\VMSemester.cs" />
+    <Compile Include="ViewModel\VMUserProdi.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

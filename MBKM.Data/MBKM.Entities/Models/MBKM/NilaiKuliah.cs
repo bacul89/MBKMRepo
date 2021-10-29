@@ -11,8 +11,8 @@ namespace MBKM.Entities.Models.MBKM
     public class NilaiKuliah : BaseEntity
     {
         public string NamaMatakuliah { get; set; }
-        public int Nilai { get; set; }
-        public int Persentase { get; set; }
+        //public int Nilai { get; set; }
+        //public int Persentase { get; set; }
 
         //public Int64 JadwalKuliahMahasiswaID { get; set; }
         //public virtual JadwalKuliahMahasiswa JadwalKuliahMahasiswas { get; set; }
@@ -22,14 +22,14 @@ namespace MBKM.Entities.Models.MBKM
         public virtual JadwalKuliah JadwalKuliahs { get; set; }
         public Int64 MahasiswaID { get; set; }
         public virtual Mahasiswa Mahasiswas { get; set; }
-        public int UTS { get; set; }
-        public int CW1 { get; set; }
-        public int CW2 { get; set; }
-        public int CW3 { get; set; }
-        public int CW4 { get; set; }
-        public int CW5 { get; set; }
-        public int Final { get; set; }
-        public int NilaiTotal { get; set; }
+        public decimal UTS { get; set; }
+        public decimal CW1 { get; set; }
+        public decimal CW2 { get; set; }
+        public decimal CW3 { get; set; }
+        public decimal CW4 { get; set; }
+        public decimal CW5 { get; set; }
+        public decimal Final { get; set; }
+        public decimal NilaiTotal { get; set; }
         public string Grade { get; set; }
         public bool FlagCetak { get; set; }
         [JsonIgnore]

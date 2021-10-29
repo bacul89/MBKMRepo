@@ -154,10 +154,14 @@
     <Compile Include="Areas\Admin\Controllers\PerjanjianKerjasama\PerjanjianKerjasamaController.cs" />
     <Compile Include="Areas\Admin\Controllers\RegisMhsByAdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SummaryFeedbackController.cs" />
     <Compile Include="Areas\Admin\Controllers\TemplateEmail\TemplateEmailController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TranskripController.cs" />
     <Compile Include="Areas\Admin\Controllers\PenilaianController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserManageController.cs" />
     <Compile Include="Areas\Admin\Controllers\VerifikasiMahasiswaController.cs" />
+    <Compile Include="Areas\Portal\Controllers\KHSController.cs" />
+    <Compile Include="Areas\Portal\Controllers\FeedBackMatakuliahController.cs" />
     <Compile Include="Areas\Portal\Controllers\PresensiKelasController.cs" />
     <Compile Include="Areas\Portal\Controllers\PresensiUjianController.cs" />
     <Compile Include="Areas\Portal\Controllers\DataDiriController.cs" />
@@ -169,9 +173,11 @@
     <Compile Include="Areas\Portal\Controllers\NimDigitalController.cs" />
     <Compile Include="Areas\Portal\Controllers\SummaryPresensiController.cs" />
     <Compile Include="Areas\Portal\Controllers\TrackingStatusPendaftaranController.cs" />
+    <Compile Include="Areas\Portal\Controllers\TranskripMahasiswaController.cs" />
     <Compile Include="Areas\Portal\PortalAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UnAuthorizedController.cs" />
+    <Compile Include="Helper\DTOAnswer.cs" />
     <Compile Include="Helper\GMailer.cs" />
     <Compile Include="Helper\MBKMAuthorize.cs" />
     <Compile Include="Global.asax.cs">
@@ -233,6 +239,7 @@
     <Content Include="Scripts\Admin\Menu\main.js" />
     <Content Include="Scripts\Admin\Role\crud.js" />
     <Content Include="Scripts\Admin\Role\main.js" />
+    <Content Include="Scripts\Admin\Transkrip\main.js" />
     <Content Include="Scripts\dataCheckBox\dataTables.checkboxes.js" />
     <Content Include="Scripts\dataCheckBox\dataTables.checkboxes.min.js" />
     <Content Include="Scripts\easy-number-separator.js" />
@@ -508,9 +515,17 @@
     <Content Include="Areas\Portal\Views\SummaryPresensi\DetailSummaryPresensiKelas.cshtml" />
     <Content Include="App_Browsers\qt.browser" />
     <Content Include="Areas\Portal\Views\SummaryPresensi\BAP.cshtml" />
+    <Content Include="Areas\Admin\Views\SummaryFeedback\Index.cshtml" />
+    <Content Include="Areas\Portal\Views\FeedBackMatakuliah\Index.cshtml" />
+    <Content Include="Areas\Portal\Views\FeedBackMatakuliah\DetailFeedBackMatakuliah.cshtml" />
+    <Content Include="Areas\Portal\Views\KHS\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Transkrip\Index.cshtml" />
+    <Content Include="Areas\Portal\Views\TranskripMahasiswa\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Penilaian\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Penilaian\DetailPenilaian.cshtml" />
     <Content Include="Areas\Portal\Views\PendaftaranMataKuliah\FormPendaftaranInternalKeLuarAtma.cshtml" />
+    <Content Include="Areas\Portal\Views\FeedBackMatakuliah\NextPageFeedBack.cshtml" />
+    <Content Include="Areas\Portal\Views\FeedBackMatakuliah\PreviousPageFeedback.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
@@ -528,6 +543,8 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\MaxLength.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\Portal\FeedbackMatkul\DetailFeedback.js" />
+    <Content Include="Scripts\Portal\FeedbackMatkul\main.js" />
     <Content Include="Scripts\Portal\LinkFasilitasMahasiswa\crud.js" />
     <Content Include="Scripts\Portal\LinkFasilitasMahasiswa\main.js" />
     <Content Include="Scripts\Portal\JadwalUjian\main.js" />
@@ -535,6 +552,7 @@
     <Content Include="Scripts\Portal\NimDigital\main.js" />
     <Content Include="Scripts\Portal\TrackingStatus\main.js" />
     <Content Include="Scripts\Portal\TrackingStatus\trackingDetail.js" />
+    <Content Include="Scripts\Portal\Transkrip\main.js" />
     <Content Include="Scripts\script.js" />
     <Content Include="Scripts\scriptDropdown.js" />
     <Content Include="Scripts\select2.min.js" />
@@ -572,6 +590,7 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\EmailTemplate\" />
     <Folder Include="Areas\Portal\Data\" />
+    <Folder Include="Areas\Portal\Views\Transkrip\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

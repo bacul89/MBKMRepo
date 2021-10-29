@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Portal/Views/Shared/_LayoutHome.cshtml";
+}
+
+@section css{
+
+    <link rel="stylesheet" type="text/css" href="~/Content/Admin/inputResponsive.css">
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/sweetalert2.all.min.js"></script>
+}
+@section modal{
+    <div class="modal fade" id="TambahMasterMapingCapaianPembelajaran" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" id="modal-inner">
+
+        </div>
+    </div>
+}
+
+<br />
+<div class="container-fluid" style="padding: 0px">
+    <div class="card center-block" style="background-color: white; width: 98%; padding: 0px">
+        <div class="card-body responsive-content" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; padding: 0px">
+            <h6 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 25px; color: black;">
+                FEEDBACK MATA KULIAH<br />
+                <small class="describe">Berikan Feedback Untuk Setiap Mata Kuliah</small>
+            </h6>
+            <hr />
+            <div class="container" style="width: 100%;">
+
+                <div class="col-md-12">
+                    <form class="form-horizontal col-md-5">
+                        <div class="form-group">
+                            <label for="inp_semester" class="col-sm-3 control-label">Tahun Semester</label>
+                            <div class="col-sm-7">
+                                 <input class="hide" type="hidden" value="@ViewData["firstSemester"].ToString()" id="firstSemester" disabled/>
+                                    <select name="inp_semester" id="inp_semester" class="form-control input-md input-data">
+                                        <option value="" selected disabled>-- Pilih Tahun Semester --</option>
+                                        @{
+                                            foreach (var dt in ViewData["semester"] as IEnumerable<MBKM.Entities.ViewModel.VMSemester>)
+                                            {
+                                                <option value="@dt.Nilai">@dt.Nama</option>
+                                            }
+                                        }
+                                    </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!--table-responsive-->
+                <table id="table-data-feedback-makul" class="table row-border hover dt-responsive responsive" style="border-spacing: 0 15px; border:0">
+                    <thead>
+                        <tr>
+                            <th class="zero-padding small-text no-border vertical-center center sorting">Feedback</th>
+                            <th class="zero-padding small-text no-border vertical-center center sorting">No</th>
+                            <th class="zero-padding small-text no-border vertical-center center sorting">Tahun Semester</th>
+                            <th class="zero-padding small-text no-border vertical-center center sorting">Kode MK</th>
+                            <th class="zero-padding small-text no-border vertical-center center sorting">Nama Mata Kuliah</th>
+                            <th class="zero-padding small-text no-border vertical-center center sorting">SKS</th>
+                            <th class="zero-padding small-text no-border vertical-center center sorting">Seksi</th>
+                            <th class="zero-padding small-text no-border vertical-center center sorting">Status Feedback</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+@*                            <td class="zero-padding small-text no-border vertical-center center sorting"> <a href="javascript:void(0)" style="color:black"> <i class="fas fa-edit coral"></i></a></td>
+*@                        </tr>
+                    </tbody>
+                </table>
+                <br />
+                <br />
+                <br />
+                <br />
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/Portal/FeedbackMatkul/main.js"></script>
+    <script src="~/Scripts/loading/loadingoverlay.min.js"></script>
+}
+

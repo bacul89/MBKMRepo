@@ -42,6 +42,7 @@ namespace MBKM.Repository.BaseRepository
 
         public DbSet<AttachmentPerjanjianKerjasama> attachmentPerjanjianKerjasamas { get; set; }
         public DbSet<CPLMatakuliah> CPLMatakuliah { get; set; }
+        public DbSet<NilaiKuliah> NilaiKuliahs { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
