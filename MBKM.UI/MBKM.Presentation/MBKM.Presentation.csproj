@@ -525,6 +525,7 @@
     <Content Include="Areas\Admin\Views\Penilaian\DetailPenilaian.cshtml" />
     <Content Include="Areas\Portal\Views\FeedBackMatakuliah\NextPageFeedBack.cshtml" />
     <Content Include="Areas\Portal\Views\FeedBackMatakuliah\PreviousPageFeedback.cshtml" />
+    <Content Include="Areas\Portal\Views\TranskripMahasiswa\PrintTranskrip.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
@@ -552,7 +553,6 @@
     <Content Include="Scripts\Portal\TrackingStatus\main.js" />
     <Content Include="Scripts\Portal\TrackingStatus\trackingDetail.js" />
     <Content Include="Scripts\Portal\Transkrip\main.js" />
-    <Content Include="Scripts\xepOnline.jqPlugin.js" />
     <Content Include="Scripts\script.js" />
     <Content Include="Scripts\scriptDropdown.js" />
     <Content Include="Scripts\select2.min.js" />
