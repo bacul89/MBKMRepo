@@ -75,17 +75,17 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             foreach (var d in data1)
             {
                 var jumlahMahasiswa = _pendaftaranMataKuliahService.Find(x => x.JadwalKuliahID == d.JadwalId && x.JadwalKuliahs.STRM == tahunSemester && x.StatusPendaftaran.Contains("ACCEPTED")).Count();
-
+                var dosenTmp = d.namaDosen.Split('-');
                 final.Add(new String[]{
                     d.JadwalId.ToString(),
                     dataSemester.Nama,
                     d.dosenId,
-                    d.namaDosen,
+                    dosenTmp[1],
                     d.Jadwals.KodeMataKuliah,
                     d.Jadwals.NamaMataKuliah,
                     d.Jadwals.ClassSection,
                     jumlahMahasiswa.ToString(),
-                });
+                }); 
                 
             }
 
