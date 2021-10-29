@@ -95,5 +95,44 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             return _mahasiswaService.Find(m => m.Email == email).FirstOrDefault();
         }
+
+        [HttpPost]
+        public ActionResult UpdateStatus(int idMahasiswa)
+        {
+
+            try
+            {
+                var dataList = _transkripService.Find(x => x.MahasiswaID == idMahasiswa).ToList();
+                foreach (var item in dataList)
+                {
+
+                    if (item.FlagCetak == false)
+                    {
+                        long id = item.ID;
+                        var data = _transkripService.Get(id);
+                        data.FlagCetak = true;
+                        data.UpdatedBy = Session["name"] as string;
+
+                        _transkripService.Save(data);
+                    }
+                    else
+                    {
+                        return Json(new ServiceResponse { status = 500, message = "Cetak Gagal Silakhan Hubungi BAA!!!" });
+                    }
+
+                }
+
+                return Json(new ServiceResponse { status = 200, message = "Cetak Berhasil..." });
+            }
+            catch (Exception e)
+            {
+                return Json(new ServiceResponse { status = 500, message = "Cetak Silakhan Hubungi BAA!!!" });
+            }
+
+        }
+
+
+
+
     }
 }
