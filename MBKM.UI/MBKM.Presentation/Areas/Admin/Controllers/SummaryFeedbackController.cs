@@ -5,10 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using MBKM.Presentation.Helper;
 using System.Web.Mvc;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
+    [MBKMAuthorize]
     public class SummaryFeedbackController : Controller
     {
         private IPendaftaranMataKuliahService _pendaftaranMataKuliahService;

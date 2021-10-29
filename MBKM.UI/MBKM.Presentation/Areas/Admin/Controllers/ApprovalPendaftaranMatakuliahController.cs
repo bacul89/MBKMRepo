@@ -13,6 +13,7 @@ using MBKM.Services;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
+    [MBKMAuthorize]
     public class ApprovalPendaftaranMatakuliahController : Controller
     {
         IApprovalPendaftaranService _approvalPendaftaranService;
@@ -46,60 +47,69 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             var data = _cPLMKPendaftaranService.Find(x => x.IsDeleted == false && x.PendaftaranMataKuliahID == id).First();
             IList<CPLMatakuliah> tempId = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.PendaftaranMataKuliahs.JadwalKuliahs.MataKuliahID).ToList();
             IList<CPLMatakuliah> capaianTujuan = tempId.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == data.PendaftaranMataKuliahs.JadwalKuliahs.ProdiID).ToList();
-            var tmpInformasiPertukaran = _informasiPertukaranService.Find(x => x.MahasiswaID == data.PendaftaranMataKuliahs.MahasiswaID).First();
+            var tmpInformasiPertukaran1 = _informasiPertukaranService.Find(x => x.MahasiswaID == data.PendaftaranMataKuliahs.MahasiswaID).Count();
 
-            if (data.CPLMatakuliahID != null)
-            {
-                IList<CPLMatakuliah> tempIDAsal = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.CPLMatakuliahs.IDMataKUliah).ToList();
-                IList<CPLMatakuliah> capaianAsal = tempIDAsal.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == data.PendaftaranMataKuliahs.JadwalKuliahs.ProdiID).ToList();
-                ViewData["capaianAsal"] = capaianAsal;
-                ViewData["countCPAsal"] = capaianAsal.Count();
-
-                ViewData["capaianTujuan"] = capaianTujuan;
-                ViewData["countCPTujuan"] = capaianTujuan.Count();
-            }else if(tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("internal") && tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("luar"))
-            {
-                IList<CPLMatakuliah> tempIDAsal = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.CPLMatakuliahs.IDMataKUliah).ToList();
-                IList<CPLMatakuliah> capaianAsal = tempIDAsal.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == data.PendaftaranMataKuliahs.JadwalKuliahs.ProdiID).ToList();
-                ViewData["capaianTujuan"] = capaianAsal;
-                ViewData["countCPTujuan"] = capaianAsal.Count();
-
-                ViewData["capaianAsal"] = capaianTujuan;
-                ViewData["countCPAsal"] = capaianTujuan.Count();
-            }
-            else
-            {
-                ViewData["capaianTujuan"] = capaianTujuan;
-                ViewData["countCPTujuan"] = capaianTujuan.Count();
-            }
-
-            if (data.PendaftaranMataKuliahs.mahasiswas.NIM != data.PendaftaranMataKuliahs.mahasiswas.NIMAsal)
+            if (tmpInformasiPertukaran1 == 0)
             {
                 ViewData["jenisProgram"] = "Pertukaran";
                 ViewData["jenisKegiatan"] = "Eksternal";
-            }
-            else if (tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("internal") && !tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("luar"))
-            {
-                ViewData["jenisProgram"] = "Pertukaran";
-                ViewData["jenisKegiatan"] = "Internal";
-            }
-            else if (tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("magang"))
-            {
-                ViewData["jenisProgram"] = "Magang";
-                ViewData["jenisKegiatan"] = "Internal";
-            }
-            else if (tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("internal") && tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("luar"))
-            {
-                ViewData["jenisProgram"] = "Pertukaran";
-                ViewData["jenisKegiatan"] = "Internal Ke Luar";
+
+                ViewData["capaianTujuan"] = capaianTujuan;
+                ViewData["countCPTujuan"] = capaianTujuan.Count();
+
             }
             else
             {
-                ViewData["jenisProgram"] = tmpInformasiPertukaran.JenisKerjasama;
-                ViewData["jenisKegiatan"] = tmpInformasiPertukaran.JenisPertukaran;
+                var tmpInformasiPertukaran = _informasiPertukaranService.Find(x => x.MahasiswaID == data.PendaftaranMataKuliahs.MahasiswaID).FirstOrDefault();
+
+                if (tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("internal") && !tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("luar"))
+                {
+                    ViewData["jenisProgram"] = "Pertukaran";
+                    ViewData["jenisKegiatan"] = "Internal";
+                }
+                else if (tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("magang"))
+                {
+                    ViewData["jenisProgram"] = "Magang";
+                    ViewData["jenisKegiatan"] = "Internal";
+                }
+                else if (tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("internal") && tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("luar"))
+                {
+                    ViewData["jenisProgram"] = "Pertukaran";
+                    ViewData["jenisKegiatan"] = "Internal Ke Luar";
+                }
+                else
+                {
+                    ViewData["jenisProgram"] = tmpInformasiPertukaran.JenisKerjasama;
+                    ViewData["jenisKegiatan"] = tmpInformasiPertukaran.JenisPertukaran;
+                }
+
+                if (data.CPLMatakuliahID != null)
+                {
+                    IList<CPLMatakuliah> tempIDAsal = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.CPLMatakuliahs.IDMataKUliah).ToList();
+                    IList<CPLMatakuliah> capaianAsal = tempIDAsal.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == data.PendaftaranMataKuliahs.JadwalKuliahs.ProdiID).ToList();
+                    ViewData["capaianAsal"] = capaianAsal;
+                    ViewData["countCPAsal"] = capaianAsal.Count();
+
+                    ViewData["capaianTujuan"] = capaianTujuan;
+                    ViewData["countCPTujuan"] = capaianTujuan.Count();
+                }
+                else if (tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("internal") && tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("luar"))
+                {
+                    IList<CPLMatakuliah> tempIDAsal = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.CPLMatakuliahs.IDMataKUliah).ToList();
+                    IList<CPLMatakuliah> capaianAsal = tempIDAsal.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == data.PendaftaranMataKuliahs.JadwalKuliahs.ProdiID).ToList();
+                    ViewData["capaianTujuan"] = capaianAsal;
+                    ViewData["countCPTujuan"] = capaianAsal.Count();
+
+                    ViewData["capaianAsal"] = capaianTujuan;
+                    ViewData["countCPAsal"] = capaianTujuan.Count();
+                }
+                else
+                {
+                    ViewData["capaianTujuan"] = capaianTujuan;
+                    ViewData["countCPTujuan"] = capaianTujuan.Count();
+                }
+
             }
-
-
             return View(data);
         }
         
