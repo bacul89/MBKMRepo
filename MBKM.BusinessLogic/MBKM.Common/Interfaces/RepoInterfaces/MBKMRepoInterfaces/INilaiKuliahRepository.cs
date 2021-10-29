@@ -11,5 +11,6 @@ namespace MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces
     public interface INilaiKuliahRepository : IGenericRepository<NilaiKuliah>
     {
         VMListNilaiKuliah GetNilaiMahasiswa();
+        IEnumerable<VMMataKuliah> GetMatkulEn(string kodeMataKuliah, int mataKuilahID, int sTRM);
     }
 }

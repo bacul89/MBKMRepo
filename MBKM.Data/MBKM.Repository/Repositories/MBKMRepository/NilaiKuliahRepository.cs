@@ -5,6 +5,7 @@ using MBKM.Repository.BaseRepository;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Text;
@@ -16,6 +17,20 @@ namespace MBKM.Repository.Repositories.MBKMRepository
     {
         public NilaiKuliahRepository(DbContext _db) : base(_db)
         {
+        }
+
+        public IEnumerable<VMMataKuliah> GetMatkulEn(string kodeMataKuliah, int mataKuilahID, int sTRM)
+        {
+            using (var context = new MBKMContext())
+            {
+
+                var strm = new SqlParameter("@STRM", sTRM);
+                var kode = new SqlParameter("@KodeMatkul", kodeMataKuliah);
+                var id = new SqlParameter("@IdMatkul", mataKuilahID);
+                var result = context.Database
+                    .SqlQuery<VMMataKuliah>("GetNamaMatkulEng @STRM, @KodeMatkul, @IdMatkul", strm, kode, id).ToList();
+                return result;
+            }
         }
 
         public VMListNilaiKuliah GetNilaiMahasiswa()

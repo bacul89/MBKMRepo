@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
 
-
+    [MBKMAuthorize]
 
     public class TranskripController : Controller
     {
@@ -35,7 +35,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         // GET: Admin/Transkrip
         public ActionResult Index()
         {
-            Session["username"] = "Smitty Werben Jeger Man Jensen";
+            //Session["username"] = "Smitty Werben Jeger Man Jensen";
             return View();
         }
 
@@ -51,7 +51,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             //List<string> mapTranskrip = new List<string>();
             List<object> data = new List<object>();
 
-            Console.WriteLine(getNilaiMahasiswa);
+            //Console.WriteLine(getNilaiMahasiswa);
 
             /*foreach (var item in getNilaiMahasiswa)
             {

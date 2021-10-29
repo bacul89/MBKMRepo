@@ -13,9 +13,12 @@ using MBKM.Presentation.Helper;
 using MBKM.Common.Helpers;
 using MBKM.Entities.Models.MBKM;
 using Newtonsoft.Json;
+using MBKM.Services;
 
 namespace MBKM.Presentation.Areas.Portal.Controllers
 {
+
+    [MBKMAuthorize]
     public class TranskripMahasiswaController : Controller
     {
 
@@ -24,13 +27,15 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         private INilaiKuliahService _transkripService;
         private IJadwalKuliahMahasiswaService _jkMhsService;
         private IMahasiswaService _mahasiswaService;
+        private ILookupService _lookupService;
 
-        public TranskripMahasiswaController(INilaiKuliahService transkripService, IJadwalKuliahMahasiswaService jkMhsService, IMahasiswaService mahasiswaService)
+        public TranskripMahasiswaController(INilaiKuliahService transkripService, IJadwalKuliahMahasiswaService jkMhsService, IMahasiswaService mahasiswaService, ILookupService lookupService)
         {
             
             _transkripService = transkripService;
             _mahasiswaService = mahasiswaService;
             _jkMhsService = jkMhsService;
+            _lookupService = lookupService;
         }
 
 
@@ -38,8 +43,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         // GET: Portal/Transkrip
         public ActionResult Index()
         {
-            Session["nama"] = "Smitty Swagger Werben Jeger Man Jensen";
-            Session["email"] = "sabangsasabana@gmail.com";
+            //Session["nama"] = "Smitty Swagger Werben Jeger Man Jensen";
+            //Session["email"] = "sabangsasabana@gmail.com";
             //var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
             string email = Session["email"] as string;
 
@@ -68,16 +73,21 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
 
             foreach (var item in transkrip)
             {
+
                 var row = new
                 {
                     ID = item.ID,
                     //mhs = item.Mahasiswas,
-                    //flagCetak = item.FlagCetak,
+                    FlagCetak = item.FlagCetak,
                     KodeMataKuliah = item.JadwalKuliahs.KodeMataKuliah,
                     NamaMataKuliah = item.NamaMatakuliah,
                     SKS = item.JadwalKuliahs.SKS,
                     //Nilai = item.Nilai,
-                    Grade = item.Grade
+                    Grade = item.Grade,
+                    STRM = item.JadwalKuliahs.STRM,
+                    MataKuilahID = item.JadwalKuliahs.MataKuliahID,
+
+                    NamaMataKuliahEN = GetMatkulEn(item.JadwalKuliahs.KodeMataKuliah, Int32.Parse(item.JadwalKuliahs.MataKuliahID), item.JadwalKuliahs.STRM)
                 };
                 data.Add(row);
             }
@@ -113,7 +123,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                         long id = item.ID;
                         var data = _transkripService.Get(id);
                         data.FlagCetak = true;
-                        data.UpdatedBy = Session["name"] as string;
+                        data.UpdatedBy = Session["nama"] as string;
 
                         _transkripService.Save(data);
                     }
@@ -175,20 +185,42 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
 
 
-/*        public async Task<IActionResult> Tes()
+        /*        public async Task<IActionResult> Tes()
+                {
+                    var pdf = new Rotativa.ViewAsPdf("Tes")
+                    {
+                        FileName = "C:\\Test.pdf",
+                        PageSize = Rotativa.Options.Size.A4,
+                        PageOrientation = Rotativa.Options.Orientation.Portrait,
+                        PageHeight = 20,
+                    };
+
+                    var byteArray = await pdf.BuildFile(ControllerContext);
+                    return File(byteArray, "application/pdf");
+                }*/
+
+
+        //-- SP
+        private string GetMatkulEn(string KodeMataKuliah, int MataKuliahID, int STRM)
         {
-            var pdf = new Rotativa.ViewAsPdf("Tes")
+
+            var GetMatkulEn = _transkripService.GetMatkulEn(KodeMataKuliah, MataKuliahID, STRM);
+            string final = "";
+            foreach (var item in GetMatkulEn)
             {
-                FileName = "C:\\Test.pdf",
-                PageSize = Rotativa.Options.Size.A4,
-                PageOrientation = Rotativa.Options.Orientation.Portrait,
-                PageHeight = 20,
-            };
+                final = item.COURSE_TITLE_LONG;
+            }
+            return final;
+        }
 
-            var byteArray = await pdf.BuildFile(ControllerContext);
-            return File(byteArray, "application/pdf");
-        }*/
 
+
+
+        //--- lookup
+        public ActionResult getLookupByTipe(string tipe)
+        {
+            return Json(_lookupService.getLookupByTipe(tipe), JsonRequestBehavior.AllowGet);
+        }
 
     }
 }

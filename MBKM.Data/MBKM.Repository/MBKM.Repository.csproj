@@ -169,6 +169,7 @@
     <Compile Include="Repositories\MBKMRepository\LinkFasilitasRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\MahasiswaRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\MasterCapaianPembelajaranRepository.cs" />
+    <Compile Include="Repositories\MBKMRepository\MBKMAuthorizeAttribute.cs" />
     <Compile Include="Repositories\MBKMRepository\NilaiKuliahRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\NilaiSubCWRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\PendaftaranMataKuliahRepository.cs" />

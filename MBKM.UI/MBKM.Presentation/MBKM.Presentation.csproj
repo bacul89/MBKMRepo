@@ -212,6 +212,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dataTables.checkboxes.css" />
     <Content Include="Content\Portal\TrackingStatus\main.css" />
+    <Content Include="Content\Portal\Transkrip\print.css" />
     <Content Include="Rotativa\help-wkhtmltoimage.txt" />
     <Content Include="Rotativa\help-wkhtmltopdf.txt" />
     <Content Include="Rotativa\wkhtmltoimage.exe" />

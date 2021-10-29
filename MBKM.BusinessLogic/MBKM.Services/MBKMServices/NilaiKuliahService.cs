@@ -15,6 +15,7 @@ namespace MBKM.Services.MBKMServices
     {
         VMListNilaiKuliah GetNilaiMahasiswa();
 
+        IEnumerable <VMMataKuliah> GetMatkulEn(string kodeMataKuliah, int mataKuilahID, int STRM);
     }
     public class NilaiKuliahService : EntityService<NilaiKuliah>, INilaiKuliahService
     {
@@ -28,10 +29,16 @@ namespace MBKM.Services.MBKMServices
             _nilaiKuliahRepository = NilaiKuliahRepository;
         }
 
-/*        public NilaiKuliah GetNilaiMahasiswa()
+
+        public IEnumerable<VMMataKuliah> GetMatkulEn(string kodeMataKuliah, int mataKuilahID, int STRM)
         {
-            return _nilaiKuliahRepository.GetNilaiMahasiswa();
-        }*/
+            return _nilaiKuliahRepository.GetMatkulEn(kodeMataKuliah,  mataKuilahID, STRM);
+        }
+
+        /*        public NilaiKuliah GetNilaiMahasiswa()
+                {
+                    return _nilaiKuliahRepository.GetNilaiMahasiswa();
+                }*/
 
         public VMListNilaiKuliah GetNilaiMahasiswa()
         {

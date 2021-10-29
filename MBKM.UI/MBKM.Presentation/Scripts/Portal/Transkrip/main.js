@@ -1,5 +1,26 @@
-﻿console.log("hallo");
+﻿//---lookup
+function getLookupBAA(tipe) {
 
+    $.ajax({
+        url: "/MasterMapingCapaianPembelajaran/getLookupByTipe",
+        type: 'get',
+        datatype: 'html',
+        data: { Tipe: tipe },
+        success: function (e) {
+
+            if (tipe == 'KepalaBiroAdministrasiAkademik') {
+                $("#baaNamePrint").text(e[0].Nilai);
+                $("#baaName").text(e[0].Nilai);
+            } else {
+                
+                return e;
+            }
+        }
+    })
+
+}
+
+// date converter
 Date.prototype.toShortFormat = function () {
 
     let monthNames = ["Januari", "Februari", "Maret", "April",
@@ -49,6 +70,7 @@ $(document).ready(function () {
     convertBirthday();
     getNilai();
     isZooming();
+    getLookupBAA('KepalaBiroAdministrasiAkademik');
     
 });
 
@@ -86,7 +108,7 @@ function isZooming() {
 //---Grade
 var gradeFinal = "";
 var sksTotal = 0;
-var Nilais;
+var Nilais, NilaiGrades;
 
 function getNilai() {
     //var base_url = window.location.origin;
@@ -94,22 +116,40 @@ function getNilai() {
         url: '/Portal/TranskripMahasiswa/getTranskrip/',
         type: 'POST',
         datatype: 'json',
-        success: function (result) {
+        success: function (resultTranskip) {
 
-            Nilais = result;
-            showValue(result);
+            Nilais = resultTranskip;
+            
+                $.ajax({
+                    url: "/MasterMapingCapaianPembelajaran/getLookupByTipe",
+                    type: 'get',
+                    datatype: 'html',
+                    data: { Tipe: 'NilaiGrade' },
+                    success: function (resultLookup) {
+                        NilaiGrades = resultLookup;
+                        showValue(resultTranskip, resultLookup);
+
+                    }
+                })
 
         }
     })
 }
 
+function intToFloat(num, decPlaces) { return num.toFixed(decPlaces); }
 
-function showValue(result) {
+function showValue(result, NilaiGrades) {
+
+    
+    //let NilaiGrades = loadFromLookup('NilaiGrade');
+
+    //console.log(NilaiGrades.A);
+
     $("#data").empty();
     var row = "";
     var html = "";
 
-    var gA = "A";
+    /*var gA = "A";
     var gAmin = "A-";
     var gBplus = "B+";
     var gB = "B";
@@ -117,10 +157,10 @@ function showValue(result) {
     var gCplus = "C+";
     var gC = "C";
     var gD = "D";
-    var gE = "E";
+    var gE = "E";*/
 
 
-    var bA = '4.00';
+    /*var bA = '4.00';
     var bAmin = '3.70';
     var bBplus = '3.30';
     var bB = '3.00';
@@ -128,30 +168,66 @@ function showValue(result) {
     var bCplus = '2.30';
     var bC = '2.00';
     var bD = '1.00';
-    var bE = '0';
+    var bE = '0';*/
 
 
-    var A = parseInt(bA);
-    var Amin = parseInt(bAmin);
-    var Bplus = parseInt(bBplus);
-    var B = parseInt(bB);
-    var Bmin = parseInt(bBmin);
-    var Cplus = parseInt(bCplus);
-    var C = parseInt(bC);
-    var D = parseInt(bD);
-    var E = parseInt(bE);
+    var gA = NilaiGrades[0].Nama;
+    var gAmin = NilaiGrades[1].Nama;
+    var gBplus = NilaiGrades[2].Nama;
+    var gB = NilaiGrades[3].Nama;
+    var gBmin = NilaiGrades[4].Nama;
+    var gCplus = NilaiGrades[5].Nama;
+    var gC = NilaiGrades[6].Nama;
+    var gD = NilaiGrades[7].Nama;
+    var gE = NilaiGrades[8].Nama;
+
+
+    var bA = NilaiGrades[0].Nilai;
+    var bAmin = NilaiGrades[1].Nilai;
+    var bBplus = NilaiGrades[2].Nilai;
+    var bB = NilaiGrades[3].Nilai;
+    var bBmin = NilaiGrades[4].Nilai;
+    var bCplus = NilaiGrades[5].Nilai;
+    var bC = NilaiGrades[6].Nilai;
+    var bD = NilaiGrades[7].Nilai;
+    var bE = NilaiGrades[8].Nilai;
+
+
+
+    var A = parseFloat(bA);
+    var Amin = parseFloat(bAmin);
+    var Bplus = parseFloat(bBplus);
+    var B = parseFloat(bB);
+    var Bmin = parseFloat(bBmin);
+    var Cplus = parseFloat(bCplus);
+    var C = parseFloat(bC);
+    var D = parseFloat(bD);
+    var E = parseFloat(bE);
 
     var nilaiTotal = 0;
     var rowNilaiSks = 0;
 
 
     for (var i = 0; i < result.length; i++) {
+        if (i == 0 && result[0].FlagCetak == false) {
+            $("#btnCetak").prop("disabled", false);
+        } else if (i == 0 && result[0].FlagCetak == true){
+            $("#btnCetak").prop("disabled", true);
+        }
+
         var kodematakuliah = "<td>" + result[i].KodeMataKuliah + "</td>";
-        var matakuliah = "<td>" + result[i].NamaMataKuliah + "</td>";
-        var grade = result[i].Grade;
-        var gradeHtml = "<td style='text-align:right;'>" + grade + "</td>";
+        
+        var mkEn = "<i style='text-align:left;' class='en'>" + result[i].NamaMataKuliahEN + "</i>";
+        var matakuliah = "<td>" + result[i].NamaMataKuliah + mkEn + "</td>";
+        
         var sksInt = parseInt(result[i].SKS);
         var sks = "<td style='text-align:right;'>" + sksInt + "</td>";
+
+        var grade = result[i].Grade;
+        var gradeHtml = "<td style='float:right;'><div style='width: 14px;text-align: left; position:relative;'>" + grade + "</div></td>";
+
+        
+        
         //var nilai = result[i].Nilai;
 
 
@@ -161,11 +237,10 @@ function showValue(result) {
         row = "<tr>" + kodematakuliah + matakuliah + sks + gradeHtml + "</tr>";
 
 
-        console.log("sks : " + sksInt);
+        //console.log("sks : " + sksInt);
+        //console.log("grade : " + grade);
         if (grade == gA) {
             rowNilaiSks = sksInt * A;
-
-            console.log("grade : " + A);
         } else if (grade == gAmin) {
             rowNilaiSks = sksInt * Amin;
         } else if (grade == gBplus) {
@@ -183,20 +258,20 @@ function showValue(result) {
         } else if (grade == gE) {
             rowNilaiSks = sksInt * E;
         }
-
+        //console.log("sks k:"+rowNilaiSks);
         nilaiTotal = nilaiTotal + rowNilaiSks;
-        console.log(rowNilaiSks);
-        console.log(nilaiTotal);
+        //console.log(rowNilaiSks);
+        //console.log(nilaiTotal);
 
         html = html + row;
     }
-    console.log(html);
+    //console.log(html);
 
     gradeTotal = nilaiTotal / sksTotal;
 
 
 
-    var A = 4.00;
+/*    var A = 4.00;
     var Amin = 3.70;
     var Bplus = 3.30;
     var B = 3.00;
@@ -224,15 +299,17 @@ function showValue(result) {
         gradeFinal = gD;
     } else if (gradeTotal >= E && gradeTotal <= D) {
         gradeFinal = gE;
-    }
+    }*/
 
-        $("#data").html(html);
-        $("#totalSks").html(sksTotal);
-        $("#totalGrade").html(gradeTotal);
+    $("#data").html(html);
+    $("#totalSks").html(sksTotal);
+    $("#totalGrade").html(intToFloat(gradeTotal, 2));
+    
+    
 
-        $("#dataPrint").html(html);
-        $("#totalSksPrint").html(sksTotal);
-        $("#totalGradePrint").html(gradeTotal);
+    $("#dataPrint").html(html);
+    $("#totalSksPrint").html(sksTotal);
+    $("#totalGradePrint").html(intToFloat(gradeTotal, 2));
 
 }
 
@@ -276,9 +353,9 @@ function print(id, nim) {
                             confirmButtonText: 'OK'
                         })
                     } else {
-                        $("#view").hide();
-                        $("#print").show();
-                        print();
+                        //$("#view").hide();
+                        //$("#print").show();
+                        //print();
                         Swal.fire({
                             title: 'Berhasil',
                             icon: 'success',
@@ -289,9 +366,9 @@ function print(id, nim) {
                             confirmButtonText: 'OK'
                         })
                         var data =  $("#print").html();
-                        var mywindow = window.open('', 'height=auto,width=auto,_blank');
+                        var mywindow = window.open('', '_blank');
                         mywindow.document.write('<html><head><title>Transkrip</title>');
-                        /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+                        /*optional stylesheet*/ mywindow.document.write('<link rel="stylesheet" href="../../Content/Portal/Transkrip/print.css" type="text/css" />');
                         mywindow.document.write('</head><body >');
                         mywindow.document.write(data);
                         mywindow.document.write('</body></html>');
@@ -299,9 +376,9 @@ function print(id, nim) {
                        
                         mywindow.print();
                         mywindow.close();
-
-                        $("#view").show();
-                        $("#print").hide();
+                        $("#btnCetak").prop("disabled", true);
+                        //$("#view").show();
+                        //$("#print").hide();
                     }
                 }, error: function (e) {
                     $.LoadingOverlay("hide");
@@ -324,3 +401,6 @@ function print(id, nim) {
 
 
 }
+
+
+
