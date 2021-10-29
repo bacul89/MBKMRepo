@@ -2,7 +2,7 @@
 @{ ViewBag.Title = "KHS";
     Layout = "~/Areas/Portal/Views/Shared/_LayoutHome.cshtml"; }
 
-@model MBKM.Entities.Models.MBKM.Mahasiswa
+
 <style>
     .box {
         border: solid 1px coral;
@@ -40,6 +40,14 @@
                 <br />
 
                 <div class="box col-md-6">
+                    <table hidden class="table" style="width: auto;">
+                        <tr>
+                            <td style="text-align: right">Tahun Semester</td>
+                            <td style="width: 400px;">
+                                <select name="tahunSemester" id="tahunSemester" class="form-control input-md"></select>
+                            </td>
+                        </tr>
+                    </table>
                     <table>
                         <tr>
                             <td>SEMESTER</td>
@@ -56,7 +64,7 @@
                         <tr>
                             <td>NAMA</td>
                             <td style="padding:5px"> : </td>
-                            <td id="name">@Model.Nama</td>
+                            <td id="name"></td>
                         </tr>
                         <tr>
                             <td>UNIVERSITAS ASAL</td>
@@ -76,16 +84,16 @@
 
                 <div class="box col-md-4">
                     <table>
-                        
-                           
-                            
-                           
+
+
+
+
                         <tr>
                             <td>A</td>
                             <td style="padding:3px"> = </td>
                             <td id="nA">4.00</td>
-                            <td style="padding-left: 100px; padding-bottom: -50px"> M = MUNDUR (WITHDRAWN)</td>
-                           
+                            <td style="padding-left: 60px"> M = MUNDUR (WITHDRAWN)</td>
+
 
                         </tr>
 
@@ -99,7 +107,7 @@
                             <td>B+</td>
                             <td style="padding:3px"> = </td>
                             <td id="nBp">3.30</td>
-                            <td style="padding-left:100px"> R = CEKAL (BARRED)</td>
+                            <td style="padding-left:60px"> R = CEKAL (BARRED)</td>
                         </tr>
                         <tr>
                             <td>B</td>
@@ -111,7 +119,7 @@
                             <td>B-</td>
                             <td style="padding:3px"> = </td>
                             <td id="nBm">2.70</td>
-                            <td style="padding-left:100px"> S = SAKIT (SICK)</td>
+                            <td style="padding-left:60px"> S = SAKIT (SICK)</td>
                         </tr>
                         <tr>
                             <td>C+</td>
@@ -123,7 +131,7 @@
                             <td>C</td>
                             <td style="padding:3px"> = </td>
                             <td id="nC">2.00</td>
-                            <td style="padding-left:100px"> T = TUNDA (POSTPONED)</td>
+                            <td style="padding-left:60px"> T = TUNDA (POSTPONED)</td>
                         </tr>
                         <tr>
                             <td>D</td>
@@ -136,10 +144,13 @@
                             <td style="padding:3px"> = </td>
                             <td id="nE">0</td>
                         </tr>
-                        
+
                     </table>
                 </div>
-                <table width="100%">
+                <div>
+
+                </div>
+                <table hidden width="100%" class="table table-bordered table-striped hover dt-responsive responsive">
                     <thead>
                         <tr>
                             <th width="10%">NO</th>
@@ -161,6 +172,31 @@
                         </tr>
                     </tbody>
                 </table>
+                @*<div style="overflow-x: auto;">*@
+                <div>
+                    <table id="jadwalKuliah" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
+                        <thead>
+                            <tr>
+
+                                <th class="zero-padding no-border vertical-center sorting">No.</th>
+
+                                <th class="zero-padding no-border vertical-center sorting">Kode Mata Kuliah</th>
+                                <th class="zero-padding no-border vertical-center sorting">Nama Mata Kuliah</th>
+                                <th class="zero-padding no-border vertical-center sorting">Seksi</th>
+                                <th class="zero-padding no-border vertical-center sorting">SKS</th>
+                                <th class="zero-padding no-border vertical-center sorting">Nilai</th>
+                                <th class="zero-padding no-border vertical-center sorting">Hasil</th>
+                                @*<th class="zero-padding no-border vertical-center sorting">Hari</th>*@
+                                @*<th class="zero-padding no-border vertical-center sorting">Waktu</th>*@
+                                @*<th class="zero-padding no-border vertical-center sorting">Seksi</th>*@
+                                @*<th class="zero-padding no-border vertical-center sorting">Ruang Kelas</th>*@
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
 
 
 
@@ -177,5 +213,124 @@
 
 
 @section scripts{
-    <script src="~/Scripts/Portal/Transkrip/main.js"></script>
+    <script>
+         var semesters = @Html.Raw(Json.Encode(Model));
+        var semestersAsList = [];
+        var datatable;
+        $(document).ready(function () {
+             $('#name').html("@ViewData["nama"].ToString()");
+             $('#nim').html("@ViewData["nim"].ToString()");
+             $('#univ').html("@ViewData["univ"].ToString()");
+            for (var key in semesters) {
+                var tmp = new Object();
+                tmp.id = key;
+                tmp.text = semesters[key];
+                semestersAsList.push(tmp);
+            }
+            $("#tahunSemester").select2({
+                placeholder: "-- Pilih Semester --",
+                data: semestersAsList
+            });
+            $("#tahunSemester").change(function () {
+                loadTable($("#tahunSemester").val());
+            });
+            //$("semester").val($("#tahunSemester").val());
+            $('#semester').html($("#tahunSemester").text());
+            //alert(semesters);
+            console.log(semesters);
+            loadTable($("#tahunSemester").val());
+        });
+        function loadTable(strm) {
+            if (!strm) {
+                strm = 0;
+            }
+            datatable = $('#jadwalKuliah').DataTable({
+                ajax: {
+                    url: '@Url.Action("GetJadwalKuliah", "KHS")?strm=' + strm,
+                    dataSrc: ''
+                },
+                "columnDefs": [{
+                    "searchable": false,
+                    "orderable": false,
+                    "targets": 0
+                }],
+                "order": [
+                    [0, 'asc']
+                ],
+                "columns": [
+                    
+                    {
+                        "data": null
+                    },
+                    {
+                        "data": "KodeMataKuliah",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "NamaMataKuliah",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "Seksi",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "SKS",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "Presetanse", //presensi
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "Hasil",//hasil
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    }
+                    //{
+                    //    "data": "JadwalKuliahs.Hari",
+                    //    "render": function (data, type, row, meta) {
+                    //        return '<div class="center">' + data + '</div>';
+                    //    }
+                    //},
+                    //{
+                    //    "data": "JadwalKuliahs.JamMasuk",
+                    //    "render": function (data, type, row, meta) {
+                    //        return '<div class="center">' + data + ' - ' + row.JadwalKuliahs.JamSelesai + '</div>';
+                    //    }
+                    //},
+                    //{
+                    //    "data": "JadwalKuliahs.ClassSection",
+                    //    "render": function (data, type, row, meta) {
+                    //        return '<div class="center">' + data + '</div>';
+                    //    }
+                    //},
+                    //{
+                    //    "data": "JadwalKuliahs.RuangKelas",
+                    //    "render": function (data, type, row, meta) {
+                    //        return '<div class="center">' + data + '</div>';
+                    //    }
+                    //},
+                    
+                ]
+            });
+            datatable.on('order.dt search.dt', function () {
+                datatable.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            }).draw();
+        }
+    </script>
+
 }
