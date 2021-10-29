@@ -5,6 +5,12 @@ function CustomValidationCheck() {
     var hasil;
     $('.data_radio').each(function () {
         hasil = 0;
+
+        if ($('#inp_kritik').val() == "") {
+            hasil = false;
+            return hasil
+        }
+
         if ($('input[name=' + i + ']:checked').val() == null) {
             hasil = false;
             return hasil
