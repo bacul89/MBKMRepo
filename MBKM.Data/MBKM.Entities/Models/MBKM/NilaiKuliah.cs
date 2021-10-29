@@ -19,10 +19,8 @@ namespace MBKM.Entities.Models.MBKM
 
         #region sprint 4
         public Int64 JadwalKuliahID { get; set; }
-        [JsonIgnore]
         public virtual JadwalKuliah JadwalKuliahs { get; set; }
         public Int64 MahasiswaID { get; set; }
-        [JsonIgnore]
         public virtual Mahasiswa Mahasiswas { get; set; }
         public int UTS { get; set; }
         public int CW1 { get; set; }

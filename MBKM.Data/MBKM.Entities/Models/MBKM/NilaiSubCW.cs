@@ -22,7 +22,6 @@ namespace MBKM.Entities.Models.MBKM
         public int CWSub10 { get; set; }
         public int NilaiTotal { get; set; }
         public Int64 NilaiKuliahID { get; set; }
-        [JsonIgnore]
         public virtual NilaiKuliah NilaiKuliahs { get; set; }
 
     }

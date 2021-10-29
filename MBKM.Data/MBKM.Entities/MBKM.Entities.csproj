@@ -110,6 +110,7 @@
     <Compile Include="Models\Menu.cs" />
     <Compile Include="Models\MenuRole.cs" />
     <Compile Include="Models\Role.cs" />
+    <Compile Include="ViewModel\VMSubBobot .cs" />
     <Compile Include="ViewModel\VMClassSection.cs" />
     <Compile Include="ViewModel\VMCPLMKPendaftaran.cs" />
     <Compile Include="ViewModel\VMListJadwalKuliah.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="ViewModel\VMListDaftarAllMahasiswa.cs" />
     <Compile Include="ViewModel\VMListJadwalUjian.cs" />
     <Compile Include="ViewModel\VMListMapingCPL.cs" />
+    <Compile Include="ViewModel\VMBobot.cs" />
     <Compile Include="ViewModel\VMListReportBAP.cs" />
     <Compile Include="ViewModel\VMLookUpUser.cs" />
     <Compile Include="Models\User.cs" />
