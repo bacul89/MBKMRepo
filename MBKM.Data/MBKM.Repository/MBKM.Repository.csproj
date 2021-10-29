@@ -142,6 +142,10 @@
     <Compile Include="Migrations\202110280937336_rubahtipedata.designer.cs">
       <DependentUpon>202110280937336_rubahtipedata.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202110290808013_rubahdimensi.cs" />
+    <Compile Include="Migrations\202110290808013_rubahdimensi.designer.cs">
+      <DependentUpon>202110290808013_rubahdimensi.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EmailTemplateRepository.cs" />
@@ -252,6 +256,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202110280937336_rubahtipedata.resx">
       <DependentUpon>202110280937336_rubahtipedata.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202110290808013_rubahdimensi.resx">
+      <DependentUpon>202110290808013_rubahdimensi.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

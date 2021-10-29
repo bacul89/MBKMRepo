@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using MBKM.Entities.ViewModel;
 using MBKM.Presentation.models;
+using Rotativa;
+using Rotativa.Options;
 
 using MBKM.Presentation.Helper;
 using MBKM.Common.Helpers;
@@ -95,5 +97,81 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             return _mahasiswaService.Find(m => m.Email == email).FirstOrDefault();
         }
+
+        [HttpPost]
+        public ActionResult UpdateStatus(int idMahasiswa)
+        {
+
+            try
+            {
+                var dataList = _transkripService.Find(x => x.MahasiswaID == idMahasiswa).ToList();
+                foreach (var item in dataList)
+                {
+
+                    if (item.FlagCetak == false)
+                    {
+                        long id = item.ID;
+                        var data = _transkripService.Get(id);
+                        data.FlagCetak = true;
+                        data.UpdatedBy = Session["name"] as string;
+
+                        _transkripService.Save(data);
+                    }
+                    else
+                    {
+                        return Json(new ServiceResponse { status = 500, message = "Cetak Gagal Silakhan Hubungi BAA!!!" });
+                    }
+
+                }
+
+                return Json(new ServiceResponse { status = 200, message = "Cetak Berhasil..." });
+            }
+            catch (Exception e)
+            {
+                return Json(new ServiceResponse { status = 500, message = "Cetak Gagal Silakhan Hubungi BAA!!!" });
+            }
+
+        }
+
+        public ActionResult PrintTranskrip()
+        {
+            string email = Session["email"] as string;
+
+            Mahasiswa model = GetMahasiswaByEmail(email);
+            return View("PrintTranskrip", model);
+
+        }
+
+
+
+
+
+        public ActionResult ExportPDF()
+        {
+
+            Session["email"] = "sabangsasabana@gmail.com";
+            string email = Session["email"] as string;
+            Mahasiswa model = GetMahasiswaByEmail(email);
+            return new ViewAsPdf("PrintTranskrip", model)
+            {
+                FileName = "ReportShift.pdf",
+                PageSize = Size.A4,
+                PageOrientation = Orientation.Landscape,
+                //CustomSwitches = footer,
+                PageMargins = new Margins(10, 3, 20, 3)
+
+            };
+
+
+            /*return new ActionAsPdf("Index")
+            {
+                FileName = Server.MapPath("~/Content/Relato.pdf"),
+                PageOrientation = Rotativa.Options.Orientation.Landscape,
+                PageSize = Rotativa.Options.Size.A4
+            };*/
+        }
+
+
+
     }
 }
