@@ -16,16 +16,16 @@ namespace MBKM.Entities.Map.MBKMMap
             ToTable("NilaiSubCW");
             HasKey(t => t.ID).Property(t => t.ID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(t => t.HeadCW).HasMaxLength(10).IsRequired();
-            Property(t => t.CWSub1).HasPrecision(3, 2).IsRequired();
-            Property(t => t.CWSub2).HasPrecision(3, 2).IsRequired();
-            Property(t => t.CWSub3).HasPrecision(3, 2).IsRequired();
-            Property(t => t.CWSub4).HasPrecision(3, 2).IsRequired();
-            Property(t => t.CWSub5).HasPrecision(3, 2).IsRequired();
-            Property(t => t.CWSub6).HasPrecision(3, 2).IsRequired();
-            Property(t => t.CWSub7).HasPrecision(3, 2).IsRequired();
-            Property(t => t.CWSub8).HasPrecision(3, 2).IsRequired();
-            Property(t => t.CWSub10).HasPrecision(3, 2).IsRequired();
-            Property(t => t.NilaiTotal).HasPrecision(3, 2).IsRequired();
+            Property(t => t.CWSub1).HasPrecision(5, 2).IsRequired();
+            Property(t => t.CWSub2).HasPrecision(5, 2).IsRequired();
+            Property(t => t.CWSub3).HasPrecision(5, 2).IsRequired();
+            Property(t => t.CWSub4).HasPrecision(5, 2).IsRequired();
+            Property(t => t.CWSub5).HasPrecision(5, 2).IsRequired();
+            Property(t => t.CWSub6).HasPrecision(5, 2).IsRequired();
+            Property(t => t.CWSub7).HasPrecision(5, 2).IsRequired();
+            Property(t => t.CWSub8).HasPrecision(5, 2).IsRequired();
+            Property(t => t.CWSub10).HasPrecision(5, 2).IsRequired();
+            Property(t => t.NilaiTotal).HasPrecision(5, 2).IsRequired();
         }
     }
 }

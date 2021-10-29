@@ -123,7 +123,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             ViewData["jawaban"] = Jawaban;
             var data1 = _jadwalKuliahService.Get(id);
             var listDosen = _feedbackMatkulService.GetDosenMakulPertemuans(data1.KodeMataKuliah, data1.ClassSection, data1.STRM.ToString(), data1.FakultasID.ToString());
-            ViewData["namaDosen"] = listDosen.FirstOrDefault().NamaDosen;
+            var dosenTmp = listDosen.FirstOrDefault().NamaDosen.Split('-');
+            ViewData["namaDosen"] = dosenTmp[1];
             ViewData["idDosen"] = listDosen.FirstOrDefault().Instructor_id;
             ViewData["urutan"] = 0;
             List<String> final = new List<String>();
@@ -226,8 +227,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var dataDosen = listDosen.Split(',');
             var idDosenTerpilih = dataDosen[nextPage];
             var dosenTerpilih = listDosen1.Where(x => x.Instructor_id == idDosenTerpilih).First();
-
-            ViewData["namaDosen"] = dosenTerpilih.NamaDosen;
+            var dosenTmp = dosenTerpilih.NamaDosen.Split('-');
+            ViewData["namaDosen"] = dosenTmp[1];
             ViewData["idDosen"] = dosenTerpilih.Instructor_id;
             ViewData["urutan"] = nextPage;
             ViewData["listDosen"] = listDosen;
@@ -258,7 +259,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var idDosenTerpilih = dataDosen[nextPage];
             var dosenTerpilih = listDosen1.Where(x => x.Instructor_id == idDosenTerpilih).First();
 
-            ViewData["namaDosen"] = dosenTerpilih.NamaDosen;
+            var dosenTmp = dosenTerpilih.NamaDosen.Split('-');
+            ViewData["namaDosen"] = dosenTmp[1];
             ViewData["idDosen"] = dosenTerpilih.Instructor_id;
             ViewData["urutan"] = nextPage;
             ViewData["listDosen"] = listDosen;

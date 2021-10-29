@@ -113,6 +113,7 @@
     <Compile Include="ViewModel\VMSubBobot .cs" />
     <Compile Include="ViewModel\VMClassSection.cs" />
     <Compile Include="ViewModel\VMCPLMKPendaftaran.cs" />
+    <Compile Include="ViewModel\VMKHS.cs" />
     <Compile Include="ViewModel\VMDosenMakulPertemuan.cs" />
     <Compile Include="ViewModel\VMJawabanFeedback.cs" />
     <Compile Include="ViewModel\VMListJadwalKuliah.cs" />

@@ -240,6 +240,7 @@
     <Content Include="Scripts\Admin\Role\crud.js" />
     <Content Include="Scripts\Admin\Role\main.js" />
     <Content Include="Scripts\Admin\Transkrip\main.js" />
+    <Content Include="Scripts\Admin\SummaryFeedback\main.js" />
     <Content Include="Scripts\dataCheckBox\dataTables.checkboxes.js" />
     <Content Include="Scripts\dataCheckBox\dataTables.checkboxes.min.js" />
     <Content Include="Scripts\easy-number-separator.js" />
@@ -526,6 +527,9 @@
     <Content Include="Areas\Portal\Views\PendaftaranMataKuliah\FormPendaftaranInternalKeLuarAtma.cshtml" />
     <Content Include="Areas\Portal\Views\FeedBackMatakuliah\NextPageFeedBack.cshtml" />
     <Content Include="Areas\Portal\Views\FeedBackMatakuliah\PreviousPageFeedback.cshtml" />
+    <Content Include="Areas\Portal\Views\KHS\KHS.cshtml" />
+    <Content Include="Areas\Admin\Views\SummaryFeedback\GetPersentationData.cshtml" />
+    <Content Include="Areas\Portal\Views\TranskripMahasiswa\PrintTranskrip.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
