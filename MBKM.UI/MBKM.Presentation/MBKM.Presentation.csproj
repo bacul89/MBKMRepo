@@ -525,6 +525,7 @@
     <Content Include="Areas\Portal\Views\TranskripMahasiswa\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Penilaian\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Penilaian\DetailPenilaian.cshtml" />
+    <Content Include="Areas\Portal\Views\PendaftaranMataKuliah\FormPendaftaranInternalKeLuarAtma.cshtml" />
     <Content Include="Areas\Portal\Views\FeedBackMatakuliah\NextPageFeedBack.cshtml" />
     <Content Include="Areas\Portal\Views\FeedBackMatakuliah\PreviousPageFeedback.cshtml" />
     <Content Include="Areas\Portal\Views\KHS\KHS.cshtml" />

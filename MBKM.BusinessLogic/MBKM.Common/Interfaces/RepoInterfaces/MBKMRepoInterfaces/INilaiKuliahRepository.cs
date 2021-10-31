@@ -10,6 +10,8 @@ namespace MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces
 {
     public interface INilaiKuliahRepository : IGenericRepository<NilaiKuliah>
     {
+        VMBobot GetBobot(string idMatkul);
+        IEnumerable<VMSubBobot> GetSubBobot(string idMatkul);
         VMListNilaiKuliah GetNilaiMahasiswa();
         IEnumerable<VMMataKuliah> GetMatkulEn(string kodeMataKuliah, int mataKuilahID, int sTRM);
     }
