@@ -138,44 +138,43 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 {
                     var tmp = item;
                     var cek = _nilaiKuliahService.Find(_ => _.JadwalKuliahID == item.JadwalKuliahID && _.MahasiswaID == item.MahasiswaID && _.IsActive && !_.IsDeleted).FirstOrDefault();
-                    if (cek != null)
-                    {
-                        tmp.ID = cek.ID;
-                        tmp.FlagCetak = cek.FlagCetak;
-                        tmp.CreatedBy = cek.CreatedBy;
-                        tmp.CreatedDate = cek.CreatedDate;
-                        tmp.IsActive = cek.IsActive;
-                        tmp.IsDeleted = cek.IsDeleted;
-                    } else
+                    if (cek == null)
                     {
                         tmp.FlagCetak = true;
                         tmp.CreatedDate = DateTime.Now;
                         tmp.IsActive = true;
                         tmp.IsDeleted = false;
+                        tmp.UpdatedDate = DateTime.Now;
                     }
-                    tmp.UpdatedDate = DateTime.Now;
-                    tmp.NilaiSubCWs = new List<NilaiSubCW>();
                     if (isSub)
                     {
                         var tmpCW = CW1[index];
-                        tmpCW.NilaiKuliahID = tmp.ID;
                         var cek2 = _nilaiSubCWService.Find(_ => _.NilaiKuliahs.JadwalKuliahID == item.JadwalKuliahID && _.NilaiKuliahs.MahasiswaID == item.MahasiswaID && _.HeadCW == "CW1" && _.IsActive && !_.IsDeleted).FirstOrDefault();
                         if (cek2 != null)
                         {
-                            tmpCW.ID = cek2.ID;
-                            tmpCW.CreatedBy = cek2.CreatedBy;
-                            tmpCW.CreatedDate = cek2.CreatedDate;
-                            tmpCW.IsActive = cek2.IsActive;
-                            tmpCW.IsDeleted = cek2.IsDeleted;
+                            cek2.CWSub1 = tmpCW.CWSub1;
+                            cek2.CWSub2 = tmpCW.CWSub2;
+                            cek2.CWSub3 = tmpCW.CWSub3;
+                            cek2.CWSub4 = tmpCW.CWSub4;
+                            cek2.CWSub5 = tmpCW.CWSub5;
+                            cek2.CWSub6 = tmpCW.CWSub6;
+                            cek2.CWSub7 = tmpCW.CWSub7;
+                            cek2.CWSub8 = tmpCW.CWSub8;
+                            cek2.CWSub9 = tmpCW.CWSub9;
+                            cek2.CWSub10 = tmpCW.CWSub10;
+                            cek2.NilaiTotal = tmpCW.NilaiTotal;
+                            cek2.UpdatedDate = DateTime.Now;
+                            _nilaiSubCWService.Save(cek2);
                         }
                         else
                         {
+                            tmp.NilaiSubCWs = new List<NilaiSubCW>();
                             tmpCW.CreatedDate = DateTime.Now;
                             tmpCW.IsActive = true;
                             tmpCW.IsDeleted = false;
+                            tmpCW.UpdatedDate = DateTime.Now;
+                            tmp.NilaiSubCWs.Add(tmpCW);
                         }
-                        tmpCW.UpdatedDate = DateTime.Now;
-                        tmp.NilaiSubCWs.Add(tmpCW);
 
                         tmpCW = null;
 
@@ -184,20 +183,28 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         cek2 = _nilaiSubCWService.Find(_ => _.NilaiKuliahs.JadwalKuliahID == item.JadwalKuliahID && _.NilaiKuliahs.MahasiswaID == item.MahasiswaID && _.HeadCW == "CW2" && _.IsActive && !_.IsDeleted).FirstOrDefault();
                         if (cek2 != null)
                         {
-                            tmpCW.ID = cek2.ID;
-                            tmpCW.CreatedBy = cek2.CreatedBy;
-                            tmpCW.CreatedDate = cek2.CreatedDate;
-                            tmpCW.IsActive = cek2.IsActive;
-                            tmpCW.IsDeleted = cek2.IsDeleted;
+                            cek2.CWSub1 = tmpCW.CWSub1;
+                            cek2.CWSub2 = tmpCW.CWSub2;
+                            cek2.CWSub3 = tmpCW.CWSub3;
+                            cek2.CWSub4 = tmpCW.CWSub4;
+                            cek2.CWSub5 = tmpCW.CWSub5;
+                            cek2.CWSub6 = tmpCW.CWSub6;
+                            cek2.CWSub7 = tmpCW.CWSub7;
+                            cek2.CWSub8 = tmpCW.CWSub8;
+                            cek2.CWSub9 = tmpCW.CWSub9;
+                            cek2.CWSub10 = tmpCW.CWSub10;
+                            cek2.NilaiTotal = tmpCW.NilaiTotal;
+                            cek2.UpdatedDate = DateTime.Now;
+                            _nilaiSubCWService.Save(cek2);
                         }
                         else
                         {
                             tmpCW.CreatedDate = DateTime.Now;
                             tmpCW.IsActive = true;
                             tmpCW.IsDeleted = false;
+                            tmpCW.UpdatedDate = DateTime.Now;
+                            tmp.NilaiSubCWs.Add(tmpCW);
                         }
-                        tmpCW.UpdatedDate = DateTime.Now;
-                        tmp.NilaiSubCWs.Add(tmpCW);
 
                         tmpCW = null;
 
@@ -206,20 +213,28 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         cek2 = _nilaiSubCWService.Find(_ => _.NilaiKuliahs.JadwalKuliahID == item.JadwalKuliahID && _.NilaiKuliahs.MahasiswaID == item.MahasiswaID && _.HeadCW == "CW3" && _.IsActive && !_.IsDeleted).FirstOrDefault();
                         if (cek2 != null)
                         {
-                            tmpCW.ID = cek2.ID;
-                            tmpCW.CreatedBy = cek2.CreatedBy;
-                            tmpCW.CreatedDate = cek2.CreatedDate;
-                            tmpCW.IsActive = cek2.IsActive;
-                            tmpCW.IsDeleted = cek2.IsDeleted;
+                            cek2.CWSub1 = tmpCW.CWSub1;
+                            cek2.CWSub2 = tmpCW.CWSub2;
+                            cek2.CWSub3 = tmpCW.CWSub3;
+                            cek2.CWSub4 = tmpCW.CWSub4;
+                            cek2.CWSub5 = tmpCW.CWSub5;
+                            cek2.CWSub6 = tmpCW.CWSub6;
+                            cek2.CWSub7 = tmpCW.CWSub7;
+                            cek2.CWSub8 = tmpCW.CWSub8;
+                            cek2.CWSub9 = tmpCW.CWSub9;
+                            cek2.CWSub10 = tmpCW.CWSub10;
+                            cek2.NilaiTotal = tmpCW.NilaiTotal;
+                            cek2.UpdatedDate = DateTime.Now;
+                            _nilaiSubCWService.Save(cek2);
                         }
                         else
                         {
                             tmpCW.CreatedDate = DateTime.Now;
                             tmpCW.IsActive = true;
                             tmpCW.IsDeleted = false;
+                            tmpCW.UpdatedDate = DateTime.Now;
+                            tmp.NilaiSubCWs.Add(tmpCW);
                         }
-                        tmpCW.UpdatedDate = DateTime.Now;
-                        tmp.NilaiSubCWs.Add(tmpCW);
 
                         tmpCW = null;
 
@@ -228,20 +243,28 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         cek2 = _nilaiSubCWService.Find(_ => _.NilaiKuliahs.JadwalKuliahID == item.JadwalKuliahID && _.NilaiKuliahs.MahasiswaID == item.MahasiswaID && _.HeadCW == "CW4" && _.IsActive && !_.IsDeleted).FirstOrDefault();
                         if (cek2 != null)
                         {
-                            tmpCW.ID = cek2.ID;
-                            tmpCW.CreatedBy = cek2.CreatedBy;
-                            tmpCW.CreatedDate = cek2.CreatedDate;
-                            tmpCW.IsActive = cek2.IsActive;
-                            tmpCW.IsDeleted = cek2.IsDeleted;
+                            cek2.CWSub1 = tmpCW.CWSub1;
+                            cek2.CWSub2 = tmpCW.CWSub2;
+                            cek2.CWSub3 = tmpCW.CWSub3;
+                            cek2.CWSub4 = tmpCW.CWSub4;
+                            cek2.CWSub5 = tmpCW.CWSub5;
+                            cek2.CWSub6 = tmpCW.CWSub6;
+                            cek2.CWSub7 = tmpCW.CWSub7;
+                            cek2.CWSub8 = tmpCW.CWSub8;
+                            cek2.CWSub9 = tmpCW.CWSub9;
+                            cek2.CWSub10 = tmpCW.CWSub10;
+                            cek2.NilaiTotal = tmpCW.NilaiTotal;
+                            cek2.UpdatedDate = DateTime.Now;
+                            _nilaiSubCWService.Save(cek2);
                         }
                         else
                         {
                             tmpCW.CreatedDate = DateTime.Now;
                             tmpCW.IsActive = true;
                             tmpCW.IsDeleted = false;
+                            tmpCW.UpdatedDate = DateTime.Now;
+                            tmp.NilaiSubCWs.Add(tmpCW);
                         }
-                        tmpCW.UpdatedDate = DateTime.Now;
-                        tmp.NilaiSubCWs.Add(tmpCW);
 
                         tmpCW = null;
 
@@ -250,25 +273,50 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         cek2 = _nilaiSubCWService.Find(_ => _.NilaiKuliahs.JadwalKuliahID == item.JadwalKuliahID && _.NilaiKuliahs.MahasiswaID == item.MahasiswaID && _.HeadCW == "CW5" && _.IsActive && !_.IsDeleted).FirstOrDefault();
                         if (cek2 != null)
                         {
-                            tmpCW.ID = cek2.ID;
-                            tmpCW.CreatedBy = cek2.CreatedBy;
-                            tmpCW.CreatedDate = cek2.CreatedDate;
-                            tmpCW.IsActive = cek2.IsActive;
-                            tmpCW.IsDeleted = cek2.IsDeleted;
+                            cek2.CWSub1 = tmpCW.CWSub1;
+                            cek2.CWSub2 = tmpCW.CWSub2;
+                            cek2.CWSub3 = tmpCW.CWSub3;
+                            cek2.CWSub4 = tmpCW.CWSub4;
+                            cek2.CWSub5 = tmpCW.CWSub5;
+                            cek2.CWSub6 = tmpCW.CWSub6;
+                            cek2.CWSub7 = tmpCW.CWSub7;
+                            cek2.CWSub8 = tmpCW.CWSub8;
+                            cek2.CWSub9 = tmpCW.CWSub9;
+                            cek2.CWSub10 = tmpCW.CWSub10;
+                            cek2.NilaiTotal = tmpCW.NilaiTotal;
+                            cek2.UpdatedDate = DateTime.Now;
+                            _nilaiSubCWService.Save(cek2);
                         }
                         else
                         {
                             tmpCW.CreatedDate = DateTime.Now;
                             tmpCW.IsActive = true;
                             tmpCW.IsDeleted = false;
+                            tmpCW.UpdatedDate = DateTime.Now;
+                            tmp.NilaiSubCWs.Add(tmpCW);
                         }
-                        tmpCW.UpdatedDate = DateTime.Now;
-                        tmp.NilaiSubCWs.Add(tmpCW);
                     }
-                    _nilaiKuliahService.Save(tmp);
                     index++;
+                    if (cek == null)
+                    {
+                        _nilaiKuliahService.Save(tmp);
+                    }
+                    else
+                    {
+                        cek.UTS = tmp.UTS;
+                        cek.CW1 = tmp.CW1;
+                        cek.CW2 = tmp.CW2;
+                        cek.CW3 = tmp.CW3;
+                        cek.CW4 = tmp.CW4;
+                        cek.CW5 = tmp.CW5;
+                        cek.Final = tmp.Final;
+                        cek.NilaiTotal = tmp.NilaiTotal;
+                        cek.Grade = tmp.Grade;
+                        cek.UpdatedDate = DateTime.Now;
+                        _nilaiKuliahService.Save(cek);
+                    }
                 }
-                return Json(new ServiceResponse { status = 200, message = "Nilai berhasil diinput!" });
+                return Json(new ServiceResponse { status = 200, message = "Nilai berhasil disimpan!" });
             }
             catch (Exception e)
             {

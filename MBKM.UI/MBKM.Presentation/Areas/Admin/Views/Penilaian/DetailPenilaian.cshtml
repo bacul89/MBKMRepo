@@ -457,16 +457,16 @@
                 if (!response) return;
                 tmpSub[flag] = response;
                 for (var i = 0; i < response.length; i++) {
-                    $('#' + flag + '.1' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub1);
-                    $('#' + flag + '.2' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub2);
-                    $('#' + flag + '.3' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub3);
-                    $('#' + flag + '.4' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub4);
-                    $('#' + flag + '.5' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub5);
-                    $('#' + flag + '.6' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub6);
-                    $('#' + flag + '.7' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub7);
-                    $('#' + flag + '.8' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub8);
-                    $('#' + flag + '.9' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub9);
-                    $('#' + flag + '.10' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub10);
+                    $('#' + flag + '1' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub1);
+                    $('#' + flag + '2' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub2);
+                    $('#' + flag + '3' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub3);
+                    $('#' + flag + '4' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub4);
+                    $('#' + flag + '5' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub5);
+                    $('#' + flag + '6' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub6);
+                    $('#' + flag + '7' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub7);
+                    $('#' + flag + '8' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub8);
+                    $('#' + flag + '9' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub9);
+                    $('#' + flag + '10' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub10);
                     $('#Total' + flag + response[i].NilaiKuliahs.MahasiswaID).val(response[i].NilaiTotal);
                 }
             });
@@ -545,12 +545,6 @@
                     loadTableSub('CW3');
                     loadTableSub('CW4');
                     loadTableSub('CW5');
-
-                    loadTmpSubTable('CW1');
-                    loadTmpSubTable('CW2');
-                    loadTmpSubTable('CW3');
-                    loadTmpSubTable('CW4');
-                    loadTmpSubTable('CW5');
                 }
             });
         }
@@ -651,7 +645,12 @@
             $('#data' + flag).DataTable({
                 ajax: {
                     url: '@Url.Action("GetMahasiswa", "Penilaian")?idJadwalKuliah=' + @Model.ID,
-                    dataSrc: ''
+                    dataSrc: function (json) {
+                        setTimeout(() => {
+                            loadTmpSubTable(flag);
+                        }, 1000);
+                        return json;
+                    }
                 },
                 "columnDefs": [{
                     "searchable": false,
@@ -935,5 +934,9 @@
                 alert(response.message);
             });
         })
+        $('#submit').click(function () {
+            if (!mahasiswa) return;
+
+        });
     </script>
 }
