@@ -1,8 +1,10 @@
 ﻿﻿
-@{ ViewBag.Title = "KHS";
-     }
+@{ ViewBag.Title = "KHS"; }
 
-@*@model MBKM.Entities.ViewModel.VMKHS*@
+@model MBKM.Entities.ViewModel.VMKHS
+
+@*@model List<MBKM.Entities.ViewModel.VMKHS>*@
+@{ var total = 0; }
 <style>
     .box {
         border: solid 1px coral;
@@ -34,7 +36,7 @@
             <hr />
 
             <div class="container" style="width: 100%;">
-                
+
                 @*<div class="col" style="text-align:center"><a target="_blank" href="javascript:void(0)" style="color:black" onclick="KHSPage()"><span class="fa fa-download"></span></a></div>*@
 
                 <br />
@@ -151,7 +153,7 @@
                 <div>
 
                 </div>
-                <table width="100%" class="table table-bordered table-striped hover dt-responsive responsive">
+                <table id="countit" width="100%" class="table table-bordered table-striped hover dt-responsive responsive">
                     <thead>
                         <tr>
                             @*<th width="10%">NO</th>*@
@@ -166,22 +168,32 @@
                     <tbody>
                         @foreach (var employee in (IEnumerable<MBKM.Entities.ViewModel.VMKHS>)ViewData["EmployeeList2"])
                         {
-                            <tr>
-                                <td>@employee.KodeMataKuliah</td>
-                                <td>@employee.NamaMatakuliah</td>
-                                <td>@employee.Seksi</td>
-                                <td>@employee.SKS</td>
-                                <td>@employee.Nilai</td>
-                                <td>@employee.Hasil</td>
-                                
-                            </tr>
-                        }
+                        <tr>
+                            <td>@employee.KodeMataKuliah</td>
+                            <td>@employee.NamaMatakuliah</td>
+                            <td>@employee.Seksi</td>
+                            <td class="count-me">@employee.SKS</td>
+                            <td>@employee.Nilai</td>
+                            <td class="count-hasil">@employee.Hasil</td>
+                            @*@{total += @employee.SKS;}*@
+
+                        </tr>
+}
 
                     </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Total</td>
+                            @*<td>@Model.Sum(i => i.SKS)</td>*@
+                        </tr>
+
+                    </tfoot>
                 </table>
                 @*<div style="overflow-x: auto;">*@
-                
 
+                Total:&nbsp;<span id="lbltotal"></span>
+                <br />
+                <br />
 
             </div>
 
@@ -203,6 +215,27 @@
              $('#univ').html("@ViewData["univ"].ToString()");
              $('#semester').html("@ViewData["semester"].ToString()");
             // console.log(@Model);
+             var tds = document.getElementById('countit').getElementsByTagName('td');
+             var sum = 0;
+             for (var i = 0; i < tds.length; i++) {
+                 if (tds[i].className == 'count-me') {
+                     sum += isNaN(tds[i].innerHTML) ? 0 : parseInt(tds[i].innerHTML);
+                 }
+             }
+             document.getElementById('countit').innerHTML += '<tr><td>' + sum + '</td><td>total SKS</td></tr>';
+
+            // var tds2 = document.getElementById('countit').getElementsByTagName('td');
+             var sum2 = 0;
+             for (var i = 0; i < tds.length; i++) {
+                 if (tds[i].className == 'count-hasil') {
+                     sum2 += isNaN(tds[i].innerHTML) ? 0 : parseFloat(tds[i].innerHTML);
+                     //sum2 += isNaN(tds[i].innerHTML) ? 0 : parseInt(tds[i].innerHTML);
+                 }
+             }
+             document.getElementById('countit').innerHTML += '<tr><td>' + sum2 + '</td><td>total hasil</td></tr>';
+             document.getElementById('countit').innerHTML += '<tr><td>' + (sum2/sum) + '</td><td>IPS</td></tr>';
+             console.log(tds[5].innerHTML);
+
         });
 
     </script>
