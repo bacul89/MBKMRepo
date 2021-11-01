@@ -396,8 +396,10 @@
                         </table>
                     </div>
                     <button id="reset" class="btn" style="margin: 30px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: rgb(209,2,2); color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; ">RESET</button>
-                    <button id="simpan" class="btn" style="margin: 30px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; ">SIMPAN</button>
-                    <button id="submit" class="btn" style="margin: 30px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: rgb(0,166,81); color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; ">SUBMIT</button>
+                    <button id="submit" class="btn" style="margin: 30px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; ">SUBMIT</button>
+                    <button id="simpan" class="btn" style="margin: 30px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: rgb(0,166,81); color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; ">SIMPAN</button>
+                    <button id="unlockSubmit" class="btn" style="margin: 30px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: rgb(209,2,2); color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; ">UNLOCK SUBMIT</button>
+                    <button id="cetak" class="btn" style="margin: 30px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: rgb(0,166,81); color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; ">CETAK DAFTAR NILAI RINCIAN (DNR)</button>
                 </div>
         </div>
     </div>
@@ -415,10 +417,18 @@
         var tmpSub = {};
 
         $(document).ready(function () {
+            $('#unlockSubmit').hide();
+            $('#cetak').hide();
             getSemester();
             getBobot();
             getSubBobot();
             loadTable();
+            if ('@Model.IsActive'.toLowerCase() == 'false') {
+                $('#reset').hide();
+                $('#simpan').hide();
+                $('#unlockSubmit').show();
+                $('#cetak').show();
+            }
         });
         function loadTmpMainTable() {
             var data = new Object();
@@ -442,7 +452,11 @@
                     $('#Total' + response[i].MahasiswaID).html(response[i].NilaiTotal);
                     $('#Grade' + response[i].MahasiswaID).html(response[i].Grade);
                 }
-            })
+                $('.inputNilai').keyup(function () {
+                    var id = this.id;
+                    onChangeNilai(id);
+                });
+            });
         }
         function loadTmpSubTable(flag) {
             var data = new Object();
@@ -469,6 +483,39 @@
                     $('#' + flag + '10' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub10);
                     $('#Total' + flag + response[i].NilaiKuliahs.MahasiswaID).val(response[i].NilaiTotal);
                 }
+            });
+            $('.inputNilai2').keyup(function () {
+                console.log(this.id);
+                var id = this.id;
+                var jenis = id.substring(0, 3);
+                var nomorUrut;
+                var idMahasiswa;
+                if (id.substring(3, 5) == '10') {
+                    nomorUrut = '10'
+                    idMahasiswa = id.substring(5);
+                } else {
+                    nomorUrut = id.substring(3, 4)
+                    idMahasiswa = id.substring(4)
+                }
+                var subBobotTmp = []
+                for (var i = 0; i < subBobot.length; i++) {
+                    if (subBobot[i].Jenis.replace(".", "").includes(jenis)) {
+                        subBobotTmp.push(subBobot[i]);
+                    }
+                }
+
+                var total = 0;
+                for (var i = 0; i < subBobotTmp.length; i++) {
+                    var jenisTmp = subBobotTmp[i].Jenis.replace(".", "");
+                    var nilai = $('#' + jenisTmp + idMahasiswa).val();
+                    if (!nilai) {
+                        nilai = 0;
+                    }
+                    total += (subBobotTmp[i].Persentase * nilai / 100);
+                }
+                $('#Total' + jenis + idMahasiswa).html(total);
+                $('#' + jenis + idMahasiswa).val(total);
+                onChangeNilai(jenis + idMahasiswa);
             });
         }
         function getSemester() {
@@ -747,35 +794,15 @@
             if (this.value == 'MT' || this.value == 'FE' || subBobot.length == 0) {
                 $('#divDataNilai').show();
                 $(".inputNilai").attr("disabled", true);
-                if (!mahasiswa && '@Model.IsActive'.toLowerCase == 'false') return;
+                if (!mahasiswa) return;
+                if ('@Model.IsActive'.toLowerCase() == 'false') return;
                 for (var i = 0; i < mahasiswa.length; i++) {
                     $('#' + this.value + mahasiswa[i].MahasiswaID).attr("disabled", false);
                 }
             } else {
-                if ('@Model.IsActive'.toLowerCase == 'false') $(".inputNilai2").attr("disabled", true);
+                if ('@Model.IsActive'.toLowerCase() == 'false') $(".inputNilai2").attr("disabled", true);
                 $('#div' + this.value).show();
             }
-        });
-        $('#submit').click(function () {
-            var data = new Object();
-            var list = [];
-            for (var i = 0; i < mahasiswaCount; i++) {
-                if (!$('#checkDosen' + i).is(':checked')) {
-                    continue;
-                }
-                list.push($('#checkDosen' + i).val());
-            }
-            data.idAbsensis = list;
-            $.ajax({
-                type: "POST",
-                url: "@Url.Action("SubmitCheckDosen", "PresensiKelas")",
-                data: data
-            }).then(function (response) {
-                alert(response.message);
-                if (response.status == 200) {
-                    window.history.back();
-                }
-            });
         });
         $('#reset').click(function () {
             if (!mahasiswa) return;
@@ -814,6 +841,82 @@
             }
         })
         $('#simpan').click(function () {
+            saveNilai('@Url.Action("InsertNilai", "Penilaian")')
+        })
+        $('#submit').click(function () {
+            saveNilai('@Url.Action("SubmitNilai", "Penilaian")')
+        });
+        $('#cetak').click(function () {
+            //cetak
+        });
+        $('#unlockSubmit').click(function () {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("UnlockSubmit", "Penilaian")?idJadwalKuliah=" + @Model.ID,
+                dataType: "json"
+            }).then(function (response) {
+                alert(response.message);
+                if (response.message == 'Unlock berhasil!') {
+                    location.reload();
+                }
+            });
+        });
+        function onChangeNilai(id) {
+            var jenis;
+            var idMahasiswa;
+            if (id.includes('CW')) {
+                jenis = id.substring(0, 3);
+                idMahasiswa = id.substring(3);
+            } else {
+                jenis = id.substring(0, 2);
+                idMahasiswa = id.substring(2);
+            }
+
+            var total = 0;
+
+            var nilaiMT = $('#MT' + idMahasiswa).val();
+            if (!nilaiMT) nilaiMT = 0;
+            total += (nilaiMT * bobot.fMT / 100);
+
+            var nilaiCW1 = $('#CW1' + idMahasiswa).val();
+            if (!nilaiCW1) nilaiCW1 = 0;
+            total += (nilaiCW1 * bobot.fCW1 / 100);
+
+            var nilaiCW2 = $('#CW2' + idMahasiswa).val();
+            if (!nilaiCW2) nilaiCW2 = 0;
+            total += (nilaiCW2 * bobot.fCW2 / 100);
+
+            var nilaiCW3 = $('#CW3' + idMahasiswa).val();
+            if (!nilaiCW3) nilaiCW3 = 0;
+            total += (nilaiCW3 * bobot.fCW3 / 100);
+
+            var nilaiCW4 = $('#CW4' + idMahasiswa).val();
+            if (!nilaiCW4) nilaiCW4 = 0;
+            total += (nilaiCW4 * bobot.fCW4 / 100);
+
+            var nilaiCW5 = $('#CW5' + idMahasiswa).val();
+            if (!nilaiCW5) nilaiCW5 = 0;
+            total += (nilaiCW5 * bobot.fCW5 / 100);
+
+            var nilaiFE = $('#FE' + idMahasiswa).val();
+            if (!nilaiFE) nilaiFE = 0;
+            total += (nilaiFE * bobot.fFinal / 100);
+
+            $('#Total' + idMahasiswa).html(Math.trunc(total));
+            var grade;
+            if (Math.trunc(total) < 45) grade = 'E';
+            else if (Math.trunc(total) < 55) grade = 'D';
+            else if (Math.trunc(total) < 59) grade = 'C';
+            else if (Math.trunc(total) < 63) grade = 'C+';
+            else if (Math.trunc(total) < 67) grade = 'B-';
+            else if (Math.trunc(total) < 71) grade = 'B';
+            else if (Math.trunc(total) < 75) grade = 'B+';
+            else if (Math.trunc(total) < 80) grade = 'A-';
+            else if (Math.trunc(total) <= 100) grade = 'A';
+            else grade = 'Invalid'
+            $('#Grade' + idMahasiswa).html(grade);
+        }
+        function saveNilai(url) {
             if (!mahasiswa) return;
             var data = new Object();
             var listNilai = [];
@@ -924,19 +1027,19 @@
             data.CW4 = CW4;
             data.CW5 = CW5;
             data.isSub = isSub;
+            data.idJadwalKuliah = @Model.ID;
             console.log(data);
             $.ajax({
                 type: "POST",
-                url: "@Url.Action("InsertNilai", "Penilaian")",
+                url: url,
                 dataType: "json",
                 data: data
             }).then(function (response) {
                 alert(response.message);
+                if (response.message == 'Nilai berhasil disubmit!') {
+                    location.reload();
+                }
             });
-        })
-        $('#submit').click(function () {
-            if (!mahasiswa) return;
-
-        });
+        }
     </script>
 }

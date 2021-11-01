@@ -129,6 +129,39 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 return Json(new ServiceResponse { status = 500, message = e.Message });
             }
         }
+        public ActionResult SubmitNilai(IEnumerable<NilaiKuliah> listNilai, NilaiSubCW[] CW1, NilaiSubCW[] CW2, NilaiSubCW[] CW3, NilaiSubCW[] CW4, NilaiSubCW[] CW5, bool isSub, int idJadwalKuliah)
+        {
+            try
+            {
+                InsertNilai(listNilai, CW1, CW2, CW3, CW4, CW5, isSub);
+                var tmp = _jadwalKuliahService.Get(idJadwalKuliah);
+                tmp.IsActive = false;
+                _jadwalKuliahService.Save(tmp);
+                return Json(new ServiceResponse { status = 200, message = "Nilai berhasil disubmit!" });
+            }
+            catch (Exception e)
+            {
+                return Json(new ServiceResponse { status = 500, message = e.Message });
+            }
+        }
+        public ActionResult UnlockSubmit(int idJadwalKuliah)
+        {
+            try
+            {
+                if ((Session["RoleName"] as string).Equals("Kepala Program Studi"))
+                {
+                    var tmp = _jadwalKuliahService.Get(idJadwalKuliah);
+                    tmp.IsActive = true;
+                    _jadwalKuliahService.Save(tmp);
+                    return Json(new ServiceResponse { status = 200, message = "Unlock berhasil!" });
+                }
+                return Json(new ServiceResponse { status = 400, message = "Hanya kepala BAA yang dapat melakukan unlock!" });
+            }
+            catch (Exception e)
+            {
+                return Json(new ServiceResponse { status = 500, message = e.Message });
+            }
+        }
         public ActionResult InsertNilai(IEnumerable<NilaiKuliah> listNilai, NilaiSubCW[] CW1, NilaiSubCW[] CW2, NilaiSubCW[] CW3, NilaiSubCW[] CW4, NilaiSubCW[] CW5, bool isSub)
         {
             try
