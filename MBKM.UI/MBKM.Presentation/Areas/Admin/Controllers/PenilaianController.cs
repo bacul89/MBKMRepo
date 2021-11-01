@@ -36,6 +36,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult Index()
         {
             return View();
+        } 
+        public ActionResult DaftarNilaiRincian()
+        {
+            return View();
         }
         public ActionResult DetailPenilaian(int idMatkul)
         {
