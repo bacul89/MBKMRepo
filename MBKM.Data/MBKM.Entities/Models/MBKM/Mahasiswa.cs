@@ -54,5 +54,6 @@ namespace MBKM.Entities.Models.MBKM
         [JsonIgnore]
         public virtual ICollection<PendaftaranMataKuliah> PendaftaranMataKuliahs { get; set; }
         public string ProdiAsalID { get; set; }
+        //public bool FlagBayar { get; set; }
     }
 }

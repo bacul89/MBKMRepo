@@ -18,9 +18,11 @@ $(document).ready(function () {
 
                     var btn = "";
                     if (row.FlagCetak == true) {
-                        btn = '<button class="btn btn-md btn-success" style="color: black" onclick="UpdateStatus('+ data +')"> Update Status</button>';
+                        btn = `<button class="btn btn-md btn-success" style="color: black" onclick="UpdateStatus(' ${data} ')"> Update Status <span class="fa fa-sync"> </span></button>
+                               <button class="btn btn-md btn-success" style="color: black" onclick="print(' ${data} ')"> Cetak <span class="fa fa-print"> </span></button>`;
                     } else {
-                        btn = '<button class="btn btn-md btn-default" style="color: black" disabled="true"> Update Status</button>';
+                        btn = `<button class="btn btn-md btn-default" style="color: black" disabled="true"> Update Status <span class="fa fa-sync"></span></button>
+                            <button class="btn btn-md btn-success" style = "color: black" onclick = "print(' ${data} ')" > Cetak <span class="fa fa-print"> </span></button>`;
                     }
 
                     return `<div class="row justify-content-center">

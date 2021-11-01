@@ -245,6 +245,7 @@
     <Content Include="Scripts\Admin\Role\main.js" />
     <Content Include="Scripts\Admin\Transkrip\main.js" />
     <Content Include="Scripts\Admin\SummaryFeedback\main.js" />
+    <Content Include="Scripts\Admin\Transkrip\print.js" />
     <Content Include="Scripts\dataCheckBox\dataTables.checkboxes.js" />
     <Content Include="Scripts\dataCheckBox\dataTables.checkboxes.min.js" />
     <Content Include="Scripts\easy-number-separator.js" />
@@ -534,6 +535,7 @@
     <Content Include="Areas\Portal\Views\KHS\KHS.cshtml" />
     <Content Include="Areas\Admin\Views\SummaryFeedback\GetPersentationData.cshtml" />
     <Content Include="Areas\Portal\Views\TranskripMahasiswa\PrintTranskrip.cshtml" />
+    <Content Include="Areas\Portal\Views\TranskripMahasiswa\ExportPDF.cshtml" />
     <Content Include="Areas\Portal\Views\SertifikatMbkm\Index.cshtml" />
     <Content Include="Areas\Admin\Views\SertifikatMBKM\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />

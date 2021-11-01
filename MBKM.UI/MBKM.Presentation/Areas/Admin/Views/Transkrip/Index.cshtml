@@ -44,11 +44,189 @@
                     </table>
                 </div>
             </div>
+
+
+            <div id="print" style="display:none">
+                <style>
+                    .btn{color:#fff!important}
+                    .btn-default{color:rgba(0,0,0,0.2)!important}
+
+                    .box-print-foot {
+                        border-bottom: 1px solid
+                    }
+
+                    .box-print {
+                        padding: 10px 20px;
+                        border-top: solid 1px;
+                        border-right: solid 1px;
+                        border-left: solid 1px;
+                    }
+
+                    .en {
+                        padding-left: 10px;
+                        font-size: 12px;
+                    }
+
+                    .no-padding {
+                        padding: 0px !important
+                    }
+
+                    .header div {
+                        line-height: 22px;
+                    }
+
+                    td {
+                        vertical-align: top;
+                    }
+                </style>
+                <div class="box-print col-md-12">
+                    @*<div width="100%">
+                    <div class="header" style="float:left">
+                        <div>Nama <i class="en">Name</i></div>
+                        <div>N.I.M. <i class="en">Student Identity Number</i></div>
+                        <div>Tempat / Tanggal Lahir <i class="en">Place & Date of Birth</i></div>
+                        <div>Jenjang Studi <i class="en">Program of Education</i></div>
+                        <div>Nomor Keputusan Pendirian Perguruan Tinggi <div><i class="en no-padding">University Constitutional Document Number</i></div></div>
+                    </div>
+                    <div class="header" style="float:left">
+                        <div style="padding: 0px 5px"> : </div>
+                        <div style="padding: 0px 5px"> : </div>
+                        <div style="padding: 0px 5px"> : </div>
+                        <div style="padding: 0px 5px"> : </div>
+                        <div style="padding: 0px 5px"> : </div>
+                    </div>
+                    <div class="header" style="float:left">
+                        <div> @Model.Nama </div>
+                        <div> @Model.NIMAsal </div>
+                        <div> @Model.TempatLahir / <span id="birthdayView"> @Model.TanggalLahir</span></div>
+                        <div> @Model.JenjangStudi </div>
+                        <div>
+                            Akte Notaris No. 3 tanggal 1 Juni 1960 <i class="en">Notarial Deed No. 3 dated 1 June 1960</i>
+                            <div>& No. 17/B.S.T/P/62 tanggal <i class="en">dated 21 Januari January 1963</i></div>
+                        </div>
+                    </div>
+                </div>*@
+                    <table width="100%">
+                        <tr>
+
+                            <!--Faculty
+                                Program of Study-->
+                            <td width="36%">Nama <i class="en">Name</i></td>
+                            <td width="2%" style="padding: 0px 5px;"> : </td>
+                            <td id="name" width="80%"></td>
+                        </tr>
+                        <tr>
+
+                            <td>N.I.M. <i class="en">Student Identity Number</i></td>
+                            <td style="padding: 0px 5px;"> : </td>
+                            <td id="nim"></td>
+                        </tr>
+                        <tr>
+                            <td>Tempat / Tanggal Lahir <i class="en">Place & Date of Birth</i></td>
+                            <td style="padding: 0px 5px;"> : </td>
+                            <td id="ttl"> / <span id="birthdayView"> </span></td>
+                        </tr>
+                        <tr>
+                            <td>Jenjang Studi <i class="en">Program of Education</i></td>
+                            <td style="padding: 0px 5px;"> : </td>
+                            <td id="jenjangStudi"></td>
+                        </tr>
+                        <tr>
+                            <td>Nomor Keputusan Pendirian Perguruan Tinggi <br /><i class="en no-padding">University Constitutional Document Number</i></td>
+                            <td style="padding: 0px 5px;"> : </td>
+                            <td id="noKeputusan">
+                                Akte Notaris No. 3 tanggal 1 Juni 1960 <i class="en">Notarial Deed No. 3 dated 1 June 1960</i>
+                                <br />& No. 17/B.S.T/P/62 tanggal <i class="en">dated 21 Januari January 1963</i>
+
+
+                            </td>
+                        </tr>
+                    </table>
+
+
+
+
+                </div>
+                <div class="box-print col-md-12">
+                    <table width="100%">
+                        <thead>
+                            <tr>
+                                <th width="10%">Kode <i class="en">Code</i></th>
+                                <th width="30%">Mata Kuliah <i class="en">Course Title</i></th>
+                                <th width="30%" style="text-align:right">KC</th>
+                                <th width="30%" style="text-align:right">NG</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataPrint">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="box-print col-md-12">
+                    <table width="100%">
+                        <thead style="display:none">
+                            <tr>
+                                <th width="10%">Kode <i class="en">Code</i></th>
+                                <th width="30%">Mata Kuliah <i class="en">Course Title</i></th>
+                                <th width="30%" style="text-align:right">KC</th>
+                                <th width="30%" style="text-align:right">NG</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td width="10%" style="color:#FFF"></td>
+                                <td width="30%" style="color:#FFF"></td>
+                                <td width="30%" id="totalSksPrint" style="text-align:right;"></td>
+                                <td width="30%" id="totalGradePrint" style="text-align:right;"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="box-print box-print-foot col-md-12 foot">
+                    <div class="col-md-12">
+
+                        <div style=" float: right; margin-bottom: 20px;">
+                            <div style="">Jakarta, <span id="currentDatePrint"></span></div>
+                            <div style="">Kepala Biro Admisitrasi Akademik</div>
+                            <div style=""><i class="en no-padding">Head of Academic Administration Bureau</i></div>
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <span id="baaNamePrint"></span>
+                            <br />
+                            <br />
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-md-12">
+
+                        <table class="footer" width="100%">
+                            <tr>
+                                <td><b>Address:</b> Jl. Jendral Sudirman 51, Jakarta Selatan 12930, Indonesia</td>
+                                <td><b>Telephone:</b> +62 21 5703306</td>
+                                <td><b>Fax:</b> +62 21 5708811</td>
+                                <td><b>Website:</b> http://aatmajaya.ac.id</td>
+                                <td><b>E-mail:</b> bba@atmajaya.ac.id</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+
+
         </div>
     </div>
 </div>
 
 @section scripts{
     <script src="~/Scripts/Admin/Transkrip/main.js"></script>
+    <script src="~/Scripts/Admin/Transkrip/print.js"></script>
     <script src="~/Scripts/loading/loadingoverlay.min.js"></script>
 }
