@@ -152,14 +152,14 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             try
             {
-                if ((Session["RoleName"] as string).Equals("Kepala Program Studi"))
-                {
+                //if ((Session["RoleName"] as string).Equals("Kepala Program Studi"))
+                //{
                     var tmp = _jadwalKuliahService.Get(idJadwalKuliah);
                     tmp.IsActive = true;
                     _jadwalKuliahService.Save(tmp);
                     return Json(new ServiceResponse { status = 200, message = "Unlock berhasil!" });
-                }
-                return Json(new ServiceResponse { status = 400, message = "Hanya kepala BAA yang dapat melakukan unlock!" });
+                //}
+                //return Json(new ServiceResponse { status = 400, message = "Hanya kepala BAA yang dapat melakukan unlock!" });
             }
             catch (Exception e)
             {
