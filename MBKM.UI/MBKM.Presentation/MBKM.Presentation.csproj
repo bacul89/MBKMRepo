@@ -154,6 +154,7 @@
     <Compile Include="Areas\Admin\Controllers\PerjanjianKerjasama\PerjanjianKerjasamaController.cs" />
     <Compile Include="Areas\Admin\Controllers\RegisMhsByAdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SertifikatMBKMController.cs" />
     <Compile Include="Areas\Admin\Controllers\SummaryFeedbackController.cs" />
     <Compile Include="Areas\Admin\Controllers\TemplateEmail\TemplateEmailController.cs" />
     <Compile Include="Areas\Admin\Controllers\TranskripController.cs" />
@@ -171,6 +172,7 @@
     <Compile Include="Areas\Portal\Controllers\PendaftaranMataKuliahController.cs" />
     <Compile Include="Areas\Portal\Controllers\HomeController.cs" />
     <Compile Include="Areas\Portal\Controllers\NimDigitalController.cs" />
+    <Compile Include="Areas\Portal\Controllers\SertifikatMbkmController.cs" />
     <Compile Include="Areas\Portal\Controllers\SummaryPresensiController.cs" />
     <Compile Include="Areas\Portal\Controllers\TrackingStatusPendaftaranController.cs" />
     <Compile Include="Areas\Portal\Controllers\TranskripMahasiswaController.cs" />
@@ -194,6 +196,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Asset\atmajayapoto.jpg" />
+    <Content Include="Asset\BG_SERTIFIKAT.png" />
     <Content Include="Asset\default-photo-profile.png" />
     <Content Include="Asset\kampus-universitas-katolik-atmajaya-jakarta-_131002231109-118.jpg" />
     <Content Include="Asset\Lambang_Atma_Jaya.png" />
@@ -531,6 +534,8 @@
     <Content Include="Areas\Portal\Views\KHS\KHS.cshtml" />
     <Content Include="Areas\Admin\Views\SummaryFeedback\GetPersentationData.cshtml" />
     <Content Include="Areas\Portal\Views\TranskripMahasiswa\PrintTranskrip.cshtml" />
+    <Content Include="Areas\Portal\Views\SertifikatMbkm\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SertifikatMBKM\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
