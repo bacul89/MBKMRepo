@@ -163,7 +163,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             Session["email"] = "sabangsasabana@gmail.com";
             string email = Session["email"] as string;
             Mahasiswa model = GetMahasiswaByEmail(email);
-            return new ViewAsPdf("PrintTranskrip", model)
+            return new ViewAsPdf("ExportPDF", model)
             {
                 FileName = "ReportShift.pdf",
                 PageSize = Size.A4,
@@ -182,6 +182,24 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 PageOrientation = Rotativa.Options.Orientation.Landscape,
                 PageSize = Rotativa.Options.Size.A4
             };*/
+        }
+
+
+        public ActionResult ExportNew()
+        {
+
+            Session["email"] = "sabangsasabana@gmail.com";
+            string email = Session["email"] as string;
+            Mahasiswa model = GetMahasiswaByEmail(email);
+            return new ViewAsPdf("PrintTranskrip", model)
+            {
+                FileName = "ReportShift.pdf",
+                PageSize = Size.A4,
+                PageOrientation = Orientation.Landscape,
+                //CustomSwitches = footer,
+                PageMargins = new Margins(10, 3, 20, 3)
+
+            };
         }
 
 
