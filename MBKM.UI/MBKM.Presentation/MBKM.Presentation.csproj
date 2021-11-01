@@ -529,7 +529,9 @@
     <Content Include="Areas\Admin\Views\Penilaian\DetailPenilaian.cshtml" />
     <Content Include="Areas\Portal\Views\FeedBackMatakuliah\NextPageFeedBack.cshtml" />
     <Content Include="Areas\Portal\Views\FeedBackMatakuliah\PreviousPageFeedback.cshtml" />
+    <Content Include="Areas\Portal\Views\KHS\KHS.cshtml" />
     <Content Include="Areas\Admin\Views\SummaryFeedback\GetPersentationData.cshtml" />
+    <Content Include="Areas\Portal\Views\TranskripMahasiswa\PrintTranskrip.cshtml" />
     <Content Include="Areas\Portal\Views\SertifikatMbkm\Index.cshtml" />
     <Content Include="Areas\Admin\Views\SertifikatMBKM\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
