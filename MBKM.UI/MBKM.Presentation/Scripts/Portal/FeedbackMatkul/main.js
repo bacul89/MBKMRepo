@@ -16,7 +16,7 @@ $(document).ready(function () {
                 "render": function (data, type, row, meta) {
                     return `<div class="row justify-content-center">
                                 <div class="col" style="text-align:center">
-                                    <a href="javascript:void(0)" style="color:black" onclick="redirectData('${data}')"> <i class="fas fa-edit coral" ></i></a>
+                                    <a href="javascript:void(0)" style="color:black" onclick="redirectData('${row[0]}','${row[7]}','${row[8]}')"> <i class="fas fa-edit coral" ></i></a>
                                  </div>
                             </div>`;
                 }
@@ -97,7 +97,7 @@ $(document).ready(function () {
                     "render": function (data, type, row, meta) {
                         return `<div class="row justify-content-center">
                                 <div class="col" style="text-align:center">
-                                    <a href="javascript:void(0)" style="color:black" onclick="redirectData('${data}')"> <i class="fas fa-edit coral" ></i></a>
+                                    <a href="javascript:void(0)" style="color:black" onclick="redirectData('${row[0]}','${row[7]}','${row[8]}')"> <i class="fas fa-edit coral" ></i></a>
                                  </div>
                             </div>`;
                     }
@@ -163,6 +163,6 @@ $(document).ready(function () {
     })
 });
 
-function redirectData(id) {
-    window.location.href = "/Portal/FeedBackMatakuliah/DetailFeedBackMatakuliah/" + id;
+function redirectData(id, ff, strm) {
+    window.location.href = "/Portal/FeedBackMatakuliah/DetailFeedBackMatakuliah/?id=" + id + "&ff=" + ff + "&strm=" + strm;
 }

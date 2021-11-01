@@ -11,10 +11,12 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
     public class SertifikatMBKMController : Controller
     {
         private IJadwalUjianMBKMService _jadwalUjianMBKMService;
+        private IPendaftaranMataKuliahService _pendaftaranMataKuliahService;
 
-        public SertifikatMBKMController(IJadwalUjianMBKMService jadwalUjianMBKMService)
+        public SertifikatMBKMController(IJadwalUjianMBKMService jadwalUjianMBKMService, IPendaftaranMataKuliahService pendaftaranMataKuliahService)
         {
             _jadwalUjianMBKMService = jadwalUjianMBKMService;
+            _pendaftaranMataKuliahService = pendaftaranMataKuliahService;
         }
 
 
@@ -24,6 +26,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             IEnumerable<VMSemester> data = _jadwalUjianMBKMService.getAllSemester();
             ViewData["semester"] = data;
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult GetDataTable(int strm)
+        {
+            var data = _pendaftaranMataKuliahService.Find(x => x.JadwalKuliahs.STRM == strm).ToList();
+            return Json(data);
         }
     }
 }

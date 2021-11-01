@@ -30,14 +30,15 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return result;
             }
         }
-        public IEnumerable<VMPertanyaanFeedback> GetPertanyaanFeedbacks(string jenjangStudi, string strm)
+        public IEnumerable<VMPertanyaanFeedback> GetPertanyaanFeedbacks(string jenjangStudi, string strm, long fakultas)
         {
             using (var context = new MBKMContext())
             {
                 var JenjangStudi = new SqlParameter("@JenjangStudi", jenjangStudi);
                 var strM = new SqlParameter("@STRM", strm);
+                var FakultasId = new SqlParameter("@FakultasID", fakultas);
                 var result = context.Database
-                    .SqlQuery<VMPertanyaanFeedback>("GetPertanyaanByStrmJenjang @JenjangStudi, @STRM", JenjangStudi, strM).ToList();
+                    .SqlQuery<VMPertanyaanFeedback>("GetPertanyaanByStrmJenjang @JenjangStudi, @STRM, @FakultasID", JenjangStudi, strM, FakultasId).ToList();
                 return result;
             }
         }
