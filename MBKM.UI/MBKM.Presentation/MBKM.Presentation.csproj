@@ -138,6 +138,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminLoginController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DaftarHadirUjianController.cs" />
     <Compile Include="Areas\Admin\Controllers\DaftarSeluruhMahasiswaController.cs" />
     <Compile Include="Areas\Admin\Controllers\ApprovalPendaftaranMatakuliahController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
@@ -221,6 +222,7 @@
     <Content Include="Rotativa\wkhtmltoimage.exe" />
     <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\Admin\ApprovalPendaftaranMakul\detailApproval.js" />
+    <Content Include="Scripts\Admin\DaftarHadirUjian\main.js" />
     <Content Include="Scripts\Admin\DaftarSeluruhMhs\main.js" />
     <Content Include="Scripts\Admin\ApprovalPendaftaranMakul\main.js" />
     <Content Include="Scripts\Admin\DaftarSeluruhMhs\main_detail.js" />
@@ -229,7 +231,6 @@
     <Content Include="Scripts\Admin\JadwalUjian\main.js" />
     <Content Include="Scripts\Admin\ManageUjian\detailManageUjian.js" />
     <Content Include="Scripts\Admin\ManageUjian\main.js" />
-    <Content Include="Scripts\Admin\JadwalKuliah\crud.js" />
     <Content Include="Scripts\Admin\JadwalKuliah\main.js" />
     <Content Include="Scripts\Admin\JadwalKuliah\main_manage_matakuliah.js" />
     <Content Include="Scripts\Admin\JadwalKuliah\search.js" />
@@ -538,6 +539,7 @@
     <Content Include="Areas\Portal\Views\TranskripMahasiswa\ExportPDF.cshtml" />
     <Content Include="Areas\Portal\Views\SertifikatMbkm\Index.cshtml" />
     <Content Include="Areas\Admin\Views\SertifikatMBKM\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\DaftarHadirUjian\index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
