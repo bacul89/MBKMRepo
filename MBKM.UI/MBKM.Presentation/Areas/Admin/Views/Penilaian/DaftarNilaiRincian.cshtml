@@ -345,15 +345,15 @@
             options: {
                 legend: { display: false },
                 title: {
-                    responsive: true,
-                    maintainAspectRatio: false,
                     display: true,
                     text: 'Student Grade Distribution'
-                }
+                },
+                animation: false
             }
         });
-
-        window.print();
-        windows.close();
+        setTimeout(() => {
+            window.print();
+            windows.close();
+        }, 500);
     });
 </script>
