@@ -25,8 +25,9 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 var idJadwalKuliahParam = new SqlParameter("@IdJadwalKuliah", idJadwalKuliah);
                 var result = context.Database
                     .SqlQuery<VMDNR>("GetDNR @IdJadwalKuliah", idJadwalKuliahParam).FirstOrDefault();
+                var idJadwalKuliahParam2 = new SqlParameter("@IdJadwalKuliah", idJadwalKuliah);
                 result.mahasiswas = context.Database
-                    .SqlQuery<VMMahasiswa>("GetMahasiswaDNR @IdJadwalKuliah", idJadwalKuliahParam).ToList();
+                    .SqlQuery<VMMahasiswa>("GetMahasiswaDNR @IdJadwalKuliah", idJadwalKuliahParam2).ToList();
                 return result;
             }
         }
@@ -50,6 +51,20 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return result;
             }
         }
+        public IEnumerable<VMMataKuliah> GetMatkulEn(string kodeMataKuliah, int mataKuilahID, int sTRM)
+        {
+            using (var context = new MBKMContext())
+            {
+
+                var strm = new SqlParameter("@STRM", sTRM);
+                var kode = new SqlParameter("@KodeMatkul", kodeMataKuliah);
+                var id = new SqlParameter("@IdMatkul", mataKuilahID);
+                var result = context.Database
+                    .SqlQuery<VMMataKuliah>("GetNamaMatkulEng @STRM, @KodeMatkul, @IdMatkul", strm, kode, id).ToList();
+                return result;
+            }
+        }
+
         public VMListNilaiKuliah GetNilaiMahasiswa()
         {
             //throw new NotImplementedException();

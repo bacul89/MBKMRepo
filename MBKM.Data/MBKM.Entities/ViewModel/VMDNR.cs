@@ -9,9 +9,9 @@ namespace MBKM.Entities.ViewModel
     public class VMDNR
     {
         public Int64 ID { get; set; }
-        public string KodeDosen { get; set; }
+        public Int64 KodeDosen { get; set; }
         public string NamaDosen { get; set; }
-        public string STRM { get; set; }
+        public int STRM { get; set; }
         public string NamaMatakuliah { get; set; }
         public string KodeMatakuliah { get; set; }
         public string Lokasi { get; set; }
@@ -28,7 +28,7 @@ namespace MBKM.Entities.ViewModel
         public string D { get; set; }
         public string E { get; set; }
         public string M { get; set; }
-        public string Total { get; set; }
+        public int Total { get; set; }
         public int ATotal { get; set; }
         public int AminTotal { get; set; }
         public int BplusTotal { get; set; }
@@ -42,19 +42,19 @@ namespace MBKM.Entities.ViewModel
         public int TMCoursework { get; set; }
         public int TMMidterm { get; set; }
         public int TMFinal { get; set; }
-        public string PctCoursework { get; set; }
-        public string PctMidterm { get; set; }
-        public string PctFinal { get; set; }
-        public decimal AveragePoint { get; set; }
-        public decimal StddevPoint { get; set; }
+        public double PctCoursework { get; set; }
+        public double PctMidterm { get; set; }
+        public double PctFinal { get; set; }
+        public double AveragePoint { get; set; }
+        public double StddevPoint { get; set; }
         public int NumberOfStudent { get; set; }
         public int NumberOfR { get; set; }
         public int NumberOfS { get; set; }
-        public decimal Stddev { get; set; }
-        public decimal Variance { get; set; }
-        public decimal Average { get; set; }
-        public decimal MaxMarks { get; set; }
-        public decimal MinMarks { get; set; }
+        public double Stddev { get; set; }
+        public double Variance { get; set; }
+        public double Average { get; set; }
+        public double MaxMarks { get; set; }
+        public double MinMarks { get; set; }
         public List<VMMahasiswa> mahasiswas { get; set; }
     }
 
@@ -64,14 +64,14 @@ namespace MBKM.Entities.ViewModel
         public string CampusID { get; set; }
         public string Nama { get; set; }
         public string Supp { get; set; }
-        public string MT { get; set; }
-        public string CW1 { get; set; }
-        public string CW2 { get; set; }
-        public string CW3 { get; set; }
-        public string CW4 { get; set; }
-        public string CW5 { get; set; }
-        public string Final { get; set; }
-        public string NilaiTotal { get; set; }
+        public decimal MT { get; set; }
+        public decimal CW1 { get; set; }
+        public decimal CW2 { get; set; }
+        public decimal CW3 { get; set; }
+        public decimal CW4 { get; set; }
+        public decimal CW5 { get; set; }
+        public decimal Final { get; set; }
+        public decimal NilaiTotal { get; set; }
         public string Grade { get; set; }
     }
 }

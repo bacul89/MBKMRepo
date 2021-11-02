@@ -76,18 +76,36 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             List<String[]> final = new List<String[]>();
             foreach (var d in data1)
             {
-                var jumlahMahasiswa = _pendaftaranMataKuliahService.Find(x => x.JadwalKuliahID == d.JadwalId && x.JadwalKuliahs.STRM == tahunSemester && x.StatusPendaftaran.Contains("ACCEPTED")).Count();
+                var jumlahMahasiswa = 0;
+                 jumlahMahasiswa = _pendaftaranMataKuliahService.Find(x => x.JadwalKuliahID == d.JadwalId && x.JadwalKuliahs.STRM == tahunSemester && x.StatusPendaftaran.Contains("ACCEPTED")).Count();
                 var dosenTmp = d.namaDosen.Split('-');
-                final.Add(new String[]{
-                    d.JadwalId.ToString(),
-                    dataSemester.Nama,
-                    d.dosenId,
-                    dosenTmp[1],
-                    d.Jadwals.KodeMataKuliah,
-                    d.Jadwals.NamaMataKuliah,
-                    d.Jadwals.ClassSection,
-                    jumlahMahasiswa.ToString(),
-                }); 
+                if(dosenTmp.Count() == 1)
+                {
+                    final.Add(new String[]{
+                        d.JadwalId.ToString(),
+                        dataSemester.Nama,
+                        d.dosenId,
+                        dosenTmp[0],
+                        d.Jadwals.KodeMataKuliah,
+                        d.Jadwals.NamaMataKuliah,
+                        d.Jadwals.ClassSection,
+                        jumlahMahasiswa.ToString(),
+                    });
+                }
+                else
+                {
+                    final.Add(new String[]{
+                        d.JadwalId.ToString(),
+                        dataSemester.Nama,
+                        d.dosenId,
+                        dosenTmp[1],
+                        d.Jadwals.KodeMataKuliah,
+                        d.Jadwals.NamaMataKuliah,
+                        d.Jadwals.ClassSection,
+                        jumlahMahasiswa.ToString(),
+                    }); 
+                }
+                
                 
             }
 
