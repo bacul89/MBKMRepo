@@ -18,6 +18,19 @@ namespace MBKM.Repository.Repositories.MBKMRepository
         public NilaiKuliahRepository(DbContext _db) : base(_db)
         {
         }
+        public VMDNR GetDNR(int idJadwalKuliah)
+        {
+            using (var context = new MBKMContext())
+            {
+                var idJadwalKuliahParam = new SqlParameter("@IdJadwalKuliah", idJadwalKuliah);
+                var result = context.Database
+                    .SqlQuery<VMDNR>("GetDNR @IdJadwalKuliah", idJadwalKuliahParam).FirstOrDefault();
+                var idJadwalKuliahParam2 = new SqlParameter("@IdJadwalKuliah", idJadwalKuliah);
+                result.mahasiswas = context.Database
+                    .SqlQuery<VMMahasiswa>("GetMahasiswaDNR @IdJadwalKuliah", idJadwalKuliahParam2).ToList();
+                return result;
+            }
+        }
         public VMBobot GetBobot(string idMatkul)
         {
             using (var context = new MBKMContext())
@@ -38,7 +51,6 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return result;
             }
         }
-
         public IEnumerable<VMMataKuliah> GetMatkulEn(string kodeMataKuliah, int mataKuilahID, int sTRM)
         {
             using (var context = new MBKMContext())

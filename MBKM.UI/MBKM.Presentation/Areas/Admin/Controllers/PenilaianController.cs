@@ -37,9 +37,11 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             return View();
         } 
-        public ActionResult DaftarNilaiRincian()
+        [HttpPost]
+        public ActionResult DaftarNilaiRincian(int idJadwalKuliah)
         {
-            return View();
+            var model = _nilaiKuliahService.GetDNR(idJadwalKuliah);
+            return View(model);
         }
         public ActionResult DetailPenilaian(int idMatkul)
         {

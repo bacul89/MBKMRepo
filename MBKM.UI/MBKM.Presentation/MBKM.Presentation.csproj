@@ -202,6 +202,7 @@
     <Content Include="Asset\Lambang_Atma_Jaya.png" />
     <Content Include="Asset\Lambang_Unika_Atma_Jaya.png" />
     <Content Include="Asset\SeekPng.com_megaphone-png_311331.png" />
+    <Content Include="Content\Admin\PrintDNR.css" />
     <Content Include="Content\Admin\AdminCostumeBS4.css" />
     <Content Include="Content\Admin\inputResponsive.css" />
     <Content Include="Content\autonumeric\autoNumeric-2.0-BETA.htm" />
@@ -535,6 +536,7 @@
     <Content Include="Areas\Portal\Views\KHS\KHS.cshtml" />
     <Content Include="Areas\Admin\Views\SummaryFeedback\GetPersentationData.cshtml" />
     <Content Include="Areas\Portal\Views\TranskripMahasiswa\PrintTranskrip.cshtml" />
+    <Content Include="Areas\Admin\Views\Penilaian\DaftarNilaiRincian.cshtml" />
     <Content Include="Areas\Portal\Views\TranskripMahasiswa\ExportPDF.cshtml" />
     <Content Include="Areas\Portal\Views\SertifikatMbkm\Index.cshtml" />
     <Content Include="Areas\Admin\Views\SertifikatMBKM\Index.cshtml" />
