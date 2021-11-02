@@ -216,6 +216,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dataTables.checkboxes.css" />
     <Content Include="Content\Portal\TrackingStatus\main.css" />
+    <Content Include="Content\Portal\Transkrip\print.css" />
     <Content Include="Rotativa\help-wkhtmltoimage.txt" />
     <Content Include="Rotativa\help-wkhtmltopdf.txt" />
     <Content Include="Rotativa\wkhtmltoimage.exe" />
@@ -246,6 +247,7 @@
     <Content Include="Scripts\Admin\SertifikatMBKM\main.js" />
     <Content Include="Scripts\Admin\Transkrip\main.js" />
     <Content Include="Scripts\Admin\SummaryFeedback\main.js" />
+    <Content Include="Scripts\Admin\Transkrip\print.js" />
     <Content Include="Scripts\dataCheckBox\dataTables.checkboxes.js" />
     <Content Include="Scripts\dataCheckBox\dataTables.checkboxes.min.js" />
     <Content Include="Scripts\easy-number-separator.js" />
@@ -529,11 +531,13 @@
     <Content Include="Areas\Portal\Views\TranskripMahasiswa\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Penilaian\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Penilaian\DetailPenilaian.cshtml" />
+    <Content Include="Areas\Portal\Views\PendaftaranMataKuliah\FormPendaftaranInternalKeLuarAtma.cshtml" />
     <Content Include="Areas\Portal\Views\FeedBackMatakuliah\NextPageFeedBack.cshtml" />
     <Content Include="Areas\Portal\Views\FeedBackMatakuliah\PreviousPageFeedback.cshtml" />
     <Content Include="Areas\Portal\Views\KHS\KHS.cshtml" />
     <Content Include="Areas\Admin\Views\SummaryFeedback\GetPersentationData.cshtml" />
     <Content Include="Areas\Portal\Views\TranskripMahasiswa\PrintTranskrip.cshtml" />
+    <Content Include="Areas\Portal\Views\TranskripMahasiswa\ExportPDF.cshtml" />
     <Content Include="Areas\Portal\Views\SertifikatMbkm\Index.cshtml" />
     <Content Include="Areas\Admin\Views\SertifikatMBKM\Index.cshtml" />
     <Content Include="Areas\Admin\Views\SertifikatMBKM\GetFile.cshtml" />

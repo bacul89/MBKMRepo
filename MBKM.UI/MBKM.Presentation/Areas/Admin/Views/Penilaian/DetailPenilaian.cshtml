@@ -155,75 +155,252 @@
 <div class="card center-block" style="background-color: white; margin: 15px;">
     <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
         <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; padding-left: 15px; font-weight: bold; font-size: 20px; color: black; ">
-            PRESENSI MAHASISWA<br />
-            <p style="font-weight: normal; font-size: 15px; color: #c1baba;">Berikut daftar hadir mahasiswa</p>
+            PENILAIAN MATA KULIAH MBKM
         </h5>
         <hr />
         <div class="container" style="width: 100%; padding-bottom: 15px;">
+            <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: solid; border-width: 1px; border-color: #FF8A04; padding-top: 15px;">
+                <div class="container" style="width: 100%;">
+                    <table class="table table-borderless" style="width: auto;">
+                        <tr>
+                            <td style="text-align: right; font-weight: bold;">Tahun Semester</td>
+                            <td style="text-align: center;">:</td>
+                            <td id="strm"></td>
 
+                            <td style="text-align: right; font-weight: bold;">Seksi</td>
+                            <td style="text-align: center;">:</td>
+                            <td>@Model.ClassSection</td>
+
+                            <td style="text-align: right; font-weight: bold;">Bobot MT & CW</td>
+                            <td style="text-align: center;">:</td>
+                            <td id="mtcw"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right; font-weight: bold;">Kode Mata Kuliah</td>
+                            <td style="text-align: center;">:</td>
+                            <td>@Model.KodeMataKuliah</td>
+
+                            <td style="text-align: right; font-weight: bold;">SKS</td>
+                            <td style="text-align: center;">:</td>
+                            <td>@Model.SKS</td>
+
+                            <td style="text-align: right; font-weight: bold;">Bobot Final Exam</td>
+                            <td style="text-align: center;">:</td>
+                            <td id="fe"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: right; font-weight: bold;">Nama Mata Kuliah</td>
+                            <td style="text-align: center;">:</td>
+                            <td>@Model.NamaMataKuliah</td>
+
+                            <td style="text-align: right; font-weight: bold;">Jenjang Studi</td>
+                            <td style="text-align: center;">:</td>
+                            <td>@Model.JenjangStudi</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
             <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
-                <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 18px; color: black;">DETAIL MATA KULIAH</h5>
-
+                <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 18px; color: black;">KRITERIA KOMPONEN</h5>
                 <div class="container" style="width: 100%;">
                     <table class="table">
                         <tr>
-                            <td style="text-align: right; width: 20%;">Tanggal</td>
-                            <td style="text-align: center;">:</td>
-                            <td>@Model.TanggalAbsen2</td>
+                            <td style="font-weight: bold;">Komponen</td>
+                            <td style="text-align: center; font-weight: bold;">MT</td>
+                            <td style="text-align: center; font-weight: bold;">CW1</td>
+                            <td style="text-align: center; font-weight: bold;">CW2</td>
+                            <td style="text-align: center; font-weight: bold;">CW3</td>
+                            <td style="text-align: center; font-weight: bold;">CW4</td>
+                            <td style="text-align: center; font-weight: bold;">CW5</td>
+                            <td style="text-align: center; font-weight: bold;">FINAL EXAM</td>
                         </tr>
                         <tr>
-                            <td style="text-align: right;">Waktu</td>
-                            <td style="text-align: center;">:</td>
-                            <td>@Model.JamMasuk2 - @Model.JamKeluar2</td>
+                            <td style="font-weight: bold;">Bobot(%)</td>
+                            <td style="text-align: center;" id="MT"></td>
+                            <td style="text-align: center;" id="CW1"></td>
+                            <td style="text-align: center;" id="CW2"></td>
+                            <td style="text-align: center;" id="CW3"></td>
+                            <td style="text-align: center;" id="CW4"></td>
+                            <td style="text-align: center;" id="CW5"></td>
+                            <td style="text-align: center;" id="FE"></td>
                         </tr>
                         <tr>
-                            <td style="text-align: right;">Mata Kuliah</td>
-                            <td style="text-align: center;">:</td>
-                            <td>@Model.KodeMataKuliah - @Model.NamaMataKuliah</td>
+                            <td style="font-weight: bold;">Nilai Maksimal</td>
+                            <td style="text-align: center;" id="maxMT"></td>
+                            <td style="text-align: center;" id="maxCW1"></td>
+                            <td style="text-align: center;" id="maxCW2"></td>
+                            <td style="text-align: center;" id="maxCW3"></td>
+                            <td style="text-align: center;" id="maxCW4"></td>
+                            <td style="text-align: center;" id="maxCW5"></td>
+                            <td style="text-align: center;" id="maxFE"></td>
                         </tr>
                         <tr>
-                            <td style="text-align: right;">Seksi</td>
-                            <td style="text-align: center;">:</td>
-                            <td>@Model.Seksi</td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: right;">Ruang Kelas</td>
-                            <td style="text-align: center;">:</td>
-                            <td>@Model.RuangKelas</td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: right;">Dosen</td>
-                            <td style="text-align: center;">:</td>
-                            <td>@Model.NamaDosen</td>
+                            <td style="font-weight: bold;">Pilih Komponen</td>
+                            <td style="text-align: center;"><input type="radio" name="jenisNilai" value="MT" /></td>
+                            <td style="text-align: center;"><input type="radio" name="jenisNilai" value="CW1" /></td>
+                            <td style="text-align: center;"><input type="radio" name="jenisNilai" value="CW2" /></td>
+                            <td style="text-align: center;"><input type="radio" name="jenisNilai" value="CW3" /></td>
+                            <td style="text-align: center;"><input type="radio" name="jenisNilai" value="CW4" /></td>
+                            <td style="text-align: center;"><input type="radio" name="jenisNilai" value="CW5" /></td>
+                            <td style="text-align: center;"><input type="radio" name="jenisNilai" value="FE" /></td>
                         </tr>
                     </table>
                 </div>
             </div>
             <br />
             <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); padding: 15px;">
-                <button id="check" name="check" class="btn" style="background-color: rgb(0,166,81); padding: 2px 30px; font-weight: bold; color: white; font-size: 16px; ">CHECK ALL</button>
-                <button id="uncheck" name="uncheck" class="btn" style="background-color: rgb(209,2,2); padding: 2px 30px; font-weight: bold; color: white; font-size: 16px; ">UNCHECK ALL</button>
-
                 <div style="overflow-x: auto;">
-                    <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; font-weight: bold; font-size: 18px; color: black; ">
+                    <h5 class="card-title" style="padding-right: 15px; font-weight: bold; font-size: 18px; color: black; ">
                         DAFTAR MAHASISWA
                     </h5>
-                    <table id="dataAbsen" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
-                        <thead>
-                            <tr>
-                                <th class="zero-padding no-border vertical-center sorting">Dosen Check</th>
-                                <th class="zero-padding no-border vertical-center sorting">No.</th>
-                                <th class="zero-padding no-border vertical-center sorting">Nomor Induk Mahasiswa</th>
-                                <th class="zero-padding no-border vertical-center sorting">Nama</th>
-                                <th class="zero-padding no-border vertical-center sorting">Mahasiswa Present</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                    <div id="divDataNilai" class="divNilai">
+                        <table id="dataNilai" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
+                            <thead>
+                                <tr id="headers">
+                                    <th class="zero-padding center no-border vertical-center sorting">No.</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">Nomor Induk Mahasiswa</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">Nama Mahasiswa</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">MT</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW1</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW2</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW3</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW4</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW5</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">Final Exam</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">Nilai Total</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">Grade</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="divCW1" class="divNilai" hidden>
+                        <table id="dataCW1" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
+                            <thead>
+                                <tr id="headers">
+                                    <th class="zero-padding center no-border vertical-center sorting">No.</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">Nomor Induk Mahasiswa</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">Nama Mahasiswa</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW1.1</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW1.2</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW1.3</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW1.4</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW1.5</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW1.6</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW1.7</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW1.8</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW1.9</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW1.10</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">Nilai Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="divCW2" class="divNilai" hidden>
+                        <table id="dataCW2" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
+                            <thead>
+                                <tr id="headers">
+                                    <th class="zero-padding center no-border vertical-center sorting">No.</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">Nomor Induk Mahasiswa</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">Nama Mahasiswa</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW2.1</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW2.2</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW2.3</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW2.4</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW2.5</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW2.6</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW2.7</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW2.8</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW2.9</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW2.10</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">Nilai Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="divCW3" class="divNilai" hidden>
+                        <table id="dataCW3" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
+                            <thead>
+                                <tr id="headers">
+                                    <th class="zero-padding center no-border vertical-center sorting">No.</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">Nomor Induk Mahasiswa</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">Nama Mahasiswa</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW3.1</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW3.2</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW3.3</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW3.4</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW3.5</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW3.6</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW3.7</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW3.8</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW3.9</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW3.10</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">Nilai Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="divCW4" class="divNilai" hidden>
+                        <table id="dataCW4" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
+                            <thead>
+                                <tr id="headers">
+                                    <th class="zero-padding center no-border vertical-center sorting">No.</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">Nomor Induk Mahasiswa</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">Nama Mahasiswa</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW4.1</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW4.2</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW4.3</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW4.4</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW4.5</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW4.6</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW4.7</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW4.8</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW4.9</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW4.10</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">Nilai Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="divCW5" class="divNilai" hidden>
+                        <table id="dataCW5" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
+                            <thead>
+                                <tr id="headers">
+                                    <th class="zero-padding center no-border vertical-center sorting">No.</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">Nomor Induk Mahasiswa</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">Nama Mahasiswa</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW5.1</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW5.2</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW5.3</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW5.4</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW5.5</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW5.6</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW5.7</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW5.8</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW5.9</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">CW5.10</th>
+                                    <th class="zero-padding center no-border vertical-center sorting">Nilai Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <button id="reset" class="btn" style="margin: 30px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: rgb(209,2,2); color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; ">RESET</button>
+                    <button id="submit" class="btn" style="margin: 30px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; ">SUBMIT</button>
+                    <button id="simpan" class="btn" style="margin: 30px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: rgb(0,166,81); color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; ">SIMPAN</button>
+                    <button id="unlockSubmit" class="btn" style="margin: 30px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: rgb(209,2,2); color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; ">UNLOCK SUBMIT</button>
+                    <button id="cetak" class="btn" style="margin: 30px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: rgb(0,166,81); color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; ">CETAK DAFTAR NILAI RINCIAN (DNR)</button>
                 </div>
-                <button id="submit" class="btn" style="margin: 30px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: white; padding: 5px 30px; font-weight: bold; font-size: 16px; ">SUBMIT</button>
-            </div>
         </div>
     </div>
 </div>
@@ -231,94 +408,640 @@
 
 @section Scripts{
     <script>
-        var mahasiswaCount = 0;
-        var datatable;
+        var mahasiswa;
+        var ids = [];
+        var subTables = [];
+        var bobot;
+        var subBobot;
+        var tmpMain;
+        var tmpSub = {};
+
         $(document).ready(function () {
+            $('#unlockSubmit').hide();
+            $('#cetak').hide();
+            getSemester();
+            getBobot();
+            getSubBobot();
             loadTable();
+            if ('@Model.IsActive'.toLowerCase() == 'false') {
+                $('#reset').hide();
+                $('#simpan').hide();
+                $('#unlockSubmit').show();
+                $('#cetak').show();
+            }
         });
 
+        function loadTmpMainTable() {
+            var data = new Object();
+            data.ids = ids;
+            data.idJadwalKuliah = @Model.ID;
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("GetNilai", "Penilaian")",
+                data: data
+            }).then(function (response) {
+                if (!response) return;
+                tmpMain = response;
+                for (var i = 0; i < response.length; i++) {
+                    $('#MT' + response[i].MahasiswaID).val(response[i].UTS);
+                    $('#CW1' + response[i].MahasiswaID).val(response[i].CW1);
+                    $('#CW2' + response[i].MahasiswaID).val(response[i].CW2);
+                    $('#CW3' + response[i].MahasiswaID).val(response[i].CW3);
+                    $('#CW4' + response[i].MahasiswaID).val(response[i].CW4);
+                    $('#CW5' + response[i].MahasiswaID).val(response[i].CW5);
+                    $('#FE' + response[i].MahasiswaID).val(response[i].Final);
+                    $('#Total' + response[i].MahasiswaID).html(response[i].NilaiTotal);
+                    $('#Grade' + response[i].MahasiswaID).html(response[i].Grade);
+                }
+                $('.inputNilai').keyup(function () {
+                    var id = this.id;
+                    onChangeNilai(id);
+                });
+            });
+        }
+        function loadTmpSubTable(flag) {
+            var data = new Object();
+            data.ids = ids;
+            data.idJadwalKuliah = @Model.ID;
+            data.headCW = flag;
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("GetNilaiSubCW", "Penilaian")",
+                data: data
+            }).then(function (response) {
+                if (!response) return;
+                tmpSub[flag] = response;
+                for (var i = 0; i < response.length; i++) {
+                    $('#' + flag + '1' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub1);
+                    $('#' + flag + '2' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub2);
+                    $('#' + flag + '3' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub3);
+                    $('#' + flag + '4' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub4);
+                    $('#' + flag + '5' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub5);
+                    $('#' + flag + '6' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub6);
+                    $('#' + flag + '7' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub7);
+                    $('#' + flag + '8' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub8);
+                    $('#' + flag + '9' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub9);
+                    $('#' + flag + '10' + response[i].NilaiKuliahs.MahasiswaID).val(response[i].CWSub10);
+                    $('#Total' + flag + response[i].NilaiKuliahs.MahasiswaID).val(response[i].NilaiTotal);
+                }
+            });
+            $('.inputNilai2').keyup(function () {
+                console.log(this.id);
+                var id = this.id;
+                var jenis = id.substring(0, 3);
+                var nomorUrut;
+                var idMahasiswa;
+                if (id.substring(3, 5) == '10') {
+                    nomorUrut = '10'
+                    idMahasiswa = id.substring(5);
+                } else {
+                    nomorUrut = id.substring(3, 4)
+                    idMahasiswa = id.substring(4)
+                }
+                var subBobotTmp = []
+                for (var i = 0; i < subBobot.length; i++) {
+                    if (subBobot[i].Jenis.replace(".", "").includes(jenis)) {
+                        subBobotTmp.push(subBobot[i]);
+                    }
+                }
+
+                var total = 0;
+                for (var i = 0; i < subBobotTmp.length; i++) {
+                    var jenisTmp = subBobotTmp[i].Jenis.replace(".", "");
+                    var nilai = $('#' + jenisTmp + idMahasiswa).val();
+                    if (!nilai) {
+                        nilai = 0;
+                    }
+                    total += (subBobotTmp[i].Persentase * nilai / 100);
+                }
+                $('#Total' + jenis + idMahasiswa).html(total);
+                $('#' + jenis + idMahasiswa).val(total);
+                onChangeNilai(jenis + idMahasiswa);
+            });
+        }
+        function getSemester() {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetSemester", "Penilaian")?strm=" + @Model.STRM
+            }).then(function (response) {
+                $('#strm').html(response);
+            });
+        }
+        function getBobot() {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("getBobot", "Penilaian")?idMatkul=" + @Model.MataKuliahID
+            }).then(function (response) {
+                if (response.CW1 != null) response.fCW1 = parseFloat(response.CW1); else response.fCW1 = 0;
+                if (response.CW2 != null) response.fCW2 = parseFloat(response.CW2); else response.fCW2 = 0;
+                if (response.CW3 != null) response.fCW3 = parseFloat(response.CW3); else response.fCW3 = 0;
+                if (response.CW4 != null) response.fCW4 = parseFloat(response.CW4); else response.fCW4 = 0;
+                if (response.CW5 != null) response.fCW5 = parseFloat(response.CW5); else response.fCW5 = 0;
+                response.fMT = parseFloat(response.MT)
+                response.fFinal = parseFloat(response.Final)
+                bobot = response;
+                $('#mtcw').html((response.fMT + response.fCW1 + response.fCW2 + response.fCW3 + response.fCW4 + response.fCW5).toFixed(2));
+                $('#fe').html(response.fFinal.toFixed(2));
+
+                $('#MT').html(response.MT);
+                $('#FE').html(response.Final);
+                $('#maxMT').html('100.00');
+                $('#maxFE').html('100.00');
+
+                $('#CW1').html(response.fCW1.toFixed(2));
+                $('#CW2').html(response.fCW2.toFixed(2));
+                $('#CW3').html(response.fCW3.toFixed(2));
+                $('#CW4').html(response.fCW4.toFixed(2));
+                $('#CW5').html(response.fCW5.toFixed(2));
+                if (response.fCW1 == 0) {
+                    $('#maxCW1').html('0.00');
+                } else {
+                    $('#maxCW1').html('100.00');
+                }
+                if (response.fCW2 == 0) {
+                    $('#maxCW2').html('0.00');
+                } else {
+                    $('#maxCW2').html('100.00');
+                }
+                if (response.fCW3 == 0) {
+                    $('#maxCW3').html('0.00');
+                } else {
+                    $('#maxCW3').html('100.00');
+                }
+                if (response.fCW4 == 0) {
+                    $('#maxCW4').html('0.00');
+                } else {
+                    $('#maxCW4').html('100.00');
+                }
+                if (response.fCW5 == 0) {
+                    $('#maxCW5').html('0.00');
+                } else {
+                    $('#maxCW5').html('100.00');
+                }
+
+            });
+        }
+        function getSubBobot() {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetSubBobot", "Penilaian")?idMatkul=" + @Model.MataKuliahID
+            }).then(function (response) {
+                subBobot = response;
+                if (response.length > 0) {
+                    loadTableSub('CW1');
+                    loadTableSub('CW2');
+                    loadTableSub('CW3');
+                    loadTableSub('CW4');
+                    loadTableSub('CW5');
+                }
+            });
+        }
         function loadTable() {
-            datatable = $('#dataAbsen').DataTable({
+            $('#dataNilai').DataTable({
                 ajax: {
-                    url: '@Url.Action("GetPresensiMahasiswa", "PresensiKelas")?idJadwal=' + @Model.IDJadwalKuliah,
-                    dataSrc: ''
+                    url: '@Url.Action("GetMahasiswa", "Penilaian")?idJadwalKuliah=' + @Model.ID,
+                    dataSrc: function (json) {
+                        mahasiswa = json;
+                        for (var i = 0; i < json.length; i++) {
+                            ids.push(json[i].MahasiswaID);
+                        }
+                        loadTmpMainTable();
+                        return json;
+                    }
                 },
                 "columnDefs": [{
                     "searchable": false,
                     "orderable": false,
-                    "targets": 1
+                    "targets": 0
                 }],
                 "order": [
-                    [1, 'asc']
+                    [0, 'asc']
                 ],
                 "columns": [
-                    {
-                        "data": "ID",
-                        "render": function (data, type, row, meta) {
-                            return '<label class="container2"><input class="checkFlag" type="checkbox" id="checkDosen' + mahasiswaCount++ + '" value="' + data + '"><span class="checkmark"></span></label>';
-                        }
-                    },
                     {
                         "data": null
                     },
                     {
-                        "data": "Mahasiswas.NIM",
+                        "data": "mahasiswas.NIM",
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center; vertical-align: middle;">' + data + '</div>';
-                        }
-                    },
-                    {
-                        "data": "Mahasiswas.Nama",
-                        "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center; vertical-align: middle;">' + data + '</div>';
-                        }
-                    },
-                    {
-                        "data": "Present",
-                        "render": function (data, type, row, meta) {
-                            var data2;
-                            if (data) {
-                                data2 = 'Hadir';
-                            } else {
-                                data2 = '-';
+                            if (data == null) {
+                                data = '-';
                             }
-                            return '<div style="text-align:center; vertical-align: middle;">' + data2 + '</div>';
+                            return '<div style="vertical-align: middle;">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "mahasiswas.Nama",
+                        "render": function (data, type, row, meta) {
+                            return '<div style="vertical-align: middle;">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai" type="text" id="MT' + row.MahasiswaID + '" disabled></div>';
+                        }
+                    },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai" type="text" id="CW1' + row.MahasiswaID + '" disabled></div>';
+                        }
+                    },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai" type="text" id="CW2' + row.MahasiswaID + '" disabled></div>';
+                        }
+                    },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai" type="text" id="CW3' + row.MahasiswaID + '" disabled></div>';
+                        }
+                    },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai" type="text" id="CW4' + row.MahasiswaID + '" disabled></div>';
+                        }
+                    },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai" type="text" id="CW5' + row.MahasiswaID + '" disabled></div>';
+                        }
+                    },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai" type="text" id="FE' + row.MahasiswaID + '" disabled></div>';
+                        }
+                    },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<div style="text-align:center; vertical-align: middle;" id="Total' + row.MahasiswaID + '">0</div>';
+                        }
+                    },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<div style="text-align:center; vertical-align: middle;" id="Grade' + row.MahasiswaID + '">E</div>';
                         }
                     }
                 ]
             });
-            datatable.on('order.dt search.dt', function () {
-                datatable.column(1, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
-                    cell.innerHTML = i + 1;
+            $('#dataNilai').DataTable().on('order.dt search.dt', function () {
+                $('#dataNilai').DataTable().column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = '<div style="text-align:center;">' + (i + 1) + '</div>';
                 });
             }).draw();
         }
-        $('#check').click(function () {
-            $('.checkFlag').prop('checked', true);
-        });
-        $('#uncheck').click(function () {
-            $('.checkFlag').prop('checked', false);
-        });
-        $('#submit').click(function () {
-            var data = new Object();
-            var list = [];
-            for (var i = 0; i < mahasiswaCount; i++) {
-                if (!$('#checkDosen' + i).is(':checked')) {
-                    continue;
-                }
-                list.push($('#checkDosen' + i).val());
+        function loadTableSub(flag) {
+            $('#data' + flag).DataTable({
+                ajax: {
+                    url: '@Url.Action("GetMahasiswa", "Penilaian")?idJadwalKuliah=' + @Model.ID,
+                    dataSrc: function (json) {
+                        setTimeout(() => {
+                            loadTmpSubTable(flag);
+                        }, 1000);
+                        return json;
+                    }
+                },
+                "columnDefs": [{
+                    "searchable": false,
+                    "orderable": false,
+                    "targets": 0
+                }],
+                "order": [
+                    [0, 'asc']
+                ],
+                "columns": [
+                    {
+                        "data": null
+                    },
+                    {
+                        "data": "mahasiswas.NIM",
+                        "render": function (data, type, row, meta) {
+                            if (data == null) {
+                                data = '-';
+                            }
+                            return '<div style="vertical-align: middle;">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "mahasiswas.Nama",
+                        "render": function (data, type, row, meta) {
+                            return '<div style="vertical-align: middle;">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '1' + row.MahasiswaID + '"></div>';
+                        }
+                    },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '2' + row.MahasiswaID + '"></div>';
+                        }
+                    },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '3' + row.MahasiswaID + '"></div>';
+                        }
+                    },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '4' + row.MahasiswaID + '"></div>';
+                        }
+                    },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '5' + row.MahasiswaID + '"></div>';
+                        }
+                    },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '6' + row.MahasiswaID + '"></div>';
+                        }
+                    },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '7' + row.MahasiswaID + '"></div>';
+                        }
+                    },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '8' + row.MahasiswaID + '"></div>';
+                        }
+                    },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '9' + row.MahasiswaID + '"></div>';
+                        }
+                    },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '10' + row.MahasiswaID + '"></div>';
+                        }
+                    },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<div style="text-align:center; vertical-align: middle;" id="Total' + flag + row.MahasiswaID + '">0</div>';
+                        }
+                    }
+                ]
+            });
+            $('#data' + flag).DataTable().on('order.dt search.dt', function () {
+                $('#data' + flag).DataTable().column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = '<div style="text-align:center;">' + (i + 1) + '</div>';
+                });
+            }).draw();
+        }
+        function onChangeNilai(id) {
+            var jenis;
+            var idMahasiswa;
+            if (id.includes('CW')) {
+                jenis = id.substring(0, 3);
+                idMahasiswa = id.substring(3);
+            } else {
+                jenis = id.substring(0, 2);
+                idMahasiswa = id.substring(2);
             }
-            data.idAbsensis = list;
+
+            var total = 0;
+
+            var nilaiMT = $('#MT' + idMahasiswa).val();
+            if (!nilaiMT) nilaiMT = 0;
+            total += (nilaiMT * bobot.fMT / 100);
+
+            var nilaiCW1 = $('#CW1' + idMahasiswa).val();
+            if (!nilaiCW1) nilaiCW1 = 0;
+            total += (nilaiCW1 * bobot.fCW1 / 100);
+
+            var nilaiCW2 = $('#CW2' + idMahasiswa).val();
+            if (!nilaiCW2) nilaiCW2 = 0;
+            total += (nilaiCW2 * bobot.fCW2 / 100);
+
+            var nilaiCW3 = $('#CW3' + idMahasiswa).val();
+            if (!nilaiCW3) nilaiCW3 = 0;
+            total += (nilaiCW3 * bobot.fCW3 / 100);
+
+            var nilaiCW4 = $('#CW4' + idMahasiswa).val();
+            if (!nilaiCW4) nilaiCW4 = 0;
+            total += (nilaiCW4 * bobot.fCW4 / 100);
+
+            var nilaiCW5 = $('#CW5' + idMahasiswa).val();
+            if (!nilaiCW5) nilaiCW5 = 0;
+            total += (nilaiCW5 * bobot.fCW5 / 100);
+
+            var nilaiFE = $('#FE' + idMahasiswa).val();
+            if (!nilaiFE) nilaiFE = 0;
+            total += (nilaiFE * bobot.fFinal / 100);
+
+            $('#Total' + idMahasiswa).html(Math.trunc(total));
+            var grade;
+            if (Math.trunc(total) < 45) grade = 'E';
+            else if (Math.trunc(total) < 55) grade = 'D';
+            else if (Math.trunc(total) < 59) grade = 'C';
+            else if (Math.trunc(total) < 63) grade = 'C+';
+            else if (Math.trunc(total) < 67) grade = 'B-';
+            else if (Math.trunc(total) < 71) grade = 'B';
+            else if (Math.trunc(total) < 75) grade = 'B+';
+            else if (Math.trunc(total) < 80) grade = 'A-';
+            else if (Math.trunc(total) <= 100) grade = 'A';
+            else grade = 'Invalid'
+            $('#Grade' + idMahasiswa).html(grade);
+        }
+        function saveNilai(url) {
+            if (!mahasiswa) return;
+            var data = new Object();
+            var listNilai = [];
+            var CW1 = [];
+            var CW2 = [];
+            var CW3 = [];
+            var CW4 = [];
+            var CW5 = [];
+            var isSub = subBobot.length > 0;
+
+            for (var i = 0; i < mahasiswa.length; i++) {
+                var tmp = new Object();
+                tmp.MahasiswaID = mahasiswa[i].MahasiswaID;
+                tmp.JadwalKuliahID = @Model.ID;
+                tmp.NamaMatakuliah = '@Model.NamaMataKuliah';
+                tmp.UTS = $('#MT' + mahasiswa[i].MahasiswaID).val();
+                tmp.CW1 = $('#CW1' + mahasiswa[i].MahasiswaID).val();
+                tmp.CW2 = $('#CW2' + mahasiswa[i].MahasiswaID).val();
+                tmp.CW3 = $('#CW3' + mahasiswa[i].MahasiswaID).val();
+                tmp.CW4 = $('#CW4' + mahasiswa[i].MahasiswaID).val();
+                tmp.CW5 = $('#CW5' + mahasiswa[i].MahasiswaID).val();
+                tmp.Final = $('#FE' + mahasiswa[i].MahasiswaID).val();
+                tmp.NilaiTotal = $('#Total' + mahasiswa[i].MahasiswaID).html();
+                tmp.Grade = $('#Grade' + mahasiswa[i].MahasiswaID).html();
+                listNilai.push(tmp);
+                if (isSub) {
+                    var tmp2 = new Object();
+                    tmp2.CWSub1 = $('#CW11' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub2 = $('#CW12' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub3 = $('#CW13' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub4 = $('#CW14' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub5 = $('#CW15' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub6 = $('#CW16' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub7 = $('#CW17' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub8 = $('#CW18' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub9 = $('#CW19' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub10 = $('#CW110' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.NilaiTotal = $('#TotalCW1' + mahasiswa[i].MahasiswaID).html();
+                    tmp2.HeadCW = 'CW1';
+                    CW1.push(tmp2);
+
+                    tmp2 = new Object();
+                    tmp2.CWSub1 = $('#CW21' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub2 = $('#CW22' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub3 = $('#CW23' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub4 = $('#CW24' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub5 = $('#CW25' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub6 = $('#CW26' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub7 = $('#CW27' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub8 = $('#CW28' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub9 = $('#CW29' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub10 = $('#CW210' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.NilaiTotal = $('#TotalCW2' + mahasiswa[i].MahasiswaID).html();
+                    tmp2.HeadCW = 'CW2';
+                    CW2.push(tmp2);
+
+                    tmp2 = new Object();
+                    tmp2.CWSub1 = $('#CW31' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub2 = $('#CW32' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub3 = $('#CW33' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub4 = $('#CW34' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub5 = $('#CW35' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub6 = $('#CW36' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub7 = $('#CW37' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub8 = $('#CW38' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub9 = $('#CW39' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub10 = $('#CW310' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.NilaiTotal = $('#TotalCW3' + mahasiswa[i].MahasiswaID).html();
+                    tmp2.HeadCW = 'CW3';
+                    CW3.push(tmp2);
+
+                    tmp2 = new Object();
+                    tmp2.CWSub1 = $('#CW41' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub2 = $('#CW42' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub3 = $('#CW43' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub4 = $('#CW44' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub5 = $('#CW45' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub6 = $('#CW46' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub7 = $('#CW47' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub8 = $('#CW48' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub9 = $('#CW49' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub10 = $('#CW410' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.NilaiTotal = $('#TotalCW4' + mahasiswa[i].MahasiswaID).html();
+                    tmp2.HeadCW = 'CW4';
+                    CW4.push(tmp2);
+
+                    tmp2 = new Object();
+                    tmp2.CWSub1 = $('#CW51' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub2 = $('#CW52' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub3 = $('#CW53' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub4 = $('#CW54' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub5 = $('#CW55' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub6 = $('#CW56' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub7 = $('#CW57' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub8 = $('#CW58' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub9 = $('#CW59' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.CWSub10 = $('#CW510' + mahasiswa[i].MahasiswaID).val();
+                    tmp2.NilaiTotal = $('#TotalCW5' + mahasiswa[i].MahasiswaID).html();
+                    tmp2.HeadCW = 'CW5';
+                    CW5.push(tmp2);
+
+                }
+            }
+            data.listNilai = listNilai;
+            data.CW1 = CW1;
+            data.CW2 = CW2;
+            data.CW3 = CW3;
+            data.CW4 = CW4;
+            data.CW5 = CW5;
+            data.isSub = isSub;
+            data.idJadwalKuliah = @Model.ID;
+            console.log(data);
             $.ajax({
                 type: "POST",
-                url: "@Url.Action("SubmitCheckDosen", "PresensiKelas")",
+                url: url,
+                dataType: "json",
                 data: data
             }).then(function (response) {
                 alert(response.message);
-                if (response.status == 200) {
-                    window.history.back();
+                if (response.message == 'Nilai berhasil disubmit!') {
+                    location.reload();
                 }
             });
+        }
+
+        $('input[type=radio][name=jenisNilai]').change(function () {
+            $('.divNilai').hide();
+            if (this.value == 'MT' || this.value == 'FE' || subBobot.length == 0) {
+                $('#divDataNilai').show();
+                $(".inputNilai").attr("disabled", true);
+                if (!mahasiswa) return;
+                if ('@Model.IsActive'.toLowerCase() == 'false') return;
+                for (var i = 0; i < mahasiswa.length; i++) {
+                    $('#' + this.value + mahasiswa[i].MahasiswaID).attr("disabled", false);
+                }
+            } else {
+                if ('@Model.IsActive'.toLowerCase() == 'false') $(".inputNilai2").attr("disabled", true);
+                $('#div' + this.value).show();
+            }
+        });
+        $('#reset').click(function () {
+            if (!mahasiswa) return;
+            var data = new Object();
+            data.ids = ids;
+            data.idJadwalKuliah = @Model.ID;
+                data.flag = $('input[name=jenisNilai]:checked').val();
+            if ($('input[name=jenisNilai]:checked').val() == 'MT' || $('input[name=jenisNilai]:checked').val() == 'FE' || subBobot.length == 0) {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("ResetNilaiMahasiswa", "Penilaian")",
+                    data: data
+                }).then(function (response) {
+                    if (response.status == 200) {
+                        for (var i = 0; i < mahasiswa.length; i++) {
+                            $('#' + $('input[name=jenisNilai]:checked').val() + mahasiswa[i].MahasiswaID).val('');
+                        }
+                    }
+                    alert(response.message);
+                });
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("ResetSubNilaiMahasiswa", "Penilaian")",
+                    data: data
+                }).then(function (response) {
+                    if (response.status == 200) {
+                        for (var j = 0; j < mahasiswa.length; j++) {
+                            for (var i = 1; i <= 10; i++) {
+                                $('#' + $('input[name=jenisNilai]:checked').val() + i + '' + mahasiswa[j].MahasiswaID).val('');
+                            }
+                        }
+                    }
+                    alert(response.message);
+                });
+            }
         })
+        $('#simpan').click(function () {
+            saveNilai('@Url.Action("InsertNilai", "Penilaian")')
+        })
+        $('#submit').click(function () {
+            saveNilai('@Url.Action("SubmitNilai", "Penilaian")')
+        });
+        $('#cetak').click(function () {
+            //cetak
+        });
+        $('#unlockSubmit').click(function () {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("UnlockSubmit", "Penilaian")?idJadwalKuliah=" + @Model.ID,
+                dataType: "json"
+            }).then(function (response) {
+                alert(response.message);
+                if (response.message == 'Unlock berhasil!') {
+                    location.reload();
+                }
+            });
+        });
     </script>
 }

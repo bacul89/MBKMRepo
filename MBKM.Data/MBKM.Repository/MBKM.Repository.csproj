@@ -146,6 +146,10 @@
     <Compile Include="Migrations\202110290808013_rubahdimensi.designer.cs">
       <DependentUpon>202110290808013_rubahdimensi.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202111020009183_updatekolombayarsertifikat.cs" />
+    <Compile Include="Migrations\202111020009183_updatekolombayarsertifikat.designer.cs">
+      <DependentUpon>202111020009183_updatekolombayarsertifikat.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EmailTemplateRepository.cs" />
@@ -169,6 +173,7 @@
     <Compile Include="Repositories\MBKMRepository\LinkFasilitasRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\MahasiswaRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\MasterCapaianPembelajaranRepository.cs" />
+    <Compile Include="Repositories\MBKMRepository\MBKMAuthorizeAttribute.cs" />
     <Compile Include="Repositories\MBKMRepository\NilaiKuliahRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\NilaiSubCWRepository.cs" />
     <Compile Include="Repositories\MBKMRepository\PendaftaranMataKuliahRepository.cs" />
@@ -259,6 +264,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202110290808013_rubahdimensi.resx">
       <DependentUpon>202110290808013_rubahdimensi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202111020009183_updatekolombayarsertifikat.resx">
+      <DependentUpon>202111020009183_updatekolombayarsertifikat.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

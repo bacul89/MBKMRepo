@@ -3,176 +3,14 @@
     ViewBag.Title = "PrintTranskrip";
     Layout = "";
 }
-<script src="../../Scripts/jquery-3.4.1.js"></script>
+
 
 @model MBKM.Entities.Models.MBKM.Mahasiswa
 
 
-<style>
-    .box {
-        border: solid 1px coral;
-        padding: 15px 25px;
-        margin: 15px 0px;
-    }
+<script src="../../Scripts/jquery-3.4.1.js"></script>
+<script type="text/javascript">
 
-    .footnote {
-        margin: 0 20%;
-    }
-
-    table.footer tr td {
-        text-align: center;
-    }
-
-    th {
-        background: #fff;
-        padding: 15px 0px;
-        font-size: 13px;
-    }
-
-    .foot {
-        font-size: 12px;
-    }
-
-    td {
-        vertical-align: top;
-    }
-
-
-
-    .box-print-foot {
-        border-bottom: 1px solid
-    }
-
-    .box-print {
-        padding: 10px 20px;
-        border-top: solid 1px;
-        border-right: solid 1px;
-        border-left: solid 1px;
-    }
-
-    .en {
-        padding-left: 10px;
-        font-size: 12px;
-    }
-
-    .no-padding {
-        padding: 0px !important
-    }
-
-    .header div {
-        line-height: 22px;
-    }
-</style>
-
-
-
-
-
-<div id="view">
-    <div class="box col-md-12">
-        <table>
-            <tr>
-                <td>Nama <i class="en">Name</i></td>
-                <td style="padding: 0px 5px"> : </td>
-                <td id="name">@Model.Nama</td>
-            </tr>
-            <tr>
-
-                <td>N.I.M. <i class="en">Student Identity Number</i></td>
-                <td style="padding: 0px 5px"> : </td>
-                <td id="nim">@Model.NIMAsal</td>
-            </tr>
-            <tr>
-                <td>Tempat / Tanggal Lahir <i class="en">Place & Date of Birth</i></td>
-                <td style="padding: 0px 5px"> : </td>
-                <td id="ttl">@Model.TempatLahir / <span id="birthday">@Model.TanggalLahir</span></td>
-            </tr>
-            <tr>
-                <td>Jenjang Studi <i class="en">Program of Education</i></td>
-                <td style="padding: 0px 5px"> : </td>
-                <td id="jenjangStudi">@Model.JenjangStudi</td>
-            </tr>
-            <tr>
-                <td>Nomor Keputusan Pendirian Perguruan Tinggi <br><i class="en no-padding">University Constitutional Document Number</i></td>
-                <td style="padding: 0px 5px"> : </td>
-                <td id="noKeputusan">
-                    Akte Notaris No. 3 tanggal 1 Juni 1960 <i class="en">Notarial Deed No. 3 dated 1 June 1960</i>
-                    <br />& No. 17/B.S.T/P/62 tanggal <i class="en">dated 21 Januari January 1963</i>
-
-
-                </td>
-            </tr>
-        </table>
-
-        <hr />
-
-        <table width="100%">
-            <thead>
-                <tr>
-                    <th width="10%">Kode <i class="en">Code</i></th>
-                    <th width="50%">Mata Kuliah <i class="en">Course Title</i></th>
-                    <th width="20%" style="text-align:right">KC</th>
-                    <th width="20%" style="text-align:right">NG</th>
-                </tr>
-            </thead>
-            <tbody id="data">
-            </tbody>
-        </table>
-
-
-    </div>
-
-    <div class="box col-md-12">
-        <table width="100%">
-
-            <tbody>
-                <tr>
-                    <td colspan="2" width="60%"></td>
-                    <td width="20%" id="totalSks" style="text-align:right;"></td>
-                    <td width="20%" id="totalGrade" style="text-align:right;"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="box col-md-12 foot">
-        <div class="col-md-12">
-
-            <div style=" float: right; margin-bottom: 20px;">
-                Jakarta, <span id="currentDate"></span><br />
-                Kepala Biro Admisitrasi Akademik<br>
-                <i class="en no-padding">Head of Academic Administration Bureau</i>
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <span id="baaName">Helena Nataly Tapoona, S.E., M.M.</span>
-                <br />
-                <br />
-            </div>
-
-        </div>
-
-
-        <div class="col-md-12">
-
-            <table class="footer" width="100%">
-                <tr>
-                    <td><b>Address:</b> Jl. Jendral Sudirman 51, Jakarta Selatan 12930, Indonesia</td>
-                    <td><b>Telephone:</b> +62 21 5703306</td>
-                    <td><b>Fax:</b> +62 21 5708811</td>
-                    <td><b>Website:</b> http://aatmajaya.ac.id</td>
-                    <td><b>E-mail:</b> bba@atmajaya.ac.id</td>
-                </tr>
-            </table>
-        </div>
-    </div>
-</div>
-
-<script src="../../Scripts/Portal/Transkrip/main.js"></script>
-<script>
-    console.log("hallo");
 
     Date.prototype.toShortFormat = function () {
 
@@ -190,13 +28,17 @@
         return `${day} ${monthName} ${year}`;
     }
 
-    var getBirtDay = $('#birthday').text();
-    var date = getBirtDay.split(" ")[0];
-    var parts = date.split('/');
-    var mydate = new Date(parts[2], parts[1] - 1, parts[0]);
+    @*
+    function convertBirthday() {
+        var getBirtDay = document.getElementById("birthday").innerHTML;
 
-    var result = mydate.toShortFormat();
+        var date = getBirtDay.split(" ")[0];
+        var parts = date.split('/');
+        var mydate = new Date(parts[2], parts[1] - 1, parts[0]);
 
+        var result = mydate.toShortFormat();
+        document.getElementById("birthday").innerHTML = result;
+    }*@
 
     function convertBirthday() {
         var getBirtDay = $('#birthday').text();
@@ -206,56 +48,31 @@
 
         var result = mydate.toShortFormat();
 
+        
         $('#birthday').text(result);
-        $('#birthdayView').text(result);
     }
 
 
 
-    /* --responsive */
     $(document).ready(function () {
+        convertBirthday();
+        $('#hallo').text("HELLO");
+        //$("#print").hide();
 
-        $("#print").hide();
-
-        var date = new Date();
+        @*  var date = new Date();
         $("#currentDate").text(date.toShortFormat());
         $("#currentDatePrint").text(date.toShortFormat());
-        convertBirthday();
-        getNilai();
-        isZooming();
+
+        getNilai();*@
+
+        
 
     });
+    
 
-    //---responsive
-    $(window).resize(function () {
-        isZooming();
-    });
+@*
+    /* --responsive */
 
-    function isZooming() {
-        var defaultH = 800;
-        var square = $('.responsive-content');
-        var screenH = $(document).height();
-        //console.log("dfH :"+defaultH);
-        //console.log("wnH :"+screenH);
-
-
-        if (defaultH < screenH) {
-
-            var footer = 39;
-            var header = 105;
-            var contentHeight = screenH - header - footer;
-
-            if (defaultH < contentHeight) {
-                square.css('min-height', contentHeight);
-            } else {
-                square.css('min-height', defaultH);
-            }
-
-
-        } else {
-            square.css('min-height', defaultH);
-        }
-    }
 
     //---Grade
     var gradeFinal = "";
@@ -497,11 +314,215 @@
 
 
 
-    }
+    }*@
 
 
 
 </script>
+
+<style>
+    .box {
+        border: solid 1px coral;
+        padding: 15px 25px;
+        margin: 15px 0px;
+    }
+
+    .footnote {
+        margin: 0 20%;
+    }
+
+    table.footer tr td {
+        text-align: center;
+    }
+
+    th {
+        background: #fff;
+        padding: 15px 0px;
+        font-size: 13px;
+    }
+
+    .foot {
+        font-size: 12px;
+    }
+
+    td {
+        vertical-align: top;
+    }
+
+
+
+    .box-print-foot {
+        border-bottom: 1px solid
+    }
+
+    .box-print {
+        padding: 10px 20px;
+        border-top: solid 1px;
+        border-right: solid 1px;
+        border-left: solid 1px;
+    }
+
+    .en {
+        padding-left: 10px;
+        font-size: 12px;
+    }
+
+    .no-padding {
+        padding: 0px !important
+    }
+
+    .header div {
+        line-height: 22px;
+    }
+</style>
+
+
+<div id="hallo"></div>
+
+<div id="print">
+    <div class="box-print col-md-12">
+        @*<div width="100%">
+                <div class="header" style="float:left">
+                    <div>Nama <i class="en">Name</i></div>
+                    <div>N.I.M. <i class="en">Student Identity Number</i></div>
+                    <div>Tempat / Tanggal Lahir <i class="en">Place & Date of Birth</i></div>
+                    <div>Jenjang Studi <i class="en">Program of Education</i></div>
+                    <div>Nomor Keputusan Pendirian Perguruan Tinggi <div><i class="en no-padding">University Constitutional Document Number</i></div></div>
+                </div>
+                <div class="header" style="float:left">
+                    <div style="padding: 0px 5px"> : </div>
+                    <div style="padding: 0px 5px"> : </div>
+                    <div style="padding: 0px 5px"> : </div>
+                    <div style="padding: 0px 5px"> : </div>
+                    <div style="padding: 0px 5px"> : </div>
+                </div>
+                <div class="header" style="float:left">
+                    <div> @Model.Nama </div>
+                    <div> @Model.NIMAsal </div>
+                    <div> @Model.TempatLahir / <span id="birthdayView"> @Model.TanggalLahir</span></div>
+                    <div> @Model.JenjangStudi </div>
+                    <div>
+                        Akte Notaris No. 3 tanggal 1 Juni 1960 <i class="en">Notarial Deed No. 3 dated 1 June 1960</i>
+                        <div>& No. 17/B.S.T/P/62 tanggal <i class="en">dated 21 Januari January 1963</i></div>
+                    </div>
+                </div>
+            </div>*@
+        <table width="100%">
+            <tr>
+
+                <!--Faculty
+                Program of Study-->
+                <td width="15%">Nama <i class="en">Name</i></td>
+                <td width="2%" style="padding: 0px 5px"> : </td>
+                <td id="name" width="80%">@Model.Nama</td>
+            </tr>
+            <tr>
+
+                <td>N.I.M. <i class="en">Student Identity Number</i></td>
+                <td style="padding: 0px 5px"> : </td>
+                <td id="nim">@Model.NIMAsal</td>
+            </tr>
+            <tr>
+                <td>Tempat / Tanggal Lahir <i class="en">Place & Date of Birth</i></td>
+                <td style="padding: 0px 5px"> : </td>
+                <td id="ttl">@Model.TempatLahir / <span id="birthday">@Model.TanggalLahir</span></td>
+            </tr>
+            <tr>
+                <td>Jenjang Studi <i class="en">Program of Education</i></td>
+                <td style="padding: 0px 5px"> : </td>
+                <td id="jenjangStudi">@Model.JenjangStudi</td>
+            </tr>
+            <tr>
+                <td>Nomor Keputusan Pendirian Perguruan Tinggi <br /><i class="en no-padding">University Constitutional Document Number</i></td>
+                <td style="padding: 0px 5px"> : </td>
+                <td id="noKeputusan">
+                    Akte Notaris No. 3 tanggal 1 Juni 1960 <i class="en">Notarial Deed No. 3 dated 1 June 1960</i>
+                    <br />& No. 17/B.S.T/P/62 tanggal <i class="en">dated 21 Januari January 1963</i>
+
+
+                </td>
+            </tr>
+        </table>
+
+
+
+
+    </div>
+    <div class="box-print col-md-12">
+        <table width="100%">
+            <thead>
+                <tr>
+                    <th width="10%">Kode <i class="en">Code</i></th>
+                    <th width="30%">Mata Kuliah <i class="en">Course Title</i></th>
+                    <th width="30%" style="text-align:right">KC</th>
+                    <th width="30%" style="text-align:right">NG</th>
+                </tr>
+            </thead>
+            <tbody id="dataPrint">
+            </tbody>
+        </table>
+    </div>
+
+    <div class="box-print col-md-12">
+        <table width="100%">
+            <thead style="display:none">
+                <tr>
+                    <th width="10%">Kode <i class="en">Code</i></th>
+                    <th width="30%">Mata Kuliah <i class="en">Course Title</i></th>
+                    <th width="30%" style="text-align:right">KC</th>
+                    <th width="30%" style="text-align:right">NG</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td width="10%" style="color:#FFF"></td>
+                    <td width="30%" style="color:#FFF"></td>
+                    <td width="30%" id="totalSksPrint" style="text-align:right;"></td>
+                    <td width="30%" id="totalGradePrint" style="text-align:right;"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="box-print box-print-foot col-md-12 foot">
+        <div class="col-md-12">
+
+            <div style=" float: right; margin-bottom: 20px;">
+                <div style="">Jakarta, <span id="currentDatePrint"></span></div>
+                <div style="">Kepala Biro Admisitrasi Akademik</div>
+                <div style=""><i class="en no-padding">Head of Academic Administration Bureau</i></div>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <span id="baaNamePrint">Helena Nataly Tapoona, S.E., M.M.</span>
+                <br />
+                <br />
+            </div>
+
+        </div>
+
+
+        <div class="col-md-12">
+
+            <table class="footer" width="100%">
+                <tr>
+                    <td><b>Address:</b> Jl. Jendral Sudirman 51, Jakarta Selatan 12930, Indonesia</td>
+                    <td><b>Telephone:</b> +62 21 5703306</td>
+                    <td><b>Fax:</b> +62 21 5708811</td>
+                    <td><b>Website:</b> http://aatmajaya.ac.id</td>
+                    <td><b>E-mail:</b> bba@atmajaya.ac.id</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+
+
+@*<script src="../../Scripts/Portal/Transkrip/main.js"></script>*@
 
 
 

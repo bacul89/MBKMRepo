@@ -16,6 +16,7 @@ namespace MBKM.Entities.ViewModel
         public string Fakultas { get; set; }
         public string ProdiID { get; set; }
         public string FakultasID { get; set; }
+        public string COURSE_TITLE_LONG { get; set; }
     }
     /*    
     public class GridDataMataKuliah { 
