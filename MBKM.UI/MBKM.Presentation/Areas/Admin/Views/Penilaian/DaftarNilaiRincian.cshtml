@@ -1,54 +1,289 @@
 ﻿
 @{
-    ViewBag.Title = "Transkrip Nilai Seluruh Mahasiswa";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
+    Layout = null;
 }
 
-@section css{
+@Styles.Render("~/Content/css")
+<style>
+    #tableNilai td {
+        padding: 1px 5px;
+    }
 
-    <link rel="stylesheet" type="text/css" href="~/Content/Admin/inputResponsive.css">
-    @Scripts.Render("~/bundles/jquery")
+    #bobot th {
+        padding-right: 40px;
+    }
 
+    @@media print {
+        .pagebreak {
+            page-break-before: always;
+            padding: 50px 0px;
+        }
+        /* page-break-after works, as well */
+    }
 
-    @Scripts.Render("~/bundles/jquery")
-    <script src="~/Scripts/sweetalert2.all.min.js"></script>
-}
+    .container {
+        width: 100%;
+        height: 100px;
+        padding: 0;
+    }
 
+    .one {
+        width: 35%;
+        height: 120px;
+        float: left;
+        border: solid;
+        border-width: 1px;
+    }
 
-<div class="container-fluid" style="padding: 0px">
-    <div class="card center-block" style="background-color: white; width: 100%; padding: 0px">
-        <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; padding: 0px ">
-            <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
-                TRANSKRIP NILAI SELURUH MAHASISWA
-            </h4>
-            <hr />
-            <div class="container" style="width: 100%;">
-                <br />
-                <br />
-                <div id="table-data-transkrip-overflow">
-                    <table id="table-data-transkrip" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
-                        <thead>
-                            <tr>
-                                <th class="zero-padding no-border vertical-center sorting">Action</th>
-                                <th class="zero-padding no-border vertical-center sorting">No.</th>
-                                <th class="zero-padding no-border vertical-center sorting">Jenjang Studi</th>
-                                <th class="zero-padding no-border vertical-center sorting">Universitas Asal</th>
-                                <th class="zero-padding no-border vertical-center sorting">NIM</th>
-                                <th class="zero-padding no-border vertical-center sorting">Name Mahasiswa</th>
-                                <th class="zero-padding no-border vertical-center sorting">No Kerjasama</th>
-                                <th class="zero-padding no-border vertical-center sorting">Status Cetak</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+    .two {
+        margin-left: 40%;
+        width: 35%;
+        height: 120px;
+        border: solid;
+        border-width: 1px;
+    }
+</style>
+<style type="text/css" media="print">
+    @@page {
+        size: auto; /* auto is the initial value */
+        margin: 0mm; /* this affects the margin in the printer settings */
+    }
+</style>
+<body style="margin: 50px; padding-top: 0;" id="tes">
+    <div id="page1">
+        <img src="~/Asset/Lambang_Unika_Atma_Jaya.png" style="height: 80px;" />
+        <br />
+        <br />
+        <div style="font-family: Arial;font-weight: bold; font-size: 16px; text-align: center;">EXAM RESULTS - FINAL</div>
+        <br />
+        <table style="font-family: 'Times New Roman'; font-size: 16px;">
+            <tr>
+                <td style="width: 160px;">Name of Instructor:</td>
+                <td>@Model.KodeDosen @Model.NamaDosen</td>
+            </tr>
+            <tr>
+                <td>Semester:</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Faculty:</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Course ID:</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Campus:</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Course:</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Section:</td>
+                <td></td>
+            </tr>
+        </table>
+        <br />
+        <div>
+            <table style="float: left; font-family: 'Times New Roman'; width: 25%; font-size: 14px;" border="1" id="tableNilai">
+                <tr style="font-weight: bold;">
+                    <td>Grade</td>
+                    <td>No</td>
+                    <td>Percentage</td>
+                </tr>
+                <tr>
+                    <td>A</td>
+                    <td></td>
+                    <td style="text-align: right;"></td>
+                </tr>
+                <tr>
+                    <td>A-</td>
+                    <td></td>
+                    <td style="text-align: right;"></td>
+                </tr>
+                <tr>
+                    <td>B+</td>
+                    <td></td>
+                    <td style="text-align: right;"></td>
+                </tr>
+                <tr>
+                    <td>B</td>
+                    <td></td>
+                    <td style="text-align: right;"></td>
+                </tr>
+                <tr>
+                    <td>B-</td>
+                    <td></td>
+                    <td style="text-align: right;"></td>
+                </tr>
+                <tr>
+                    <td>C+</td>
+                    <td></td>
+                    <td style="text-align: right;"></td>
+                </tr>
+                <tr>
+                    <td>C</td>
+                    <td></td>
+                    <td style="text-align: right;"></td>
+                </tr>
+                <tr>
+                    <td>D (Fail)</td>
+                    <td></td>
+                    <td style="text-align: right;"></td>
+                </tr>
+                <tr>
+                    <td>E (Fail)</td>
+                    <td></td>
+                    <td style="text-align: right;"></td>
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td></td>
+                    <td style="text-align: right;"></td>
+                </tr>
+            </table>
+            <table style="display: inline-block; font-family: 'Times New Roman'; width: 50%; font-size: 14px; margin-left: 100px;" id="bobot">
+                <tr style="font-weight: bold; text-align: center;">
+                    <td colspan="3">Component for Evaluation</td>
+                </tr>
+                <tr style="font-weight: bold;">
+                    <th>Exam Distribution Name</th>
+                    <th>Total Mark</th>
+                    <th>Percentage</th>
+                </tr>
+                <tr>
+                    <td>Courseworks</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Mid-Term Exam</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Final Exam</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+        <div style="clear: both;">
+            <br />
+            <table style="font-family: 'Times New Roman'; width: 30%; font-size: 14px; " border="1" id="tableNilai">
+                <tr>
+                    <td style="width: 60%;">Average (point)</td>
+                    <td style="text-align: right;">1</td>
+                </tr>
+                <tr>
+                    <td>Stddev (point)</td>
+                    <td style="text-align: right;"></td>
+                </tr>
+                <tr>
+                    <td>Number of Students</td>
+                    <td style="text-align: right;"></td>
+                </tr>
+                <tr>
+                    <td>Number of R</td>
+                    <td style="text-align: right;"></td>
+                </tr>
+                <tr>
+                    <td>Number of S</td>
+                    <td style="text-align: right;"></td>
+                </tr>
+            </table>
         </div>
     </div>
-</div>
+    <div id="page2" class="pagebreak">
+        <img src="~/Asset/Lambang_Unika_Atma_Jaya.png" style="height: 80px;" />
+        <br />
+        <br />
+        <div style="font-family: Arial;font-weight: bold; font-size: 16px; text-align: center;">EXAM RESULTS - FINAL</div>
+        <br />
+        <table style="font-family: 'Times New Roman'; width: 100%; font-size: 14px; " border="1" id="listMahasiswa">
+            <tr style="text-align: center;">
+                <td>No</td>
+                <td>Student ID</td>
+                <td>Campus ID</td>
+                <td>Student Name</td>
+                <td>Supp</td>
+                <td>MT</td>
+                <td>CW1</td>
+                <td>CW2</td>
+                <td>CW3</td>
+                <td>CW4</td>
+                <td>CW5</td>
+                <td>Final Exam</td>
+                <td>Overall Marks</td>
+                <td>Overall Grade</td>
+            </tr>
+        </table>
+    </div>
+    <div id="page3" class="pagebreak">
+        <img src="~/Asset/Lambang_Unika_Atma_Jaya.png" style="height: 80px;" />
+        <br />
+        <br />
+        <div style="font-family: Arial;font-weight: bold; font-size: 16px; text-align: center;">EXAM RESULTS - FINAL</div>
+        <br />
+        <table style="font-family: 'Times New Roman'; width: 25%; font-size: 14px;" border="1" id="tableNilai">
+            <tr>
+                <td style="width: 40%;">Std Dev</td>
+                <td style="text-align: right;"></td>
+            </tr>
+            <tr>
+                <td>Variance</td>
+                <td style="text-align: right;"></td>
+            </tr>
+            <tr>
+                <td>Average</td>
+                <td style="text-align: right;"></td>
+            </tr>
+            <tr>
+                <td>Max Marks</td>
+                <td style="text-align: right;"></td>
+            </tr>
+            <tr>
+                <td>Min Marks</td>
+                <td style="text-align: right;"></td>
+            </tr>
+        </table>
+        <br />
+        <div style="font-size: 16px; font-family: 'Times New Roman';">
+            I hereby endorse that the grades stated above are correct and alid on the date of delivery, unless decided otherwise by the Head of Study Program.
+            <br />
+            Remarks:
+            <section class="container">
+                <div class="one" style="text-align: center">
+                    Head of Study Program
+                </div>
+                <div class="two" style="text-align: center">
+                    Lecturer
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    Dosen
+                </div>
+            </section>
+            <br />
+            Note:
+            <br />
+            <br />
+            <table>
+                <tr>
+                    <td style="padding-right: 10px;">CC: </td>
+                    <td>1. Program of Study</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>2. BAA</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
 
-@section scripts{
-    <script src="~/Scripts/Admin/Transkrip/main.js"></script>
-    <script src="~/Scripts/loading/loadingoverlay.min.js"></script>
-}
+<script></script>

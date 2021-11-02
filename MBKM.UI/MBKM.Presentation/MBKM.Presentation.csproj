@@ -530,6 +530,7 @@
     <Content Include="Areas\Portal\Views\KHS\KHS.cshtml" />
     <Content Include="Areas\Admin\Views\SummaryFeedback\GetPersentationData.cshtml" />
     <Content Include="Areas\Portal\Views\TranskripMahasiswa\PrintTranskrip.cshtml" />
+    <Content Include="Areas\Admin\Views\Penilaian\DaftarNilaiRincian.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />

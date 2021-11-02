@@ -16,6 +16,7 @@ namespace MBKM.Services.MBKMServices
         VMBobot GetBobot(string idMatkul);
         IEnumerable<VMSubBobot> GetSubBobot(string idMatkul);
         VMListNilaiKuliah GetNilaiMahasiswa();
+        VMDNR GetDNR(int idJadwalKuliah);
 
     }
     public class NilaiKuliahService : EntityService<NilaiKuliah>, INilaiKuliahService
@@ -46,6 +47,10 @@ namespace MBKM.Services.MBKMServices
         public VMListNilaiKuliah GetNilaiMahasiswa()
         {
             return _nilaiKuliahRepository.GetNilaiMahasiswa();
+        }
+        public VMDNR GetDNR(int idJadwalKuliah)
+        {
+            return _nilaiKuliahRepository.GetDNR(idJadwalKuliah);
         }
     }
 }
