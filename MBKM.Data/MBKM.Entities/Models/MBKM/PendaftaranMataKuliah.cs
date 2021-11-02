@@ -25,7 +25,7 @@ namespace MBKM.Entities.Models.MBKM
         [JsonIgnore]
         public virtual ICollection<CPLMKPendaftaran> CPLMKPendaftarans { get; set; }
         public string StatusPendaftaran { get; set; }
-        //public bool FlagSertifikat { get; set; }
+        public bool FlagSertifikat { get; set; }
 
     }
 }
