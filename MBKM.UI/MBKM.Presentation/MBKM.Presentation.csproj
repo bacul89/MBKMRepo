@@ -179,6 +179,7 @@
     <Compile Include="Areas\Portal\PortalAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UnAuthorizedController.cs" />
+    <Compile Include="Helper\CapaiaMatakuliahSertifkatDTO.cs" />
     <Compile Include="Helper\DTOAnswer.cs" />
     <Compile Include="Helper\GMailer.cs" />
     <Compile Include="Helper\MBKMAuthorize.cs" />
@@ -195,6 +196,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Asset\atma-sertifikat.png" />
     <Content Include="Asset\atmajayapoto.jpg" />
     <Content Include="Asset\BG_SERTIFIKAT.png" />
     <Content Include="Asset\default-photo-profile.png" />
@@ -244,6 +246,7 @@
     <Content Include="Scripts\Admin\Menu\main.js" />
     <Content Include="Scripts\Admin\Role\crud.js" />
     <Content Include="Scripts\Admin\Role\main.js" />
+    <Content Include="Scripts\Admin\SertifikatMBKM\main.js" />
     <Content Include="Scripts\Admin\Transkrip\main.js" />
     <Content Include="Scripts\Admin\SummaryFeedback\main.js" />
     <Content Include="Scripts\Admin\Transkrip\print.js" />
@@ -540,6 +543,7 @@
     <Content Include="Areas\Portal\Views\TranskripMahasiswa\ExportPDF.cshtml" />
     <Content Include="Areas\Portal\Views\SertifikatMbkm\Index.cshtml" />
     <Content Include="Areas\Admin\Views\SertifikatMBKM\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SertifikatMBKM\GetFile.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
