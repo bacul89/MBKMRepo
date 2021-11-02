@@ -19,9 +19,12 @@
     }
 
     th {
-        background: #fff;
+        background: #FF8A04;
         padding: 15px 0px;
         font-size: 13px;
+    }
+    .sempit {
+        line-height: 10px;
     }
 </style>
 
@@ -29,16 +32,17 @@
     <div class="card center-block" style="background-color: white; width: 100%; padding: 0px">
         <div class="card-body responsive-content" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; padding: 0px">
             <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
-                KHS<br />
+                KHS
+                <p style="font-weight: normal; font-size: 15px; color: #c1baba;" id="subtitle">Kartu Hasil Studi</p>
+               
             </h4>
             <hr />
 
             <div class="container" style="width: 100%;">
-                <button target="_blank" class="btn btn-success" onclick="KHSPage($('#tahunSemester').text(),$('#tahunSemester').val())"> Cetak <span class="fa fa-download"></span></button>
+                @*<button target="_blank" class="btn btn-success" onclick="KHSPage($('#tahunSemester').text(),$('#tahunSemester').val())"> Cetak <span class="fa fa-download"></span></button>*@
                 @*<div class="col" style="text-align:center"><a target="_blank" href="javascript:void(0)" style="color:black" onclick="PrintKHS($('#tahunSemester').text(),$('#tahunSemester').val())"><span class="fa fa-download"></span></a></div>*@
-                <div class="col" style="text-align:center"><a target="_blank" onclick="location.href='@Url.Action("PrintKHS", "KHS")?strmT=' + $('#tahunSemester').text() + '&strmID=' + $('#tahunSemester').val()" style="color:black"><i class="fas fa-file-download coral"></i></i></a></div>
-                <br />
-                <br />
+                @*<div class="col" style="text-align:center"><a target="_blank" onclick="location.href='@Url.Action("PrintKHS", "KHS")?strmT=' + $('#tahunSemester').text() + '&strmID=' + $('#tahunSemester').val()" style="color:black"><i class="fas fa-file-download coral"></i></i></a></div>*@
+               
 
                 <div class="box col-md-6">
                     <table hidden class="table" style="width: auto;">
@@ -51,29 +55,29 @@
                     </table>
                     <table>
                         <tr>
-                            <td>SEMESTER</td>
+                            <td style="font-weight:bold">SEMESTER</td>
                             <td style="padding:5px"> : </td>
                             <td id="semester"></td>
                         </tr>
                         <tr>
                         </tr>
                         <tr>
-                            <td>NIM</td>
+                            <td style="font-weight:bold">NIM</td>
                             <td style="padding:5px"> : </td>
                             <td id="nim"></td>
                         </tr>
                         <tr>
-                            <td>NAMA</td>
+                            <td style="font-weight:bold">NAMA</td>
                             <td style="padding:5px"> : </td>
                             <td id="name"></td>
                         </tr>
                         <tr>
-                            <td>UNIVERSITAS ASAL</td>
+                            <td style="font-weight:bold">UNIVERSITAS ASAL</td>
                             <td style="padding:5px"> : </td>
                             <td id="univ"></td>
                         </tr>
                     </table>
-                    
+
 
 
 
@@ -87,63 +91,72 @@
                     <table>
 
 
+                        <tr class="sempit" style="margin: 0">
+                            <td style="font-size: 12px;font-weight:bold; margin: 0">NILAI</td>
+                            <td></td>
+                            <td style="font-size: 12px;font-weight:bold; margin: 0"><em>GRADE</em></td>
 
-
-                        <tr>
-                            <td>A</td>
-                            <td style="padding:3px"> = </td>
-                            <td id="nA">4.00</td>
-                            <td style="padding-left: 60px"> M = MUNDUR (WITHDRAWN)</td>
 
 
                         </tr>
+                        <tr class="sempit" style="margin: 0">
+                            <td style="font-size: 12px; margin: 0">A</td>
+                            <td style="padding: 3px; font-size: 12px; margin: 0"> = </td>
+                            <td style="font-size: 12px; margin: 0" id="nA">4.00</td>
+                            <td style="font-size:12px; padding-left: 60px;margin:0"> M = MUNDUR (WITHDRAWN)</td>
 
-                        <tr>
-                            <td>A-</td>
-                            <td style="padding:3px;padding-right:5px"> = </td>
-                            <td id="nAm">3.70</td>
-                            @*<td style="padding-left: 100px; padding-top: -10px"> WITHDRAWn</td>*@
+
                         </tr>
-                        <tr>
-                            <td>B+</td>
-                            <td style="padding:3px"> = </td>
-                            <td id="nBp">3.30</td>
-                            <td style="padding-left:60px"> R = CEKAL (BARRED)</td>
+
+                        <tr class="sempit" style="margin: 0">
+                            <td style="font-size: 12px; margin: 0">A-</td>
+                            <td style="padding: 3px; font-size: 12px; margin: 0"> = </td>
+                            <td style="font-size: 12px; margin: 0" id="nA">3.70</td>
+                            @*<td style="font-size:12px; padding-left: 60px"> R = CEKAL (BARRED)</td>*@
+
+
                         </tr>
-                        <tr>
-                            <td>B</td>
-                            <td style="padding:3px"> = </td>
-                            <td id="nB">3.00</td>
-                            @*<td style="padding-left:100px"> BARRED</td>*@
+                        <tr class="sempit">
+                            <td style="font-size:12px">B+</td>
+                            <td style="padding: 3px; font-size: 12px"> = </td>
+                            <td style="font-size:12px" id="nA">3.30</td>
+                            <td style="font-size:12px; padding-left: 60px"> R = CEKAL (BARRED)</td>
                         </tr>
-                        <tr>
-                            <td>B-</td>
-                            <td style="padding:3px"> = </td>
-                            <td id="nBm">2.70</td>
-                            <td style="padding-left:60px"> S = SAKIT (SICK)</td>
+                        <tr class="sempit">
+                            <td style="font-size:12px">B</td>
+                            <td style="padding: 3px; font-size: 12px"> = </td>
+                            <td style="font-size:12px" id="nA">3.00</td>
+                            @*<td style="font-size:12px; padding-left: 60px"> R = CEKAL (BARRED)</td>*@
                         </tr>
-                        <tr>
-                            <td>C+</td>
-                            <td style="padding:3px"> = </td>
-                            <td id="nCp">2.30</td>
-                            @*<td style="padding-left:100px"> SICK</td>*@
+                        <tr class="sempit">
+                            <td style="font-size:12px">B-</td>
+                            <td style="padding: 3px; font-size: 12px"> = </td>
+                            <td style="font-size:12px" id="nA">2.70</td>
+                            <td style="font-size:12px; padding-left: 60px"> S = SICK (SAKIT)</td>
                         </tr>
-                        <tr>
-                            <td>C</td>
-                            <td style="padding:3px"> = </td>
-                            <td id="nC">2.00</td>
-                            <td style="padding-left:60px"> T = TUNDA (POSTPONED)</td>
+                        <tr class="sempit">
+                            <td style="font-size:12px">C+</td>
+                            <td style="padding: 3px; font-size: 12px"> = </td>
+                            <td style="font-size:12px" id="nA">2.30</td>
+                            @*<td style="font-size:12px; padding-left: 60px"> R = CEKAL (BARRED)</td>*@
                         </tr>
-                        <tr>
-                            <td>D</td>
-                            <td style="padding:3px"> = </td>
-                            <td id="nD">1.00</td>
-                            @*<td style="padding-left:100px"> POSTPONED</td>*@
+                        <tr class="sempit">
+                            <td style="font-size:12px">C</td>
+                            <td style="padding: 3px; font-size: 12px"> = </td>
+                            <td style="font-size:12px" id="nA">2.00</td>
+                            <td style="font-size:12px; padding-left: 60px"> T = TUNDA (POSTPONED)</td>
                         </tr>
-                        <tr>
-                            <td>E</td>
-                            <td style="padding:3px"> = </td>
-                            <td id="nE">0</td>
+                        <tr class="sempit">
+                            <td style="font-size:12px">D</td>
+                            <td style="padding: 3px; font-size: 12px"> = </td>
+                            <td style="font-size:12px" id="nA">1.00</td>
+                            @*<td style="font-size:12px; padding-left: 60px"> R = CEKAL (BARRED)</td>*@
+                        </tr>
+                        <tr class="sempit">
+                            <td style="font-size:12px">E</td>
+                            <td style="padding: 3px; font-size: 12px"> = </td>
+                            <td style="font-size:12px" id="nA">0</td>
+                            @*<td style="font-size:12px; padding-left: 60px"> R = CEKAL (BARRED)</td>*@
                         </tr>
 
                     </table>
@@ -198,13 +211,72 @@
                         </tbody>
                     </table>
                 </div>
+                <!--<div>
+            <table id="countit" width="100%" class="table table-bordered table-striped hover dt-responsive responsive">
+                <thead>
+                    <tr>-->
+                @*<th width="10%">NO</th>*@
+                <!--<th width="20%" style="text-align:center">KODE MATA KULIAH <br /> <em>CODE</em></th>
+                <th width="40%" style="text-align:center">NAMA MATA KULIAH <br /> <em>COURSES</em></th>
+                <th width="5%" style="text-align:center">SEKSI<br /> <em>SECTION</em></th>
+                <th width="10%" style="text-align:center">SKS(K)<br /> <em>UNITS</em></th>
+                <th width="5%" style="text-align:center">NILAI(N) <br /> <em>GRADE</em></th>
+                <th width="20%" style="text-align:center">HASIL(N X K)<br /> <em>QUALITY POINTS</em></th>
+            </tr>
+        </thead>
+        <tbody>
+            foreach (var employee in (IEnumerable<MBKM.Entities.ViewModel.VMKHS>)ViewData["EmployeeList2"])
+            {
+                <tr>
+                    <td>employee.KodeMataKulia</td>
+                    <td>employee.EngMK <br /> employee.NamaMatakuliah</td>
+                    <td>employee.Seksi</td>
+                    <td class="count-me">employee.SKS</td>
+                    <td>employee.Nilai</td>
+                    <td class="count-hasil">employee.Hasil</td>-->
+                @*@{total += @employee.SKS;}*@
+
+                <!--</tr>
+                    }
+
+                </tbody>
+
+            </table>
+        </div>-->
+                <br />
+                <div>
+
+                    <table id="sumT" width="50%" class="table table-bordered table-striped hover dt-responsive responsive">
+
+                        <colgroup span="3"></colgroup>
+                        <colgroup span="3"></colgroup>
+                        <thead>
+                            <tr>
+                                @*<th width="10%">NO</th>*@
+
+                                @*<th width="40%">HASIL SEMESTER <em>SEMESTER RESULTS</em></th>*@
+                                <th colspan="3" scope="colgroup" style="text-align:center">HASIL SEMESTER <em>SEMESTER RESULTS</em></th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                            </tr>
+
+
+                        </tbody>
+
+                    </table>
+                </div>
 
 
 
             </div>
 
-
-
+            
+            @*<div class="col" style="text-align:center"><a target="_blank" href="javascript:void(0)" style="color:black" onclick="PrintKHS($('#tahunSemester').text(),$('#tahunSemester').val())"><span class="fa fa-download"></span></a></div>*@
+            <div class="col" style="text-align: right; "><a class="btn btn-success" target="_blank" onclick="location.href='@Url.Action("PrintKHS", "KHS")?strmT=' + $('#tahunSemester').text() + '&strmID=' + $('#tahunSemester').val()" style="color: white;margin-right:20px">Cetak <span class="fa fa-download"></span></a></div>
         </div>
     </div>
 </div>
@@ -214,6 +286,7 @@
 
 
 @section scripts{
+    <script src="https://cdn.datatables.net/plug-ins/1.10.19/api/sum().js"></script>
     <script>
          var semesters = @Html.Raw(Json.Encode(Model));
         var semestersAsList = [];
@@ -234,21 +307,56 @@
             });
             $("#tahunSemester").change(function () {
                 loadTable($("#tahunSemester").val());
+                $("#jadwalKuliah_filter").hide();
             });
             //$("semester").val($("#tahunSemester").val());
             $('#semester').html($("#tahunSemester").text());
             //alert(semesters);
             console.log(semesters);
             loadTable($("#tahunSemester").val());
+
+            //batas hasil res
+            var tds = document.getElementById('jadwalKuliah').getElementsByTagName('td');
+            var sum = 0;
+            for (var i = 0; i < tds.length; i++) {
+                if (tds[i].className == 'count-me') {
+                    sum += isNaN(tds[i].innerHTML) ? 0 : parseInt(tds[i].innerHTML);
+                }
+            }
+
+            // var tds2 = document.getElementById('countit').getElementsByTagName('td');
+            var sum2 = 0;
+            for (var i = 0; i < tds.length; i++) {
+                if (tds[i].className == 'count-hasil') {
+                    sum2 += isNaN(tds[i].innerHTML) ? 0 : parseFloat(tds[i].innerHTML);
+                    //sum2 += isNaN(tds[i].innerHTML) ? 0 : parseInt(tds[i].innerHTML);
+                }
+            }
+            document.getElementById('sumT').innerHTML += '<tr><td style="font-weight:bold" id="totalsks"></td><td style="font-weight:bold" id="totalHasil"></td><td style="font-weight:bold" id="IPS"></td></tr>';
+            console.log(tds[5]);
         });
         function loadTable(strm) {
             if (!strm) {
                 strm = 0;
             }
             datatable = $('#jadwalKuliah').DataTable({
+                "paging": false,
+                "bFilter": false,
+                "bInfo": false,
                 ajax: {
                     url: '@Url.Action("GetJadwalKuliah", "KHS")?strm=' + strm,
                     dataSrc: ''
+                },
+                drawCallback: function () {
+                    var sumSks = $('#jadwalKuliah').DataTable().column(4).data().sum();
+                    $('#totalsks').html('∑K: ' + sumSks + ' SKS');
+                    var sumHasil = $('#jadwalKuliah').DataTable().column(6).data().sum();
+                    $('#totalHasil').html('∑N X K: ' + parseFloat(sumHasil).toFixed(2));
+                    var sumIPS = (sumHasil /sumSks);
+                    $('#IPS').html('IPS <em> GPA</em>: ' + parseFloat(sumIPS).toFixed(2));
+                    //∑N X K: ' + parseFloat(sum2).toFixed(2) + '
+                    //∑K: ' + parseFloat(sum).toFixed(2) + ' SKS <em>Units</em>
+                    //IPS <em>GPA</em>: ' + parseFloat((sum2 / sum)).toFixed(2) + '
                 },
                 "columnDefs": [{
                     "searchable": false,
@@ -284,7 +392,7 @@
                     {
                         "data": "SKS",
                         "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
+                            return '<div class="count-me center">' + data + '</div>';
                         }
                     },
                     {
@@ -296,7 +404,7 @@
                     {
                         "data": "Hasil",//hasil
                         "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
+                            return '<div class="count-hasil center">' + data + '</div>';
                         }
                     }
                     //{
