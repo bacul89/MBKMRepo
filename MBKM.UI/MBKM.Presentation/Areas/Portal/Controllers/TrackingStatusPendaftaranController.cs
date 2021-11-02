@@ -167,13 +167,14 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     _pendaftaranMataKuliahService.Save(pendaftaran);
                     var NimBaru = _mahasiswaService.GetNim();
                     
-                    if (pendaftaran.mahasiswas.NIM == null || (pendaftaran.mahasiswas.NIM != pendaftaran.mahasiswas.NIMAsal && !pendaftaran.mahasiswas.NIM.Contains("MBKM")))
+                    if (pendaftaran.mahasiswas.NIM == null /*|| (pendaftaran.mahasiswas.NIM != pendaftaran.mahasiswas.NIMAsal && !pendaftaran.mahasiswas.NIM.Contains("MBKM"))*/)
                     {
                         Mahasiswa tmpMhs = _mahasiswaService.Get(pendaftaran.MahasiswaID);
                         tmpMhs.NIM = NimBaru;
                         _mahasiswaService.Save(tmpMhs);
-                        string[] tempNimArray = NimBaru.Split(new string[] { "MBKM" }, StringSplitOptions.None);
-                        int CountNim = Int32.Parse(tempNimArray[1]);
+                        string data = NimBaru.Substring(NimBaru.Length - 4);
+                        /*string[] tempNimArray = NimBaru.Split(new string[] { "MBKM" }, StringSplitOptions.None);*/
+                        int CountNim = Int32.Parse(data);
                         _mahasiswaService.UpdateNim(CountNim);
                     }
 

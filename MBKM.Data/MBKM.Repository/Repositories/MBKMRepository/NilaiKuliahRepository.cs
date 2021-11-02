@@ -18,6 +18,26 @@ namespace MBKM.Repository.Repositories.MBKMRepository
         public NilaiKuliahRepository(DbContext _db) : base(_db)
         {
         }
+        public VMBobot GetBobot(string idMatkul)
+        {
+            using (var context = new MBKMContext())
+            {
+                var courseParam = new SqlParameter("@CourseID", idMatkul);
+                var result = context.Database
+                    .SqlQuery<VMBobot>("GetBobotByCourseID @CourseID", courseParam).FirstOrDefault();
+                return result;
+            }
+        }
+        public IEnumerable<VMSubBobot> GetSubBobot(string idMatkul)
+        {
+            using (var context = new MBKMContext())
+            {
+                var courseParam = new SqlParameter("@CourseID", idMatkul);
+                var result = context.Database
+                    .SqlQuery<VMSubBobot>("GetSubBobotByCourseID @CourseID", courseParam).ToList();
+                return result;
+            }
+        }
 
         public IEnumerable<VMMataKuliah> GetMatkulEn(string kodeMataKuliah, int mataKuilahID, int sTRM)
         {

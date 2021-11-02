@@ -98,42 +98,58 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             if (n == "A")
             {
                 var hasil = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length)) * 4.00;
-                return hasil.ToString();
+                var gege = hasil.ToString();
+                var ccd = gege.Replace(',', '.');
+                return ccd;
             }
             if (n == "A-")
             {
                 var hasil = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length)) * 3.70;
-                return hasil.ToString();
+                var gege = hasil.ToString();
+                var ccd = gege.Replace(',', '.');
+                return ccd;
             }
             if (n == "B+")
             {
                 var hasil = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length)) * 3.30;
-                return hasil.ToString();
+                var gege = hasil.ToString();
+                var ccd = gege.Replace(',', '.');
+                return ccd;
             }
             if (n == "B")
             {
                 var hasil = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length)) * 3.00;
-                return hasil.ToString();
+                var gege = hasil.ToString();
+                var ccd = gege.Replace(',', '.');
+                return ccd;
             }
             if (n == "B-")
             {
                 var hasil = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length)) * 2.70;
-                return hasil.ToString();
+                var gege = hasil.ToString();
+                var ccd = gege.Replace(',', '.');
+                return ccd;
             }
             if (n == "C+")
             {
                 var hasil = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length)) * 2.30;
-                return hasil.ToString();
+                var gege = hasil.ToString();
+                var ccd = gege.Replace(',', '.');
+                return ccd;
             }
             if (n == "C")
             {
                 var hasil = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length)) * 2.00;
-                return hasil.ToString();
+                var gege = hasil.ToString();
+                var ccd = gege.Replace(',', '.');
+                return ccd;
             }
             if (n == "D")
             {
                 var hasil = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length)) * 1.00;
-                return hasil.ToString();
+                var gege = hasil.ToString();
+                var ccd = gege.Replace(',', '.');
+                return ccd;
             }
             var cek = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length));
             var E = 0;
