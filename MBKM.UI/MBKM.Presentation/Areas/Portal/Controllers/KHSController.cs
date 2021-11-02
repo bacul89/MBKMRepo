@@ -98,57 +98,75 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             if (n == "A")
             {
                 var hasil = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length)) * 4.00;
-                var gege = hasil.ToString();
+                //var hasil = Math.Truncate( Convert.ToInt64(sks) * 4.00);
+                //var dec = Decimal.Round(Convert.ToDecimal(hasil), 2);
+                var dec = hasil.ToString("N2");
+                var gege = dec.ToString();
                 var ccd = gege.Replace(',', '.');
+                //var tes = parseFloat(hasil).toFixed(2);
                 return ccd;
             }
             if (n == "A-")
             {
                 var hasil = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length)) * 3.70;
-                var gege = hasil.ToString();
+                var dec = hasil.ToString("N2");
+                var gege = dec.ToString();
                 var ccd = gege.Replace(',', '.');
+                //var tes = parseFloat(hasil).toFixed(2);
                 return ccd;
             }
             if (n == "B+")
             {
                 var hasil = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length)) * 3.30;
-                var gege = hasil.ToString();
+                var dec = hasil.ToString("N2");
+                var gege = dec.ToString();
                 var ccd = gege.Replace(',', '.');
+                //var tes = parseFloat(hasil).toFixed(2);
                 return ccd;
             }
             if (n == "B")
             {
                 var hasil = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length)) * 3.00;
-                var gege = hasil.ToString();
+                var dec = hasil.ToString("N2");
+                var gege = dec.ToString();
                 var ccd = gege.Replace(',', '.');
+                //var tes = parseFloat(hasil).toFixed(2);
                 return ccd;
             }
             if (n == "B-")
             {
                 var hasil = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length)) * 2.70;
-                var gege = hasil.ToString();
+                var dec = hasil.ToString("N2");
+                var gege = dec.ToString();
                 var ccd = gege.Replace(',', '.');
+                //var tes = parseFloat(hasil).toFixed(2);
                 return ccd;
             }
             if (n == "C+")
             {
                 var hasil = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length)) * 2.30;
-                var gege = hasil.ToString();
+                var dec = hasil.ToString("N2");
+                var gege = dec.ToString();
                 var ccd = gege.Replace(',', '.');
+                //var tes = parseFloat(hasil).toFixed(2);
                 return ccd;
             }
             if (n == "C")
             {
                 var hasil = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length)) * 2.00;
-                var gege = hasil.ToString();
+                var dec = hasil.ToString("N2");
+                var gege = dec.ToString();
                 var ccd = gege.Replace(',', '.');
+                //var tes = parseFloat(hasil).toFixed(2);
                 return ccd;
             }
             if (n == "D")
             {
                 var hasil = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length)) * 1.00;
-                var gege = hasil.ToString();
+                var dec = hasil.ToString("N2");
+                var gege = dec.ToString();
                 var ccd = gege.Replace(',', '.');
+                //var tes = parseFloat(hasil).toFixed(2);
                 return ccd;
             }
             var cek = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length));
@@ -164,6 +182,17 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             ViewData["nim"] = mahasiswa.NIM;
             ViewData["univ"] = mahasiswa.NamaUniversitas;
             ViewData["semester"] = strmT;
+            var smIndo = strmT;
+            if (smIndo.Contains("ODD"))
+            {
+                var smIndo2 = strmT.Replace("ODD Semester", "Semester Ganjil");
+                ViewData["sIndo"] = smIndo2;
+            }
+            else
+            {
+                var smIndo2 = strmT.Replace("EVEN Semester", "Semester Genap");
+                ViewData["sIndo"] = smIndo2;
+            }
             //var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
             List<PendaftaranMataKuliah> pmks = new List<PendaftaranMataKuliah>();
             //List<NilaiKuliah> nilaiKuliahs = new List<NilaiKuliah>();
@@ -189,7 +218,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 Nilai = //x.JadwalKuliahID,
                              GetPresentase(mahasiswa.ID, x.JadwalKuliahID),
                 //JadwalKuliahID = x.JadwalKuliahID,
-                Hasil = GetHasil(mahasiswa.ID, x.JadwalKuliahID, x.JadwalKuliahs.SKS)
+                Hasil = GetHasil(mahasiswa.ID, x.JadwalKuliahID, x.JadwalKuliahs.SKS),
+                EngMK = GetMatkulEn(x.JadwalKuliahs.KodeMataKuliah, Int32.Parse(x.JadwalKuliahs.MataKuliahID), strmID)
                 //ID = x.ID
             });
             //List<VMKHS> khsmodel = new List<VMKHS>();
@@ -207,6 +237,16 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             ViewData["nim"] = mahasiswa.NIM;
             ViewData["univ"] = mahasiswa.NamaUniversitas;
             ViewData["semester"] = strmT;
+            var smIndo = strmT;
+            if (smIndo.Contains("ODD"))
+            {
+                var smIndo2 = strmT.Replace("ODD Semester", "Semester Ganjil");
+                ViewData["sIndo"] = smIndo2;
+            }
+            else {
+                var smIndo2 = strmT.Replace("EVEN Semester", "Semester Genap");
+                ViewData["sIndo"] = smIndo2;
+            }
             //var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
             List<PendaftaranMataKuliah> pmks = new List<PendaftaranMataKuliah>();
             //List<NilaiKuliah> nilaiKuliahs = new List<NilaiKuliah>();
@@ -232,7 +272,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 Nilai = //x.JadwalKuliahID,
                              GetPresentase(mahasiswa.ID, x.JadwalKuliahID),
                 //JadwalKuliahID = x.JadwalKuliahID,
-                Hasil = GetHasil(mahasiswa.ID, x.JadwalKuliahID, x.JadwalKuliahs.SKS)
+                Hasil = GetHasil(mahasiswa.ID, x.JadwalKuliahID, x.JadwalKuliahs.SKS),
+                EngMK = GetMatkulEn(x.JadwalKuliahs.KodeMataKuliah,Int32.Parse(x.JadwalKuliahs.MataKuliahID),x.JadwalKuliahs.STRM)
+             
                 //ID = x.ID
             });
             //List<VMKHS> khsmodel = new List<VMKHS>();
@@ -241,8 +283,19 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             ViewData["EmployeeList2"] = list;
 
             var report = new Rotativa.ViewAsPdf("KHS")
-            { FileName = "-KHS.pdf" };
+            { FileName = strmT+"-"+mahasiswa.Nama+"-KHS.pdf" };
             return report;
+        }
+        private string GetMatkulEn(string KodeMataKuliah, int MataKuliahID, int STRM)
+        {
+
+            var GetMatkulEn = _transkripService.GetMatkulEn(KodeMataKuliah, MataKuliahID, STRM);
+            string final = "";
+            foreach (var item in GetMatkulEn)
+            {
+                final = item.COURSE_TITLE_LONG;
+            }
+            return final;
         }
         public Mahasiswa GetMahasiswaByEmail(string email)
         {

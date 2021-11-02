@@ -16,5 +16,6 @@ namespace MBKM.Entities.ViewModel
         public string SKS { get; set; }
         public string Nilai { get; set; }
         public string Hasil { get; set; }
+        public string EngMK { get; set; }
     }
 }

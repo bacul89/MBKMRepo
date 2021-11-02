@@ -85,7 +85,9 @@
                 @* box orange *@
                 <img src="~/Asset/Lambang_Unika_Atma_Jaya.png" style="max-height: 75px; margin: 15px 25px;float:left" />
                 <h4 style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black; text-align:right">
-                    KHS<br />
+                    KHS
+                    
+                    <br />
                 </h4>
                 <h4 style="padding-top: 0px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 25px; color: black; text-align:right; font-weight:normal">
                     Kartu Hasil Studi<br />
@@ -247,12 +249,12 @@
                     <thead>
                         <tr>
                             @*<th width="10%">NO</th>*@
-                            <th width="20%">KODE MATA KULIAH</th>
-                            <th width="40%">NAMA MATA KULIAH</th>
-                            <th width="5%">SEKSI</th>
-                            <th width="10%">SKS(K)</th>
-                            <th width="5%">NILAI(N)</th>
-                            <th width="20%">HASIL(N X K)</th>
+                            <th width="20%" style="text-align:center">KODE MATA KULIAH <br /> <em>CODE</em></th>
+                            <th width="40%" style="text-align:center">NAMA MATA KULIAH <br /> <em>COURSES</em></th>
+                            <th width="5%" style="text-align:center">SEKSI<br /> <em>SECTION</em></th>
+                            <th width="10%" style="text-align:center">SKS(K)<br /> <em>UNITS</em></th>
+                            <th width="5%" style="text-align:center">NILAI(N) <br /> <em>GRADE</em></th>
+                            <th width="20%" style="text-align:center">HASIL(N X K)<br /> <em>QUALITY POINTS</em></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -260,7 +262,7 @@
                         {
                             <tr>
                                 <td>@employee.KodeMataKuliah</td>
-                                <td>@employee.NamaMatakuliah</td>
+                                <td>@employee.EngMK <br /> @employee.NamaMatakuliah</td>
                                 <td>@employee.Seksi</td>
                                 <td class="count-me">@employee.SKS</td>
                                 <td>@employee.Nilai</td>
@@ -322,16 +324,30 @@
 <script>
 
 
-         $(document).ready(function () {
+    $(document).ready(function () {
+        
              $('#name').html("@ViewData["nama"].ToString()");
              $('#nim').html("@ViewData["nim"].ToString()");
              $('#univ').html("@ViewData["univ"].ToString()");
-             $('#semester').html("@ViewData["semester"].ToString()");
-             var term1 = $('#semester').text();
-            //// if (term1.includes("ODD")) {
-                 var term2 = term1.replace('ODD Semester', 'Semester Ganjil')
-                 $('#term').html(term2);
-            //// }
+             $('#semester').html('<em>'+"@ViewData["semester"].ToString()"+'</em>');
+           // var term1 = $('#semester').text();
+       // var regex = new RegExp("ODD",);
+       //var rex = regex.test(term1);
+       // if (rex == true) {
+       //     var term2 = term1.replace('ODD Semester', 'Semester Ganjil')
+            $('#term').html("@ViewData["sIndo"].ToString()");
+       // }
+             //if (term1.includes("ODD")) {
+             //    var term2 = term1.replace('ODD Semester', 'Semester Ganjil')
+
+             //    $('#term').html(term2);
+             //}
+            // var term1 = $('#semester').text();
+             //setTimeout(function () {
+             //    //your code here
+
+             //}, 500);
+
             // if (term1.includes("ODD")) {
             //     alert("asd");
             //     }
@@ -339,7 +355,7 @@
              //    var term2 = term1.replace('Even Semester', 'Semester Genap')
             //     $('#term').html(term1);
             // }
-            
+
             // console.log(@Model);
              var tds = document.getElementById('countit').getElementsByTagName('td');
              var sum = 0;
@@ -357,23 +373,37 @@
                      //sum2 += isNaN(tds[i].innerHTML) ? 0 : parseInt(tds[i].innerHTML);
                  }
              }
-             document.getElementById('sumT').innerHTML += '<tr><td>∑K: ' + sum + ' SKS <em>Units</em></td><td>∑N X K: ' + sum2 + '</td><td>IPS <em>GPA</em>: ' + (sum2 / sum) +'</td></tr>';
+        document.getElementById('sumT').innerHTML += '<tr><td>∑K: ' + parseFloat(sum).toFixed(2) + ' SKS <em>Units</em></td><td>∑N X K: ' + parseFloat(sum2).toFixed(2) + '</td><td>IPS <em>GPA</em>: ' + parseFloat((sum2 / sum)).toFixed(2) +'</td></tr>';
              //document.getElementById('sumT').innerHTML += '<tr><td>' + sum2 + '</td><td>total hasil</td></tr>';
              //document.getElementById('sumT').innerHTML += '<tr><td>' + (sum2/sum) + '</td><td>IPS</td></tr>';
              console.log(tds[5].innerHTML);
              //sts();
+             //geek();
 
     //window.onload = sts();
          });
     //document.onload = sts();
-    function sts() {
-        var term1 = $('#semester').text();
-         if (term1.includes("ODD")) {
-        var term2 = term1.replace('ODD Semester', 'Semester Ganjil')
-        $('#term').html(term2);
-             }
+    //function sts() {
+    //    var term1 = $('#semester').text();
+    //     if (term1.includes("ODD")) {
+    //    var term2 = term1.replace('ODD Semester', 'Semester Ganjil')
+    //    $('#term').html(term2);
+    //         }
 
-    }
+    //}
+    //function geek() {
+    //    var term1 = $('#semester').text();
+    //    var regex = new RegExp("ODD",);
+    //    var rex = regex.test(term1);
+    //    if (rex == true) {
+    //        var term2 = term1.replace('ODD Semester', 'Semester Ganjil')
+    //        $('#term').html(term2);
+    //    }
+    //    //document.getElementById("app").innerHTML
+    //    //    = " Match " + " found: " + "<b>"
+    //    //    + rex + "</b>";
+    //    console.log(rex);
+    //}
 
 </script>
 
