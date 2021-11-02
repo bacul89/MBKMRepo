@@ -283,7 +283,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             ViewData["EmployeeList2"] = list;
 
             var report = new Rotativa.ViewAsPdf("KHS")
-            { FileName = "-KHS.pdf" };
+            { FileName = strmT+"-"+mahasiswa.Nama+"-KHS.pdf" };
             return report;
         }
         private string GetMatkulEn(string KodeMataKuliah, int MataKuliahID, int STRM)
