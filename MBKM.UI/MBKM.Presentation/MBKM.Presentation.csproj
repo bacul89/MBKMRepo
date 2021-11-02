@@ -179,6 +179,7 @@
     <Compile Include="Areas\Portal\PortalAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UnAuthorizedController.cs" />
+    <Compile Include="Helper\CapaiaMatakuliahSertifkatDTO.cs" />
     <Compile Include="Helper\DTOAnswer.cs" />
     <Compile Include="Helper\GMailer.cs" />
     <Compile Include="Helper\MBKMAuthorize.cs" />
