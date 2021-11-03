@@ -6,6 +6,7 @@ $(document).ready(function () {
     $("#prodiCari").prop("disabled", true);
     $("#lokasiCari").prop("disabled", true);
     $("#matakuliahCari").prop("disabled", true);
+    $("#seksiCari").prop("disabled", true);
     $("#jenjangCari").select2({
         placeholder: "-- Pilih Jenjang Studi --"
     });
@@ -350,36 +351,12 @@ function loadJenjangStudi(tipe, id, nama) {
                             //quietMillis: 50,
                             data: function (params) {
 
-                                return {
-
-                                    //search: params.term,
-                                    //instansi: $('#namaUniversitas').val(),
-                                    //length: params.length || 10,
-                                    //skip: params.skip || 0
-
-                                    take: 10,
-                                    search: params.term || "",
-                                    skip: (params.page - 1) * 10 || 0,
-                                    // searchBy: params.term,
-
-                                };
                             },
                             processResults: function (data, params) {
 
-                                var page = params.page - 1 || 1;
-                                //var pageLength = pageLength + data.length || 10;
-                                //console.log('page : ' + params.page);
-                                //console.log(page);
-                                //console.log('------------------------');
-                                //console.log(page * 10);
-                                //console.log(pageLength);
-
-                                return {
-                                    results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } }),
-                                    pagination: {
-                                        more: (page * 10) <= data.length
-                                    }
-                                }
+                                    return {
+                                        results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
+                                    };            
 
                             },
                         }
