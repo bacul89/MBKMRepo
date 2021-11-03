@@ -31,7 +31,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
         public ActionResult Index()
         {
-            return View();
+            return View(_absensiService.GetTahunSemester());
         }
         public ActionResult DetailPresensi(Int64 idJadwal, string tanggalAbsen)
         {
@@ -49,7 +49,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             return View(model);
         }
         public ActionResult GetTahunSemester()
-        {
+        {   
             return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.GetTahunSemester()), ContentType = "application/json" };
         }
         public ActionResult getLookupByTipe(string tipe)
