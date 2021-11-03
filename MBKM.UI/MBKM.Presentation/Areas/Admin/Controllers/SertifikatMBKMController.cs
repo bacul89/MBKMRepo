@@ -58,31 +58,65 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 var dataCheck = data.Where(x => x.MahasiswaID == d.MahasiswaID && x.Status == false).Count();
                 if (dataCheck != 0)
                 {
-                    final.Add(new String[]{
-                        d.MahasiswaID.ToString(),
-                        DescSemester.Nama,
-                        d.Mahasiswas.JenjangStudi,
-                        d.Mahasiswas.NamaUniversitas,
-                        d.Mahasiswas.NIM,
-                        d.Mahasiswas.Nama,
-                        d.Mahasiswas.NoKerjasama,
-                        "Belum Feedback",
-                        "Sudah Bayar"
-                    });
+                    if (d.Mahasiswas.FlagBayar)
+                    {
+                        final.Add(new String[]{
+                            d.MahasiswaID.ToString(),
+                            DescSemester.Nama,
+                            d.Mahasiswas.JenjangStudi,
+                            d.Mahasiswas.NamaUniversitas,
+                            d.Mahasiswas.NIM,
+                            d.Mahasiswas.Nama,
+                            d.Mahasiswas.NoKerjasama,
+                            "Belum Feedback",
+                            "Sudah Bayar"
+                        });
+                    }
+                    else
+                    {
+                        final.Add(new String[]{
+                            d.MahasiswaID.ToString(),
+                            DescSemester.Nama,
+                            d.Mahasiswas.JenjangStudi,
+                            d.Mahasiswas.NamaUniversitas,
+                            d.Mahasiswas.NIM,
+                            d.Mahasiswas.Nama,
+                            d.Mahasiswas.NoKerjasama,
+                            "Belum Feedback",
+                            "Belum Bayar"
+                        });
+                    }
                 }
                 else
                 {
-                    final.Add(new String[]{
-                        d.MahasiswaID.ToString(),
-                        DescSemester.Nama,
-                        d.Mahasiswas.JenjangStudi,
-                        d.Mahasiswas.NamaUniversitas,
-                        d.Mahasiswas.NIM,
-                        d.Mahasiswas.Nama,
-                        d.Mahasiswas.NoKerjasama,
-                        "Sudah Feedback",
-                        "Sudah Bayar"
-                    });
+                    if (d.Mahasiswas.FlagBayar)
+                    {
+                        final.Add(new String[]{
+                            d.MahasiswaID.ToString(),
+                            DescSemester.Nama,
+                            d.Mahasiswas.JenjangStudi,
+                            d.Mahasiswas.NamaUniversitas,
+                            d.Mahasiswas.NIM,
+                            d.Mahasiswas.Nama,
+                            d.Mahasiswas.NoKerjasama,
+                            "Sudah Feedback",
+                            "Sudah Bayar"
+                        });
+                    }
+                    else
+                    {
+                        final.Add(new String[]{
+                            d.MahasiswaID.ToString(),
+                            DescSemester.Nama,
+                            d.Mahasiswas.JenjangStudi,
+                            d.Mahasiswas.NamaUniversitas,
+                            d.Mahasiswas.NIM,
+                            d.Mahasiswas.Nama,
+                            d.Mahasiswas.NoKerjasama,
+                            "Sudah Feedback",
+                            "Belum Bayar"
+                        });
+                    }
                 }
             }
             return Json(final);

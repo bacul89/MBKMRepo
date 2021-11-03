@@ -17,13 +17,20 @@ $(document).ready(function () {
             "columns": [
                 {
                     "title": "Action",
-                    "data": 0,
                     "render": function (data, type, row, meta) {
-                        return `<div class="row justify-content-center">
-                            <div class="col" style="text-align:center">
-                                <a href="javascript:void(0)" style="color:black" onclick="GetSertificate('${data}')"> <i class="fas fa-file-search coral"></i></a>
-                            </div>
-                        </div>`;
+                        if (row[7] == "Sudah Feedback" && row[8] == "Sudah Bayar") {
+                            return `<div class="row justify-content-center">
+                                        <div class="col" style="text-align:center">
+                                            <a href="javascript:void(0)" style="color:black" onclick="GetSertificate('${row[0]}')"> <i class="fas fa-file-search coral"></i></a>
+                                        </div>
+                                    </div>`;
+                        } else {
+                            return `<div class="row justify-content-center">
+                                        <div class="col" style="text-align:center">
+                                            <a href="javascript:void(0)" style="color:black" disabled> <i class="fas fa-file-search coral"></i></a>
+                                        </div>
+                                    </div>`;
+                        }
                     }
                 },
                 {
