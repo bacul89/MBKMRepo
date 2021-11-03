@@ -2,6 +2,13 @@
     Layout = null;
 }
 @model MBKM.Entities.Models.MBKM.Mahasiswa
+<style>
+    div[disabled] {
+        pointer-events: none;
+        opacity: 0.7;
+    }
+</style>
+
 <div class="modal-content data-content-modal" id="detail-seluruhMHS-template">
     <div class="modal-header" style="background-color: #FF8A04; ">
         <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black; text-align: center;">
@@ -53,11 +60,11 @@
                     @{ if (Model.Gender == "P")
                         {
 
-                            <input type="text" value="Perempuan" class="form-control input-pendaftaran input-data"style="border:none" disabled="disabled" id="genderp" name="gp" >
+                            <input type="text" value="Perempuan" class="form-control input-pendaftaran input-data" style="border:none" disabled="disabled" id="genderp" name="gp">
                         }
                         else
                         {
-                            <input type="text" value="Laki-Laki" class="form-control input-pendaftaran input-data"style="border:none" disabled="disabled" id="genderl" name="gl" >
+                            <input type="text" value="Laki-Laki" class="form-control input-pendaftaran input-data" style="border:none" disabled="disabled" id="genderl" name="gl">
                         }
                     }
                     @*@Html.EditorFor(model => model.Gender, new { htmlAttributes = new { @class = "form-control input-md", maxlength = 100, disabled = "disabled", @style = "border: none" } })*@
@@ -111,6 +118,37 @@
                     @Html.EditorFor(model => model.NoKerjasama, new { htmlAttributes = new { @class = "form-control input-md", maxlength = 100, disabled = "disabled", @id = "noKJs", @style = "border: none" } })
                 </div>
             </div>
+            <div disabled id="statusBayarDiv" class="form-group">
+                <label for="inp_status" class="col-sm-4 control-label"style="font-size: 14px; font-weight: normal">Status Pembayaran: </label>
+
+                @if (Model.FlagBayar == true)
+                {
+
+
+                    <div class="col-sm-8">
+
+                        <label class="radio-inline input-pendaftaran">
+                            <input type="radio" name="inpStatus" id="inp_status" value="1" checked> Lunas
+                        </label>
+                        <label class="radio-inline input-pendaftaran">
+                            <input type="radio" name="inpStatus" id="inp_status" value="0"> Belum Lunas
+                        </label>
+                    </div>
+
+                }
+                @if (Model.FlagBayar == false)
+                {
+                    <div class="col-sm-8">
+
+                        <label class="radio-inline input-pendaftaran">
+                            <input type="radio" name="inpStatus" id="inp_status" value="1"> Lunas
+                        </label>
+                        <label class="radio-inline input-pendaftaran">
+                            <input type="radio" name="inpStatus" id="inp_status" value="0" checked> Belum Lunas
+                        </label>
+                    </div>
+                }
+            </div>
             <div class="form-group">
                 <label class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Status Pendaftaran</label>
                 <div class="col-sm-8">
@@ -124,6 +162,7 @@
                     @Html.EditorFor(model => model.NIM, new { htmlAttributes = new { @class = "form-control input-md", maxlength = 100, disabled = "disabled", @style = "border: none" } })
                 </div>
             </div>
+
             <div class="form-group" hidden>
                 <label for="biaya" class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Biaya: </label>
                 <div class="col-sm-8">
@@ -137,7 +176,7 @@
                     <button id="Update" onclick="" type="button" value="Update" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;">Update</button>
                 </div>
             </div>
-            
+
 
 
         </form>
