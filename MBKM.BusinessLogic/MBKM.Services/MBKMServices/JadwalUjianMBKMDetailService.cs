@@ -12,6 +12,7 @@ namespace MBKM.Services.MBKMServices
 {
     public interface IJadwalUjianMBKMDetailService : IEntityService<JadwalUjianMBKMDetail>
     {
+       // object GetListSeksi();
     }
     public class JadwalUjianMBKMDetailService : EntityService<JadwalUjianMBKMDetail>, IJadwalUjianMBKMDetailService
     {
