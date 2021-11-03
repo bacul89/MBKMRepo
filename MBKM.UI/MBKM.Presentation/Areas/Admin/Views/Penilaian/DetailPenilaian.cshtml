@@ -404,7 +404,9 @@
         </div>
     </div>
 </div>
-
+<form method="post" action="@Url.Action("DaftarNilaiRincian","Penilaian")" id="printDNR" target="_blank">
+    <input type="hidden" name="idJadwalKuliah" id="idJadwalKuliah" value="@Model.ID" />
+</form>
 
 @section Scripts{
     <script>
@@ -1029,7 +1031,7 @@
             saveNilai('@Url.Action("SubmitNilai", "Penilaian")')
         });
         $('#cetak').click(function () {
-            //cetak
+            $('#printDNR').submit();
         });
         $('#unlockSubmit').click(function () {
             $.ajax({

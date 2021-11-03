@@ -119,7 +119,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             List<JadwalKuliah> jks = new List<JadwalKuliah>();
             List<string> jadwalKuliahs = new List<string>();
-            foreach (var item in _jkService.Find(jk => jk.ProdiID == idProdi && jk.Lokasi == lokasi && jk.STRM == strm).ToList())
+            foreach (var item in _jkService.Find(jk => jk.ProdiID == idProdi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen).ToList())
             {
                 if (!jadwalKuliahs.Contains(item.NamaMataKuliah))
                 {

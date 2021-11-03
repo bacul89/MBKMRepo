@@ -48,7 +48,7 @@
                         </div>
                         <div id="univAsal">
                             <div class='form-group'>
-                                <label>Universitas Asal</label>
+                                <label>Universitas Asal<h style="color: red;"> *</h></label>
                                 <select name='NamaUniversitas' id='namaUniversitas' class='form-control input-lg' required>
                                 </select>
                             </div>
@@ -201,12 +201,12 @@
         });
         $("#kerjasama").change(function () {
             if ($("#kerjasama").val() == "y") {
-                $("#univAsal").html("<div class= 'form-group'><label>Universitas Asal</label><select name='NamaUniversitas' id='namaUniversitas' class='form-control input-lg' required></select></div><div id='noKS'><div class='form-group'><label>No. Kerjasama</label><select name='noKerjasama' id='noKerjasama' class='form-control input-lg' required></select></div></div>");
+                $("#univAsal").html("<div class= 'form-group'><label>Universitas Asal<h style='color: red;'> *</h></label><select name='NamaUniversitas' id='namaUniversitas' class='form-control input-lg' required></select></div><div id='noKS'><div class='form-group'><label>No. Kerjasama</label><select name='noKerjasama' id='noKerjasama' class='form-control input-lg' required></select></div></div>");
                 loadNoKerjasama();
                 loadNamaUniversitas();
                 namaUnivOnChange();
             } else {
-                $("#univAsal").html("<div class= 'form-group'><label>Universitas Asal</label><input type='text' name='NamaUniversitas' id='NamaUniversitas' placeholder='Nama Universitas' class='form-control input-lg' /></div>");
+                $("#univAsal").html("<div class= 'form-group'><label>Universitas Asal<h style='color: red;'> *</h></label><input type='text' name='NamaUniversitas' id='NamaUniversitas' placeholder='Nama Universitas' class='form-control input-lg' /></div>");
             }
         });
         function namaUnivOnChange() {
@@ -218,7 +218,7 @@
             }
         }
         function submitRegistrasi() {
-            if (isEmpty("nama", "Nama lengkap") || isEmpty("tempatLahir", "Tempat lahir") || isEmpty("tanggalLahir", "Tanggal lahir") || isEmpty("noHp", "No. handphone") || isEmpty("emailRegistrasi", "Email") || isEmpty("passwordRegistrasi", "Password")) {
+            if (isEmpty("namaUniversitas", "Universitas Asal") || isEmpty("nama", "Nama lengkap") || isEmpty("tempatLahir", "Tempat lahir") || isEmpty("tanggalLahir", "Tanggal lahir") || isEmpty("noHp", "No. handphone") || isEmpty("emailRegistrasi", "Email") || isEmpty("passwordRegistrasi", "Password")) {
                 return;
             }
             mahasiswa = new Object;
@@ -228,9 +228,13 @@
             mahasiswa.Gender = $("#gender").val();
             mahasiswa.Agama = $("#agama").val();
             if ($("#kerjasama").val() == "y") {
-                mahasiswa.BiayaKuliah = $('#noKerjasama').select2('data')[0].biaya;
-                mahasiswa.NamaUniversitas = $('#noKerjasama').select2('data')[0].nama;
-                mahasiswa.NoKerjasama = $('#noKerjasama').select2('data')[0].value;
+                if ($('#noKerjasama').val()) {
+                    mahasiswa.BiayaKuliah = $('#noKerjasama').select2('data')[0].biaya;
+                    mahasiswa.NamaUniversitas = $('#noKerjasama').select2('data')[0].nama;
+                    mahasiswa.NoKerjasama = $('#noKerjasama').select2('data')[0].value;
+                } else {
+                    mahasiswa.NamaUniversitas = $('#namaUniversitas').select2('data')[0].value;
+                }
             } else {
                 mahasiswa.NamaUniversitas = $("#NamaUniversitas").val();
             }

@@ -1,54 +1,359 @@
 ﻿
 @{
-    ViewBag.Title = "Transkrip Nilai Seluruh Mahasiswa";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
+    Layout = null;
+    int i = 1;
 }
 
-@section css{
+@Styles.Render("~/Content/css")
+<style>
+    #tableNilai td {
+        padding: 1px 5px;
+    }
+    #listMahasiswa td {
+        padding: 1px 5px;
+    }
 
-    <link rel="stylesheet" type="text/css" href="~/Content/Admin/inputResponsive.css">
-    @Scripts.Render("~/bundles/jquery")
+    #bobot th {
+        padding-right: 40px;
+    }
 
+    @@media print {
+        .pagebreak {
+            page-break-before: always;
+            padding: 50px 0px;
+        }
+        table.listdb {
+            border-collapse: unset;
+        }
+        /* page-break-after works, as well */
+    }
 
-    @Scripts.Render("~/bundles/jquery")
-    <script src="~/Scripts/sweetalert2.all.min.js"></script>
-}
+    .container {
+        width: 100%;
+        height: 100px;
+        padding: 0;
+    }
 
+    .one {
+        width: 40%;
+        height: 120px;
+        float: left;
+        border: solid;
+        border-width: 1px;
+    }
 
-<div class="container-fluid" style="padding: 0px">
-    <div class="card center-block" style="background-color: white; width: 100%; padding: 0px">
-        <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; padding: 0px ">
-            <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
-                TRANSKRIP NILAI SELURUH MAHASISWA
-            </h4>
-            <hr />
-            <div class="container" style="width: 100%;">
-                <br />
-                <br />
-                <div id="table-data-transkrip-overflow">
-                    <table id="table-data-transkrip" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
-                        <thead>
-                            <tr>
-                                <th class="zero-padding no-border vertical-center sorting">Action</th>
-                                <th class="zero-padding no-border vertical-center sorting">No.</th>
-                                <th class="zero-padding no-border vertical-center sorting">Jenjang Studi</th>
-                                <th class="zero-padding no-border vertical-center sorting">Universitas Asal</th>
-                                <th class="zero-padding no-border vertical-center sorting">NIM</th>
-                                <th class="zero-padding no-border vertical-center sorting">Name Mahasiswa</th>
-                                <th class="zero-padding no-border vertical-center sorting">No Kerjasama</th>
-                                <th class="zero-padding no-border vertical-center sorting">Status Cetak</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+    .two {
+        margin-left: 45%;
+        width: 40%;
+        height: 120px;
+        border: solid;
+        border-width: 1px;
+    }
+</style>
+<style type="text/css" media="print">
+    @@page {
+        size: auto; /* auto is the initial value */
+        margin: 0mm; /* this affects the margin in the printer settings */
+    }
+</style>
+<body style="margin: 50px; padding-top: 0;" id="tes">
+    <div id="page1">
+        <img src="~/Asset/Lambang_Unika_Atma_Jaya.png" style="height: 80px;" />
+        <br />
+        <br />
+        <div style="font-family: Arial;font-weight: bold; font-size: 16px; text-align: center;">EXAM RESULTS - FINAL</div>
+        <br />
+        <table style="font-family: 'Times New Roman'; font-size: 16px;">
+            <tr>
+                <td style="width: 160px;">Name of Instructor:</td>
+                <td>@Model.KodeDosen @Model.NamaDosen</td>
+            </tr>
+            <tr>
+                <td>Semester:</td>
+                <td>@Model.STRM</td>
+            </tr>
+            <tr>
+                <td>Faculty:</td>
+                <td>@Model.Fakultas</td>
+            </tr>
+            <tr>
+                <td>Course ID:</td>
+                <td>@Model.KodeMatakuliah</td>
+            </tr>
+            <tr>
+                <td>Campus:</td>
+                <td>@Model.Lokasi</td>
+            </tr>
+            <tr>
+                <td>Course:</td>
+                <td>@Model.NamaMatakuliah</td>
+            </tr>
+            <tr>
+                <td>Section:</td>
+                <td>@Model.Seksi</td>
+            </tr>
+        </table>
+        <br />
+        <div>
+            <table style="float: left; font-family: 'Times New Roman'; width: 25%; font-size: 14px;" border="1" id="tableNilai">
+                <tr style="font-weight: bold;">
+                    <td>Grade</td>
+                    <td>No</td>
+                    <td>Percentage</td>
+                </tr>
+                <tr>
+                    <td>A</td>
+                    <td>@Model.ATotal</td>
+                    <td style="text-align: right;">@Model.A</td>
+                </tr>
+                <tr>
+                    <td>A-</td>
+                    <td>@Model.AminTotal</td>
+                    <td style="text-align: right;">@Model.Amin</td>
+                </tr>
+                <tr>
+                    <td>B+</td>
+                    <td>@Model.BplusTotal</td>
+                    <td style="text-align: right;">@Model.Bplus</td>
+                </tr>
+                <tr>
+                    <td>B</td>
+                    <td>@Model.BTotal</td>
+                    <td style="text-align: right;">@Model.B</td>
+                </tr>
+                <tr>
+                    <td>B-</td>
+                    <td>@Model.BminTotal</td>
+                    <td style="text-align: right;">@Model.Bmin</td>
+                </tr>
+                <tr>
+                    <td>C+</td>
+                    <td>@Model.CplusTotal</td>
+                    <td style="text-align: right;">@Model.Cplus</td>
+                </tr>
+                <tr>
+                    <td>C</td>
+                    <td>@Model.CTotal</td>
+                    <td style="text-align: right;">@Model.C</td>
+                </tr>
+                <tr>
+                    <td>D (Fail)</td>
+                    <td>@Model.DTotal</td>
+                    <td style="text-align: right;">@Model.D</td>
+                </tr>
+                <tr>
+                    <td>E (Fail)</td>
+                    <td>@Model.ETotal</td>
+                    <td style="text-align: right;">@Model.E</td>
+                </tr>
+                <tr>
+                    <td>M</td>
+                    <td>@Model.MTotal</td>
+                    <td style="text-align: right;">@Model.M</td>
+                </tr>
+                <tr>
+                    <td>Total</td>
+                    <td>@Model.Total</td>
+                    <td style="text-align: right;"></td>
+                </tr>
+            </table>
+            <table style="display: inline-block; font-family: 'Times New Roman'; width: 50%; font-size: 14px; margin-left: 100px;" id="bobot">
+                <tr style="font-weight: bold; text-align: center;">
+                    <td colspan="3">Component for Evaluation</td>
+                </tr>
+                <tr style="font-weight: bold;">
+                    <th>Exam Distribution Name</th>
+                    <th>Total Mark</th>
+                    <th>Percentage</th>
+                </tr>
+                <tr>
+                    <td>Courseworks</td>
+                    <td>@Model.TMCoursework</td>
+                    <td>@Model.PctCoursework</td>
+                </tr>
+                <tr>
+                    <td>Mid-Term Exam</td>
+                    <td>@Model.TMMidterm</td>
+                    <td>@Model.PctMidterm</td>
+                </tr>
+                <tr>
+                    <td>Final Exam</td>
+                    <td>@Model.TMFinal</td>
+                    <td>@Model.PctFinal</td>
+                </tr>
+            </table>
+        </div>
+        <div style="clear: both;">
+            <br />
+            <table style="font-family: 'Times New Roman'; width: 30%; font-size: 14px; " border="1" id="tableNilai">
+                <tr>
+                    <td style="width: 60%;">Average (point)</td>
+                    <td style="text-align: right;">@Model.AveragePoint</td>
+                </tr>
+                <tr>
+                    <td>Stddev (point)</td>
+                    <td style="text-align: right;">@Model.StddevPoint</td>
+                </tr>
+                <tr>
+                    <td>Number of Students</td>
+                    <td style="text-align: right;">@Model.NumberOfStudent</td>
+                </tr>
+                <tr>
+                    <td>Number of R</td>
+                    <td style="text-align: right;">@Model.NumberOfR</td>
+                </tr>
+                <tr>
+                    <td>Number of S</td>
+                    <td style="text-align: right;">@Model.NumberOfS</td>
+                </tr>
+            </table>
         </div>
     </div>
-</div>
+    <div id="page2" class="pagebreak">
+        <img src="~/Asset/Lambang_Unika_Atma_Jaya.png" style="height: 80px;" />
+        <br />
+        <br />
+        <div style="font-family: Arial;font-weight: bold; font-size: 16px; text-align: center;">EXAM RESULTS - FINAL</div>
+        <br />
+        <table style="font-family: 'Times New Roman'; width: 100%; font-size: 14px; " border="1" id="listMahasiswa">
+            <tr style="text-align: center;">
+                <td>No</td>
+                <td>Student ID</td>
+                <td>Student Name</td>
+                <td>Supp</td>
+                <td>MT</td>
+                <td class="CW1" hidden>CW1</td>
+                <td class="CW2" hidden>CW2</td>
+                <td class="CW3" hidden>CW3</td>
+                <td class="CW4" hidden>CW4</td>
+                <td class="CW5" hidden>CW5</td>
+                <td>Final Exam</td>
+                <td>Overall Marks</td>
+                <td>Overall Grade</td>
+            </tr>
+            @foreach (var item in Model.mahasiswas)
+            {
+                <tr>
+                    <td style="text-align: center;">@i</td>
+                    <td style="text-align: center;">@item.StudentID</td>
+                    <td>@item.Nama</td>
+                    <td>@item.Supp</td>
+                    <td style="text-align: right;">@item.MT</td>
+                    <td style="text-align: right;" class="CW1" hidden>@item.CW1</td>
+                    <td style="text-align: right;" class="CW2" hidden>@item.CW2</td>
+                    <td style="text-align: right;" class="CW3" hidden>@item.CW3</td>
+                    <td style="text-align: right;" class="CW4" hidden>@item.CW4</td>
+                    <td style="text-align: right;" class="CW5" hidden>@item.CW5</td>
+                    <td style="text-align: right;">@item.Final</td>
+                    <td style="text-align: right;">@item.NilaiTotal</td>
+                    <td style="text-align: center;">@item.Grade</td>
+                </tr>
+                i++;
+            }
+        </table>
+    </div>
+    <div id="page3" class="pagebreak">
+        <img src="~/Asset/Lambang_Unika_Atma_Jaya.png" style="height: 80px;" />
+        <br />
+        <br />
+        <div style="font-family: Arial;font-weight: bold; font-size: 16px; text-align: center;">EXAM RESULTS - FINAL</div>
+        <br />
+        <table style="float:left; font-family: 'Times New Roman'; width: 25%; font-size: 14px;" border="1" id="tableNilai">
+            <tr>
+                <td style="width: 40%;">Std Dev</td>
+                <td style="text-align: right;">@Model.Stddev</td>
+            </tr>
+            <tr>
+                <td>Variance</td>
+                <td style="text-align: right;">@Model.Variance</td>
+            </tr>
+            <tr>
+                <td>Average</td>
+                <td style="text-align: right;">@Model.Average</td>
+            </tr>
+            <tr>
+                <td>Max Marks</td>
+                <td style="text-align: right;">@Model.MaxMarks</td>
+            </tr>
+            <tr>
+                <td>Min Marks</td>
+                <td style="text-align: right;">@Model.MinMarks</td>
+            </tr>
+        </table>
+        <div style="display: inline-block; width: 25%; margin-left: 3%;">
+            <canvas id="bar-chart" height="175"></canvas>
+        </div>
+        
+        <div style="font-size: 16px; font-family: 'Times New Roman';">
+            I hereby endorse that the grades stated above are correct and alid on the date of delivery, unless decided otherwise by the Head of Study Program.
+            <br />
+            Remarks:
+            <section class="container">
+                <div class="one" style="text-align: center">
+                    Head of Study Program
+                </div>
+                <div class="two" style="text-align: center">
+                    Lecturer
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    @Model.NamaDosen
+                </div>
+            </section>
+            <br />
+            Note:
+            <br />
+            <table>
+                <tr>
+                    <td style="padding-right: 10px;">CC: </td>
+                    <td>1. Program of Study</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>2. BAA</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
 
-@section scripts{
-    <script src="~/Scripts/Admin/Transkrip/main.js"></script>
-    <script src="~/Scripts/loading/loadingoverlay.min.js"></script>
-}
+
+
+@Scripts.Render("~/bundles/jquery")
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var tmp = @Model.TMCoursework;
+        for (var i = 0; i <  tmp/100; i++) {
+            $('.CW' + (i + 1)).show();
+        }
+
+        // Bar chart
+        new Chart($("#bar-chart"), {
+            type: 'bar',
+            data: {
+                labels: ["A", "B", "C", "D", "E"],
+                datasets: [
+                    {
+                        label: "Population (millions)",
+                        backgroundColor: ["rgb(38, 82, 126)", "rgb(38, 82, 126)", "rgb(38, 82, 126)", "rgb(38, 82, 126)", "rgb(38, 82, 126)"],
+                        data: [@Model.ATotal + @Model.AminTotal, @Model.BplusTotal + @Model.BTotal + @Model.BminTotal, @Model.CplusTotal + @Model.CTotal, @Model.DTotal, @Model.ETotal]
+                    }
+                ]
+            },
+            options: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: 'Student Grade Distribution'
+                },
+                animation: false
+            }
+        });
+        setTimeout(() => {
+            window.print();
+            window.close();
+        }, 500);
+    });
+</script>

@@ -160,7 +160,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             dBaru.KritikSaran = answer.First().kritik;
             dBaru.DosenID = answer.First().dosenID;
             dBaru.NamaDosen = answer.First().namaDosen;
-            dBaru.StatusFeedBack = true;
+            dBaru.StatusFeedBack = false;
             dBaru.CreatedBy = "MAHASISWA";
             dBaru.CreatedDate = DateTime.Now;
             dBaru.IsActive = true;
@@ -168,6 +168,30 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             try
             {
                 _feedbackMatkulService.Save(dBaru);
+
+                var listFeedbackMahasiswa = _feedbackMatkulService.Find(x => x.MahasiswaID == mahasiswaID && x.JadwalKuliahID == dBaru.JadwalKuliahID).ToList();
+                var ListDosen = _feedbackMatkulService.GetDosenMakulPertemuans(
+                    listFeedbackMahasiswa.FirstOrDefault().JadwalKuliahs.KodeMataKuliah,
+                    listFeedbackMahasiswa.FirstOrDefault().JadwalKuliahs.ClassSection,
+                    listFeedbackMahasiswa.FirstOrDefault().JadwalKuliahs.STRM.ToString(),
+                    listFeedbackMahasiswa.FirstOrDefault().JadwalKuliahs.FakultasID.ToString());
+                var dosenTerpenuhi = true;
+                foreach(var d in ListDosen)
+                {
+                    if(!listFeedbackMahasiswa.Any(x => x.DosenID == d.Instructor_id))
+                    {
+                        dosenTerpenuhi = false;
+                    }
+                }
+                if (dosenTerpenuhi)
+                {
+                    foreach(var d in listFeedbackMahasiswa)
+                    {
+                        FeedbackMatkul updateFeed = d;
+                        updateFeed.StatusFeedBack = true;
+                        _feedbackMatkulService.Save(updateFeed);
+                    }
+                }
             }
             catch (DbEntityValidationException e)
             {

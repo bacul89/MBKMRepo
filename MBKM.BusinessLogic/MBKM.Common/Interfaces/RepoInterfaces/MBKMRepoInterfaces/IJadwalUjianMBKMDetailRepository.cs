@@ -1,4 +1,5 @@
 ﻿using MBKM.Entities.Models.MBKM;
+using MBKM.Entities.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces
 {
     public interface IJadwalUjianMBKMDetailRepository : IGenericRepository<JadwalUjianMBKMDetail>
     {
-
+        List<VMClassSection> GetListSeksi();
     }
 }

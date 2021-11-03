@@ -110,6 +110,7 @@
     <Compile Include="Models\Menu.cs" />
     <Compile Include="Models\MenuRole.cs" />
     <Compile Include="Models\Role.cs" />
+    <Compile Include="ViewModel\VMDNR.cs" />
     <Compile Include="ViewModel\VMSubBobot .cs" />
     <Compile Include="ViewModel\VMClassSection.cs" />
     <Compile Include="ViewModel\VMCPLMKPendaftaran.cs" />
