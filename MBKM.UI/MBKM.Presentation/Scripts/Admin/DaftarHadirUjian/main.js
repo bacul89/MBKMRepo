@@ -10,6 +10,8 @@ $(document).ready(function () {
         placeholder: "-- Pilih Jenjang Studi --"
     });
 
+    
+
     $("#fakultasCari").select2({
         placeholder: "-- Pilih Fakultas --"
     });
@@ -20,7 +22,9 @@ $(document).ready(function () {
     $("#matakuliahCari").select2({
         placeholder: "-- Pilih Mata Kuliah --"
     });
-
+    $("#seksiCari").select2({
+        placeholder: "-- Pilih Seksi --"
+    });
 
 
     datatable = $('#table-data-master-mapping-cpl').DataTable();
@@ -118,9 +122,11 @@ function loadJenjangStudi(tipe, id, nama) {
         $("#prodiIdCari").val('');
         $("#lokasiCari").empty();
         $("#matakuliahCari").empty();
+        $("#seksiCari").empty();
         $("#prodiCari").prop("disabled", true);
-        $("#lokasiCari").prop("disabled", true);
+        $("#lokasiCari").prop("disabled", true);        
         $("#matakuliahCari").prop("disabled", true);
+        $("#seksiCari").prop("disabled", true);
         $("#fakultasCari").prop("disabled", false);
         $("#fakultasCari").select2({
             placeholder: "-- Pilih Fakultas --",
@@ -151,8 +157,10 @@ function loadJenjangStudi(tipe, id, nama) {
             $("#prodiIdCari").val('');
             $("#lokasiCari").empty();
             $("#matakuliahCari").empty();
+            $("#seksiCari").empty();
             $("#lokasiCari").prop("disabled", true);
             $("#matakuliahCari").prop("disabled", true);
+            $("#seksiCari").prop("disabled", true);
 
             $("#prodiCari").prop("disabled", false);
             $("#prodiCari").select2({
@@ -187,6 +195,7 @@ function loadJenjangStudi(tipe, id, nama) {
                 $("#lokasiCari").empty();
                 $("#prodiIdCari").val('');
                 $("#matakuliahCari").empty();
+                $("#seksiCari").empty();
                 $("#matakuliahCari").prop("disabled", true);
 
                 //$("#lokasiCari").prop("disabled", false);
@@ -204,6 +213,7 @@ function loadJenjangStudi(tipe, id, nama) {
                 buttonHandler("close");
                 $("#matakuliahCari").empty();
                 $("#matakuliahCari").prop("disabled", false);
+                $("#seksiCari").prop("disabled", true);
                 //$("#matakuliahNamaCari").val('');
 
                 //getLocationByPodiID();
@@ -305,7 +315,7 @@ function loadJenjangStudi(tipe, id, nama) {
 
 
                 $("#matakuliahCari").change(function () {
-
+                    $("#seksiCari").prop("disabled", false);
                     /*
                         dataParam.NamaProdi = $('#prodiCari').val();
                     dataParam.lokasi = $('#lokasiCari').val();
@@ -324,6 +334,64 @@ function loadJenjangStudi(tipe, id, nama) {
                     $("#matakuliahIdCari").val($(this).val());
 
                     buttonHandler("open");
+
+
+                    $('#seksiCari').select2({
+
+                        placeholder: "-- Pilih Seksi --",
+                        "proccessing": true,
+                        "serverSide": true,
+                        //multiple: true,
+                        width: "100%",
+                        ajax: {
+                            url: "/DaftarHadirUjian/GetSection",
+                            type: 'POST',
+                            dataType: 'json',
+                            //quietMillis: 50,
+                            data: function (params) {
+
+                                return {
+
+                                    //search: params.term,
+                                    //instansi: $('#namaUniversitas').val(),
+                                    //length: params.length || 10,
+                                    //skip: params.skip || 0
+
+                                    take: 10,
+                                    search: params.term || "",
+                                    skip: (params.page - 1) * 10 || 0,
+                                    // searchBy: params.term,
+
+                                };
+                            },
+                            processResults: function (data, params) {
+
+                                var page = params.page - 1 || 1;
+                                //var pageLength = pageLength + data.length || 10;
+                                //console.log('page : ' + params.page);
+                                //console.log(page);
+                                //console.log('------------------------');
+                                //console.log(page * 10);
+                                //console.log(pageLength);
+
+                                return {
+                                    results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } }),
+                                    pagination: {
+                                        more: (page * 10) <= data.length
+                                    }
+                                }
+
+                            },
+                        }
+                    });
+                    $("#seksiCari").change(function () {
+
+                        //$("#matakuliahCari").empty();
+                        //$("#jenjangCari").prop("disabled", false);
+                        //loadJenjangStudi("JenjangStudi", "jenjang", "Jenjang Studi");
+
+
+                    });
 
                 });
 

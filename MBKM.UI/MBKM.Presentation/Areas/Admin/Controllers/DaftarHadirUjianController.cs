@@ -159,24 +159,24 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             return Json(data);
         }
 
-        /*        [HttpPost]
-                public ActionResult GetSesion(int skip, int take, string search)
+        [HttpPost]
+        public ActionResult GetSection()
+        {
+
+            var final = _juService.getSection();
+            List<object> data = new List<object>();
+            foreach (var p in final)
+            {
+                var q = new
                 {
+                    Nama = p.Nama,
+                    //ID = p.ID
+                };
+                data.Add(q);
+            }
 
-                    var final = _juService.GetListSeksi(skip, take, search);
-                    List<object> data = new List<object>();
-                    foreach (var p in final)
-                    {
-                        var q = new
-                        {
-                            Nama = p.Nama,
-                            ID = p.ID
-                        };
-                        data.Add(q);
-                    }
+            return Json(data);
+        }
 
-                    return Json(data);
-                }
-        */
     }
 }
