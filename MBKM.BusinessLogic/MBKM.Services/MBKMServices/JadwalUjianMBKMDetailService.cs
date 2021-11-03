@@ -1,6 +1,7 @@
 ﻿using MBKM.Common.Interfaces;
 using MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces;
 using MBKM.Entities.Models.MBKM;
+using MBKM.Entities.ViewModel;
 using MBKM.Services.BaseServices;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,8 @@ namespace MBKM.Services.MBKMServices
 {
     public interface IJadwalUjianMBKMDetailService : IEntityService<JadwalUjianMBKMDetail>
     {
-       // object GetListSeksi();
+        List<VMClassSection> getSection();
+
     }
     public class JadwalUjianMBKMDetailService : EntityService<JadwalUjianMBKMDetail>, IJadwalUjianMBKMDetailService
     {
@@ -24,6 +26,13 @@ namespace MBKM.Services.MBKMServices
         {
             _unitOfWork = unitOfWork;
             _jadwalRepository = JadwalRepository;
+        }
+
+
+
+        public List<VMClassSection> getSection()
+        {
+            return _jadwalRepository.GetListSeksi();
         }
     }
 }
