@@ -12,6 +12,7 @@ using System.Web.Mvc;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
+    [MBKMAuthorize]
     public class SertifikatMBKMController : Controller
     {
         private IJadwalUjianMBKMService _jadwalUjianMBKMService;
