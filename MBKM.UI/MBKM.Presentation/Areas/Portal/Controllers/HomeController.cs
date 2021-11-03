@@ -205,7 +205,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public void PopulateSession(bool isLogin, string email, string nama)
         {
             Session["isLogin"] = isLogin;
-            Session["email"] = email;
+            Session["emailMahasiswa"] = email;
             Session["nama"] = nama;
         }
         public string hp(string password)

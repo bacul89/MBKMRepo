@@ -31,14 +31,14 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult Index()
         {
-            string email = Session["email"] as string;
+            string email = Session["emailMahasiswa"] as string;
             Mahasiswa mahasiswa = GetMahasiswaByEmail(email);
             ViewData["status"] = mahasiswa.StatusVerifikasi;
             return View();
         }
         public ActionResult GetDataMahasiswa()
         {
-            string email = Session["email"] as string;
+            string email = Session["emailMahasiswa"] as string;
             var result = GetMahasiswaByEmail(email);
             return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }

@@ -27,6 +27,15 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return result;
             }
         }
+        public IEnumerable<VMSemester> GetTahunSemester()
+        {
+            using (var context = new MBKMContext())
+            {
+                var result = context.Database
+                    .SqlQuery<VMSemester>("GetSemesterAll2").ToList();
+                return result;
+            }
+        }
         public IEnumerable<VMLookup> GetFakultasByJenjangStudi(string search, string jenjangStudi)
         {
             using (var context = new MBKMContext())
@@ -38,7 +47,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return result;
             }
         }
-        public IEnumerable<VMLookup> GetLokasiByFakultas(string search, string jenjangStudi, string fakultas)
+        public IEnumerable<VMLookup> GetProdiByFakultas(string search, string jenjangStudi, string fakultas)
         {
             using (var context = new MBKMContext())
             {
@@ -46,23 +55,11 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 var jenjangStudiParam = new SqlParameter("@JenjangStudi", jenjangStudi);
                 var fakultasParam = new SqlParameter("@Fakultas", fakultas);
                 var result = context.Database
-                    .SqlQuery<VMLookup>("GetLokasiByFakultas @JenjangStudi, @Fakultas, @Search", jenjangStudiParam, fakultasParam, searchParam).ToList();
+                    .SqlQuery<VMLookup>("GetProdiByNamaFakultas @JenjangStudi, @Fakultas, @Search", jenjangStudiParam, fakultasParam, searchParam).ToList();
                 return result;
             }
         }
-        public IEnumerable<VMLookup> GetProdiByLokasi(string search, string jenjangStudi, string lokasi)
-        {
-            using (var context = new MBKMContext())
-            {
-                var searchParam = new SqlParameter("@Search", search);
-                var jenjangStudiParam = new SqlParameter("@JenjangStudi", jenjangStudi);
-                var lokasiParam = new SqlParameter("@Lokasi", lokasi);
-                var result = context.Database
-                    .SqlQuery<VMLookup>("GetProdiByLokasi @JenjangStudi, @Lokasi, @Search", jenjangStudiParam, lokasiParam, searchParam).ToList();
-                return result;
-            }
-        }
-        public IEnumerable<VMLookup> GetMatkulByProdi(string search, string jenjangStudi, string prodi)
+        public IEnumerable<VMLookup> GetLokasiByProdi(string search, string jenjangStudi, string prodi)
         {
             using (var context = new MBKMContext())
             {
@@ -70,19 +67,33 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 var jenjangStudiParam = new SqlParameter("@JenjangStudi", jenjangStudi);
                 var prodiParam = new SqlParameter("@Prodi", prodi);
                 var result = context.Database
-                    .SqlQuery<VMLookup>("GetMatkulByProdi @JenjangStudi, @Prodi, @Search", jenjangStudiParam, prodiParam, searchParam).ToList();
+                    .SqlQuery<VMLookup>("GetLokasiByProdi @JenjangStudi, @Prodi, @Search", jenjangStudiParam, prodiParam, searchParam).ToList();
                 return result;
             }
         }
-        public IEnumerable<VMLookup> GetSeksiByMatkul(string search, string jenjangStudi, string matkul)
+        public IEnumerable<VMLookup> GetMatkulByLokasi(string search, string jenjangStudi, string prodi, string lokasi)
+        {
+            using (var context = new MBKMContext())
+            {
+                var searchParam = new SqlParameter("@Search", search);
+                var jenjangStudiParam = new SqlParameter("@JenjangStudi", jenjangStudi);
+                var prodiParam = new SqlParameter("@Prodi", prodi);
+                var lokasiParam = new SqlParameter("@Lokasi", lokasi);
+                var result = context.Database
+                    .SqlQuery<VMLookup>("GetMatkulByLokasi @JenjangStudi, @Prodi, @Search, @Lokasi", jenjangStudiParam, prodiParam, searchParam, lokasiParam).ToList();
+                return result;
+            }
+        }
+        public IEnumerable<VMLookup> GetSeksiByMatkul(string search, string jenjangStudi, string matkul, string lokasi)
         {
             using (var context = new MBKMContext())
             {
                 var searchParam = new SqlParameter("@Search", search);
                 var jenjangStudiParam = new SqlParameter("@JenjangStudi", jenjangStudi);
                 var matkulParam = new SqlParameter("@Matkul", matkul);
+                var lokasiParam = new SqlParameter("@Lokasi", lokasi);
                 var result = context.Database
-                    .SqlQuery<VMLookup>("GetSeksiByMatkul @JenjangStudi, @Matkul, @Search", jenjangStudiParam, matkulParam, searchParam).ToList();
+                    .SqlQuery<VMLookup>("GetSeksiByMatkul @JenjangStudi, @Matkul, @Search, @Lokasi", jenjangStudiParam, matkulParam, searchParam, lokasiParam).ToList();
                 return result;
             }
         }

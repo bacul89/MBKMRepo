@@ -43,7 +43,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult Index()
         {
-            var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
+            var mahasiswa = GetMahasiswaByEmail(Session["emailMahasiswa"] as string);
             if (mahasiswa.StatusVerifikasi == "DAFTAR")
             {
                 TempData["alertMessage"] = "Tolong lengkapi data diri anda terlebih dahulu!";
@@ -67,7 +67,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult Internal()
         {
-            var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
+            var mahasiswa = GetMahasiswaByEmail(Session["emailMahasiswa"] as string);
             if (mahasiswa.NIM != mahasiswa.NIMAsal)
             {
                 return RedirectToAction("Eksternal");
@@ -77,7 +77,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult Eksternal()
         {
-            var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
+            var mahasiswa = GetMahasiswaByEmail(Session["emailMahasiswa"] as string);
             if (mahasiswa.NIM == mahasiswa.NIMAsal)
             {
                 return RedirectToAction("Internal");
@@ -90,7 +90,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var matkul = GetJadwalKuliah(idMatkul);
             VMPendaftaranJadwalKuliah model = new VMPendaftaranJadwalKuliah(matkul);
             model.ID = idMatkul;
-            model.NoKerjasama = GetMahasiswaByEmail(Session["email"] as string).NoKerjasama;
+            model.NoKerjasama = GetMahasiswaByEmail(Session["emailMahasiswa"] as string).NoKerjasama;
             return View(model);
         }
         public ActionResult FormPendaftaranInternalKeLuarAtma()
@@ -111,7 +111,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult GetFakultas(string search)
         {
-            string email = Session["email"] as string;
+            string email = Session["emailMahasiswa"] as string;
             var result = GetMahasiswaByEmail(email);
             return new ContentResult { Content = JsonConvert.SerializeObject(_pmkService.GetFakultas(result.JenjangStudi, search)), ContentType = "application/json" };
         }
@@ -131,13 +131,13 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult GetProdiByFakultas(string idFakultas, string search)
         {
-            string email = Session["email"] as string;
+            string email = Session["emailMahasiswa"] as string;
             var result = GetMahasiswaByEmail(email);
             return new ContentResult { Content = JsonConvert.SerializeObject(_pmkService.GetProdiByFakultas(result.JenjangStudi, idFakultas, search)), ContentType = "application/json" };
         }
         public ActionResult GetLokasiByProdi(string namaProdi, string search)
         {
-            string email = Session["email"] as string;
+            string email = Session["emailMahasiswa"] as string;
             var result = GetMahasiswaByEmail(email);
             return new ContentResult { Content = JsonConvert.SerializeObject(_pmkService.GetLokasiByProdi(result.JenjangStudi, namaProdi, search)), ContentType = "application/json" };
         }
@@ -187,19 +187,19 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult GetInformasiPertukaran()
         {
-            Int64 id = GetMahasiswaByEmail(Session["email"] as string).ID;
+            Int64 id = GetMahasiswaByEmail(Session["emailMahasiswa"] as string).ID;
             return new ContentResult { Content = JsonConvert.SerializeObject(_informasiPertukaranService.Find(ip => ip.MahasiswaID == id).FirstOrDefault()), ContentType = "application/json" };
         }
         public ActionResult GetJenisKerjasama()
         {
-            string noKerjasama = GetMahasiswaByEmail(Session["email"] as string).NoKerjasama;
+            string noKerjasama = GetMahasiswaByEmail(Session["emailMahasiswa"] as string).NoKerjasama;
             int jenisKerjasamaID = int.Parse(_perjanjianKerjasamaService.Find(pk => pk.NoPerjanjian == noKerjasama).FirstOrDefault().JenisKerjasama);
             var jenisKerjasama = _jenisKerjasamaService.Find(jk => jk.ID == jenisKerjasamaID).FirstOrDefault();
             return new ContentResult { Content = JsonConvert.SerializeObject(jenisKerjasama), ContentType = "application/json" };
         }
         public ActionResult GetJenisKerjasamaInternal()
         {
-            Int64 id = GetMahasiswaByEmail(Session["email"] as string).ID;
+            Int64 id = GetMahasiswaByEmail(Session["emailMahasiswa"] as string).ID;
             var informasiPertukaran = _informasiPertukaranService.Find(ip => ip.MahasiswaID == id).FirstOrDefault();
             return new ContentResult { Content = JsonConvert.SerializeObject(informasiPertukaran), ContentType = "application/json" };
         }
@@ -225,11 +225,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             try
             {
-                Int64 id = GetMahasiswaByEmail(Session["email"] as string).ID;
+                Int64 id = GetMahasiswaByEmail(Session["emailMahasiswa"] as string).ID;
                 var ip = _informasiPertukaranService.Find(_ => _.MahasiswaID == id).FirstOrDefault();
                 if (ip == null)
                 {
-                    informasiPertukaran.STRM = (int) _pmkService.getOngoingSemester(GetMahasiswaByEmail(Session["email"] as string).JenjangStudi).ID;
+                    informasiPertukaran.STRM = (int) _pmkService.getOngoingSemester(GetMahasiswaByEmail(Session["emailMahasiswa"] as string).JenjangStudi).ID;
                     informasiPertukaran.MahasiswaID = id;
                     informasiPertukaran.IsActive = true;
                     informasiPertukaran.IsDeleted = false;
@@ -273,7 +273,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             try
             {
-                Int64 id = GetMahasiswaByEmail(Session["email"] as string).ID;
+                Int64 id = GetMahasiswaByEmail(Session["emailMahasiswa"] as string).ID;
                 if (_pendaftaranMataKuliahService.Find(pmk => pmk.MahasiswaID == id && pmk.JadwalKuliahID == pendaftaranMataKuliah.JadwalKuliahID).FirstOrDefault() == null)
                 {
                     pendaftaranMataKuliah.MahasiswaID = id;
