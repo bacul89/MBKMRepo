@@ -27,12 +27,12 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return result;
             }
         }
-        public IEnumerable<VMSemester> GetTahunSemester()
+        public VMSemester GetTahunSemester()
         {
             using (var context = new MBKMContext())
             {
                 var result = context.Database
-                    .SqlQuery<VMSemester>("GetSemesterAll2").ToList();
+                    .SqlQuery<VMSemester>("GetSemesterAll").FirstOrDefault();
                 return result;
             }
         }

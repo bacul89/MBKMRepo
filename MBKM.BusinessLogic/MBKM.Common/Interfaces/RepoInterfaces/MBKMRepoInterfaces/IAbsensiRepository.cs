@@ -11,7 +11,7 @@ namespace MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces
     public interface IAbsensiRepository : IGenericRepository<Absensi>
     {
         string GetSemesterBySTRM(int strm);
-        IEnumerable<VMSemester> GetTahunSemester();
+        VMSemester GetTahunSemester();
         IEnumerable<VMLookup> GetFakultasByJenjangStudi(string search, string jenjangStudi);
         IEnumerable<VMLookup> GetProdiByFakultas(string search, string jenjangStudi, string fakultas);
         IEnumerable<VMLookup> GetLokasiByProdi(string search, string jenjangStudi, string prodi);

@@ -14,7 +14,7 @@ namespace MBKM.Services.MBKMServices
     public interface IAbsensiService : IEntityService<Absensi>
     {
         string GetSemesterBySTRM(int strm);
-        IEnumerable<VMSemester> GetTahunSemester();
+        VMSemester GetTahunSemester();
         IEnumerable<VMLookup> GetFakultasByJenjangStudi(string search, string jenjangStudi);
         IEnumerable<VMLookup> GetProdiByFakultas(string search, string jenjangStudi, string fakultas);
         IEnumerable<VMLookup> GetLokasiByProdi(string search, string jenjangStudi, string prodi);
@@ -37,7 +37,7 @@ namespace MBKM.Services.MBKMServices
         {
             return _absensiRepository.GetSemesterBySTRM(strm);
         }
-        public IEnumerable<VMSemester> GetTahunSemester()
+        public VMSemester GetTahunSemester()
         {
             return _absensiRepository.GetTahunSemester();
         }public IEnumerable<VMLookup> GetFakultasByJenjangStudi(string search, string jenjangStudi)
