@@ -34,7 +34,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         // GET: Portal/KHS
         public ActionResult Index()
         {
-            var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
+            var mahasiswa = GetMahasiswaByEmail(Session["emailMahasiswa"] as string);
             ViewData["nama"] = mahasiswa.Nama;
             ViewData["nim"] = mahasiswa.NIM;
             ViewData["univ"] = mahasiswa.NamaUniversitas;
@@ -52,7 +52,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult GetJadwalKuliah(int strm)
         {
-            var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
+            var mahasiswa = GetMahasiswaByEmail(Session["emailMahasiswa"] as string);
             List<PendaftaranMataKuliah> pmks = new List<PendaftaranMataKuliah>();
             //List<NilaiKuliah> nilaiKuliahs = new List<NilaiKuliah>();
             //nilaiKuliahs = _nilaiKuliahService.Find(nilaiKuliah => nilaiKuliah.MahasiswaID == 98).ToList();
@@ -177,7 +177,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult KHS(string strmT, int strmID)
         {
 
-            var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
+            var mahasiswa = GetMahasiswaByEmail(Session["emailMahasiswa"] as string);
             ViewData["nama"] = mahasiswa.Nama;
             ViewData["nim"] = mahasiswa.NIM;
             ViewData["univ"] = mahasiswa.NamaUniversitas;
@@ -193,7 +193,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 var smIndo2 = strmT.Replace("EVEN Semester", "Semester Genap");
                 ViewData["sIndo"] = smIndo2;
             }
-            //var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
+            //var mahasiswa = GetMahasiswaByEmail(Session["emailMahasiswa"] as string);
             List<PendaftaranMataKuliah> pmks = new List<PendaftaranMataKuliah>();
             //List<NilaiKuliah> nilaiKuliahs = new List<NilaiKuliah>();
             //nilaiKuliahs = _nilaiKuliahService.Find(nilaiKuliah => nilaiKuliah.MahasiswaID == 98).ToList();
@@ -232,7 +232,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         [AllowAnonymous]
         public ActionResult PrintKHS(string strmT, int strmID)
         {
-            var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
+            var mahasiswa = GetMahasiswaByEmail(Session["emailMahasiswa"] as string);
             ViewData["nama"] = mahasiswa.Nama;
             ViewData["nim"] = mahasiswa.NIM;
             ViewData["univ"] = mahasiswa.NamaUniversitas;
@@ -247,7 +247,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 var smIndo2 = strmT.Replace("EVEN Semester", "Semester Genap");
                 ViewData["sIndo"] = smIndo2;
             }
-            //var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
+            //var mahasiswa = GetMahasiswaByEmail(Session["emailMahasiswa"] as string);
             List<PendaftaranMataKuliah> pmks = new List<PendaftaranMataKuliah>();
             //List<NilaiKuliah> nilaiKuliahs = new List<NilaiKuliah>();
             //nilaiKuliahs = _nilaiKuliahService.Find(nilaiKuliah => nilaiKuliah.MahasiswaID == 98).ToList();
