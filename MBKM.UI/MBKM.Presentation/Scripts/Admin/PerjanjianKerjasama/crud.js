@@ -136,7 +136,23 @@ function SubmitPerjanjian() {
     var fileInput = document.getElementById('file');
     for (i = 0; i < fileInput.files.length; i++) {
         var sfilename = fileInput.files[i].name;
-        data.append("file", fileInput.files[i]);
+        var filesize = fileInput.files[i].size / 1024 / 1024;
+        if (filesize <= 2) {
+            data.append("file", fileInput.files[i]);
+        }
+        else {
+            Swal.fire({
+
+                title: 'File Size Error',
+                icon: 'error',
+                html: 'File yang terupload lebih dari 2MB',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText: 'OK'
+            })
+            return;
+        }
     }
     $.ajax({
         type: "POST",
@@ -235,7 +251,23 @@ function UpdatePerjanjian() {
     var fileInput = document.getElementById('file');
     for (i = 0; i < fileInput.files.length; i++) {
         var sfilename = fileInput.files[i].name;
-        data.append("file", fileInput.files[i]);
+        var filesize = fileInput.files[i].size / 1024 / 1024;
+        if (filesize <= 2) {
+            data.append("file", fileInput.files[i]);
+        }
+        else {
+            Swal.fire({
+
+                title: 'File Size Error',
+                icon: 'error',
+                html: 'File yang terupload lebih dari 2MB',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText: 'OK'
+            })
+            return;
+        }
     }
     data.append("ID", $("#idKerjasama").val());
     data.append("JenisPertukaran", $("#JenisPertukaran").val());
