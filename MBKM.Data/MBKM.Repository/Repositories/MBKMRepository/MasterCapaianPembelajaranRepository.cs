@@ -69,7 +69,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 var namaProdiParam = new SqlParameter("@NamaProdi", namaProdi);
                 var searchParam = new SqlParameter("@Search", search);
                 var result = context.Database
-                    .SqlQuery<VMProdi>("GetLokasiByProdi @JenjangStudi, @NamaProdi, @Search", jenjangStudiParam, namaProdiParam, searchParam).ToList();
+                    .SqlQuery<VMProdi>("GetLokasiByJenjangStudi @JenjangStudi, @NamaProdi, @Search", jenjangStudiParam, namaProdiParam, searchParam).ToList();
                 return result;
             }
         }
