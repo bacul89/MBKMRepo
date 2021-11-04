@@ -61,7 +61,7 @@ function convertBirthday() {
 
 /* --responsive */
 $(document).ready(function () {
-
+    checkStatusSertifikat();
     $("#print").hide();
 
     var date = new Date();
@@ -216,7 +216,6 @@ function showValue(result, NilaiGrades) {
         }
 
         var kodematakuliah = "<td>" + result[i].KodeMataKuliah + "</td>";
-        
         var mkEn = "<i style='text-align:left;' class='en'>" + result[i].NamaMataKuliahEN + "</i>";
         var matakuliah = "<td>" + result[i].NamaMataKuliah + mkEn + "</td>";
         
@@ -395,12 +394,49 @@ function print(id, nim) {
             })
         }
     })
+}
 
 
+function checkStatusSertifikat() {
+    $.ajax({
+        url: '/Portal/TranskripMahasiswa/CheckStatusSertifikat',
+        type: 'POST',
+        datatype: 'JSON',
+        success: function (e) {
 
+            //console.log(e);
 
+            if (e.data == false) {
+                $("#sertifikatCetak").prop("disabled", false);
+            } else {
+                $("#sertifikatCetak").prop("disabled", true);                
+            }
+        }, error: function (e) {
+            $("#sertifikatCetak").prop("disabled", true);
+        }
+    })
 
 }
 
 
+function printSertifikat() {
+    var base_url = window.location.origin;
+    window.location = base_url + '/Portal/SertifikatMbkm/GetFile';
 
+
+    $.ajax({
+        url: '/Portal/TranskripMahasiswa/UpdateStatusSertifikat',
+        type: 'POST',
+        datatype: 'JSON',
+        success: function (e) {
+
+            if (e.status == 500) {
+                $("#sertifikatCetak").prop("disabled", true);
+            } else {
+                $("#sertifikatCetak").prop("disabled", false);
+            }
+        }, error: function (e) {
+            $("#sertifikatCetak").prop("disabled", true);
+        }
+    })
+}

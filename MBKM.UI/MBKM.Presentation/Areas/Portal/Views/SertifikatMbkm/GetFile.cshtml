@@ -1,0 +1,109 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/Content/Admin/inputResponsive.css">
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    @Styles.Render("~/Content/css")
+    @*  @Scripts.Render("~/bundles/modernizr")
+    *@
+    <link rel="stylesheet" type="text/css" href="~/Content/Admin/AdminCostumeBS4.css">
+
+</head>
+<body>
+    <div class="container-fluid" style="background-image: url('/Asset/BG_SERTIFIKAT.png'); background-repeat: no-repeat; background-size: contain; height: 900px; width: 1200px; margin-left:auto; margin-right:auto">
+        <div style="margin :20px 20px 20px 20px">
+            <div class="row" style="padding-top:10px; margin-left:10px">
+                <img src="~/Asset/Lambang_Unika_Atma_Jaya.png" style="max-height: 80px; margin: 15px 25px;" />
+            </div>
+            <div class="row center">
+                <h2 style="font-size:30px">
+                    UNIVERSITAS KATOLIK INDONESIA <br />
+                    <img src="~/Asset/atma-sertifikat.png" style="max-height: 75px; margin: 15px 25px;" />
+                </h2>
+            </div>
+            <div class="row center">
+                memberikan penghargaan kepada
+            </div>
+            <div class="row center">
+                <h3 style="font-size:25px">@ViewData["namaMahasiswa"]</h3>
+                <h3 style="font-size:23px">@ViewData["nim"]</h3>
+                <div class="row center">
+                    atas partisipasinya mengikuti program Merdeka Belajar Kampus Merdeka (MBKM) <br />
+                    <i>
+                        Semester @ViewData["jenisSemester"] Tahun Akademik @ViewData["TahunSemester"] dengan @ViewData["jumlahMatkul"] Matakuliah (@ViewData["jumlahSks"] SKS) <br />
+                        di Universitas Katolik Indonesia Atma Jaya, Jl. Jend. Sudirman 51, Jakarta. <br />
+                    </i>
+                </div>
+            </div>
+            <div class="row center">
+                <h3>Jakarta, @ViewData["DateNow"]</h3>
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <div class="row center">
+                @ViewData["Warek"]<br />
+                Wakil Rektor Bidang Akademik
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid center" style="height: 900px; width: 1200px; margin-left:auto; margin-right:auto">
+        <div style="margin :20px 20px 20px 20px">
+            <table id="table-data-manage-ujian-mahasiswa" style="border: 1px solid coral" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
+                <thead>
+                    <tr style="border: 1px solid coral">
+                        <th style="border: 1px solid black" rowspan="2" class="zero-padding vertical-center center sorting">No. </th>
+                        <th style="border: 1px solid black" rowspan="2" class="zero-padding vertical-center center sorting">Nama Mata Kuliah</th>
+                        <th style="border: 1px solid black" rowspan="2" class="zero-padding vertical-center center sorting">Kompetensi Yang Diperoleh</th>
+                        <th style="border: 1px solid black" colspan="2" class="zero-padding vertical-center center sorting">Nilai</th>
+                    </tr>
+                    <tr>
+                        <th style="border: 1px solid black" class="zero-padding vertical-center center sorting">Angka</th>
+                        <th style="border: 1px solid black" class="zero-padding vertical-center center sorting">Huruf</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var i = 1;
+                        foreach (var dat in ViewData["dataGrid"] as List<MBKM.Presentation.Helper.CapaiaMatakuliahSertifkatDTO>)
+                        {
+                            <tr>
+                                <td style="border: 1px solid black" class="zero-padding vertical-center center sorting">@i</td>
+                                <td style="border: 1px solid black" class="zero-padding vertical-center center sorting">@dat.namaMatkul</td>
+                                <td style="border: 1px solid black" class="">
+                                    <ol>
+                                        @{
+                                            foreach (var z in dat.kompetensi as IList<MBKM.Entities.Models.MBKM.CPLMatakuliah>)
+                                            {
+                                                <li style="text-align:left">
+                                                    @z.MasterCapaianPembelajarans.Capaian;
+                                                </li>
+                                            }
+                                        }
+                                    </ol>
+                                </td>
+                                <td style="border: 1px solid black" class="zero-padding vertical-center center sorting">@dat.angka</td>
+                                <td style="border: 1px solid black" class="zero-padding vertical-center center sorting">@dat.huruf</td>
+
+                            </tr>
+                            i = i + 1;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>
