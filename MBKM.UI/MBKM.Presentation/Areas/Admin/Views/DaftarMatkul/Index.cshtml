@@ -119,10 +119,10 @@
                     </td>
                 </tr>
             </table>
-            <button id="cetakPDF" name="cetakPDF" class="btn" style="background-color: rgb(0,166,81); padding: 2px 30px; font-weight: bold; color: white; font-size: 16px; ">
+            <button id="cetakPDF" name="cetakPDF" class="btn" style="background-color: rgb(209,2,2); padding: 2px 30px; font-weight: bold; color: white; font-size: 16px; ">
                 <i class="fas fa-file-download"></i> CETAK PDF
             </button>
-            <button id="cetakExcel" name="cetakExcel" class="btn" style="background-color: rgb(209,2,2); padding: 2px 30px; font-weight: bold; color: white; font-size: 16px; ">
+            <button id="cetakExcel" name="cetakExcel" class="btn" style="background-color: rgb(0,166,81); padding: 2px 30px; font-weight: bold; color: white; font-size: 16px; ">
                 <i class="fas fa-file-download"></i>  CETAK EXCEL
             </button>
             <hr />
@@ -265,9 +265,44 @@
             }).draw();
         });
         $('#cetakPDF').click(function () {
-
+            if (!$('#jenjangStudi').val() || !$('#fakultas').val() || !$('#prodi').val() || !$('#tahunSemester').val()) {
+                alert('Tolong lengkapi data pencarian!');
+                return;
+            }
+            var lokasi = $('#lokasi').val();
+            if (!$('#lokasi').val()) {
+                lokasi = '';
+            }
+            var url = '@Url.Action("ExportPDF", "DaftarMatkul")?strm= ' + $('#tahunSemester').val() + '&jenjangStudi=' + $('#jenjangStudi').val() + '&fakultas=' + $('#fakultas').val() + '&lokasi=' + lokasi + '&prodi=' + $('#prodi').val() + '&tahunSemester=' + $('#tahunSemester').select2('data')[0].text;
+            console.log(url);
+            var win = window.open(url, '_blank');
+            if (win) {
+                //Browser has allowed it to be opened
+                win.focus();
+            } else {
+                //Browser has blocked it
+                alert('Please allow popups for this website');
+            }
         });
         $('#cetakExcel').click(function () {
+            if (!$('#jenjangStudi').val() || !$('#fakultas').val() || !$('#prodi').val() || !$('#tahunSemester').val()) {
+                alert('Tolong lengkapi data pencarian!');
+                return;
+            }
+            var lokasi = $('#lokasi').val();
+            if (!$('#lokasi').val()) {
+                lokasi = '';
+            }
+            var url = '@Url.Action("ExportExcel", "DaftarMatkul")?strm= ' + $('#tahunSemester').val() + '&jenjangStudi=' + $('#jenjangStudi').val() + '&fakultas=' + $('#fakultas').val() + '&lokasi=' + lokasi + '&prodi=' + $('#prodi').val() + '&tahunSemester=' + $('#tahunSemester').select2('data')[0].text;
+            console.log(url);
+            var win = window.open(url, '_blank');
+            if (win) {
+                //Browser has allowed it to be opened
+                win.focus();
+            } else {
+                //Browser has blocked it
+                alert('Please allow popups for this website');
+            }
         });
         function loadJenjangStudi() {
 
