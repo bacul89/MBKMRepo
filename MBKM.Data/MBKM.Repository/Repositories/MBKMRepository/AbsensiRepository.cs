@@ -32,7 +32,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             using (var context = new MBKMContext())
             {
                 var result = context.Database
-                    .SqlQuery<VMSemester>("GetSemesterAll").FirstOrDefault();
+                    .SqlQuery<VMSemester>("GetSemester").FirstOrDefault();
                 return result;
             }
         }

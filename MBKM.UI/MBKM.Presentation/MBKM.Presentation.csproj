@@ -138,10 +138,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminLoginController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ReportCPLMatkulController.cs" />
     <Compile Include="Areas\Admin\Controllers\DaftarHadirUjianController.cs" />
     <Compile Include="Areas\Admin\Controllers\DaftarSeluruhMahasiswaController.cs" />
     <Compile Include="Areas\Admin\Controllers\ApprovalPendaftaranMatakuliahController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DaftarMatkulController.cs" />
     <Compile Include="Areas\Admin\Controllers\LinkFasilitasAdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\JadwalUjianController.cs" />
     <Compile Include="Areas\Admin\Controllers\ManageJadwalUjianController.cs" />
@@ -547,6 +549,8 @@
     <Content Include="Areas\Admin\Views\SertifikatMBKM\GetFile.cshtml" />
     <Content Include="Areas\Admin\Views\DaftarHadirUjian\index.cshtml" />
     <Content Include="Areas\Portal\Views\SertifikatMbkm\GetFile.cshtml" />
+    <Content Include="Areas\Admin\Views\ReportCPLMatkul\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\DaftarMatkul\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
