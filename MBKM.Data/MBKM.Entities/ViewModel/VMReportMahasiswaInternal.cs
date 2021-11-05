@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MBKM.Entities.ViewModel
 {
-    public class VMPendaftaranNonPertukaran
+    public class VMReportMahasiswaInternal
     {
         public Int64 ID { get; set; }
         public string MatkulIDAsal { get; set; }

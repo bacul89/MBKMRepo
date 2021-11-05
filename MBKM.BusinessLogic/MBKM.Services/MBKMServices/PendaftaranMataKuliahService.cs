@@ -21,7 +21,8 @@ namespace MBKM.Services.MBKMServices
         VMListPendaftaranMataKuliah GetPendaftaranMahasiswaDataTable(DataTableAjaxPostModel model);
         VMListPendaftaranMataKuliah GetPendaftaranMahasiswaDataTableByMahasiswa(DataTableAjaxPostModel model, string emailMahasiswa);
         IEnumerable<VMPendaftaranWithInformasipertukaran> GetListPendaftaranAndInformasiPertukaran(long strm);
-        IEnumerable<VMPendaftaranNonPertukaran> GetListPendaftaranNonPertukaran(long strm);
+        IEnumerable<VMReportMahasiswaInternal> GetListPendaftaranNonPertukaran(long strm);
+        IEnumerable<VMReportMahasiswaInternal> GetListPendaftaranInternalPertukaran(long strm);
     }
     public class PendaftaranMataKuliahService : EntityService<PendaftaranMataKuliah>, IPendaftaranMataKuliahService
     {
@@ -97,9 +98,14 @@ namespace MBKM.Services.MBKMServices
             return _pmkRepository.GetListPendaftaranAndInformasiPertukaran(strm);
         }
 
-        public IEnumerable<VMPendaftaranNonPertukaran> GetListPendaftaranNonPertukaran(long strm)
+        public IEnumerable<VMReportMahasiswaInternal> GetListPendaftaranNonPertukaran(long strm)
         {
             return _pmkRepository.GetListPendaftaranNonPertukaran(strm);
+        }
+
+        public IEnumerable<VMReportMahasiswaInternal> GetListPendaftaranInternalPertukaran(long strm)
+        {
+            return _pmkRepository.GetListPendaftaranInternalPertukaran(strm);
         }
     }
 }
