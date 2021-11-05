@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "SIMBKM";
+    ViewBag.Title = "Penilaian MBKM";
     Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
 }
 
@@ -85,6 +85,13 @@
         <div class="container" style="width: 100%; padding-bottom: 15px;">
             <table class="table" style="width: auto;">
                 <tr>
+                    <td style="text-align: right">Tahun Semester</td>
+                    <td style="width: 400px;">
+                        <input type="text" value="@Model.Nama" class="form-control input-md" disabled />
+                        <input type="hidden" name="tahunSemester" id="tahunSemester" value="@Model.Nilai" class="form-control input-md" />
+                    </td>
+                </tr>
+                <tr>
                     <td style="text-align: right">Jenjang Studi</td>
                     <td style="width: 400px;">
                         <select name="jenjangStudi" id="jenjangStudi" class="form-control input-md"></select>
@@ -97,15 +104,15 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="text-align: right">Lokasi</td>
-                    <td style="width: 400px;">
-                        <select name="lokasi" id="lokasi" class="form-control input-md"></select>
-                    </td>
-                </tr>
-                <tr>
                     <td style="text-align: right">Program Studi</td>
                     <td style="width: 400px;">
                         <select name="prodi" id="prodi" class="form-control input-md"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right">Lokasi</td>
+                    <td style="width: 400px;">
+                        <select name="lokasi" id="lokasi" class="form-control input-md"></select>
                     </td>
                 </tr>
                 <tr>
@@ -267,14 +274,14 @@
             $("#jenjangStudi").change(function () {
 
                 $("#fakultas").empty();
-                $("#lokasi").empty();
                 $("#prodi").empty();
+                $("#lokasi").empty();
                 $("#mataKuliah").empty();
                 $("#seksi").empty();
 
                 $("#fakultas").prop("disabled", false);
-                $("#lokasi").prop("disabled", true);
                 $("#prodi").prop("disabled", true);
+                $("#lokasi").prop("disabled", true);
                 $("#mataKuliah").prop("disabled", true);
                 $("#seksi").prop("disabled", true);
 
@@ -302,21 +309,21 @@
                 });
                 $("#fakultas").change(function () {
 
-                    $("#lokasi").empty();
                     $("#prodi").empty();
+                    $("#lokasi").empty();
                     $("#mataKuliah").empty();
                     $("#seksi").empty();
 
-                    $("#lokasi").prop("disabled", false);
-                    $("#prodi").prop("disabled", true);
+                    $("#prodi").prop("disabled", false);
+                    $("#lokasi").prop("disabled", true);
                     $("#mataKuliah").prop("disabled", true);
                     $("#seksi").prop("disabled", true);
 
-                    $("#lokasi").select2({
-                        placeholder: "-- Pilih Lokasi --",
+                    $("#prodi").select2({
+                        placeholder: "-- Pilih Program Studi --",
                         width: "100%",
                         ajax: {
-                            url: "@Url.Action("GetLokasiByFakultas", "PresensiKelas")",
+                            url: "@Url.Action("GetProdiByFakultas", "PresensiKelas")",
                             dataType: 'json',
                             method: "POST",
                             delay: 250,
@@ -335,21 +342,21 @@
                             },
                         }
                     });
-                    $("#lokasi").change(function () {
+                    $("#prodi").change(function () {
 
-                        $("#prodi").empty();
+                        $("#lokasi").empty();
                         $("#mataKuliah").empty();
                         $("#seksi").empty();
 
-                        $("#prodi").prop("disabled", false);
+                        $("#lokasi").prop("disabled", false);
                         $("#mataKuliah").prop("disabled", true);
                         $("#seksi").prop("disabled", true);
 
-                        $("#prodi").select2({
-                            placeholder: "-- Pilih Program Studi --",
+                        $("#lokasi").select2({
+                            placeholder: "-- Pilih Lokasi --",
                             width: "100%",
                             ajax: {
-                                url: "@Url.Action("GetProdiByLokasi", "PresensiKelas")",
+                                url: "@Url.Action("GetLokasiByProdi", "PresensiKelas")",
                                 dataType: 'json',
                                 method: "POST",
                                 delay: 250,
@@ -357,7 +364,7 @@
                                 data: function (params) {
                                     return {
                                         Search: params.term || "",
-                                        Lokasi: $('#lokasi').val(),
+                                        Prodi: $('#prodi').val(),
                                         JenjangStudi: $('#jenjangStudi').val()
                                     };
                                 },
@@ -368,7 +375,7 @@
                                 },
                             }
                         });
-                        $("#prodi").change(function () {
+                        $("#lokasi").change(function () {
 
                             $("#mataKuliah").empty();
                             $("#seksi").empty();
@@ -380,7 +387,7 @@
                                 placeholder: "-- Pilih Mata Kuliah --",
                                 width: "100%",
                                 ajax: {
-                                    url: "@Url.Action("GetMatkulByProdi", "PresensiKelas")",
+                                    url: "@Url.Action("GetMatkulByLokasi", "PresensiKelas")",
                                     dataType: 'json',
                                     method: "POST",
                                     delay: 250,
@@ -389,6 +396,7 @@
                                         return {
                                             Search: params.term || "",
                                             Prodi: $('#prodi').val(),
+                                            Lokasi: $('#lokasi').val(),
                                             JenjangStudi: $('#jenjangStudi').val()
                                         };
                                     },
@@ -418,6 +426,8 @@
                                             return {
                                                 Search: params.term || "",
                                                 Matkul: $('#mataKuliah').val(),
+                                                Lokasi: $('#lokasi').val(),
+                                                Prodi: $('#prodi').val(),
                                                 JenjangStudi: $('#jenjangStudi').val()
                                             };
                                         },

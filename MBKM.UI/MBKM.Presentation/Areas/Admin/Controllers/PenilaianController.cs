@@ -35,7 +35,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         // GET: Admin/UserManage
         public ActionResult Index()
         {
-            return View();
+            return View(_absensiService.GetTahunSemester());
         } 
         [HttpPost]
         public ActionResult DaftarNilaiRincian(int idJadwalKuliah)

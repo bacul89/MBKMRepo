@@ -36,7 +36,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         // GET: Portal/FeedBackMatakuliah
         public ActionResult Index()
         {
-            var email = HttpContext.Session["email"].ToString();
+            var email = HttpContext.Session["emailMahasiswa"].ToString();
             var jenjang = _mahasiswaService.Find(x => x.Email == email).First().JenjangStudi;
             var dataSemester = _mahasiswaService.GetDataSemester(jenjang).First().ID;
             ViewData["firstSemester"] = dataSemester.ToString();
@@ -48,7 +48,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         [HttpPost]
         public ActionResult GetDataTable(int semester)
         {
-            var email = HttpContext.Session["email"].ToString();
+            var email = HttpContext.Session["emailMahasiswa"].ToString();
             var data1 = _pendaftaranMataKuliahService.Find(x => x.mahasiswas.Email == email && x.JadwalKuliahs.STRM == semester).ToList();
             var DescSemester = _feedbackMatkulService.GetSemesterByStrm(data1.First().JadwalKuliahs.STRM.ToString());
             List<String[]> final = new List<String[]>();
@@ -117,7 +117,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
 
         public ActionResult DetailFeedBackMatakuliah(int id, long ff, string strm)
         {
-            var email = HttpContext.Session["email"].ToString();
+            var email = HttpContext.Session["emailMahasiswa"].ToString();
             var jenjang = _mahasiswaService.Find(x => x.Email == email).First().JenjangStudi;
             var dataSemester = _mahasiswaService.GetDataSemester(jenjang).First().ID;
             IEnumerable<VMPertanyaanFeedback> Pertanyaan = _feedbackMatkulService.GetPertanyaanFeedbacks(jenjang, "2010", ff);
@@ -152,7 +152,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         [HttpPost]
         public ActionResult PostDataAnswer(List<DTOAnswer> answer)
         {
-            var email = HttpContext.Session["email"].ToString();
+            var email = HttpContext.Session["emailMahasiswa"].ToString();
             var mahasiswaID = _mahasiswaService.Find(x => x.Email == email).First().ID;
             FeedbackMatkul dBaru = new FeedbackMatkul();
             dBaru.MahasiswaID = mahasiswaID;
@@ -228,7 +228,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         [HttpPost]
         public ActionResult CheckDosenAnswer(string dosenID, int jadwalID)
         {
-            var email = HttpContext.Session["email"].ToString();
+            var email = HttpContext.Session["emailMahasiswa"].ToString();
             var mahasiswaID = _mahasiswaService.Find(x => x.Email == email).First().ID;
             var data = _feedbackMatkulService.Find(x => x.DosenID == dosenID && x.MahasiswaID == mahasiswaID && x.JadwalKuliahID == jadwalID).Count();
             if (data != 0)
@@ -247,7 +247,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var nextPage = urutan + 1;
             var data1 = _jadwalKuliahService.Get(idJadwalKuliah);
 
-            var email = HttpContext.Session["email"].ToString();
+            var email = HttpContext.Session["emailMahasiswa"].ToString();
             var jenjang = _mahasiswaService.Find(x => x.Email == email).First().JenjangStudi;
             var dataSemester = _mahasiswaService.GetDataSemester(jenjang).First().ID;
 
@@ -285,7 +285,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var nextPage = urutan - 1;
             var data1 = _jadwalKuliahService.Get(idJadwalKuliah);
 
-            var email = HttpContext.Session["email"].ToString();
+            var email = HttpContext.Session["emailMahasiswa"].ToString();
             var jenjang = _mahasiswaService.Find(x => x.Email == email).First().JenjangStudi;
             var dataSemester = _mahasiswaService.GetDataSemester(jenjang).First().ID;
 

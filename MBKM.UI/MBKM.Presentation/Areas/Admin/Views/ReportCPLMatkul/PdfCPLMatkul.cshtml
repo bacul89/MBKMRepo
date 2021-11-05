@@ -1,0 +1,40 @@
+﻿
+@{
+    Layout = null;
+    int i = 1;
+}
+
+<style>
+    table td {
+        padding: 1px 5px;
+    }
+</style>
+
+<table style="font-family: 'Times New Roman'; font-size: 14px; text-align: center; width: 100%" border="1">
+    <tr style="font-weight: bold;">
+        <td>No</td>
+        <td>Jenjang Studi</td>
+        <td>Fakultas</td>
+        <td>Program Studi</td>
+        <td>Kode Mata Kuliah</td>
+        <td>Nama Mata Kuliah</td>
+        <td>Kelompok</td>
+        <td>Capaian Pembelajaran</td>
+        <td>Kode</td>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@i</td>
+            <td>@item.MasterCapaianPembelajarans.JenjangStudi</td>
+            <td>@item.MasterCapaianPembelajarans.NamaFakultas</td>
+            <td>@item.MasterCapaianPembelajarans.NamaProdi</td>
+            <td>@item.KodeMataKuliah</td>
+            <td>@item.NamaMataKuliah</td>
+            <td>@item.Kelompok</td>
+            <td>@item.MasterCapaianPembelajarans.Capaian</td>
+            <td>@item.MasterCapaianPembelajarans.Kode</td>
+        </tr>
+        i++;
+    }
+</table>

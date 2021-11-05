@@ -25,7 +25,7 @@ namespace MBKM.Presentation.Helper
             }
             else if (area.ToLower() == "portal")
             {
-                if (filterContext.HttpContext.Session["email"] == null)
+                if (filterContext.HttpContext.Session["emailMahasiswa"] == null)
                 {
                     filterContext.Result = new RedirectResult("~/Portal/Home");
                     return;

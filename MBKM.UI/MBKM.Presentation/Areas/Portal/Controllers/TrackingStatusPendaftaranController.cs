@@ -141,7 +141,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
 
             }
 
-            if (data.PendaftaranMataKuliahs.StatusPendaftaran.Contains("MAHASISWA"))
+            if (data.PendaftaranMataKuliahs.StatusPendaftaran.Contains("MAHASISWA") || data.PendaftaranMataKuliahs.StatusPendaftaran.Contains("REJECTED"))
             {
                 ViewData["disabled"] = "true";
             }
