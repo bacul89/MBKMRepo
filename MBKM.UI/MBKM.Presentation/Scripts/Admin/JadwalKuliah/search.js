@@ -230,6 +230,8 @@ function loadJenjangStudi(tipe, id, nama) {
                             };
                         },
                         processResults: function (data, params) {
+
+                            console.log(data);
                             return {
                                 results: $.map(data, function (item) { return { id: item.ID, value: item.Kampus, text: item.Kampus } })
                             };
