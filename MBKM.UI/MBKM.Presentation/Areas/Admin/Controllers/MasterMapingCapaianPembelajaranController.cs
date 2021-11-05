@@ -78,9 +78,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             });
         }
 
-        public JsonResult SearchList(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string idMatakuliah)
+        public JsonResult SearchList(DataTableAjaxPostModel model, string idProdi, string idFakultas, string jenjangStudi, string idMatakuliah) //string lokasi,
         {
-            VMListMapingCPL vMListCPL = _cplMatakuliah.SearchListMapingCPL(model, idProdi, lokasi, idFakultas, jenjangStudi,idMatakuliah);
+            VMListMapingCPL vMListCPL = _cplMatakuliah.SearchListMapingCPL(model, idProdi,  idFakultas, jenjangStudi,idMatakuliah); //lokasi,
             return Json(new
             {
                 // this is what datatables wants sending back
@@ -386,7 +386,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             /*var vMListCPL = ;*/
             return new ContentResult
             {
-                Content = JsonConvert.SerializeObject(_mcpService.Find(mcp => mcp.ProdiID == idProdi && mcp.FakultasID == idFakultas && mcp.Kelompok == Kelompok).ToList()),ContentType = "application/json"
+                Content = JsonConvert.SerializeObject(_mcpService.Find(mcp => mcp.NamaProdi == idProdi && mcp.FakultasID == idFakultas && mcp.Kelompok == Kelompok).ToList()),ContentType = "application/json"
             };
         }
         public ActionResult GetMasterCPLByID(int id)
