@@ -53,7 +53,7 @@ $(document).ready(function () {
         //multiple: true,
         width: "100%",
         ajax: {
-            url: "/JadwalKuliah/GetSemesterAll",
+            url: "/Admin/JadwalKuliah/GetSemesterAll",
             type: 'POST',
             dataType: 'json',
             //quietMillis: 50,
@@ -137,7 +137,7 @@ function loadJenjangStudi(tipe, id, nama) {
         placeholder: "-- Pilih " + nama + " --",
         width: "100%",
         ajax: {
-            url: "/JadwalKuliah/getLookupByTipe",
+            url: "/Admin/JadwalKuliah/getLookupByTipe",
             dataType: 'json',
             method: "POST",
             delay: 250,
@@ -173,7 +173,7 @@ function loadJenjangStudi(tipe, id, nama) {
             placeholder: "-- Pilih Fakultas --",
             width: "100%",
             ajax: {
-                url: "/JadwalKuliah/GetFakultas",
+                url: "/Admin/JadwalKuliah/GetFakultas",
                 dataType: 'json',
                 method: "POST",
                 delay: 250,
@@ -209,7 +209,7 @@ function loadJenjangStudi(tipe, id, nama) {
                 placeholder: "-- Pilih Program Studi --",
                 width: "100%",
                 ajax: {
-                    url: "/JadwalKuliah/GetProdiByFakultas",
+                    url: "/Admin/JadwalKuliah/GetProdiByFakultas",
                     dataType: 'json',
                     method: "POST",
                     delay: 250,
@@ -248,7 +248,7 @@ function loadJenjangStudi(tipe, id, nama) {
                     placeholder: "-- Pilih Lokasi --",
                     width: "100%",
                     ajax: {
-                        url: "/JadwalKuliah/GetLokasiByProdi",
+                        url: "/Admin/JadwalKuliah/GetLokasiByProdi",
                         dataType: 'json',
                         method: "POST",
                         delay: 250,

@@ -311,7 +311,8 @@ function loadJenjangStudi(tipe, id, nama) {
                                     take: 10,
                                     searchBy: params.term || "",
                                     skip: params.page || 1,                                    
-                                    idProdi: $('#lokasiCari').select2('data')[0].id,
+                                    //idProdi: $('#lokasiCari').select2('data')[0].id,
+                                    idProdi: $('#prodiCari').val(),
                                     idFakultas: $('#fakultasCari').val()
                                 };
                             },
