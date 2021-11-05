@@ -93,6 +93,12 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             {
                 int ProdiIDInt = Int32.Parse(idProdi);
                 int FakultasIDInt = Int32.Parse(idFakultas);
+                int idmatkul = idMatakuliah.Length;
+                string idmatkulAdd = idMatakuliah;
+                for (int i = idmatkul; i < 6; i++)
+                {
+                    idmatkulAdd=idmatkulAdd.Insert(0, "0");
+                }
 
                 var result = context.jadwalKuliahs.Where(
                     x =>
@@ -101,7 +107,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                     x.FakultasID == FakultasIDInt &&
                     x.JenjangStudi == jenjangStudi &&
                     x.Lokasi == lokasi &&
-                    x.MataKuliahID == idMatakuliah &&
+                    x.MataKuliahID == idmatkulAdd &&
                     x.FlagOpen == true &&
                     x.ClassSection == seksi
                    
