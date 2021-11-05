@@ -37,7 +37,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             //Session["nama"] = "Smitty Swagger Werben Jeger Man Jensen";
             //Session["email"] = "sabangsasabana@gmail.com";
-            var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
+            var mahasiswa = GetMahasiswaByEmail(Session["emailMahasiswa"] as string);
 
 
             VMSemester model = _jkMhsService.getOngoingSemester(mahasiswa.JenjangStudi);
@@ -97,7 +97,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult GetJadwalKuliah(string strm)
         {
 
-            var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
+            var mahasiswa = GetMahasiswaByEmail(Session["emailMahasiswa"] as string);
 
             List<JadwalKuliah> MVJadwal = new List<JadwalKuliah>();
             List<string> mapJadwal = new List<string>();
