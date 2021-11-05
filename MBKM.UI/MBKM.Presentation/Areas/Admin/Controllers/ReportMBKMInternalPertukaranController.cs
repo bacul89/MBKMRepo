@@ -60,7 +60,6 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     "4.00"
                 });
             }
-
             return Json(final);
         }
 

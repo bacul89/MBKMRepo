@@ -6,6 +6,8 @@ $(document).ready(function () {
         jsData.semester = $('#inp_semester :selected').val();
         table.destroy();
         table = $('#table-data-rekap-mahasiswa').DataTable({
+            paging: false,
+            info: false,
             "ajax": {
                 url: '/Admin/ReportMahasiswaMBKM/TableData',
                 dataSrc: '',
@@ -86,6 +88,71 @@ $(document).ready(function () {
                 },
 
             ],
+            "footerCallback": function (row, data, start, end, display) {
+                var api = this.api(), data;
+
+                // converting to interger to find total
+                var intVal = function (i) {
+                    return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '') * 1 :
+                        typeof i === 'number' ?
+                            i : 0;
+                };
+
+                // computing column Total of the complete result 
+
+                var tueTotal = api
+                    .column(6)
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+                var wedTotal = api
+                    .column(7)
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+                var thuTotal = api
+                    .column(8)
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+                var friTotal = api
+                    .column(9)
+                    .data()
+                    .reduce(function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0);
+
+
+                // Update footer by showing the total with the reference of the column index 
+                $(api.column(6).footer()).css({
+                    'border': '1px solid black',
+                    'border-collapse': 'collapse',
+                    'vertical-align': 'center',
+                }).html(tueTotal);
+                $(api.column(7).footer()).css({
+                    'border': '1px solid black',
+                    'border-collapse': 'collapse',
+                    'vertical-align': 'center',
+                }).html(wedTotal);
+                $(api.column(8).footer()).css({
+                    'border': '1px solid black',
+                    'border-collapse': 'collapse',
+                    'vertical-align': 'center',
+                }).html(thuTotal);
+                $(api.column(9).footer()).css({
+                    'border': '1px solid black',
+                    'border-collapse': 'collapse',
+                    'vertical-align': 'center',
+                }).html(friTotal);
+            },
+
             "createdRow": function (row, data, index) {
                 $('td', row).css({
                     'border': '1px solid coral',
