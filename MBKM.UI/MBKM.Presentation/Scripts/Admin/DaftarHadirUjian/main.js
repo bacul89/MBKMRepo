@@ -31,8 +31,7 @@ $(document).ready(function () {
     });
 
 
-    datatable = $('#table-data-master-mapping-cpl').DataTable();
-    $("#table-data-master-mapping-cpl_filter").hide();
+    datatable = $('#table-data-daftar-hadir-ujian').DataTable();
 
 
 });
@@ -471,23 +470,29 @@ function buttonHandler(param) {
 
 
 //---<> datatable
-
-
-
 $('#cari').click(function () {
+
+    console.log('halloo');
     reloadDatatable();
 });
 
 function reloadDatatable() {
+    console.log($('#lokasiCari').select2('data')[0].id);
+    console.log($('#lokasiCari').select2('data')[0].Kampus);
+    console.log($('#lokasiCari').select2('data')[0].kampus);
+    console.log($('#lokasiCari').val());
+
     var variable =
-        'idProdi=' + $('#prodiIdCari').val() +
-        '&lokasi=' + $('#kampusCari').val() +
+        'idProdi=' + $('#lokasiCari').select2('data')[0].id +
+        '&lokasi=' + $('#lokasiCari').select2('data')[0].value +
         '&idFakultas=' + $('#fakultasCari').val() +
         '&jenjangStudi=' + $('#jenjangCari').val() +
+        '&idMatakuliah=' + $('#matakuliahCari').val() +
+        '&seksi=' + $('#seksiCari').val() +
         '&strm=' + $('#tahunAjaranCari').val();
 
     datatable.destroy();
-    datatable = $('#table-data-jadwal-kuliah').DataTable({
+    datatable = $('#table-data-daftar-hadir-ujian').DataTable({
         "columnDefs": [{
             "searchable": false,
             "orderable": false,
@@ -501,7 +506,7 @@ function reloadDatatable() {
         "order": [[1, 'asc']],
         //"aaSorting": [[0, "asc"]],
         "ajax": {
-            url: '/JadwalKuliah/SearchList?' + variable,
+            url: '/Admin/DaftarHadirUjian/SearchList?' + variable,
             //dataSrc: ''
             type: 'POST'
         },

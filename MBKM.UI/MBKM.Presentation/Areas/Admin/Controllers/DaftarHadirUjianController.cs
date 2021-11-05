@@ -13,6 +13,8 @@ using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using MBKM.Presentation.Helper;
+using Rotativa;
+using Rotativa.Options;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
@@ -22,14 +24,16 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private ICPLMatakuliahService _cplMatakuliah;
         private ILookupService _lookupService;
         private IJadwalKuliahService _jkService;
-        private IJadwalUjianMBKMDetailService _juService;
+        private IJadwalUjianMBKMDetailService _juDetailService;
+        private IJadwalUjianMBKMService _juService;
         private IMasterCapaianPembelajaranService _mcpService;
 
-        public DaftarHadirUjianController(ICPLMatakuliahService cplMatakuliah, ILookupService lookupService, IJadwalKuliahService jkService, IMasterCapaianPembelajaranService mcpService, IJadwalUjianMBKMDetailService juService)
+        public DaftarHadirUjianController(ICPLMatakuliahService cplMatakuliah, ILookupService lookupService, IJadwalKuliahService jkService, IMasterCapaianPembelajaranService mcpService, IJadwalUjianMBKMDetailService juDetailService, IJadwalUjianMBKMService juService)
         {
             _cplMatakuliah = cplMatakuliah;
             _lookupService = lookupService;
             _jkService = jkService;
+            _juDetailService = juDetailService;
             _juService = juService;
             _mcpService = mcpService;
         }
@@ -44,9 +48,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
 
 
-        public JsonResult SearchList(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm)
+        public JsonResult SearchList(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm, string idMatakuliah, string seksi)
         {
-            VMListJadwalUjian vmList = _juService.SearchListJadwalUjian(model, idProdi, lokasi, idFakultas, jenjangStudi, strm);
+            VMListJadwalUjian vmList = _juDetailService.SearchListJadwalUjian(model, idProdi, lokasi, idFakultas, jenjangStudi, strm, idMatakuliah, seksi);
             return Json(new
             {
                 // this is what datatables wants sending back
@@ -57,7 +61,49 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             });
         }
 
+        public ActionResult PrintDHU()
+        {
 
+            return new ViewAsPdf("PrintDHU")
+            {
+                FileName = "DHU.pdf",
+                PageSize = Size.A4,
+                PageOrientation = Orientation.Portrait,
+                //CustomSwitches = footer,
+                PageMargins = new Margins(10, 3, 20, 3)
+
+            };
+        }
+
+        public ActionResult viewDHU()
+        {
+            VMDHU vmDHU = new VMDHU();
+            int ID = 5187;
+            var jadwalUjian = _juService.Get(ID);
+            var mahasiswa = _juDetailService.Find(x => x.JadwalUjianMBKMID == ID).ToList();
+
+            List<object> data = new List<object>();
+            foreach (var p in mahasiswa)
+            {
+                //p.JadwalUjianMBKMs.;
+
+                var q = new
+                {
+                    Nama = p.Mahasiswas.Nama,
+                    NIM = p.Mahasiswas.NIM,
+                    NamaUniversitas = p.Mahasiswas.NamaUniversitas,
+                    NoKerjasama= p.Mahasiswas.NoKerjasama
+
+                    //ID = p.ID
+                };
+                data.Add(q);
+            }
+
+            ViewData["ujian"] = JsonConvert.SerializeObject(jadwalUjian);
+
+            ViewData["mahasiswas"] = JsonConvert.SerializeObject(data);
+            return View("PrintDHU");
+        }
 
         /* Lookup --<> */
         public ActionResult getLookupByTipe(string tipe)
@@ -178,7 +224,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult GetSection()
         {
 
-            var final = _juService.getSection();
+            var final = _juDetailService.getSection();
             List<object> data = new List<object>();
             foreach (var p in final)
             {

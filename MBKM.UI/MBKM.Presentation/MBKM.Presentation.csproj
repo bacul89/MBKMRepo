@@ -547,6 +547,7 @@
     <Content Include="Areas\Admin\Views\SertifikatMBKM\GetFile.cshtml" />
     <Content Include="Areas\Admin\Views\DaftarHadirUjian\index.cshtml" />
     <Content Include="Areas\Portal\Views\SertifikatMbkm\GetFile.cshtml" />
+    <Content Include="Areas\Admin\Views\DaftarHadirUjian\PrintDHU.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />

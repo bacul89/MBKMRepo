@@ -33,7 +33,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             }
         }
 
-        public VMListJadwalUjian SearchListJadwalUjian(int skip, int take, string searchBy, string sortBy, bool sortDir, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm)
+        public VMListJadwalUjian SearchListJadwalUjian(int skip, int take, string searchBy, string sortBy, bool sortDir, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm, string idMatakuliah, string seksi)
         {
             VMListJadwalUjian mListJadwalUjian = new VMListJadwalUjian();
             if (String.IsNullOrEmpty(searchBy))
@@ -45,7 +45,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             }
             using (var context = new MBKMContext())
             {
-
+                var idFakultas2nd = idFakultas.Substring(idFakultas.Length - 2);
                 //int ProdiIDInt = Int32.Parse(idProdi);
                 //int FakultasIDInt = Int32.Parse(idFakultas);
                 //int IDMataKUliahInt = Int32.Parse(idMatakuliah);
@@ -55,9 +55,11 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                     x =>
                     x.IsDeleted == false &&
                     x.ProdiID == idProdi &&
-                    x.FakultasID == idFakultas &&
+                    x.FakultasID == idFakultas2nd &&
                     x.JenjangStudi == jenjangStudi &&
                     x.Lokasi == lokasi &&
+                    x.IDMatkul == idMatakuliah &&
+                    x.ClassSection == seksi &&
                     x.STRM == strm
                     
                     //x.FlagOpen == true

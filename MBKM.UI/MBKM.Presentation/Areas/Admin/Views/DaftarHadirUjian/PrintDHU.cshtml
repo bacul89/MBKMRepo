@@ -1,0 +1,273 @@
+﻿
+@{
+    Layout = null;
+}
+@model MBKM.Entities.ViewModel.VMDHU
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PrintDHU | SIMBKM</title>
+
+
+        @Styles.Render("~/Content/css")
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
+        <link href="~/Content/select2.min.css" rel="stylesheet" />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        @Scripts.Render("~/bundles/modernizr")
+
+        <style type="text/css">
+            .thumbnail {
+                border: solid 1px;
+                padding: 15px;
+            }
+
+            .title {
+                text-align: right;
+            }
+
+                .title h1, .title h2 {
+                    margin: 0;
+                }
+
+            th.mhsList.start, td.mhsList.start {
+                border-left: solid 1px;
+            }
+
+            th.mhsList {
+                border-bottom: solid 1px;
+                border-right: solid 1px;
+                border-top: solid 1px;
+                @*display: inline-block;*@
+                padding: 10px;
+            }
+
+            td.mhsList {
+                border: solid 1px;
+                @*display: inline-block;*@
+                padding: 10px;
+            }
+
+
+            h3 {
+                margin: 0;
+            }
+
+            ol {
+                margin: 0px;
+                padding: 0px 15px;
+            }
+
+            .content table {
+                float: left;
+                position: relative;
+            }
+
+            .left {
+                float: left
+            }
+
+            .berita th, .berita td {
+                border: solid 1px;
+            }
+        </style>
+    </head>
+<body>
+
+    <div class="thumbnail">
+        <div class="header">
+            <div class="logo"></div>
+            <div class="title">
+                <h1>DHU</h1>
+                <h2>DAFTAR HADIR DHU</h2>
+            </div>
+        </div>
+        <table>
+            <tr>
+                <td><b>SEMESTER</b></td>
+                <td>:</td>
+                <td id="semseter"></td>
+                <td><b>SEKSI</b></td>
+                <td>:</td>
+                <td id="seksi"></td>
+            </tr>
+            <tr>
+                <td><b>PROGRAM STUDI</b></td>
+                <td>:</td>
+                <td id="prodi"></td>
+                <td><b>KOMPONEN</b></td>
+                <td>:</td>
+                <td id="komponen"></td>
+            </tr>
+            <tr>
+                <td><b>KODE MATAKULIAH</b></td>
+                <td>:</td>
+                <td id="kodeMK"></td>
+                <td><b>HARI / TGL</b></td>
+                <td>:</td>
+                <td id="tgl"></td>
+            </tr>
+            <tr>
+                <td><b>NAMA MATAKULIAH</b></td>
+                <td>:</td>
+                <td id="namaMK"></td>
+                <td><b>JAM</b></td>
+                <td>:</td>
+                <td id="jam"></td>
+            </tr>
+            <tr>
+                <td><b>SKS</b></td>
+                <td>:</td>
+                <td></td>
+                <td><b>RUANG</b></td>
+                <td>:</td>
+                <td id="ruang"></td>
+            </tr>
+            <tr>
+                <td><b>DOSEN</b></td>
+                <td>:</td>
+                <td></td>
+                <td><b>HALAMAN</b></td>
+                <td>:</td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+
+
+
+    <div class="content">
+        <table>
+            <thead>
+                <tr>
+                    <th class="mhsList start">No.</th>
+                    <th class="mhsList">STUDENT ID</th>
+                    <th class="mhsList">CAMPUS ID</th>
+                    <th class="mhsList">NAMA MAHASISWA</th>
+                    <th class="mhsList">TANDA TANGAN</th>
+                </tr>
+            </thead>
+            <tbody id="mhs">
+            </tbody>
+        </table>
+
+
+        <table class="berita">
+            <thead>
+                <tr>
+                    <th colspan="2" style="padding: 10px;"><center>BERITA ACARA UJIAN</center></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr rowspan="12">
+                    <td colspan="2">
+                        Waktu : .....Jam
+                    </td>
+                </tr>
+                <tr rowspan="3">
+                    <td colspan="2" >
+
+                        <div class="">Tercetak :</div>
+                        <div class="">Hadir :</div>
+                        <div class="">Tidak Hadir :</div>
+                    </td>
+                </tr>
+            </tbody>
+            <thead>
+                <tr>
+                    <th>NAMA PENGAWAS UJIAN</th>
+                    <th>PARAF</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="left"><span>........ : CEKAL</span></div>
+    <br />
+    <br />
+    <div class="thumbnail left">
+        <h3>Perhatian !!!</h3>
+        <ol>
+            <li>Mahasiswa yang berhak mengikuti ujian adalah mereka yang namanya tercantm dalam DHU ini.</li>
+            <li>Tidak diperkenankan menambahkan peseta ujian dengan alasan apapun juga.</li>
+        </ol>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+<script type="text/javascript">
+
+    var ujian;
+    var mahasiswa;
+    $(document).ready(function () {
+        console.log('hellollll');
+
+
+        ujian = JSON.parse(@Html.Raw(Json.Encode(@ViewData["ujian"])));
+        mahasiswa = JSON.parse(@Html.Raw(Json.Encode(@ViewData["mahasiswas"])));
+
+        console.log(ujian.STRM);
+        
+        $('#semseter').text(ujian.STRM);
+        $('#seksi').text(ujian.ClassSection);
+
+        $('#prodi').text(ujian.NamaProdi);
+        $('#komponen').text('Kuliah');
+        $('#kodeMK').text(ujian.KodeMatkul);
+        $('#namaMK').text(ujian.NamaMatkul);
+
+        $('#tgl').text(ujian.TanggalUjian);
+        $('#jam').text(ujian.JamMulai+' - '+ujian.JamAkhir);
+        $('#ruang').text(ujian.RuangUjian);
+
+
+        console.log(ujian);
+        console.log(mahasiswa);
+        var tablemhs = '';
+
+        for (var i = 0; i < mahasiswa.length; i++) {
+            var num = i + 1;
+            var nama = mahasiswa[i].Nama;
+            var nim = mahasiswa[i].NIM;
+            var idCampus = mahasiswa[i].NoKerjasama;
+            tablemhs = tablemhs + '<tr><td class="mhsList start">' + num + '</td><td class="mhsList">' + nim + '</td><td class="mhsList">' + idCampus + '</td><td class="mhsList">' + nama +'</td><td class="mhsList"></td></tr>'
+        }
+        $("#mhs").html(tablemhs);
+    });
+
+</script>
+</body>
+</html>
