@@ -1,0 +1,39 @@
+﻿
+@{
+    Layout = null;
+    int i = 1;
+}
+<body>
+    <table style="font-family: 'Times New Roman'; font-size: 14px; text-align: center; width: 100%" border="1">
+        <tr style="font-weight: bold;">
+            <td>No</td>
+            <td>Tahun Semester</td>
+            <td>Jenjang Studi</td>
+            <td>Fakultas</td>
+            <td>Program Studi</td>
+            <td>Kode Mata Kuliah</td>
+            <td>Nama Mata Kuliah</td>
+            <td>SKS</td>
+            <td>Seksi</td>
+            <td>Lokasi</td>
+            <td>Nama Dosen</td>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@i</td>
+                <td>@TempData["tahunSemester"]</td>
+                <td>@item.JenjangStudi</td>
+                <td>@item.NamaFakultas</td>
+                <td>@item.NamaProdi</td>
+                <td>@item.KodeMataKuliah</td>
+                <td>@item.NamaMataKuliah</td>
+                <td>@item.SKS</td>
+                <td>@item.ClassSection</td>
+                <td>@item.Lokasi</td>
+                <td>@item.NamaDosen</td>
+            </tr>
+            i++;
+        }
+    </table>
+</body>
