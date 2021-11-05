@@ -18,6 +18,19 @@ namespace MBKM.Repository.Repositories.MBKMRepository
         public LinkFasilitasRepository(DbContext _db) : base(_db)
         {
         }
+
+        public IEnumerable<VMLookup> GetFakultasByJenjangStudi(string search, string jenjangStudi)
+        {
+            using (var context = new MBKMContext())
+            {
+                var searchParam = new SqlParameter("@Search", search);
+                var jenjangStudiParam = new SqlParameter("@JenjangStudi", jenjangStudi);
+                var result = context.Database
+                    .SqlQuery<VMLookup>("GetFakultasByJenjangStudi @JenjangStudi, @Search", jenjangStudiParam, searchParam).ToList();
+                return result;
+            }
+        }
+
         public VMLinkFasilitas GetListJadwalKuliah(int Skip, int Length, string SearchParam, string SortBy, bool SortDir)
         {
             throw new NotImplementedException();
@@ -34,6 +47,18 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                     Nama = x.ClassSection
                 }).GroupBy(x => x.Nama).Select(y => y.FirstOrDefault()).OrderBy(x => x.Nama);
                 return result.ToList();
+            }
+        }
+
+        public IEnumerable<VMLookup> GetLokasiByProdi(string search, string jenjangStudi, string prodi)
+        {
+            using (var context = new MBKMContext())
+            {
+                var searchParam = new SqlParameter("@Search", search);
+                var jenjangStudiParam = new SqlParameter("@JenjangStudi", jenjangStudi);
+                var prodiParam = new SqlParameter("@Prodi", prodi);
+                var result = context.Database.SqlQuery<VMLookup>("GetLokasiByProdi @JenjangStudi, @Prodi, @Search", jenjangStudiParam, prodiParam, searchParam).ToList();
+                return result;
             }
         }
 
@@ -73,13 +98,44 @@ namespace MBKM.Repository.Repositories.MBKMRepository
 
         }
 
+        public IEnumerable<VMLookup> GetMatkulByLokasi(string search, string jenjangStudi, string prodi, string lokasi)
+        {
+            using (var context = new MBKMContext())
+            {
+                //int ProdiIDInt = Int32.Parse(prodi);
+                var searchParam = new SqlParameter("@Search", search);
+                var jenjangStudiParam = new SqlParameter("@JenjangStudi", jenjangStudi);
+                var prodiParam = new SqlParameter("@Prodi", prodi);
+                var lokasiParam = new SqlParameter("@Lokasi", lokasi);
+                var result = context.Database.SqlQuery<VMLookup>("GetMatkulByLokasi @JenjangStudi, @Prodi, @Search, @Lokasi", jenjangStudiParam, prodiParam, searchParam, lokasiParam).ToList();
+                return result;
+            }
+        }
+
+        public IEnumerable<VMLookup> GetProdiByFakultas(string search, string jenjangStudi, string fakultas)
+        {
+            using (var context = new MBKMContext())
+            {
+                var searchParam = new SqlParameter("@Search", search);
+                var jenjangStudiParam = new SqlParameter("@JenjangStudi", jenjangStudi);
+                var fakultasParam = new SqlParameter("@Fakultas", fakultas);
+                var result = context.Database.SqlQuery<VMLookup>("GetProdiByNamaFakultas @JenjangStudi, @Fakultas, @Search", jenjangStudiParam, fakultasParam, searchParam).ToList();
+                return result;
+            }
+        }
+
+        public IEnumerable<VMLookup> GetSeksiByMatkul(string search, string jenjangStudi, string matkul, string lokasi)
+        {
+            throw new NotImplementedException();
+        }
+
         //public IEnumerable<VMLinkFasilitas> GetSeksi(string search)
         //{
         //    throw new NotImplementedException();
         //}
 
 
-        public VMLinkFasilitas SearchListJadwalKuliah(int Skip, int Length, string SearchParam, string SortBy, bool SortDir, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string idMatakuliah, string seksi)
+        public VMLinkFasilitas SearchListJadwalKuliah(int Skip, int Length, string SearchParam, string SortBy, bool SortDir, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string idMatakuliah, string seksi,int strm)
         {
             VMLinkFasilitas mListCPL = new VMLinkFasilitas();
             if (String.IsNullOrEmpty(SearchParam))
@@ -109,7 +165,8 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                     x.Lokasi == lokasi &&
                     x.MataKuliahID == idmatkulAdd &&
                     x.FlagOpen == true &&
-                    x.ClassSection == seksi
+                    x.ClassSection == seksi &&
+                    x.STRM == strm
                    
                 );
                 mListCPL.TotalCount = result.Count();
