@@ -83,9 +83,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
         {
             var context = new MBKMContext();
             var data = _perjanjianKerjasamaService.Get(id);
-            var j = _perjanjianKerjasamaService.Get(id);
-            var jk = context.Lookups.Where(x => x.Tipe == "JenisKerjasama" && x.Nilai == j.JenisKerjasama).Select(x => x.Nama).FirstOrDefault();
-            ViewData["jenisKerjasm"] = jk;
+            var j = _jenisKerjasamaModelService.Get(int.Parse(data.JenisKerjasama));
+            //var jk = context.Lookups.Where(x => x.Tipe == "JenisKerjasama" && x.Nilai == j.JenisKerjasama).Select(x => x.Nama).FirstOrDefault();
+            ViewBag.JenisKerjasama = j.JenisKerjasama;
             var file = _perjanjianKerjasamaService.Get(id).AttachmentPerjanjianKerjasamas.Select(x =>
             new AttachmentPerjanjianKerjasama
             {
@@ -106,12 +106,12 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
                     for (int i = 0; i < file.Length; i++)
                     {
                         var files = file[i];
-                        if (files != null && files.ContentLength > 2154227)
+                        if (files != null && files.ContentLength > 3145728)
                         {
                             ViewBag.Message = String.Format("File yang terupload lebih dari 2MB");
 
                         }
-                        else if (files != null && files.ContentLength < 2154227)
+                        else if (files != null && files.ContentLength < 3145728)
                         {
                             var fileName = Path.GetFileName(files.FileName);
                             AttachmentPerjanjianKerjasama attch = new AttachmentPerjanjianKerjasama()

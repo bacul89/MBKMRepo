@@ -1,0 +1,415 @@
+﻿
+@{
+    ViewBag.Title = "CPL Per Mata Kuliah";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
+}
+
+<style>
+
+    .coral {
+        color: coral;
+    }
+
+    .center {
+        align-content: center;
+        align-items: center;
+        vertical-align: unset;
+        align-self: center;
+        text-align: center
+    }
+
+    .zero-padding {
+        padding: 10px 15px !important;
+    }
+
+    .vertical-center {
+        vertical-align: middle !important;
+    }
+
+    .no-border {
+        border: 0px !important;
+    }
+
+    .table-responsive {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+
+    table.dataTable.no-footer {
+        border: none;
+    }
+
+    .dataTables_wrapper .dataTables_processing {
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        width: 30%;
+        height: 40px;
+        margin-left: -20%;
+        margin-top: -25px;
+        padding-top: 20px;
+        text-align: center;
+        font-size: 1.2em;
+        background: none;
+    }
+
+    thead tr {
+        background-color: #FF8A04;
+        border: 0;
+    }
+
+    .table-spacing {
+        border-spacing: 0px 0.5rem !important;
+    }
+
+    .body-content {
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+    }
+</style>
+
+<form action="@Url.Action("DetailPenilaian","Penilaian")" method="post" id="detailPenilaian">
+    <input type="hidden" id="idMatkul" name="idMatkul" />
+</form>
+
+<div class="card center-block" style="background-color: white; margin: 15px;">
+    <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
+        <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; padding-left: 15px; font-weight: bold; font-size: 20px; color: black; ">
+            REPORT CAPAIAN PEMBELAJARAN PER MATA KULIAH
+        </h5>
+        <hr />
+        <div class="container" style="width: 100%; padding-bottom: 15px;">
+            <table class="table" style="width: auto;">
+                <tr>
+                    <td style="text-align: right">Jenjang Studi</td>
+                    <td style="width: 400px;">
+                        <select name="jenjangStudi" id="jenjangStudi" class="form-control input-md"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right">Fakultas</td>
+                    <td style="width: 400px;">
+                        <select name="fakultas" id="fakultas" class="form-control input-md"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right">Program Studi</td>
+                    <td style="width: 400px;">
+                        <select name="prodi" id="prodi" class="form-control input-md"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: right">Mata Kuliah<br />(Optional)</td>
+                    <td style="width: 400px;">
+                        <select name="matkul" id="matkul" class="form-control input-md"></select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button id="cari" name="cari" class="btn" style="float: right; background-color: #FF8A04; color: white; padding: 2px 30px; font-weight: bold; font-size: 16px;">CARI</button>
+                    </td>
+                </tr>
+            </table>
+            <button id="cetakPDF" name="cetakPDF" class="btn" style="background-color: rgb(209,2,2); padding: 2px 30px; font-weight: bold; color: white; font-size: 16px; ">
+                <i class="fas fa-file-download"></i> CETAK PDF
+            </button>
+            <button id="cetakExcel" name="cetakExcel" class="btn" style="background-color: rgb(0,166,81); padding: 2px 30px; font-weight: bold; color: white; font-size: 16px; ">
+                <i class="fas fa-file-download"></i>  CETAK EXCEL
+            </button>
+            <hr />
+            <div style="overflow-x: auto;">
+                <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; font-weight: bold; font-size: 18px; color: black; ">
+                    DAFTAR MATA KULIAH
+                </h5>
+                <table id="hasilPencarian" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
+                    <thead>
+                        <tr>
+                            <th class="zero-padding no-border vertical-center sorting">No.</th>
+                            <th class="zero-padding no-border vertical-center sorting">Jenjang Studi</th>
+                            <th class="zero-padding no-border vertical-center sorting">Fakultas</th>
+                            <th class="zero-padding no-border vertical-center sorting">Program Studi</th>
+                            <th class="zero-padding no-border vertical-center sorting">Kode Mata Kuliah</th>
+                            <th class="zero-padding no-border vertical-center sorting">Nama Mata Kuliah</th>
+                            <th class="zero-padding no-border vertical-center sorting">Kelompok</th>
+                            <th class="zero-padding no-border vertical-center sorting">Capaian Pembelajaran</th>
+                            <th class="zero-padding no-border vertical-center sorting">Kode</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        var datatable;
+        $(document).ready(function () {
+            loadJenjangStudi();
+            $("#fakultas").select2({
+                placeholder: "-- Pilih Fakultas --"
+            });
+            $("#prodi").select2({
+                placeholder: "-- Pilih Program Studi --"
+            });
+            $("#matkul").select2({
+                placeholder: "-- Pilih Matakuliah --"
+            });
+            datatable = $('#hasilPencarian').DataTable();
+        });
+
+        $('#cari').click(function () {
+            if (!$('#jenjangStudi').val() || !$('#fakultas').val() || !$('#prodi').val()) {
+                alert('Tolong lengkapi data pencarian!');
+                return;
+            }
+            var matkul = $('#matkul').val();
+            if (!$('#matkul').val()) {
+                matkul = '';
+            }
+            datatable.destroy();
+            datatable = $('#hasilPencarian').DataTable({
+                ajax: {
+                    url: '@Url.Action("GetCPLMatkul", "ReportCPLMatkul")?jenjangStudi=' + $('#jenjangStudi').val() + '&fakultas=' + $('#fakultas').val() + '&prodi=' + $('#prodi').val() + '&matkul=' + matkul,
+                    dataSrc: ''
+                },
+                "columnDefs": [{
+                    "searchable": false,
+                    "orderable": false,
+                    "targets": 0
+                }],
+                "order": [
+                    [0, 'asc']
+                ],
+                "columns": [
+                    {
+                        "data": null
+                    },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + $('#jenjangStudi').val() + '</div>';
+                        }
+                    },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + $('#fakultas').val() + '</div>';
+                        }
+                    },
+                    {
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + $('#prodi').val() + '</div>';
+                        }
+                    },
+                    {
+                        "data": "KodeMataKuliah",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "NamaMataKuliah",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "Kelompok",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "MasterCapaianPembelajarans.Capaian",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        "data": "MasterCapaianPembelajarans.Kode",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + data + '</div>';
+                        }
+                    }
+                ]
+            });
+            datatable.on('order.dt search.dt', function () {
+                datatable.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            }).draw();
+        });
+        $('#cetakPDF').click(function () {
+            if (!$('#jenjangStudi').val() || !$('#fakultas').val() || !$('#prodi').val()) {
+                alert('Tolong lengkapi data pencarian!');
+                return;
+            }
+            var matkul = $('#matkul').val();
+            if (!$('#matkul').val()) {
+                matkul = '';
+            }
+            var url = "@Url.Action("ExportPDF", "ReportCPLMatkul")?jenjangStudi=" + $('#jenjangStudi').val() + '&fakultas=' + $('#fakultas').val() + '&prodi=' + $('#prodi').val() + '&matkul=' + matkul;
+            var win = window.open(url, '_blank');
+            if (win) {
+                //Browser has allowed it to be opened
+                win.focus();
+            } else {
+                //Browser has blocked it
+                alert('Please allow popups for this website');
+            }
+        });
+        $('#cetakExcel').click(function () {
+            if (!$('#jenjangStudi').val() || !$('#fakultas').val() || !$('#prodi').val()) {
+                alert('Tolong lengkapi data pencarian!');
+                return;
+            }
+            var matkul = $('#matkul').val();
+            if (!$('#matkul').val()) {
+                matkul = '';
+            }
+            var url = "@Url.Action("ExportExcel", "ReportCPLMatkul")?jenjangStudi=" + $('#jenjangStudi').val() + '&fakultas=' + $('#fakultas').val() + '&prodi=' + $('#prodi').val() + '&matkul=' + matkul;
+            var win = window.open(url, '_blank');
+            if (win) {
+                //Browser has allowed it to be opened
+                win.focus();
+            } else {
+                //Browser has blocked it
+                alert('Please allow popups for this website');
+            }
+        });
+        function loadJenjangStudi() {
+
+            $("#fakultas").prop("disabled", true);
+            $("#prodi").prop("disabled", true);
+            $("#matkul").prop("disabled", true);
+
+            $("#jenjangStudi").select2({
+                placeholder: "-- Pilih Jenjang Studi --",
+                width: "100%",
+                ajax: {
+                    url: "@Url.Action("getLookupByTipe", "PresensiKelas")",
+                    dataType: 'json',
+                    method: "POST",
+                    delay: 250,
+                    cache: false,
+                    data: function (params) {
+                        return {
+                            Search: params.term || "",
+                            Tipe: 'JenjangStudi'
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: $.map(data, function (item) { return { id: item.Nilai, value: item.Nilai, text: item.Nama } })
+                        };
+                    }
+                }
+            });
+            $("#jenjangStudi").change(function () {
+
+                $("#fakultas").empty();
+                $("#prodi").empty();
+                $("#matkul").empty();
+
+                $("#fakultas").prop("disabled", false);
+                $("#prodi").prop("disabled", true);
+                $("#matkul").prop("disabled", true);
+
+                $("#fakultas").select2({
+                    placeholder: "-- Pilih Fakultas --",
+                    width: "100%",
+                    ajax: {
+                        url: "@Url.Action("GetFakultasByJenjangStudi", "PresensiKelas")",
+                        dataType: 'json',
+                        method: "POST",
+                        delay: 250,
+                        cache: false,
+                        data: function (params) {
+                            return {
+                                Search: params.term || "",
+                                JenjangStudi: $('#jenjangStudi').val()
+                            };
+                        },
+                        processResults: function (data, params) {
+                            return {
+                                results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
+                            };
+                        },
+                    }
+                });
+                $("#fakultas").change(function () {
+
+                    $("#prodi").empty();
+                    $("#matkul").empty();
+
+                    $("#prodi").prop("disabled", false);
+                    $("#matkul").prop("disabled", true);
+
+                    $("#prodi").select2({
+                        placeholder: "-- Pilih Program Studi --",
+                        width: "100%",
+                        ajax: {
+                            url: "@Url.Action("GetProdiByFakultas", "PresensiKelas")",
+                            dataType: 'json',
+                            method: "POST",
+                            delay: 250,
+                            cache: false,
+                            data: function (params) {
+                                return {
+                                    Search: params.term || "",
+                                    Fakultas: $('#fakultas').val(),
+                                    JenjangStudi: $('#jenjangStudi').val()
+                                };
+                            },
+                            processResults: function (data, params) {
+                                return {
+                                    results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
+                                };
+                            },
+                        }
+                    });
+                    $("#prodi").change(function () {
+
+                        $("#matkul").empty();
+
+                        $("#matkul").prop("disabled", false);
+
+                        $("#matkul").select2({
+                            placeholder: "-- Pilih Mata Kuliah --",
+                            width: "100%",
+                            ajax: {
+                                url: "@Url.Action("GetMatkulByProdi", "ReportCPLMatkul")",
+                                dataType: 'json',
+                                method: "POST",
+                                delay: 250,
+                                cache: false,
+                                data: function (params) {
+                                    return {
+                                        Search: params.term || "",
+                                        Prodi: $('#prodi').val(),
+                                        JenjangStudi: $('#jenjangStudi').val()
+                                    };
+                                },
+                                processResults: function (data, params) {
+                                    return {
+                                        results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
+                                    };
+                                },
+                            }
+                        });
+                    });
+                });
+            });
+        }
+        function appendZero(string, length) {
+            string += "";
+            while (string.length < length) {
+                string = "0" + string;
+            }
+            return string;
+        }
+    </script>
+}

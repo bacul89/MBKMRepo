@@ -7,7 +7,7 @@ function DetailMhs(id) {
         datatype: 'html',
         success: function (e) {
             $.LoadingOverlay("hide");
-            /*console.log(e);*/
+           // console.log(data);
             if ($('.data-content-modal').length) {
                 $('.data-content-modal').remove();
             }
@@ -18,7 +18,8 @@ function DetailMhs(id) {
             loadBiaya($("#noKJs").val());
             $("#Edit").click(function () {
                 //$("input").removeAttr("disabled");
-            
+                $("#statusBayarDiv").removeAttr("disabled");
+
                 //$("select").removeAttr("disabled");
                 //$("textarea").removeAttr("disabled");
                 loadFromLookup("StatusKerjasama", "skj", "StatusKerjasama");
@@ -31,6 +32,7 @@ function DetailMhs(id) {
                     //alert(latest_valueskj)
                     if (latest_valueskj == "ADA KERJASAMA") {
                         $("#noKJ").removeAttr("disabled");
+                        
                     }
                     
                 });
@@ -154,6 +156,11 @@ function UpdateKJ(id) {
     dMasterMhs.ID = id;
     dMasterMhs.NoKerjasama = latest_valueKJ;
     dMasterMhs.StatusKerjasama = latest_valueskj;
+    var cekAktif = $('input[id=inp_status]:checked').val();
+    if (cekAktif == 1) {
+        dMasterMhs.FlagBayar = "true";
+    }
+    else { dMasterMhs.FlagBayar = "false"; }
     //alert(latest_valueKJ);
     //alert(id);
     //alert(by);

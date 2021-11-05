@@ -31,7 +31,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
         public ActionResult Index()
         {
-            return View();
+            return View(_absensiService.GetTahunSemester());
         }
         public ActionResult DetailPresensi(Int64 idJadwal, string tanggalAbsen)
         {
@@ -48,6 +48,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             model.NamaDosen = result.NamaDosen;
             return View(model);
         }
+        public ActionResult GetTahunSemester()
+        {   
+            return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.GetTahunSemester()), ContentType = "application/json" };
+        }
         public ActionResult getLookupByTipe(string tipe)
         {
             return new ContentResult { Content = JsonConvert.SerializeObject(_lookupService.getLookupByTipe(tipe)), ContentType = "application/json" };
@@ -56,21 +60,21 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.GetFakultasByJenjangStudi(search, jenjangStudi)), ContentType = "application/json" };
         }
-        public ActionResult GetLokasiByFakultas(string search, string jenjangStudi, string fakultas)
+        public ActionResult GetProdiByFakultas(string search, string jenjangStudi, string fakultas)
         {
-            return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.GetLokasiByFakultas(search, jenjangStudi, fakultas)), ContentType = "application/json" };
+            return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.GetProdiByFakultas(search, jenjangStudi, fakultas)), ContentType = "application/json" };
         }
-        public ActionResult GetProdiByLokasi(string search, string jenjangStudi, string lokasi)
+        public ActionResult GetLokasiByProdi(string search, string jenjangStudi, string prodi)
         {
-            return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.GetProdiByLokasi(search, jenjangStudi, lokasi)), ContentType = "application/json" };
+            return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.GetLokasiByProdi(search, jenjangStudi, prodi)), ContentType = "application/json" };
         }
-        public ActionResult GetMatkulByProdi(string search, string jenjangStudi, string prodi)
+        public ActionResult GetMatkulByLokasi(string search, string jenjangStudi, string prodi, string lokasi)
         {
-            return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.GetMatkulByProdi(search, jenjangStudi, prodi)), ContentType = "application/json" };
+            return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.GetMatkulByLokasi(search, jenjangStudi, prodi, lokasi)), ContentType = "application/json" };
         }
-        public ActionResult GetSeksiByMatkul(string search, string jenjangStudi, string matkul)
+        public ActionResult GetSeksiByMatkul(string search, string jenjangStudi, string matkul, string lokasi)
         {
-            return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.GetSeksiByMatkul(search, jenjangStudi, matkul)), ContentType = "application/json" };
+            return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.GetSeksiByMatkul(search, jenjangStudi, matkul, lokasi)), ContentType = "application/json" };
         }
         public ActionResult GetPresensiMahasiswa(Int64 idJadwal)
         {
@@ -79,10 +83,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             now = now.Date + ts;
             return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.Find(_ => _.JadwalKuliahID == idJadwal && _.TanggalAbsen == now).ToList()), ContentType = "application/json" };
         }
-        public ActionResult GetPresensi(string jenjangStudi, string fakultas, string lokasi, string prodi, string matkul, string seksi)
+        public ActionResult GetPresensi(int strm, string jenjangStudi, string fakultas, string lokasi, string prodi, string matkul, string seksi)
         {
-            var strm = getOngoingSemester(jenjangStudi);
-            var result = _absensiService.GetPresensi((int) strm.ID, jenjangStudi, fakultas, lokasi, prodi, matkul, seksi);
+            var result = _absensiService.GetPresensi(strm, jenjangStudi, fakultas, lokasi, prodi, matkul, seksi);
             return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
         public VMSemester getOngoingSemester(string jenjangStudi)

@@ -54,6 +54,12 @@
                                 <select name="prodiCari" id="prodiCari" class="form-control input-md"></select>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="inp_lokasi" class="col-sm-3 control-label">Lokasi</label>
+                            <div class="col-sm-9">
+                                <select name="lokasiCari" id="lokasiCari" class="form-control input-md"></select>
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <label for="inp_matakuliah" class="col-sm-3 control-label">Mata Kuliah</label>
@@ -100,7 +106,7 @@
                 <br />
                 <!--table-responsive-->
                 <!--<div id="table-data-master-mapping-cpl-overflow">-->
-                <table id="table-data-master-mapping-cpl" class="table table-bordered table-spacing dataTable table-responsive display nowrap">
+                <table id="table-data-master-mapping-cpl" class="table table-bordered table-spacing js-basic-example dataTable display nowrap no-footer">
                     <thead>
                         <tr>
                             <th class="zero-padding no-border vertical-center sorting">Unduh PHU</th>
@@ -110,7 +116,7 @@
                             <th class="zero-padding no-border vertical-center sorting">Program Studi</th>
                             <th class="zero-padding no-border vertical-center sorting">Kode Mata Kuliah</th>
                             <th class="zero-padding no-border vertical-center sorting">Nama Mata Kuliah</th>
-                            <th class="zero-padding no-border vertical-center sorting">SKS</th>
+                            @*<th class="zero-padding no-border vertical-center sorting">SKS</th>*@
                             <th class="zero-padding no-border vertical-center sorting">Seksi</th>
 
                         </tr>

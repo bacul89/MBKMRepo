@@ -18,7 +18,7 @@ namespace MBKM.Services.MBKMServices
     {
 
         VMListMapingCPL GetListMapingCPL(DataTableAjaxPostModel model);
-        VMListMapingCPL SearchListMapingCPL(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string idMatakuliah);
+        VMListMapingCPL SearchListMapingCPL(DataTableAjaxPostModel model, string idProdi,  string idFakultas, string jenjangStudi, string idMatakuliah); //string lokasi,
 
         IEnumerable<VMMataKuliah> GetMatkul(int skip, int take, string searchBy, string idProdi, string idFakultas);
         IEnumerable<VMListProdi> GetProdiLocByFakultas(string jenjangStudi, string idFakultas, string search);
@@ -93,7 +93,7 @@ namespace MBKM.Services.MBKMServices
                 }
         */
 
-        public VMListMapingCPL SearchListMapingCPL(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string idMatakuliah)
+        public VMListMapingCPL SearchListMapingCPL(DataTableAjaxPostModel model, string idProdi,  string idFakultas, string jenjangStudi, string idMatakuliah) //string lokasi,
         {
             var searchBy = (model.search != null) ? model.search.value : null;
             var take = model.length;
@@ -110,7 +110,7 @@ namespace MBKM.Services.MBKMServices
             if (sortBy == null)
                 sortBy = "ID";
             sortBy = sortBy + " " + model.order[0].dir.ToUpper();
-            return _cplRepository.SearchListMapingCPL(skip, take, searchBy, sortBy, sortDir, idProdi, lokasi, idFakultas, jenjangStudi, idMatakuliah);
+            return _cplRepository.SearchListMapingCPL(skip, take, searchBy, sortBy, sortDir, idProdi,  idFakultas, jenjangStudi, idMatakuliah); //lokasi,
         }
     }
 

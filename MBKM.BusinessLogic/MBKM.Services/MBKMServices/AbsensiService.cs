@@ -14,11 +14,12 @@ namespace MBKM.Services.MBKMServices
     public interface IAbsensiService : IEntityService<Absensi>
     {
         string GetSemesterBySTRM(int strm);
+        VMSemester GetTahunSemester();
         IEnumerable<VMLookup> GetFakultasByJenjangStudi(string search, string jenjangStudi);
-        IEnumerable<VMLookup> GetLokasiByFakultas(string search, string jenjangStudi, string fakultas);
-        IEnumerable<VMLookup> GetProdiByLokasi(string search, string jenjangStudi, string lokasi);
-        IEnumerable<VMLookup> GetMatkulByProdi(string search, string jenjangStudi, string prodi);
-        IEnumerable<VMLookup> GetSeksiByMatkul(string search, string jenjangStudi, string matkul);
+        IEnumerable<VMLookup> GetProdiByFakultas(string search, string jenjangStudi, string fakultas);
+        IEnumerable<VMLookup> GetLokasiByProdi(string search, string jenjangStudi, string prodi);
+        IEnumerable<VMLookup> GetMatkulByLokasi(string search, string jenjangStudi, string prodi, string lokasi);
+        IEnumerable<VMLookup> GetSeksiByMatkul(string search, string jenjangStudi, string matkul, string lokasi);
         IEnumerable<VMPresensi> GetPresensi(int strm, string jenjangStudi, string fakultas, string lokasi, string prodi, string matkul, string seksi);
     }
     public class AbsensiService : EntityService<Absensi>, IAbsensiService
@@ -36,25 +37,28 @@ namespace MBKM.Services.MBKMServices
         {
             return _absensiRepository.GetSemesterBySTRM(strm);
         }
-        public IEnumerable<VMLookup> GetFakultasByJenjangStudi(string search, string jenjangStudi)
+        public VMSemester GetTahunSemester()
+        {
+            return _absensiRepository.GetTahunSemester();
+        }public IEnumerable<VMLookup> GetFakultasByJenjangStudi(string search, string jenjangStudi)
         {
             return _absensiRepository.GetFakultasByJenjangStudi(search, jenjangStudi);
         }
-        public IEnumerable<VMLookup> GetLokasiByFakultas(string search, string jenjangStudi, string fakultas)
+        public IEnumerable<VMLookup> GetProdiByFakultas(string search, string jenjangStudi, string fakultas)
         {
-            return _absensiRepository.GetLokasiByFakultas(search, jenjangStudi, fakultas);
+            return _absensiRepository.GetProdiByFakultas(search, jenjangStudi, fakultas);
         }
-        public IEnumerable<VMLookup> GetProdiByLokasi(string search, string jenjangStudi, string lokasi)
+        public IEnumerable<VMLookup> GetLokasiByProdi(string search, string jenjangStudi, string prodi)
         {
-            return _absensiRepository.GetProdiByLokasi(search, jenjangStudi, lokasi);
+            return _absensiRepository.GetLokasiByProdi(search, jenjangStudi, prodi);
         }
-        public IEnumerable<VMLookup> GetMatkulByProdi(string search, string jenjangStudi, string prodi)
+        public IEnumerable<VMLookup> GetMatkulByLokasi(string search, string jenjangStudi, string prodi, string lokasi)
         {
-            return _absensiRepository.GetMatkulByProdi(search, jenjangStudi, prodi);
+            return _absensiRepository.GetMatkulByLokasi(search, jenjangStudi, prodi, lokasi);
         }
-        public IEnumerable<VMLookup> GetSeksiByMatkul(string search, string jenjangStudi, string matkul)
+        public IEnumerable<VMLookup> GetSeksiByMatkul(string search, string jenjangStudi, string matkul, string lokasi)
         {
-            return _absensiRepository.GetSeksiByMatkul(search, jenjangStudi, matkul);
+            return _absensiRepository.GetSeksiByMatkul(search, jenjangStudi, matkul, lokasi);
         }
         public IEnumerable<VMPresensi> GetPresensi(int strm, string jenjangStudi, string fakultas, string lokasi, string prodi, string matkul, string seksi)
         {

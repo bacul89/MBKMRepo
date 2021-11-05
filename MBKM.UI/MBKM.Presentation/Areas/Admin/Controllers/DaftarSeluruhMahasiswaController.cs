@@ -74,6 +74,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             data.BiayaKuliah = mhs.BiayaKuliah;
             data.StatusKerjasama = mhs.StatusKerjasama;
             data.UpdatedDate = DateTime.Now;
+            data.FlagBayar = mhs.FlagBayar;
             data.UpdatedBy = Session["username"] as string;
 
 

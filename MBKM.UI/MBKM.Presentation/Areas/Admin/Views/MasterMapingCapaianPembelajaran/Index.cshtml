@@ -230,7 +230,7 @@
         function reloadDatatable() {
             var variable =
                 'idProdi=' + $('#prodiCari').val() +
-                '&lokasi=' + $('#prodiCari').select2('data')[0].lokasi +
+                //'&lokasi=' + $('#prodiCari').select2('data')[0].lokasi +
                 '&idFakultas=' + $('#fakultasCari').val() +
                 '&jenjangStudi=' + $('#jenjangCari').val() +
                 '&idMatakuliah=' + $('#matakuliahCari').val();
@@ -471,7 +471,7 @@
                         placeholder: "-- Pilih Program Studi --",
                         width: "100%",
                         ajax: {
-                            url: "/Admin/MasterMapingCapaianPembelajaran/GetProdiLocByFakultas",
+                            url: "/Admin/MasterMapingCapaianPembelajaran/GetProdiByFakultas",
                             dataType: 'json',
                             method: "POST",
                             delay: 250,
@@ -485,7 +485,8 @@
                             },
                             processResults: function (data, params) {
                                 return {
-                                    results: $.map(data, function (item) { return { id: item.IDProdi, value: item.NamProdi, text: item.NamProdi+' - '+item.Lokasi, lokasi: item.Lokasi } })
+                                    //results: $.map(data, function (item) { return { id: item.IDProdi, value: item.NamProdi, text: item.NamProdi+' - '+item.Lokasi, lokasi: item.Lokasi } })
+                                    results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
                                 };
                             },
                         }

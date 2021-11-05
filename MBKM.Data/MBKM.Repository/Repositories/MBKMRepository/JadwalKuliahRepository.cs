@@ -23,7 +23,6 @@ namespace MBKM.Repository.Repositories.MBKMRepository
         
         public IEnumerable<VMSemester> GetSemesterAll(int skip, int take, string search)
         {
-
             using (var context = new MBKMContext())
             {
                 if (String.IsNullOrEmpty(search))
@@ -50,10 +49,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                         .ToList();
                     return result;
                 }
-
-
             }
-
         }
 
         public VMListJadwalKuliah SearchListJadwalKuliah(int skip, int take, string searchBy, string sortBy, bool sortDir, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm)
@@ -229,6 +225,16 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 mListJadwalKuliah.gridDatas = gridfilter.Skip(skip).Take(take).ToList();
                 mListJadwalKuliah.TotalFilterCount = gridfilter.Count();
                 return mListJadwalKuliah;
+            }
+        }
+
+        public IEnumerable<VMSemester> GetSemesterAll2()
+        {
+            using (var context = new MBKMContext())
+            {
+                var result = context.Database
+                    .SqlQuery<VMSemester>("GetSemesterAll2").ToList();
+                return result;
             }
         }
     }

@@ -38,9 +38,20 @@
                 <label for="Instansi" class="col-md-4 col-form-label">Instansi</label>
                 <div class="col-md-8">
                     <select name="Instansi" id="instansi" class="form-control" value="@Model.Instansi" required>
-                        @*<option value="@Model.Instansi" selected>@Model.Instansi</option>*@
-                        <option value="Perusahaan">Perusahaan</option>
-                        <option value="Universitas">Universitas</option>
+                        @{
+                            if (@Model.Instansi == "Perusahaan")
+                            {
+                                <option value="Perusahaan" selected>Perusahaan</option>
+                                <option value="Universitas">Universitas</option>
+                            }
+                            else
+                            {
+                                <option value="Perusahaan">Perusahaan</option>
+                                <option value="Universitas" selected>Universitas</option>
+                            }
+                        }
+
+
                     </select>
                 </div>
             </div>
@@ -63,11 +74,17 @@
                 <div class="col-md-8">
                     <select name="JenisPertukaran" id="JenisPertukaran" class="form-control" required>
 
-                        <option value="@Model.JenisPertukaran"  selected>@Model.JenisPertukaran</option>
                         @{
                             foreach (var data in ViewData["listPerjanjian"] as IEnumerable<MBKM.Entities.ViewModel.VMJenisPertukaran>)
                             {
-                                <option value="@data.JenisPertukaran">@data.JenisPertukaran</option>
+                                if (@Model.JenisPertukaran.Replace("Program ", "") == @data.JenisPertukaran.Replace("Program ", ""))
+                                {
+                                    <option value="@data.JenisPertukaran" selected>@data.JenisPertukaran</option>
+                                }
+                                else
+                                {
+                                    <option value="@data.JenisPertukaran">@data.JenisPertukaran</option>
+                                }
                             }
                         }
                     </select>
@@ -98,7 +115,7 @@
             <div class="form-group row">
                 <label for="biaya" class="col-md-4 col-form-label">Biaya</label>
                 <div class="col-md-8">
-                    <input id="biaya" class="form-control number-separator" value="@Model.BiayaKuliah"  required>
+                    <input id="biaya" class="form-control number-separator" value="@Model.BiayaKuliah" required>
                     <input id='text' type="hidden" name="BiayaKuliah" class="form-control input-data" value="@Model.BiayaKuliah">
                 </div>
             </div>

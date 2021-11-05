@@ -10,7 +10,7 @@ $(document).ready(function () {
         "serverSide": true,
         width: "100%",
         ajax: {
-            url: "/JadwalKuliah/GetSemesterAll",
+            url: "/Portal/JadwalKuliahMahasisawa/GetSemesterAll",
             type: 'POST',
             dataType: 'json',
             //quietMillis: 50,
