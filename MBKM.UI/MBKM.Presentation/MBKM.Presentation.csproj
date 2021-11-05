@@ -249,6 +249,7 @@
     <Content Include="Scripts\Admin\MenuRole\main.js" />
     <Content Include="Scripts\Admin\Menu\crud.js" />
     <Content Include="Scripts\Admin\Menu\main.js" />
+    <Content Include="Scripts\Admin\ReportMahasiswaInternalPertukaran\main.js" />
     <Content Include="Scripts\Admin\ReportMahasiswaMBKM\main.js" />
     <Content Include="Scripts\Admin\ReportMBKMNonPertukaran\main.js" />
     <Content Include="Scripts\Admin\Role\crud.js" />
