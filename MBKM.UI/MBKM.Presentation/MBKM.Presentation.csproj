@@ -156,6 +156,9 @@
     <Compile Include="Areas\Admin\Controllers\MenuRoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\PerjanjianKerjasama\PerjanjianKerjasamaController.cs" />
     <Compile Include="Areas\Admin\Controllers\RegisMhsByAdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ReportMahasiswaMBKMController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ReportMBKMInternalPertukaranController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ReportMBKMNonPertukaranController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\SertifikatMBKMController.cs" />
     <Compile Include="Areas\Admin\Controllers\SummaryFeedbackController.cs" />
@@ -184,6 +187,7 @@
     <Compile Include="Controllers\UnAuthorizedController.cs" />
     <Compile Include="Helper\CapaiaMatakuliahSertifkatDTO.cs" />
     <Compile Include="Helper\DTOAnswer.cs" />
+    <Compile Include="Helper\DTOProdi.cs" />
     <Compile Include="Helper\GMailer.cs" />
     <Compile Include="Helper\MBKMAuthorize.cs" />
     <Compile Include="Global.asax.cs">
@@ -247,6 +251,8 @@
     <Content Include="Scripts\Admin\MenuRole\main.js" />
     <Content Include="Scripts\Admin\Menu\crud.js" />
     <Content Include="Scripts\Admin\Menu\main.js" />
+    <Content Include="Scripts\Admin\ReportMahasiswaMBKM\main.js" />
+    <Content Include="Scripts\Admin\ReportMBKMNonPertukaran\main.js" />
     <Content Include="Scripts\Admin\Role\crud.js" />
     <Content Include="Scripts\Admin\Role\main.js" />
     <Content Include="Scripts\Admin\SertifikatMBKM\main.js" />
@@ -551,6 +557,9 @@
     <Content Include="Areas\Portal\Views\SertifikatMbkm\GetFile.cshtml" />
     <Content Include="Areas\Admin\Views\ReportCPLMatkul\Index.cshtml" />
     <Content Include="Areas\Admin\Views\DaftarMatkul\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ReportMahasiswaMBKM\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ReportMBKMInternalPertukaran\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ReportMBKMNonPertukaran\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />

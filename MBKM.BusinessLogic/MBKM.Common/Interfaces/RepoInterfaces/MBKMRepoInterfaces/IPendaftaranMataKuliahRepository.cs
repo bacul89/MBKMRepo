@@ -17,5 +17,7 @@ namespace MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces
 		VMSemester getOngoingSemester(string jenjangStudi);
 		VMListPendaftaranMataKuliah GetPendaftaranList(int Skip, int Length, string SearchParam, string SortBy, bool SortDir);
         VMListPendaftaranMataKuliah GetPendaftaranListFromMahasiswa(int Skip, int Length, string SearchParam, string SortBy, bool SortDir, string emailMahasiswa);
+        IEnumerable<VMPendaftaranWithInformasipertukaran> GetListPendaftaranAndInformasiPertukaran(long strm);
+        IEnumerable<VMPendaftaranNonPertukaran> GetListPendaftaranNonPertukaran(long strm);
     }
 }

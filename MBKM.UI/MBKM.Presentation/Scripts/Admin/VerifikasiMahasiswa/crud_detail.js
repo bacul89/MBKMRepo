@@ -20,6 +20,7 @@ $(document).ready(function () {
 function getValueOnForm() {
     dataVerifikasi.StatusKerjasama = $('select[name="inp_statusKerjaSama"] option').filter(':selected').val()
     dataVerifikasi.NoKerjasama = $('select[name="inp_noKerjaSama"] option').filter(':selected').text()
+    dataVerifikasi.FlagBayar = $("input[name=inp_pembayaran]:checked").val();
 
     var biayaTmp = $('input[name=inp_biaya]').val();
     var biayaT1 = biayaTmp.split(" ");
@@ -38,6 +39,8 @@ function getValueOnForm() {
 
 function ValidationStatusApproval() {
     if (!$("input[name=inp_verifikasi]:checked").val()) {
+        return false;
+    } else if (!$("input[name=inp_pembayaran]:checked").val()){
         return false;
     } else {
         return true;
@@ -111,7 +114,7 @@ function PostDataUpdate() {
         Swal.fire({
             title: 'Oppss',
             icon: 'warning',
-            html: 'Masukkan Status Verifikasi !',
+            html: 'Masukkan Status Verifikasi dan Status Pembayaran!',
             showCloseButton: true,
             showCancelButton: false,
             focusConfirm: false,

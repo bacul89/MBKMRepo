@@ -152,5 +152,64 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 mListPendaftaranMataKuliah.TotalFilterCount = gridfilter.Count();
                 return mListPendaftaranMataKuliah;
             }
-        }    }
+        }
+
+
+        public IEnumerable<VMPendaftaranWithInformasipertukaran> GetListPendaftaranAndInformasiPertukaran(long strm)
+        {
+            using (var context = new MBKMContext())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                var result = context.PendaftaranMataKuliahs.Where(x => x.JadwalKuliahs.STRM == strm && x.StatusPendaftaran.ToLower().Contains("accepted"))
+                    .Join(context.informasiPertukarans, 
+                        pendaftaran => pendaftaran.MahasiswaID, 
+                        informasi => informasi.MahasiswaID, 
+                        (pendaftaran,informasi) => new VMPendaftaranWithInformasipertukaran
+                        {
+                            JadwalKuliahID = pendaftaran.JadwalKuliahID,
+                            JadwalKuliahs = pendaftaran.JadwalKuliahs,
+                            mahasiswas = pendaftaran.mahasiswas,
+                            InformasiPertukaran = informasi
+                        }
+                        ).ToList();
+                
+                return result;
+            }
+        }
+
+        public IEnumerable<VMPendaftaranNonPertukaran> GetListPendaftaranNonPertukaran(long strm)
+        {
+            using (var context = new MBKMContext())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                var result = context.PendaftaranMataKuliahs.Where(x => x.JadwalKuliahs.STRM == strm && x.StatusPendaftaran.ToLower().Contains("accepted"))
+                    .Join(context.informasiPertukarans,
+                        pendaftaran => pendaftaran.MahasiswaID,
+                        informasi => informasi.MahasiswaID,
+                        (pendaftaran, informasi) => new VMPendaftaranWithInformasipertukaran
+                        {
+                            JadwalKuliahID = pendaftaran.JadwalKuliahID,
+                            JadwalKuliahs = pendaftaran.JadwalKuliahs,
+                            mahasiswas = pendaftaran.mahasiswas,
+                            InformasiPertukaran = informasi
+                        }
+                        )
+                    .Join(context.NilaiKuliahs,
+                        pendaf => pendaf.mahasiswas.ID,
+                        nilai => nilai.MahasiswaID,
+                        (pendaf, nilai) => new VMPendaftaranNonPertukaran
+                        {
+                            JadwalKuliahID = pendaf.JadwalKuliahID,
+                            JadwalKuliahs = pendaf.JadwalKuliahs,
+                            mahasiswas = pendaf.mahasiswas,
+                            InformasiPertukaran = pendaf.InformasiPertukaran,
+                            NilaiKuliah = nilai
+                        })
+
+                    .Where(z => z.InformasiPertukaran.JenisPertukaran.ToLower().Contains("non")).ToList();
+
+                return result;
+            }
+        }
+    }
 }

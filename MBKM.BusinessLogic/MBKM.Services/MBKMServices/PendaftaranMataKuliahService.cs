@@ -20,6 +20,8 @@ namespace MBKM.Services.MBKMServices
         VMSemester getOngoingSemester(string jenjangStudi);
         VMListPendaftaranMataKuliah GetPendaftaranMahasiswaDataTable(DataTableAjaxPostModel model);
         VMListPendaftaranMataKuliah GetPendaftaranMahasiswaDataTableByMahasiswa(DataTableAjaxPostModel model, string emailMahasiswa);
+        IEnumerable<VMPendaftaranWithInformasipertukaran> GetListPendaftaranAndInformasiPertukaran(long strm);
+        IEnumerable<VMPendaftaranNonPertukaran> GetListPendaftaranNonPertukaran(long strm);
     }
     public class PendaftaranMataKuliahService : EntityService<PendaftaranMataKuliah>, IPendaftaranMataKuliahService
     {
@@ -88,5 +90,16 @@ namespace MBKM.Services.MBKMServices
                 sortBy = "ID";
             sortBy = sortBy + " " + model.order[0].dir.ToUpper();
             return _pmkRepository.GetPendaftaranListFromMahasiswa(skip, take, searchBy, sortBy, sortDir, emailMahasiswa);
-        }    }
+        }
+
+        public IEnumerable<VMPendaftaranWithInformasipertukaran> GetListPendaftaranAndInformasiPertukaran(long strm)
+        {
+            return _pmkRepository.GetListPendaftaranAndInformasiPertukaran(strm);
+        }
+
+        public IEnumerable<VMPendaftaranNonPertukaran> GetListPendaftaranNonPertukaran(long strm)
+        {
+            return _pmkRepository.GetListPendaftaranNonPertukaran(strm);
+        }
+    }
 }
