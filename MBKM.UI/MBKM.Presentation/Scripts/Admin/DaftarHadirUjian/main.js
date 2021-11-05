@@ -470,6 +470,192 @@ function buttonHandler(param) {
 }
 
 
+//---<> datatable
+
+
+
+$('#cari').click(function () {
+    reloadDatatable();
+});
+
+function reloadDatatable() {
+    var variable =
+        'idProdi=' + $('#prodiIdCari').val() +
+        '&lokasi=' + $('#kampusCari').val() +
+        '&idFakultas=' + $('#fakultasCari').val() +
+        '&jenjangStudi=' + $('#jenjangCari').val() +
+        '&strm=' + $('#tahunAjaranCari').val();
+
+    datatable.destroy();
+    datatable = $('#table-data-jadwal-kuliah').DataTable({
+        "columnDefs": [{
+            "searchable": false,
+            "orderable": false,
+            "paging": false,
+            "targets": 0,
+            //"visible": false, 'targets': [4, 6]
+        }],
+        //"order": [[1, 'asc']],
+        "proccessing": true,
+        "serverSide": true,
+        "order": [[1, 'asc']],
+        //"aaSorting": [[0, "asc"]],
+        "ajax": {
+            url: '/JadwalKuliah/SearchList?' + variable,
+            //dataSrc: ''
+            type: 'POST'
+        },
+        "language": {
+            "emptyTable": "No record found.",
+            "processing":
+                '<i class="fa fa-spinner fa-spin fa-3x fa-fw" style="color:#2a2b2b;"></i><span class="sr-only">Loading...</span> ',
+            "search": "Search:",
+            "searchPlaceholder": ""
+        },
+
+        //ID
+
+        "columns": [
+            {
+                "title": "Action",
+                "data": "ID",
+                "render": function (data, type, row, meta) {
+                    return `<div class="row justify-content-center">
+                            <div class="col" style="text-align:center">
+                                <a href="javascript:void(0)" style="color:black" onclick="printDHU('${data}')"> <i class="fas fa-print coral" ></i></a>
+                            </div>
+                        </div>`;
+                }
+            },
+            {
+                //"title": "No",
+                "data": null,
+                "render": function (data, type, full, meta) {
+                    return meta.row + 1;
+                }
+            },
+            {
+                //"title": "Nomor Induk Pegawai",
+                "data": "STRM",
+                "name": "STRM",
+                "render": function (data, type, row, meta) {
+                    return '<div class="center">' + data + '</div>';
+                }
+            },
+            {
+                //"title": "Nama",
+                "data": "JenjangStudi",
+                "name": "JenjangStudi",
+                "render": function (data, type, row, meta) {
+                    return '<div class="center">' + data + '</div>';
+                }
+            },
+
+            {
+                //"title": "Email",
+                "data": "NamaProdi",
+                "name": "NamaProdi",
+                "render": function (data, type, row, meta) {
+                    return '<div class="center">' + data + '</div>';
+                }
+            },
+            {
+                //"title": "Nomor Induk Pegawai",
+                "data": "KodeMatkul",
+                "name": "KodeMatkul",
+                "render": function (data, type, row, meta) {
+                    return '<div class="center">' + data + '</div>';
+                }
+            },
+
+            {
+                //"title": "Email",
+                "data": "NamaMatkul",
+                "name": "NamaMatkul",
+                "render": function (data, type, row, meta) {
+                    return '<div class="center">' + data + '</div>';
+                }
+            },
+
+            {
+                //"title": "Email",
+                "data": "ClassSection",
+                "name": "ClassSection",
+                "render": function (data, type, row, meta) {
+                    return '<div class="center">' + data + '</div>';
+                }
+            },
+
+        ],
+        "createdRow": function (row, data, index) {
+            $('td', row).css({
+                'border': '1px solid coral',
+                'border-collapse': 'collapse',
+                'vertical-align': 'center',
+            });
+
+        }//,
+        //'columnDefs': [
+        //    //hide the second & fourth column
+        //    { 'visible': false, 'targets': [5] }
+        //]
+
+    });
+    /* datatable = $('#table-data-master-mapping-cpl').DataTable({
+        ajax: {
+            url: '@Url.Action("SearchList", "JadwalKuliah")?' + varibale,
+            dataSrc: ''
+        },
+        "columns": [
+            {
+                "data": "ID",
+                "render": function (data, type, row, meta) {
+                    return `<div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick="javascript:$('#idMatkul').val(${data}); $('#daftarMatkul').submit();"><i class="fas fa-edit"></i></a></div>`;
+                }
+            },
+            {
+                "data": null,
+                "render": function (data, type, full, meta) {
+                    return '<div style="text-align:center; vertical-align: middle;">' + (meta.row + 1) + '</div>';
+                }
+            },
+            {
+                "data": "KodeMataKuliah",
+                "render": function (data, type, row, meta) {
+                    return '<div style="text-align:center; vertical-align: middle;">' + data + '</div>';
+                }
+            },
+            {
+                "data": "NamaMataKuliah",
+                "render": function (data, type, row, meta) {
+                    return '<div class="center">' + data + '</div>';
+                }
+            },
+            {
+                "data": null,
+                "render": function (data, type, full, meta) {
+                    return meta.row + 1;
+                }
+            },
+            {
+                "data": null,
+                "render": function (data, type, full, meta) {
+                    return meta.row + 1;
+                }
+            },
+            {
+                "data": null,
+                "render": function (data, type, full, meta) {
+                    return meta.row + 1;
+                }
+            }
+
+        ]
+    });*/
+}
+
+
+
 
 //---<> responsive
 $(document).ready(function () {

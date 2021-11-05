@@ -44,6 +44,21 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
 
 
+        public JsonResult SearchList(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm)
+        {
+            VMListJadwalUjian vmList = _juService.SearchListJadwalUjian(model, idProdi, lokasi, idFakultas, jenjangStudi, strm);
+            return Json(new
+            {
+                // this is what datatables wants sending back
+                draw = model.draw,
+                recordsTotal = vmList.TotalCount,
+                recordsFiltered = vmList.TotalFilterCount,
+                data = vmList.gridDatas
+            });
+        }
+
+
+
         /* Lookup --<> */
         public ActionResult getLookupByTipe(string tipe)
         {

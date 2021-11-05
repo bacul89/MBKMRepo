@@ -35,7 +35,7 @@ function reloadDatatable() {
         "order": [[1, 'asc']],
         //"aaSorting": [[0, "asc"]],
         "ajax": {
-            url: '/JadwalKuliah/SearchList?' + variable,
+            url: '/Admin/JadwalKuliah/SearchList?' + variable,
             //dataSrc: ''
             type: 'POST'
         },
