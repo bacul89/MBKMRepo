@@ -136,7 +136,7 @@ function SubmitPerjanjian() {
     var fileInput = document.getElementById('file');
     for (i = 0; i < fileInput.files.length; i++) {
         var sfilename = fileInput.files[i].name;
-        var filesize = fileInput.files[i].size / 1024 / 1024;
+        var filesize = fileInput.files[i].size / (1024 * 3);
         if (filesize <= 3) {
             data.append("file", fileInput.files[i]);
         }
@@ -251,7 +251,7 @@ function UpdatePerjanjian() {
     var fileInput = document.getElementById('file');
     for (i = 0; i < fileInput.files.length; i++) {
         var sfilename = fileInput.files[i].name;
-        var filesize = fileInput.files[i].size / 1024 / 1024;
+        var filesize = fileInput.files[i].size / (1024 * 3);
         if (filesize <= 3) {
             data.append("file", fileInput.files[i]);
         }

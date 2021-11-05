@@ -106,12 +106,12 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
                     for (int i = 0; i < file.Length; i++)
                     {
                         var files = file[i];
-                        if (files != null && files.ContentLength > 2154227)
+                        if (files != null && files.ContentLength > 3145728)
                         {
                             ViewBag.Message = String.Format("File yang terupload lebih dari 2MB");
 
                         }
-                        else if (files != null && files.ContentLength < 2154227)
+                        else if (files != null && files.ContentLength < 3145728)
                         {
                             var fileName = Path.GetFileName(files.FileName);
                             AttachmentPerjanjianKerjasama attch = new AttachmentPerjanjianKerjasama()
