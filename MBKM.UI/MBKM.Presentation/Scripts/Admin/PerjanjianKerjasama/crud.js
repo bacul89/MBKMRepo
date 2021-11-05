@@ -137,7 +137,7 @@ function SubmitPerjanjian() {
     for (i = 0; i < fileInput.files.length; i++) {
         var sfilename = fileInput.files[i].name;
         var filesize = fileInput.files[i].size / 1024 / 1024;
-        if (filesize <= 2) {
+        if (filesize <= 3) {
             data.append("file", fileInput.files[i]);
         }
         else {
@@ -252,7 +252,7 @@ function UpdatePerjanjian() {
     for (i = 0; i < fileInput.files.length; i++) {
         var sfilename = fileInput.files[i].name;
         var filesize = fileInput.files[i].size / 1024 / 1024;
-        if (filesize <= 2) {
+        if (filesize <= 3) {
             data.append("file", fileInput.files[i]);
         }
         else {
