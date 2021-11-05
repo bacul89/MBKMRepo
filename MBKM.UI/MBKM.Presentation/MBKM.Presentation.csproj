@@ -138,6 +138,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminLoginController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DaftarHadirController.cs" />
     <Compile Include="Areas\Admin\Controllers\DaftarHadirUjianController.cs" />
     <Compile Include="Areas\Admin\Controllers\DaftarSeluruhMahasiswaController.cs" />
     <Compile Include="Areas\Admin\Controllers\ApprovalPendaftaranMatakuliahController.cs" />
@@ -154,6 +155,7 @@
     <Compile Include="Areas\Admin\Controllers\MenuRoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\PerjanjianKerjasama\PerjanjianKerjasamaController.cs" />
     <Compile Include="Areas\Admin\Controllers\RegisMhsByAdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ReportInternalKeluarController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\SertifikatMBKMController.cs" />
     <Compile Include="Areas\Admin\Controllers\SummaryFeedbackController.cs" />
@@ -229,6 +231,8 @@
     <Content Include="Scripts\Admin\DaftarSeluruhMhs\main.js" />
     <Content Include="Scripts\Admin\ApprovalPendaftaranMakul\main.js" />
     <Content Include="Scripts\Admin\DaftarSeluruhMhs\main_detail.js" />
+    <Content Include="Scripts\Admin\DHK\main.js" />
+    <Content Include="Scripts\Admin\DHK\search.js" />
     <Content Include="Scripts\Admin\LinkFasilitasAdmin\crud.js" />
     <Content Include="Scripts\Admin\JadwalUjian\detailJadwalUjian.js" />
     <Content Include="Scripts\Admin\JadwalUjian\main.js" />
@@ -546,6 +550,8 @@
     <Content Include="Areas\Admin\Views\SertifikatMBKM\Index.cshtml" />
     <Content Include="Areas\Admin\Views\SertifikatMBKM\GetFile.cshtml" />
     <Content Include="Areas\Admin\Views\DaftarHadirUjian\index.cshtml" />
+    <Content Include="Areas\Admin\Views\ReportInternalKeluar\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\DaftarHadir\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
