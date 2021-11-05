@@ -83,9 +83,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
         {
             var context = new MBKMContext();
             var data = _perjanjianKerjasamaService.Get(id);
-            var j = _perjanjianKerjasamaService.Get(id);
-            var jk = context.Lookups.Where(x => x.Tipe == "JenisKerjasama" && x.Nilai == j.JenisKerjasama).Select(x => x.Nama).FirstOrDefault();
-            ViewData["jenisKerjasm"] = jk;
+            var j = _jenisKerjasamaModelService.Get(int.Parse(data.JenisKerjasama));
+            //var jk = context.Lookups.Where(x => x.Tipe == "JenisKerjasama" && x.Nilai == j.JenisKerjasama).Select(x => x.Nama).FirstOrDefault();
+            ViewBag.JenisKerjasama = j.JenisKerjasama;
             var file = _perjanjianKerjasamaService.Get(id).AttachmentPerjanjianKerjasamas.Select(x =>
             new AttachmentPerjanjianKerjasama
             {

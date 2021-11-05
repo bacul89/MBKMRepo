@@ -38,9 +38,20 @@
                 <label for="Instansi" class="col-md-4 col-form-label">Instansi</label>
                 <div class="col-md-8">
                     <select name="Instansi" id="instansi" class="form-control" value="@Model.Instansi" required>
-                        @*<option value="@Model.Instansi" selected>@Model.Instansi</option>*@
-                        <option value="Perusahaan">Perusahaan</option>
-                        <option value="Universitas">Universitas</option>
+                        @{
+                            if (@Model.Instansi == "Perusahaan")
+                            {
+                                <option value="Perusahaan" selected>Perusahaan</option>
+                                <option value="Universitas">Universitas</option>
+                            }
+                            else
+                            {
+                                <option value="Perusahaan">Perusahaan</option>
+                                <option value="Universitas" selected>Universitas</option>
+                            }
+                        }
+
+
                     </select>
                 </div>
             </div>
@@ -66,7 +77,7 @@
                         @{
                             foreach (var data in ViewData["listPerjanjian"] as IEnumerable<MBKM.Entities.ViewModel.VMJenisPertukaran>)
                             {
-                                if (@Model.JenisPertukaran.Replace("Program ","") == @data.JenisPertukaran.Replace("Program ",""))
+                                if (@Model.JenisPertukaran.Replace("Program ", "") == @data.JenisPertukaran.Replace("Program ", ""))
                                 {
                                     <option value="@data.JenisPertukaran" selected>@data.JenisPertukaran</option>
                                 }
