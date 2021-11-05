@@ -52,7 +52,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return mListCPL;
             }
         }
-        VMListMapingCPL ICPLMataKuliahRepository.SearchListMapingCPL(int Skip, int Length, string SearchParam, string SortBy, bool SortDir, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string idMatakuliah)
+        VMListMapingCPL ICPLMataKuliahRepository.SearchListMapingCPL(int Skip, int Length, string SearchParam, string SortBy, bool SortDir, string idProdi,  string idFakultas, string jenjangStudi, string idMatakuliah)//string lokasi,
         {
             VMListMapingCPL mListCPL = new VMListMapingCPL();
             if (String.IsNullOrEmpty(SearchParam))
@@ -68,11 +68,10 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 var result = context.CPLMatakuliah.Where(
                     x => 
                     x.IsDeleted == false &&
-                    x.MasterCapaianPembelajarans.ProdiID == idProdi &&
+                    x.MasterCapaianPembelajarans.NamaProdi == idProdi &&
                     x.MasterCapaianPembelajarans.FakultasID == idFakultas &&
                     x.MasterCapaianPembelajarans.JenjangStudi == jenjangStudi &&
-                    x.MasterCapaianPembelajarans.Lokasi == lokasi &&
-                    x.IDMataKUliah == idMatakuliah                
+                    x.IDMataKUliah == idMatakuliah
                 );
                 mListCPL.TotalCount = result.Count();
                 var gridfilter = result.AsQueryable().Where(y => y.NamaMataKuliah.Contains(SearchParam) || y.KodeMataKuliah.Contains(SearchParam) ||
