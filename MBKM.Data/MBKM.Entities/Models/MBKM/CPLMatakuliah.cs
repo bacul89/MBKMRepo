@@ -15,7 +15,6 @@ namespace MBKM.Entities.Models.MBKM
         public string NamaMataKuliah { get; set; }
         public string Kelompok { get; set; }
         public Int64 MasterCapaianPembelajaranID { get; set; }
-        [JsonIgnore]
         public virtual MasterCapaianPembelajaran MasterCapaianPembelajarans { get; set; }
         [JsonIgnore]
         public virtual ICollection<CPLMKPendaftaran> CPLMKPendaftarans { get; set; }
