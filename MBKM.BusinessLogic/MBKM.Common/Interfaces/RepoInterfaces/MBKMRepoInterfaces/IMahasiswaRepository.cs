@@ -18,6 +18,7 @@ namespace MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces
         void UpdateNim(int Nilai);
         void GenerateAbsence(long jadwalKuliahId, long mahasiswaId, string kodeMk, string classSection, string strm, string fakultasId);
         IEnumerable<VMSemester> GetDataSemester(string jenjangStudi);
+        IEnumerable<VMAllProdi> GetAllDataProdi();
         //int updateRangeVer(Int64[] listId);
     }
 }

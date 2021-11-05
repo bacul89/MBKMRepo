@@ -39,6 +39,7 @@ namespace MBKM.Repository.BaseRepository
         public DbSet<JadwalUjianMBKM> jadwalUjians { get; set; }
         public DbSet<PendaftaranMataKuliah> PendaftaranMataKuliahs { get; set; }
         public DbSet<JenisKerjasamaModel> JenisKerjasamaModels { get; set; }
+        public DbSet<InformasiPertukaran> informasiPertukarans { get; set; }
 
         public DbSet<AttachmentPerjanjianKerjasama> attachmentPerjanjianKerjasamas { get; set; }
         public DbSet<CPLMatakuliah> CPLMatakuliah { get; set; }

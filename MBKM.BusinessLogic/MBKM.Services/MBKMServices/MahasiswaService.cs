@@ -21,6 +21,7 @@ namespace MBKM.Services.MBKMServices
         void UpdateNim(int Nilai);
         void GenerateAbsence(long jadwalKuliahId, long mahasiswaId, string kodeMk, string classSection, string strm, string fakultasId);
         IEnumerable<VMSemester> GetDataSemester(string jenjangStudi);
+        IEnumerable<VMAllProdi> GetAllDataProdi();
         //int updateRangeVer(Int64[] listId);
     }
     public class MahasiswaService : EntityService<Mahasiswa>, IMahasiswaService
@@ -38,6 +39,11 @@ namespace MBKM.Services.MBKMServices
         public void GenerateAbsence(long jadwalKuliahId, long mahasiswaId, string kodeMk, string classSection, string strm, string fakultasId)
         {
              _mahasiswaRepository.GenerateAbsence(jadwalKuliahId, mahasiswaId, kodeMk, classSection, strm, fakultasId);
+        }
+
+        public IEnumerable<VMAllProdi> GetAllDataProdi()
+        {
+            return _mahasiswaRepository.GetAllDataProdi();
         }
 
         public IEnumerable<VMSemester> GetDataSemester(string jenjangStudi)
