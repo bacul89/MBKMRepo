@@ -19,6 +19,25 @@ namespace MBKM.Repository.Repositories.MBKMRepository
         {
         }
 
+        public VMDosenMakulPertemuan GetDosen(string seksi, string kodeMataKuliah, string strm, string fakultasId)
+        {
+
+
+            using (var context = new MBKMContext())
+            {
+                var kodeMkParam = new SqlParameter("@Kodemk", kodeMataKuliah);
+                var seksiParam = new SqlParameter("@ClassSection", seksi);
+                var strmParam = new SqlParameter("@STRM", strm);
+                var idFakultasParam = new SqlParameter("@FakultasID", fakultasId);
+
+
+                var result = context.Database
+                    .SqlQuery<VMDosenMakulPertemuan>("GetDosenMatkulPertemuan @Kodemk, @ClassSection, @STRM, @FakultasID", kodeMkParam, seksiParam, strmParam, idFakultasParam).First();
+                //x.FakultasID == idFakultas).Skip(skip).Take(take).ToList();
+                return result;
+            }
+        }
+
         public List<VMClassSection> GetListSeksi()
         {
             using (var context = new MBKMContext())
@@ -46,10 +65,25 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             using (var context = new MBKMContext())
             {
                 var idFakultas2nd = idFakultas.Substring(idFakultas.Length - 2);
+               // var idFakultas2nd = Int32.Parse(idFakultas);
                 //int ProdiIDInt = Int32.Parse(idProdi);
                 //int FakultasIDInt = Int32.Parse(idFakultas);
                 //int IDMataKUliahInt = Int32.Parse(idMatakuliah);
                 //int strmInt = Int32.Parse(strm);
+
+                /*var result = context.jadwalUjians.Where(
+                    x =>
+                    x.IsDeleted == false &&
+                    x.ProdiID == idProdi &&
+                    Int32.Parse(x.FakultasID) == idFakultas2nd &&
+                    x.JenjangStudi == jenjangStudi &&
+                    x.Lokasi == lokasi &&
+                    x.IDMatkul == idMatakuliah &&
+                    x.ClassSection == seksi &&
+                    x.STRM == strm
+                    
+                    //x.FlagOpen == true
+                );*/
 
                 var result = context.jadwalUjians.Where(
                     x =>
@@ -61,9 +95,10 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                     x.IDMatkul == idMatakuliah &&
                     x.ClassSection == seksi &&
                     x.STRM == strm
-                    
-                    //x.FlagOpen == true
+
+                //x.FlagOpen == true
                 );
+
                 mListJadwalUjian.TotalCount = result.Count();
                 var gridfilter = result.AsQueryable().Where(
                     y => y.NamaMatkul.Contains(searchBy)

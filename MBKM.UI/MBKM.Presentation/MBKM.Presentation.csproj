@@ -568,8 +568,8 @@
     <Content Include="Areas\Admin\Views\SertifikatMBKM\Index.cshtml" />
     <Content Include="Areas\Admin\Views\SertifikatMBKM\GetFile.cshtml" />
     <Content Include="Areas\Admin\Views\DaftarHadirUjian\index.cshtml" />
-    <Content Include="Areas\Portal\Views\SertifikatMbkm\GetFile.cshtml" />	<Content Include="Areas\Admin\Views\ReportCPLMatkul\Index.cshtml" />
-	<Content Include="Areas\Admin\Views\DaftarHadirUjian\PrintDHU.cshtml" />
+    <Content Include="Areas\Portal\Views\SertifikatMbkm\GetFile.cshtml" />
+    <Content Include="Areas\Admin\Views\ReportCPLMatkul\Index.cshtml" />
     <Content Include="Areas\Admin\Views\DaftarMatkul\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ReportCPLMatkul\PdfCPLMatkul.cshtml" />
     <Content Include="Areas\Admin\Views\DaftarMatkul\PdfDaftarMatkul.cshtml" />
@@ -577,7 +577,9 @@
     <Content Include="Areas\Admin\Views\ReportMBKMInternalPertukaran\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ReportMBKMNonPertukaran\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ReportInternalKeluar\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\DaftarHadir\Index.cshtml" />    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Areas\Admin\Views\DaftarHadir\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\DaftarHadirUjian\PrintDHU.cshtml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
     <Content Include="Areas\Portal\Views\TrackingStatusPendaftaran\Index.cshtml" />

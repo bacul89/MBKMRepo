@@ -481,7 +481,7 @@ function reloadDatatable() {
     console.log($('#lokasiCari').select2('data')[0].Kampus);
     console.log($('#lokasiCari').select2('data')[0].kampus);
     console.log($('#lokasiCari').val());
-
+    var base_url = window.location.origin;
     var variable =
         'idProdi=' + $('#lokasiCari').select2('data')[0].id +
         '&lokasi=' + $('#lokasiCari').select2('data')[0].value +
@@ -527,10 +527,10 @@ function reloadDatatable() {
                 "render": function (data, type, row, meta) {
                     return `<div class="row justify-content-center">
                             <div class="col" style="text-align:center">
-                                <a href="javascript:void(0)" style="color:black" onclick="printDHU('${data}')"> <i class="fas fa-print coral" ></i></a>
+                                <a href="${base_url}/Admin/DaftarHadirUjian/PrintDHU/${data}"  style="color:black" target="_blank"> <i class="fas fa-print coral" ></i> HERE</a>
                             </div>
                         </div>`;
-                }
+                }//javascript:void(0) // onclick="printDHU()"
             },
             {
                 //"title": "No",

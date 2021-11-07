@@ -8,8 +8,10 @@ namespace MBKM.Entities.ViewModel
 {
     public class VMDHU
     {
-        public string dhu { get; set; }
-        public string mahasiswas { get; set; }
-
+        public string StudentID { get; set; }
+        //public string CampusID { get; set; }
+        public string Nama { get; set; }
     }
+
+
 }

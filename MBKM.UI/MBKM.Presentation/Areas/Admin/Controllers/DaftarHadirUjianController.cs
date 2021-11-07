@@ -61,9 +61,57 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             });
         }
 
-        public ActionResult PrintDHU()
+        public ActionResult PrintDHU(int ID)
         {
 
+            //int ID = 5187;
+            VMDHU vmDHU = new VMDHU();
+            
+            var jadwalUjian = _juService.Get(ID);
+            List<JadwalUjianMBKMDetail> mahasiswa = _juDetailService.Find(x => x.JadwalUjianMBKMID == ID).ToList();
+            var dosen = _juDetailService.GetDosen(jadwalUjian.ClassSection, jadwalUjian.KodeMatkul, jadwalUjian.STRM, jadwalUjian.FakultasID);
+
+            int strmInt = Int32.Parse(jadwalUjian.STRM);
+            long fkaultasInt = Int64.Parse(jadwalUjian.FakultasID);
+            long prodiInt = Int64.Parse(jadwalUjian.ProdiID);
+
+            var jadwal = _jkService.Find(x =>
+                                x.ClassSection == jadwalUjian.ClassSection &&
+                                x.KodeMataKuliah == jadwalUjian.KodeMatkul &&
+                                x.STRM == strmInt &&
+                                x.FakultasID == fkaultasInt &&
+                                x.ProdiID == prodiInt &&
+                                x.Lokasi == jadwalUjian.Lokasi
+                         ).First();
+
+            var list = mahasiswa.Select(x => new VMDHU()
+            {
+                Nama = x.Mahasiswas.Nama,
+                StudentID = x.Mahasiswas.NIM
+            });
+
+            //List <VMMahasiswas> mahasiswas = new List<VMMahasiswas>();
+            /*foreach (var p in mahasiswa)
+            {
+                //p.JadwalUjianMBKMs.;
+
+                var q = new
+                {
+                    Nama = p.Mahasiswas.Nama,
+                    NIM = p.Mahasiswas.NIM,
+                    NamaUniversitas = p.Mahasiswas.NamaUniversitas,
+                    NoKerjasama = p.Mahasiswas.NoKerjasama
+
+                    //ID = p.ID
+                };
+                mahasiswas.Add(q);
+            }*/
+
+            ViewData["ujian"] = JsonConvert.SerializeObject(jadwalUjian);
+
+            ViewData["mahasiswas"] = list;
+            ViewData["dosen"] = JsonConvert.SerializeObject(dosen);
+            ViewData["jadwal"] = JsonConvert.SerializeObject(jadwal);
             return new ViewAsPdf("PrintDHU")
             {
                 FileName = "DHU.pdf",
@@ -75,15 +123,36 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             };
         }
 
-        public ActionResult viewDHU()
+        public ActionResult viewDHU(int ID)
         {
+            //int ID = 5187;
             VMDHU vmDHU = new VMDHU();
-            int ID = 5187;
+            
             var jadwalUjian = _juService.Get(ID);
-            var mahasiswa = _juDetailService.Find(x => x.JadwalUjianMBKMID == ID).ToList();
+            List<JadwalUjianMBKMDetail> mahasiswa = _juDetailService.Find(x => x.JadwalUjianMBKMID == ID).ToList();
+            var dosen = _juDetailService.GetDosen(jadwalUjian.ClassSection, jadwalUjian.KodeMatkul, jadwalUjian.STRM, jadwalUjian.FakultasID);
 
-            List<object> data = new List<object>();
-            foreach (var p in mahasiswa)
+            int strmInt = Int32.Parse(jadwalUjian.STRM);
+            long fkaultasInt = Int64.Parse(jadwalUjian.FakultasID);
+            long prodiInt = Int64.Parse(jadwalUjian.ProdiID);
+
+            var jadwal = _jkService.Find(x =>
+                                x.ClassSection == jadwalUjian.ClassSection &&
+                                x.KodeMataKuliah == jadwalUjian.KodeMatkul &&
+                                x.STRM == strmInt &&
+                                x.FakultasID == fkaultasInt &&
+                                x.ProdiID == prodiInt &&
+                                x.Lokasi == jadwalUjian.Lokasi
+                         ).First();
+
+            var list = mahasiswa.Select(x => new VMDHU()
+            {
+                Nama = x.Mahasiswas.Nama,
+                StudentID = x.Mahasiswas.NIM
+            });
+
+            //List <VMMahasiswas> mahasiswas = new List<VMMahasiswas>();
+            /*foreach (var p in mahasiswa)
             {
                 //p.JadwalUjianMBKMs.;
 
@@ -92,16 +161,18 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     Nama = p.Mahasiswas.Nama,
                     NIM = p.Mahasiswas.NIM,
                     NamaUniversitas = p.Mahasiswas.NamaUniversitas,
-                    NoKerjasama= p.Mahasiswas.NoKerjasama
+                    NoKerjasama = p.Mahasiswas.NoKerjasama
 
                     //ID = p.ID
                 };
-                data.Add(q);
-            }
+                mahasiswas.Add(q);
+            }*/
 
             ViewData["ujian"] = JsonConvert.SerializeObject(jadwalUjian);
 
-            ViewData["mahasiswas"] = JsonConvert.SerializeObject(data);
+            ViewData["mahasiswas"] = list;
+            ViewData["dosen"] = JsonConvert.SerializeObject(dosen);
+            ViewData["jadwal"] = JsonConvert.SerializeObject(jadwal);
             return View("PrintDHU");
         }
 
@@ -110,7 +181,6 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             return Json(_lookupService.getLookupByTipe(tipe), JsonRequestBehavior.AllowGet);
         }
-
 
         /* Attribute Kuliah --<> */
         public ActionResult GetFakultas(string search, string JenjangStudi)
