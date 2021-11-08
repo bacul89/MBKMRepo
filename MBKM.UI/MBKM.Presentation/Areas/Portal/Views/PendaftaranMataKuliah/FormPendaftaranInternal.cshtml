@@ -81,6 +81,11 @@
                             <td id="jenisKegiatanMBKM"></td>
                         </tr>
                         <tr>
+                            <td style="text-align: right;">Nama Instansi</td>
+                            <td style="text-align: center;">:</td>
+                            <td id="namaInstansi"></td>
+                        </tr>
+                        <tr>
                             <td style="text-align: right;">No. Kerjasama</td>
                             <td style="text-align: center;">:</td>
                             <td id="noKerjasama"></td>
@@ -198,7 +203,17 @@
             }).then(function (response) {
                 $('#jenisProgramMBKM').html(response.JenisPertukaran);
                 $('#jenisKegiatanMBKM').html(response.JenisKerjasama);
-                $('#noKerjasama').html(response.NoKerjasama);
+                if (response.NoKerjasama) {
+                    $('#noKerjasama').html(response.NoKerjasama);
+
+                    $.ajax({
+                        type: "GET",
+                        url: "@Url.Action("GetInstansiByNoKerjasama", "PendaftaranMataKuliah")?noKerjasama=" + response.NoKerjasama
+                    }).then(function (response) {
+                        $('#namaInstansi').html(response.NamaInstansi);
+                    });
+                }
+
                 if (response.JenisPertukaran.includes('Non Pertukaran')) {
                     $('#matkulAsal').hide();
 
