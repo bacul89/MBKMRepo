@@ -111,6 +111,7 @@
     <Compile Include="Models\MenuRole.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="ViewModel\VMAllProdi.cs" />
+    <Compile Include="ViewModel\VMDHK.cs" />
     <Compile Include="ViewModel\VMDNR.cs" />
     <Compile Include="ViewModel\VMPendaftaranWithInformasipertukaranKeluar.cs" />
     <Compile Include="ViewModel\VMReportMahasiswaInternal.cs" />
