@@ -39,8 +39,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetPendaftaranMakul(DataTableAjaxPostModel model, string emailMahasiswa)
+        public JsonResult GetPendaftaranMakul(DataTableAjaxPostModel model)
         {
+            string emailMahasiswa = Session["emailMahasiswa"] as string;
             var data = _pendaftaranMataKuliahService.GetPendaftaranMahasiswaDataTableByMahasiswa(model,emailMahasiswa);
 
             return Json(new
