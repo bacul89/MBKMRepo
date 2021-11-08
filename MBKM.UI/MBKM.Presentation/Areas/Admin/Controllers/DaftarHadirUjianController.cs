@@ -27,8 +27,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private IJadwalUjianMBKMDetailService _juDetailService;
         private IJadwalUjianMBKMService _juService;
         private IMasterCapaianPembelajaranService _mcpService;
+        private IFeedbackMatkulService _feedbackMatkulService;
 
-        public DaftarHadirUjianController(ICPLMatakuliahService cplMatakuliah, ILookupService lookupService, IJadwalKuliahService jkService, IMasterCapaianPembelajaranService mcpService, IJadwalUjianMBKMDetailService juDetailService, IJadwalUjianMBKMService juService)
+
+        public DaftarHadirUjianController(ICPLMatakuliahService cplMatakuliah, ILookupService lookupService, IJadwalKuliahService jkService, IMasterCapaianPembelajaranService mcpService, IJadwalUjianMBKMDetailService juDetailService, IJadwalUjianMBKMService juService, IFeedbackMatkulService feedbackMatkulService)
         {
             _cplMatakuliah = cplMatakuliah;
             _lookupService = lookupService;
@@ -36,6 +38,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             _juDetailService = juDetailService;
             _juService = juService;
             _mcpService = mcpService;
+            _feedbackMatkulService = feedbackMatkulService;
         }
 
 
@@ -70,6 +73,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             var jadwalUjian = _juService.Get(ID);
             List<JadwalUjianMBKMDetail> mahasiswa = _juDetailService.Find(x => x.JadwalUjianMBKMID == ID).ToList();
             var dosen = _juDetailService.GetDosen(jadwalUjian.ClassSection, jadwalUjian.KodeMatkul, jadwalUjian.STRM, jadwalUjian.FakultasID);
+            var dataSemester = _feedbackMatkulService.GetSemesterByStrm(jadwalUjian.STRM);
 
             int strmInt = Int32.Parse(jadwalUjian.STRM);
             long fkaultasInt = Int64.Parse(jadwalUjian.FakultasID);
@@ -108,7 +112,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             }*/
 
             ViewData["ujian"] = JsonConvert.SerializeObject(jadwalUjian);
-
+            ViewData["semester"] = dataSemester.Nama;
             ViewData["mahasiswas"] = list;
             ViewData["dosen"] = JsonConvert.SerializeObject(dosen);
             ViewData["jadwal"] = JsonConvert.SerializeObject(jadwal);
@@ -118,7 +122,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 PageSize = Size.A4,
                 PageOrientation = Orientation.Portrait,
                 //CustomSwitches = footer,
-                PageMargins = new Margins(10, 3, 20, 3)
+                PageMargins = new Margins(3, 3, 20, 3)
 
             };
         }
@@ -131,6 +135,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             var jadwalUjian = _juService.Get(ID);
             List<JadwalUjianMBKMDetail> mahasiswa = _juDetailService.Find(x => x.JadwalUjianMBKMID == ID).ToList();
             var dosen = _juDetailService.GetDosen(jadwalUjian.ClassSection, jadwalUjian.KodeMatkul, jadwalUjian.STRM, jadwalUjian.FakultasID);
+            var dataSemester = _feedbackMatkulService.GetSemesterByStrm(jadwalUjian.STRM);
 
             int strmInt = Int32.Parse(jadwalUjian.STRM);
             long fkaultasInt = Int64.Parse(jadwalUjian.FakultasID);
@@ -169,6 +174,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             }*/
 
             ViewData["ujian"] = JsonConvert.SerializeObject(jadwalUjian);
+            ViewData["semester"] = dataSemester.Nama;
 
             ViewData["mahasiswas"] = list;
             ViewData["dosen"] = JsonConvert.SerializeObject(dosen);

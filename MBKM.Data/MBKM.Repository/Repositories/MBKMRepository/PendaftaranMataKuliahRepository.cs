@@ -252,5 +252,45 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             }
         }
 
+
+        public IEnumerable<VMReportMahasiswaEksternal> GetListPendaftaranEksternalPertukaran(long strm)
+        {
+            using (var context = new MBKMContext())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                var result = context.PendaftaranMataKuliahs.Where(x => x.JadwalKuliahs.STRM == strm && x.StatusPendaftaran.ToLower().Contains("accepted"))
+                    .Join(context.informasiPertukarans,
+                        pendaftaran => pendaftaran.MahasiswaID,
+                        informasi => informasi.MahasiswaID,
+                        (pendaftaran, informasi) => new VMPendaftaranWithInformasipertukaran
+                        {
+                            MatkulKodeAsal = pendaftaran.MatkulKodeAsal,
+                            MatkulAsal = pendaftaran.MatkulAsal,
+                            MatkulIDAsal = pendaftaran.MatkulIDAsal,
+                            JadwalKuliahID = pendaftaran.JadwalKuliahID,
+                            JadwalKuliahs = pendaftaran.JadwalKuliahs,
+                            mahasiswas = pendaftaran.mahasiswas,
+                            InformasiPertukaran = informasi
+                        }
+                        )
+                    .Join(context.NilaiKuliahs,
+                        pendaf => pendaf.mahasiswas.ID,
+                        nilai => nilai.MahasiswaID,
+                        (pendaf, nilai) => new VMReportMahasiswaEksternal
+                        {
+                            MatkulKodeAsal = pendaf.MatkulKodeAsal,
+                            MatkulAsal = pendaf.MatkulAsal,
+                            MatkulIDAsal = pendaf.MatkulIDAsal,
+                            JadwalKuliahID = pendaf.JadwalKuliahID,
+                            JadwalKuliahs = pendaf.JadwalKuliahs,
+                            mahasiswas = pendaf.mahasiswas,
+                            InformasiPertukaran = pendaf.InformasiPertukaran,
+                            NilaiKuliah = nilai
+                        })
+                    .Where(z => z.mahasiswas.NIM != z.mahasiswas.NIMAsal  && z.JadwalKuliahs.ID == z.NilaiKuliah.JadwalKuliahID).ToList();
+
+                return result;
+            }
+        }
     }
 }

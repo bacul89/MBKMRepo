@@ -20,10 +20,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
-    <script src="../../Scripts/jquery-3.4.1.js"></script>
+    @Styles.Render("~/Content/css")
+
 
 
     <style type="text/css">
+        .logo {
+            width: 65px
+        }
+
+        h1 {
+            margin: 3px 0px
+        }
+
+        .Title {
+            margin: 26px 0
+        }
+
+
             .thumbnail {
                 border: solid 1px;
                 padding: 15px;
@@ -119,7 +133,28 @@
 
     <div class="id">
         <div class="thumbnail" style=" padding: 15px 34px;">
-            <div class="header">
+            <div class="col-md-12 Header">
+                <div class="col-md-1 col-sm-1 col-lg-1 col-xs-1 pd0">
+                    <img class="logo" src="~/Asset/Lambang_Atma_Jaya.png" />
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-6 col-xs-6 Title pd0">
+                    <b>
+                        <span> UNIVERSITAS KATOLIK INDONESIA</span>
+                        <h1>ATMA JAYA</h1>
+                    </b>
+                </div>
+                <div class="col-md-5 col-sm-5 col-lg-5 col-xs-5 Title pd0">
+                    <div class="title">
+                        <i>
+                            <h1><b>DHU</b></h1>
+                            <h2>DAFTAR HADIR DHU</h2>
+                        </i>
+                    </div>
+                </div>
+            </div>
+
+
+            @*<div class="header">
                 <div class="logo"></div>
                 <div class="title">
                     <i>
@@ -127,12 +162,12 @@
                         <h2>DAFTAR HADIR DHU</h2>
                     </i>
                 </div>
-            </div>
+            </div>*@
             <table>
                 <tr>
                     <td class="p-tb10"><b>SEMESTER</b></td>
                     <td class="p-tb10lr5">:</td>
-                    <td class="p-tb10" id="semseter" style="width: 52%;"></td>
+                    <td class="p-tb10" style="width: 52%;">@ViewData["semester"]</td> @*id="semseter"*@
                     <td class="space"></td>
                     <td class="p-tb10"><b>SEKSI</b></td>
                     <td class="p-tb10lr5">:</td>
@@ -331,7 +366,7 @@
         $('#seksi').text(ujian.ClassSection);
 
         $('#prodi').text(ujian.NamaProdi);
-        $('#komponen').text('Kuliah');
+        $('#komponen').text("Kuliah");
         $('#kodeMK').text(ujian.KodeMatkul);
         $('#namaMK').text(ujian.NamaMatkul);
 

@@ -89,6 +89,22 @@ $("#tahunAjaranCari").change(function () {
     $("#jenjangCari").prop("disabled", false);
     loadJenjangStudi("JenjangStudi", "jenjang", "Jenjang Studi");
 
+    $("#fakultasCari").prop("disabled", true);
+    $("#fakultasCari").prop("disabled", true);
+    $("#prodiCari").prop("disabled", true);
+    $("#lokasiCari").prop("disabled", true);
+    $("#matakuliahCari").prop("disabled", true);
+    $("#seksiCari").prop("disabled", true);
+
+    $("#jenjangCari").empty();
+    $("#fakultasCari").empty();
+    $("#prodiCari").empty();
+    $("#prodiIdCari").val('');
+    $("#lokasiCari").empty();
+    $("#matakuliahCari").empty();
+    $("#seksiCari").empty();
+
+
 
 });
 
@@ -527,7 +543,7 @@ function reloadDatatable() {
                 "render": function (data, type, row, meta) {
                     return `<div class="row justify-content-center">
                             <div class="col" style="text-align:center">
-                                <a href="${base_url}/Admin/DaftarHadirUjian/PrintDHU/${data}"  style="color:black" target="_blank"> <i class="fas fa-print coral" ></i> HERE</a>
+                                <a href="${base_url}/Admin/DaftarHadirUjian/PrintDHU/${data}"  style="color:black" target="_blank"> <i class="fas fa-print coral" ></i></a>
                             </div>
                         </div>`;
                 }//javascript:void(0) // onclick="printDHU()"
@@ -544,7 +560,7 @@ function reloadDatatable() {
                 "data": "STRM",
                 "name": "STRM",
                 "render": function (data, type, row, meta) {
-                    return '<div class="center">' + data + '</div>';
+                    return '<div class="center">' + $('#tahunAjaranCari').select2('data')[0].text + '</div>';
                 }
             },
             {
