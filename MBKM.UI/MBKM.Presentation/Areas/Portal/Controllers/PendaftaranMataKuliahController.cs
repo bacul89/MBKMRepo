@@ -115,11 +115,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var result = GetMahasiswaByEmail(email);
             return new ContentResult { Content = JsonConvert.SerializeObject(_pmkService.GetFakultas(result.JenjangStudi, search)), ContentType = "application/json" };
         }
-        public ActionResult GetMataKuliahByProdi(int idProdi, string lokasi, int strm)
+        public ActionResult GetMataKuliahByProdi(string prodi, string lokasi, int strm)
         {
             List<JadwalKuliah> jks = new List<JadwalKuliah>();
             List<string> jadwalKuliahs = new List<string>();
-            foreach (var item in _jkService.Find(jk => jk.ProdiID == idProdi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen).ToList())
+            foreach (var item in _jkService.Find(jk => jk.NamaProdi == prodi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen).ToList())
             {
                 if (!jadwalKuliahs.Contains(item.NamaMataKuliah))
                 {
