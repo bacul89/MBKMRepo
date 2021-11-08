@@ -47,7 +47,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult GetFile()
         {
 
-            string email = Session["email"] as string;
+            string email = Session["emailMahasiswa"] as string;
 
             var tmpMahasiswa = _mahasiswaService.Find(x => x.Email == email).First();
             double id = tmpMahasiswa.ID;

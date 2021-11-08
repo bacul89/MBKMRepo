@@ -7,12 +7,14 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using MBKM.Presentation.Helper;
 using System.Web;
 using System.Web.Mvc;
+using Rotativa;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
-
+    [MBKMAuthorize]
     public class ReportMBKMInternalPertukaranController : Controller
     {
         private IPendaftaranMataKuliahService _pendaftaranMataKuliahService;
@@ -93,9 +95,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 });
             }
 
-            ViewData["datas"] = final;
-
-            return View();
+            return new ViewAsPdf("GetFilePdf");
         }
 
 
