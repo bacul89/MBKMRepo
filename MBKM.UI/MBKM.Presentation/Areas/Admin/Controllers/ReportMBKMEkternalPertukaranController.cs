@@ -11,6 +11,8 @@ using Rotativa.Options;
 using Rotativa;
 using OfficeOpenXml;
 using System.IO;
+using OfficeOpenXml.Style;
+using System.Drawing;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
@@ -203,8 +205,66 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 .Find(_ => _.MasterCapaianPembelajarans.JenjangStudi == jenjangStudi && _.MasterCapaianPembelajarans.NamaProdi == prodi && _.MasterCapaianPembelajarans.NamaFakultas == fakultas).ToList();
             }*/
 
+
+
+
+
             ExcelPackage package = new ExcelPackage();
+
+
+
             var ws = package.Workbook.Worksheets.Add("Report Pertukaran Eksternal");
+
+            double columnWidth = 2;
+            ws.Column(1).Width = columnWidth;
+            ws.Column(8).Width = columnWidth;
+
+
+
+            
+
+
+            
+            ws.Cells["A1:A2"].Merge = true;
+            ws.Cells["B1:I1"].Merge = true;
+            ws.Cells["B2:I2"].Merge = true;
+            ws.Cells["A3:I4"].Merge = true;
+            ws.Cells["Q1:Q2"].Merge = true;
+
+            ws.Row(1).Height = 15;
+            ws.Row(2).Height = 26;
+            ws.Column(1).Width = 17;
+
+            ws.Cells["B1:I1"].Style.Font.Bold = true;
+            ws.Cells["B2:I2"].Style.Font.Bold = true;
+            ws.Cells["B2:I2"].Style.Font.Size = 25;
+            ws.Cells["B2:I2"].Style.WrapText = true;
+            ws.Cells["B1:I1"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+            ws.Cells["B2:I2"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+            ws.Cells["A3:I4"].Style.Font.Bold = true;
+
+            ws.Cells["A3"].Value = "FORMULIR \nMATRIKS MATAKULIAH PROGRAM MBKM NON PERTUKARAN";
+            ws.Cells["B1"].Value = "UNIVERSITAS KATOLIK INDONESIA";
+            ws.Cells["B2"].Value = "ATMA JAYA";
+
+            ws.Cells["A6:R6"].Style.Font.Bold = true;
+            ws.Cells["A6:R6"].Style.Border.Top.Style = ExcelBorderStyle.Thick;
+            ws.Cells["A6:R6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thick;
+            ws.Cells["A6:R6"].Style.Border.Left.Style = ExcelBorderStyle.Thick;
+            ws.Cells["A6:R6"].Style.Border.Right.Style = ExcelBorderStyle.Thick;
+            ws.Cells["A6:R6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Cells["A3:I4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+            ws.Cells["A3:I4"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+            ws.Cells["Q1:Q2"].Merge = true;
+            ws.Cells["Q1"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+            ws.Cells["Q1"].Value = "Kode Dokumen :\nFR-UAJ-02-92/R1";
+            ws.Cells["Q3"].Value = "Tanggal Berlaku: ";
+            ws.Cells["Q3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+            ws.Cells["Q4"].Value = "Tanggal Revisi: ";
+            ws.Cells["Q4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+
+
             ws.Cells["A6"].Value = "No.";
             ws.Cells["B6"].Value = "Tahun Semester";
             ws.Cells["C6"].Value = "Jenjang Studi";
@@ -223,30 +283,62 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ws.Cells["P6"].Value = "Tanggal Selesai";
             ws.Cells["Q6"].Value = "Dosen";
             ws.Cells["R6"].Value = "Program Studi";
-
-
-            for (int i = 0; i < result.Count; i++)
+            ws.Column(1).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Column(2).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Column(3).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Column(5).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Column(7).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Column(9).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Column(10).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Column(11).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Column(12).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Column(13).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Column(14).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Column(15).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Column(16).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Column(17).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Column(18).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Column(19).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            int i = 0;
+            for (i = 0; i < result.Count; i++)
             {
+                
+                ws.Column(i + 7).Width = 10;
+                Console.WriteLine(i + 7);
+                ws.Cells["A" + (i + 7) + ":R" + (i + 7)].Style.Border.Top.Style = ExcelBorderStyle.Hair;
+                ws.Cells["A" + (i + 7) + ":R" + (i + 7)].Style.Border.Bottom.Style = ExcelBorderStyle.Hair;
+                ws.Cells["A" + (i + 7) + ":R" + (i + 7)].Style.Border.Left.Style = ExcelBorderStyle.Hair;
+                ws.Cells["A" + (i + 7) + ":R" + (i + 7)].Style.Border.Right.Style = ExcelBorderStyle.Hair;
                 var tmp = result[i];
-                ws.Cells["A" + (i + 2)].Value = (i + 1);
-                ws.Cells["B" + (i + 2)].Value = dataSemester;
-                ws.Cells["C" + (i + 2)].Value = tmp.mahasiswas.JenjangStudi;
-                ws.Cells["D" + (i + 2)].Value = tmp.mahasiswas.NamaUniversitas;
-                ws.Cells["E" + (i + 2)].Value = tmp.mahasiswas.NIM;
-                ws.Cells["F" + (i + 2)].Value = tmp.mahasiswas.Nama;
-                ws.Cells["G" + (i + 2)].Value = tmp.JadwalKuliahs.KodeMataKuliah;
-                ws.Cells["H" + (i + 2)].Value = tmp.JadwalKuliahs.NamaMataKuliah;
-                ws.Cells["I" + (i + 2)].Value = tmp.JadwalKuliahs.ClassSection;
-                ws.Cells["J" + (i + 2)].Value = tmp.NilaiKuliah.NilaiTotal;
-                ws.Cells["K" + (i + 2)].Value = tmp.NilaiKuliah.Grade;
-                ws.Cells["L" + (i + 2)].Value = tmp.JadwalKuliahs.Hari;
-                ws.Cells["M" + (i + 2)].Value = tmp.JadwalKuliahs.JamMasuk;
-                ws.Cells["N" + (i + 2)].Value = tmp.JadwalKuliahs.JamSelesai;
-                ws.Cells["O" + (i + 2)].Value = tmp.JadwalKuliahs.TglAwalKuliah;
-                ws.Cells["P" + (i + 2)].Value = tmp.JadwalKuliahs.TglAkhirKuliah;
-                ws.Cells["Q" + (i + 2)].Value = tmp.JadwalKuliahs.DosenID+" - "+tmp.JadwalKuliahs.NamaDosen;
-                ws.Cells["R" + (i + 2)].Value = tmp.JadwalKuliahs.NamaProdi;
+                ws.Cells["A" + (i + 7)].Value = (i + 1);
+                ws.Cells["B" + (i + 7)].Value = dataSemester.Nama;
+                ws.Cells["C" + (i + 7)].Value = tmp.mahasiswas.JenjangStudi;
+                ws.Cells["D" + (i + 7)].Value = tmp.mahasiswas.NamaUniversitas;
+                ws.Cells["E" + (i + 7)].Value = tmp.mahasiswas.NIM;
+                ws.Cells["F" + (i + 7)].Value = tmp.mahasiswas.Nama;
+                ws.Cells["G" + (i + 7)].Value = tmp.JadwalKuliahs.KodeMataKuliah;
+                ws.Cells["H" + (i + 7)].Value = tmp.JadwalKuliahs.NamaMataKuliah;
+                ws.Cells["I" + (i + 7)].Value = tmp.JadwalKuliahs.ClassSection;
+                ws.Cells["J" + (i + 7)].Value = tmp.NilaiKuliah.NilaiTotal;
+                ws.Cells["K" + (i + 7)].Value = tmp.NilaiKuliah.Grade;
+                ws.Cells["L" + (i + 7)].Value = tmp.JadwalKuliahs.Hari;
+                ws.Cells["M" + (i + 7)].Value = tmp.JadwalKuliahs.JamMasuk;
+                ws.Cells["N" + (i + 7)].Value = tmp.JadwalKuliahs.JamSelesai;
+                ws.Cells["O" + (i + 7)].Value = tmp.JadwalKuliahs.TglAwalKuliah.Date.ToString("dd/MM/yyyy");
+                ws.Cells["P" + (i + 7)].Value = tmp.JadwalKuliahs.TglAkhirKuliah.Date.ToString("dd/MM/yyyy");
+                ws.Cells["Q" + (i + 7)].Value = tmp.JadwalKuliahs.DosenID+" - "+tmp.JadwalKuliahs.NamaDosen;
+                ws.Cells["R" + (i + 7)].Value = tmp.JadwalKuliahs.NamaProdi;
+
+                
             }
+            
+            //ws.Cell["A7"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            //ws.Cells["A" + 7 + ":R" + (i + 7)].AutoFitColumns();
+            //ws.Cells["A" + 7 + ":R" + (i + 7)].Width = 10;
+            //ws.Cells["A"+ (0 + 7) + ":R" + (i + 7)].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+
+
 
             ws.Cells[ws.Dimension.Address].AutoFitColumns();
 

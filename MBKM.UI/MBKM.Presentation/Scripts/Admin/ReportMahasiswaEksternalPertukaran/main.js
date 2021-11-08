@@ -109,16 +109,28 @@ $(document).ready(function () {
     });
     $("#tahunAjaranCari").change(function () {
         reloadDatatable();
+        createDownload();
 
-        //$("#").
 
-        //$("a").attr("href", "")
+
+
     });
 
     datatable = $('#table-data-external').DataTable();
     reloadDatatable();
+    createDownload();
 });
 
+
+function createDownload() {
+    var base_url = window.location.origin;
+    var strm = $('#tahunAjaranCari').val();
+    var urlPDF = base_url + "/Admin/ReportMBKMEkternalPertukaran/ExportPdf?strm=" + strm;
+    var urlXLS = base_url + "/Admin/ReportMBKMEkternalPertukaran/ExportExcel?strm=" + strm;
+
+    $("#pdf").attr("href", urlPDF);
+    $("#xls").attr("href", urlXLS);
+}
 
 function reloadDatatable() {
 
