@@ -46,10 +46,10 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             using (var context = new MBKMContext())
             {
                 var jenjangStudiParam = new SqlParameter("@JenjangStudi", jenjangStudi);
-                var namaProdiParam = new SqlParameter("@NamaProdi", namaProdi);
+                var namaProdiParam = new SqlParameter("@Prodi", namaProdi);
                 var searchParam = new SqlParameter("@Search", search);
                 var result = context.Database
-                    .SqlQuery<VMProdi>("GetLokasiByProdi @JenjangStudi, @NamaProdi, @Search", jenjangStudiParam, namaProdiParam, searchParam).ToList();
+                    .SqlQuery<VMProdi>("GetLokasiByProdi @JenjangStudi, @Prodi, @Search", jenjangStudiParam, namaProdiParam, searchParam).ToList();
                 return result;
             }
         }
