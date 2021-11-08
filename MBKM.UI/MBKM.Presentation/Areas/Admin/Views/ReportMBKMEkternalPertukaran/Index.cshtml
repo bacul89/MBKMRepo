@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "REPORT MBKM PERTUKARAN EKSTERMAL - SIMBKM";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
+}
+
+@model MBKM.Entities.ViewModel.VMSemester
+
+@section css{
+
+    <link rel="stylesheet" type="text/css" href="~/Content/Admin/inputResponsive.css">
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/sweetalert2.all.min.js"></script>
+}
+
+<div class="card-body responsive-content" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; padding: 0px">
+    <h6 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 25px; color: black;">
+        REPORT MBKM PERTUKARAN EKSTERNAL DARI LUAR ATMA JAYA <br />
+    </h6>
+    <hr />
+    <div class="container" style="width: 100%;">
+        <div class="">
+
+            <div class="col-md-12">
+                <form class="form-horizontal col-md-7">
+
+                    <div class="form-group">
+                        <label for="inp_tahunAjaran" class="col-sm-3 control-label">Tahun Semester</label>
+                        <div class="col-sm-9">
+                            <select name="tahunAjaranCari" id="tahunAjaranCari" class="form-control input-md">
+                                <option value="@Model.ID" selected>@Model.Nama</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <br />
+                    <br />
+
+                </form>
+            </div>
+
+            <form class="form-horizontal col-md-5">
+                <div class="form-group">
+                    <div class="col-sm-12 ">
+                        <a type="button" id="pdf" class="btn btn-success" style="width: 10vw" href=""><span class="fa fa-download"></span> CETAK PDF</a>
+                        <a type="button" id="xls" class="btn btn-danger" style="width: 10vw" href=""><span class="fa fa-download"></span> CETAK EXCEL</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--table-responsive-->
+        <table id="table-data-external" class="table table-bordered table-spacing dataTable table-responsive display nowrap" style="border-spacing: 0 5px; border:0">
+            <thead>
+                <tr>
+                    <th class="zero-padding2 no-border small-text vertical-center center ">No</th>
+                    <th class="zero-padding2 no-border small-text vertical-center center ">Tahun Semester</th>
+                    <th class="zero-padding2 no-border small-text vertical-center center ">Jenjang Studi</th>
+                    <th class="zero-padding2 no-border small-text vertical-center center ">Universitas Asal</th>
+                    <th class="zero-padding2 no-border small-text vertical-center center ">NIM</th>
+                    <th class="zero-padding2 no-border small-text vertical-center center ">Nama Mahasiswa</th>
+                    <th class="zero-padding2 no-border small-text vertical-center center ">Kode Mata Kuliah</th>
+                    <th class="zero-padding2 no-border small-text vertical-center center ">Nama Mata Kuliah </th>
+                    <th class="zero-padding2 no-border small-text vertical-center center ">Seksi</th>
+                    <th class="zero-padding2 no-border small-text vertical-center center ">Nilai Akhir</th>
+                    <th class="zero-padding2 no-border small-text vertical-center center ">Grade</th>
+                    <th class="zero-padding2 no-border small-text vertical-center center ">Hari</th>
+                    <th class="zero-padding2 no-border small-text vertical-center center ">Jam Mulai</th>
+                    <th class="zero-padding2 no-border small-text vertical-center center ">Jam Selesi</th>
+                    <th class="zero-padding2 no-border small-text vertical-center center ">Tanggal Mulai</th>
+                    <th class="zero-padding2 no-border small-text vertical-center center ">Tanggal Selesai</th>
+                    <th class="zero-padding2 no-border small-text vertical-center center ">Dosen</th>
+                    <th class="zero-padding2 no-border small-text vertical-center center ">Program Studi</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <br />
+        <br />
+        <br />
+        <br />
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/Admin/ReportMahasiswaEksternalPertukaran/main.js"></script>
+}
+
+

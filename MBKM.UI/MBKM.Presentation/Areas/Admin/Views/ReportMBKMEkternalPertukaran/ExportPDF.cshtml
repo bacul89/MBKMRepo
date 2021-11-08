@@ -1,0 +1,195 @@
+﻿
+@{
+    Layout = null;
+}
+@model MBKM.Entities.ViewModel.VMReportMahasiswaEksternal
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ExportPDF</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <style>
+        body{
+            padding:0px
+        }
+        .logo {
+            width: 65px
+        }
+        h1 {
+            margin: 3px 0px
+        }
+        .Title{
+            margin:26px 0
+        }
+
+        .Header {
+            margin: 15px 0 0 0
+        }
+        .pd0{
+            padding:0px;
+        }
+        .pd5 {
+            padding: 5px 0
+        }
+
+        .documentStyle{
+            border:solid 1px #222
+        }
+
+        .describe {
+            font-size: 18px!important;
+        }
+
+
+            th.mhsList.start, td.mhsList.start {
+                border-left: solid 1px;
+            }
+
+            th.mhsList {
+                border-bottom: solid 1px;
+                border-right: solid 1px;
+                border-top: solid 1px;
+                @*display: inline-block;*@
+                padding: 10px;
+            }
+
+            td.mhsList {
+                border: solid 1px;
+                @*display: inline-block;*@
+                padding: 7px 10px;
+            }
+
+    </style>
+</head>
+<body>
+    <div class="col-md-12 Header">
+        <div class="col-md-1 pd0">
+            <img class="logo" src="~/Asset/Lambang_Atma_Jaya.png" />
+        </div>
+        <div class="col-md-7 Title pd0">
+            <b>
+                <span> UNIVERSITAS KATOLIK INDONESIA</span>
+                <h1>ATMA JAYA</h1>
+            </b>
+        </div>
+        <div class="col-md-4 Title pd0">
+            <center>
+                <label>Kode Dokumen :</label> <br />
+                <b class="describe">
+                    FR-UAJ-02-92/R1
+                </b>
+            </center>
+
+
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-9 pd0">
+            <b class="describe pd5">
+                FORMULIR<br />
+                MATRIKS MATAKULIAH PROGRAM MBKM NON PERTUKARAN
+            </b>
+        </div>
+        <div class="col-md-3 pd0">
+
+            <label> Tanggal Berlaku: </label><span id="tgl-berlaku"></span><br />
+            <label> Tanggal Revisi : </label><span id="tgl-revisi"></span>
+
+        </div>
+    </div>
+
+
+    <table class="documentStyle">
+        <thead>
+            <tr>
+                @*<th class="mhsList start">Admit Term</th>
+                    <th class="mhsList">Tipe MBKM</th>
+                    <th class="mhsList">Student ID</th>
+                    <th class="mhsList">Campus ID</th>
+                    <th class="mhsList">Name</th>
+                    <th class="mhsList">Term</th>
+                    <th class="mhsList">Kode MK	</th>
+                    <th class="mhsList">Descr</th>
+                    <th class="mhsList">Section</th>
+                    <th class="mhsList">Exam Type</th>
+                    <th class="mhsList">Sem Mark</th>
+                    <th class="mhsList">Grade</th>
+                    <th class="mhsList">Mon</th>
+                    <th class="mhsList">Tues</th>
+                    <th class="mhsList">Wed</th>
+                    <th class="mhsList">Thurs</th>
+                    <th class="mhsList">Fri</th>
+                    <th class="mhsList">Sat</th>
+                    <th class="mhsList">Sun</th>
+                    <th class="mhsList">Mtg Start</th>
+                    <th class="mhsList">Mtg Start</th>
+                    <th class="mhsList">Dosen</th>
+                    <th class="mhsList">Other Institute</th>
+                    <th class="mhsList">Status</th>
+                    <th class="mhsList">Reason</th>
+                    <th class="mhsList">Kode Prodi</th>*@
+
+                <th class="mhsList">No</th>
+                <th class="mhsList">Tahun Semester</th>
+                <th class="mhsList">Jenjang Studi</th>
+                <th class="mhsList">Universitas Asal</th>
+                <th class="mhsList">NIM</th>
+                <th class="mhsList">Nama Mahasiswa</th>
+                <th class="mhsList">Kode Mata Kuliah</th>
+                <th class="mhsList">Nama Mata Kuliah </th>
+                <th class="mhsList">Seksi</th>
+                <th class="mhsList">Nilai Akhir</th>
+                <th class="mhsList">Grade</th>
+                <th class="mhsList">Hari</th>
+                <th class="mhsList">Jam Mulai</th>
+                <th class="mhsList">Jam Selesi</th>
+                <th class="mhsList">Tanggal Mulai</th>
+                <th class="mhsList">Tanggal Selesai</th>
+                <th class="mhsList">Dosen</th>
+                <th class="mhsList">Program Studi</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int i = 0;}
+            @foreach (var mhs in (IEnumerable<MBKM.Entities.ViewModel.VMReportMahasiswaEksternal>)ViewData["mahasiswas"])
+            {
+
+                <tr>
+                    <td class="mhsList start padding0">
+                        <center>
+                            @{i = i + 1;}
+                            @i
+                         <center>
+                    </td>
+                    <td class="mhsList">@ViewData["semester"]</td>
+                    <td class="mhsList">@mhs.mahasiswas.JenjangStudi</td>
+                    <td class="mhsList">@mhs.mahasiswas.NamaUniversitas</td>
+                    <td class="mhsList">@mhs.mahasiswas.NIM</td>
+                    <td class="mhsList">@mhs.mahasiswas.Nama</td>
+                    <td class="mhsList">@mhs.JadwalKuliahs.KodeMataKuliah</td>
+                    <td class="mhsList">@mhs.JadwalKuliahs.KodeMataKuliah</td>
+                    <td class="mhsList">@mhs.JadwalKuliahs.ClassSection</td>
+                    <td class="mhsList">@mhs.Nilai</td>
+                    <td class="mhsList">@mhs.NilaiKuliah.Grade</td>
+                    <td class="mhsList">@mhs.JadwalKuliahs.Hari</td>
+                    <td class="mhsList">@mhs.JadwalKuliahs.JamMasuk</td>
+                    <td class="mhsList">@mhs.JadwalKuliahs.JamSelesai</td>
+                    <td class="mhsList">@mhs.JadwalKuliahs.TglAwalKuliah</td>
+                    <td class="mhsList">@mhs.JadwalKuliahs.TglAkhirKuliah</td>
+                    <td class="mhsList">@mhs.JadwalKuliahs.DosenID - @mhs.JadwalKuliahs.NamaDosen</td>
+                    <td class="mhsList">@mhs.JadwalKuliahs.NamaProdi</td>
+                </tr>
+                //@i++
+            }
+
+        </tbody>
+
+    </table>
+</body>
+</html>
