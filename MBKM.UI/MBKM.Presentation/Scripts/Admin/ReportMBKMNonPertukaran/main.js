@@ -137,4 +137,47 @@ $(document).ready(function () {
             }
         });
     })
+
+
+    $('#exportPDF').click(function () {
+        GetFilePDF();
+    })
+    $('#exportExcel').click(function () {
+        GetFileExcel();
+    })
 })
+
+
+
+function GetFilePDF() {
+    if ($('#inp_semester :selected').val() == "") {
+        Swal.fire({
+            title: 'Oppss',
+            icon: 'warning',
+            html: 'Masukkan Inputan Semester!',
+            showCloseButton: true,
+            showCancelButton: false,
+            focusConfirm: false,
+            confirmButtonText: 'OK'
+        })
+    } else {
+        window.location.href = "/Admin/ReportMBKMNonPertukaran/GetDataPDF/" + $('#inp_semester :selected').val();
+    }
+}
+
+
+function GetFileExcel() {
+    if ($('#inp_semester :selected').val() == "") {
+        Swal.fire({
+            title: 'Oppss',
+            icon: 'warning',
+            html: 'Masukkan Inputan Semester!',
+            showCloseButton: true,
+            showCancelButton: false,
+            focusConfirm: false,
+            confirmButtonText: 'OK'
+        })
+    } else {
+        window.location.href = "/Admin/ReportMBKMNonPertukaran/GetFileExcel/" + $('#inp_semester :selected').val();
+    }
+}
