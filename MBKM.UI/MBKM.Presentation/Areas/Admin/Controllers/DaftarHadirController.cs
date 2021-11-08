@@ -24,8 +24,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private IJadwalUjianMBKMDetailService _juService;
         private IMasterCapaianPembelajaranService _mcpService;
         private IAbsensiService _absensiService;
+        private IMahasiswaService _mahasiswaService;
 
-        public DaftarHadirController(IAbsensiService absensiService,ILinkFasilitasService linkFasilitasService,ICPLMatakuliahService cplMatakuliah, ILookupService lookupService, IJadwalKuliahService jkService, IJadwalUjianMBKMDetailService juService, IMasterCapaianPembelajaranService mcpService)
+        public DaftarHadirController(IMahasiswaService mahasiswaService ,IAbsensiService absensiService,ILinkFasilitasService linkFasilitasService,ICPLMatakuliahService cplMatakuliah, ILookupService lookupService, IJadwalKuliahService jkService, IJadwalUjianMBKMDetailService juService, IMasterCapaianPembelajaranService mcpService)
         {
             _cplMatakuliah = cplMatakuliah;
             _lookupService = lookupService;
@@ -34,6 +35,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             _mcpService = mcpService;
             _linkFasilitasService = linkFasilitasService;
             _absensiService = absensiService;
+            _mahasiswaService = mahasiswaService;
         }
 
         public ActionResult Index()
@@ -48,6 +50,15 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             var jks = _jkService.Find(jk => jk.ID == id).FirstOrDefault();
             var sem = _absensiService.GetSemesterBySTRM(jks.STRM);
+            List<Absensi> abs = _absensiService.Find(x => x.JadwalKuliahID == id).ToList();
+            //List<Mahasiswa> mhs = _mahasiswaService.Find(x => x.ID == abs.).ToList();
+            var list = abs.Select(x => new VMDHK()
+            {
+                Nama = x.Mahasiswas.Nama,
+                StudentID = x.Mahasiswas.NIM
+            }) ;
+            ViewData["mahasiswas"] = list;
+            //var abs = _absensiService.GetSemesterBySTRM(jks.STRM);
             ViewData["semester"] = sem;
             ViewData["prodi"] = jks.NamaProdi;
             ViewData["kodeMK"] = jks.KodeMataKuliah;
@@ -65,18 +76,18 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         
 
 
-        public JsonResult SearchList(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm)
-        {
-            VMListJadwalUjian vmList = _juService.SearchListJadwalUjian(model, idProdi, lokasi, idFakultas, jenjangStudi, strm);
-            return Json(new
-            {
-                // this is what datatables wants sending back
-                draw = model.draw,
-                recordsTotal = vmList.TotalCount,
-                recordsFiltered = vmList.TotalFilterCount,
-                data = vmList.gridDatas
-            });
-        }
+        //public JsonResult SearchList(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm)
+        //{
+        //    VMListJadwalUjian vmList = _juService.SearchListJadwalUjian(model, idProdi, lokasi, idFakultas, jenjangStudi, strm);
+        //    return Json(new
+        //    {
+        //        // this is what datatables wants sending back
+        //        draw = model.draw,
+        //        recordsTotal = vmList.TotalCount,
+        //        recordsFiltered = vmList.TotalFilterCount,
+        //        data = vmList.gridDatas
+        //    });
+        //}
 
 
 

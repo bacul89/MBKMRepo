@@ -199,21 +199,35 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @{int i = 0;}
+                        @foreach (var mhs in (IEnumerable<MBKM.Entities.ViewModel.VMDHK>)ViewData["mahasiswas"])
+                        {
 
-                        <tr>
-                            <td>KodeMataKuliah</td>
-                            <td>EngMK <br /> NamaMatakuliah</td>
-                            <td>Seksi</td>
-                            <td class="count-me">SKS</td>
-                            <td>tanggal1</td>
-                            <td>tanggal2</td>
-                            <td>tanggal3</td>
-                            <td>tanggal4</td>
-                            <td>tanggal5</td>
+                    <tr>
+                        <td class="mhsList start padding0">
+                            <center>
+                                @{i = i + 1;}
+                            @i
+                            <center>
+                    </td>
+                    <td class="mhsList">@mhs.StudentID</td>
+                    <td class="mhsList">@mhs.Nama</td>
+                    <td class="mhsList"></td>
+                    </tr>//@i++
+                                }
+                        <!--<tr>
+        <td>KodeMataKuliah</td>
+        <td>EngMK <br /> NamaMatakuliah</td>
+        <td>Seksi</td>
+        <td class="count-me">SKS</td>
+        <td>tanggal1</td>
+        <td>tanggal2</td>
+        <td>tanggal3</td>
+        <td>tanggal4</td>
+        <td>tanggal5</td>-->
+                        @*@{total += @employee.SKS;}*@
 
-                            @*@{total += @employee.SKS;}*@
-
-                        </tr>
+                        <!--</tr>-->
 
 
                     </tbody>
