@@ -79,6 +79,8 @@ $(document).ready(function () {
     });
     $("#tahunAjaranCari").change(function () {
         buttonHandler("open");
+        $("#jenjangCari").prop("disabled", false);
+        loadJenjangStudi("JenjangStudi", "jenjang", "Jenjang Studi");
 
     });
 
@@ -106,7 +108,7 @@ function loadJenjangStudi(tipe, id, nama) {
         placeholder: "-- Pilih " + nama + " --",
         width: "100%",
         ajax: {
-            url: "/JadwalKuliah/getLookupByTipe",
+            url: "/Admin/DaftarHadirUjian/getLookupByTipe",
             dataType: 'json',
             method: "POST",
             delay: 250,

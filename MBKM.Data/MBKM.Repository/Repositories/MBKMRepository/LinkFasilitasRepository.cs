@@ -147,6 +147,9 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             }
             using (var context = new MBKMContext())
             {
+                var Strm = new SqlParameter("@STRM", strm);
+                var semesterName = context.Database
+                    .SqlQuery<VMSemester>("GetSemesterBySTRM @STRM", Strm).First();
                 int ProdiIDInt = Int32.Parse(idProdi);
                 int FakultasIDInt = Int32.Parse(idFakultas);
                 int idmatkul = idMatakuliah.Length;
@@ -203,6 +206,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                         RuangKelas = z.RuangKelas,
                         Lokasi = z.Lokasi,
                         STRM = z.STRM,
+                        semesterName = semesterName.Nama,
                         SKS = z.SKS,
                         ClassSection = z.ClassSection,
                         JenjangStudi = z.JenjangStudi,

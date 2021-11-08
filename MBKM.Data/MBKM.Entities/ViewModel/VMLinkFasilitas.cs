@@ -35,6 +35,7 @@ namespace MBKM.Entities.ViewModel
         public string RuangKelas { get; set; }
         public string Lokasi { get; set; }
         public int STRM { get; set; }
+        public string semesterName { get; set; }
         public string SKS { get; set; }
         public string ClassSection { get; set; }
         public string JenjangStudi { get; set; }
