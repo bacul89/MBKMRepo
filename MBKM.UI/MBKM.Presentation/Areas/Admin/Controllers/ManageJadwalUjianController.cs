@@ -52,7 +52,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult DetailManageUjian(int id)
         {
             var data = _jadwalUjianMBKMService.Get(id);
-
+            var checkLagi = _jadwalUjianMBKMDetailService.Find(x => x.JadwalUjianMBKMID == id).Count();
+            ViewData["countAvailable"] = data.Tersedia - checkLagi;
             IEnumerable<PendaftaranMataKuliah> tempJadwalUjian = _pendaftaranMataKuliahService.Find(x => x.JadwalKuliahs.MataKuliahID == data.IDMatkul).ToList();
             ViewData["dataMahasiswa"] = tempJadwalUjian;
             return View(data);
@@ -100,22 +101,24 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public JsonResult CheckData(int idData, string dataMahasiswa)
         {
             var checkLagi = _jadwalUjianMBKMDetailService.Find(x => x.JadwalUjianMBKMID == idData).Count();
-
-            if(checkLagi != 0)
-            {
-                return Json(new ServiceResponse { status = 300, message = "Ruangan Ini sudah Terisi" });
-            }
             var available = _jadwalUjianMBKMService.Get(idData).Tersedia;
             string[] tempMahasiswa = dataMahasiswa.Split(',');
             string[] data1 = tempMahasiswa.Distinct().ToArray();
-            if (data1.Count() > available)
+
+
+            if(checkLagi >= available)
             {
-                var d = data1.Count() - available;
+                return Json(new ServiceResponse { status = 300, message = "Ruangan Ini sudah Penuh" });
+            }
+
+            if (data1.Count() > (available -checkLagi))
+            {
+                var d = data1.Count() - (available - checkLagi);
                 return Json(new ServiceResponse { status = 300, message = "kurangi mahasiswa sejumlah " + d });
 
-            }else if (data1.Count() < available)
+            }else if (data1.Count() < (available - checkLagi))
             {
-                var d = available - data1.Count();
+                var d = (available - checkLagi) - data1.Count();
                 return Json(new ServiceResponse { status = 400, message = "Kursi masih tersedia sejumlah " + d });
             }
             else
