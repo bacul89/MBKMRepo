@@ -59,7 +59,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 var checkstatus = "-";
                 foreach (var p in listDosen)
                 {
-                    var checkStatusDosen = _feedbackMatkulService.Find(x => x.JadwalKuliahID == d.JadwalKuliahID && x.DosenID == p.Instructor_id).Count();
+                    var checkStatusDosen = _feedbackMatkulService.Find(x => x.JadwalKuliahID == d.JadwalKuliahID && x.DosenID == p.Instructor_id && x.Mahasiswas.Email == email).Count();
                     if(checkStatusDosen == 0)
                     {
                         checkstatus = "ada";
@@ -170,12 +170,15 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 _feedbackMatkulService.Save(dBaru);
 
                 var listFeedbackMahasiswa = _feedbackMatkulService.Find(x => x.MahasiswaID == mahasiswaID && x.JadwalKuliahID == dBaru.JadwalKuliahID).ToList();
+                var jadwalKuliah = _jadwalKuliahService.Get(dBaru.JadwalKuliahID);
                 var ListDosen = _feedbackMatkulService.GetDosenMakulPertemuans(
-                    listFeedbackMahasiswa.FirstOrDefault().JadwalKuliahs.KodeMataKuliah,
-                    listFeedbackMahasiswa.FirstOrDefault().JadwalKuliahs.ClassSection,
-                    listFeedbackMahasiswa.FirstOrDefault().JadwalKuliahs.STRM.ToString(),
-                    listFeedbackMahasiswa.FirstOrDefault().JadwalKuliahs.FakultasID.ToString());
+                    jadwalKuliah.KodeMataKuliah,
+                    jadwalKuliah.ClassSection,
+                    jadwalKuliah.STRM.ToString(),
+                    jadwalKuliah.FakultasID.ToString());
+
                 var dosenTerpenuhi = true;
+
                 foreach(var d in ListDosen)
                 {
                     if(!listFeedbackMahasiswa.Any(x => x.DosenID == d.Instructor_id))
