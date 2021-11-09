@@ -13,6 +13,7 @@ using OfficeOpenXml;
 using System.IO;
 using OfficeOpenXml.Style;
 using System.Drawing;
+using OfficeOpenXml.Drawing;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
@@ -218,13 +219,26 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             double columnWidth = 2;
             ws.Column(1).Width = columnWidth;
             ws.Column(8).Width = columnWidth;
+            int RowIndex = 0;
+            int ColIndex = 0;
 
-
-
+            //Image.FromFile(@"D:\sample.png");
+            /*int Width = 320;
+            int Height = 200;*/
             
+            var dir = Server.MapPath("~/Asset");
+                var path = Path.Combine(dir, "Lambang_Atma_Jaya.png"); //validate the path for security or use other means to generate the path.
+               Image imageView =  Image.FromFile(path);
+
+            ExcelPicture pic = ws.Drawings.AddPicture("Logo", imageView);
+            pic.SetPosition(RowIndex, 2, ColIndex, 15);
+            pic.SetSize(35, 48);
 
 
-            
+            //ws.Column().AddPicture("Picture_Name", img);
+
+
+
             ws.Cells["A1:A2"].Merge = true;
             ws.Cells["B1:I1"].Merge = true;
             ws.Cells["B2:I2"].Merge = true;

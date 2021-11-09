@@ -31,7 +31,7 @@ function loadFromLookup(tipe, id, nama) {
         placeholder: "-- Pilih " + nama + " --",
         width: "100%",
         ajax: {
-            url: "/MasterMapingCapaianPembelajaran/getLookupByTipe",
+            url: "/Admin/MasterMapingCapaianPembelajaran/getLookupByTipe",
             dataType: 'json',
             method: "POST",
             delay: 250,
