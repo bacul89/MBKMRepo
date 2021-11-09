@@ -234,6 +234,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             pic.SetPosition(RowIndex, 2, ColIndex, 15);
             pic.SetSize(35, 48);
 
+            //Worksheet sheet = workBook.Sheets[1];
+            //Range sortRange = sheet.Range["A1", "S100"];
+            //sortRange.Sort(sortRange.Columns[5], Microsoft.Office.Interop.Excel.XlSortOrder.xlDescending);
+
 
             //ws.Column().AddPicture("Picture_Name", img);
 
