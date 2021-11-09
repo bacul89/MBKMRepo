@@ -18,7 +18,7 @@ namespace MBKM.Services.MBKMServices
         IEnumerable<VMProdi> GetProdiByFakultas(string jenjangStudi, string idFakultas, string search);
         IEnumerable<VMProdi> GetLokasiByProdi(string jenjangStudi, string namaProdi, string search);
         VMSemester getOngoingSemester(string jenjangStudi);
-        VMListPendaftaranMataKuliah GetPendaftaranMahasiswaDataTable(DataTableAjaxPostModel model);
+        VMListPendaftaranMataKuliah GetPendaftaranMahasiswaDataTable(DataTableAjaxPostModel model, int strm);
         VMListPendaftaranMataKuliah GetPendaftaranMahasiswaDataTableByMahasiswa(DataTableAjaxPostModel model, string emailMahasiswa);
         IEnumerable<VMPendaftaranWithInformasipertukaran> GetListPendaftaranAndInformasiPertukaran(long strm);
         IEnumerable<VMReportMahasiswaInternal> GetListPendaftaranNonPertukaran(long strm);
@@ -53,7 +53,7 @@ namespace MBKM.Services.MBKMServices
         {
             return _pmkRepository.getOngoingSemester(jenjangStudi);
         }
-        public VMListPendaftaranMataKuliah GetPendaftaranMahasiswaDataTable(DataTableAjaxPostModel model)
+        public VMListPendaftaranMataKuliah GetPendaftaranMahasiswaDataTable(DataTableAjaxPostModel model, int strm)
         {
             var searchBy = (model.search != null) ? model.search.value : null;
             var take = model.length;
@@ -70,7 +70,7 @@ namespace MBKM.Services.MBKMServices
             if (sortBy == null)
                 sortBy = "ID";
             sortBy = sortBy + " " + model.order[0].dir.ToUpper();
-            return _pmkRepository.GetPendaftaranList(skip, take, searchBy, sortBy, sortDir);
+            return _pmkRepository.GetPendaftaranList(skip, take, searchBy, sortBy, sortDir, strm);
         }
 
         public VMListPendaftaranMataKuliah GetPendaftaranMahasiswaDataTableByMahasiswa(DataTableAjaxPostModel model, string emailMahasiswa)
