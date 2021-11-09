@@ -39,6 +39,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult Index()
         {
             IEnumerable<VMSemester> data = _jadwalUjianMBKMService.getAllSemester();
+            ViewData["firstSemester"] = _mahasiswaService.GetDataSemester(null).First().Nilai;
             ViewData["semester"] = data;
             return View();
         }
