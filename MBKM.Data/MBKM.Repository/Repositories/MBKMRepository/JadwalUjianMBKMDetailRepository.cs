@@ -106,42 +106,46 @@ namespace MBKM.Repository.Repositories.MBKMRepository
 
                 var idFakultas2nd = idFakultas.Substring(idFakultas.Length - 2);
 
-                context.Configuration.LazyLoadingEnabled = false;
-                var result = context.jadwalUjians.Where(
-                    x =>
-                    x.IsDeleted == false &&
-                    x.ProdiID == idProdi &&
-                    x.FakultasID == idFakultas2nd &&
-                    x.JenjangStudi == jenjangStudi &&
-                    x.Lokasi == lokasi &&
-                    x.IDMatkul == idMatakuliah &&
-                    x.ClassSection == seksi &&
-                    x.STRM == strm
+                /* context.Configuration.LazyLoadingEnabled = false;
+                 var result = context.jadwalUjians.Where(
+                     x =>
+                     x.IsDeleted == false &&
+                     x.ProdiID == idProdi &&
+                     x.FakultasID == idFakultas2nd &&
+                     x.JenjangStudi == jenjangStudi &&
+                     x.Lokasi == lokasi &&
+                     x.IDMatkul == idMatakuliah &&
+                     x.ClassSection == seksi &&
+                     x.STRM == strm
+                 //x.FlagOpen == true
+                 ).Join(
+                     context.PendaftaranMataKuliahs,
+                         a => a.IDMatkul,
+                         b => b.JadwalKuliahs.MataKuliahID,
+                         (a, b) => new VMJadwalUjian
+                         {
 
-                //x.FlagOpen == true
-                )
-                    /*.Join(
-                    context.jadwalKuliahs,                        
-                        a => a.KodeMatkul,
-                        b => b.NamaMataKuliah,
-                        c => c.MataKuliahID,
-                        d => d.FakultasID,
-                        e => e.ProdiID,
-                        f => f.MahasiswaID,
-                        g => g.NamaMataKuliah,
-                        (pendaftaran, informasi) => new JadwalKuliah
-                        {
-                            MataKuliahID = pend,
-                            MatkulAsal = pendaftaran.MatkulAsal,
-                            MatkulIDAsal = pendaftaran.MatkulIDAsal,
-                            JadwalKuliahID = pendaftaran.JadwalKuliahID,
-                            JadwalKuliahs = pendaftaran.JadwalKuliahs,
-                            mahasiswas = pendaftaran.mahasiswas,
-                            InformasiPertukaran = informasi
-                        }
-                        )*/
-                
-                ;
+                             KodeMatkul = a.KodeMatkul,
+                             NamaMatkul = a.NamaMatkul,
+                             FakultasID = a.FakultasID,
+                             ProdiID = a.ProdiID,
+                             JenjangStudi = a.JenjangStudi,
+                             STRM = a.STRM,
+                             SKS = b.JadwalKuliahs.SKS,
+                             JadwalKuliahs = b.JadwalKuliahs
+
+                         }
+
+                 ).Where(z => 
+                     z.NamaMatkul == z.JadwalKuliahs.NamaMataKuliah &&
+                     z.IDMatkul   == z.JadwalKuliahs.MataKuliahID &&
+                     z.KodeMatkul == z.JadwalKuliahs.KodeMataKuliah &&
+                     z.FakultasID == z.JadwalKuliahs.FakultasID.ToString() &&
+                     z.ProdiID    == z.JadwalKuliahs.ProdiID.ToString() &&
+
+                     z.JenjangStudi == z.JadwalKuliahs.JenjangStudi &&
+                     z.STRM == z.JadwalKuliahs.STRM.ToString()                     
+                 ).ToList();*/
 
 
                 // var idFakultas2nd = Int32.Parse(idFakultas);
@@ -213,7 +217,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                         Tersedia = z.Tersedia,
                         ClassSection = z.ClassSection,
                         KodeClassSection = z.KodeClassSection,
-                        //SKS = z.STRM,
+                        //SKS = z.SKS,
                         /*CreatedBy = z.CreatedBy,
                         CreatedDate = z.CreatedDate,
                         UpdatedBy = z.UpdatedBy,

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MBKM.Entities.Models.MBKM;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,14 +7,7 @@ using System.Threading.Tasks;
 
 namespace MBKM.Entities.ViewModel
 {
-    public class VMListJadwalUjian
-    {
-        public int TotalCount { get; set; }
-        public int TotalFilterCount { get; set; }
-        public List<GridDataJadwalUjian> gridDatas { get; set; }
-    }
-
-    public class GridDataJadwalUjian
+    public class VMJadwalUjian
     {
         public Int64 ID { get; set; }
         public string JenjangStudi { get; set; }
@@ -38,6 +32,6 @@ namespace MBKM.Entities.ViewModel
         public string ClassSection { get; set; }
         public string KodeClassSection { get; set; }
         public string SKS { get; set; }
-
+        public virtual JadwalKuliah JadwalKuliahs { get; set; }
     }
 }

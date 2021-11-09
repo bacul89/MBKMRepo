@@ -121,7 +121,7 @@ function getNilai() {
             Nilais = resultTranskip;
             
                 $.ajax({
-                    url: "Portal/TranskripMahasiswa/getLookupByTipe",
+                    url: "/Portal/TranskripMahasiswa/getLookupByTipe",
                     type: 'get',
                     datatype: 'html',
                     data: { Tipe: 'NilaiGrade' },
