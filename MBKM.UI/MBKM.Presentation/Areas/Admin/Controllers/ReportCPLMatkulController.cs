@@ -46,7 +46,17 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 {
                     Nama = _.KodeMataKuliah + " - " + _.NamaMataKuliah
                 }).Distinct().ToList();
-            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
+            var cek = new List<string>();
+            var final = new List<VMLookup>();
+            foreach (var item in result)
+            {
+                if (!cek.Contains(item.Nama))
+                {
+                    cek.Add(item.Nama);
+                    final.Add(item);
+                }
+            }
+            return new ContentResult { Content = JsonConvert.SerializeObject(final), ContentType = "application/json" };
         }
         public ActionResult GetCPLMatkul(string jenjangStudi, string fakultas, string prodi, string matkul)
         {

@@ -76,12 +76,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.GetSeksiByMatkul(search, jenjangStudi, matkul, lokasi)), ContentType = "application/json" };
         }
-        public ActionResult GetPresensiMahasiswa(Int64 idJadwal)
+        public ActionResult GetPresensiMahasiswa(Int64 idJadwal, DateTime tanggalAbsen)
         {
-            var now = DateTime.Now;
-            TimeSpan ts = new TimeSpan(0, 0, 0);
-            now = now.Date + ts;
-            return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.Find(_ => _.JadwalKuliahID == idJadwal && _.TanggalAbsen == now).ToList()), ContentType = "application/json" };
+            return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.Find(_ => _.JadwalKuliahID == idJadwal && _.TanggalAbsen == tanggalAbsen).ToList()), ContentType = "application/json" };
         }
         public ActionResult GetPresensi(int strm, string jenjangStudi, string fakultas, string lokasi, string prodi, string matkul, string seksi)
         {

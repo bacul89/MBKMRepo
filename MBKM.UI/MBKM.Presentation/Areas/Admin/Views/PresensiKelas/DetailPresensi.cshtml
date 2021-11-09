@@ -1,6 +1,6 @@
 ﻿
 @{
-    Layout = "~/Areas/Admpin/Views/shared/_Layout2.cshtml";
+    Layout = "~/Areas/Admin/Views/shared/_Layout2.cshtml";
     ViewBag.Title = "Presensi Kelas";
 }
 
@@ -238,9 +238,11 @@
         });
 
         function loadTable() {
+            var tmp = '@Model.TanggalAbsen2'.split("/");
+            var tanggal = new Date(tmp[2] + '-' + tmp[1] + '-' + tmp[0]).toJSON();
             datatable = $('#dataAbsen').DataTable({
                 ajax: {
-                    url: '@Url.Action("GetPresensiMahasiswa", "PresensiKelas")?idJadwal=' + @Model.IDJadwalKuliah,
+                    url: '@Url.Action("GetPresensiMahasiswa", "PresensiKelas")?idJadwal=' + @Model.IDJadwalKuliah + '&tanggalAbsen=' + tanggal,
                     dataSrc: ''
                 },
                 "columnDefs": [{
