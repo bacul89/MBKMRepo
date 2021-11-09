@@ -59,7 +59,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
 
 
 
-/*            var result = context.PendaftaranMataKuliahs.Where(x => x.JadwalKuliahs.STRM == strm && x.StatusPendaftaran.ToLower().Contains("accepted"))
+            /*var result = context.PendaftaranMataKuliahs.Where(x => x.JadwalKuliahs.STRM == strm && x.StatusPendaftaran.ToLower().Contains("accepted"))
                 .Join(context.informasiPertukarans,
                     pendaftaran => pendaftaran.MahasiswaID,
                     informasi => informasi.MahasiswaID,
@@ -106,67 +106,47 @@ namespace MBKM.Repository.Repositories.MBKMRepository
 
                 var idFakultas2nd = idFakultas.Substring(idFakultas.Length - 2);
 
-                /* context.Configuration.LazyLoadingEnabled = false;
-                 var result = context.jadwalUjians.Where(
-                     x =>
-                     x.IsDeleted == false &&
-                     x.ProdiID == idProdi &&
-                     x.FakultasID == idFakultas2nd &&
-                     x.JenjangStudi == jenjangStudi &&
-                     x.Lokasi == lokasi &&
-                     x.IDMatkul == idMatakuliah &&
-                     x.ClassSection == seksi &&
-                     x.STRM == strm
-                 //x.FlagOpen == true
-                 ).Join(
-                     context.PendaftaranMataKuliahs,
-                         a => a.IDMatkul,
-                         b => b.JadwalKuliahs.MataKuliahID,
-                         (a, b) => new VMJadwalUjian
-                         {
-
-                             KodeMatkul = a.KodeMatkul,
-                             NamaMatkul = a.NamaMatkul,
-                             FakultasID = a.FakultasID,
-                             ProdiID = a.ProdiID,
-                             JenjangStudi = a.JenjangStudi,
-                             STRM = a.STRM,
-                             SKS = b.JadwalKuliahs.SKS,
-                             JadwalKuliahs = b.JadwalKuliahs
-
-                         }
-
-                 ).Where(z => 
-                     z.NamaMatkul == z.JadwalKuliahs.NamaMataKuliah &&
-                     z.IDMatkul   == z.JadwalKuliahs.MataKuliahID &&
-                     z.KodeMatkul == z.JadwalKuliahs.KodeMataKuliah &&
-                     z.FakultasID == z.JadwalKuliahs.FakultasID.ToString() &&
-                     z.ProdiID    == z.JadwalKuliahs.ProdiID.ToString() &&
-
-                     z.JenjangStudi == z.JadwalKuliahs.JenjangStudi &&
-                     z.STRM == z.JadwalKuliahs.STRM.ToString()                     
-                 ).ToList();*/
-
-
-                // var idFakultas2nd = Int32.Parse(idFakultas);
-                //int ProdiIDInt = Int32.Parse(idProdi);
-                //int FakultasIDInt = Int32.Parse(idFakultas);
-                //int IDMataKUliahInt = Int32.Parse(idMatakuliah);
-                //int strmInt = Int32.Parse(strm);
-
-                /*var result = context.jadwalUjians.Where(
+                /*context.Configuration.LazyLoadingEnabled = false;
+                var result = context.jadwalUjians.Where(
                     x =>
                     x.IsDeleted == false &&
                     x.ProdiID == idProdi &&
-                    Int32.Parse(x.FakultasID) == idFakultas2nd &&
+                    x.FakultasID == idFakultas2nd &&
                     x.JenjangStudi == jenjangStudi &&
                     x.Lokasi == lokasi &&
                     x.IDMatkul == idMatakuliah &&
                     x.ClassSection == seksi &&
                     x.STRM == strm
-                    
-                    //x.FlagOpen == true
-                );*/
+                //x.FlagOpen == true
+                ).Join(
+                    context.PendaftaranMataKuliahs,
+                        a => a.IDMatkul,
+                        b => b.JadwalKuliahs.MataKuliahID,
+                        (a, b) => new VMJadwalUjian
+                        {
+                            KodeMatkul = a.KodeMatkul,
+                            NamaMatkul = a.NamaMatkul,
+                            FakultasID = a.FakultasID,
+                            NamaFakultas = a.NamaFakultas,
+                            ProdiID = a.ProdiID,
+                            NamaProdi = a.NamaProdi,
+                            JenjangStudi = a.JenjangStudi,
+                            STRM = a.STRM,
+                            SKS = b.JadwalKuliahs.SKS,
+                            JadwalKuliahs = b.JadwalKuliahs,
+                            IDMatkul = a.IDMatkul
+                        }
+
+                ).Where(z =>
+                    z.NamaMatkul == z.JadwalKuliahs.NamaMataKuliah &&
+                    z.IDMatkul == z.JadwalKuliahs.MataKuliahID &&
+                    z.KodeMatkul == z.JadwalKuliahs.KodeMataKuliah &&
+                    *//*z.FakultasID == z.JadwalKuliahs.FakultasID.ToString() &&
+                    z.ProdiID == z.JadwalKuliahs.ProdiID.ToString() &&*//*
+                    z.JenjangStudi == z.JadwalKuliahs.JenjangStudi *//*&&*/
+                /*z.STRM == z.JadwalKuliahs.STRM.ToString()*//*
+            ).ToList();*/
+
 
                 var result = context.jadwalUjians.Where(
                     x =>
@@ -178,8 +158,6 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                     x.IDMatkul == idMatakuliah &&
                     x.ClassSection == seksi &&
                     x.STRM == strm
-
-                //x.FlagOpen == true
                 );
 
                 mListJadwalUjian.TotalCount = result.Count();
