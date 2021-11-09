@@ -41,13 +41,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             IEnumerable<VMSemester> data = _jadwalUjianMBKMService.getAllSemester();
             ViewData["semester"] = data;
+            ViewData["firstSemester"] = _mahasiswaService.GetDataSemester(null).First().Nilai;
             return View();
         }
 
         [HttpPost]
-        public ActionResult TableData()
+        public ActionResult TableData(int strm)
         {
-            int strm = 2110;
             var dataProdi =  _mahasiswaService.GetAllDataProdi();
             var dataMahasiswa = _pendaftaranMataKuliahService.GetListPendaftaranAndInformasiPertukaran(strm);
             var dataSemester = _feedbackMatkulService.GetSemesterByStrm(strm.ToString());
