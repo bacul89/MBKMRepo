@@ -75,6 +75,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             var dosen = _juDetailService.GetDosen(jadwalUjian.ClassSection, jadwalUjian.KodeMatkul, jadwalUjian.STRM, jadwalUjian.FakultasID);
             var dataSemester = _feedbackMatkulService.GetSemesterByStrm(jadwalUjian.STRM);
 
+
             int strmInt = Int32.Parse(jadwalUjian.STRM);
             long fkaultasInt = Int64.Parse(jadwalUjian.FakultasID);
             long prodiInt = Int64.Parse(jadwalUjian.ProdiID);
@@ -118,7 +119,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ViewData["jadwal"] = JsonConvert.SerializeObject(jadwal);
             return new ViewAsPdf("PrintDHU")
             {
-                FileName = "DHU.pdf",
+                FileName = 
+                    dataSemester.Nama+"_"+
+                    jadwalUjian.JenjangStudi + "_" +
+                    jadwalUjian.NamaFakultas + "_" +
+                    jadwalUjian.NamaProdi + "_" +
+                    jadwalUjian.NamaProdi + "_" +
+                    jadwalUjian.KodeMatkul + "-" + jadwalUjian.NamaMatkul + "_DHU.pdf",
                 PageSize = Size.A4,
                 PageOrientation = Orientation.Portrait,
                 //CustomSwitches = footer,

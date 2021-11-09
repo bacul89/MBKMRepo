@@ -113,6 +113,7 @@
     <Compile Include="ViewModel\VMAllProdi.cs" />
     <Compile Include="ViewModel\VMDHU.cs" />
     <Compile Include="ViewModel\VMDNR.cs" />
+    <Compile Include="ViewModel\VMJadwalUjian.cs" />
     <Compile Include="ViewModel\VMReportMahasiswaEksternal.cs" />
     <Compile Include="ViewModel\VMReportMahasiswaInternal.cs" />
     <Compile Include="ViewModel\VMPendaftaranWithInformasipertukaran.cs" />

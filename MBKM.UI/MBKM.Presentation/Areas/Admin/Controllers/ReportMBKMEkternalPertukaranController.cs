@@ -187,33 +187,16 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
         public ActionResult ExportExcel(int strm)
         {
-            var fileDownloadName = "Report Pertukaran Eksternal.xlsx";
+            
             var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
             var result = new List<VMReportMahasiswaEksternal>();
             var dataSemester = _feedbackMatkulService.GetSemesterByStrm(strm.ToString());
 
             result = _pendaftaranMataKuliahService.GetListPendaftaranEksternalPertukaran(strm).ToList();
-
-            /*if (matkul != null && matkul.Length != 0)
-            {
-                result = _cplMatakuliahService
-                .Find(_ => _.MasterCapaianPembelajarans.JenjangStudi == jenjangStudi && _.MasterCapaianPembelajarans.NamaProdi == prodi && _.MasterCapaianPembelajarans.NamaFakultas == fakultas && _.KodeMataKuliah + " - " + _.NamaMataKuliah == matkul).ToList();
-            }
-            else
-            {
-                result = _cplMatakuliahService
-                .Find(_ => _.MasterCapaianPembelajarans.JenjangStudi == jenjangStudi && _.MasterCapaianPembelajarans.NamaProdi == prodi && _.MasterCapaianPembelajarans.NamaFakultas == fakultas).ToList();
-            }*/
-
-
-
-
-
+            var fileDownloadName = dataSemester.Nama + " - Report Pertukaran Eksternal.xlsx";
+           
             ExcelPackage package = new ExcelPackage();
-
-
-
             var ws = package.Workbook.Worksheets.Add("Report Pertukaran Eksternal");
 
             double columnWidth = 2;
@@ -227,27 +210,22 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             int Height = 200;*/
             
             var dir = Server.MapPath("~/Asset");
-                var path = Path.Combine(dir, "Lambang_Atma_Jaya.png"); //validate the path for security or use other means to generate the path.
-               Image imageView =  Image.FromFile(path);
+            var path = Path.Combine(dir, "Lambang_Atma_Jaya.png"); //validate the path for security or use other means to generate the path.
+            Image imageView =  Image.FromFile(path);
 
             ExcelPicture pic = ws.Drawings.AddPicture("Logo", imageView);
             pic.SetPosition(RowIndex, 2, ColIndex, 15);
             pic.SetSize(35, 48);
 
-            //Worksheet sheet = workBook.Sheets[1];
-            //Range sortRange = sheet.Range["A1", "S100"];
-            //sortRange.Sort(sortRange.Columns[5], Microsoft.Office.Interop.Excel.XlSortOrder.xlDescending);
-
-
+           
             //ws.Column().AddPicture("Picture_Name", img);
-
 
 
             ws.Cells["A1:A2"].Merge = true;
             ws.Cells["B1:I1"].Merge = true;
             ws.Cells["B2:I2"].Merge = true;
             ws.Cells["A3:I4"].Merge = true;
-            ws.Cells["Q1:Q2"].Merge = true;
+            //ws.Cells["Q1:Q2"].Merge = true;
 
             ws.Row(1).Height = 15;
             ws.Row(2).Height = 26;
@@ -274,13 +252,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ws.Cells["A3:I4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
             ws.Cells["A3:I4"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
 
-            ws.Cells["Q1:Q2"].Merge = true;
+            /*ws.Cells["Q1:Q2"].Merge = true;
             ws.Cells["Q1"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
             ws.Cells["Q1"].Value = "Kode Dokumen :\nFR-UAJ-02-92/R1";
             ws.Cells["Q3"].Value = "Tanggal Berlaku: ";
             ws.Cells["Q3"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
             ws.Cells["Q4"].Value = "Tanggal Revisi: ";
-            ws.Cells["Q4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+            ws.Cells["Q4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;*/
 
 
             ws.Cells["A6"].Value = "No.";
@@ -409,7 +387,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ViewData["mahasiswas"] = list;
             return new ViewAsPdf()
             {
-                FileName = "ReportPertukaranExternal.pdf",
+                FileName = dataSemester.Nama+" - ReportPertukaranExternal.pdf",
                 PageSize = Rotativa.Options.Size.A4,
                 PageOrientation = Orientation.Portrait,
                 //CustomSwitches = footer,
