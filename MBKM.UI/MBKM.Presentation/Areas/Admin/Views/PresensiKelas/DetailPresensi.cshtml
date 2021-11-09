@@ -239,7 +239,7 @@
 
         function loadTable() {
             var tmp = '@Model.TanggalAbsen2'.split("/");
-            var tanggal = new Date(tmp[2] + '-' + tmp[1] + '-' + tmp[0]).toJSON();
+            var tanggal = tmp[2] + '-' + appendZero(tmp[1], 2) + '-' + appendZero(tmp[0], 2) + 'T00:00:00.000Z';
             datatable = $('#dataAbsen').DataTable({
                 ajax: {
                     url: '@Url.Action("GetPresensiMahasiswa", "PresensiKelas")?idJadwal=' + @Model.IDJadwalKuliah + '&tanggalAbsen=' + tanggal,
@@ -321,6 +321,13 @@
                     window.history.back();
                 }
             });
-        })
+        });
+        function appendZero(string, length) {
+            string += "";
+            while (string.length < length) {
+                string = "0" + string;
+            }
+            return string;
+        }
     </script>
 }
