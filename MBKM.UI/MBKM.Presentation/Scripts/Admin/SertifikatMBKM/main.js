@@ -14,7 +14,7 @@ $(document).ready(function () {
             {
                 "title": "Action",
                 "render": function (data, type, row, meta) {
-                    if (row[7] == "Sudah Feedback" && row[8] == "Sudah Bayar") {
+                    if (row[7] == "Sudah Feedback" && row[8] == "True") {
                         return `<div class="row justify-content-center">
                                         <div class="col" style="text-align:center">
                                             <a href="javascript:void(0)" style="color:black" onclick="GetSertificate('${row[0]}')"> <i class="fas fa-file-search coral"></i></a>
@@ -88,7 +88,11 @@ $(document).ready(function () {
                 /*Status Pembayaran*/
                 "data": 8,
                 "render": function (data, type, row, meta) {
-                    return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
+                    if (data == "True") {
+                        return '<div class="center vertical-center" style="font-size: 0.8vw">Sudah Bayar</div>';
+                    } else {
+                        return '<div class="center vertical-center" style="font-size: 0.8vw">Belum Bayar</div>';
+                    }
                 }
             }
 
@@ -118,7 +122,7 @@ $(document).ready(function () {
                 {
                     "title": "Action",
                     "render": function (data, type, row, meta) {
-                        if (row[7] == "Sudah Feedback" && row[8] == "Sudah Bayar") {
+                        if (row[7] == "Sudah Feedback" && row[8] == "True") {
                             return `<div class="row justify-content-center">
                                         <div class="col" style="text-align:center">
                                             <a href="javascript:void(0)" style="color:black" onclick="GetSertificate('${row[0]}')"> <i class="fas fa-file-search coral"></i></a>
@@ -192,7 +196,11 @@ $(document).ready(function () {
                     /*Status Pembayaran*/
                     "data": 8,
                     "render": function (data, type, row, meta) {
-                        return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
+                        if (data == "True") {
+                            return '<div class="center vertical-center" style="font-size: 0.8vw">Sudah Bayar</div>';
+                        } else {
+                            return '<div class="center vertical-center" style="font-size: 0.8vw">Belum Bayar</div>';
+                        }
                     }
                 }
 

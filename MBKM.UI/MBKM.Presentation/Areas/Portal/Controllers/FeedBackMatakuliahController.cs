@@ -22,8 +22,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         private IFeedbackMatkulDetailService _feedbackMatkulDetailService;
         private IMahasiswaService _mahasiswaService;
         private IJadwalUjianMBKMService _jadwalUjianMBKMService;
+        private INilaiKuliahService _nilaiKuliahService;
 
-        public FeedBackMatakuliahController(IPendaftaranMataKuliahService pendaftaranMataKuliahService, IJadwalKuliahService jadwalKuliahService, IFeedbackMatkulService feedbackMatkulService, IFeedbackMatkulDetailService feedbackMatkulDetailService, IMahasiswaService mahasiswaService, IJadwalUjianMBKMService jadwalUjianMBKMService)
+        public FeedBackMatakuliahController(IPendaftaranMataKuliahService pendaftaranMataKuliahService, IJadwalKuliahService jadwalKuliahService, IFeedbackMatkulService feedbackMatkulService, IFeedbackMatkulDetailService feedbackMatkulDetailService, IMahasiswaService mahasiswaService, IJadwalUjianMBKMService jadwalUjianMBKMService, INilaiKuliahService nilaiKuliahService)
         {
             _pendaftaranMataKuliahService = pendaftaranMataKuliahService;
             _jadwalKuliahService = jadwalKuliahService;
@@ -31,7 +32,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             _feedbackMatkulDetailService = feedbackMatkulDetailService;
             _mahasiswaService = mahasiswaService;
             _jadwalUjianMBKMService = jadwalUjianMBKMService;
+            _nilaiKuliahService = nilaiKuliahService;
         }
+
 
         // GET: Portal/FeedBackMatakuliah
         public ActionResult Index()
@@ -49,7 +52,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult GetDataTable(int semester)
         {
             var email = HttpContext.Session["emailMahasiswa"].ToString();
-            var data1 = _pendaftaranMataKuliahService.Find(x => x.mahasiswas.Email == email && x.JadwalKuliahs.STRM == semester).ToList();
+            /*var data1 = _pendaftaranMataKuliahService.Find(x => x.mahasiswas.Email == email && x.JadwalKuliahs.STRM == semester).ToList();*/
+            var data1 = _nilaiKuliahService.Find(x => x.Mahasiswas.Email == email && x.JadwalKuliahs.STRM == semester).ToList();
             var DescSemester = _feedbackMatkulService.GetSemesterByStrm(data1.First().JadwalKuliahs.STRM.ToString());
             List<String[]> final = new List<String[]>();
            
