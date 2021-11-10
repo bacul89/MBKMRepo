@@ -187,21 +187,22 @@
                 </div>
                 <table id="countit" width="100%" class="table table-bordered table-striped hover dt-responsive responsive">
                     <colgroup span="5"></colgroup>
-                    <thead>
+                    <rowgroup span="2"></rowgroup>
+                   
                         <tr>
                             @*<th width="10%">NO</th>*@
-                            <th width="5%" style="text-align:center">NO.</th>
-                            <th width="20%" style="text-align:center">STUDENT ID </th>
-                            <th width="40%" style="text-align:center">NAMA MAHASISWA</th>
-                            <th width="10%" style="text-align:center">CEKAL</th>
+                            <th rowspan="2" width="5%"  scope="rowgroup" style="text-align:center">NO.</th>
+                            <th rowspan="2" width="20%" scope="rowgroup" style="text-align:center">STUDENT ID </th>
+                            <th rowspan="2" width="40%" scope="rowgroup" style="text-align:center">NAMA MAHASISWA</th>
+                            <th rowspan="2" width="10%" scope="rowgroup" style="text-align:center">CEKAL</th>
                             <th width="25%" colspan="5" scope="colgroup" style="text-align:center">TANGGAL</th>
 
                         </tr>
-                    </thead>
+                   
                     <tbody>
                         @{int i = 0;}
                         @foreach (var mhs in (IEnumerable<MBKM.Entities.ViewModel.VMDHK>)ViewData["mahasiswas"])
-                        {
+                        {   
 
                     <tr>
                         <td class="mhsList start padding0">
@@ -212,6 +213,11 @@
                     </td>
                     <td class="mhsList">@mhs.StudentID</td>
                     <td class="mhsList">@mhs.Nama</td>
+                    <td class="mhsList"></td>
+                    <td class="mhsList"></td>
+                    <td class="mhsList"></td>
+                    <td class="mhsList"></td>
+                    <td class="mhsList"></td>
                     <td class="mhsList"></td>
                     </tr>//@i++
                                 }
@@ -247,6 +253,55 @@
         </div>
     </div>
 </div>
+<footer>
+    <div class="container" style="width: 100%;">
+        <table id="countit" width="100%" class="table table-bordered table-striped hover dt-responsive responsive">
+            <colgroup span="5"></colgroup>
+            <rowgroup span="2"></rowgroup>
+
+            <tr>
+                @*<th width="10%">NO</th>*@
+                <th rowspan="2" width="40%" scope="rowgroup" style="text-align:center">footer</th>
+                <th rowspan="2" width="35%" scope="rowgroup" style="text-align:center">footer </th>
+                <th rowspan="2" width="25%" scope="rowgroup" style="text-align:center">footer</th>
+                
+
+            </tr>
+
+            <tbody>
+              
+
+                    <tr>
+                        
+                           
+                        
+                        <td class="mhsList"></td>
+                        <td class="mhsList"></td>
+                        <td class="mhsList"></td>
+                        
+                    </tr>
+
+                
+                <!--<tr>
+            <td>KodeMataKuliah</td>
+            <td>EngMK <br /> NamaMatakuliah</td>
+            <td>Seksi</td>
+            <td class="count-me">SKS</td>
+            <td>tanggal1</td>
+            <td>tanggal2</td>
+            <td>tanggal3</td>
+            <td>tanggal4</td>
+            <td>tanggal5</td>-->
+                @*@{total += @employee.SKS;}*@
+
+                <!--</tr>-->
+
+
+            </tbody>
+
+        </table>
+    </div>
+</footer>
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
 @*@RenderSection("scripts", required: true)*@

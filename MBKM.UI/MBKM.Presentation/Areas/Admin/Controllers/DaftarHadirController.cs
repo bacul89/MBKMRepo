@@ -25,8 +25,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private IMasterCapaianPembelajaranService _mcpService;
         private IAbsensiService _absensiService;
         private IMahasiswaService _mahasiswaService;
+        private IPendaftaranMataKuliahService _pendaftaranMKService;
 
-        public DaftarHadirController(IMahasiswaService mahasiswaService ,IAbsensiService absensiService,ILinkFasilitasService linkFasilitasService,ICPLMatakuliahService cplMatakuliah, ILookupService lookupService, IJadwalKuliahService jkService, IJadwalUjianMBKMDetailService juService, IMasterCapaianPembelajaranService mcpService)
+        public DaftarHadirController(IPendaftaranMataKuliahService pendaftaranMKService,IMahasiswaService mahasiswaService ,IAbsensiService absensiService,ILinkFasilitasService linkFasilitasService,ICPLMatakuliahService cplMatakuliah, ILookupService lookupService, IJadwalKuliahService jkService, IJadwalUjianMBKMDetailService juService, IMasterCapaianPembelajaranService mcpService)
         {
             _cplMatakuliah = cplMatakuliah;
             _lookupService = lookupService;
@@ -36,6 +37,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             _linkFasilitasService = linkFasilitasService;
             _absensiService = absensiService;
             _mahasiswaService = mahasiswaService;
+            _pendaftaranMKService = pendaftaranMKService;
         }
 
         public ActionResult Index()
@@ -50,12 +52,16 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             var jks = _jkService.Find(jk => jk.ID == id).FirstOrDefault();
             var sem = _absensiService.GetSemesterBySTRM(jks.STRM);
-            List<Absensi> abs = _absensiService.Find(x => x.JadwalKuliahID == id).ToList();
+            //List<Absensi> abs = _absensiService.Find(x => x.JadwalKuliahID == id).ToList();
+            List<PendaftaranMataKuliah> pmk = _pendaftaranMKService.Find(x => x.JadwalKuliahID == id && x.StatusPendaftaran.ToLower().Contains("accepted")).ToList();
+            //var grupmhs = abs.GroupBy(x => x.MahasiswaID)
+            //    .Select(grp => grp.ToList())
+            //    .ToList();
             //List<Mahasiswa> mhs = _mahasiswaService.Find(x => x.ID == abs.).ToList();
-            var list = abs.Select(x => new VMDHK()
+            var list = pmk.Select(x => new VMDHK()
             {
-                Nama = x.Mahasiswas.Nama,
-                StudentID = x.Mahasiswas.NIM
+                Nama = x.mahasiswas.Nama,
+                StudentID = x.mahasiswas.NIM
             }) ;
             ViewData["mahasiswas"] = list;
             //var abs = _absensiService.GetSemesterBySTRM(jks.STRM);
