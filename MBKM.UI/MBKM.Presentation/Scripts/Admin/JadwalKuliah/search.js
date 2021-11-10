@@ -2,10 +2,14 @@
 var datatable = null;
 
 $(document).ready(function () {
+    $("#jenjangCari").prop("disabled", true);
     $("#fakultasCari").prop("disabled", true);
     $("#prodiCari").prop("disabled", true);
     $("#lokasiCari").prop("disabled", true);
-    $("#tahunAjaranCari").prop("disabled", true);
+    $("#tahunAjaranCari").prop("disabled", false);
+    $("#jenjangCari").select2({
+        placeholder: "-- Pilih Jenjang Studi --"
+    });
     $("#fakultasCari").select2({
         placeholder: "-- Pilih Fakultas --"
     });
@@ -19,7 +23,7 @@ $(document).ready(function () {
         placeholder: "-- Pilih Tahun Ajaran --"
     });
 
-    loadJenjangStudi("JenjangStudi", "jenjang", "Jenjang Studi");
+    
 
     datatable = $('#table-data-jadwal-kuliah').DataTable({
         paging : false,
@@ -27,9 +31,21 @@ $(document).ready(function () {
         info : false
     });
     //$("#table-data-master-mapping-cpl_filter").hide();
-
-
+    buttonHandler("close");
+    $("#fakultasCari").empty();
+    $("#prodiCari").empty();
+    $("#prodiIdCari").val('');
+    $("#lokasiCari").empty();
+    $("#matakuliahCari").empty();
+    $("#tahunAjaranCari").empty();
+    $("#jenjangCari").empty();
+    $("#prodiCari").prop("disabled", true);
+    $("#lokasiCari").prop("disabled", true);
+    $("#matakuliahCari").prop("disabled", true);
+    //$("#tahunAjaranCari").prop("disabled", true);
+    $("#fakultasCari").prop("disabled", true);
     $('#tahunAjaranCari').select2({
+
 
         placeholder: "-- Pilih Tahun Ajaran --",
         "proccessing": true,
@@ -37,7 +53,7 @@ $(document).ready(function () {
         //multiple: true,
         width: "100%",
         ajax: {
-            url: "/JadwalKuliah/GetSemesterAll",
+            url: "/Admin/JadwalKuliah/GetSemesterAll",
             type: 'POST',
             dataType: 'json',
             //quietMillis: 50,
@@ -78,7 +94,22 @@ $(document).ready(function () {
         }
     });
     $("#tahunAjaranCari").change(function () {
-        buttonHandler("open");
+        buttonHandler("close");
+        $("#jenjangCari").empty();
+        $("#fakultasCari").empty();
+        $("#prodiCari").empty();
+        $("#prodiIdCari").val('');
+        $("#lokasiCari").empty();
+        $("#matakuliahCari").empty();
+        //$("#tahunAjaranCari").empty();
+        
+        $("#prodiCari").prop("disabled", true);
+        $("#lokasiCari").prop("disabled", true);
+        $("#matakuliahCari").prop("disabled", true);
+        //$("#tahunAjaranCari").prop("disabled", true);
+        $("#fakultasCari").prop("disabled", true);
+        $("#jenjangCari").prop("disabled", false);
+        loadJenjangStudi("JenjangStudi", "jenjang", "Jenjang Studi");
 
     });
 
@@ -106,7 +137,7 @@ function loadJenjangStudi(tipe, id, nama) {
         placeholder: "-- Pilih " + nama + " --",
         width: "100%",
         ajax: {
-            url: "/JadwalKuliah/getLookupByTipe",
+            url: "/Admin/JadwalKuliah/getLookupByTipe",
             dataType: 'json',
             method: "POST",
             delay: 250,
@@ -132,17 +163,17 @@ function loadJenjangStudi(tipe, id, nama) {
         $("#prodiIdCari").val('');
         $("#lokasiCari").empty();
         $("#matakuliahCari").empty();
-        $("#tahunAjaranCari").empty();
+        //$("#tahunAjaranCari").empty();
         $("#prodiCari").prop("disabled", true);
         $("#lokasiCari").prop("disabled", true);
         $("#matakuliahCari").prop("disabled", true);
-        $("#tahunAjaranCari").prop("disabled", true);
+        //$("#tahunAjaranCari").prop("disabled", true);
         $("#fakultasCari").prop("disabled", false);
         $("#fakultasCari").select2({
             placeholder: "-- Pilih Fakultas --",
             width: "100%",
             ajax: {
-                url: "/JadwalKuliah/GetFakultas",
+                url: "/Admin/JadwalKuliah/GetFakultas",
                 dataType: 'json',
                 method: "POST",
                 delay: 250,
@@ -172,13 +203,13 @@ function loadJenjangStudi(tipe, id, nama) {
 
             $("#prodiCari").prop("disabled", false);
 
-            $("#tahunAjaranCari").empty();
-            $("#tahunAjaranCari").prop("disabled", true);
+           // $("#tahunAjaranCari").empty();
+            //$("#tahunAjaranCari").prop("disabled", true);
             $("#prodiCari").select2({
                 placeholder: "-- Pilih Program Studi --",
                 width: "100%",
                 ajax: {
-                    url: "/JadwalKuliah/GetProdiByFakultas",
+                    url: "/Admin/JadwalKuliah/GetProdiByFakultas",
                     dataType: 'json',
                     method: "POST",
                     delay: 250,
@@ -209,15 +240,15 @@ function loadJenjangStudi(tipe, id, nama) {
 
                 $("#lokasiCari").prop("disabled", false);
 
-                $("#tahunAjaranCari").empty();
-                $("#tahunAjaranCari").prop("disabled", true);
+                //$("#tahunAjaranCari").empty();
+                //$("#tahunAjaranCari").prop("disabled", true);
 
                 //$("#kampusCari").val('');
                 $("#lokasiCari").select2({
                     placeholder: "-- Pilih Lokasi --",
                     width: "100%",
                     ajax: {
-                        url: "/JadwalKuliah/GetLokasiByProdi",
+                        url: "/Admin/JadwalKuliah/GetLokasiByProdi",
                         dataType: 'json',
                         method: "POST",
                         delay: 250,
@@ -230,6 +261,8 @@ function loadJenjangStudi(tipe, id, nama) {
                             };
                         },
                         processResults: function (data, params) {
+
+                            console.log(data);
                             return {
                                 results: $.map(data, function (item) { return { id: item.ID, value: item.Kampus, text: item.Kampus } })
                             };
@@ -240,15 +273,16 @@ function loadJenjangStudi(tipe, id, nama) {
 
 
                 $("#lokasiCari").change(function () {
-                    buttonHandler("close");
+                    
+                    buttonHandler("open");
                     $("#prodiIdCari").val($("#lokasiCari").val());
 
                     $("#kampusCari").removeAttr('value');
                     var kampus = $(this).find(":selected").text();
                     //console.log(kampus);
                     $("#kampusCari").val(kampus);
-                    $("#tahunAjaranCari").empty();
-                    $("#tahunAjaranCari").prop("disabled", false);
+                    //$("#tahunAjaranCari").empty();
+                    //$("#tahunAjaranCari").prop("disabled", false);
 
 
                     //getLocationByPodiID();

@@ -28,14 +28,16 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         private IJadwalKuliahMahasiswaService _jkMhsService;
         private IMahasiswaService _mahasiswaService;
         private ILookupService _lookupService;
+        private IPendaftaranMataKuliahService _pendaftaranMataKuliahService;
 
-        public TranskripMahasiswaController(INilaiKuliahService transkripService, IJadwalKuliahMahasiswaService jkMhsService, IMahasiswaService mahasiswaService, ILookupService lookupService)
+        public TranskripMahasiswaController(INilaiKuliahService transkripService, IJadwalKuliahMahasiswaService jkMhsService, IMahasiswaService mahasiswaService, ILookupService lookupService, IPendaftaranMataKuliahService pendaftaranMKService)
         {
             
             _transkripService = transkripService;
             _mahasiswaService = mahasiswaService;
             _jkMhsService = jkMhsService;
             _lookupService = lookupService;
+            _pendaftaranMataKuliahService = pendaftaranMKService;
         }
 
 
@@ -154,9 +156,6 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
 
 
-
-
-
         public ActionResult ExportPDF()
         {
 
@@ -203,8 +202,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
 
 
-        /*        public async Task<IActionResult> Tes()
-                {
+        /*public async Task<IActionResult> Tes(){
                     var pdf = new Rotativa.ViewAsPdf("Tes")
                     {
                         FileName = "C:\\Test.pdf",
@@ -215,7 +213,105 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
 
                     var byteArray = await pdf.BuildFile(ControllerContext);
                     return File(byteArray, "application/pdf");
+        }*/
+
+
+        //---<> Sertifikat
+        [HttpPost]
+        public ActionResult UpdateStatusSertifikat()
+        {
+            string email = Session["email"] as string;
+            Mahasiswa mahasiswa = GetMahasiswaByEmail(email);
+
+            try
+            {
+
+
+                var dataMahasiswa = _pendaftaranMataKuliahService.Find(x => x.MahasiswaID == mahasiswa.ID).ToList();
+                foreach (var item in dataMahasiswa)
+                {
+
+                    if (item.FlagSertifikat == false)
+                    {
+
+                        long id = item.ID;
+                        var data = _pendaftaranMataKuliahService.Get(id);
+                        data.FlagSertifikat = true;
+                        data.UpdatedBy = Session["nama"] as string;
+
+                        _pendaftaranMataKuliahService.Save(data);
+                        
+                    }
+                    else
+                    {
+                        return Json(new ServiceResponse { status = 500, message = "Cetak Gagal Silakhan Hubungi BAA!!!" });
+                    }
+                }
+
+                return Json(new ServiceResponse { status = 200, message = "Cetak Berhasil..." });
+
+
+                /*var dataList = _transkripService.Find(x => x.MahasiswaID == idMahasiswa).ToList();
+                foreach (var item in dataList)
+                {
+
+                    if (item.FlagCetak == false)
+                    {
+                        long id = item.ID;
+                        var data = _transkripService.Get(id);
+                        data.FlagCetak = true;
+                        data.UpdatedBy = Session["nama"] as string;
+
+                        _transkripService.Save(data);
+                    }
+                    else
+                    {
+                        return Json(new ServiceResponse { status = 500, message = "Cetak Gagal Silakhan Hubungi BAA!!!" });
+                    }
+
                 }*/
+
+                /*return Json(new ServiceResponse { status = 200, message = "Cetak Berhasil..." });*/
+            }
+            catch (Exception e)
+            {
+                return Json(new ServiceResponse { status = 500, message = "Cetak Gagal Silakhan Hubungi BAA!!!" });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult CheckStatusSertifikat()
+        {
+
+            string email = Session["email"] as string;
+
+            Mahasiswa mahasiswa = GetMahasiswaByEmail(email);
+            try
+            {
+                var dataMahasiswa = _pendaftaranMataKuliahService.Find(x => x.MahasiswaID == mahasiswa.ID).First();
+                /*foreach (var item in dataList)
+                {*/
+                /*var data= Json(new {});
+                if (dataMahasiswa.FlagSertifikat != false)
+                {
+
+                    //return Json(new ServiceResponse { status = 200, message = "Cetak Berhasil...", data="{status:true}" });
+                    data = Json(new { status = dataMahasiswa.FlagSertifikat });
+                }
+                else
+                {
+                    data = Json(new { status = 0 });
+                }*/
+                return Json(new ServiceResponse { status = 200, message = "Cetak Gagal Silakhan Hubungi BAA!!!", data = dataMahasiswa.FlagSertifikat });
+
+            }
+            catch (Exception e)
+            {
+                return Json(new ServiceResponse { status = 500, message = "Cetak Gagal Silakhan Hubungi BAA!!!" });
+            }
+
+        }
+
 
 
         //-- SP

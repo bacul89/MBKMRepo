@@ -119,6 +119,7 @@
                         <li><a href="@Url.Action("Index","MasterCPL")">Master CPL</a></li>
                         <li><a href="@Url.Action("Index","MasterMapingCapaianPembelajaran")">Mapping CPL Per Mata Kuliah</a></li>
                         <li><a href="@Url.Action("Index","SummaryFeedback")">Summary Feedback</a></li>
+                        <li><a href="@Url.Action("Index","SertifikatMBKM")">Sertifikat</a></li>
                     </ul>
                 </li>
                 <li>
@@ -138,6 +139,14 @@
                     <ul class="nav collapse" id="submenu7" role="menu" aria-labelledby="btn-1">
                         <li><a href="@Url.Action("Index","ReportCPLMatkul")">CPL Per Mata Kuliah</a></li>
                         <li><a href="@Url.Action("Index","DaftarMatkul")">Daftar Mata Kuliah MBKM</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" id="btn-1" data-toggle="collapse" data-target="#submenu7" aria-expanded="false"><i class="fas fa-user-circle"></i>Reports MBKM</a>
+                    <ul class="nav collapse" id="submenu7" role="menu" aria-labelledby="btn-1">
+                        <li><a href="@Url.Action("Index","ReportMahasiswaMBKM")">Rekap Mahasiswa MBKM</a></li>
+                        <li><a href="@Url.Action("Index","ReportMBKMInternalPertukaran")">MBKM Pertukaran Internal</a></li>
+                        <li><a href="@Url.Action("Index","ReportMBKMNonPertukaran")">MBKM Non Pertukaran</a></li>
                     </ul>
                 </li>
             </ul>

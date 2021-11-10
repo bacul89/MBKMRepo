@@ -33,7 +33,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         // GET: Portal/JadwalUjian
         public ActionResult Index()
         {
-            var email = HttpContext.Session["email"].ToString();
+            var email = HttpContext.Session["emailMahasiswa"].ToString();
             var jenjang = _mahasiswaService.Find(x => x.Email == email).First().JenjangStudi;
             var dataSemester =  _mahasiswaService.GetDataSemester(jenjang).First().ID;
             ViewData["firstSemester"] = dataSemester.ToString();
@@ -44,7 +44,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
 
         public ActionResult CheckData(string semester)
         {
-            var email = HttpContext.Session["email"].ToString();
+            var email = HttpContext.Session["emailMahasiswa"].ToString();
             var data = _jadwalUjianMBKMDetailService.Find(
                 x => x.Mahasiswas.Email == email
                 && x.JadwalUjianMBKMs.STRM == semester
@@ -62,7 +62,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         [HttpPost]
         public ActionResult DaftarJadwalUjian(string semester)
         {
-            var email = HttpContext.Session["email"].ToString();
+            var email = HttpContext.Session["emailMahasiswa"].ToString();
             IList<JadwalUjianMBKMDetail> data = _jadwalUjianMBKMDetailService.Find(
                 x => x.Mahasiswas.Email == email
                 && x.JadwalUjianMBKMs.STRM == semester

@@ -2,7 +2,7 @@
 function getLookupBAA(tipe) {
 
     $.ajax({
-        url: "/MasterMapingCapaianPembelajaran/getLookupByTipe",
+        url: "/Admin/MasterMapingCapaianPembelajaran/getLookupByTipe",
         type: 'get',
         datatype: 'html',
         data: { Tipe: tipe },
@@ -68,9 +68,9 @@ $(document).ready(function () {
 
     $("#print").hide();
 
-    //var date = new Date();
+    var date = new Date();
     //$("#currentDate").text(date.toShortFormat());
-    //$("#currentDatePrint").text(date.toShortFormat());
+    $("#currentDatePrint").text(date.toShortFormat());
     //convertBirthday();
     //getNilai();
     //isZooming();
@@ -87,7 +87,7 @@ var Nilais, NilaiGrades;
 function getNilai() {
     //var base_url = window.location.origin;
     $.ajax({
-        url: '/Portal/Transkrip/getTranskrip/',
+        url: '/Admin/Transkrip/getTranskrip/',
         type: 'POST',
         datatype: 'json',
         success: function (resultTranskip) {
@@ -179,11 +179,11 @@ function showValue(result, NilaiGrades) {
     var nilaiTotal = 0;
     var rowNilaiSks = 0;
 
-    console.log(Nilais);
+    //console.log(Nilais);
 
     for (var i = 0; i < result.length; i++) {
         if (i == 0) {
-            console.log(Nilais[0].tanggalLahir);
+            //console.log(Nilais[0].tanggalLahir);
             var tempatLahir = Nilais[0].TempatLahir;
             var tanggalLahir = convertBirthday(Nilais[0].TanggalLahir);
             var ttl = tempatLahir + ' / ' + tanggalLahir;
@@ -326,12 +326,15 @@ function print(id, nim) {
                             mywindow.document.write('<link rel="stylesheet" href="../../Content/Portal/Transkrip/print.css" type="text/css" />');
                             mywindow.document.write('</head><body >');
                             mywindow.document.write(data);
+                            mywindow.document.write('<script>console.log("hallo")</script>');
                             mywindow.document.write('</body></html>');
 
                             mywindow.print();
+                            //setTimeout(function () { window.print(); }, 500);
+                            //mywindow.onfocus = function () { setTimeout(function () { window.close(); }, 500); }
                             mywindow.close();
 
-                            //
+                    
                             Swal.fire({
                                 title: 'success',
                                 icon: 'success',
@@ -342,6 +345,8 @@ function print(id, nim) {
                                 confirmButtonText: 'OK'
                             })
                             $.LoadingOverlay("hide");
+                            //
+
 
 
 /*                            swal.fire({

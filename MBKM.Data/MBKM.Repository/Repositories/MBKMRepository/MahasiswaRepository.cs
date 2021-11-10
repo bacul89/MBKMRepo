@@ -142,6 +142,17 @@ namespace MBKM.Repository.Repositories.MBKMRepository
         }
 
 
+        public IEnumerable<VMAllProdi> GetAllDataProdi()
+        {
+            using (var context = new MBKMContext())
+            {
+                var result = context.Database
+                    .SqlQuery<VMAllProdi>("GetListProdi").ToList();
+                return result;
+            }
+        }
+
+
         //public int updateRangeVer(Int64[] listId)
         //{
         //    using (var context = new MBKMContext())

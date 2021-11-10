@@ -70,6 +70,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ViewData["StatusKerjasama"] = StatusKerjasama;
             ViewBag.terima = StatusVerifikasi.Terima;
             ViewBag.tolak = StatusVerifikasi.Tolak;
+            ViewBag.lunas = true;
+            ViewBag.belum = false;
             var data = _mahasiswaService.Get(id);
             return View(data);
         }
@@ -96,13 +98,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             data.NoKerjasama = _mahasiswa.NoKerjasama;
             data.StatusKerjasama = _mahasiswa.StatusKerjasama;
             data.StatusVerifikasi = _mahasiswa.StatusVerifikasi;
+            data.FlagBayar = _mahasiswa.FlagBayar;
             data.UpdatedBy = HttpContext.Session["username"].ToString();
             data.UpdatedDate = DateTime.Now;
             try
             {
                 // Your code...
                 // Could also be before try if you know the exception occurs in SaveChanges
-
                 _mahasiswaService.Save(data);
             }
             catch (DbEntityValidationException e)

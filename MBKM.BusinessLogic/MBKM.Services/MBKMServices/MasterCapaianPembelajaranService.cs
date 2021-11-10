@@ -61,7 +61,7 @@ namespace MBKM.Services.MBKMServices
 
         public IEnumerable<VMProdi> GetLokasiByProdi(string jenjangStudi, string namaProdi, string search)
         {
-            return _mcpRepository.GetLokasiByProdi(jenjangStudi, namaProdi, search);
+            return _mcpRepository.GetLokasiByProdiName(jenjangStudi, namaProdi, search);
         }
 
         public IEnumerable<VMProdi> GetProdiByFakultas(string jenjangStudi, string idFakultas, string search)

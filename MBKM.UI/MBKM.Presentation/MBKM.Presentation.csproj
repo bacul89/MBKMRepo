@@ -148,6 +148,8 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminLoginController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReportCPLMatkulController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DaftarHadirController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DaftarHadirUjianController.cs" />
     <Compile Include="Areas\Admin\Controllers\DaftarSeluruhMahasiswaController.cs" />
     <Compile Include="Areas\Admin\Controllers\ApprovalPendaftaranMatakuliahController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
@@ -164,6 +166,10 @@
     <Compile Include="Areas\Admin\Controllers\MenuRoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\PerjanjianKerjasama\PerjanjianKerjasamaController.cs" />
     <Compile Include="Areas\Admin\Controllers\RegisMhsByAdminController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ReportMahasiswaMBKMController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ReportMBKMInternalPertukaranController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ReportMBKMNonPertukaranController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ReportInternalKeluarController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\SertifikatMBKMController.cs" />
     <Compile Include="Areas\Admin\Controllers\SummaryFeedbackController.cs" />
@@ -190,7 +196,9 @@
     <Compile Include="Areas\Portal\PortalAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UnAuthorizedController.cs" />
+    <Compile Include="Helper\CapaiaMatakuliahSertifkatDTO.cs" />
     <Compile Include="Helper\DTOAnswer.cs" />
+    <Compile Include="Helper\DTOProdi.cs" />
     <Compile Include="Helper\GMailer.cs" />
     <Compile Include="Helper\MBKMAuthorize.cs" />
     <Compile Include="Global.asax.cs">
@@ -206,6 +214,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Asset\atma-sertifikat.png" />
     <Content Include="Asset\atmajayapoto.jpg" />
     <Content Include="Asset\BG_SERTIFIKAT.png" />
     <Content Include="Asset\default-photo-profile.png" />
@@ -233,15 +242,17 @@
     <Content Include="Rotativa\wkhtmltoimage.exe" />
     <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\Admin\ApprovalPendaftaranMakul\detailApproval.js" />
+    <Content Include="Scripts\Admin\DaftarHadirUjian\main.js" />
     <Content Include="Scripts\Admin\DaftarSeluruhMhs\main.js" />
     <Content Include="Scripts\Admin\ApprovalPendaftaranMakul\main.js" />
     <Content Include="Scripts\Admin\DaftarSeluruhMhs\main_detail.js" />
+    <Content Include="Scripts\Admin\DHK\main.js" />
+    <Content Include="Scripts\Admin\DHK\search.js" />
     <Content Include="Scripts\Admin\LinkFasilitasAdmin\crud.js" />
     <Content Include="Scripts\Admin\JadwalUjian\detailJadwalUjian.js" />
     <Content Include="Scripts\Admin\JadwalUjian\main.js" />
     <Content Include="Scripts\Admin\ManageUjian\detailManageUjian.js" />
     <Content Include="Scripts\Admin\ManageUjian\main.js" />
-    <Content Include="Scripts\Admin\JadwalKuliah\crud.js" />
     <Content Include="Scripts\Admin\JadwalKuliah\main.js" />
     <Content Include="Scripts\Admin\JadwalKuliah\main_manage_matakuliah.js" />
     <Content Include="Scripts\Admin\JadwalKuliah\search.js" />
@@ -253,8 +264,12 @@
     <Content Include="Scripts\Admin\MenuRole\main.js" />
     <Content Include="Scripts\Admin\Menu\crud.js" />
     <Content Include="Scripts\Admin\Menu\main.js" />
+    <Content Include="Scripts\Admin\ReportMahasiswaInternalPertukaran\main.js" />
+    <Content Include="Scripts\Admin\ReportMahasiswaMBKM\main.js" />
+    <Content Include="Scripts\Admin\ReportMBKMNonPertukaran\main.js" />
     <Content Include="Scripts\Admin\Role\crud.js" />
     <Content Include="Scripts\Admin\Role\main.js" />
+    <Content Include="Scripts\Admin\SertifikatMBKM\main.js" />
     <Content Include="Scripts\Admin\Transkrip\main.js" />
     <Content Include="Scripts\Admin\SummaryFeedback\main.js" />
     <Content Include="Scripts\Admin\Transkrip\print.js" />
@@ -551,10 +566,18 @@
     <Content Include="Areas\Portal\Views\TranskripMahasiswa\ExportPDF.cshtml" />
     <Content Include="Areas\Portal\Views\SertifikatMbkm\Index.cshtml" />
     <Content Include="Areas\Admin\Views\SertifikatMBKM\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\SertifikatMBKM\GetFile.cshtml" />
+    <Content Include="Areas\Admin\Views\DaftarHadirUjian\index.cshtml" />
+    <Content Include="Areas\Portal\Views\SertifikatMbkm\GetFile.cshtml" />
     <Content Include="Areas\Admin\Views\ReportCPLMatkul\Index.cshtml" />
     <Content Include="Areas\Admin\Views\DaftarMatkul\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ReportCPLMatkul\PdfCPLMatkul.cshtml" />
     <Content Include="Areas\Admin\Views\DaftarMatkul\PdfDaftarMatkul.cshtml" />
+    <Content Include="Areas\Admin\Views\ReportMahasiswaMBKM\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ReportMBKMInternalPertukaran\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ReportMBKMNonPertukaran\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ReportInternalKeluar\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\DaftarHadir\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />

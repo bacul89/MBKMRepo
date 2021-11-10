@@ -231,7 +231,6 @@ function GenerateDataTable() {
     }
 }
 
-
 function GetViewDataDosen(id) {
     $.LoadingOverlay("show");
     $.ajax({
