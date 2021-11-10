@@ -16,8 +16,13 @@ namespace MBKM.Services.MBKMServices
     {
         List<VMClassSection> getSection();
         IEnumerable<VMMataKuliah> GetMatkul(int skip, int take, string searchBy, string idProdi, string idFakultas);
-        VMLinkFasilitas SearchListJadwalKuliah(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string idMatakuliah,string seksi);
-
+        VMLinkFasilitas SearchListJadwalKuliah(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string idMatakuliah,string seksi, int strm);
+        IEnumerable<VMLookup> GetMatkulByLokasi(string search, string jenjangStudi, string prodi, string lokasi);
+        IEnumerable<VMLookup> GetProdiByFakultas(string search, string jenjangStudi, string fakultas);
+        IEnumerable<VMLookup> GetLokasiByProdi(string search, string jenjangStudi, string prodi);
+        
+        IEnumerable<VMLookup> GetSeksiByMatkul(string search, string jenjangStudi, string matkul, string lokasi);
+        IEnumerable<VMLookup> GetFakultasByJenjangStudi(string search, string jenjangStudi);
     }
     public class LinkFasilitasService : EntityService<JadwalKuliah>, ILinkFasilitasService
     {
@@ -30,9 +35,29 @@ namespace MBKM.Services.MBKMServices
             _linkFasilitasRepository = LinkFasilitasRepository;
         }
 
+        public IEnumerable<VMLookup> GetFakultasByJenjangStudi(string search, string jenjangStudi)
+        {
+            return _linkFasilitasRepository.GetFakultasByJenjangStudi(search, jenjangStudi);
+        }
+
+        public IEnumerable<VMLookup> GetLokasiByProdi(string search, string jenjangStudi, string prodi)
+        {
+            return _linkFasilitasRepository.GetLokasiByProdi(search, jenjangStudi, prodi);
+        }
+
         public IEnumerable<VMMataKuliah> GetMatkul(int skip, int take, string searchBy, string idProdi, string idFakultas)
         {
             return _linkFasilitasRepository.GetMatkul(skip, take, searchBy, idProdi, idFakultas);
+        }
+
+        public IEnumerable<VMLookup> GetMatkulByLokasi(string search, string jenjangStudi, string prodi, string lokasi)
+        {
+            return _linkFasilitasRepository.GetMatkulByLokasi(search, jenjangStudi, prodi, lokasi);
+        }
+
+        public IEnumerable<VMLookup> GetProdiByFakultas(string search, string jenjangStudi, string fakultas)
+        {
+            return _linkFasilitasRepository.GetProdiByFakultas(search, jenjangStudi, fakultas);
         }
 
         public List<VMClassSection> getSection()
@@ -40,7 +65,12 @@ namespace MBKM.Services.MBKMServices
             return _linkFasilitasRepository.GetListSeksi();
         }
 
-        public VMLinkFasilitas SearchListJadwalKuliah(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string idMatakuliah, string seksi)
+        public IEnumerable<VMLookup> GetSeksiByMatkul(string search, string jenjangStudi, string matkul, string lokasi)
+        {
+            throw new NotImplementedException();
+        }
+
+        public VMLinkFasilitas SearchListJadwalKuliah(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string idMatakuliah, string seksi, int strm)
         {
             var searchBy = (model.search != null) ? model.search.value : null;
             var take = model.length;
@@ -57,7 +87,7 @@ namespace MBKM.Services.MBKMServices
             if (sortBy == null)
                 sortBy = "ID";
             sortBy = sortBy + " " + model.order[0].dir.ToUpper();
-            return _linkFasilitasRepository.SearchListJadwalKuliah(skip, take, searchBy, sortBy, sortDir, idProdi, lokasi, idFakultas, jenjangStudi, idMatakuliah,seksi);
+            return _linkFasilitasRepository.SearchListJadwalKuliah(skip, take, searchBy, sortBy, sortDir, idProdi, lokasi, idFakultas, jenjangStudi, idMatakuliah,seksi, strm);
         }
     }
 }

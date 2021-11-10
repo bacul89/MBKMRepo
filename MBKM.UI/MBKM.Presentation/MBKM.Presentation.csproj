@@ -269,6 +269,7 @@
     <Content Include="Scripts\Admin\ReportMahasiswaInternalPertukaran\main.js" />
     <Content Include="Scripts\Admin\ReportMahasiswaMBKM\main.js" />
     <Content Include="Scripts\Admin\ReportMBKMNonPertukaran\main.js" />
+    <Content Include="Scripts\Admin\ReportMBKMPertukaranInternalKeluar\main.js" />
     <Content Include="Scripts\Admin\Role\crud.js" />
     <Content Include="Scripts\Admin\Role\main.js" />
     <Content Include="Scripts\Admin\SertifikatMBKM\main.js" />
@@ -581,8 +582,12 @@
     <Content Include="Areas\Admin\Views\ReportInternalKeluar\Index.cshtml" />
     <Content Include="Areas\Admin\Views\DaftarHadir\Index.cshtml" />
     <Content Include="Areas\Admin\Views\DaftarHadirUjian\PrintDHU.cshtml" />
+    <Content Include="Areas\Admin\Views\ReportMahasiswaMBKM\getDataPdf.cshtml" />
+    <Content Include="Areas\Admin\Views\ReportMBKMNonPertukaran\GetDataPDF.cshtml" />
+    <Content Include="Areas\Admin\Views\ReportMBKMInternalPertukaran\GetFilePdf.cshtml" />
     <Content Include="Areas\Admin\Views\ReportMBKMEkternalPertukaran\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ReportMBKMEkternalPertukaran\ExportPDF.cshtml" />
+    <Content Include="Areas\Admin\Views\DaftarHadir\DHK.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />

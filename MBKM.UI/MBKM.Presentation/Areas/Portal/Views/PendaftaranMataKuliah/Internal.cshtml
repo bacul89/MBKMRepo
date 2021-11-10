@@ -244,7 +244,7 @@
             datatable.destroy();
             datatable = $('#hasilPencarian').DataTable({
                 ajax: {
-                    url: '@Url.Action("GetMataKuliahByProdi","PendaftaranMataKuliah")?idProdi=' + $('#lokasi').val() + '&lokasi=' + $('#lokasi').select2('data')[0].text + '&strm=' + $('#strm').val(),
+                    url: '@Url.Action("GetMataKuliahByProdi","PendaftaranMataKuliah")?prodi=' + $('#prodi').val() + '&lokasi=' + $('#lokasi').val() + '&strm=' + $('#strm').val(),
                     dataSrc: ''
                 },
                 "columnDefs": [{
@@ -437,7 +437,7 @@
                             },
                             processResults: function (data, params) {
                                 return {
-                                    results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Kampus } })
+                                    results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
                                 };
                             },
                         }
@@ -512,7 +512,7 @@
                     }
                 });
                 $("#jenisKegiatanMBKM").change(function () {
-                    if (!$("#jenisKegiatanMBKM").val().toLowerCase().includes('internal ke luar atma jaya')) {
+                    if ($("#jenisKegiatanMBKM").select2('data')[0].text.toLowerCase() == 'internal') {
                         return;
                     }
                     $("#namaInstansi").empty();

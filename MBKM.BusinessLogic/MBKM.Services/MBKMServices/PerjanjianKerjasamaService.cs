@@ -54,7 +54,10 @@ namespace MBKM.Services.MBKMServices
             }
             if (sortBy == null)
                 sortBy = "ID";
-            sortBy = sortBy + " " + model.order[0].dir.ToUpper();
+            if (sortBy == "ID")
+                sortBy = sortBy + " DESC";
+            else
+                sortBy = sortBy + " " + model.order[0].dir.ToUpper();
             return _perjanjianKerjasamaRepository.getListPerjanjianKerjasama(skip, take, searchBy, sortBy, sortDir);
         }
 

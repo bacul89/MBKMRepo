@@ -115,7 +115,7 @@
                         </div>
                         <br />
                         @{
-                            if (!ViewData["jenisKegiatan"].ToString().ToLower().Contains("eksternal") || ViewData["jenisKegiatan"].ToString().ToLower().Contains("luar"))
+                            if (!ViewData["jenisKegiatan"].ToString().ToLower().Contains("eksternal") || !ViewData["jenisKegiatan"].ToString().ToLower().Contains("luar"))
                             {
                                 <div class="row">
                                     <div class="col-sm-3 text-right">
@@ -167,13 +167,13 @@
                     </form>
                     <br />
                     @{
-                        if (ViewData["jenisProgram"] == "Pertukaran")
+                        if (ViewData["jenisProgram"].ToString().ToLower().Contains("pertukaran"))
                         {
                             <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
                                 <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">DETAIL CAPAIAN PEMBELAJARAN PROGRAM STUDI ASAL</h5>
                                 <form class="form-horizontal">
                                     @{
-                                        if (ViewData["jenisKegiatan"] == "Internal")
+                                        if (ViewData["jenisKegiatan"].ToString().ToLower().Contains("internal"))
                                         {
                                             <div class="row">
                                                 <div class="col-sm-3 text-right">

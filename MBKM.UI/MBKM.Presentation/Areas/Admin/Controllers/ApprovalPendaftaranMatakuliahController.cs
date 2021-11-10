@@ -16,15 +16,16 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
     [MBKMAuthorize]
     public class ApprovalPendaftaranMatakuliahController : Controller
     {
-        IApprovalPendaftaranService _approvalPendaftaranService;
-        IPendaftaranMataKuliahService _pendaftaranMataKuliahService;
-        ICPLMKPendaftaranService _cPLMKPendaftaranService;
-        IInformasiPertukaranService _informasiPertukaranService;
-        IMahasiswaService _mahasiswaService;
-        ICPLMatakuliahService _cPLMatakuliahService;
-        IUserService _userService;
+        private IApprovalPendaftaranService _approvalPendaftaranService;
+        private IPendaftaranMataKuliahService _pendaftaranMataKuliahService;
+        private ICPLMKPendaftaranService _cPLMKPendaftaranService;
+        private IInformasiPertukaranService _informasiPertukaranService;
+        private IMahasiswaService _mahasiswaService;
+        private ICPLMatakuliahService _cPLMatakuliahService;
+        private IUserService _userService;
+        private IJadwalUjianMBKMService _jadwalUjianMBKMService;
 
-        public ApprovalPendaftaranMatakuliahController(IApprovalPendaftaranService approvalPendaftaranService, IPendaftaranMataKuliahService pendaftaranMataKuliahService, ICPLMKPendaftaranService cPLMKPendaftaranService, IInformasiPertukaranService informasiPertukaranService, IMahasiswaService mahasiswaService, ICPLMatakuliahService cPLMatakuliahService, IUserService userService)
+        public ApprovalPendaftaranMatakuliahController(IApprovalPendaftaranService approvalPendaftaranService, IPendaftaranMataKuliahService pendaftaranMataKuliahService, ICPLMKPendaftaranService cPLMKPendaftaranService, IInformasiPertukaranService informasiPertukaranService, IMahasiswaService mahasiswaService, ICPLMatakuliahService cPLMatakuliahService, IUserService userService, IJadwalUjianMBKMService jadwalUjianMBKMService)
         {
             _approvalPendaftaranService = approvalPendaftaranService;
             _pendaftaranMataKuliahService = pendaftaranMataKuliahService;
@@ -33,12 +34,15 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             _mahasiswaService = mahasiswaService;
             _cPLMatakuliahService = cPLMatakuliahService;
             _userService = userService;
+            _jadwalUjianMBKMService = jadwalUjianMBKMService;
         }
-
 
         // GET: Admin/ApprovalPendaftaranMatakuliah
         public ActionResult Index()
         {
+            IEnumerable<VMSemester> data = _jadwalUjianMBKMService.getAllSemester();
+            ViewData["semester"] = data;
+            ViewData["firstSemester"] = _mahasiswaService.GetDataSemester(null).First().Nilai;
             return View();
         }
 
@@ -52,7 +56,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             if (tmpInformasiPertukaran1 == 0)
             {
                 ViewData["jenisProgram"] = "Pertukaran";
-                ViewData["jenisKegiatan"] = "Eksternal";
+                ViewData["jenisKegiatan"] = "Eksternal Dari Luar Atma Jaya";
 
                 ViewData["capaianTujuan"] = capaianTujuan;
                 ViewData["countCPTujuan"] = capaianTujuan.Count();
@@ -69,17 +73,17 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 }
                 else if (tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("magang"))
                 {
-                    ViewData["jenisProgram"] = "Magang";
-                    ViewData["jenisKegiatan"] = "Internal";
+                    ViewData["jenisProgram"] = "Non-Pertukaran";
+                    ViewData["jenisKegiatan"] = "magang";
                 }
                 else if (tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("internal") && tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("luar"))
                 {
                     ViewData["jenisProgram"] = "Pertukaran";
-                    ViewData["jenisKegiatan"] = "Internal Ke Luar";
+                    ViewData["jenisKegiatan"] = "Internal Ke Luar Atma Jaya";
                 }
                 else
                 {
-                    ViewData["jenisProgram"] = tmpInformasiPertukaran.JenisKerjasama;
+                    ViewData["jenisProgram"] = "Non-Pertukaran";
                     ViewData["jenisKegiatan"] = tmpInformasiPertukaran.JenisPertukaran;
                 }
 
@@ -114,9 +118,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
         
         [HttpPost]
-        public JsonResult GetAllApprovalPMK(DataTableAjaxPostModel model)
+        public JsonResult GetAllApprovalPMK(DataTableAjaxPostModel model, int strm)
         {
-            var data = _pendaftaranMataKuliahService.GetPendaftaranMahasiswaDataTable(model);
+            var data = _pendaftaranMataKuliahService.GetPendaftaranMahasiswaDataTable(model, strm);
 
             return Json(new
                 {
@@ -124,8 +128,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     recordsTotal = data.TotalCount,
                     recordsFiltered = data.TotalFilterCount,
                     data = data.gridDatas
-                }
-                );
+                });
         }
 
         [HttpPost]

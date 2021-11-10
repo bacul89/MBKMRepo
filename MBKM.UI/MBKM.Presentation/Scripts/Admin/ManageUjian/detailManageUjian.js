@@ -131,6 +131,7 @@ $('#frm-example').on('submit', function (e) {
                                         focusConfirm: false,
                                         confirmButtonText: 'OK'
                                     })
+                                    window.location.href ="/Admin/ManageJadwalUjian"
                                 }
                             }, error: function (e) {
                                 $.LoadingOverlay("hide");

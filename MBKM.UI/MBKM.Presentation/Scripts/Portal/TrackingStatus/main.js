@@ -3,7 +3,6 @@
     "serverSide": true,
     "ajax": {
         url: '/Portal/TrackingStatusPendaftaran/GetPendaftaranMakul/',
-        data: { emailMahasiswa: $('#getEmail').val()},
         type: 'POST'
     },
     "language": {

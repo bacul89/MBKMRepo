@@ -1,0 +1,77 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/Content/Admin/inputResponsive.css">
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/Admin/inputResponsive.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container-fluid" style="width: 70vw; margin-left:auto; margin-right:auto; margin-top:70px">
+        <div style="margin :20px 20px 20px 20px">
+            <h3>REKAP NILAI MAHASISWA MBKM GANJIL - GENAP 2021/2022</h3>
+            <table id="table-data-rekap-mahasiswa" class="table table-bordered">
+                <thead style="background-color: lightgray; display: table-header-group;">
+                    <tr>
+                        <th class="zero-padding2 small-text  vertical-center center sorting">No</th>
+                        <th class="zero-padding2 small-text  vertical-center center sorting">Tahun Semester</th>
+                        <th class="zero-padding2 small-text  vertical-center center sorting">Jenjang Studi</th>
+                        <th class="zero-padding2 small-text  vertical-center center sorting">Fakultas</th>
+                        <th class="zero-padding2 small-text  vertical-center center sorting">Program Studi</th>
+                        <th class="zero-padding2 small-text  vertical-center center sorting">Lokasi</th>
+                        <th class="zero-padding2 small-text  vertical-center center sorting">Internal</th>
+                        <th class="zero-padding2 small-text  vertical-center center sorting">Internal Ke Luar</th>
+                        <th class="zero-padding2 small-text  vertical-center center sorting">Eksternal</th>
+                        <th class="zero-padding2 small-text  vertical-center center sorting">Non Pertukaran</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var i = 1;
+                        foreach (var d in ViewData["datas"] as List<String[]>)
+                        {
+                            <tr style="page-break-inside: avoid;">
+                                <td class="zero-padding2 small-text  vertical-center center sorting">@i</td>
+                                <td class="zero-padding2 small-text  vertical-center center sorting">@d[0]</td>
+                                <td class="zero-padding2 small-text  vertical-center center sorting">@d[1]</td>
+                                <td class="zero-padding2 small-text  vertical-center center sorting">@d[2]</td>
+                                <td class="zero-padding2 small-text  vertical-center center sorting">@d[3]</td>
+                                <td class="zero-padding2 small-text  vertical-center center sorting">@d[4]</td>
+                                <td class="zero-padding2 small-text  vertical-center center sorting">@d[5]</td>
+                                <td class="zero-padding2 small-text  vertical-center center sorting">@d[6]</td>
+                                <td class="zero-padding2 small-text  vertical-center center sorting">@d[7]</td>
+                                <td class="zero-padding2 small-text  vertical-center center sorting">@d[8]</td>
+                            </tr>
+                            i = i + 1;
+                        }
+                    }
+
+                </tbody>
+                <tfoot align="right" style="border: 1px solid black; display: table-row-group;">
+                    <tr>
+                        <th colspan="6" class="zero-padding2 small-text vertical-center center sorting">TOTAL</th>
+                        <th class="vertical-center center">@ViewData["internal"]</th>
+                        <th class="vertical-center center">@ViewData["internalKeluar"]</th>
+                        <th class="vertical-center center">@ViewData["eksternal"]</th>
+                        <th class="vertical-center center">@ViewData["nonpertukaran"]</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
