@@ -48,77 +48,54 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult GetDataTable(int strm)
         {
-            var data = _feedbackMatkulService.Find(x => x.JadwalKuliahs.STRM == strm).GroupBy(z => new {z.MahasiswaID, z.StatusFeedBack}).Select(s => new {MahasiswaID = s.Key.MahasiswaID, Status = s.Key.StatusFeedBack}).ToList();
-            var data2 = _feedbackMatkulService.Find(x => x.JadwalKuliahs.STRM == strm)
-                .GroupBy(z => new { z.MahasiswaID,z.Mahasiswas})
+            
+            var data = _feedbackMatkulService.Find(x => x.JadwalKuliahs.STRM == strm)
+                .GroupBy(z => new {z.MahasiswaID, z.StatusFeedBack, z.Mahasiswas, z.JadwalKuliahID })
+                .Select(s => new {MahasiswaID = s.Key.MahasiswaID, Status = s.Key.StatusFeedBack, Mahasiswas = s.Key.Mahasiswas, JadwalID = s.Key.JadwalKuliahID }).ToList();
+            
+            var data2 = data.GroupBy(z => new { z.MahasiswaID,z.Mahasiswas})
                 .Select(s => new { MahasiswaID = s.Key.MahasiswaID, Mahasiswas = s.Key.Mahasiswas}).ToList();
+
+            var data3 = data.GroupBy(z => new { z.MahasiswaID, z.Mahasiswas, z.JadwalID})
+                .Select(s => new { MahasiswaID = s.Key.MahasiswaID, Mahasiswas = s.Key.Mahasiswas }).ToList();
+
+            var pendaftaran = _pendaftaranMataKuliahService.Find(x => x.JadwalKuliahs.STRM == strm).ToList();
 
             List<String[]> final = new List<String[]>();
             var DescSemester = _feedbackMatkulService.GetSemesterByStrm(strm.ToString());
             foreach (var d in data2)
             {
                 var dataCheck = data.Where(x => x.MahasiswaID == d.MahasiswaID && x.Status == false).Count();
-                if (dataCheck != 0)
+                var MatkulPendaftaranCheck = pendaftaran.Where(x => x.MahasiswaID == d.MahasiswaID).Count();
+                var matkulFeedbackCheck = data3.Where(x => x.MahasiswaID == d.MahasiswaID).Count();
+
+                if (dataCheck == 0 && (matkulFeedbackCheck == MatkulPendaftaranCheck))
                 {
-                    if (d.Mahasiswas.FlagBayar)
-                    {
-                        final.Add(new String[]{
-                            d.MahasiswaID.ToString(),
-                            DescSemester.Nama,
-                            d.Mahasiswas.JenjangStudi,
-                            d.Mahasiswas.NamaUniversitas,
-                            d.Mahasiswas.NIM,
-                            d.Mahasiswas.Nama,
-                            d.Mahasiswas.NoKerjasama,
-                            "Belum Feedback",
-                            "Sudah Bayar"
-                        });
-                    }
-                    else
-                    {
-                        final.Add(new String[]{
-                            d.MahasiswaID.ToString(),
-                            DescSemester.Nama,
-                            d.Mahasiswas.JenjangStudi,
-                            d.Mahasiswas.NamaUniversitas,
-                            d.Mahasiswas.NIM,
-                            d.Mahasiswas.Nama,
-                            d.Mahasiswas.NoKerjasama,
-                            "Belum Feedback",
-                            "Belum Bayar"
-                        });
-                    }
+                    final.Add(new String[]{
+                        d.MahasiswaID.ToString(),
+                        DescSemester.Nama,
+                        d.Mahasiswas.JenjangStudi,
+                        d.Mahasiswas.NamaUniversitas,
+                        d.Mahasiswas.NIM,
+                        d.Mahasiswas.Nama,
+                        d.Mahasiswas.NoKerjasama,
+                        "Sudah Feedback",
+                        d.Mahasiswas.FlagBayar.ToString()
+                    });
                 }
                 else
                 {
-                    if (d.Mahasiswas.FlagBayar)
-                    {
-                        final.Add(new String[]{
-                            d.MahasiswaID.ToString(),
-                            DescSemester.Nama,
-                            d.Mahasiswas.JenjangStudi,
-                            d.Mahasiswas.NamaUniversitas,
-                            d.Mahasiswas.NIM,
-                            d.Mahasiswas.Nama,
-                            d.Mahasiswas.NoKerjasama,
-                            "Sudah Feedback",
-                            "Sudah Bayar"
-                        });
-                    }
-                    else
-                    {
-                        final.Add(new String[]{
-                            d.MahasiswaID.ToString(),
-                            DescSemester.Nama,
-                            d.Mahasiswas.JenjangStudi,
-                            d.Mahasiswas.NamaUniversitas,
-                            d.Mahasiswas.NIM,
-                            d.Mahasiswas.Nama,
-                            d.Mahasiswas.NoKerjasama,
-                            "Sudah Feedback",
-                            "Belum Bayar"
-                        });
-                    }
+                    final.Add(new String[]{
+                        d.MahasiswaID.ToString(),
+                        DescSemester.Nama,
+                        d.Mahasiswas.JenjangStudi,
+                        d.Mahasiswas.NamaUniversitas,
+                        d.Mahasiswas.NIM,
+                        d.Mahasiswas.Nama,
+                        d.Mahasiswas.NoKerjasama,
+                        "Belum Feedback",
+                        d.Mahasiswas.FlagBayar.ToString()
+                    });
                 }
             }
             return Json(final);
