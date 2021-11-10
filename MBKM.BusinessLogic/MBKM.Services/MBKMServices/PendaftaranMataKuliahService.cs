@@ -24,6 +24,7 @@ namespace MBKM.Services.MBKMServices
         IEnumerable<VMReportMahasiswaInternal> GetListPendaftaranNonPertukaran(long strm);
         IEnumerable<VMReportMahasiswaInternal> GetListPendaftaranInternalPertukaran(long strm);
         IEnumerable<VMReportMahasiswaEksternal> GetListPendaftaranEksternalPertukaran(long strm);
+        IEnumerable<VMReportMahasiswaInternalKeluar> GetListPendaftaranInternalPertukaranKeluar(long strm);
     }
     public class PendaftaranMataKuliahService : EntityService<PendaftaranMataKuliah>, IPendaftaranMataKuliahService
     {
@@ -114,5 +115,9 @@ namespace MBKM.Services.MBKMServices
             return _pmkRepository.GetListPendaftaranEksternalPertukaran(strm);
         }
 
+        public IEnumerable<VMReportMahasiswaInternalKeluar> GetListPendaftaranInternalPertukaranKeluar(long strm)
+        {
+            return _pmkRepository.GetListPendaftaranInternalPertukaranKeluar(strm);
+        }
     }
 }
