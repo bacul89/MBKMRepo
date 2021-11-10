@@ -36,6 +36,14 @@ $(document).ready(function () {
 
 });
 
+function convertMilisecondToDate(value) {
+    var num = parseInt(value.match(/\d+/), 10)
+    var date = new Date(num);
+    var result = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear()
+    return result;
+
+}
+
 //---<> search
 $('#tahunAjaranCari').select2({
 
@@ -593,6 +601,40 @@ function reloadDatatable() {
                 //"title": "Email",
                 "data": "NamaMatkul",
                 "name": "NamaMatkul",
+                "render": function (data, type, row, meta) {
+                    return '<div class="center">' + data + '</div>';
+                }
+            },
+
+
+            {
+                //"title": "Email",
+                "data": "TipeUjian",
+                "name": "TipeUjian",
+                "render": function (data, type, row, meta) {
+                    return '<div class="center">' + data + '</div>';
+                }
+            },
+            {
+                //"title": "Email",
+                "data": "TanggalUjian",
+                "name": "TanggalUjian",
+                "render": function (data, type, row, meta) {
+                    return '<div class="center">' + convertMilisecondToDate(data) + '</div>';
+                }
+            },
+            {
+                //"title": "Email",
+                "data": "JamAkhir",
+                "name": "JamAkhir",
+                "render": function (data, type, row, meta) {
+                    return '<div class="center">' + row.JamMulai + ' - ' + row.JamAkhir + '</div>';
+                }
+            },
+            {
+                //"title": "Email",
+                "data": "RuangUjian",
+                "name": "RuangUjian",
                 "render": function (data, type, row, meta) {
                     return '<div class="center">' + data + '</div>';
                 }
