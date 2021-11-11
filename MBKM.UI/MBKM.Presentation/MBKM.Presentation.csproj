@@ -588,6 +588,7 @@
     <Content Include="Areas\Admin\Views\ReportMBKMEkternalPertukaran\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ReportMBKMEkternalPertukaran\ExportPDF.cshtml" />
     <Content Include="Areas\Admin\Views\DaftarHadir\DHK.cshtml" />
+    <Content Include="Areas\Admin\Views\ReportInternalKeluar\GetDataPDF.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />

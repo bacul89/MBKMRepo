@@ -15,6 +15,6 @@ namespace MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces
         IEnumerable<VMProdi> GetProdiByFakultas(string jenjangStudi, string idFakultas, string search);
         IEnumerable<VMProdi> GetLokasiByProdi(string jenjangStudi, string namaProdi, string search);
         IEnumerable<VMProdi> GetLokasiByProdiName(string jenjangStudi, string namaProdi, string search);
-        VMListMasterCPL GetListMasterCPL(int Skip, int Length, string SearchParam, string SortBy, bool SortDir);
+        VMListMasterCPL GetListMasterCPL(int Skip, int Length, string SearchParam, string SortBy, bool SortDir, string prodi, string jenjang, string fakultas);
     }
 }

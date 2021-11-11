@@ -56,19 +56,6 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                     .SqlQuery<VMProdi>("GetLokasiByJenjangStudi @JenjangStudi, @NamaProdi, @Search", jenjangStudiParam, namaProdiParam, searchParam).ToList();
                 return result;
             }
-
-            /*using (var context = new MBKMContext())
-            {
-                //jenjangStudi = "S1";
-                var jenjangStudiParam = new SqlParameter("@JenjangStudi", jenjangStudi);
-                //var jenjangStudiParam = "S1";
-                
-                var idProdiParam = new SqlParameter("@IdProdi", idProdi);
-                var searchParam = new SqlParameter("@Search", search);
-                var result = context.Database
-                    .SqlQuery<VMProdi>("GetLokasiByProdi @JenjangStudi, @IdProdi, @Search", jenjangStudiParam, idProdiParam, searchParam).ToList();
-                return result;
-            }*/
         }
 
         public IEnumerable<VMProdi> GetLokasiByProdiName(string jenjangStudi, string namaProdi, string search)
@@ -99,34 +86,26 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             }
         }
 
-        public VMListMasterCPL GetListMasterCPL(int Skip, int Length, string SearchParam, string SortBy, bool SortDir)
+        public VMListMasterCPL GetListMasterCPL(int Skip, int Length, string SearchParam, string SortBy, bool SortDir, string prodi, string jenjang, string fakultas)
         {
             VMListMasterCPL mListCPL = new VMListMasterCPL();
             if (String.IsNullOrEmpty(SearchParam))
             {
-                // if we have an empty search then just order the results by Id ascending
-                //SortBy = "ID";
-                //SortDir = true;
                 SearchParam = "";
             }
             using (var context = new MBKMContext())
             {
 
-                var result = context.MasterCPLS.Where(x => x.IsDeleted == false);
+                var result = context.MasterCPLS.Where(x => x.IsDeleted == false && x.NamaProdi.Contains(prodi)  && x.JenjangStudi == jenjang && x.FakultasID.Contains(fakultas));
                 mListCPL.TotalCount = result.Count();
                 var gridfilter = result.AsQueryable().Where(y => y.Kode.Contains(SearchParam) || y.Kelompok.Contains(SearchParam) ||
                 y.Capaian.Contains(SearchParam))
                     .Select(z => new GridDataCPL
                     {
                         ID = z.ID,
-                        //JenjangStudi = z.JenjangStudi,
-                        //Lokasi = z.Lokasi,
                         Kode = z.Kode,
                         Kelompok = z.Kelompok,
                         Capaian = z.Capaian
-                        //KodeProdi = Convert.ToDouble(z.KodeProdi),
-
-                        //Status = z.IsActive
                     }).OrderBy(SortBy, SortDir);
                 mListCPL.gridDatas = gridfilter.Skip(Skip).Take(Length).ToList();
                 mListCPL.TotalFilterCount = gridfilter.Count();

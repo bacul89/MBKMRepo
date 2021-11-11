@@ -119,6 +119,7 @@
     <Compile Include="ViewModel\VMPendaftaranWithInformasipertukaranKeluar.cs" />
     <Compile Include="ViewModel\VMReportMahasiswaInternal.cs" />
     <Compile Include="ViewModel\VMPendaftaranWithInformasipertukaran.cs" />
+    <Compile Include="ViewModel\VMReportMahasiswaInternalKeluar.cs" />
     <Compile Include="ViewModel\VMSubBobot .cs" />
     <Compile Include="ViewModel\VMClassSection.cs" />
     <Compile Include="ViewModel\VMCPLMKPendaftaran.cs" />
