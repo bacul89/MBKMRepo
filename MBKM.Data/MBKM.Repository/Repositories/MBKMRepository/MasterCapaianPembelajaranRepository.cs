@@ -100,14 +100,34 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 mListCPL.TotalCount = result.Count();
                 var gridfilter = result.AsQueryable().Where(y => y.Kode.Contains(SearchParam) || y.Kelompok.Contains(SearchParam) ||
                 y.Capaian.Contains(SearchParam))
-                    .Select(z => new GridDataCPL
+                    .Select(z => new VMMasterCPL
                     {
                         ID = z.ID,
                         Kode = z.Kode,
                         Kelompok = z.Kelompok,
-                        Capaian = z.Capaian
-                    }).OrderBy(SortBy, SortDir);
-                mListCPL.gridDatas = gridfilter.Skip(Skip).Take(Length).ToList();
+                        Capaian = z.Capaian,
+                        FakultasID = z.FakultasID,
+                        NamaProdi = z.NamaProdi,
+                        JenjangStudi = z.JenjangStudi
+                    })
+                    .OrderBy(SortBy, SortDir);
+                mListCPL.gridDatas = gridfilter.Skip(Skip).Take(Length).GroupBy(s => new
+                {
+                    s.JenjangStudi,
+                    s.Kode,
+                    s.FakultasID,
+                    s.Kelompok,
+                    s.Capaian,
+                    s.NamaProdi
+                }).Select(n => new GridDataCPL
+                {
+                    JenjangStudi = n.Key.JenjangStudi,
+                    Kode = n.Key.Kode,
+                    FakultasID = n.Key.FakultasID,
+                    Kelompok = n.Key.Kelompok,
+                    Capaian = n.Key.Capaian,
+                    NamaProdi = n.Key.NamaProdi
+                }).ToList();
                 mListCPL.TotalFilterCount = gridfilter.Count();
                 return mListCPL;
             }

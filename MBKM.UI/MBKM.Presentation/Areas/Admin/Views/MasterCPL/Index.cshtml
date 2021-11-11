@@ -48,13 +48,6 @@
                                 <input type="text" value="" class="form-control input-pendaftaran input-data" disabled="disabled" id="prodiDetail" name="kelompokDetail">
                             </div>
                         </div>
-                        <div class="form-group ">
-                            <label for="lokasi" class="col-sm-3 control-label">Lokasi</label>
-                            <div class="col-sm-9">
-                                @Html.EditorFor(model => model.Lokasi, new { htmlAttributes = new { @class = "form-control input-pendaftaran input-data", maxlength = 100, disabled = "disabled", @id = "lokasiDetail" } })
-                            </div>
-
-                        </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">Kelompok</label>
                             <div class="col-sm-9">
@@ -218,14 +211,6 @@
                                 </div>
 
                             </div>
-                            <div class="form-group ">
-                                <label for="lokasi" class="col-sm-3 control-label">Lokasi</label>
-                                <div class="col-sm-9">
-                                    @Html.EditorFor(model => model.Lokasi, new { htmlAttributes = new { @class = "form-control input-pendaftaran input-data", maxlength = 100, disabled = "disabled", @id = "lokasiEdit" } })
-                                </div>
-
-                            </div>
-
                             <div class="form-group">
                                 <label for="kelompok" class="col-sm-3 control-label">Kelompok</label>
                                 <div class="col-sm-9">
@@ -573,11 +558,19 @@
         }
 
         //batas crud detail
-        function DetailMasterCPL(id) {
+        function DetailMasterCPL(fakultasId, prodiNama, jenjangID, capaiandd, kodedd, kelompokdd) {
             $.LoadingOverlay("show");
             $.ajax({
-                url: "@Url.Action("ModalDetailMasterCpl", "MasterCPL")/"+id,
-                type: 'get',
+                url: "@Url.Action("ModalDetailMasterCpl", "MasterCPL")/",
+                data: {
+                    fakultas: fakultasId,
+                    prodi: prodiNama,
+                    jenjang: jenjangID,
+                    capaian: capaiandd,
+                    kode: kodedd,
+                    kelompok: kelompokdd,
+                },
+                type: 'post',
                 datatype: 'html',
                 success: function (data) {
                     $.LoadingOverlay("hide");
@@ -710,11 +703,19 @@
 
         }
         //UPDATE
-        function UpdateMasterCPL(id) {
+        function UpdateMasterCPL(fakultasId, prodiNama, jenjangID, capaiandd, kodedd, kelompokdd) {
             $.LoadingOverlay("show");
             $.ajax({
-                url: '/Admin/MasterCPL/ModalEditMasterCpl/' + id,
-                type: 'get',
+                url: '/Admin/MasterCPL/ModalEditMasterCpl/',
+                data: {
+                    fakultas: fakultasId,
+                    prodi: prodiNama,
+                    jenjang: jenjangID,
+                    capaian: capaiandd,
+                    kode: kodedd,
+                    kelompok: kelompokdd,
+                },
+                type: 'post',
                 datatype: 'html',
                 success: function (data) {
                     $.LoadingOverlay("hide");
@@ -820,7 +821,7 @@
 
         }
         //===============================DELETE=====================
-        function DeleteCPL(idCPL) {
+        function DeleteCPL(fakultasId, prodiNama, jenjangID, capaiandd, kodedd, kelompokdd) {
 
             Swal.fire({
                 title: "Apakah anda yakin?",
@@ -836,8 +837,14 @@
                     $.ajax({
                         url: '/Admin/MasterCPL/PostDeleteCPL',
                         type: "POST",
-                        data: { id: idCPL }
-                        ,
+                        data: {
+                            fakultas: fakultasId,
+                            prodi: prodiNama,
+                            jenjang: jenjangID,
+                            capaian: capaiandd,
+                            kode: kodedd,
+                            kelompok: kelompokdd,
+                        },
                         dataType: "json",
                     }).then(function (response) {
                             $.LoadingOverlay("hide");
@@ -936,15 +943,15 @@
                     "columns": [
                         {
                             "title": "Action",
-                            "data": "ID",
+                            "data": "",
                             "render": function (data, type, row, meta) {
                                 return `<div class="row justify-content-center">
                             <div class="col" style="text-align:center">
 
-                               <a href="javascript:void(0)" style="color:black" onclick="UpdateMasterCPL('${data}')"> <i class="fas fa-edit coral" ></i></a>
+                               <a href="javascript:void(0)" style="color:black" onclick="UpdateMasterCPL('${row.FakultasID}','${row.NamaProdi}','${row.JenjangStudi}','${row.Capaian}','${row.Kode}','${row.Kelompok}')"> <i class="fas fa-edit coral" ></i></a>
 
-                                <a href="javascript:void(0)" style="color:black" onclick="DetailMasterCPL('${data}')"data-bs-target="#detail-cpl-template"> <i class="fas fa-file-search coral"></i></a>
-                                <a href="javascript:void(0)" style="color:black" onclick="DeleteCPL('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="DetailMasterCPL('${row.FakultasID}','${row.NamaProdi}','${row.JenjangStudi}','${row.Capaian}','${row.Kode}','${row.Kelompok}')"data-bs-target="#detail-cpl-template"> <i class="fas fa-file-search coral"></i></a>
+                                <a href="javascript:void(0)" style="color:black" onclick="DeleteCPL('${row.FakultasID}','${row.NamaProdi}','${row.JenjangStudi}','${row.Capaian}','${row.Kode}','${row.Kelompok}')">  <i class="fas fa-trash-alt coral"></i></a>
 
 
 
@@ -983,10 +990,6 @@
                                 return '<div class="center">' + data + '</div>';
                             }
                         },
-
-
-
-
                     ],
                     "createdRow": function (row, data, index) {
                         $('td', row).css({
