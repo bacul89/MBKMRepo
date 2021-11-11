@@ -1,6 +1,6 @@
 ﻿var datatable = null;
 $(document).ready(function () {
-    $("#jenjangCari").prop("disabled", true);
+    /*$("#jenjangCari").prop("disabled", true);*/
     $("#fakultasCari").prop("disabled", true);
     $("#fakultasCari").prop("disabled", true);
     $("#prodiCari").prop("disabled", true);
@@ -32,7 +32,7 @@ $(document).ready(function () {
 
 
     datatable = $('#table-data-daftar-hadir-ujian').DataTable();
-
+    loadJenjangStudi("JenjangStudi", "jenjang", "Jenjang Studi");
 
 });
 
@@ -97,7 +97,7 @@ $("#tahunAjaranCari").change(function () {
     $("#jenjangCari").prop("disabled", false);
     loadJenjangStudi("JenjangStudi", "jenjang", "Jenjang Studi");
 
-    $("#fakultasCari").prop("disabled", true);
+    /*$("#fakultasCari").prop("disabled", true);*/
     $("#fakultasCari").prop("disabled", true);
     $("#prodiCari").prop("disabled", true);
     $("#lokasiCari").prop("disabled", true);
@@ -496,7 +496,7 @@ function buttonHandler(param) {
 //---<> datatable
 $('#cari').click(function () {
 
-    console.log('halloo');
+    //console.log('halloo');
     reloadDatatable();
 });
 
@@ -551,10 +551,11 @@ function reloadDatatable() {
                 "render": function (data, type, row, meta) {
                     return `<div class="row justify-content-center">
                             <div class="col" style="text-align:center">
-                                <a href="${base_url}/Admin/DaftarHadirUjian/PrintDHU/${data}"  style="color:black" target="_blank"> <i class="fas fa-print coral" ></i></a>
+                               
+                                <a javascript:void(0) onclick="printDHU(${data})"  style="color:black" target="_blank"> <i class="fas fa-print coral" ></i></a>
                             </div>
                         </div>`;
-                }//javascript:void(0) // onclick="printDHU()"
+                }//javascript:void(0) // onclick="printDHU()" /* <a href="${base_url}/Admin/DaftarHadirUjian/PrintDHU/${data}"  style="color:black" target="_blank"> <i class="fas fa-print coral" ></i></a>*/
             },
             {
                 //"title": "No",
@@ -576,7 +577,7 @@ function reloadDatatable() {
                 "data": "JenjangStudi",
                 "name": "JenjangStudi",
                 "render": function (data, type, row, meta) {
-                    return '<div class="center">' + data + '</div>';
+                    return '<div class="center">' + $('#jenjangCari').select2('data')[0].text + '</div>';
                 }
             },
 
@@ -723,6 +724,7 @@ function reloadDatatable() {
         ]
     });*/
 }
+
 
 
 
