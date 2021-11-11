@@ -669,7 +669,7 @@
                             focusConfirm: false,
                             confirmButtonText: 'OK'
                         })
-                        tableUser.ajax.reload(null, false);
+                        
                         $('.modal').modal('hide');
 
                         //$('#TambahUser')[0].reset();
@@ -680,13 +680,13 @@
                             Swal.fire({
                                 title: 'Berhasil',
                                 icon: 'success',
-                                html: 'CPL Baru Berhasil Ditambahkan',
+                                html: 'CPL Baru Berhasil Ditambahkan, Silahkan Melakukan Filtering Ulang',
                                 showCloseButton: true,
                                 showCancelButton: false,
                                 focusConfirm: false,
                                 confirmButtonText: 'OK'
                             })
-                            tableUser.ajax.reload(null, false);
+                            
                             $('.modal').modal('hide');
                             $("#fakultas").empty();
                             $("#fakultas").prop("disabled",true);
