@@ -102,7 +102,15 @@
                 }
             }
         },
-        
+        {
+            //"title": "Jabatan",
+            "data": "Nama",
+            "name": "Nama",
+            "render": function (data, type, row, meta) {
+                return '<div class="center">' + data + '</div>';
+            }
+        },
+
         {
             //"title": "Jabatan",
             "data": "Gender",
@@ -112,14 +120,6 @@
             }
 
 
-        },
-        {
-            //"title": "Jabatan",
-            "data": "Nama",
-            "name": "Nama",
-            "render": function (data, type, row, meta) {
-                return '<div class="center">' + data + '</div>';
-            }
         },
         {
             //"title": "Program Studi/Unit",
