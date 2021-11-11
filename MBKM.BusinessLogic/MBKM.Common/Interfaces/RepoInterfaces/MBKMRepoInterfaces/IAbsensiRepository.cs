@@ -12,6 +12,7 @@ namespace MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces
     {
         string GetSemesterBySTRM(int strm);
         VMSemester GetTahunSemester();
+        string GetKomponenDHK(int idJadwalKuliah);
         IEnumerable<VMLookup> GetFakultasByJenjangStudi(string search, string jenjangStudi);
         IEnumerable<VMLookup> GetProdiByFakultas(string search, string jenjangStudi, string fakultas);
         IEnumerable<VMLookup> GetLokasiByProdi(string search, string jenjangStudi, string prodi);

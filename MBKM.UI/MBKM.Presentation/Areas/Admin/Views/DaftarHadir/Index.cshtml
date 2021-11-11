@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "DHK - SIMBKM";
+    ViewBag.Title = "DHK";
     Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
 }
 
@@ -12,6 +12,72 @@
 
     @Scripts.Render("~/bundles/jquery")
     <script src="~/Scripts/sweetalert2.all.min.js"></script>
+    <style>
+
+        .coral {
+            color: coral;
+        }
+
+        .center {
+            align-content: center;
+            align-items: center;
+            vertical-align: unset;
+            align-self: center;
+            text-align: center
+        }
+
+        .zero-padding {
+            padding: 10px 15px !important;
+        }
+
+        .vertical-center {
+            vertical-align: middle !important;
+        }
+
+        .no-border {
+            border: 0px !important;
+        }
+
+        .table-responsive {
+            display: block;
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
+        }
+
+        table.dataTable.no-footer {
+            border: none;
+        }
+
+        .dataTables_wrapper .dataTables_processing {
+            position: absolute;
+            top: 70%;
+            left: 50%;
+            width: 30%;
+            height: 40px;
+            margin-left: -20%;
+            margin-top: -25px;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 1.2em;
+            background: none;
+        }
+
+        thead tr {
+            background-color: #FF8A04;
+            border: 0;
+        }
+
+        .table-spacing {
+            border-spacing: 0px 0.5rem !important;
+        }
+
+        .body-content {
+            padding-right: 0px !important;
+            padding-left: 0px !important;
+        }
+    </style>
 }
 @section modal{
     <div class="modal fade" id="TambahMasterMapingCapaianPembelajaran" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -23,152 +89,82 @@
 
 <div class="container-fluid" style="padding: 0px">
     <div class="card center-block" style="background-color: white; width: 100%; padding: 0px">
-        <div class="card-body responsive-content" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; padding: 0px">
+        <div class="card-body responsive-content" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; padding: 15px">
             <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
                 CETAK DAFTAR HADIR (DHK)<br />
-                
+
             </h4>
             <hr />
-            <div class="container" style="width: 100%;">
-
-                <div class="col-md-12">
-                    <form class="form-horizontal col-md-7">
-                        <div class="form-group">
-                            <label for="inp_jenjang" class="col-sm-3 control-label">Tahun Semester</label>
-                            <div class="col-sm-9">
-                                <input type="text" value="@Model.Nama" class="form-control input-md" disabled />
-                                <input type="hidden" name="tahunSemester" id="tahunSemester" value="@Model.Nilai" class="form-control input-md" />
-                                @*<option value="" selected disabled>-- Pilih Authority Approval --</option>*@
-
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inp_jenjang" class="col-sm-3 control-label">Jenjang Studi</label>
-                            <div class="col-sm-9">
-                                <select name="jenjangCari" id="jenjangCari" class="form-control input-md">
-                                    @*<option value="" selected disabled>-- Pilih Authority Approval --</option>*@
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="inp_fakultas" class="col-sm-3 control-label">Fakultas</label>
-                            <div class="col-sm-9">
-                                <select name="fakultasCari" id="fakultasCari" class="form-control input-md"></select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inp_prodi" class="col-sm-3 control-label">Program Studi</label>
-                            <div class="col-sm-9">
-                                <select name="prodiCari" id="prodiCari" class="form-control input-md"></select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inp_lokasi" class="col-sm-3 control-label">Lokasi</label>
-                            <div class="col-sm-9">
-                                <select name="lokasiCari" id="lokasiCari" class="form-control input-md"></select>
-                            </div>
-                        </div>
-                        <div class="form-group" hidden>
-                            <label for="inp_prodiId" class="col-sm-3 control-label">Kampus</label>
-                            <div class="col-sm-9">
-                                <input name="kampusCari" id="kampusCari" class="form-control input-md" disabled>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group" hidden>
-                            <label for="inp_prodiId" class="col-sm-3 control-label">Prodi ID</label>
-                            <div class="col-sm-9">
-                                <input name="prodiIdCari" id="prodiIdCari" class="form-control input-md" disabled>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inp_matakuliah" class="col-sm-3 control-label">Mata Kuliah</label>
-                            <div class="col-sm-9">
-                                <select name="matakuliahCari" id="matakuliahCari" class="form-control input-md">
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group" hidden>
-                            <label for="inp_matakuliahId" class="col-sm-3 control-label">Nama Mata Kuliah</label>
-                            <div class="col-sm-9">
-                                <input name="matakuliahNamaCari" id="matakuliahNamaCari" class="form-control input-md">
-                            </div>
-                        </div>
-                        <div class="form-group" hidden>
-                            <label for="inp_matakuliahKode" class="col-sm-3 control-label">Kode Mata Kuliah</label>
-                            <div class="col-sm-9">
-                                <input name="matakuliahKodeCari" id="matakuliahKodeCari" class="form-control input-md">
-                            </div>
-                        </div>
-                        <div class="form-group" hidden>
-                            <label for="inp_matakuliahId" class="col-sm-3 control-label">Id Mata Kuliah</label>
-                            <div class="col-sm-9">
-                                <input name="matakuliahIdCari" id="matakuliahIdCari" class="form-control input-md">
-                            </div>
-                        </div>
-                        @*<div class="form-group">
-                                <label for="seksi" class="col-sm-3 control-label">Seksi</label>
-                                <div class="col-sm-9">
-                                    <select name="matakuliahCari" id="seksi" class="form-control input-md">
-                                    </select>
-                                </div>
-                            </div>*@
-                        <div class="form-group">
-                            <label for="pertukaran" class="col-sm-3 control-label">
-                                Seksi
-                            </label>
-                            <div class="col-sm-9">
-                                <select name="ClassSection" id="ClassSection" class="form-control input-data" required>
-                                    <option value="" disabled selected>
-                                        --Pilih Seksi Kelas--
-                                    </option>
-                                    @{
-                                        foreach (var data in ViewData["listSection"] as IEnumerable<MBKM.Entities.ViewModel.VMClassSection>)
-                                        {
-                                            <option value="@data.Nama">@data.Nama</option>
-                                        }
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-2 col-md-offset-10">
-                                <button type="button" id="cari" class="btn btn-warning" style="float: right;" title="Mohon untuk melengkapi form pencarian terlebih dahulu!" disabled><span class="fa fa-search"></span> Cari</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-
-                <label class=" control-label" style="font-weight: bold; font-size: 17px;">Jadwal Perkuliahan</label>
-                @*<button id="add" class="btn btn-success" onclick="IndexCreateMasterMapingCapaianPembelajaran()" title="Mohon untuk melengkapi form pencarian terlebih dahulu!" disabled><i class="fas fa-plus-circle"></i> Tambah Master Maping</button>*@
-
-                <!--table-responsive-->
-                <table id="table-data-master-mapping-cpl" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
-                    <thead>
-                        <tr>
-                            <th class="zero-padding no-border vertical-center sorting">Unduh DHK</th>
-                            <th class="zero-padding no-border vertical-center sorting">No.</th>
-                            <th class="zero-padding no-border vertical-center sorting">Tahun Semester</th>
-                            <th class="zero-padding no-border vertical-center sorting">Jenjang Studi</th>
-                            <th class="zero-padding no-border vertical-center sorting">Program Studi</th>
-                            <th class="zero-padding no-border vertical-center sorting">Kode Mata Kuliah</th>
-                            <th class="zero-padding no-border vertical-center sorting">Nama Mata Kuliah</th>
-                            <th class="zero-padding no-border vertical-center sorting">SKS</th>
-                            <th class="zero-padding no-border vertical-center sorting">Seksi</th>
-
-
-
-
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
+                <table class="table" style="width: auto;">
+                    <tr>
+                        <td style="text-align: right">Tahun Semester</td>
+                        <td style="width: 400px;">
+                            <select name="tahunSemester" id="tahunSemester" class="form-control input-md"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right">Jenjang Studi</td>
+                        <td style="width: 400px;">
+                            <select name="jenjangStudi" id="jenjangStudi" class="form-control input-md"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right">Fakultas</td>
+                        <td style="width: 400px;">
+                            <select name="fakultas" id="fakultas" class="form-control input-md"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right">Program Studi</td>
+                        <td style="width: 400px;">
+                            <select name="prodi" id="prodi" class="form-control input-md"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right">Lokasi</td>
+                        <td style="width: 400px;">
+                            <select name="lokasi" id="lokasi" class="form-control input-md"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right">Mata Kuliah</td>
+                        <td style="width: 400px;">
+                            <select name="mataKuliah" id="mataKuliah" class="form-control input-md"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right">Seksi</td>
+                        <td style="width: 400px;">
+                            <select name="seksi" id="seksi" class="form-control input-md"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button type="button" id="cari" class="btn btn-warning" style="float: right;" title="Mohon untuk melengkapi form pencarian terlebih dahulu!" disabled><span class="fa fa-search"></span> Cari</button>
+                        </td>
+                    </tr>
                 </table>
-
+                <hr />
+                <div style="overflow-x: auto;">
+                    <table id="table-data-master-mapping-cpl" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
+                        <thead>
+                            <tr>
+                                <th class="zero-padding no-border vertical-center sorting">Unduh DHK</th>
+                                <th class="zero-padding no-border vertical-center sorting">No.</th>
+                                <th class="zero-padding no-border vertical-center sorting">Tahun Semester</th>
+                                <th class="zero-padding no-border vertical-center sorting">Jenjang Studi</th>
+                                <th class="zero-padding no-border vertical-center sorting">Fakultas</th>
+                                <th class="zero-padding no-border vertical-center sorting">Program Studi</th>
+                                <th class="zero-padding no-border vertical-center sorting">Kode Mata Kuliah</th>
+                                <th class="zero-padding no-border vertical-center sorting">Nama Mata Kuliah</th>
+                                <th class="zero-padding no-border vertical-center sorting">SKS</th>
+                                <th class="zero-padding no-border vertical-center sorting">Seksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -178,74 +174,42 @@
     <script src="~/Scripts/Admin/MasterMapingCapaianPembelajaran/main.js"></script>
     <script src="~/Scripts/Admin/LinkFasilitasAdmin/crud.js"></script>
     <script src="~/Scripts/loading/loadingoverlay.min.js"></script>
-
-
-
     <script>
         var datatable = null;
         $(document).ready(function () {
-            $("#fakultasCari").prop("disabled", true);
-            $("#prodiCari").prop("disabled", true);
-            $("#lokasiCari").prop("disabled", true);
-            $("#matakuliahCari").prop("disabled", true);
-            $("#fakultasCari").select2({
-                placeholder: "-- Pilih Fakultas --"
+            $("#jenjangStudi").select2({
+                placeholder: "-- Pilih Jenjang Studi --",
+                width: "100%"
             });
-            $("#prodiCari").select2({
-                placeholder: "-- Pilih Program Studi --"
+            $("#fakultas").select2({
+                placeholder: "-- Pilih Fakultas --",
+                width: "100%"
             });
-            $("#lokasiCari").select2({
-                placeholder: "-- Pilih Lokasi --"
-            });
-            $("#matakuliahCari").select2({
-                placeholder: "-- Pilih Mata Kuliah --"
-            });
-
-            loadJenjangStudi("JenjangStudi", "jenjang", "Jenjang Studi");
-
-            datatable = $('#table-data-master-mapping-cpl').DataTable();
-            $("#table-data-master-mapping-cpl_filter").hide();
-
-            @*loadFakultas();*@
-            @*$("#prodi").select2({
-                placeholder: "-- Pilih Program Studi --"
+            $("#prodi").select2({
+                placeholder: "-- Pilih Program Studi --",
+                width: "100%"
             });
             $("#lokasi").select2({
-                placeholder: "-- Pilih Lokasi --"
+                placeholder: "-- Pilih Lokasi --",
+                width: "100%"
             });
-            datatable = $('#hasilPencarian').DataTable({
-            });*@
+            $("#mataKuliah").select2({
+                placeholder: "-- Pilih Mata Kuliah --",
+                width: "100%"
+            });
+            $("#seksi").select2({
+                placeholder: "-- Pilih Seksi --",
+                width: "100%"
+            });
+            datatable = $('#table-data-master-mapping-cpl').DataTable();
+            loadJenjangStudi();
         });
         function buttonHandler(param) {
-            /*title='This is my title'*/
-            //console.log(param);
-@*            if (access == "cari") {
-                if (param == "open") {
-                    $('#cari').removeAttr("disabled");
-                    $('#cari').removeAttr("title");
-                } else if (param == "close") {
-                    $('#cari, #add').attr("disabled", "disabled");
-                    $('#cari').attr("title", "Mohon untuk melengkapi form pencarian terlebih dahulu!");
-                    $('#add').attr("title", "Mohon untuk melengkapi form pencarian terlebih dahulu!");
-                } else {
-                    console.log("error : param");
-                }
-
-
-
-            } elseif (access == "action") {
-
-            } else {
-                console.log("error : access");
-            }
-*@
-
             if (param == "open") {
                 $('#cari, #add').removeAttr("disabled");
                 $('#cari, #add').removeAttr("title");
             } else if (param == "close") {
                 $('#cari, #add').attr("disabled", "disabled");
-                //$().attr("disabled", "disabled");
                 $('#cari').attr("title", "Mohon untuk melengkapi form pencarian terlebih dahulu!");
                 $('#add').attr("title", "Mohon untuk melengkapi form pencarian terlebih dahulu!");
             } else {
@@ -253,7 +217,6 @@
             }
 
         }
-
         $('#cari').click(function () {
             reloadDatatable();
         });
@@ -266,139 +229,91 @@
         }
 
         function reloadDatatable() {
-            var variable =
-                'idProdi=' + $('#prodiIdCari').val() +
-                '&lokasi=' + $('#kampusCari').val() +
-                '&idFakultas=' + $('#fakultasCari').val() +
-                '&jenjangStudi=' + $('#jenjangCari').val() +
-                '&idMatakuliah=' + $('#matakuliahCari').val() +
-                '&seksi=' + $('#ClassSection').val() +
-                '&strm=' + $('#tahunSemester').val();
-            console.log(variable);
-            //var variable =
-            //    'idProdi=' + '500' +
-            //    '&lokasi=' + 'Semanggi' +
-            //    '&idFakultas=' + '5' +
-            //    '&jenjangStudi=' + 'S1' +
-            //    '&idMatakuliah=' + '003398' +
-            //    '&seksi=' + 'Z';
-            //console.log($('#ClassSection').val());
+            var param =
+                'strm=' + $('#tahunSemester').val() +
+                '&jenjangStudi=' + $('#jenjangStudi').val() +
+                '&fakultas=' + $('#fakultas').val() +
+                '&prodi=' + $('#prodi').val() +
+                '&lokasi=' + $('#lokasi').val() +
+                '&matkul=' + $('#mataKuliah').val() +
+                '&seksi=' + $('#seksi').val();
 
             datatable.destroy();
+
             datatable = $('#table-data-master-mapping-cpl').DataTable({
                 "columnDefs": [{
                     "searchable": false,
                     "orderable": false,
                     "paging": false,
                     "targets": 0,
-                    //"visible": false, 'targets': [4, 6]
                 }],
-                //"order": [[1, 'asc']],
-                "proccessing": true,
-                "serverSide": true,
                 "order": [[1, 'asc']],
-                //"aaSorting": [[0, "asc"]],
                 "ajax": {
-                    url: '/Admin/LinkFasilitasAdmin/SearchList?' + variable,
-
-                    //dataSrc: ''
-                    type: 'POST'
-                },
-                "language": {
-                    "emptyTable": "No record found.",
-                    "processing":
-                        '<i class="fa fa-spinner fa-spin fa-3x fa-fw" style="color:#2a2b2b;"></i><span class="sr-only">Loading...</span> ',
-                    "search": "Search:",
-                    "searchPlaceholder": ""
+                    url: '/Admin/daftarhadir/SearchList?' + param,
+                    type: 'POST',
+                    dataSrc: ''
                 },
                 "columns": [
                     {
-                        "title": "Action",
                         "data": "ID",
                         "render": function (data, type, row, meta) {
                             return `<div class="row justify-content-center">
-                            <div class="col" style="text-align:center">
-
-                                 <div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick="DetailDHK('${data}')"><i class="fas fa-file-download coral"></i></i></a></div>
-
-
-
-
-                            </div>
-                        </div>`;//<a href="javascript:void(0)" style="color:black" onclick="DeleteUserGetID('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
-                            //<a href="javascript:void(0)" style="color:black" onclick="DetailMasterCPL('${data}')"> <i class="fas fa-file-search coral"></i></a>
+                                <div class="col" style="text-align:center">
+                                    <div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick="DetailDHK('${data}')"><i class="fas fa-file-download coral"></i></i></a></div>
+                                </div>
+                            </div>`;
                         }
                     },
                     {
-                        //"title": "No",
                         "data": null,
                         "render": function (data, type, full, meta) {
                             return meta.row + 1;
                         }
                     },
                     {
-                        //"title": "Nama semester",
-                        "data": "semesterName",
-                        "name": "semesterName",
                         "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
+                            return '<div class="center">' + $('#tahunSemester').select2('data')[0].text + '</div>';
                         }
                     },
                     {
-                        //"title": "Email",
-                        "data": "JenjangStudi",
-                        "name": "JenjangStudi",
                         "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data +'</div>';
+                            return '<div class="center">' + $('#jenjangStudi').val() + '</div>';
                         }
                     },
                     {
-                        //"title": "Email",
-                        "data": "NamaProdi",
-                        "name": "NamaProdi",
                         "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
+                            return '<div class="center">' + $('#fakultas').val() + '</div>';
                         }
                     },
                     {
-                        //"title": "Nomor Induk Pegawai",
+                        "render": function (data, type, row, meta) {
+                            return '<div class="center">' + $('#prodi').val() + '</div>';
+                        }
+                    },
+                    {
                         "data": "KodeMataKuliah",
-                        "name": "KodeMataKuliah",
                         "render": function (data, type, row, meta) {
                             return '<div class="center">' + data + '</div>';
                         }
                     },
                     {
-                        //"title": "Nama",
                         "data": "NamaMataKuliah",
-                        "name": "NamaMataKuliah",
                         "render": function (data, type, row, meta) {
                             return '<div class="center">' + data + '</div>';
                         }
                     },
                     {
-                        //"title": "Nama",
                         "data": "SKS",
-                        "name": "SKS",
                         "render": function (data, type, row, meta) {
                             return '<div class="center">' + data + '</div>';
                         }
                     },
                     {
-                        //"title": "Nomor Induk Pegawai",
                         "data": "ClassSection",
-                        "name": "ClassSection",
                         "render": function (data, type, row, meta) {
                             return '<div class="center">' + data + '</div>';
                         }
                     },
-
-
-
-
-
-
-
                 ],
                 "createdRow": function (row, data, index) {
                     $('td', row).css({
@@ -407,144 +322,93 @@
                         'vertical-align': 'center',
                     });
 
-                }//,
-                //'columnDefs': [
-                //    //hide the second & fourth column
-                //    { 'visible': false, 'targets': [5] }
-                //]
-
+                }
             });
-            @* datatable = $('#table-data-master-mapping-cpl').DataTable({
-                ajax: {
-                    url: '@Url.Action("SearchList", "MasterMapingCapaianPembelajaran")?' + varibale,
-                    dataSrc: ''
-                },
-                "columns": [
-                    {
-                        "data": "ID",
-                        "render": function (data, type, row, meta) {
-                            return `<div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick="javascript:$('#idMatkul').val(${data}); $('#daftarMatkul').submit();"><i class="fas fa-edit"></i></a></div>`;
-                        }
-                    },
-                    {
-                        "data": null,
-                        "render": function (data, type, full, meta) {
-                            return '<div style="text-align:center; vertical-align: middle;">' + (meta.row + 1) + '</div>';
-                        }
-                    },
-                    {
-                        "data": "KodeMataKuliah",
-                        "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center; vertical-align: middle;">' + data + '</div>';
-                        }
-                    },
-                    {
-                        "data": "NamaMataKuliah",
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
-                        }
-                    },
-                    {
-                        "data": null,
-                        "render": function (data, type, full, meta) {
-                            return meta.row + 1;
-                        }
-                    },
-                    {
-                        "data": null,
-                        "render": function (data, type, full, meta) {
-                            return meta.row + 1;
-                        }
-                    },
-                    {
-                        "data": null,
-                        "render": function (data, type, full, meta) {
-                            return meta.row + 1;
-                        }
-                    }
-
-                ]
-            });*@
-
-            $("#table-data-master-mapping-cpl_filter").hide();
         }
 
 
-        @* search *@
-        function loadJenjangStudi(tipe, id, nama) {
-            $("#" + id+"Cari").select2({
-                placeholder: "-- Pilih " + nama + " --",
+        function loadJenjangStudi() {
+
+            $("#jenjangStudi").prop("disabled", true);
+            $("#fakultas").prop("disabled", true);
+            $("#prodi").prop("disabled", true);
+            $("#lokasi").prop("disabled", true);
+            $("#mataKuliah").prop("disabled", true);
+            $("#seksi").prop("disabled", true);
+
+            $("#tahunSemester").select2({
+                placeholder: "-- Pilih Tahun Semester --",
                 width: "100%",
                 ajax: {
-                    url: "@Url.Action("getLookupByTipe", "LinkFasilitasAdmin")",
+                    url: "@Url.Action("GetSemesterAll2", "DaftarMatkul")",
                     dataType: 'json',
                     method: "POST",
                     delay: 250,
                     cache: false,
-                    data: function (params) {
-                        return {
-                            Search: params.term || "",
-                            Tipe: tipe
-                        };
-                    },
                     processResults: function (data, params) {
                         return {
                             results: $.map(data, function (item) { return { id: item.Nilai, value: item.Nilai, text: item.Nama } })
                         };
-                    },
+                    }
                 }
             });
-            $("#" + id + "Cari").change(function () {
-                //clearValueOnForm();
-                buttonHandler("close");
-                $("#fakultasCari").empty();
-                $("#prodiCari").empty();
-                $("#prodiIdCari").val('');
-                $("#lokasiCari").empty();
-                $("#matakuliahCari").empty();
-                $("#prodiCari").prop("disabled", true);
-                $("#lokasiCari").prop("disabled", true);
-                $("#matakuliahCari").prop("disabled", true);
-                $("#fakultasCari").prop("disabled", false);
-                $("#fakultasCari").select2({
-                    placeholder: "-- Pilih Fakultas --",
+            $("#tahunSemester").change(function () {
+
+                $("#jenjangStudi").empty();
+                $("#fakultas").empty();
+                $("#prodi").empty();
+                $("#lokasi").empty();
+                $("#mataKuliah").empty();
+                $("#seksi").empty();
+
+                $("#jenjangStudi").prop("disabled", false);
+                $("#fakultas").prop("disabled", true);
+                $("#prodi").prop("disabled", true);
+                $("#lokasi").prop("disabled", true);
+                $("#mataKuliah").prop("disabled", true);
+                $("#seksi").prop("disabled", true);
+
+                $("#jenjangStudi").select2({
+                    placeholder: "-- Pilih Jenjang Studi --",
                     width: "100%",
                     ajax: {
-                        //url: "/Admin/LinkFasilitasAdmin/GetFakultasByJenjangStudi",
-                        url: "/Admin/LinkFasilitasAdmin/GetFakultas",
+                        url: "@Url.Action("getLookupByTipe", "PresensiKelas")",
                         dataType: 'json',
                         method: "POST",
                         delay: 250,
                         cache: false,
                         data: function (params) {
                             return {
-                                Search: params.term || "",
-                                JenjangStudi: $('#' + id + "Cari").val(),
+                                Tipe: 'JenjangStudi'
                             };
                         },
                         processResults: function (data, params) {
                             return {
-                                results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+                                results: $.map(data, function (item) { return { id: item.Nilai, value: item.Nilai, text: item.Nama } })
                             };
-                        },
+                        }
                     }
                 });
-                $("#fakultasCari").change(function () {
-                    //clearValueOnForm();
+                $("#jenjangStudi").change(function () {
                     buttonHandler("close");
-                    $("#prodiCari").empty();
-                    $("#prodiIdCari").val('');
-                    $("#lokasiCari").empty();
-                    $("#matakuliahCari").empty();
-                    $("#lokasiCari").prop("disabled", true);
-                    $("#matakuliahCari").prop("disabled", true);
 
-                    $("#prodiCari").prop("disabled", false);
-                    $("#prodiCari").select2({
-                        placeholder: "-- Pilih Program Studi --",
+                    $("#fakultas").empty();
+                    $("#prodi").empty();
+                    $("#lokasi").empty();
+                    $("#mataKuliah").empty();
+                    $("#seksi").empty();
+
+                    $("#fakultas").prop("disabled", false);
+                    $("#prodi").prop("disabled", true);
+                    $("#lokasi").prop("disabled", true);
+                    $("#mataKuliah").prop("disabled", true);
+                    $("#seksi").prop("disabled", true);
+
+                    $("#fakultas").select2({
+                        placeholder: "-- Pilih Fakultas --",
                         width: "100%",
                         ajax: {
-                            url: "/Admin/LinkFasilitasAdmin/GetProdiByFakultas",
+                            url: "@Url.Action("GetFakultasByJenjangStudi", "PresensiKelas")",
                             dataType: 'json',
                             method: "POST",
                             delay: 250,
@@ -552,8 +416,7 @@
                             data: function (params) {
                                 return {
                                     Search: params.term || "",
-                                    JenjangStudi: $('#' + id +"Cari").val(),
-                                    IDFakultas: $('#fakultasCari').val()
+                                    JenjangStudi: $('#jenjangStudi').val()
                                 };
                             },
                             processResults: function (data, params) {
@@ -563,26 +426,24 @@
                             },
                         }
                     });
-
-                    $("#prodiCari").change(function () {
-                        console.log("prodiID: " + $('#prodiCari').text());
-                        console.log("jenjang: " + $('#jenjangCari').val());
-                        //console.log("select2");
-                        //clearValueOnForm();
+                    $("#fakultas").change(function () {
                         buttonHandler("close");
-                        $("#lokasiCari").empty();
-                        //$("#prodiIdCari").val('');
-                        $("#matakuliahCari").empty();
-                        $("#matakuliahCari").prop("disabled", true);
 
-                        $("#lokasiCari").prop("disabled", false);
+                        $("#prodi").empty();
+                        $("#lokasi").empty();
+                        $("#mataKuliah").empty();
+                        $("#seksi").empty();
 
-                        //$("#kampusCari").val('');
-                        $("#lokasiCari").select2({
-                            placeholder: "-- Pilih Lokasi --",
+                        $("#prodi").prop("disabled", false);
+                        $("#lokasi").prop("disabled", true);
+                        $("#mataKuliah").prop("disabled", true);
+                        $("#seksi").prop("disabled", true);
+
+                        $("#prodi").select2({
+                            placeholder: "-- Pilih Program Studi --",
                             width: "100%",
                             ajax: {
-                                url: "/Admin/LinkFasilitasAdmin/GetLokasiByProdi",
+                                url: "@Url.Action("GetProdiByFakultas", "PresensiKelas")",
                                 dataType: 'json',
                                 method: "POST",
                                 delay: 250,
@@ -590,149 +451,123 @@
                                 data: function (params) {
                                     return {
                                         Search: params.term || "",
-                                        NamaProdi: $('#prodiCari').val(),
-                                        //Prodi: $('#prodiCari').text(),
-                                        JenjangStudi: $('#' + id + "Cari").val()
+                                        Fakultas: $('#fakultas').val(),
+                                        JenjangStudi: $('#jenjangStudi').val()
                                     };
                                 },
                                 processResults: function (data, params) {
                                     return {
-                                        results: $.map(data, function (item) { return { id: item.ID, value: item.Kampus, text: item.Kampus} })
+                                        results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
                                     };
                                 },
                             }
                         });
-
-
-
-                        $("#lokasiCari").change(function () {
-                            //clearValueOnForm();
-                            //var tes = $("#lokasiCari").val();
-                            $("#prodiIdCari").val($("#lokasiCari").val());
-                            //$("#prodiIdCari").val(tes.substring(1));
-
-                            $("#kampusCari").removeAttr('value');
-                            var kampus = $(this).find(":selected").text();
-                            //console.log(kampus);
-                            $("#kampusCari").val(kampus);
-
-                            console.log("lokasi: " + $('#lokasiCari').text());
-                            console.log($('#jenjangCari').val());
+                        $("#prodi").change(function () {
                             buttonHandler("close");
-                            $("#matakuliahCari").empty();
-                            $("#matakuliahCari").prop("disabled", false);
-                            //$("#matakuliahNamaCari").val('');
 
-                            //getLocationByPodiID();
+                            $("#lokasi").empty();
+                            $("#mataKuliah").empty();
+                            $("#seksi").empty();
 
-                            var start = 0;
-                            var end = 0;
-                            var pageLength = 0;
-                            $('#matakuliahCari').select2({
-                                placeholder: "-- Pilih Mata Kuliah --",
-                                "proccessing": true,
-                                "serverSide": true,
-                                //multiple: true,
+                            $("#lokasi").prop("disabled", false);
+                            $("#mataKuliah").prop("disabled", true);
+                            $("#seksi").prop("disabled", true);
+
+                            $("#lokasi").select2({
+                                placeholder: "-- Pilih Lokasi --",
                                 width: "100%",
                                 ajax: {
-                                    //url: "/Admin/LinkFasilitasAdmin/GetMataKuliah",
-                                    //url:"Url.Action("GetMatkulByLokasi", "LinkFasilitasAdmin")",
-                                    url: "/Admin/MasterMapingCapaianPembelajaran/GetMataKuliah",
-                                    type: 'POST',
-                                    dataType: 'json',
-                                    data: function (params) {
-                                        return {
-                                            //take: 10,
-                                           // Search: params.term || "",
-                                           //// skip: (params.page - 1) * 10 || 0,
-                                           // //skip: params.page || 1,
-                                           // Prodi: $('#prodiCari').text(),
-                                           // //idProdi: $('#prodiIdCari').val(),
-                                           // Lokasi: $('#lokasiCari').text(),
-                                           // JenjangStudi: $('#jenjangCari').val()
-                                           // //batas
-                                            take: 10,
-                                            searchBy: params.term || "",
-                                            skip: params.page || 1,
-                                            idProdi: $('#prodiCari').val(),
-                                            idFakultas: $('#fakultasCari').val()
-                                        };
-                                    },
-                                    processResults: function (data, params) {
-
-                                        var page = params.page - 1 || 1;
-                                        pageLength = pageLength + data.length;
-
-                                        @* console.log('page : ' + params.page);
-                                        console.log(page);
-                                        console.log('');
-                                        console.log(page * 10);
-                                        console.log(pageLength);*@
-
-                                            return {
-                                            results: $.map(data, function (item) { return { id: item.id, value: item.id, text: item.kode + ' - ' + item.text, name: item.text, kode: item.kode } }),
-                                            pagination: {
-                                                more: data.length > 0 && data.length == 10
-                                            }
-                                        }
-                                    },
-                                    //processResults: function (data, page) {
-                                    ////console.log(data);
-                                    //     pageLength = pageLength + data.length;
-                                    //    return {
-                                    //        results: $.map(data, function (item) { return { id: item.id, value: item.id, text: item.text, title: item.kode } }),
-                                    //        pagination: {
-                                    //           // more: (page * 10) <= data.length
-                                    //            more: data.length > 0 && data.length == 10
-                                    //        }
-                                    //    }
-                                    //},
-                                }
-                            });
-
-
-
-                        $("#matakuliahCari").change(function () {
-
-                            @*
-                                dataParam.NamaProdi = $('#prodiCari').val();
-                            dataParam.lokasi = $('#lokasiCari').val();
-                            dataParam.MataKuliahID = $('#matakuliahCari').val();*@
-
-                            $("#matakuliahNamaCari").removeAttr('value');
-                            var matakuliah = $(this).find(":selected").text();
-                            $("#matakuliahNamaCari").val(matakuliah);
-
-
-
-                            $("#matakuliahKodeCari").val($(this).find(":selected").prop("title"));
-                            $("#matakuliahIdCari").val($(this).val());
-
-                            @*
-                                $.ajax({
-                                    url: "/Admin/MasterMapingCapaianPembelajaran/GetMataKuliahByID",
+                                    url: "@Url.Action("GetLokasiByProdi", "PresensiKelas")",
                                     dataType: 'json',
                                     method: "POST",
                                     delay: 250,
                                     cache: false,
-                                    contentType: 'application/json',
-                                    data: JSON.stringify(dataParam),
-                                    success: function (e) {
-                                        //console.log(e[0]);
-                                        $("#matakuliahNamaCari").val(e[0].NamaMataKuliah);
-                                        //$("#matakuliahKodeCari").val(e[0].KodeMataKuliah);
-                                        $("#matakuliahIdCari").val(e[0].MataKuliahID);
-                                        //console.log("MK");
+                                    data: function (params) {
+                                        return {
+                                            Search: params.term || "",
+                                            Prodi: $('#prodi').val(),
+                                            JenjangStudi: $('#jenjangStudi').val()
+                                        };
                                     },
-                                    error: function (e) {
-                                        console.log("matakuliah not found...");
+                                    processResults: function (data, params) {
+                                        return {
+                                            results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
+                                        };
+                                    },
+                                }
+                            });
+                            $("#lokasi").change(function () {
+                                buttonHandler("close");
+
+                                $("#mataKuliah").empty();
+                                $("#seksi").empty();
+
+                                $("#mataKuliah").prop("disabled", false);
+                                $("#seksi").prop("disabled", true);
+
+                                $("#mataKuliah").select2({
+                                    placeholder: "-- Pilih Mata Kuliah --",
+                                    width: "100%",
+                                    ajax: {
+                                        url: "@Url.Action("GetMatkulByLokasi", "DaftarHadir")",
+                                        dataType: 'json',
+                                        method: "POST",
+                                        delay: 250,
+                                        cache: false,
+                                        data: function (params) {
+                                            return {
+                                                Search: params.term || "",
+                                                STRM: $('#tahunSemester').val(),
+                                                Prodi: $('#prodi').val(),
+                                                Lokasi: $('#lokasi').val(),
+                                                JenjangStudi: $('#jenjangStudi').val()
+                                            };
+                                        },
+                                        processResults: function (data, params) {
+                                            return {
+                                                results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
+                                            };
+                                        },
                                     }
-                                }) *@
-                                buttonHandler("open");
+                                });
+                                $("#mataKuliah").change(function () {
+                                    buttonHandler("close");
 
+                                    $("#seksi").empty();
+
+                                    $("#seksi").prop("disabled", false);
+
+                                    $("#seksi").select2({
+                                        placeholder: "-- Pilih Seksi --",
+                                        width: "100%",
+                                        ajax: {
+                                            url: "@Url.Action("GetSeksiByMatkul", "PresensiKelas")",
+                                            dataType: 'json',
+                                            method: "POST",
+                                            delay: 250,
+                                            cache: false,
+                                            data: function (params) {
+                                                return {
+                                                    Search: params.term || "",
+                                                    Matkul: $('#mataKuliah').val(),
+                                                    Lokasi: $('#lokasi').val(),
+                                                    Prodi: $('#prodi').val(),
+                                                    JenjangStudi: $('#jenjangStudi').val()
+                                                };
+                                            },
+                                            processResults: function (data, params) {
+                                                return {
+                                                    results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
+                                                };
+                                            },
+                                        }
+                                    });
+                                    $("#seksi").change(function () {
+                                        buttonHandler("open");
+                                    });
+                                });
+                            });
                         });
-                    });
-
                     });
                 });
             });
@@ -742,8 +577,8 @@
         function getLocationByPodiID() {
             //console.log("ajax");
             var dataParam = {};
-            dataParam.NamaProdi = $('#prodiCari').val();
-            dataParam.JenjangStudi = $('#jenjangCari').val();
+            dataParam.NamaProdi = $('#prodi').val();
+            dataParam.JenjangStudi = $('#jenjangStudi').val();
             dataParam.Search = "";
 
             //console.log(dataParam);
@@ -774,29 +609,15 @@
         });
 
         function DetailDHK(id) {
-
-            //console.log();
-           // @Url.Action("DHK", "DaftarHadir")
-            //$.LoadingOverlay("show");
-           // window.
-            $.ajax({
-                url: '@Url.Action("DHK", "DaftarHadir")?id=' + id,
-                //url: '@Url.Action("GetJadwalKuliah", "PresensiKelas")?strm=' + strm,
-                type: 'get',
-                datatype: 'html',
-                success: function (data) {
-                    //$.LoadingOverlay("hide");
-                    //console.log(data);
-                    window.location = "/Admin/DaftarHadir/DHK/?id="+id
-
-
-
-                }, error: function (e) {
-                   // $.LoadingOverlay("hide");
-                   alert("error")
-
-                }
-            })
+            var url = '@Url.Action("DHK", "DaftarHadir")?id=' + id
+            var win = window.open(url, '_blank');
+            if (win) {
+                //Browser has allowed it to be opened
+                win.focus();
+            } else {
+                //Browser has blocked it
+                alert('Please allow popups for this website');
+            }
 
         }
         function isZooming() {
