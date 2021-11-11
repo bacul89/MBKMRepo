@@ -85,8 +85,12 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
            
             var CountData2 = _nilaiKuliahService.Find(x => x.MahasiswaID == MahasiswaID && x.JadwalKuliahID == JadwalKuliahID).FirstOrDefault() ;
-            var n = CountData2.Grade;
-           
+            string n = string.Empty;
+            if(CountData2 == null)
+                n = "E";
+            else
+                n = CountData2.Grade;
+
             return n.ToString();
 
         }
@@ -94,7 +98,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
 
             var CountData2 = _nilaiKuliahService.Find(x => x.MahasiswaID == MahasiswaID && x.JadwalKuliahID == JadwalKuliahID).FirstOrDefault();
-            var n = CountData2.Grade;
+            string n = string.Empty;
+            if (CountData2 == null)
+                n = "E";
+            else
+                n = CountData2.Grade;
             if (n == "A")
             {
                 var hasil = Convert.ToInt64(sks.Substring(0, sks.IndexOf('.') > 0 ? sks.IndexOf('.') : sks.Length)) * 4.00;
