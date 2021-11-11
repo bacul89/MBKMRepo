@@ -223,6 +223,7 @@
     <Content Include="Asset\Lambang_Atma_Jaya.png" />
     <Content Include="Asset\Lambang_Unika_Atma_Jaya.png" />
     <Content Include="Asset\SeekPng.com_megaphone-png_311331.png" />
+    <Content Include="Content\Admin\PrintDHU.css" />
     <Content Include="Content\Admin\PrintDNR.css" />
     <Content Include="Content\Admin\AdminCostumeBS4.css" />
     <Content Include="Content\Admin\inputResponsive.css" />
@@ -588,6 +589,7 @@
     <Content Include="Areas\Admin\Views\ReportMBKMEkternalPertukaran\Index.cshtml" />
     <Content Include="Areas\Admin\Views\ReportMBKMEkternalPertukaran\ExportPDF.cshtml" />
     <Content Include="Areas\Admin\Views\DaftarHadir\DHK.cshtml" />
+    <Content Include="Areas\Admin\Views\ReportInternalKeluar\GetDataPDF.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />

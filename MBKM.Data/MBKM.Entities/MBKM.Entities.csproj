@@ -115,10 +115,12 @@
     <Compile Include="ViewModel\VMDHK.cs" />
     <Compile Include="ViewModel\VMDNR.cs" />
     <Compile Include="ViewModel\VMJadwalUjian.cs" />
+    <Compile Include="ViewModel\VMMasterCPL.cs" />
     <Compile Include="ViewModel\VMReportMahasiswaEksternal.cs" />
     <Compile Include="ViewModel\VMPendaftaranWithInformasipertukaranKeluar.cs" />
     <Compile Include="ViewModel\VMReportMahasiswaInternal.cs" />
     <Compile Include="ViewModel\VMPendaftaranWithInformasipertukaran.cs" />
+    <Compile Include="ViewModel\VMReportMahasiswaInternalKeluar.cs" />
     <Compile Include="ViewModel\VMSubBobot .cs" />
     <Compile Include="ViewModel\VMClassSection.cs" />
     <Compile Include="ViewModel\VMCPLMKPendaftaran.cs" />

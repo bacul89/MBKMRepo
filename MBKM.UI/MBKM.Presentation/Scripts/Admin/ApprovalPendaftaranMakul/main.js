@@ -153,6 +153,7 @@ $(document).ready(function () {
                 'vertical-align': 'center',
             });
         },
+        "order": [[0, "desc"]]
     });
 
     $('#inp_semester').change(function () {
@@ -310,6 +311,7 @@ $(document).ready(function () {
                     'vertical-align': 'center',
                 });
             },
+            "order": [[0, "desc"]]
         });
     })
 })

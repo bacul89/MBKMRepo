@@ -14,9 +14,11 @@ using System.IO;
 using OfficeOpenXml.Style;
 using System.Drawing;
 using OfficeOpenXml.Drawing;
+using MBKM.Presentation.Helper;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
+    [MBKMAuthorize]
     public class ReportMBKMEkternalPertukaranController : Controller
     {
         private IPendaftaranMataKuliahService _pendaftaranMataKuliahService;
