@@ -47,6 +47,16 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return result;
             }
         }
+        public string GetKomponenDHK(int idJadwalKuliah)
+        {
+            using (var context = new MBKMContext())
+            {
+                var idJadwalParam = new SqlParameter("@JadwalKuliahID", idJadwalKuliah);
+                var result = context.Database
+                    .SqlQuery<string>("GetKomponenDHK @JadwalKuliahID", idJadwalParam).FirstOrDefault();
+                return result;
+            }
+        }
         public IEnumerable<VMLookup> GetProdiByFakultas(string search, string jenjangStudi, string fakultas)
         {
             using (var context = new MBKMContext())

@@ -95,7 +95,10 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult FormPendaftaranInternalKeLuarAtma()
         {
-            return View();
+            VMPendaftaranJadwalKuliah model = (VMPendaftaranJadwalKuliah)TempData["Model"];
+
+
+            return View(model);
         }
         public ActionResult FormPendaftaranInternal(int idMatkul, string jenisKegiatan)
         {
@@ -104,7 +107,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             model.ID = idMatkul;
             if (jenisKegiatan.ToLower().Contains("internal ke luar atma jaya"))
             {
-                ViewData["Model"] = model;
+                TempData["Model"] = model;
                 return RedirectToAction("FormPendaftaranInternalKeLuarAtma");
             }
             return View(model);
