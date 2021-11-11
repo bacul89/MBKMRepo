@@ -68,6 +68,7 @@ function postDataQuitionare() {
                                     focusConfirm: false,
                                     confirmButtonText: 'OK'
                                 })
+                                window.location.href = "/Portal/FeedBackMatakuliah/"
                             } else {
                                 $.LoadingOverlay("hide");
                                 Swal.fire({

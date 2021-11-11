@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "LINK FASILITAS PERKULIAHAN - SIMBKM";
     Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
 }
 
@@ -33,6 +33,15 @@
 
                 <div class="col-md-12">
                     <form class="form-horizontal col-md-7">
+                        <div class="form-group">
+                            <label for="inp_jenjang" class="col-sm-3 control-label">Tahun Semester</label>
+                            <div class="col-sm-9">
+                                <input type="text" value="@Model.Nama" class="form-control input-md" disabled />
+                                <input type="hidden" name="tahunSemester" id="tahunSemester" value="@Model.Nilai" class="form-control input-md" />
+                                @*<option value="" selected disabled>-- Pilih Authority Approval --</option>*@
+                                
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="inp_jenjang" class="col-sm-3 control-label">Jenjang Studi</label>
                             <div class="col-sm-9">
@@ -88,25 +97,25 @@
                                 <input name="matakuliahNamaCari" id="matakuliahNamaCari" class="form-control input-md">
                             </div>
                         </div>
-                        <div class="form-group"hidden>
+                        <div class="form-group" hidden>
                             <label for="inp_matakuliahKode" class="col-sm-3 control-label">Kode Mata Kuliah</label>
                             <div class="col-sm-9">
                                 <input name="matakuliahKodeCari" id="matakuliahKodeCari" class="form-control input-md">
                             </div>
                         </div>
-                        <div class="form-group"hidden>
+                        <div class="form-group" hidden>
                             <label for="inp_matakuliahId" class="col-sm-3 control-label">Id Mata Kuliah</label>
                             <div class="col-sm-9">
                                 <input name="matakuliahIdCari" id="matakuliahIdCari" class="form-control input-md">
                             </div>
                         </div>
                         @*<div class="form-group">
-                            <label for="seksi" class="col-sm-3 control-label">Seksi</label>
-                            <div class="col-sm-9">
-                                <select name="matakuliahCari" id="seksi" class="form-control input-md">
-                                </select>
-                            </div>
-                        </div>*@
+            <label for="seksi" class="col-sm-3 control-label">Seksi</label>
+            <div class="col-sm-9">
+                <select name="matakuliahCari" id="seksi" class="form-control input-md">
+                </select>
+            </div>
+        </div>*@
                         <div class="form-group">
                             <label for="pertukaran" class="col-sm-3 control-label">
                                 Seksi
@@ -259,8 +268,9 @@
                 '&lokasi=' + $('#kampusCari').val() +
                 '&idFakultas=' + $('#fakultasCari').val() +
                 '&jenjangStudi=' + $('#jenjangCari').val() +
-                '&idMatakuliah=' + $('#matakuliahCari').val()+
-                '&seksi=' + $('#ClassSection').val();
+                '&idMatakuliah=' + $('#matakuliahCari').val() +
+                '&seksi=' + $('#ClassSection').val() +
+                '&strm=' + $('#tahunSemester').val();
             console.log(variable);
             //var variable =
             //    'idProdi=' + '500' +
@@ -306,7 +316,7 @@
                             <div class="col" style="text-align:center">
 
                                 <a href="javascript:void(0)" style="color:black" onclick="IndexUpdateLinkFasilitas('${data}')"> <i class="fas fa-edit coral" ></i></a>
-                               
+
 
 
 
@@ -493,6 +503,7 @@
                     placeholder: "-- Pilih Fakultas --",
                     width: "100%",
                     ajax: {
+                        //url: "/Admin/LinkFasilitasAdmin/GetFakultasByJenjangStudi",
                         url: "/Admin/LinkFasilitasAdmin/GetFakultas",
                         dataType: 'json',
                         method: "POST",
@@ -547,11 +558,13 @@
                     });
 
                     $("#prodiCari").change(function () {
+                        console.log("prodiID: " + $('#prodiCari').text());
+                        console.log("jenjang: " + $('#jenjangCari').val());
                         //console.log("select2");
                         //clearValueOnForm();
                         buttonHandler("close");
                         $("#lokasiCari").empty();
-                        $("#prodiIdCari").val('');
+                        //$("#prodiIdCari").val('');
                         $("#matakuliahCari").empty();
                         $("#matakuliahCari").prop("disabled", true);
 
@@ -571,6 +584,7 @@
                                     return {
                                         Search: params.term || "",
                                         NamaProdi: $('#prodiCari').val(),
+                                        //Prodi: $('#prodiCari').text(),
                                         JenjangStudi: $('#' + id + "Cari").val()
                                     };
                                 },
@@ -594,7 +608,9 @@
                             var kampus = $(this).find(":selected").text();
                             //console.log(kampus);
                             $("#kampusCari").val(kampus);
-
+                           
+                            console.log("lokasi: " + $('#lokasiCari').text());
+                            console.log($('#jenjangCari').val());
                             buttonHandler("close");
                             $("#matakuliahCari").empty();
                             $("#matakuliahCari").prop("disabled", false);
@@ -612,30 +628,58 @@
                                 //multiple: true,
                                 width: "100%",
                                 ajax: {
-                                    url: "/Admin/LinkFasilitasAdmin/GetMataKuliah",
+                                    //url: "/Admin/LinkFasilitasAdmin/GetMataKuliah",
+                                    //url:"Url.Action("GetMatkulByLokasi", "LinkFasilitasAdmin")",
+                                    url: "/Admin/MasterMapingCapaianPembelajaran/GetMataKuliah",
                                     type: 'POST',
                                     dataType: 'json',
                                     data: function (params) {
                                         return {
+                                            //take: 10,
+                                           // Search: params.term || "",
+                                           //// skip: (params.page - 1) * 10 || 0,
+                                           // //skip: params.page || 1,
+                                           // Prodi: $('#prodiCari').text(),
+                                           // //idProdi: $('#prodiIdCari').val(),
+                                           // Lokasi: $('#lokasiCari').text(),
+                                           // JenjangStudi: $('#jenjangCari').val()
+                                           // //batas
                                             take: 10,
                                             searchBy: params.term || "",
-                                           // skip: (params.page - 1) * 10 || 0,
                                             skip: params.page || 1,
-                                            idProdi: $('#prodiIdCari').val(),
+                                            idProdi: $('#prodiCari').val(),
                                             idFakultas: $('#fakultasCari').val()
                                         };
                                     },
-                                    processResults: function (data, page) {
-                                    //console.log(data);
-                                         pageLength = pageLength + data.length;
-                                        return {
-                                            results: $.map(data, function (item) { return { id: item.id, value: item.id, text: item.text, title: item.kode } }),
+                                    processResults: function (data, params) {
+
+                                        var page = params.page - 1 || 1;
+                                        pageLength = pageLength + data.length;
+
+                                        @* console.log('page : ' + params.page);
+                                        console.log(page);
+                                        console.log('');
+                                        console.log(page * 10);
+                                        console.log(pageLength);*@
+
+                                            return {
+                                            results: $.map(data, function (item) { return { id: item.id, value: item.id, text: item.kode + ' - ' + item.text, name: item.text, kode: item.kode } }),
                                             pagination: {
-                                               // more: (page * 10) <= data.length
                                                 more: data.length > 0 && data.length == 10
                                             }
                                         }
                                     },
+                                    //processResults: function (data, page) {
+                                    ////console.log(data);
+                                    //     pageLength = pageLength + data.length;
+                                    //    return {
+                                    //        results: $.map(data, function (item) { return { id: item.id, value: item.id, text: item.text, title: item.kode } }),
+                                    //        pagination: {
+                                    //           // more: (page * 10) <= data.length
+                                    //            more: data.length > 0 && data.length == 10
+                                    //        }
+                                    //    }
+                                    //},
                                 }
                             });
 

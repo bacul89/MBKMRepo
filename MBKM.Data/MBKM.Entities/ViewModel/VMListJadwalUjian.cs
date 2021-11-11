@@ -37,7 +37,7 @@ namespace MBKM.Entities.ViewModel
         public int Tersedia { get; set; }
         public string ClassSection { get; set; }
         public string KodeClassSection { get; set; }
-        //public string SKS { get; set; }
+        public string SKS { get; set; }
 
     }
 }

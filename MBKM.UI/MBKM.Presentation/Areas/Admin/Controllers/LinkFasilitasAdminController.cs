@@ -23,21 +23,27 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private ILookupService _lookupService;
         private IJadwalKuliahService _jkService;
         private IMasterCapaianPembelajaranService _mcpService;
+        private IAbsensiService _absensiService;
         public LinkFasilitasAdminController(ICPLMatakuliahService cplMatakuliah, ILookupService lookupService, 
             IJadwalKuliahService jkService, IMasterCapaianPembelajaranService mcpService,
-            ILinkFasilitasService linkFasilitasService)
+            ILinkFasilitasService linkFasilitasService, IAbsensiService absensiService)
         {
             _cplMatakuliah = cplMatakuliah;
             _jkService = jkService;
             _lookupService = lookupService;
             _linkFasilitasService = linkFasilitasService;
+            _absensiService = absensiService;
             _mcpService = mcpService;
         }
         public ActionResult Index()
         {
             var listSection = _linkFasilitasService.getSection();
             ViewData["listSection"] = listSection;
-            return View();
+            return View(_absensiService.GetTahunSemester());
+        }
+        public ActionResult GetTahunSemester()
+        {
+            return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.GetTahunSemester()), ContentType = "application/json" };
         }
         public JsonResult GetSection()
         {
@@ -64,7 +70,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
 
 
-
+        public ActionResult GetMatkulByLokasi(string search, string jenjangStudi, string prodi, string lokasi)
+        {
+            return new ContentResult { Content = JsonConvert.SerializeObject(_linkFasilitasService.GetMatkulByLokasi(search, jenjangStudi, prodi, lokasi)), ContentType = "application/json" };
+        }
 
 
         /* Lookup --<> */
@@ -75,6 +84,21 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
 
         /* Attribute Kuliah --<> */
+        //batas getnama november terbaru
+        //public ActionResult GetFakultasByJenjangStudi(string search, string jenjangStudi)
+        //{
+        //    return new ContentResult { Content = JsonConvert.SerializeObject(_linkFasilitasService.GetFakultasByJenjangStudi(search, jenjangStudi)), ContentType = "application/json" };
+        //}
+        //public ActionResult GetProdiByFakultas(string search, string jenjangStudi, string fakultas)
+        //{
+        //    return new ContentResult { Content = JsonConvert.SerializeObject(_linkFasilitasService.GetProdiByFakultas(search, jenjangStudi, fakultas)), ContentType = "application/json" };
+        //}
+        //public ActionResult GetLokasiByProdi(string search, string jenjangStudi, string prodi)
+        //{
+        //    return new ContentResult { Content = JsonConvert.SerializeObject(_linkFasilitasService.GetLokasiByProdi(search, jenjangStudi, prodi)), ContentType = "application/json" };
+        //}
+        //batas bawah
+
         public ActionResult GetFakultas(string search, string JenjangStudi)
         {
 
@@ -111,9 +135,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             return new ContentResult { Content = JsonConvert.SerializeObject(_jkService.Find(jk => jk.MataKuliahID == MataKuliahID).ToList()), ContentType = "application/json" };
         }
-        public JsonResult SearchList(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string idMatakuliah,string seksi)
+        public JsonResult SearchList(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string idMatakuliah,string seksi,int strm)
         {
-            VMLinkFasilitas vMLinkFasilitas = _linkFasilitasService.SearchListJadwalKuliah(model, idProdi, lokasi, idFakultas, jenjangStudi, idMatakuliah,seksi);
+            VMLinkFasilitas vMLinkFasilitas = _linkFasilitasService.SearchListJadwalKuliah(model, idProdi, lokasi, idFakultas, jenjangStudi, idMatakuliah,seksi,strm);
             return Json(new
             {
                 // this is what datatables wants sending back

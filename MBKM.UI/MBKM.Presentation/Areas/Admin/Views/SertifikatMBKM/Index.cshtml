@@ -23,6 +23,7 @@
                     <br />
                     <label for="inp_semester" class="col-sm-3 control-label">Tahun Semester</label>
                     <div class="col-sm-7">
+                        <input type="hidden" name="inp_semester" id="firstSemester" value="@ViewData["firstSemester"].ToString()" disabled />
                         <select name="inp_semester" id="inp_semester" class="form-control select2 input-md input-data">
                             <option value="" selected disabled>-- Pilih Tahun Semester --</option>
                             @{

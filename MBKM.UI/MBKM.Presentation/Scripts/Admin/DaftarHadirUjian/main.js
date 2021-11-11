@@ -31,8 +31,7 @@ $(document).ready(function () {
     });
 
 
-    datatable = $('#table-data-master-mapping-cpl').DataTable();
-    $("#table-data-master-mapping-cpl_filter").hide();
+    datatable = $('#table-data-daftar-hadir-ujian').DataTable();
 
 
 });
@@ -89,6 +88,22 @@ $('#tahunAjaranCari').select2({
 $("#tahunAjaranCari").change(function () {
     $("#jenjangCari").prop("disabled", false);
     loadJenjangStudi("JenjangStudi", "jenjang", "Jenjang Studi");
+
+    $("#fakultasCari").prop("disabled", true);
+    $("#fakultasCari").prop("disabled", true);
+    $("#prodiCari").prop("disabled", true);
+    $("#lokasiCari").prop("disabled", true);
+    $("#matakuliahCari").prop("disabled", true);
+    $("#seksiCari").prop("disabled", true);
+
+    $("#jenjangCari").empty();
+    $("#fakultasCari").empty();
+    $("#prodiCari").empty();
+    $("#prodiIdCari").val('');
+    $("#lokasiCari").empty();
+    $("#matakuliahCari").empty();
+    $("#seksiCari").empty();
+
 
 
 });
@@ -471,23 +486,29 @@ function buttonHandler(param) {
 
 
 //---<> datatable
-
-
-
 $('#cari').click(function () {
+
+    console.log('halloo');
     reloadDatatable();
 });
 
 function reloadDatatable() {
+    console.log($('#lokasiCari').select2('data')[0].id);
+    console.log($('#lokasiCari').select2('data')[0].Kampus);
+    console.log($('#lokasiCari').select2('data')[0].kampus);
+    console.log($('#lokasiCari').val());
+    var base_url = window.location.origin;
     var variable =
-        'idProdi=' + $('#prodiIdCari').val() +
-        '&lokasi=' + $('#kampusCari').val() +
+        'idProdi=' + $('#lokasiCari').select2('data')[0].id +
+        '&lokasi=' + $('#lokasiCari').select2('data')[0].value +
         '&idFakultas=' + $('#fakultasCari').val() +
         '&jenjangStudi=' + $('#jenjangCari').val() +
+        '&idMatakuliah=' + $('#matakuliahCari').val() +
+        '&seksi=' + $('#seksiCari').val() +
         '&strm=' + $('#tahunAjaranCari').val();
 
     datatable.destroy();
-    datatable = $('#table-data-jadwal-kuliah').DataTable({
+    datatable = $('#table-data-daftar-hadir-ujian').DataTable({
         "columnDefs": [{
             "searchable": false,
             "orderable": false,
@@ -501,7 +522,7 @@ function reloadDatatable() {
         "order": [[1, 'asc']],
         //"aaSorting": [[0, "asc"]],
         "ajax": {
-            url: '/JadwalKuliah/SearchList?' + variable,
+            url: '/Admin/DaftarHadirUjian/SearchList?' + variable,
             //dataSrc: ''
             type: 'POST'
         },
@@ -522,10 +543,10 @@ function reloadDatatable() {
                 "render": function (data, type, row, meta) {
                     return `<div class="row justify-content-center">
                             <div class="col" style="text-align:center">
-                                <a href="javascript:void(0)" style="color:black" onclick="printDHU('${data}')"> <i class="fas fa-print coral" ></i></a>
+                                <a href="${base_url}/Admin/DaftarHadirUjian/PrintDHU/${data}"  style="color:black" target="_blank"> <i class="fas fa-print coral" ></i></a>
                             </div>
                         </div>`;
-                }
+                }//javascript:void(0) // onclick="printDHU()"
             },
             {
                 //"title": "No",
@@ -539,7 +560,7 @@ function reloadDatatable() {
                 "data": "STRM",
                 "name": "STRM",
                 "render": function (data, type, row, meta) {
-                    return '<div class="center">' + data + '</div>';
+                    return '<div class="center">' + $('#tahunAjaranCari').select2('data')[0].text + '</div>';
                 }
             },
             {

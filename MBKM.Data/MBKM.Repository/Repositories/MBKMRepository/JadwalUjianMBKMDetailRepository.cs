@@ -19,6 +19,25 @@ namespace MBKM.Repository.Repositories.MBKMRepository
         {
         }
 
+        public VMDosenMakulPertemuan GetDosen(string seksi, string kodeMataKuliah, string strm, string fakultasId)
+        {
+
+
+            using (var context = new MBKMContext())
+            {
+                var kodeMkParam = new SqlParameter("@Kodemk", kodeMataKuliah);
+                var seksiParam = new SqlParameter("@ClassSection", seksi);
+                var strmParam = new SqlParameter("@STRM", strm);
+                var idFakultasParam = new SqlParameter("@FakultasID", fakultasId);
+
+
+                var result = context.Database
+                    .SqlQuery<VMDosenMakulPertemuan>("GetDosenMatkulPertemuan @Kodemk, @ClassSection, @STRM, @FakultasID", kodeMkParam, seksiParam, strmParam, idFakultasParam).First();
+                //x.FakultasID == idFakultas).Skip(skip).Take(take).ToList();
+                return result;
+            }
+        }
+
         public List<VMClassSection> GetListSeksi()
         {
             using (var context = new MBKMContext())
@@ -33,8 +52,46 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             }
         }
 
-        public VMListJadwalUjian SearchListJadwalUjian(int skip, int take, string searchBy, string sortBy, bool sortDir, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm)
+        public VMListJadwalUjian SearchListJadwalUjian(int skip, int take, string searchBy, string sortBy, bool sortDir, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm, string idMatakuliah, string seksi)
         {
+
+
+
+
+
+            /*var result = context.PendaftaranMataKuliahs.Where(x => x.JadwalKuliahs.STRM == strm && x.StatusPendaftaran.ToLower().Contains("accepted"))
+                .Join(context.informasiPertukarans,
+                    pendaftaran => pendaftaran.MahasiswaID,
+                    informasi => informasi.MahasiswaID,
+                    (pendaftaran, informasi) => new VMPendaftaranWithInformasipertukaran
+                    {
+                        MatkulKodeAsal = pendaftaran.MatkulKodeAsal,
+                        MatkulAsal = pendaftaran.MatkulAsal,
+                        MatkulIDAsal = pendaftaran.MatkulIDAsal,
+                        JadwalKuliahID = pendaftaran.JadwalKuliahID,
+                        JadwalKuliahs = pendaftaran.JadwalKuliahs,
+                        mahasiswas = pendaftaran.mahasiswas,
+                        InformasiPertukaran = informasi
+                    }
+                    )
+                .Join(context.NilaiKuliahs,
+                    pendaf => pendaf.mahasiswas.ID,
+                    nilai => nilai.MahasiswaID,
+                    (pendaf, nilai) => new VMReportMahasiswaInternal
+                    {
+                        MatkulKodeAsal = pendaf.MatkulKodeAsal,
+                        MatkulAsal = pendaf.MatkulAsal,
+                        MatkulIDAsal = pendaf.MatkulIDAsal,
+                        JadwalKuliahID = pendaf.JadwalKuliahID,
+                        JadwalKuliahs = pendaf.JadwalKuliahs,
+                        mahasiswas = pendaf.mahasiswas,
+                        InformasiPertukaran = pendaf.InformasiPertukaran,
+                        NilaiKuliah = nilai
+                    })
+                .Where(z => !z.InformasiPertukaran.JenisPertukaran.ToLower().Contains("non") && z.InformasiPertukaran.JenisKerjasama.ToLower() == "internal" && z.JadwalKuliahs.ID == z.NilaiKuliah.JadwalKuliahID).ToList();
+
+*/
+
             VMListJadwalUjian mListJadwalUjian = new VMListJadwalUjian();
             if (String.IsNullOrEmpty(searchBy))
             {
@@ -46,22 +103,63 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             using (var context = new MBKMContext())
             {
 
-                //int ProdiIDInt = Int32.Parse(idProdi);
-                //int FakultasIDInt = Int32.Parse(idFakultas);
-                //int IDMataKUliahInt = Int32.Parse(idMatakuliah);
-                //int strmInt = Int32.Parse(strm);
+
+                var idFakultas2nd = idFakultas.Substring(idFakultas.Length - 2);
+
+                /*context.Configuration.LazyLoadingEnabled = false;
+                var result = context.jadwalUjians.Where(
+                    x =>
+                    x.IsDeleted == false &&
+                    x.ProdiID == idProdi &&
+                    x.FakultasID == idFakultas2nd &&
+                    x.JenjangStudi == jenjangStudi &&
+                    x.Lokasi == lokasi &&
+                    x.IDMatkul == idMatakuliah &&
+                    x.ClassSection == seksi &&
+                    x.STRM == strm
+                //x.FlagOpen == true
+                ).Join(
+                    context.PendaftaranMataKuliahs,
+                        a => a.IDMatkul,
+                        b => b.JadwalKuliahs.MataKuliahID,
+                        (a, b) => new VMJadwalUjian
+                        {
+                            KodeMatkul = a.KodeMatkul,
+                            NamaMatkul = a.NamaMatkul,
+                            FakultasID = a.FakultasID,
+                            NamaFakultas = a.NamaFakultas,
+                            ProdiID = a.ProdiID,
+                            NamaProdi = a.NamaProdi,
+                            JenjangStudi = a.JenjangStudi,
+                            STRM = a.STRM,
+                            SKS = b.JadwalKuliahs.SKS,
+                            JadwalKuliahs = b.JadwalKuliahs,
+                            IDMatkul = a.IDMatkul
+                        }
+
+                ).Where(z =>
+                    z.NamaMatkul == z.JadwalKuliahs.NamaMataKuliah &&
+                    z.IDMatkul == z.JadwalKuliahs.MataKuliahID &&
+                    z.KodeMatkul == z.JadwalKuliahs.KodeMataKuliah &&
+                    *//*z.FakultasID == z.JadwalKuliahs.FakultasID.ToString() &&
+                    z.ProdiID == z.JadwalKuliahs.ProdiID.ToString() &&*//*
+                    z.JenjangStudi == z.JadwalKuliahs.JenjangStudi *//*&&*/
+                /*z.STRM == z.JadwalKuliahs.STRM.ToString()*//*
+            ).ToList();*/
+
 
                 var result = context.jadwalUjians.Where(
                     x =>
                     x.IsDeleted == false &&
                     x.ProdiID == idProdi &&
-                    x.FakultasID == idFakultas &&
+                    x.FakultasID == idFakultas2nd &&
                     x.JenjangStudi == jenjangStudi &&
                     x.Lokasi == lokasi &&
+                    x.IDMatkul == idMatakuliah &&
+                    x.ClassSection == seksi &&
                     x.STRM == strm
-                    
-                    //x.FlagOpen == true
                 );
+
                 mListJadwalUjian.TotalCount = result.Count();
                 var gridfilter = result.AsQueryable().Where(
                     y => y.NamaMatkul.Contains(searchBy)
@@ -97,7 +195,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                         Tersedia = z.Tersedia,
                         ClassSection = z.ClassSection,
                         KodeClassSection = z.KodeClassSection,
-                        //SKS = z.STRM,
+                        //SKS = z.SKS,
                         /*CreatedBy = z.CreatedBy,
                         CreatedDate = z.CreatedDate,
                         UpdatedBy = z.UpdatedBy,

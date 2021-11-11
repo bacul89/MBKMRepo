@@ -48,7 +48,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             //Session["nama"] = "Smitty Swagger Werben Jeger Man Jensen";
             //Session["email"] = "sabangsasabana@gmail.com";
             //var mahasiswa = GetMahasiswaByEmail(Session["email"] as string);
-            string email = Session["email"] as string;
+            string email = Session["emailMahasiswa"] as string;
 
             Mahasiswa model = GetMahasiswaByEmail(email);
             return View(model);
@@ -57,7 +57,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         [HttpPost]
         public ActionResult getTranskrip()
         {
-            string email = Session["email"] as string;
+            string email = Session["emailMahasiswa"] as string;
 
             List<NilaiKuliah> MVTranskrip = new List<NilaiKuliah>();
             List<string> mapTranskrip = new List<string>();
@@ -148,7 +148,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult PrintTranskrip()
         {
             Session["email"] = "sabangsasabana@gmail.com";
-            string email = Session["email"] as string;
+            string email = Session["emailMahasiswa"] as string;
 
             Mahasiswa model = GetMahasiswaByEmail(email);
             return View("PrintTranskrip", model);
@@ -160,7 +160,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
 
             Session["email"] = "sabangsasabana@gmail.com";
-            string email = Session["email"] as string;
+            string email = Session["emailMahasiswa"] as string;
             Mahasiswa model = GetMahasiswaByEmail(email);
             return new ViewAsPdf("ExportPDF", model)
             {
@@ -220,7 +220,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         [HttpPost]
         public ActionResult UpdateStatusSertifikat()
         {
-            string email = Session["email"] as string;
+            string email = Session["emailMahasiswa"] as string;
             Mahasiswa mahasiswa = GetMahasiswaByEmail(email);
 
             try
@@ -283,7 +283,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult CheckStatusSertifikat()
         {
 
-            string email = Session["email"] as string;
+            string email = Session["emailMahasiswa"] as string;
 
             Mahasiswa mahasiswa = GetMahasiswaByEmail(email);
             try

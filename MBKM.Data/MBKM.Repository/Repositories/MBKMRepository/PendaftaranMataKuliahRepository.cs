@@ -63,7 +63,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return result;
             }
         }        
-        public VMListPendaftaranMataKuliah GetPendaftaranList(int Skip, int Length, string SearchParam, string SortBy, bool SortDir)
+        public VMListPendaftaranMataKuliah GetPendaftaranList(int Skip, int Length, string SearchParam, string SortBy, bool SortDir, int strm)
         {
             VMListPendaftaranMataKuliah mListPendaftaranMataKuliah = new VMListPendaftaranMataKuliah();
             if (String.IsNullOrEmpty(SearchParam))
@@ -73,7 +73,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             using (var context = new MBKMContext())
             {
                 context.Configuration.LazyLoadingEnabled = false;
-                var result = context.PendaftaranMataKuliahs.Where(x => x.IsDeleted == false && x.StatusPendaftaran == "MENUNGGU APPROVAL KAPRODI/WR BIDANG AKADEMIK").Include(x => x.mahasiswas).Include(x => x.JadwalKuliahs);
+                var result = context.PendaftaranMataKuliahs.Where(x => x.IsDeleted == false && x.StatusPendaftaran == "MENUNGGU APPROVAL KAPRODI/WR BIDANG AKADEMIK" && x.JadwalKuliahs.STRM == strm).Include(x => x.mahasiswas).Include(x => x.JadwalKuliahs);
                 mListPendaftaranMataKuliah.TotalCount = result.Count();
                 var gridfilter = result
                     .AsQueryable()
@@ -251,6 +251,87 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return result;
             }
         }
+        public IEnumerable<VMReportMahasiswaInternal> GetListPendaftaranInternalPertukaranKeluar(long strm)
+        {
+            using (var context = new MBKMContext())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                var result = context.PendaftaranMataKuliahs.Where(x => x.JadwalKuliahs.STRM == strm && x.StatusPendaftaran.ToLower().Contains("accepted"))
+                    .Join(context.informasiPertukarans,
+                        pendaftaran => pendaftaran.MahasiswaID,
+                        informasi => informasi.MahasiswaID,
+                        (pendaftaran, informasi) => new VMPendaftaranWithInformasipertukaranKeluar
+                        {
+                            MatkulKodeAsal = pendaftaran.MatkulKodeAsal,
+                            MatkulAsal = pendaftaran.MatkulAsal,
+                            MatkulIDAsal = pendaftaran.MatkulIDAsal,
+                            JadwalKuliahID = pendaftaran.JadwalKuliahID,
+                            JadwalKuliahs = pendaftaran.JadwalKuliahs,
+                            mahasiswas = pendaftaran.mahasiswas,
+                            InformasiPertukaran = informasi,
+                            LokasiTugas = informasi.LokasiTugas
+                            
+                        }
+                        )
+                    .Join(context.NilaiKuliahs,
+                        pendaf => pendaf.mahasiswas.ID,
+                        nilai => nilai.MahasiswaID,
+                        (pendaf, nilai) => new VMReportMahasiswaInternal
+                        {
+                            MatkulKodeAsal = pendaf.MatkulKodeAsal,
+                            MatkulAsal = pendaf.MatkulAsal,
+                            MatkulIDAsal = pendaf.MatkulIDAsal,
+                            JadwalKuliahID = pendaf.JadwalKuliahID,
+                            JadwalKuliahs = pendaf.JadwalKuliahs,
+                            mahasiswas = pendaf.mahasiswas,
+                            InformasiPertukaran = pendaf.InformasiPertukaran,
+                            NilaiKuliah = nilai
+                        })
+                    .Where(z => !z.InformasiPertukaran.JenisPertukaran.ToLower().Contains("non") && z.InformasiPertukaran.JenisKerjasama.ToLower() == "internal" && z.JadwalKuliahs.ID == z.NilaiKuliah.JadwalKuliahID).ToList();
 
+                return result;
+            }
+        }
+
+
+        public IEnumerable<VMReportMahasiswaEksternal> GetListPendaftaranEksternalPertukaran(long strm)
+        {
+            using (var context = new MBKMContext())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                var result = context.PendaftaranMataKuliahs.Where(x => x.JadwalKuliahs.STRM == strm && x.StatusPendaftaran.ToLower().Contains("accepted"))
+                    .Join(context.informasiPertukarans,
+                        pendaftaran => pendaftaran.MahasiswaID,
+                        informasi => informasi.MahasiswaID,
+                        (pendaftaran, informasi) => new VMPendaftaranWithInformasipertukaran
+                        {
+                            MatkulKodeAsal = pendaftaran.MatkulKodeAsal,
+                            MatkulAsal = pendaftaran.MatkulAsal,
+                            MatkulIDAsal = pendaftaran.MatkulIDAsal,
+                            JadwalKuliahID = pendaftaran.JadwalKuliahID,
+                            JadwalKuliahs = pendaftaran.JadwalKuliahs,
+                            mahasiswas = pendaftaran.mahasiswas,
+                            InformasiPertukaran = informasi
+                        }
+                        )
+                    .Join(context.NilaiKuliahs,
+                        pendaf => pendaf.mahasiswas.ID,
+                        nilai => nilai.MahasiswaID,
+                        (pendaf, nilai) => new VMReportMahasiswaEksternal
+                        {
+                            MatkulKodeAsal = pendaf.MatkulKodeAsal,
+                            MatkulAsal = pendaf.MatkulAsal,
+                            MatkulIDAsal = pendaf.MatkulIDAsal,
+                            JadwalKuliahID = pendaf.JadwalKuliahID,
+                            JadwalKuliahs = pendaf.JadwalKuliahs,
+                            mahasiswas = pendaf.mahasiswas,
+                            InformasiPertukaran = pendaf.InformasiPertukaran,
+                            NilaiKuliah = nilai
+                        })
+                    .Where(z => z.mahasiswas.NIM != z.mahasiswas.NIMAsal  && z.JadwalKuliahs.ID == z.NilaiKuliah.JadwalKuliahID).ToList();
+
+                return result;
+            }
+        }
     }
 }

@@ -39,8 +39,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetPendaftaranMakul(DataTableAjaxPostModel model, string emailMahasiswa)
+        public JsonResult GetPendaftaranMakul(DataTableAjaxPostModel model)
         {
+            string emailMahasiswa = Session["emailMahasiswa"] as string;
             var data = _pendaftaranMataKuliahService.GetPendaftaranMahasiswaDataTableByMahasiswa(model,emailMahasiswa);
 
             return Json(new
@@ -82,7 +83,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             if (tmpInformasiPertukaran1 == 0)
             {
                 ViewData["jenisProgram"] = "Pertukaran";
-                ViewData["jenisKegiatan"] = "Eksternal";
+                ViewData["jenisKegiatan"] = "Eksternal Dari Luar Atma Jaya";
 
                 ViewData["capaianTujuan"] = capaianTujuan;
                 ViewData["countCPTujuan"] = capaianTujuan.Count();
@@ -99,17 +100,17 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 }
                 else if (tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("magang"))
                 {
-                    ViewData["jenisProgram"] = "Magang";
-                    ViewData["jenisKegiatan"] = "Internal";
+                    ViewData["jenisProgram"] = "Non-Pertukaran";
+                    ViewData["jenisKegiatan"] = "magang";
                 }
                 else if (tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("internal") && tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("luar"))
                 {
                     ViewData["jenisProgram"] = "Pertukaran";
-                    ViewData["jenisKegiatan"] = "Internal Ke Luar";
+                    ViewData["jenisKegiatan"] = "Internal Ke Luar Atma Jaya";
                 }
                 else
                 {
-                    ViewData["jenisProgram"] = tmpInformasiPertukaran.JenisKerjasama;
+                    ViewData["jenisProgram"] = "Non-Pertukaran";
                     ViewData["jenisKegiatan"] = tmpInformasiPertukaran.JenisPertukaran;
                 }
 

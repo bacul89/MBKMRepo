@@ -15,7 +15,8 @@ namespace MBKM.Services.MBKMServices
     public interface IJadwalUjianMBKMDetailService : IEntityService<JadwalUjianMBKMDetail>
     {
         List<VMClassSection> getSection();
-        VMListJadwalUjian SearchListJadwalUjian(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm);
+        VMListJadwalUjian SearchListJadwalUjian(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm, string idMatakuliah, string seksi);
+        VMDosenMakulPertemuan GetDosen(string seksi, string kodeMataKuliah, string strm, string fakultasId);
     }
     public class JadwalUjianMBKMDetailService : EntityService<JadwalUjianMBKMDetail>, IJadwalUjianMBKMDetailService
     {
@@ -29,14 +30,17 @@ namespace MBKM.Services.MBKMServices
             _jadwalRepository = JadwalRepository;
         }
 
-
+        public VMDosenMakulPertemuan GetDosen(string seksi, string kodeMataKuliah, string strm, string fakultasId)
+        {
+            return _jadwalRepository.GetDosen(seksi, kodeMataKuliah, strm, fakultasId);
+        }
 
         public List<VMClassSection> getSection()
         {
             return _jadwalRepository.GetListSeksi();
         }
 
-        public VMListJadwalUjian SearchListJadwalUjian(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm)
+        public VMListJadwalUjian SearchListJadwalUjian(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm, string idMatakuliah, string seksi)
         {
             var searchBy = (model.search != null) ? model.search.value : null;
             var take = model.length;
@@ -54,7 +58,7 @@ namespace MBKM.Services.MBKMServices
                 sortBy = "ID";
             sortBy = sortBy + " " + model.order[0].dir.ToUpper();
 
-            return _jadwalRepository.SearchListJadwalUjian(skip, take, searchBy, sortBy, sortDir, idProdi, lokasi, idFakultas, jenjangStudi, strm);
+            return _jadwalRepository.SearchListJadwalUjian(skip, take, searchBy, sortBy, sortDir, idProdi, lokasi, idFakultas, jenjangStudi, strm, idMatakuliah, seksi);
         }
     }
 }

@@ -13,6 +13,8 @@ using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using MBKM.Presentation.Helper;
+using Rotativa;
+using Rotativa.Options;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
@@ -22,16 +24,21 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private ICPLMatakuliahService _cplMatakuliah;
         private ILookupService _lookupService;
         private IJadwalKuliahService _jkService;
-        private IJadwalUjianMBKMDetailService _juService;
+        private IJadwalUjianMBKMDetailService _juDetailService;
+        private IJadwalUjianMBKMService _juService;
         private IMasterCapaianPembelajaranService _mcpService;
+        private IFeedbackMatkulService _feedbackMatkulService;
 
-        public DaftarHadirUjianController(ICPLMatakuliahService cplMatakuliah, ILookupService lookupService, IJadwalKuliahService jkService, IMasterCapaianPembelajaranService mcpService, IJadwalUjianMBKMDetailService juService)
+
+        public DaftarHadirUjianController(ICPLMatakuliahService cplMatakuliah, ILookupService lookupService, IJadwalKuliahService jkService, IMasterCapaianPembelajaranService mcpService, IJadwalUjianMBKMDetailService juDetailService, IJadwalUjianMBKMService juService, IFeedbackMatkulService feedbackMatkulService)
         {
             _cplMatakuliah = cplMatakuliah;
             _lookupService = lookupService;
             _jkService = jkService;
+            _juDetailService = juDetailService;
             _juService = juService;
             _mcpService = mcpService;
+            _feedbackMatkulService = feedbackMatkulService;
         }
 
 
@@ -44,9 +51,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
 
 
-        public JsonResult SearchList(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm)
+        public JsonResult SearchList(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm, string idMatakuliah, string seksi)
         {
-            VMListJadwalUjian vmList = _juService.SearchListJadwalUjian(model, idProdi, lokasi, idFakultas, jenjangStudi, strm);
+            VMListJadwalUjian vmList = _juDetailService.SearchListJadwalUjian(model, idProdi, lokasi, idFakultas, jenjangStudi, strm, idMatakuliah, seksi);
             return Json(new
             {
                 // this is what datatables wants sending back
@@ -57,14 +64,136 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             });
         }
 
+        public ActionResult PrintDHU(int ID)
+        {
 
+            //int ID = 5187;
+            VMDHU vmDHU = new VMDHU();
+            
+            var jadwalUjian = _juService.Get(ID);
+            List<JadwalUjianMBKMDetail> mahasiswa = _juDetailService.Find(x => x.JadwalUjianMBKMID == ID).ToList();
+            var dosen = _juDetailService.GetDosen(jadwalUjian.ClassSection, jadwalUjian.KodeMatkul, jadwalUjian.STRM, jadwalUjian.FakultasID);
+            var dataSemester = _feedbackMatkulService.GetSemesterByStrm(jadwalUjian.STRM);
+
+
+            int strmInt = Int32.Parse(jadwalUjian.STRM);
+            long fkaultasInt = Int64.Parse(jadwalUjian.FakultasID);
+            long prodiInt = Int64.Parse(jadwalUjian.ProdiID);
+
+            var jadwal = _jkService.Find(x =>
+                                x.ClassSection == jadwalUjian.ClassSection &&
+                                x.KodeMataKuliah == jadwalUjian.KodeMatkul &&
+                                x.STRM == strmInt &&
+                                x.FakultasID == fkaultasInt &&
+                                x.ProdiID == prodiInt &&
+                                x.Lokasi == jadwalUjian.Lokasi
+                         ).First();
+
+            var list = mahasiswa.Select(x => new VMDHU()
+            {
+                Nama = x.Mahasiswas.Nama,
+                StudentID = x.Mahasiswas.NIM
+            });
+
+            //List <VMMahasiswas> mahasiswas = new List<VMMahasiswas>();
+            /*foreach (var p in mahasiswa)
+            {
+                //p.JadwalUjianMBKMs.;
+
+                var q = new
+                {
+                    Nama = p.Mahasiswas.Nama,
+                    NIM = p.Mahasiswas.NIM,
+                    NamaUniversitas = p.Mahasiswas.NamaUniversitas,
+                    NoKerjasama = p.Mahasiswas.NoKerjasama
+
+                    //ID = p.ID
+                };
+                mahasiswas.Add(q);
+            }*/
+
+            ViewData["ujian"] = JsonConvert.SerializeObject(jadwalUjian);
+            ViewData["semester"] = dataSemester.Nama;
+            ViewData["mahasiswas"] = list;
+            ViewData["dosen"] = JsonConvert.SerializeObject(dosen);
+            ViewData["jadwal"] = JsonConvert.SerializeObject(jadwal);
+            return new ViewAsPdf("PrintDHU")
+            {
+                FileName = 
+                    dataSemester.Nama+"_"+
+                    jadwalUjian.JenjangStudi + "_" +
+                    jadwalUjian.NamaFakultas + "_" +
+                    jadwalUjian.NamaProdi + "_" +
+                    jadwalUjian.NamaProdi + "_" +
+                    jadwalUjian.KodeMatkul + "-" + jadwalUjian.NamaMatkul + "_DHU.pdf",
+                PageSize = Size.A4,
+                PageOrientation = Orientation.Portrait,
+                //CustomSwitches = footer,
+                PageMargins = new Margins(3, 3, 20, 3)
+
+            };
+        }
+
+        public ActionResult viewDHU(int ID)
+        {
+            //int ID = 5187;
+            VMDHU vmDHU = new VMDHU();
+            
+            var jadwalUjian = _juService.Get(ID);
+            List<JadwalUjianMBKMDetail> mahasiswa = _juDetailService.Find(x => x.JadwalUjianMBKMID == ID).ToList();
+            var dosen = _juDetailService.GetDosen(jadwalUjian.ClassSection, jadwalUjian.KodeMatkul, jadwalUjian.STRM, jadwalUjian.FakultasID);
+            var dataSemester = _feedbackMatkulService.GetSemesterByStrm(jadwalUjian.STRM);
+
+            int strmInt = Int32.Parse(jadwalUjian.STRM);
+            long fkaultasInt = Int64.Parse(jadwalUjian.FakultasID);
+            long prodiInt = Int64.Parse(jadwalUjian.ProdiID);
+
+            var jadwal = _jkService.Find(x =>
+                                x.ClassSection == jadwalUjian.ClassSection &&
+                                x.KodeMataKuliah == jadwalUjian.KodeMatkul &&
+                                x.STRM == strmInt &&
+                                x.FakultasID == fkaultasInt &&
+                                x.ProdiID == prodiInt &&
+                                x.Lokasi == jadwalUjian.Lokasi
+                         ).First();
+
+            var list = mahasiswa.Select(x => new VMDHU()
+            {
+                Nama = x.Mahasiswas.Nama,
+                StudentID = x.Mahasiswas.NIM
+            });
+
+            //List <VMMahasiswas> mahasiswas = new List<VMMahasiswas>();
+            /*foreach (var p in mahasiswa)
+            {
+                //p.JadwalUjianMBKMs.;
+
+                var q = new
+                {
+                    Nama = p.Mahasiswas.Nama,
+                    NIM = p.Mahasiswas.NIM,
+                    NamaUniversitas = p.Mahasiswas.NamaUniversitas,
+                    NoKerjasama = p.Mahasiswas.NoKerjasama
+
+                    //ID = p.ID
+                };
+                mahasiswas.Add(q);
+            }*/
+
+            ViewData["ujian"] = JsonConvert.SerializeObject(jadwalUjian);
+            ViewData["semester"] = dataSemester.Nama;
+
+            ViewData["mahasiswas"] = list;
+            ViewData["dosen"] = JsonConvert.SerializeObject(dosen);
+            ViewData["jadwal"] = JsonConvert.SerializeObject(jadwal);
+            return View("PrintDHU");
+        }
 
         /* Lookup --<> */
         public ActionResult getLookupByTipe(string tipe)
         {
             return Json(_lookupService.getLookupByTipe(tipe), JsonRequestBehavior.AllowGet);
         }
-
 
         /* Attribute Kuliah --<> */
         public ActionResult GetFakultas(string search, string JenjangStudi)
@@ -178,7 +307,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult GetSection()
         {
 
-            var final = _juService.getSection();
+            var final = _juDetailService.getSection();
             List<object> data = new List<object>();
             foreach (var p in final)
             {

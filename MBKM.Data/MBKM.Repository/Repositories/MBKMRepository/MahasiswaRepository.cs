@@ -112,10 +112,20 @@ namespace MBKM.Repository.Repositories.MBKMRepository
         {
             using (var context = new MBKMContext())
             {
-                var jenjangStudiParam = new SqlParameter("@JenjangStudi", jenjangStudi);
-                var result = context.Database
-                    .SqlQuery<VMSemester>("GetSemester @JenjangStudi", jenjangStudiParam).ToList();
-                return result;
+                if(jenjangStudi != null)
+                {
+                    var jenjangStudiParam = new SqlParameter("@JenjangStudi", jenjangStudi);
+                    var result = context.Database
+                        .SqlQuery<VMSemester>("GetSemester @JenjangStudi", jenjangStudiParam).ToList();
+                    return result;
+                }
+                else
+                {
+                    var result = context.Database
+                        .SqlQuery<VMSemester>("GetSemester").ToList();
+                    return result;
+                }
+                
             }
         }
 

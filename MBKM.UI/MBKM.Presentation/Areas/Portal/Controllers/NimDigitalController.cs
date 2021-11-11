@@ -35,7 +35,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult GetNim()
         {
 
-            string email = Session["email"] as string;
+            string email = Session["emailMahasiswa"] as string;
 
             var ma = _mahasiswaService.Find(x => x.Email == email).First();
             var photoprofile = "none";

@@ -24,6 +24,7 @@
                     <br />
                     <label for="inp_semester" class="col-sm-3 control-label">Tahun Semester</label>
                     <div class="col-sm-7">
+                        <input type="hidden" name="inp_semester" id="firstSemester" value="@ViewData["firstSemester"].ToString()" disabled />
                         <select name="inp_semester" id="inp_semester" class="form-control select2 input-md input-data">
                             <option value="" selected disabled>-- Pilih Tahun Semester --</option>
                             @{
@@ -39,8 +40,8 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-12 ">
-                        <button type="button" id="cari" class="btn btn-success" style="width: 10vw" onclick="GenerateDataTable()"><span class="fa fa-search"></span> CETAK PDF</button>
-                        <button type="button" id="cari" class="btn btn-danger" style="width: 10vw" onclick="GenerateDataTable()"><span class="fa fa-search"></span> CETAK EXCEL</button>
+                        <button type="button" id="exportPDF" class="btn btn-success" style="width: 10vw"><span class="fa fa-search"></span> CETAK PDF</button>
+                        <button type="button" id="exportExcel" class="btn btn-danger" style="width: 10vw"><span class="fa fa-search"></span> CETAK EXCEL</button>
                     </div>
                 </div>
             </form>

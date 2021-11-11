@@ -37,12 +37,12 @@ Date.prototype.toShortFormat = function () {
     return `${day} ${monthName} ${year}`;
 }
 
-var getBirtDay = $('#birthday').text();
+/*var getBirtDay = $('#birthday').text();
 var date = getBirtDay.split(" ")[0];
 var parts = date.split('/');
 var mydate = new Date(parts[2], parts[1] - 1, parts[0]);
 
-var result = mydate.toShortFormat();
+var result = mydate.toShortFormat();*/
 
 
 function convertBirthday() {
@@ -121,7 +121,7 @@ function getNilai() {
             Nilais = resultTranskip;
             
                 $.ajax({
-                    url: "/MasterMapingCapaianPembelajaran/getLookupByTipe",
+                    url: "/Portal/TranskripMahasiswa/getLookupByTipe",
                     type: 'get',
                     datatype: 'html',
                     data: { Tipe: 'NilaiGrade' },
