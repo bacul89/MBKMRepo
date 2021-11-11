@@ -115,6 +115,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ViewData["ujian"] = JsonConvert.SerializeObject(jadwalUjian);
             ViewData["semester"] = dataSemester.Nama;
             ViewData["mahasiswas"] = list;
+            ViewData["mahasiswaLenght"] = list.Count();
             ViewData["dosen"] = JsonConvert.SerializeObject(dosen);
             ViewData["jadwal"] = JsonConvert.SerializeObject(jadwal);
             return new ViewAsPdf("PrintDHU")
@@ -182,7 +183,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
             ViewData["ujian"] = JsonConvert.SerializeObject(jadwalUjian);
             ViewData["semester"] = dataSemester.Nama;
-
+            ViewData["mahasiswaLenght"] = list.Count();
             ViewData["mahasiswas"] = list;
             ViewData["dosen"] = JsonConvert.SerializeObject(dosen);
             ViewData["jadwal"] = JsonConvert.SerializeObject(jadwal);
