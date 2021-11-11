@@ -10,7 +10,6 @@
     <meta name="viewport" content="width=device-width" />
     <title>Print Daftar Hadir Ujian (DHU) - SIMBKM</title>
 
-
     @Styles.Render("~/Content/css")
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,28 +20,58 @@
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Styles.Render("~/Content/css")
-
-
+    @Scripts.Render("~/bundles/bootstrap")
+    <link href="~/Content/Admin/PrintDHU.css" rel="stylesheet" media="print" />
 
     <style type="text/css">
+        @*-- print --*@
+        .page {
+            size: 9.25in 7in;
+            margin: 0 !important;
+        }
+        body {
+            size: portrait;
+            font-size:12px
+        }
+        @*-- print --*@
+
+        .page {
+
+        }
+
+
         .logo {
-            width: 65px
+            width: 55px;
         }
 
         h1 {
             margin: 3px 0px
         }
 
+        h2{
+            font-size:21px;
+        }
+
         .Title {
-            margin: 26px 0
+            margin: 16px 0
+        }
+
+        .headerInfo{
+
         }
 
 
-            .thumbnail {
-                border: solid 1px;
-                padding: 15px;
-                border-radius:0px
-            }
+        .border {
+            border: solid 1px;
+            border-radius: 0px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            padding: 10px 22px!important;
+        }
+
+        .info{
+            font-size:12px;
+        }
 
             .title {
                 text-align: right;
@@ -56,19 +85,20 @@
                 border-left: solid 1px;
             }
 
-            th.mhsList {
-                border-bottom: solid 1px;
-                border-right: solid 1px;
-                border-top: solid 1px;
-                @*display: inline-block;*@
-                padding: 10px;
-            }
+        th.mhsList {
+            border-bottom: solid 1px;
+            border-right: solid 1px;
+            border-top: solid 1px;
+            @*display: inline-block;*@
+            @* padding: 10px;*@
+            padding: 1px 10px;
+        }
 
-            td.mhsList {
-                border: solid 1px;
-                @*display: inline-block;*@
-                padding: 7px 10px;
-            }
+        td.mhsList {
+            border: solid 1px;
+            padding: 10px 10px;
+            line-height: 12px;
+        }
 
 
             h3 {
@@ -89,9 +119,7 @@
                 float: left
             }
 
-            @*.berita{
-                bodee
-            }*@
+
             .berita th, .berita td {
                 border: solid 1px;
             }
@@ -116,375 +144,421 @@
             .breakhere {
                 page-break-after: always
             }
+            .p0{
+                padding:0px
+            }
 
-            .p-tb10{
+            @*.p-l15 {
+                padding: 0 15px 0 0
+            }*@
+        .p-tb10 {
+            padding: 1px 0px;
+            line-height: 18px;
+            width: 18%;
+            vertical-align: top;
+        }
+
+        .p-tb8 {
+            padding: 1px 0px;
+            line-height: 18px;
+            width: 12%;
+            vertical-align: top;
+        }
+
+            @*.p-tb10{
                 padding: 8px 0px;
-            }
-            .p-tb10lr5 {
-                padding: 8px 5px;
-            }
+            }*@
+        .p-tb10lr5 {
+            padding: 1px 0px;
+            vertical-align: top;
+            width: 2px;
+        }
             .space{
-                width:10px;
+                width:5px;
             }
 
     </style>
 </head>
-<body style="padding: 0 0 0 0px; float: left">
+<body id="body" style="padding: 0 0 0 0px; float: left">
 
-    <div class="id">
-        <div class="thumbnail" style=" padding: 15px 34px;">
-            <div class="col-md-12 Header">
-                <div class="col-md-1 col-sm-1 col-lg-1 col-xs-1 pd0">
-                    <img class="logo" src="~/Asset/Lambang_Atma_Jaya.png" />
-                </div>
-                <div class="col-md-6 col-sm-6 col-lg-6 col-xs-6 Title pd0">
-                    <b>
-                        <span> UNIVERSITAS KATOLIK INDONESIA</span>
-                        <h1>ATMA JAYA</h1>
-                    </b>
-                </div>
-                <div class="col-md-5 col-sm-5 col-lg-5 col-xs-5 Title pd0">
-                    <div class="title">
-                        <i>
-                            <h1><b>DHU</b></h1>
-                            <h2>DAFTAR HADIR UJIAN</h2>
-                        </i>
-                    </div>
-                </div>
-            </div>
-
-
-            @*<div class="header">
-                <div class="logo"></div>
-                <div class="title">
-                    <i>
-                        <h1><b>DHU</b></h1>
-                        <h2>DAFTAR HADIR DHU</h2>
-                    </i>
-                </div>
-            </div>*@
-            <table>
-                <tr>
-                    <td class="p-tb10"><b>SEMESTER</b></td>
-                    <td class="p-tb10lr5">:</td>
-                    <td class="p-tb10" style="width: 52%;">@ViewData["semester"]</td> @*id="semseter"*@
-                    <td class="space"></td>
-                    <td class="p-tb10"><b>SEKSI</b></td>
-                    <td class="p-tb10lr5">:</td>
-                    <td class="p-tb10" id="seksi"></td>
-                </tr>
-                <tr>
-                    <td class="p-tb10"><b>PROGRAM STUDI</b></td>
-                    <td class="p-tb10lr5">:</td>
-                    <td class="p-tb10" id="prodi"></td>
-                    <td class="space"></td>
-                    <td class="p-tb10"><b>KOMPONEN</b></td>
-                    <td class="p-tb10lr5">:</td>
-                    <td class="p-tb10" id="komponen"></td>
-                </tr>
-                <tr>
-                    <td class="p-tb10"><b>KODE MATAKULIAH</b></td>
-                    <td class="p-tb10lr5">:</td>
-                    <td class="p-tb10" id="kodeMK"></td>
-                    <td class="space"></td>
-                    <td class="p-tb10"><b>HARI / TGL</b></td>
-                    <td class="p-tb10lr5">:</td>
-                    <td class="p-tb10" id="tgl"></td>
-                </tr>
-                <tr>
-                    <td class="p-tb10"><b>NAMA MATAKULIAH</b></td>
-                    <td class="p-tb10lr5">:</td>
-                    <td class="p-tb10" id="namaMK"></td>
-                    <td class="space"></td>
-                    <td class="p-tb10"><b>JAM</b></td>
-                    <td class="p-tb10lr5">:</td>
-                    <td class="p-tb10" id="jam"></td>
-                </tr>
-                <tr>
-                    <td class="p-tb10"><b>SKS</b></td>
-                    <td class="p-tb10lr5">:</td>
-                    <td class="p-tb10" id="sks"></td>
-                    <td class="space"></td>
-                    <td class="p-tb10"><b>RUANG</b></td>
-                    <td class="p-tb10lr5">:</td>
-                    <td class="p-tb10" id="ruang"></td>
-                </tr>
-                <tr>
-                    <td class="p-tb10"><b>DOSEN</b></td>
-                    <td class="p-tb10lr5">:</td>
-                    <td class="p-tb10" id="dosen"></td>
-                    <td class="space"></td>
-                    <td class="p-tb10"><b>HALAMAN</b></td>
-                    <td class="p-tb10lr5">:</td>
-                    <td class="p-tb10"></td>
-                </tr>
-            </table>
-        </div>
-
-
-        <div class="content">
-            <table>
-                <thead>
-                    <tr>
-                        <th class="mhsList start"><center>No.</center></th>
-                        <th class="mhsList"><center>STUDENT ID</center></th>
-                        <th class="mhsList" style="width:56%"><center>NAMA MAHASISWA</center></th>
-                        <th class="mhsList"><center>TANDA TANGAN</center></th>
-                    </tr>
-                </thead>
-                <tbody id="mhs">
-                    @{int i = 0;}
-                    @{int defRow = 20;}
-                    @foreach (var mhs in (IEnumerable<MBKM.Entities.ViewModel.VMDHU>)ViewData["mahasiswas"])
-                    {
-                        
-                        <tr>
-                            <td class="mhsList start padding0">
-                                <center>@{i = i + 1;}
-                                    @i
-                                <center>
-                            </td>
-                            <td class="mhsList">@mhs.StudentID</td>
-                            <td class="mhsList">@mhs.Nama</td>
-                            <td class="mhsList"></td>
-                        </tr>
-                        //@i++
-                    }
-
-                    @for (int j = 0; j < defRow - i; j++)
-                    {
-                        <tr><td class="mhsList start heightDefault"><center><center></td><td class="mhsList heightDefault"></td><td class="mhsList heightDefault"></td><td class="mhsList heightDefault"></td></tr>
-                    }
-                </tbody>
-            </table>
-
-
-            <table class="berita" style="margin: 0 0 0 20px;">
-                <thead>
-                    <tr>
-                        <th colspan="2" style="padding: 10px;"><center>BERITA ACARA UJIAN</center></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td colspan="2" style=" height: 350px; padding: 15px; vertical-align: 10px;">
-                            Waktu : .....Jam
-                        </td>
-                    </tr>
-                    <tr rowspan="3">
-                        <td colspan="2">
-                            <center>
-                                <table style=" margin: 20px 48px;">
-                                    <tr>
-                                        <td class="borderNone pading0">Tercetak</td>
-                                        <td class="borderNone pading5">:</td>
-                                        <td class="borderNone pading0" style="text-align:right"><span id="tercetak"></span> Orang</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="borderNone pading0">Hadir</td>
-                                        <td class="borderNone pading5">:</td>
-                                        <td class="borderNone pading0" style="border-bottom:solid 1px!important">.....Orang</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="borderNone pading0">Tidak Hadir </td>
-                                        <td class="borderNone pading5">:</td>
-                                        <td class="borderNone pading0">.....Orang</td>
-                                    </tr>
-                                </table>
-                            </center>
-                        </td>
-                    </tr>
-                </tbody>
-
-                <tbody>
-                    <tr>
-                        <td class="mhsList"><b>NAMA PENGAWAS UJIAN</b></td>
-                        <td class="mhsList"><b>PARAF</b></td>
-                    </tr>
-                    <tr>
-                        <td class="heightDefault"></td>
-                        <td class="heightDefault"></td>
-                    </tr>
-                    <tr>
-                        <td class="heightDefault"></td>
-                        <td class="heightDefault"></td>
-                    </tr>
-                    <tr>
-                        <td class="heightDefault"></td>
-                        <td class="heightDefault"></td>
-                    </tr>
-                    <tr>
-                        <td class="heightDefault"></td>
-                        <td class="heightDefault"></td>
-                    </tr>
-                    <tr>
-                        <td class="heightDefault"></td>
-                        <td class="heightDefault"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div style=" margin-top:15px; width:100%" class="left"><span>........ : CEKAL</span></div>
-        <br class="left" />
-        <br />
-        <div class="thumbnail left" style=" font-size: 12px; margin-top:15px">
-            <h3>Perhatian !!!</h3>
-            <ol>
-                <li>Mahasiswa yang berhak mengikuti ujian adalah mereka yang namanya tercantm dalam DHU ini.</li>
-                <li>Tidak diperkenankan menambahkan peseta ujian dengan alasan apapun juga.</li>
-            </ol>
-        </div>
-    </div>
 
 
     <script type="text/javascript">
-        $('#hello').text("hello");
 
     var ujian;
     var mahasiswa;
-    var dosen;
-    var jadwal;
+    var semester = '@ViewData["semester"]';
+
 
     $(document).ready(function () {
-        //console.log('hellollll');
-        $('#hallo').text("HELLO");
 
         ujian = JSON.parse(@Html.Raw(Json.Encode(@ViewData["ujian"])));
         //mahasiswa = JSON.parse(@Html.Raw(Json.Encode(@ViewData["mahasiswas"])));
-        dosen = JSON.parse(@Html.Raw(Json.Encode(@ViewData["dosen"])));
-        jadwal = JSON.parse(@Html.Raw(Json.Encode(@ViewData["jadwal"])));
+        mahasiswa = JSON.parse("[{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"45\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"46\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"104 Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"103 Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"2021MBKM0013\",\"Nama\":\"Anindya Sabrina Pangesti\"},{\"StudentID\":\"202190010019\",\"Nama\":\"wkwkwk\"},{\"StudentID\":\"202190010020\",\"Nama\":\"Hendra Sadewa\"}]");
+        @*//dosen = JSON.parse(@Html.Raw(Json.Encode(@ViewData["dosen"])));
+        //jadwal = JSON.parse(@Html.Raw(Json.Encode(@ViewData["jadwal"])));*@
 
-        console.log(ujian);
+        @*console.log(ujian);
         console.log(mahasiswa);
+        console.log(mahasiswa.length);
         console.log(dosen);
-        console.log(jadwal);
+        console.log(jadwal);*@
 
-        //console.log(ujian.STRM);
+        //component
+        var header, sidebar, content, footer;
 
-        $('#semseter').text(ujian.STRM);
-        $('#seksi').text(ujian.ClassSection);
+        var defaultRow = 20;
 
-        $('#prodi').text(ujian.NamaProdi);
-        $('#komponen').text("Kuliah");
-        $('#kodeMK').text(ujian.KodeMatkul);
-        $('#namaMK').text(ujian.NamaMatkul);
+        var page = 0;
+        var pageTotal = getTotalPage(defaultRow, mahasiswa.length);
 
-        //console.log(ujian.TanggalUjian);
-        convertDate(ujian.TanggalUjian)
-
-
-        $('#jam').text(ujian.JamMulai+' - '+ujian.JamAkhir);
-        $('#ruang').text(ujian.RuangUjian);
-        $('#dosen').text(dosen.NamaDosen);
-        $('#sks').text(jadwal.SKS);
-        $('#tercetak').text(mahasiswa.length);
-
-
-
-
-        //var tablemhs = '';
-        //var dfRow = 20;
-
-
-@*        if (mahasiswa.length < dfRow) {
-            for (var i = 0; i < mahasiswa.length; i++) {
-                var num = i + 1;
-                var nama = mahasiswa[i].Nama;
-                var nim = mahasiswa[i].NIM;
-                //var idCampus = mahasiswa[i].NoKerjasama;
-                tablemhs = tablemhs + '<tr><td class="mhsList start padding0"><center>' + num + '<center></td><td class="mhsList">' + nim + '</td><td class="mhsList">' + nama + '</td><td class="mhsList"></td></tr>'
+        for (var i = 0; i < mahasiswa.length; i++) {
+            if (i % 20 == 0) {
+                page++;
+                header = generateHeader(ujian, semester, page, pageTotal);
+                sidebar = generateSidebar(mahasiswa.length);
+                content = generateContent(mahasiswa, page, pageTotal, defaultRow);
+                footer = generateFooter();
+                generatePage(header, content, footer, sidebar);
             }
 
-            for (var i = 0; i < dfRow - mahasiswa.length; i++) {
-                //var idCampus = mahasiswa[i].NoKerjasama;
-                tablemhs = tablemhs + '<tr><td class="mhsList start heightDefault"><center><center></td><td class="mhsList heightDefault"></td><td class="mhsList heightDefault"></td><td class="mhsList heightDefault"></td></tr>'
-            }
 
-        } else if (mahasiswa.length == dfRow) {
-            for (var i = 0; i < mahasiswa.length; i++) {
-                var num = i + 1;
-                var nama = mahasiswa[i].Nama;
-                var nim = mahasiswa[i].NIM;
-                //var idCampus = mahasiswa[i].NoKerjasama;
-                tablemhs = tablemhs + '<tr><td class="mhsList start"><center>' + num + '<center></td><td class="mhsList">' + nim + '</td><td class="mhsList">' + nama + '</td><td class="mhsList"></td></tr>'
-            }
-        } else{
-            for (var i = 0; i < dfRow; i++) {
-                var num = i + 1;
-                var nama = mahasiswa[i].Nama;
-                var nim = mahasiswa[i].NIM;
-                //var idCampus = mahasiswa[i].NoKerjasama;
-                tablemhs = tablemhs + '<tr><td class="mhsList start"><center>' + num + '<center></td><td class="mhsList">' + nim + '</td><td class="mhsList">' + nama + '</td><td class="mhsList"></td></tr>'
-            }
         }
 
+        //$("#mhs").append(tablemhs);
+        //$("#point").text("bold");
 
-        $("#mhs").append(tablemhs);
-        $("#point").text("bold");*@
+
     });
 
-@*    Date.prototype.toShortFormat = function () {
+    //---<> Component
 
-        let monthNames = ["Januari", "Februari", "Maret", "April",
-            "Mei", "Juni", "Juli", "Augustus",
-            "September", "Oktober", "November", "Desember"];
+        function generateContent(mahasiswa, page, pageTotal, limit) {
 
-        let day = this.getDate();
+            var tablemhs = '';
 
-        let monthIndex = this.getMonth();
-        let monthName = monthNames[monthIndex];
+            var limitPage = page * limit;
+            var numEnd = limitPage;
+            var numStart = limitPage - limit;
+            var data = mahasiswa;//filterData(mahasiswa, numStart, numEnd);
 
-        let year = this.getFullYear();
+            //console.log(data);
 
-        return `${day} ${monthName} ${year}`;
-    }*@
+            @*console.log("st : " + numStart);
+            console.log("end : " + numEnd);
+            console.log("123 : "+data.length);*@
 
-    function convertDate(getBirtDay) {
-        //console.log(getBirtDay);
+            if (data.length < numEnd) {
+                for (var i = numStart; i < data.length; i++) {
+                    var num = i + 1;
+                    var nama = data[i].Nama;
+                    var nim = data[i].StudentID;
+                    //var idCampus = mahasiswa[i].NoKerjasama;
+                    tablemhs = tablemhs + '<tr><td class="mhsList start padding0"><center>' + num + '<center></td><td class="mhsList">' + nim + '</td><td class="mhsList">' + nama + '</td><td class="mhsList"></td></tr>'
+                }
 
+                for (var i = 0; i < numEnd - data.length; i++) {
+                    //var idCampus = mahasiswa[i].NoKerjasama;
+                    tablemhs = tablemhs + '<tr><td class="mhsList start heightDefault"><center><center></td><td class="mhsList heightDefault"></td><td class="mhsList heightDefault"></td><td class="mhsList heightDefault"></td></tr>'
+                }
 
-        const month = new Array();
-        month[0] = "Januari";
-        month[1] = "Februari";
-        month[2] = "Maret";
-        month[3] = "April";
-        month[4] = "Mei";
-        month[5] = "Juni";
-        month[6] = "Juli";
-        month[7] = "Augustus";
-        month[8] = "September";
-        month[9] = "Oktober";
-        month[10] = "November";
-        month[11] = "Desember";
+            } @*else if (data.length == numEnd) {
+                for (var i = numStart; i < data.length; i++) {
+                    var num = i + 1;
+                    var nama = data[i].Nama;
+                    var nim = data[i].StudentID;
+                    //var idCampus = mahasiswa[i].NoKerjasama;
+                    tablemhs = tablemhs + '<tr><td class="mhsList start"><center>' + num + '<center></td><td class="mhsList">' + nim + '</td><td class="mhsList">' + nama + '</td><td class="mhsList"></td></tr>'
+                }
+            }*@
 
+            else {
 
-        const weekday = new Array(7);
-        weekday[0] = "Minggu";
-        weekday[1] = "Senin";
-        weekday[2] = "Selasa";
-        weekday[3] = "Rabu";
-        weekday[4] = "Kamis";
-        weekday[5] = "Juma't";
-        weekday[6] = "Sabtu";
-
-        //let day = weekday[d.getDay()];
-
-        var date = getBirtDay.split("T")[0];
-        //var createdate = new Date(date);
-        //var newdate = new Date();
-        //console.log(createdate.getMonth());
-        var parts = date.split('-');
-        var createdate = new Date(parts[0], parts[1] - 1, parts[2]);
-
-        //var result = mydate.toShortFormat();
-
-        var result = weekday[createdate.getDay()]+' / '+createdate.getDate()+' '+month[createdate.getMonth()]+' '+createdate.getFullYear();
-        $('#tgl').text(result);
-        //return ;
-    }
+                for (var i = numStart; i < numEnd; i++) {
+                    var num = i + 1;
+                    var nama = data[i].Nama;
+                    var nim = data[i].StudentID;
+                    //var idCampus = mahasiswa[i].NoKerjasama;
+                    tablemhs = tablemhs + '<tr><td class="mhsList start"><center>' + num + '<center></td><td class="mhsList">' + nim + '</td><td class="mhsList">' + nama + '</td><td class="mhsList"></td></tr>'
+                }
+            }
 
 
+            var content = `<div id="content" class="col-md-8 col-lg-8 col-sm-8 col-xs-8 p-l15" style="padding-left:0px">
+                                <table width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th class="mhsList start"><center>No.</center></th>
+                                            <th class="mhsList"><center>STUDENT ID</center></th>
+                                            <th class="mhsList" style="width:56%"><center>NAMA MAHASISWA</center></th>
+                                            <th class="mhsList"><center>TANDA TANGAN</center></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="mhs">
+                                        ${tablemhs}
+
+                                        @*<tr>
+                                            <td class="mhsList start padding0">
+                                                <center>
+                                                </center>
+                                            </td>
+                                            <td class="mhsList"></td>
+                                            <td class="mhsList"></td>
+                                            <td class="mhsList"></td>
+                                        </tr>*@
+
+
+                                        @*<tr><td class="mhsList start heightDefault"><center><center></td><td class="mhsList heightDefault"></td><td class="mhsList heightDefault"></td><td class="mhsList heightDefault"></td></tr>*@
+
+                                    </tbody>
+                                </table>
+                            </div>`;
+
+
+            return content;
+        }
+
+        function generateHeader(ujian, semester, page, pageTotal) {
+
+            var komponen = ujian.Komponen;
+
+            var header = `<div class="border col-md-12 col-lg-12 col-sm-12 col-xs-12  p0">
+                            <div class="col-md-12 Header p0">
+                                <div class="col-md-1 col-sm-1 col-lg-1 col-xs-1 p0">
+                                    <img class="logo" src="/Asset/Lambang_Atma_Jaya.png" />
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-lg-6 col-xs-6 Title p0" style="padding-left: 25px;">
+                                    <b>
+                                        <span> UNIVERSITAS KATOLIK INDONESIA</span>
+                                        <h1>ATMA JAYA</h1>
+                                    </b>
+                                </div>
+                                <div class="col-md-5 col-sm-5 col-lg-5 col-xs-5 Title p0">
+                                    <div class="title">
+                                        <i>
+                                            <h1 style="font-size: 29px;"><b>DHU</b></h1>
+                                            <h2>DAFTAR HADIR UJIAN</h2>
+                                        </i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <table class="info col-md-12 col-lg-12 col-sm-12 col-xs-12  p0">
+                                <tr>
+                                    <td class="p-tb10"><b>SEMESTER</b></td>
+                                    <td class="p-tb10lr5">:</td>
+                                    <td class="p-tb10" style="width: 42%;">${semester}</td>
+                                    <td class="space"></td>
+                                    <td class="p-tb8"><b>SEKSI</b></td>
+                                    <td class="p-tb10lr5">:</td>
+                                    <td class="p-tb10" id="seksi" style="width:21%">${ujian.ClassSection}</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-tb10"><b>PROGRAM STUDI</b></td>
+                                    <td class="p-tb10lr5">:</td>
+                                    <td class="p-tb10" id="prodi">${ujian.NamaProdi}</td>
+                                    <td class="space"></td>
+                                    <td class="p-tb8"><b>KOMPONEN</b></td>
+                                    <td class="p-tb10lr5">:</td>
+                                    <td class="p-tb10" id="komponen">${komponen}</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-tb10"><b>KODE MATAKULIAH</b></td>
+                                    <td class="p-tb10lr5">:</td>
+                                    <td class="p-tb10" id="kodeMK">${ujian.KodeMatkul}</td>
+                                    <td class="space"></td>
+                                    <td class="p-tb8"><b>HARI / TGL</b></td>
+                                    <td class="p-tb10lr5">:</td>
+                                    <td class="p-tb10" id="tgl">${convertDate(ujian.TanggalUjian)}</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-tb10"><b>NAMA MATAKULIAH</b></td>
+                                    <td class="p-tb10lr5">:</td>
+                                    <td class="p-tb10" id="namaMK">${ujian.NamaMatkul}</td>
+                                    <td class="space"></td>
+                                    <td class="p-tb8"><b>JAM</b></td>
+                                    <td class="p-tb10lr5">:</td>
+                                    <td class="p-tb10" id="jam">${ujian.JamMulai} - ${ujian.JamAkhir}</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-tb10"><b>SKS</b></td>
+                                    <td class="p-tb10lr5">:</td>
+                                    <td class="p-tb10" id="sks">${ujian.SKS}</td>
+                                    <td class="space"></td>
+                                    <td class="p-tb8"><b>RUANG</b></td>
+                                    <td class="p-tb10lr5">:</td>
+                                    <td class="p-tb10" id="ruang">${ujian.RuangUjian}</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-tb10"><b>DOSEN</b></td>
+                                    <td class="p-tb10lr5">:</td>
+                                    <td class="p-tb10" id="dosen">${ujian.NamaDosen}</td>
+                                    <td class="space"></td>
+                                    <td class="p-tb8"><b>HALAMAN</b></td>
+                                    <td class="p-tb10lr5">:</td>
+                                    <td class="p-tb10">${page} DARI ${pageTotal}</td>
+                                </tr>
+                            </table>
+                        </div>`;
+
+            return header
+        }
+
+        function generateSidebar(totalMhs) {
+            var sidebar = `<div id="sidebar" class="col-md-4 col-lg-4 col-sm-4 col-xs-4 p0">
+                                <table class="berita" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="2" style="padding: 10px;"><center>BERITA ACARA UJIAN</center></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="2" style=" height: 333px; padding: 15px; vertical-align: 10px;">
+                                                Waktu : .....Jam
+                                            </td>
+                                        </tr>
+                                        <tr rowspan="3">
+                                            <td colspan="2">
+                                                <center>
+                                                    <table style=" margin: 20px 48px;">
+                                                        <tr>
+                                                            <td class="borderNone pading0">Tercetak</td>
+                                                            <td class="borderNone pading5">:</td>
+                                                            <td class="borderNone pading0" style="text-align:right"><span id="tercetak">${totalMhs}</span> Orang</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="borderNone pading0">Hadir</td>
+                                                            <td class="borderNone pading5">:</td>
+                                                            <td class="borderNone pading0" style="border-bottom:solid 1px!important">.....Orang</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="borderNone pading0">Tidak Hadir </td>
+                                                            <td class="borderNone pading5">:</td>
+                                                            <td class="borderNone pading0">.....Orang</td>
+                                                        </tr>
+                                                    </table>
+                                                </center>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+
+                                    <tbody>
+                                        <tr>
+                                            <td class="mhsList"><b>NAMA PENGAWAS UJIAN</b></td>
+                                            <td class="mhsList"><b>PARAF</b></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="heightDefault"></td>
+                                            <td class="heightDefault"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="heightDefault"></td>
+                                            <td class="heightDefault"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="heightDefault"></td>
+                                            <td class="heightDefault"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="heightDefault"></td>
+                                            <td class="heightDefault"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="heightDefault"></td>
+                                            <td class="heightDefault"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>`;
+
+            return sidebar;
+        }
+
+        function generateFooter() {
+            var footer = `<div style=" margin-top:10px; width:100%" class="left"><span>........ : CEKAL</span></div>
+                            <br class="left" />
+                            <br />
+                            <div class="border col-md-8 col-sm-8 col-lg-8 col-xs-8 p0" style=" font-size: 11px; margin-top:15px; padding: 8px 15px!important;">
+                                <h3 style="font-size: 13px;font-weight: bold; margin-bottom: 5px;">Perhatian !!!</h3>
+                                <ol>
+                                    <li>Mahasiswa yang berhak mengikuti ujian adalah mereka yang namanya tercantm dalam DHU ini.</li>
+                                    <li>Tidak diperkenankan menambahkan peseta ujian dengan alasan apapun juga.</li>
+                                </ol>
+                            </div>`;
+
+            return footer;
+        }
+
+        function generatePage(header, content, footer, sidebar) {
+            var page = `<div id="page" class="page col-md-12 col-lg-12 col-sm-12 col-xs-12">
+            ${header} ${content}  ${sidebar} ${footer}
+            </div > `;
+
+            $("#body").append(page);
+        }
+
+    //--<> Helper
+        function convertDate(getDate) {
+            const month = new Array();
+            month[0] = "Januari";
+            month[1] = "Februari";
+            month[2] = "Maret";
+            month[3] = "April";
+            month[4] = "Mei";
+            month[5] = "Juni";
+            month[6] = "Juli";
+            month[7] = "Augustus";
+            month[8] = "September";
+            month[9] = "Oktober";
+            month[10] = "November";
+            month[11] = "Desember";
+
+
+            const weekday = new Array(7);
+            weekday[0] = "Minggu";
+            weekday[1] = "Senin";
+            weekday[2] = "Selasa";
+            weekday[3] = "Rabu";
+            weekday[4] = "Kamis";
+            weekday[5] = "Juma't";
+            weekday[6] = "Sabtu";
+
+            //let day = weekday[d.getDay()];
+
+            var date = getDate.split("T")[0];
+            //var createdate = new Date(date);
+            //var newdate = new Date();
+            //console.log(createdate.getMonth());
+            var parts = date.split('-');
+            var createdate = new Date(parts[0], parts[1] - 1, parts[2]);
+
+            //var result = mydate.toShortFormat();
+
+            var result = weekday[createdate.getDay()]+' / '+createdate.getDate()+' '+month[createdate.getMonth()]+' '+createdate.getFullYear();
+            //$('#tgl').text(result);
+            return result;
+        }
+
+        function getTotalPage(limit, mhsLenght) {
+            var page = 0;
+            //mhsLenght = 112;
+            //console.log(mhsLenght);
+            //console.log(limit);
+            if (mhsLenght < limit) {
+                page = 1;
+                //console.log('hello');
+            } else if (mhsLenght > limit) {
+                page = parseInt(mhsLenght / limit);
+
+                if (mhsLenght % limit > 0) {
+                    page++;
+                }
+            }
+
+            // console.log(page);
+            return page;
+        }
     </script>
 </body>
 </html>

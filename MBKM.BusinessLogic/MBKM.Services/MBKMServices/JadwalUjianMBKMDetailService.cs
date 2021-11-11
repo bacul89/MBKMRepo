@@ -15,8 +15,9 @@ namespace MBKM.Services.MBKMServices
     public interface IJadwalUjianMBKMDetailService : IEntityService<JadwalUjianMBKMDetail>
     {
         List<VMClassSection> getSection();
-        VMListJadwalUjian SearchListJadwalUjian(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm, string idMatakuliah, string seksi);
+        VMListJadwalUjian GetDHU(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm, string idMatakuliah, string seksi);
         VMDosenMakulPertemuan GetDosen(string seksi, string kodeMataKuliah, string strm, string fakultasId);
+        List<VMJadwalUjian> GetAttrubuteDHU(string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm, string idMatakuliah, string seksi);
     }
     public class JadwalUjianMBKMDetailService : EntityService<JadwalUjianMBKMDetail>, IJadwalUjianMBKMDetailService
     {
@@ -40,7 +41,7 @@ namespace MBKM.Services.MBKMServices
             return _jadwalRepository.GetListSeksi();
         }
 
-        public VMListJadwalUjian SearchListJadwalUjian(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm, string idMatakuliah, string seksi)
+        public VMListJadwalUjian GetDHU(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm, string idMatakuliah, string seksi)
         {
             var searchBy = (model.search != null) ? model.search.value : null;
             var take = model.length;
@@ -58,7 +59,12 @@ namespace MBKM.Services.MBKMServices
                 sortBy = "ID";
             sortBy = sortBy + " " + model.order[0].dir.ToUpper();
 
-            return _jadwalRepository.SearchListJadwalUjian(skip, take, searchBy, sortBy, sortDir, idProdi, lokasi, idFakultas, jenjangStudi, strm, idMatakuliah, seksi);
+            return _jadwalRepository.GetDHU(skip, take, searchBy, sortBy, sortDir, idProdi, lokasi, idFakultas, jenjangStudi, strm, idMatakuliah, seksi);
+        }
+
+        public List<VMJadwalUjian> GetAttrubuteDHU(string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm, string idMatakuliah, string seksi)
+        {
+            return _jadwalRepository.GetDHUTest(idProdi, lokasi, idFakultas, jenjangStudi, strm, idMatakuliah, seksi);
         }
     }
 }

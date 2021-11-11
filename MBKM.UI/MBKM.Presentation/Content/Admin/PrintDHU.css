@@ -1,0 +1,11 @@
+﻿@media print {
+    .pagebreak {
+        page-break-before: always;
+        padding: 50px 0px;
+    }
+
+    @page {
+        size: auto; /* auto is the initial value */
+        margin: 0mm; /* this affects the margin in the printer settings */
+    }
+}
