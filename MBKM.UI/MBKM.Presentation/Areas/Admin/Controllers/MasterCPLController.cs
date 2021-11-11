@@ -55,15 +55,29 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult PostDataCPL(MasterCapaianPembelajaran model)
         {
-
             try
             {
-                model.CreatedDate = DateTime.Now;
-                model.UpdatedDate = DateTime.Now;
-                model.IsDeleted = false;
-                model.IsActive = model.IsActive;
-                model.CreatedBy = Session["username"] as string;
-                _mcpService.Save(model);
+                var LoopLokasi = _cplMatakuliah.GetProdiLocByFakultas(model.JenjangStudi, model.FakultasID, "");
+                var prodiTerpilih = LoopLokasi.Where(x => x.NamProdi == model.NamaProdi).ToList();
+                foreach(var d in prodiTerpilih)
+                {
+                    MasterCapaianPembelajaran dataSimpan = new MasterCapaianPembelajaran();
+                    dataSimpan.FakultasID = model.FakultasID;
+                    dataSimpan.NamaFakultas = model.NamaFakultas;
+                    dataSimpan.JenjangStudi = model.JenjangStudi;
+                    dataSimpan.Kelompok = model.Kelompok;
+                    dataSimpan.Kode = model.Kode;
+                    dataSimpan.Capaian = model.Capaian;
+                    dataSimpan.CreatedDate = DateTime.Now;
+                    dataSimpan.UpdatedDate = DateTime.Now;
+                    dataSimpan.IsDeleted = false;
+                    dataSimpan.IsActive = model.IsActive;
+                    dataSimpan.CreatedBy = Session["username"] as string;
+                    dataSimpan.Lokasi = d.Lokasi;
+                    dataSimpan.ProdiID = d.IDProdi;
+                    dataSimpan.NamaProdi = d.NamProdi;
+                    _mcpService.Save(dataSimpan);
+                }
                 return Json(new ServiceResponse { status = 200, message = "Pendaftaran CPL Berhasil!" });
             }
             catch (Exception e)
@@ -131,7 +145,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
         public ActionResult GetProdiLocByFakultas(string JenjangStudi, string idFakultas, string search)
         {
-            return Json(_cplMatakuliah.GetProdiLocByFakultas(JenjangStudi, idFakultas, search), JsonRequestBehavior.AllowGet);
+            var data = _cplMatakuliah.GetProdiLocByFakultas(JenjangStudi, idFakultas, search);
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
     }
 }

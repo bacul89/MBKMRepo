@@ -113,23 +113,18 @@
                                 <div class="col-sm-9">
                                     <select name="fakultas" id="fakultas" class="form-control input-pendaftaran input-data"></select>
                                 </div>
-
                             </div>
                             <div class="form-group "hidden>
                                 <label for="prodi" class="col-sm-3 control-label">Program Studi</label>
                                 <div class="col-sm-9">
-
                                     <select name="prodi" id="prodi" class="form-control input-pendaftaran input-data"></select>
                                 </div>
-
                             </div>
                             <div class="form-group ">
                                 <label for="prodi" class="col-sm-3 control-label">Program Studi</label>
                                 <div class="col-sm-9">
-
                                     <select name="prodi2" id="prodi2" class="form-control input-pendaftaran input-data"></select>
                                 </div>
-
                             </div>
                             <div class="form-group "hidden>
                                 <label for="lokasi" class="col-sm-3 control-label">Lokasi</label>
@@ -628,19 +623,12 @@
             var formInputUser = new Object();
             var latest_valueFakultas = $("option:selected:first", "#fakultas").text();
             var latest_valueJenjang = $("option:selected:first", "#jenjang").text();
-            var latest_valueProdi = $("option:selected:first", "#prodi").text();
             var latest_valueProdi2 = $("option:selected:first", "#prodi2").val(); //idprodi
             var latest_valueProdi3 = ($("option:selected:first", "#prodi2").text()); //concated prodi-lokasi
             var getNamaProd = latest_valueProdi3.substring(0, latest_valueProdi3.indexOf("-"));
             var getLok = latest_valueProdi3.substring(latest_valueProdi3.indexOf('-') + 1) //split concated item //note kurang nama prodi
-            var latest_valueLokasi = $("option:selected:first", "#lokasi").text();
-            console.log(latest_valueProdi2);
-            console.log(latest_valueProdi3);
-            console.log(getLok);
-            console.log(getNamaProd);
 
             formInputUser.FakultasID = $('#fakultas').val();
-            //var asd = $('#fakultas').on('select2:select');
             formInputUser.NamaFakultas = latest_valueFakultas;
             formInputUser.ProdiID = latest_valueProdi2;
             formInputUser.NamaProdi = getNamaProd;
@@ -900,44 +888,57 @@
         }
 
         function GenerateTable() {
-            var dataFilter = {};
-            dataFilter.jenjangStudi = $('#inp_jenjang :selected').val();
-            dataFilter.fakultas = $('#inp_fakultas :selected').val();
-            dataFilter.prodi = $('#inp_prodi :selected').val();
-            tableUser.destroy();
-            tableUser = $('#TableList').DataTable({
-                "columnDefs": [{
-                    "searchable": false,
-                    "orderable": false,
-                    "paging": false,
-                    "targets": 0,
-                }],
-                "proccessing": true,
-                "serverSide": true,
-                "order": [[1, 'asc']],
-                "ajax": {
-                    url: '/Admin/MasterCPL/GetList',
-                    data: {
-                        jenjang: $('#inp_jenjang :selected').val(),
-                        fakultas: $('#inp_fakultas :selected').val(),
-                        prodi: $('#inp_prodi :selected').val()
+            if (!CustomValidation()) {
+                $.LoadingOverlay("hide");
+                Swal.fire({
+                    title: 'Oppss',
+                    icon: 'warning',
+                    html: 'Masukkan Fiter Pencarian',
+                    showCloseButton: true,
+                    showCancelButton: false,
+                    focusConfirm: false,
+                    confirmButtonText: 'OK'
+                })
+            } else {
+
+                var dataFilter = {};
+                dataFilter.jenjangStudi = $('#inp_jenjang :selected').val();
+                dataFilter.fakultas = $('#inp_fakultas :selected').val();
+                dataFilter.prodi = $('#inp_prodi :selected').val();
+                tableUser.destroy();
+                tableUser = $('#TableList').DataTable({
+                    "columnDefs": [{
+                        "searchable": false,
+                        "orderable": false,
+                        "paging": false,
+                        "targets": 0,
+                    }],
+                    "proccessing": true,
+                    "serverSide": true,
+                    "order": [[1, 'asc']],
+                    "ajax": {
+                        url: '/Admin/MasterCPL/GetList',
+                        data: {
+                            jenjang: $('#inp_jenjang :selected').val(),
+                            fakultas: $('#inp_fakultas :selected').val(),
+                            prodi: $('#inp_prodi :selected').val()
+                        },
+                        //dataSrc: ''
+                        type: 'POST'
                     },
-                    //dataSrc: ''
-                    type: 'POST'
-                },
-                "language": {
-                    "emptyTable": "No record found.",
-                    "processing":
-                        '<i class="fa fa-spinner fa-spin fa-3x fa-fw" style="color:#2a2b2b;"></i><span class="sr-only">Loading...</span> ',
-                    "search": "Search:",
-                    "searchPlaceholder": ""
-                },
-                "columns": [
-                    {
-                        "title": "Action",
-                        "data": "ID",
-                        "render": function (data, type, row, meta) {
-                            return `<div class="row justify-content-center">
+                    "language": {
+                        "emptyTable": "No record found.",
+                        "processing":
+                            '<i class="fa fa-spinner fa-spin fa-3x fa-fw" style="color:#2a2b2b;"></i><span class="sr-only">Loading...</span> ',
+                        "search": "Search:",
+                        "searchPlaceholder": ""
+                    },
+                    "columns": [
+                        {
+                            "title": "Action",
+                            "data": "ID",
+                            "render": function (data, type, row, meta) {
+                                return `<div class="row justify-content-center">
                             <div class="col" style="text-align:center">
 
                                <a href="javascript:void(0)" style="color:black" onclick="UpdateMasterCPL('${data}')"> <i class="fas fa-edit coral" ></i></a>
@@ -949,53 +950,54 @@
 
                             </div>
                         </div>`;
-                        }
-                    },
-                    {
-                        "orderable": false,
-                        "data": null,
-                        "render": function (data, type, full, meta) {
-                            return '<div class="center">' + (meta.row + meta.settings._iDisplayStart + 1) + '</div>';
-                        }
-                    },
-                    {
-                        //"title": "Nomor Induk Pegawai",
-                        "data": "Kode",
-                        "name": "Kode",
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
-                        }
-                    },
-                    {
-                        //"title": "Nama",
-                        "data": "Kelompok",
-                        "name": "Kelompok",
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
-                        }
-                    },
-                    {
-                        //"title": "Email",
-                        "data": "Capaian",
-                        "name": "Capaian",
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + data + '</div>';
-                        }
-                    },
+                            }
+                        },
+                        {
+                            "orderable": false,
+                            "data": null,
+                            "render": function (data, type, full, meta) {
+                                return '<div class="center">' + (meta.row + meta.settings._iDisplayStart + 1) + '</div>';
+                            }
+                        },
+                        {
+                            //"title": "Nomor Induk Pegawai",
+                            "data": "Kode",
+                            "name": "Kode",
+                            "render": function (data, type, row, meta) {
+                                return '<div class="center">' + data + '</div>';
+                            }
+                        },
+                        {
+                            //"title": "Nama",
+                            "data": "Kelompok",
+                            "name": "Kelompok",
+                            "render": function (data, type, row, meta) {
+                                return '<div class="center">' + data + '</div>';
+                            }
+                        },
+                        {
+                            //"title": "Email",
+                            "data": "Capaian",
+                            "name": "Capaian",
+                            "render": function (data, type, row, meta) {
+                                return '<div class="center">' + data + '</div>';
+                            }
+                        },
 
 
 
 
-                ],
-                "createdRow": function (row, data, index) {
-                    $('td', row).css({
-                        'border': '1px solid coral',
-                        'border-collapse': 'collapse',
-                        'vertical-align': 'center',
-                    });
+                    ],
+                    "createdRow": function (row, data, index) {
+                        $('td', row).css({
+                            'border': '1px solid coral',
+                            'border-collapse': 'collapse',
+                            'vertical-align': 'center',
+                        });
 
-                }
-            });
+                    }
+                });
+            }
         }
 
         //lookup kelompok
@@ -1025,6 +1027,6 @@
         }
 
     </script>
-    <script src="~/Scripts/Admin/MasterCPL/crud.js"></script>
+    @*<script src="~/Scripts/Admin/MasterCPL/crud.js"></script>*@
 }
 
