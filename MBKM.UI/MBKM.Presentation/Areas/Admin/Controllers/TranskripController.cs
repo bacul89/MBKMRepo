@@ -33,14 +33,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             _lookupService = lookupService;
         }
 
-
-
-
-
         // GET: Admin/Transkrip
         public ActionResult Index()
         {
-            //Session["username"] = "Smitty Werben Jeger Man Jensen";
             return View();
         }
 

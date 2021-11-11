@@ -606,8 +606,15 @@ function reloadDatatable() {
                 }
             },
 
-
             {
+                //"title": "Email",
+                "data": "SKS",
+                "name": "SKS",
+                "render": function (data, type, row, meta) {
+                    return '<div class="center">' + data + '</div>';
+                }
+            },
+            /*{
                 //"title": "Email",
                 "data": "TipeUjian",
                 "name": "TipeUjian",
@@ -638,7 +645,7 @@ function reloadDatatable() {
                 "render": function (data, type, row, meta) {
                     return '<div class="center">' + data + '</div>';
                 }
-            },
+            },*/
 
             {
                 //"title": "Email",
