@@ -59,9 +59,7 @@ function convertBirthday() {
 
 
 
-/* --responsive */
 $(document).ready(function () {
-    checkStatusSertifikat();
     $("#print").hide();
 
     var date = new Date();
@@ -209,10 +207,8 @@ function showValue(result, NilaiGrades) {
 
 
     for (var i = 0; i < result.length; i++) {
-        if (i == 0 && result[0].FlagCetak == false) {
-            $("#btnCetak").prop("disabled", false);
-        } else if (i == 0 && result[0].FlagCetak == true){
-            $("#btnCetak").prop("disabled", true);
+        if (i == 0) {
+            CheckStatusFeedback(result[0].FlagCetak);
         }
 
         var kodematakuliah = "<td>" + result[i].KodeMataKuliah + "</td>";
@@ -440,3 +436,30 @@ function printSertifikat() {
         }
     })
 }
+
+
+function CheckStatusFeedback(FlagTranscript) {
+    $.ajax({
+        url: '/Portal/TranskripMahasiswa/CheckStatusFeedback',
+        type: 'POST',
+        datatype: 'json',
+        success: function (result) {
+           // console.log(result);
+            var status = result[5];
+            if (status == 'Belum Feedback') {
+                $("#btnCetak").prop("disabled", true);
+                $("#sertifikatCetak").prop("disabled", true);
+            } else {
+                checkStatusSertifikat();
+
+                if (FlagTranscript == true) {
+                    $("#btnCetak").prop("disabled", true);
+                } else {
+                    $("#btnCetak").prop("disabled", false);
+                }
+            }
+        }
+    })
+
+}
+
