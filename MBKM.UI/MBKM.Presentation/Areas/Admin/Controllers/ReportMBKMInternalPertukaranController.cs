@@ -23,8 +23,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private IFeedbackMatkulService _feedbackMatkulService;
         private IJadwalKuliahService _jadwalKuliahService;
         private IJadwalUjianMBKMService _jadwalUjianMBKMService;
+        private INilaiKuliahService _nilaiKuliahService;
 
-        public ReportMBKMInternalPertukaranController(IPendaftaranMataKuliahService pendaftaranMataKuliahService, IMahasiswaService mahasiswaService, IInformasiPertukaranService informasiPertukaranService, IFeedbackMatkulService feedbackMatkulService, IJadwalKuliahService jadwalKuliahService, IJadwalUjianMBKMService jadwalUjianMBKMService)
+        public ReportMBKMInternalPertukaranController(IPendaftaranMataKuliahService pendaftaranMataKuliahService, IMahasiswaService mahasiswaService, IInformasiPertukaranService informasiPertukaranService, IFeedbackMatkulService feedbackMatkulService, IJadwalKuliahService jadwalKuliahService, IJadwalUjianMBKMService jadwalUjianMBKMService, INilaiKuliahService nilaiKuliahService)
         {
             _pendaftaranMataKuliahService = pendaftaranMataKuliahService;
             _mahasiswaService = mahasiswaService;
@@ -32,7 +33,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             _feedbackMatkulService = feedbackMatkulService;
             _jadwalKuliahService = jadwalKuliahService;
             _jadwalUjianMBKMService = jadwalUjianMBKMService;
+            _nilaiKuliahService = nilaiKuliahService;
         }
+
+
 
         // GET: Admin/ReportMBKMInternalPertukaran
         public ActionResult Index()
@@ -51,21 +55,46 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             List<String[]> final = new List<String[]>();
             foreach (var d in dataMahasiswa)
             {
-                final.Add(new String[]{
-                    dataSemester.Nama,
-                    d.JadwalKuliahs.JenjangStudi,
-                    d.mahasiswas.NIM,
-                    d.mahasiswas.Nama,
-                    d.JadwalKuliahs.NamaProdi,
-                    d.JadwalKuliahs.KodeMataKuliah,
-                    d.JadwalKuliahs.NamaMataKuliah,
-                    d.JadwalKuliahs.SKS,
-                    d.NilaiKuliah.Grade,
-                    d.MatkulKodeAsal,
-                    d.MatkulAsal,
-                    "A",
-                    "4.00"
-                });
+
+                var checkNilai = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.MatkulIDAsal.ToString().PadLeft(6, '0'), d.MatkulKodeAsal, d.mahasiswas.ID.ToString());
+/*                var checkNilai = _nilaiKuliahService.GetNilaiDiakui("S1","2110", "001320", "FHK 214", "2015050251");
+*/              if(checkNilai == null)
+                {
+                    final.Add(new String[]{
+                        dataSemester.Nama,
+                        d.JadwalKuliahs.JenjangStudi,
+                        d.mahasiswas.NIM,
+                        d.mahasiswas.Nama,
+                        d.JadwalKuliahs.NamaProdi,
+                        d.JadwalKuliahs.KodeMataKuliah,
+                        d.JadwalKuliahs.NamaMataKuliah,
+                        d.JadwalKuliahs.SKS,
+                        d.NilaiKuliah.Grade,
+                        d.MatkulKodeAsal,
+                        d.MatkulAsal,
+                        "-",
+                        "-",
+                    });
+                }
+                else
+                {
+                    final.Add(new String[]{
+                        dataSemester.Nama,
+                        d.JadwalKuliahs.JenjangStudi,
+                        d.mahasiswas.NIM,
+                        d.mahasiswas.Nama,
+                        d.JadwalKuliahs.NamaProdi,
+                        d.JadwalKuliahs.KodeMataKuliah,
+                        d.JadwalKuliahs.NamaMataKuliah,
+                        d.JadwalKuliahs.SKS,
+                        d.NilaiKuliah.Grade,
+                        d.MatkulKodeAsal,
+                        d.MatkulAsal,
+                        checkNilai.NilaiDiakui,
+                        checkNilai.BobotDiakui,
+                    });
+                }
+
             }
             return Json(final);
         }
@@ -79,21 +108,45 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             List<String[]> final = new List<String[]>();
             foreach (var d in dataMahasiswa)
             {
-                final.Add(new String[]{
-                    dataSemester.Nama,
-                    d.JadwalKuliahs.JenjangStudi,
-                    d.mahasiswas.NIM,
-                    d.mahasiswas.Nama,
-                    d.JadwalKuliahs.NamaProdi,
-                    d.JadwalKuliahs.KodeMataKuliah,
-                    d.JadwalKuliahs.NamaMataKuliah,
-                    d.JadwalKuliahs.SKS,
-                    d.NilaiKuliah.Grade,
-                    d.MatkulKodeAsal,
-                    d.MatkulAsal,
-                    "A",
-                    "4.00"
-                });
+                var checkNilai = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.MatkulIDAsal.ToString().PadLeft(6, '0'), d.MatkulKodeAsal, d.mahasiswas.ID.ToString());
+                /*                var checkNilai = _nilaiKuliahService.GetNilaiDiakui("S1","2110", "001320", "FHK 214", "2015050251");
+                */
+                if (checkNilai == null)
+                {
+                    final.Add(new String[]{
+                        dataSemester.Nama,
+                        d.JadwalKuliahs.JenjangStudi,
+                        d.mahasiswas.NIM,
+                        d.mahasiswas.Nama,
+                        d.JadwalKuliahs.NamaProdi,
+                        d.JadwalKuliahs.KodeMataKuliah,
+                        d.JadwalKuliahs.NamaMataKuliah,
+                        d.JadwalKuliahs.SKS,
+                        d.NilaiKuliah.Grade,
+                        d.MatkulKodeAsal,
+                        d.MatkulAsal,
+                        "-",
+                        "-",
+                    });
+                }
+                else
+                {
+                    final.Add(new String[]{
+                        dataSemester.Nama,
+                        d.JadwalKuliahs.JenjangStudi,
+                        d.mahasiswas.NIM,
+                        d.mahasiswas.Nama,
+                        d.JadwalKuliahs.NamaProdi,
+                        d.JadwalKuliahs.KodeMataKuliah,
+                        d.JadwalKuliahs.NamaMataKuliah,
+                        d.JadwalKuliahs.SKS,
+                        d.NilaiKuliah.Grade,
+                        d.MatkulKodeAsal,
+                        d.MatkulAsal,
+                        checkNilai.NilaiDiakui,
+                        checkNilai.BobotDiakui,
+                    });
+                }
             }
             var semesterSekarang = dataSemester.Nama.Split(' ');
             ViewData["TahunSemester"] = semesterSekarang.Last();
@@ -124,21 +177,45 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             List<String[]> final = new List<String[]>();
             foreach (var d in dataMahasiswa)
             {
-                final.Add(new String[]{
-                    dataSemester.Nama,
-                    d.JadwalKuliahs.JenjangStudi,
-                    d.mahasiswas.NIM,
-                    d.mahasiswas.Nama,
-                    d.JadwalKuliahs.NamaProdi,
-                    d.JadwalKuliahs.KodeMataKuliah,
-                    d.JadwalKuliahs.NamaMataKuliah,
-                    d.JadwalKuliahs.SKS,
-                    d.NilaiKuliah.Grade,
-                    d.MatkulKodeAsal,
-                    d.MatkulAsal,
-                    "A",
-                    "4.00"
-                });
+                var checkNilai = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.MatkulIDAsal.ToString().PadLeft(6, '0'), d.MatkulKodeAsal, d.mahasiswas.ID.ToString());
+                /*                var checkNilai = _nilaiKuliahService.GetNilaiDiakui("S1","2110", "001320", "FHK 214", "2015050251");
+                */
+                if (checkNilai == null)
+                {
+                    final.Add(new String[]{
+                        dataSemester.Nama,
+                        d.JadwalKuliahs.JenjangStudi,
+                        d.mahasiswas.NIM,
+                        d.mahasiswas.Nama,
+                        d.JadwalKuliahs.NamaProdi,
+                        d.JadwalKuliahs.KodeMataKuliah,
+                        d.JadwalKuliahs.NamaMataKuliah,
+                        d.JadwalKuliahs.SKS,
+                        d.NilaiKuliah.Grade,
+                        d.MatkulKodeAsal,
+                        d.MatkulAsal,
+                        "-",
+                        "-",
+                    });
+                }
+                else
+                {
+                    final.Add(new String[]{
+                        dataSemester.Nama,
+                        d.JadwalKuliahs.JenjangStudi,
+                        d.mahasiswas.NIM,
+                        d.mahasiswas.Nama,
+                        d.JadwalKuliahs.NamaProdi,
+                        d.JadwalKuliahs.KodeMataKuliah,
+                        d.JadwalKuliahs.NamaMataKuliah,
+                        d.JadwalKuliahs.SKS,
+                        d.NilaiKuliah.Grade,
+                        d.MatkulKodeAsal,
+                        d.MatkulAsal,
+                        checkNilai.NilaiDiakui,
+                        checkNilai.BobotDiakui,
+                    });
+                }
             }
 
             ExcelPackage package = new ExcelPackage();
