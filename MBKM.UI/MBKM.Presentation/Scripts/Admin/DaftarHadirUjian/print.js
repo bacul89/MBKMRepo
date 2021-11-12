@@ -195,12 +195,12 @@ function generateHeader(ujian, semester, page, pageTotal) {
                                     <td class="space"></td>
                                     <td class="p-tb8"><b>SEKSI</b></td>
                                     <td class="p-tb10lr5">:</td>
-                                    <td class="p-tb10" id="seksi" style="width:21%">${ujian.ClassSection}</td>
+                                    <td class="p-tb10" id="seksi" style="width:22%">${ujian.ClassSection}</td>
                                 </tr>
                                 <tr>
                                     <td class="p-tb10"><b>PROGRAM STUDI</b></td>
                                     <td class="p-tb10lr5">:</td>
-                                    <td class="p-tb10" id="prodi">${ujian.NamaProdi}</td>
+                                    <td class="p-tb10" id="prodi" style="text-transform: uppercase;">${ujian.NamaProdi}</td>
                                     <td class="space"></td>
                                     <td class="p-tb8"><b>KOMPONEN</b></td>
                                     <td class="p-tb10lr5">:</td>
@@ -213,7 +213,7 @@ function generateHeader(ujian, semester, page, pageTotal) {
                                     <td class="space"></td>
                                     <td class="p-tb8"><b>HARI / TGL</b></td>
                                     <td class="p-tb10lr5">:</td>
-                                    <td class="p-tb10" id="tgl">${convertMilisecondToDate(ujian.TanggalUjian)}</td>
+                                    <td class="p-tb10" id="tgl" style="text-transform: uppercase;">${convertMilisecondToDate(ujian.TanggalUjian)}</td>
                                 </tr>
                                 <tr>
                                     <td class="p-tb10"><b>NAMA MATAKULIAH</b></td>
@@ -236,7 +236,7 @@ function generateHeader(ujian, semester, page, pageTotal) {
                                 <tr>
                                     <td class="p-tb10"><b>DOSEN</b></td>
                                     <td class="p-tb10lr5">:</td>
-                                    <td class="p-tb10" id="dosen">${ujian.Dosen} - ${ujian.NamaDosen}</td>
+                                    <td class="p-tb10" id="dosen">${ujian.DosenID} - ${ujian.NamaDosen}</td>
                                     <td class="space"></td>
                                     <td class="p-tb8"><b>HALAMAN</b></td>
                                     <td class="p-tb10lr5">:</td>

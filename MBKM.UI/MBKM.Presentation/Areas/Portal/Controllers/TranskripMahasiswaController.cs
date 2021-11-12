@@ -29,8 +29,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         private IMahasiswaService _mahasiswaService;
         private ILookupService _lookupService;
         private IPendaftaranMataKuliahService _pendaftaranMataKuliahService;
+        private IFeedbackMatkulService _feedbackMatkulService;
 
-        public TranskripMahasiswaController(INilaiKuliahService transkripService, IJadwalKuliahMahasiswaService jkMhsService, IMahasiswaService mahasiswaService, ILookupService lookupService, IPendaftaranMataKuliahService pendaftaranMKService)
+        public TranskripMahasiswaController(INilaiKuliahService transkripService, IJadwalKuliahMahasiswaService jkMhsService, IMahasiswaService mahasiswaService, ILookupService lookupService, IPendaftaranMataKuliahService pendaftaranMKService, IFeedbackMatkulService feedbackMatkulService)
         {
             
             _transkripService = transkripService;
@@ -38,6 +39,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             _jkMhsService = jkMhsService;
             _lookupService = lookupService;
             _pendaftaranMataKuliahService = pendaftaranMKService;
+            _feedbackMatkulService = feedbackMatkulService;
         }
 
 
@@ -113,28 +115,65 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         [HttpPost]
         public ActionResult UpdateStatus(int idMahasiswa)
         {
-
             try
             {
-                var dataList = _transkripService.Find(x => x.MahasiswaID == idMahasiswa).ToList();
-                foreach (var item in dataList)
+                string email = Session["emailMahasiswa"] as string;
+                Mahasiswa mahasiswa = GetMahasiswaByEmail(email);
+                VMSemester semester = _jkMhsService.getOngoingSemester(mahasiswa.JenjangStudi);
+
+                var strmString = semester.ID;
+                int strm = Int32.Parse(strmString.ToString());
+
+                var data = _feedbackMatkulService.Find(x => x.JadwalKuliahs.STRM == strm).Where(x => x.MahasiswaID == mahasiswa.ID)
+                    .GroupBy(z => new { z.MahasiswaID, z.StatusFeedBack, z.Mahasiswas, z.JadwalKuliahID })
+                    .Select(s => new { MahasiswaID = s.Key.MahasiswaID, Status = s.Key.StatusFeedBack, Mahasiswas = s.Key.Mahasiswas, JadwalID = s.Key.JadwalKuliahID }).ToList();
+
+                var data2 = data.GroupBy(z => new { z.MahasiswaID, z.Mahasiswas })
+                    .Select(s => new { MahasiswaID = s.Key.MahasiswaID, Mahasiswas = s.Key.Mahasiswas }).ToList();
+
+                var data3 = data.GroupBy(z => new { z.MahasiswaID, z.Mahasiswas, z.JadwalID })
+                    .Select(s => new { MahasiswaID = s.Key.MahasiswaID, Mahasiswas = s.Key.Mahasiswas }).ToList();
+
+                var pendaftaran = _pendaftaranMataKuliahService.Find(x => x.JadwalKuliahs.STRM == strm).ToList();
+
+                List<String[]> final = new List<String[]>();
+                var DescSemester = _feedbackMatkulService.GetSemesterByStrm(strmString.ToString());
+                foreach (var d in data2)
                 {
+                    var dataCheck = data.Where(x => x.MahasiswaID == d.MahasiswaID && x.Status == false).Count();
+                    var MatkulPendaftaranCheck = pendaftaran.Where(x => x.MahasiswaID == d.MahasiswaID).Count();
+                    var matkulFeedbackCheck = data3.Where(x => x.MahasiswaID == d.MahasiswaID).Count();
 
-                    if (item.FlagCetak == false)
+                    if (dataCheck == 0 && (matkulFeedbackCheck == MatkulPendaftaranCheck))
                     {
-                        long id = item.ID;
-                        var data = _transkripService.Get(id);
-                        data.FlagCetak = true;
-                        data.UpdatedBy = Session["nama"] as string;
+                        var dataList = _transkripService.Find(x => x.MahasiswaID == idMahasiswa).ToList();
+                        foreach (var item in dataList)
+                        {
 
-                        _transkripService.Save(data);
+                            if (item.FlagCetak == false)
+                            {
+                                long id = item.ID;
+                                var dataSave = _transkripService.Get(id);
+                                dataSave.FlagCetak = true;
+                                dataSave.UpdatedBy = Session["nama"] as string;
+
+                                _transkripService.Save(dataSave);
+                            }
+                            else
+                            {
+                                return Json(new ServiceResponse { status = 500, message = "Cetak Gagal Silakhan Hubungi BAA!!!" });
+                            }
+
+                        }
+
+
                     }
                     else
                     {
-                        return Json(new ServiceResponse { status = 500, message = "Cetak Gagal Silakhan Hubungi BAA!!!" });
+                        return Json(new ServiceResponse { status = 500, message = "Silahkan Mengisi Feedback Terlebih Dahulu!!!" });
                     }
-
                 }
+
 
                 return Json(new ServiceResponse { status = 200, message = "Cetak Berhasil..." });
             }
@@ -145,7 +184,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
 
         }
 
-        public ActionResult PrintTranskrip()
+        /*public ActionResult PrintTranskrip()
         {
             Session["email"] = "sabangsasabana@gmail.com";
             string email = Session["emailMahasiswa"] as string;
@@ -153,67 +192,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             Mahasiswa model = GetMahasiswaByEmail(email);
             return View("PrintTranskrip", model);
 
-        }
-
-
-        public ActionResult ExportPDF()
-        {
-
-            Session["email"] = "sabangsasabana@gmail.com";
-            string email = Session["emailMahasiswa"] as string;
-            Mahasiswa model = GetMahasiswaByEmail(email);
-            return new ViewAsPdf("ExportPDF", model)
-            {
-                FileName = "ReportShift.pdf",
-                PageSize = Size.A4,
-                PageOrientation = Orientation.Landscape,
-                //CustomSwitches = footer,
-                PageMargins = new Margins(10, 3, 20, 3)
-
-            };
-
-
-
-
-            /*return new ActionAsPdf("Index")
-            {
-                FileName = Server.MapPath("~/Content/Relato.pdf"),
-                PageOrientation = Rotativa.Options.Orientation.Landscape,
-                PageSize = Rotativa.Options.Size.A4
-            };*/
-        }
-
-
-        public ActionResult ExportNew()
-        {
-
-            Session["email"] = "sabangsasabana@gmail.com";
-            string email = Session["email"] as string;
-            Mahasiswa model = GetMahasiswaByEmail(email);
-            return new ViewAsPdf("PrintTranskrip", model)
-            {
-                FileName = "ReportShift.pdf",
-                PageSize = Size.A4,
-                PageOrientation = Orientation.Landscape,
-                //CustomSwitches = footer,
-                PageMargins = new Margins(10, 3, 20, 3)
-
-            };
-        }
-
-
-        /*public async Task<IActionResult> Tes(){
-                    var pdf = new Rotativa.ViewAsPdf("Tes")
-                    {
-                        FileName = "C:\\Test.pdf",
-                        PageSize = Rotativa.Options.Size.A4,
-                        PageOrientation = Rotativa.Options.Orientation.Portrait,
-                        PageHeight = 20,
-                    };
-
-                    var byteArray = await pdf.BuildFile(ControllerContext);
-                    return File(byteArray, "application/pdf");
         }*/
+
+
 
 
         //---<> Sertifikat
@@ -312,6 +293,63 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
 
         }
 
+        [HttpPost]
+        public ActionResult CheckStatusFeedback()
+        {
+            string email = Session["emailMahasiswa"] as string;
+            Mahasiswa mahasiswa = GetMahasiswaByEmail(email);
+            VMSemester semester = _jkMhsService.getOngoingSemester(mahasiswa.JenjangStudi);
+            
+            var strmString = semester.ID;
+            int strm = Int32.Parse(strmString.ToString());
+
+            var data = _feedbackMatkulService.Find(x => x.JadwalKuliahs.STRM == strm).Where(x => x.MahasiswaID == mahasiswa.ID)
+                .GroupBy(z => new { z.MahasiswaID, z.StatusFeedBack, z.Mahasiswas, z.JadwalKuliahID })
+                .Select(s => new { MahasiswaID = s.Key.MahasiswaID, Status = s.Key.StatusFeedBack, Mahasiswas = s.Key.Mahasiswas, JadwalID = s.Key.JadwalKuliahID }).ToList();
+
+            var data2 = data.GroupBy(z => new { z.MahasiswaID, z.Mahasiswas })
+                .Select(s => new { MahasiswaID = s.Key.MahasiswaID, Mahasiswas = s.Key.Mahasiswas }).ToList();
+
+            var data3 = data.GroupBy(z => new { z.MahasiswaID, z.Mahasiswas, z.JadwalID })
+                .Select(s => new { MahasiswaID = s.Key.MahasiswaID, Mahasiswas = s.Key.Mahasiswas }).ToList();
+
+            var pendaftaran = _pendaftaranMataKuliahService.Find(x => x.JadwalKuliahs.STRM == strm).ToList();
+
+            List<String[]> final = new List<String[]>();
+            var DescSemester = _feedbackMatkulService.GetSemesterByStrm(strmString.ToString());
+            foreach (var d in data2)
+            {
+                var dataCheck = data.Where(x => x.MahasiswaID == d.MahasiswaID && x.Status == false).Count();
+                var MatkulPendaftaranCheck = pendaftaran.Where(x => x.MahasiswaID == d.MahasiswaID).Count();
+                var matkulFeedbackCheck = data3.Where(x => x.MahasiswaID == d.MahasiswaID).Count();
+
+                if (dataCheck == 0 && (matkulFeedbackCheck == MatkulPendaftaranCheck))
+                {
+                    final.Add(new String[]{
+                        d.MahasiswaID.ToString(),
+                        DescSemester.Nama,
+                        d.Mahasiswas.NamaUniversitas,
+                        d.Mahasiswas.NIM,
+                        d.Mahasiswas.Nama,
+                        "Sudah Feedback",
+                        d.Mahasiswas.FlagBayar.ToString()
+                    });
+                }
+                else
+                {
+                    final.Add(new String[]{
+                        d.MahasiswaID.ToString(),
+                        DescSemester.Nama,
+                        d.Mahasiswas.NamaUniversitas,
+                        d.Mahasiswas.NIM,
+                        d.Mahasiswas.Nama,
+                        "Belum Feedback",
+                        d.Mahasiswas.FlagBayar.ToString()
+                    });
+                }
+            }
+            return Json(final);
+        }
 
 
         //-- SP

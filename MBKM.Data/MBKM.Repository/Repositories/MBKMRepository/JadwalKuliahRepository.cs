@@ -237,5 +237,39 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return result;
             }
         }
+
+
+        IEnumerable<JadwalKuliah> IJadwalKuliahRepository.GetMatkulFlag(int skip, int take, string searchBy, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm)
+        {
+            if (String.IsNullOrEmpty(searchBy))
+            {
+                // if we have an empty search then just order the results by Id ascending
+                //SortBy = "ID";
+                //SortDir = true;
+                searchBy = "";
+            }
+
+            using (var context = new MBKMContext())
+            {
+                int ProdiIDInt = Int32.Parse(idProdi);
+                int FakultasIDInt = Int32.Parse(idFakultas);
+                //int IDMataKUliahInt = Int32.Parse(idMatakuliah);
+                int strmInt = Int32.Parse(strm);
+
+                var result = context.jadwalKuliahs.Where(
+                    x =>
+                    x.IsDeleted == false &&
+                    x.ProdiID == ProdiIDInt &&
+                    x.FakultasID == FakultasIDInt &&
+                    x.JenjangStudi == jenjangStudi &&
+                    x.Lokasi == lokasi &&
+                    x.STRM == strmInt &&
+                    x.FlagOpen == true
+                ).OrderBy("ID", true).Skip(skip).Take(take).ToList();
+                return result;
+            }
+
+        }
+
     }
 }

@@ -18,6 +18,7 @@ using Rotativa.Options;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
+    [MBKMAuthorize]
     public class DaftarHadirUjianController : Controller
     {
 
@@ -48,9 +49,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         // GET: Admin/DaftarHadirUjian
         public ActionResult Index()
         {
-            Session["username"] = "Smitty Werben Jeger Man Jensen";
-
-
+            //Session["username"] = "Smitty Werben Jeger Man Jensen";
             VMSemester model = _jkMhsService.getOngoingSemester("S1");
             return View(model);
         }
