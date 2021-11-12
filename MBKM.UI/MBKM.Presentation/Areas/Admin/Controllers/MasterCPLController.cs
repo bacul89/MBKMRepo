@@ -193,7 +193,17 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult GetProdiLocByFakultas(string JenjangStudi, string idFakultas, string search)
         {
             var data = _cplMatakuliah.GetProdiLocByFakultas(JenjangStudi, idFakultas, search);
-            return Json(data, JsonRequestBehavior.AllowGet);
+            var data2 = data.GroupBy(z => new { z.NamProdi }).ToList();
+            List<VMListProdi> final = new List<VMListProdi>();
+
+            foreach (var d in data2)
+            {
+                final.Add(new VMListProdi
+                {
+                    NamProdi = d.Key.NamProdi
+                });
+            }
+            return Json(final, JsonRequestBehavior.AllowGet);
         }
     }
 }
