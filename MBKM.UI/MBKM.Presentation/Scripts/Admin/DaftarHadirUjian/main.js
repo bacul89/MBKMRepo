@@ -322,7 +322,8 @@ function loadJenjangStudi(tipe, id, nama) {
                         //multiple: true,
                         width: "100%",
                         ajax: {
-                            url: "/Admin/DaftarHadirUjian/GetMataKuliah",
+                            //url: "/Admin/DaftarHadirUjian/GetMataKuliah",
+                            url: "/Admin/JadwalKuliah/GetMataKuliahFlag",
                             type: 'POST',
                             dataType: 'json',
 
@@ -333,10 +334,14 @@ function loadJenjangStudi(tipe, id, nama) {
                                 return {
                                     take: 10,
                                     searchBy: params.term || "",
-                                    skip: params.page || 1,                                    
+                                    skip: params.page || 0,                                    
                                     //idProdi: $('#lokasiCari').select2('data')[0].id,
                                     idProdi: $('#prodiCari').val(),
-                                    idFakultas: $('#fakultasCari').val()
+                                    idProdi: $('#lokasiCari').select2('data')[0].id,
+                                    idFakultas: $('#fakultasCari').val(),
+                                    jenjangStudi: $('#jenjangCari').val(),
+                                    strm: $('#tahunAjaranCari').val(),
+                                    lokasi: $('#lokasiCari').select2('data')[0].value
                                 };
                             },
 
@@ -348,7 +353,7 @@ function loadJenjangStudi(tipe, id, nama) {
 
 
                                 return {
-                                    results: $.map(data, function (item) { return { id: item.id, value: item.id, text: item.kode + ' - ' + item.text, name: item.text, kode: item.kode } }),
+                                    results: $.map(data, function (item) { return { id: item.MataKuliahID, value: item.MataKuliahID, text: item.KodeMataKuliah + ' - ' + item.NamaMataKuliah, name: item.NamaMataKuliah, kode: item.KodeMataKuliah } }),
                                     pagination: {
                                         more: data.length > 0 && data.length == 10
                                     }
@@ -440,7 +445,7 @@ function loadJenjangStudi(tipe, id, nama) {
                             //multiple: true,
                             width: "100%",
                             ajax: {
-                                url: "/DaftarHadirUjian/GetSection",
+                                url: "/Admin/DaftarHadirUjian/GetSection",
                                 type: 'POST',
                                 dataType: 'json',
                                 //quietMillis: 50,
@@ -672,57 +677,8 @@ function reloadDatatable() {
         //]
 
     });
-    /* datatable = $('#table-data-master-mapping-cpl').DataTable({
-        ajax: {
-            url: '@Url.Action("SearchList", "JadwalKuliah")?' + varibale,
-            dataSrc: ''
-        },
-        "columns": [
-            {
-                "data": "ID",
-                "render": function (data, type, row, meta) {
-                    return `<div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick="javascript:$('#idMatkul').val(${data}); $('#daftarMatkul').submit();"><i class="fas fa-edit"></i></a></div>`;
-                }
-            },
-            {
-                "data": null,
-                "render": function (data, type, full, meta) {
-                    return '<div style="text-align:center; vertical-align: middle;">' + (meta.row + 1) + '</div>';
-                }
-            },
-            {
-                "data": "KodeMataKuliah",
-                "render": function (data, type, row, meta) {
-                    return '<div style="text-align:center; vertical-align: middle;">' + data + '</div>';
-                }
-            },
-            {
-                "data": "NamaMataKuliah",
-                "render": function (data, type, row, meta) {
-                    return '<div class="center">' + data + '</div>';
-                }
-            },
-            {
-                "data": null,
-                "render": function (data, type, full, meta) {
-                    return meta.row + 1;
-                }
-            },
-            {
-                "data": null,
-                "render": function (data, type, full, meta) {
-                    return meta.row + 1;
-                }
-            },
-            {
-                "data": null,
-                "render": function (data, type, full, meta) {
-                    return meta.row + 1;
-                }
-            }
 
-        ]
-    });*/
+    controlTableResponsive();
 }
 
 
@@ -762,4 +718,9 @@ function isZooming() {
     } else {
         square.css('min-height', defaultH);
     }
+}
+
+
+function controlTableResponsive() {
+    $('#table-data-daftar-hadir-ujian').addClass('table-responsive');
 }

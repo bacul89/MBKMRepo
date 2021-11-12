@@ -33,7 +33,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public JadwalKuliahController(IJadwalKuliahService jkService, ILookupService lookupService, IMasterCapaianPembelajaranService mcpService)
         {
             _jkService = jkService;
-            _lookupService = lookupService;            
+            _lookupService = lookupService;
             _mcpService = mcpService;
         }
 
@@ -106,16 +106,16 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
         public ActionResult GetMataKuliah(string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm)
         {
-            List <JadwalKuliah> MVJadwal = new List<JadwalKuliah>();
+            List<JadwalKuliah> MVJadwal = new List<JadwalKuliah>();
             List<string> mapJadwal = new List<string>();
 
             int idProdiInt = Int32.Parse(idProdi);
             int idFakultasInt = Int32.Parse(idFakultas);
             int strmInt = Int32.Parse(strm);
 
-            foreach (var item in _jkService.Find(dataMap => 
-                dataMap.ProdiID == idProdiInt && 
-                dataMap.FakultasID == idFakultasInt && 
+            foreach (var item in _jkService.Find(dataMap =>
+                dataMap.ProdiID == idProdiInt &&
+                dataMap.FakultasID == idFakultasInt &&
                 dataMap.Lokasi == lokasi &&
                 dataMap.JenjangStudi == jenjangStudi &&
                 dataMap.STRM == strmInt &&
@@ -174,6 +174,60 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
             return Json(data);
         }
+
+        [HttpPost]
+        public ActionResult GetMataKuliahFlag(int skip, int take, string searchBy, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm)
+        {
+
+
+            /*List<JadwalKuliah> MVJadwal = new List<JadwalKuliah>();
+            List<string> mapJadwal = new List<string>();*/
+
+            /*int idProdiInt = Int32.Parse(idProdi);
+            int idFakultasInt = Int32.Parse(idFakultas);
+            int strmInt = Int32.Parse(strm);*/
+
+            List<JadwalKuliah> final = _jkService.GetMatkulFlag(skip, take, searchBy, idProdi, lokasi, idFakultas, jenjangStudi, strm).ToList();
+
+            /*foreach (var item in final)
+            {
+                if (!mapJadwal.Contains(item.NamaMataKuliah))
+                {
+                    MVJadwal.Add(item);
+                }
+            }*/
+            return new ContentResult { Content = JsonConvert.SerializeObject(final), ContentType = "application/json" };
+        }
+
+
+       /* public ActionResult GetMataKuliahFlag(string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm)
+        {
+            List<JadwalKuliah> MVJadwal = new List<JadwalKuliah>();
+            List<string> mapJadwal = new List<string>();
+
+            int idProdiInt = Int32.Parse(idProdi);
+            int idFakultasInt = Int32.Parse(idFakultas);
+            int strmInt = Int32.Parse(strm);
+
+            foreach (var item in _jkService.Find(dataMap =>
+                dataMap.ProdiID == idProdiInt &&
+                dataMap.FakultasID == idFakultasInt &&
+                dataMap.Lokasi == lokasi &&
+                dataMap.JenjangStudi == jenjangStudi &&
+                dataMap.STRM == strmInt &&
+                dataMap.FlagOpen == false
+
+            ).ToList())
+            {
+                if (!mapJadwal.Contains(item.NamaMataKuliah))
+                {
+                    MVJadwal.Add(item);
+                    mapJadwal.Add(item.NamaMataKuliah);
+                }
+            }
+            return new ContentResult { Content = JsonConvert.SerializeObject(MVJadwal), ContentType = "application/json" };
+        }*/
+
 
     }
 }
