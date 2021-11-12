@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "MANAGE CAPAIAN PEMBELAJARAN - SIMBKM";
+    ViewBag.Title = "MANAGE CAPAIAN PEMBELAJARAN";
     Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
 }
 @section css{
@@ -488,7 +488,7 @@
                         },
                         processResults: function (data, params) {
                             return {
-                                results: $.map(data, function (item) { return { id: item.IDProdi, value: item.NamProdi, text: item.NamProdi + '-' + item.Lokasi, lokasi: item.Lokasi } })
+                                results: $.map(data, function (item) { return { id: item.NamProdi, value: item.NamProdi, text: item.NamProdi } })
                             };
                         },
                     }
@@ -617,16 +617,11 @@
             var latest_valueFakultas = $("option:selected:first", "#fakultas").text();
             var latest_valueJenjang = $("option:selected:first", "#jenjang").text();
             var latest_valueProdi2 = $("option:selected:first", "#prodi2").val(); //idprodi
-            var latest_valueProdi3 = ($("option:selected:first", "#prodi2").text()); //concated prodi-lokasi
-            var getNamaProd = latest_valueProdi3.substring(0, latest_valueProdi3.indexOf("-"));
-            var getLok = latest_valueProdi3.substring(latest_valueProdi3.indexOf('-') + 1) //split concated item //note kurang nama prodi
 
             formInputUser.FakultasID = $('#fakultas').val();
             formInputUser.NamaFakultas = latest_valueFakultas;
-            formInputUser.ProdiID = latest_valueProdi2;
-            formInputUser.NamaProdi = getNamaProd;
+            formInputUser.NamaProdi = latest_valueProdi2;
             formInputUser.JenjangStudi = latest_valueJenjang;
-            formInputUser.Lokasi = getLok;
             formInputUser.Kelompok = $('#kelompok').val();
             formInputUser.Kode = $('#kode').val();
 
@@ -640,7 +635,7 @@
             else { formInputUser.IsActive = "false"; }
            // console.log(formInputUser);
             console.log(formInputUser);
-            if ((($('#jenjang').text()) && (latest_valueProdi2) && (latest_valueFakultas) && (getLok) && ($('#kode').val()) && (formInputUser.Kelompok = $('#kelompok').val()) && ($('textarea[name=txtCPL]').val()) != null)) {
+            if ((($('#jenjang').text()) && (latest_valueProdi2) && (latest_valueFakultas) && ($('#kode').val()) && (formInputUser.Kelompok = $('#kelompok').val()) && ($('textarea[name=txtCPL]').val()) != null)) {
 
                 var base_url = window.location.origin;
                 $.ajax({

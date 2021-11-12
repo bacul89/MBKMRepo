@@ -126,6 +126,23 @@ namespace MBKM.Repository.Repositories.MBKMRepository
 
         }
 
+
+        public VMNilaiDiakui GetNilaiDiakui(string Jenjang, string Strm, string MatkulId, string KodeMatkul, string Nim)
+        {
+            using (var context = new MBKMContext())
+            {
+
+                var jenjang = new SqlParameter("@JenjangStudi", Jenjang);
+                var strm = new SqlParameter("@STRM", Strm);
+                var matkulId = new SqlParameter("@MatkulID", MatkulId);
+                var kodeMatkul = new SqlParameter("@KodeMatkul", KodeMatkul);
+                var nim = new SqlParameter("@NIM", Nim);
+                var result = context.Database
+                    .SqlQuery<VMNilaiDiakui>("GetNilaiDiakui @JenjangStudi, @STRM, @MatkulID, @KodeMatkul, @NIM", jenjang, strm, matkulId, kodeMatkul, nim).FirstOrDefault();
+                return result;
+            }
+        }
+
     }
 
 
