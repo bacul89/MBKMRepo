@@ -3,7 +3,18 @@
     ViewBag.Title = "DHK";
     Layout = "";
     int i = 1;
-    var mahasiswas = (IEnumerable<MBKM.Entities.ViewModel.VMDHK>) ViewData["mahasiswas"];
+    var mahasiswas = ((IEnumerable<MBKM.Entities.ViewModel.VMDHK>)ViewData["mahasiswas"]).ToList();
+    int index = 0;
+    for (int j = 0; j < 40; j++)
+    {
+        var tmp2 = new MBKM.Entities.ViewModel.VMDHK();
+        tmp2.Nama = mahasiswas[0].Nama + index++;
+        mahasiswas.Add(tmp2);
+    }
+    int pageSize = 20;
+    decimal tmp = (decimal)(mahasiswas.Count / (decimal)pageSize);
+    int page = (int)Math.Ceiling(tmp);
+    bool cek = false;
 }
 <head>
 
@@ -29,6 +40,7 @@
 
     body {
         font-family: 'Roboto';
+        padding-top: 0px;
     }
 
     a:hover {
@@ -41,14 +53,6 @@
 
     select {
         max-width: 100%;
-    }
-
-    .footnote {
-        margin: 0 20%;
-    }
-
-    table.footer tr td {
-        text-align: center;
     }
 
     th {
@@ -73,156 +77,268 @@
         font-size: 14px;
     }
 </style>
+@{
+    for (int j = 0; j < page; j++)
+    {
+        <div class="container" style="width: 100%; page-break-before: always; padding-top: 25px;">
+            @* box orange *@
+            <div style="border: solid; padding: 0px 15px;">
+                <img src="~/Asset/Lambang_Unika_Atma_Jaya.png" style="max-height: 75px; margin: 15px 25px;float:left" />
+                <h4 style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black; text-align:right">
+                    DAFTAR HADIR
+                    <br />
+                </h4>
+                <br />
+                <br />
+                <div id="daga">
+                    <table>
+                        <tr>
+                            <td style="font-weight:bold;">SEMESTER</td>
+                            <td style="padding:5px"> : </td>
+                            <td style="padding-right: 30px;">@ViewData["semester"].ToString()</td>
 
-<div class="container" style="width: 100%;">
-    @* box orange *@
-    <div style="border: solid; padding: 0px 15px;">
-        <img src="~/Asset/Lambang_Unika_Atma_Jaya.png" style="max-height: 75px; margin: 15px 25px;float:left" />
-        <h4 style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black; text-align:right">
-            DAFTAR HADIR
-            <br />
-        </h4>
+                            <td style="font-weight:bold">SEKSI</td>
+                            <td style="padding:5px"> : </td>
+                            <td id="seksi">@ViewData["seksi"].ToString()</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold">PROGRAM STUDI</td>
+                            <td style="padding:5px"> : </td>
+                            <td id="prodi">@ViewData["prodi"].ToString()</td>
+
+                            <td style="font-weight:bold">KOMPONEN</td>
+                            <td style="padding:5px"> : </td>
+                            <td>@ViewData["komponen"]</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold;">KODE MATAKULIAH</td>
+                            <td style="padding:5px"> : </td>
+                            <td id="kodeMK">@ViewData["kodeMK"].ToString()</td>
+
+                            <td style="font-weight:bold">HARI</td>
+                            <td style="padding:5px"> : </td>
+                            <td id="hari">@ViewData["hari"].ToString()</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold">NAMA MATAKULIAH</td>
+                            <td style="padding:5px"> : </td>
+                            <td id="namaMK">@ViewData["namaMK"].ToString()</td>
+
+                            <td style="font-weight:bold">JAM</td>
+                            <td style="padding:5px"> : </td>
+                            <td id="jam">@ViewData["jam"].ToString()</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold;">SKS</td>
+                            <td style="padding:5px"> : </td>
+                            <td id="sks">@ViewData["sks"].ToString()</td>
+
+                            <td style="font-weight:bold">RUANG</td>
+                            <td style="padding:5px"> : </td>
+                            <td id="ruang">@ViewData["ruang"].ToString()</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold">DOSEN</td>
+                            <td style="padding:5px"> : </td>
+                            <td id="dosen">
+                                @foreach (var item in (IEnumerable<MBKM.Entities.ViewModel.VMDosenMakulPertemuan>)ViewData["dosens"])
+                                {
+                                    <div>
+                                        @item.Instructor_id - @item.NamaDosen
+                                    </div>
+                                }
+                            </td>
+
+                            <td style="font-weight:bold">HALAMAN</td>
+                            <td style="padding:5px"> : </td>
+                            <td>@(j+1) dari <a class="page">@page</a> </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
         <br />
-        <br />
-        <div id="daga">
-            <table>
+        <div class="container" style="width: 100%;">
+            <table width="100%" border="1">
                 <tr>
-                    <td style="font-weight:bold;">SEMESTER</td>
-                    <td style="padding:5px"> : </td>
-                    <td id="semester" style="padding-right: 30px;"></td>
-
-                    <td style="font-weight:bold">SEKSI</td>
-                    <td style="padding:5px"> : </td>
-                    <td id="seksi"></td>
+                    <th rowspan="2" width="5%" scope="rowgroup" style="height:48px; text-align:center; vertical-align: middle">NO.</th>
+                    <th rowspan="2" width="20%" scope="rowgroup" style="text-align: center; vertical-align: middle">STUDENT ID </th>
+                    <th rowspan="2" width="30%" scope="rowgroup" style="text-align: center; vertical-align: middle">NAMA MAHASISWA</th>
+                    <th rowspan="2" width="10%" scope="rowgroup" style="text-align: center; vertical-align: middle">CEKAL</th>
+                    <th colspan="5" width="35%" scope="colgroup" style="text-align: center; vertical-align: middle">TANGGAL</th>
                 </tr>
-                <tr>
-                    <td style="font-weight:bold">PROGRAM STUDI</td>
-                    <td style="padding:5px"> : </td>
-                    <td id="prodi"></td>
-
-                    <td style="font-weight:bold">KOMPONEN</td>
-                    <td style="padding:5px"> : </td>
-                    <td>@ViewData["komponen"]</td>
+                <tr style="color: white;">
+                    <td style="height: 24px;"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
-                <tr>
-                    <td style="font-weight:bold;">KODE MATAKULIAH</td>
-                    <td style="padding:5px"> : </td>
-                    <td id="kodeMK"></td>
-
-                    <td style="font-weight:bold">HARI</td>
-                    <td style="padding:5px"> : </td>
-                    <td id="hari"></td>
-                </tr>
-                <tr>
-                    <td style="font-weight:bold">NAMA MATAKULIAH</td>
-                    <td style="padding:5px"> : </td>
-                    <td id="namaMK"></td>
-
-                    <td style="font-weight:bold">JAM</td>
-                    <td style="padding:5px"> : </td>
-                    <td id="jam"></td>
-                </tr>
-                <tr>
-                    <td style="font-weight:bold;">SKS</td>
-                    <td style="padding:5px"> : </td>
-                    <td id="sks"></td>
-
-                    <td style="font-weight:bold">RUANG</td>
-                    <td style="padding:5px"> : </td>
-                    <td id="ruang"></td>
-                </tr>
-                <tr>
-                    <td style="font-weight:bold">DOSEN</td>
-                    <td style="padding:5px"> : </td>
-                    <td id="dosen">
-                        @foreach (var item in (IEnumerable<MBKM.Entities.ViewModel.VMDosenMakulPertemuan>)ViewData["dosens"])
+                @{
+                    int n = pageSize * j + pageSize;
+                    if (mahasiswas.Count - pageSize * j == mahasiswas.Count % pageSize)
+                    {
+                        //lastPage
+                        n = mahasiswas.Count;
+                        if (pageSize - (mahasiswas.Count % pageSize) < 6)
                         {
-                            <div>
-                                @item.Instructor_id - @item.NamaDosen
-                            </div>
+                            cek = true;
                         }
-                    </td>
 
-                    <td style="font-weight:bold">HALAMAN</td>
-                    <td style="padding:5px"> : </td>
-                    <td id="halaman"></td>
+                    }
+                    for (int k = pageSize * j; k < n; k++)
+                    {
+                        <tr>
+                            <td class="mhsList start padding0"><center> @i </center></td>
+                            <td class="mhsList">@mahasiswas[k].StudentID</td>
+                            <td class="mhsList">@mahasiswas[k].Nama</td>
+                            <td class="mhsList"></td>
+                            <td class="mhsList"></td>
+                            <td class="mhsList"></td>
+                            <td class="mhsList"></td>
+                            <td class="mhsList"></td>
+                            <td class="mhsList"></td>
+                        </tr>
+                        i++;
+                    }
+                }
+            </table>
+        </div>
+    }
+}
+@{
+    if (!cek)
+    {
+        <br />
+        <div class="container" style="width: 100%; bottom: 0">
+            HANYA DIISI UNTUK ABSENSI UJIAN (<i>ONLY APPLICABLE FOR EXAM ATTENDANCE</i>)
+            <table width="100%" border="1">
+                <tr>
+                    <td width="40%" scope="rowgroup" style="height:30px; text-align:center; vertical-align: middle">BERITA ACARA UJIAN</td>
+                    <td width="30%" scope="rowgroup" style="text-align: center; vertical-align: middle">NAMA PENGAWAS UJIAN</td>
+                    <td width="30%" scope="rowgroup" style="text-align: center; vertical-align: middle">PARAF</td>
+                </tr>
+                <tr>
+                    <td rowspan="2" scope="rowgroup" style="height: 90px;center; vertical-align: middle"></td>
+                    <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
+                    <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
+                </tr>
+                <tr>
+                    <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
+                    <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
                 </tr>
             </table>
         </div>
-    </div>
-</div>
-<br />
-<div class="container" style="width: 100%;">
-    <table width="100%" border="1">
-        <tr>
-            <th rowspan="2" width="5%" scope="rowgroup" style="height:48px; text-align:center; vertical-align: middle">NO.</td>
-            <th rowspan="2" width="20%" scope="rowgroup" style="text-align: center; vertical-align: middle">STUDENT ID </td>
-            <th rowspan="2" width="30%" scope="rowgroup" style="text-align: center; vertical-align: middle">NAMA MAHASISWA</td>
-            <th rowspan="2" width="10%" scope="rowgroup" style="text-align: center; vertical-align: middle">CEKAL</td>
-            <th colspan="5" width="35%" scope="colgroup" style="text-align: center; vertical-align: middle">TANGGAL</td>
-        </tr>
-        <tr style="color: white;">
-            <td style="height: 24px;"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        @foreach (var mhs in (IEnumerable<MBKM.Entities.ViewModel.VMDHK>)ViewData["mahasiswas"])
-        {
-            <tr>
-                <td class="mhsList start padding0"><center> @i </center></td>
-                <td class="mhsList">@mhs.StudentID</td>
-                <td class="mhsList">@mhs.Nama</td>
-                <td class="mhsList"></td>
-                <td class="mhsList"></td>
-                <td class="mhsList"></td>
-                <td class="mhsList"></td>
-                <td class="mhsList"></td>
-                <td class="mhsList"></td>
-            </tr>
-            i++;
-        }
-    </table>
-</div>
-<br />
-<div class="container" style="width: 100%; bottom: 0">
-    HANYA DIISI UNTUK ABSENSI UJIAN (<i>ONLY APPLICABLE FOR EXAM ATTENDANCE</i>)
-    <table width="100%" border="1">
-        <tr>
-            <td width="40%" scope="rowgroup" style="height:30px; text-align:center; vertical-align: middle">BERITA ACARA UJIAN</td>
-            <td width="30%" scope="rowgroup" style="text-align: center; vertical-align: middle">NAMA PENGAWAS UJIAN</td>
-            <td width="30%" scope="rowgroup" style="text-align: center; vertical-align: middle">PARAF</td>
-        </tr>
-        <tr>
-            <td rowspan="2" scope="rowgroup" style="height: 90px;center; vertical-align: middle"></td>
-            <td  scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
-            <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
-        </tr>
-        <tr>
-            <td  scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
-            <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
-        </tr>
-    </table>
-</div>
+    }
+    else
+    {
+        page++;
+        <div class="container" style="width: 100%; page-break-before: always; padding-top: 25px;">
+            @* box orange *@
+            <div style="border: solid; padding: 0px 15px;">
+                <img src="~/Asset/Lambang_Unika_Atma_Jaya.png" style="max-height: 75px; margin: 15px 25px;float:left" />
+                <h4 style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black; text-align:right">
+                    DAFTAR HADIR
+                    <br />
+                </h4>
+                <br />
+                <br />
+                <div id="daga">
+                    <table>
+                        <tr>
+                            <td style="font-weight:bold;">SEMESTER</td>
+                            <td style="padding:5px"> : </td>
+                            <td style="padding-right: 30px;">@ViewData["semester"].ToString()</td>
 
+                            <td style="font-weight:bold">SEKSI</td>
+                            <td style="padding:5px"> : </td>
+                            <td id="seksi">@ViewData["seksi"].ToString()</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold">PROGRAM STUDI</td>
+                            <td style="padding:5px"> : </td>
+                            <td id="prodi">@ViewData["prodi"].ToString()</td>
 
+                            <td style="font-weight:bold">KOMPONEN</td>
+                            <td style="padding:5px"> : </td>
+                            <td>@ViewData["komponen"]</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold;">KODE MATAKULIAH</td>
+                            <td style="padding:5px"> : </td>
+                            <td id="kodeMK">@ViewData["kodeMK"].ToString()</td>
+
+                            <td style="font-weight:bold">HARI</td>
+                            <td style="padding:5px"> : </td>
+                            <td id="hari">@ViewData["hari"].ToString()</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold">NAMA MATAKULIAH</td>
+                            <td style="padding:5px"> : </td>
+                            <td id="namaMK">@ViewData["namaMK"].ToString()</td>
+
+                            <td style="font-weight:bold">JAM</td>
+                            <td style="padding:5px"> : </td>
+                            <td id="jam">@ViewData["jam"].ToString()</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold;">SKS</td>
+                            <td style="padding:5px"> : </td>
+                            <td id="sks">@ViewData["sks"].ToString()</td>
+
+                            <td style="font-weight:bold">RUANG</td>
+                            <td style="padding:5px"> : </td>
+                            <td id="ruang">@ViewData["ruang"].ToString()</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold">DOSEN</td>
+                            <td style="padding:5px"> : </td>
+                            <td id="dosen">
+                                @foreach (var item in (IEnumerable<MBKM.Entities.ViewModel.VMDosenMakulPertemuan>)ViewData["dosens"])
+                                {
+                                    <div>
+                                        @item.Instructor_id - @item.NamaDosen
+                                    </div>
+                                }
+                            </td>
+
+                            <td style="font-weight:bold">HALAMAN</td>
+                            <td style="padding:5px"> : </td>
+                            <td>@page dari <a class="page">@page</a> </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="container" style="width: 100%; bottom: 0">
+            HANYA DIISI UNTUK ABSENSI UJIAN (<i>ONLY APPLICABLE FOR EXAM ATTENDANCE</i>)
+            <table width="100%" border="1">
+                <tr>
+                    <td width="40%" scope="rowgroup" style="height:30px; text-align:center; vertical-align: middle">BERITA ACARA UJIAN</td>
+                    <td width="30%" scope="rowgroup" style="text-align: center; vertical-align: middle">NAMA PENGAWAS UJIAN</td>
+                    <td width="30%" scope="rowgroup" style="text-align: center; vertical-align: middle">PARAF</td>
+                </tr>
+                <tr>
+                    <td rowspan="2" scope="rowgroup" style="height: 90px;center; vertical-align: middle"></td>
+                    <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
+                    <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
+                </tr>
+                <tr>
+                    <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
+                    <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
+                </tr>
+            </table>
+        </div>
+    }
+}
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/bootstrap")
 @*@RenderSection("scripts", required: true)*@
 <script src="~/Scripts/select2.min.js"></script>
 <script>
     $(document).ready(function () {
-        $('#semester').html("@ViewData["semester"].ToString()");
-        $('#prodi').html("@ViewData["prodi"].ToString()");
-        $('#kodeMK').html("@ViewData["kodeMK"].ToString()");
-        $('#namaMK').html("@ViewData["namaMK"].ToString()");
-        $('#sks').html("@ViewData["sks"].ToString()");
-        //kanan
-        $('#seksi').html("@ViewData["seksi"].ToString()");
-        $('#hari').html("@ViewData["hari"].ToString()");
-        $('#jam').html("@ViewData["jam"].ToString()");
-        $('#ruang').html("@ViewData["ruang"].ToString()");
+        $(".page").html('@page');
         window.print();
     });
 
