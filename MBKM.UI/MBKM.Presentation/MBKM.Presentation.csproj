@@ -224,6 +224,7 @@
     <Content Include="Asset\Lambang_Unika_Atma_Jaya.png" />
     <Content Include="Asset\SeekPng.com_megaphone-png_311331.png" />
     <Content Include="Content\Admin\PrintDHU.css" />
+    <Content Include="Content\Admin\PrintDHUStyle.css" />
     <Content Include="Content\Admin\PrintDNR.css" />
     <Content Include="Content\Admin\AdminCostumeBS4.css" />
     <Content Include="Content\Admin\inputResponsive.css" />
@@ -245,6 +246,7 @@
     <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\Admin\ApprovalPendaftaranMakul\detailApproval.js" />
     <Content Include="Scripts\Admin\DaftarHadirUjian\main.js" />
+    <Content Include="Scripts\Admin\DaftarHadirUjian\print.js" />
     <Content Include="Scripts\Admin\DaftarSeluruhMhs\main.js" />
     <Content Include="Scripts\Admin\ApprovalPendaftaranMakul\main.js" />
     <Content Include="Scripts\Admin\DaftarSeluruhMhs\main_detail.js" />

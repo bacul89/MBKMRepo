@@ -28,9 +28,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private IJadwalUjianMBKMService _juService;
         private IMasterCapaianPembelajaranService _mcpService;
         private IFeedbackMatkulService _feedbackMatkulService;
+        private IJadwalKuliahMahasiswaService _jkMhsService;
 
 
-        public DaftarHadirUjianController(ICPLMatakuliahService cplMatakuliah, ILookupService lookupService, IJadwalKuliahService jkService, IMasterCapaianPembelajaranService mcpService, IJadwalUjianMBKMDetailService juDetailService, IJadwalUjianMBKMService juService, IFeedbackMatkulService feedbackMatkulService)
+        public DaftarHadirUjianController(ICPLMatakuliahService cplMatakuliah, ILookupService lookupService, IJadwalKuliahService jkService, IMasterCapaianPembelajaranService mcpService, IJadwalUjianMBKMDetailService juDetailService, IJadwalUjianMBKMService juService, IFeedbackMatkulService feedbackMatkulService, IJadwalKuliahMahasiswaService jkMahasiswaService)
         {
             _cplMatakuliah = cplMatakuliah;
             _lookupService = lookupService;
@@ -39,6 +40,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             _juService = juService;
             _mcpService = mcpService;
             _feedbackMatkulService = feedbackMatkulService;
+            _jkMhsService = jkMahasiswaService;
         }
 
 
@@ -47,7 +49,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult Index()
         {
             Session["username"] = "Smitty Werben Jeger Man Jensen";
-            return View();
+
+
+            VMSemester model = _jkMhsService.getOngoingSemester("S1");
+            return View(model);
         }
 
 
@@ -83,6 +88,31 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ViewData["mahasiswas"] = JsonConvert.SerializeObject(list);
             return View("PrintDHU");
         }
+
+        [HttpPost]
+        public ActionResult GetDHU(int ID)
+        {
+
+            VMDHU vmDHU = new VMDHU();
+            var jadwalUjian = _juService.Get(ID);
+            List<JadwalUjianMBKMDetail> mahasiswa = _juDetailService.Find(x => x.JadwalUjianMBKMID == ID).ToList();
+            var dataSemester = _feedbackMatkulService.GetSemesterByStrm(jadwalUjian.STRM);
+            var ujian = _juDetailService.GetAttrubuteDHU(jadwalUjian.ProdiID, jadwalUjian.Lokasi, jadwalUjian.FakultasID, jadwalUjian.JenjangStudi, jadwalUjian.STRM, jadwalUjian.IDMatkul, jadwalUjian.ClassSection).Where(x => x.ID == ID).First();
+
+            var list = mahasiswa.Select(x => new VMDHU()
+            {
+                Nama = x.Mahasiswas.Nama,
+                StudentID = x.Mahasiswas.NIM
+            });
+
+            ViewData["ujian"] = ujian;
+            ViewData["semester"] = dataSemester.Nama;
+            ViewData["mahasiswas"] = list;
+            return Json(ViewData, JsonRequestBehavior.AllowGet);
+        }
+
+
+
 
         /* Lookup --<> */
         public ActionResult getLookupByTipe(string tipe)

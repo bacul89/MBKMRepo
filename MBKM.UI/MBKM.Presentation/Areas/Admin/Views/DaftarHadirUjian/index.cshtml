@@ -3,7 +3,7 @@
     ViewBag.Title = "Cetak Daftar Hadir Ujian - SIMBKM";
     Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
 }
-
+@model MBKM.Entities.ViewModel.VMSemester
 
 @section css{
 
@@ -30,6 +30,7 @@
                             <label for="inp_tahunAjaran" class="col-sm-3 control-label">Tahun Semester</label>
                             <div class="col-sm-9">
                                 <select name="tahunAjaranCari" id="tahunAjaranCari" class="form-control input-md">
+                                    <option value="@Model.ID" selected>@Model.Nama</option>
                                 </select>
                             </div>
                         </div>
@@ -117,9 +118,9 @@
                             <th class="zero-padding no-border vertical-center sorting">Kode Mata Kuliah</th>
                             <th class="zero-padding no-border vertical-center sorting">Nama Mata Kuliah</th>
                             @*<th class="zero-padding no-border vertical-center sorting">Tipe Ujian</th>
-        <th class="zero-padding no-border vertical-center sorting">Tanggal</th>
-        <th class="zero-padding no-border vertical-center sorting">Jam</th>
-        <th class="zero-padding no-border vertical-center sorting">Ruangan</th>*@
+                                <th class="zero-padding no-border vertical-center sorting">Tanggal</th>
+                                <th class="zero-padding no-border vertical-center sorting">Jam</th>
+                                <th class="zero-padding no-border vertical-center sorting">Ruangan</th>*@
                             <th class="zero-padding no-border vertical-center sorting">SKS</th>
                             <th class="zero-padding no-border vertical-center sorting">Seksi</th>
 
@@ -136,6 +137,7 @@
 
     @section scripts{
         <script src="~/Scripts/Admin/DaftarHadirUjian/main.js"></script>
+        <script src="~/Scripts/Admin/DaftarHadirUjian/print.js"></script>
         <script src="~/Scripts/loading/loadingoverlay.min.js"></script>
 
     }
