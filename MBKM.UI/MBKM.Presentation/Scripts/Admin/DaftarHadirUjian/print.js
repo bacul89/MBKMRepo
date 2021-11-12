@@ -17,9 +17,9 @@ function printDHU(Id) {
             var semester = result[1].Value;
             var mahasiswa = result[2].Value;
 
-            console.log(result[0].Value);
-            console.log(result[1].Value);
-            console.log(result[2].Value);
+            //console.log(result[0].Value);
+            //console.log(result[1].Value);
+            //console.log(result[2].Value);
 
 
             // component
@@ -164,7 +164,7 @@ function generateHeader(ujian, semester, page, pageTotal) {
     var base_url = window.location.origin;
     var komponen = ujian.Komponen;
 
-    console.log(semester);
+    //console.log(semester);
 
     var header = `<div class="border col-md-12 col-lg-12 col-sm-12 col-xs-12  p0">
                             <div class="col-md-12 Header p0">
@@ -359,7 +359,7 @@ function convertDate(getDate) {
 
     var date = getDate.split("T")[0];
 
-    console.log(date);
+    //console.log(date);
     var parts = date.split('-');
     var createdate = new Date(parts[0], parts[1] - 1, parts[2]);
 
@@ -394,9 +394,9 @@ function convertMilisecondToDate(value) {
     weekday[6] = "Sabtu";
 
     var num = parseInt(value.match(/\d+/), 10)
-    console.log(num);
+    //console.log(num);
     var createdate = new Date(num);
-    console.log(createdate);
+    //console.log(createdate);
 
     var result = weekday[createdate.getDay()] + ' / ' + createdate.getDate() + ' ' + month[createdate.getMonth()] + ' ' + createdate.getFullYear();
 
