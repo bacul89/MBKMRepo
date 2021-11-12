@@ -164,10 +164,9 @@
                 url: "@Url.Action("InsertPendaftaranMK", "PendaftaranMataKuliah")",
                 data: data
             }).then(function (response2) {
+                alert(response2.message);
                 if (response2.status == 200) {
                     window.history.back();
-                } else {
-                    alert(response2.message);
                 }
             });
         });

@@ -532,7 +532,7 @@
         function getBobot() {
             $.ajax({
                 type: "GET",
-                url: "@Url.Action("getBobot", "Penilaian")?idMatkul=" + @Model.MataKuliahID
+                url: "@Url.Action("getBobot", "Penilaian")?idMatkul=@Model.MataKuliahID"
             }).then(function (response) {
                 if (response.CW1 != null) response.fCW1 = parseFloat(response.CW1); else response.fCW1 = 0;
                 if (response.CW2 != null) response.fCW2 = parseFloat(response.CW2); else response.fCW2 = 0;
@@ -586,7 +586,7 @@
         function getSubBobot() {
             $.ajax({
                 type: "GET",
-                url: "@Url.Action("GetSubBobot", "Penilaian")?idMatkul=" + @Model.MataKuliahID
+                url: "@Url.Action("GetSubBobot", "Penilaian")?idMatkul=@Model.MataKuliahID"
             }).then(function (response) {
                 subBobot = response;
                 if (response.length > 0) {
