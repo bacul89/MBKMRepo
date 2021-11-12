@@ -2,16 +2,14 @@
 $(document).ready(function () {
     /*$("#jenjangCari").prop("disabled", true);*/
     $("#fakultasCari").prop("disabled", true);
-    $("#fakultasCari").prop("disabled", true);
     $("#prodiCari").prop("disabled", true);
     $("#lokasiCari").prop("disabled", true);
     $("#matakuliahCari").prop("disabled", true);
     $("#seksiCari").prop("disabled", true);
+
     $("#jenjangCari").select2({
         placeholder: "-- Pilih Jenjang Studi --"
-    });
-
-    
+    });    
 
     $("#fakultasCari").select2({
         placeholder: "-- Pilih Fakultas --"
@@ -53,7 +51,7 @@ $('#tahunAjaranCari').select2({
     //multiple: true,
     width: "100%",
     ajax: {
-        url: "/DaftarHadirUjian/GetSemesterAll",
+        url: "/Admin/DaftarHadirUjian/GetSemesterAll",
         type: 'POST',
         dataType: 'json',
         //quietMillis: 50,
@@ -190,29 +188,7 @@ function loadJenjangStudi(tipe, id, nama) {
             $("#seksiCari").prop("disabled", true);
 
             $("#prodiCari").prop("disabled", false);
-            /*$("#prodiCari").select2({
-                placeholder: "-- Pilih Program Studi --",
-                width: "100%",
-                ajax: {
-                    url: "s",
-                    dataType: 'json',
-                    method: "POST",
-                    delay: 250,
-                    cache: false,
-                    data: function (params) {
-                        return {
-                            Search: params.term || "",
-                            JenjangStudi: $('#' + id + "Cari").val(),
-                            IdFakultas: $('#fakultasCari').val()
-                        };
-                    },
-                    processResults: function (data, params) {
-                        return {
-                            results: $.map(data, function (item) { return { id: item.IDProdi, value: item.NamProdi, text: item.NamProdi + ' - ' + item.Lokasi, lokasi: item.Lokasi } })
-                        };
-                    },
-                }
-            });*/
+
 
             $("#prodiCari").select2({
                 placeholder: "-- Pilih Program Studi --",
@@ -231,7 +207,7 @@ function loadJenjangStudi(tipe, id, nama) {
                         };
                     },
                     processResults: function (data, params) {
-                        console.log(data);
+                        //console.log(data);
                         return {
                             results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
                         };
@@ -240,7 +216,6 @@ function loadJenjangStudi(tipe, id, nama) {
             });
 
             $("#prodiCari").change(function () {
-                //console.log("select2");
 
                 buttonHandler("close");
                 $("#lokasiCari").empty();
@@ -340,7 +315,7 @@ function loadJenjangStudi(tipe, id, nama) {
                                     idProdi: $('#lokasiCari').select2('data')[0].id,
                                     idFakultas: $('#fakultasCari').val(),
                                     jenjangStudi: $('#jenjangCari').val(),
-                                    strm: $('#tahunAjaranCari').val(),
+                                    strm: $('#tahunAjaranCari').select2('data')[0].id,
                                     lokasi: $('#lokasiCari').select2('data')[0].value
                                 };
                             },
@@ -506,10 +481,10 @@ $('#cari').click(function () {
 });
 
 function reloadDatatable() {
-    console.log($('#lokasiCari').select2('data')[0].id);
+    /*console.log($('#lokasiCari').select2('data')[0].id);
     console.log($('#lokasiCari').select2('data')[0].Kampus);
     console.log($('#lokasiCari').select2('data')[0].kampus);
-    console.log($('#lokasiCari').val());
+    console.log($('#lokasiCari').val());*/
     var base_url = window.location.origin;
     var variable =
         'idProdi=' + $('#lokasiCari').select2('data')[0].id +
