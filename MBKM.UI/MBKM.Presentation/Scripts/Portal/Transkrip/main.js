@@ -66,7 +66,7 @@ $(document).ready(function () {
     $("#currentDate").text(date.toShortFormat());
     $("#currentDatePrint").text(date.toShortFormat());
     convertBirthday();
-    getNilai();
+    //getNilai();
     isZooming();
     getLookupBAA('KepalaBiroAdministrasiAkademik');
     
@@ -106,9 +106,10 @@ function isZooming() {
 //---Grade
 var gradeFinal = "";
 var sksTotal = 0;
-var Nilais, NilaiGrades;
+var Nilais;
 
-function getNilai() {
+//NilaiGrades
+/*function getNilai() {
     //var base_url = window.location.origin;
     $.ajax({
         url: '/Portal/TranskripMahasiswa/getTranskrip/',
@@ -132,13 +133,11 @@ function getNilai() {
 
         }
     })
-}
+}*/
 
 function intToFloat(num, decPlaces) { return num.toFixed(decPlaces); }
 
-function showValue(result, NilaiGrades) {
-
-    
+function showValue(result) {
     //let NilaiGrades = loadFromLookup('NilaiGrade');
 
     //console.log(NilaiGrades.A);
@@ -169,7 +168,7 @@ function showValue(result, NilaiGrades) {
     var bE = '0';*/
 
 
-    var gA = NilaiGrades[0].Nama;
+    /*var gA = NilaiGrades[0].Nama;
     var gAmin = NilaiGrades[1].Nama;
     var gBplus = NilaiGrades[2].Nama;
     var gB = NilaiGrades[3].Nama;
@@ -200,29 +199,44 @@ function showValue(result, NilaiGrades) {
     var Cplus = parseFloat(bCplus);
     var C = parseFloat(bC);
     var D = parseFloat(bD);
-    var E = parseFloat(bE);
+    var E = parseFloat(bE);*/
 
     var nilaiTotal = 0;
     var rowNilaiSks = 0;
+    var sksTotal = 0;
 
+    //console.log(Nilais);
 
     for (var i = 0; i < result.length; i++) {
         if (i == 0) {
-            CheckStatusFeedback(result[0].FlagCetak);
+            //console.log(Nilais[0].tanggalLahir);
+            var tempatLahir = Nilais[0].TempatLahir;
+            var tanggalLahir = convertBirthday(Nilais[0].TanggalLahir);
+            var ttl = tempatLahir + ' / ' + tanggalLahir;
+            var jenjangStudi = Nilais[0].JenjangStudi;
+            $('#name').text(Nilais[0].Nama);
+            $('#nim').text(Nilais[0].NIM);
+            $('#ttl').text(ttl);
+            $('#jenjangStudi').text(jenjangStudi);
         }
 
         var kodematakuliah = "<td>" + result[i].KodeMataKuliah + "</td>";
+
         var mkEn = "<i style='text-align:left;' class='en'>" + result[i].NamaMataKuliahEN + "</i>";
         var matakuliah = "<td>" + result[i].NamaMataKuliah + mkEn + "</td>";
-        
+
         var sksInt = parseInt(result[i].SKS);
         var sks = "<td style='text-align:right;'>" + sksInt + "</td>";
 
         var grade = result[i].Grade;
         var gradeHtml = "<td style='float:right;'><div style='width: 14px;text-align: left; position:relative;'>" + grade + "</div></td>";
 
-        
-        
+        var bobot = parseFloat(result[i].Nilai);
+
+        //console.log(result[i].Nilai);
+        //console.log(bobot);
+
+        //bobotTotal = bobotTotal + bobot;
         //var nilai = result[i].Nilai;
 
 
@@ -230,11 +244,11 @@ function showValue(result, NilaiGrades) {
         sksTotal = sksTotal + sksInt;
 
         row = "<tr>" + kodematakuliah + matakuliah + sks + gradeHtml + "</tr>";
-
+        rowNilaiSks = sksInt * bobot;
 
         //console.log("sks : " + sksInt);
         //console.log("grade : " + grade);
-        if (grade == gA) {
+        /*if (grade == gA) {
             rowNilaiSks = sksInt * A;
         } else if (grade == gAmin) {
             rowNilaiSks = sksInt * Amin;
@@ -252,7 +266,7 @@ function showValue(result, NilaiGrades) {
             rowNilaiSks = sksInt * D;
         } else if (grade == gE) {
             rowNilaiSks = sksInt * E;
-        }
+        }*/
         //console.log("sks k:"+rowNilaiSks);
         nilaiTotal = nilaiTotal + rowNilaiSks;
         //console.log(rowNilaiSks);
@@ -266,46 +280,47 @@ function showValue(result, NilaiGrades) {
 
 
 
-/*    var A = 4.00;
-    var Amin = 3.70;
-    var Bplus = 3.30;
-    var B = 3.00;
-    var Bmin = 2.70;
-    var Cplus = 2.30;
-    var C = 2.00;
-    var D = 1.00;
-    var E = 0;
+    /*    var A = 4.00;
+        var Amin = 3.70;
+        var Bplus = 3.30;
+        var B = 3.00;
+        var Bmin = 2.70;
+        var Cplus = 2.30;
+        var C = 2.00;
+        var D = 1.00;
+        var E = 0;
+    
+        if (gradeTotal == A) {
+            gradeFinal = gA;
+        } else if (gradeTotal >= Amin && gradeTotal <= A) {
+            gradeFinal = gAmin;
+        } else if (gradeTotal >= Bplus && gradeTotal <= Amin) {
+            gradeFinal = gBplus;
+        } else if (gradeTotal >= B && gradeTotal <= Bplus) {
+            gradeFinal = gB;
+        } else if (gradeTotal >= Bmin && gradeTotal <= B) {
+            gradeFinal = gBmin;
+        } else if (gradeTotal >= Cplus && gradeTotal <= Bmin) {
+            gradeFinal = gCplus;
+        } else if (gradeTotal >= C && gradeTotal <= Cplus) {
+            gradeFinal = gC;
+        } else if (gradeTotal >= D && gradeTotal <= C) {
+            gradeFinal = gD;
+        } else if (gradeTotal >= E && gradeTotal <= D) {
+            gradeFinal = gE;
+        }*/
 
-    if (gradeTotal == A) {
-        gradeFinal = gA;
-    } else if (gradeTotal >= Amin && gradeTotal <= A) {
-        gradeFinal = gAmin;
-    } else if (gradeTotal >= Bplus && gradeTotal <= Amin) {
-        gradeFinal = gBplus;
-    } else if (gradeTotal >= B && gradeTotal <= Bplus) {
-        gradeFinal = gB;
-    } else if (gradeTotal >= Bmin && gradeTotal <= B) {
-        gradeFinal = gBmin;
-    } else if (gradeTotal >= Cplus && gradeTotal <= Bmin) {
-        gradeFinal = gCplus;
-    } else if (gradeTotal >= C && gradeTotal <= Cplus) {
-        gradeFinal = gC;
-    } else if (gradeTotal >= D && gradeTotal <= C) {
-        gradeFinal = gD;
-    } else if (gradeTotal >= E && gradeTotal <= D) {
-        gradeFinal = gE;
-    }*/
+    //console.log(gradeTotal);
 
     $("#data").html(html);
     $("#totalSks").html(sksTotal);
     $("#totalGrade").html(intToFloat(gradeTotal, 2));
-    
-    
+
+
 
     $("#dataPrint").html(html);
     $("#totalSksPrint").html(sksTotal);
     $("#totalGradePrint").html(intToFloat(gradeTotal, 2));
-
 }
 
 

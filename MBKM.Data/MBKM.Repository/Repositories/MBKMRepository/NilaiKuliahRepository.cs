@@ -126,6 +126,19 @@ namespace MBKM.Repository.Repositories.MBKMRepository
 
         }
 
+
+        public VMNilaiBobot GetBobotNilai(decimal Nilai)
+        {
+            using (var context = new MBKMContext())
+            {
+                //.ToInt32(value);
+                //int nilaiInt = Int32.Parse(nilaiTotal);
+                var courseParam = new SqlParameter("@Nilai", Nilai);
+                var result = context.Database
+                    .SqlQuery<VMNilaiBobot>("GetGradeByNilai @Nilai", courseParam).First();
+                return result;
+            }
+        }
     }
 
 

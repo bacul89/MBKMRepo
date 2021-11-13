@@ -48,7 +48,7 @@ var result = mydate.toShortFormat();*/
 function convertBirthday(value) {
 
 
-    console.log(value);
+    //console.log(value);
 
     var date = value.split("T")[0];
     var parts = date.split('-');
@@ -82,9 +82,11 @@ $(document).ready(function () {
 //---Grade
 var gradeFinal = "";
 var sksTotal = 0;
-var Nilais, NilaiGrades;
+var Nilais;
 
-function getNilai() {
+
+//---GetLookup Grade
+/*function getNilai() {
     //var base_url = window.location.origin;
     $.ajax({
         url: '/Admin/Transkrip/getTranskrip/',
@@ -108,11 +110,11 @@ function getNilai() {
 
         }
     })
-}
+}*/
 
 function intToFloat(num, decPlaces) { return num.toFixed(decPlaces); }
 
-function showValue(result, NilaiGrades) {
+function showValue(result) {
     //let NilaiGrades = loadFromLookup('NilaiGrade');
 
     //console.log(NilaiGrades.A);
@@ -143,7 +145,7 @@ function showValue(result, NilaiGrades) {
     var bE = '0';*/
 
 
-    var gA = NilaiGrades[0].Nama;
+    /*var gA = NilaiGrades[0].Nama;
     var gAmin = NilaiGrades[1].Nama;
     var gBplus = NilaiGrades[2].Nama;
     var gB = NilaiGrades[3].Nama;
@@ -174,10 +176,11 @@ function showValue(result, NilaiGrades) {
     var Cplus = parseFloat(bCplus);
     var C = parseFloat(bC);
     var D = parseFloat(bD);
-    var E = parseFloat(bE);
+    var E = parseFloat(bE);*/
 
     var nilaiTotal = 0;
-    var rowNilaiSks = 0;
+    var rowNilaiSks = 0; 
+    var sksTotal = 0;
 
     //console.log(Nilais);
 
@@ -205,8 +208,12 @@ function showValue(result, NilaiGrades) {
         var grade = result[i].Grade;
         var gradeHtml = "<td style='float:right;'><div style='width: 14px;text-align: left; position:relative;'>" + grade + "</div></td>";
 
+        var bobot = parseFloat(result[i].Nilai);
 
+        //console.log(result[i].Nilai);
+        //console.log(bobot);
 
+        //bobotTotal = bobotTotal + bobot;
         //var nilai = result[i].Nilai;
 
 
@@ -214,11 +221,11 @@ function showValue(result, NilaiGrades) {
         sksTotal = sksTotal + sksInt;
 
         row = "<tr>" + kodematakuliah + matakuliah + sks + gradeHtml + "</tr>";
-
+        rowNilaiSks = sksInt * bobot;
 
         //console.log("sks : " + sksInt);
         //console.log("grade : " + grade);
-        if (grade == gA) {
+        /*if (grade == gA) {
             rowNilaiSks = sksInt * A;
         } else if (grade == gAmin) {
             rowNilaiSks = sksInt * Amin;
@@ -236,7 +243,7 @@ function showValue(result, NilaiGrades) {
             rowNilaiSks = sksInt * D;
         } else if (grade == gE) {
             rowNilaiSks = sksInt * E;
-        }
+        }*/
         //console.log("sks k:"+rowNilaiSks);
         nilaiTotal = nilaiTotal + rowNilaiSks;
         //console.log(rowNilaiSks);
@@ -279,6 +286,8 @@ function showValue(result, NilaiGrades) {
         } else if (gradeTotal >= E && gradeTotal <= D) {
             gradeFinal = gE;
         }*/
+
+    console.log(gradeTotal);
 
     $("#data").html(html);
     $("#totalSks").html(sksTotal);
