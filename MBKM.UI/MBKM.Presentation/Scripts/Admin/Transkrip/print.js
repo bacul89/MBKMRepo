@@ -305,7 +305,7 @@ function showValue(result) {
 function print(id, nim) {
     var idMahasiswa = parseInt(id);
     $.LoadingOverlay("show");
-
+    var base_url = window.location.origin;
 
     $.ajax({
         url: '/Admin/Transkrip/getTranskripByIdMahasiswa/',
@@ -328,21 +328,23 @@ function print(id, nim) {
 
                             NilaiGrades = resultLookup;
                             showValue(resultTranskip, resultLookup);
-
+                            
                             var data = $("#print").html();
                             var mywindow = window.open('', '_blank');
                             mywindow.document.write('<html><head><title>Transkrip</title>');
-                            mywindow.document.write('<link rel="stylesheet" href="../../Content/Portal/Transkrip/print.css" type="text/css" />');
-                            mywindow.document.write('</head><body >');
+                            mywindow.document.write('<link rel="stylesheet" href="' + base_url+'/Content/Portal/Transkrip/print.css" type="text/css" media="print" />');
+                            mywindow.document.write('</head><body>');
                             mywindow.document.write(data);
-                            mywindow.document.write('<script>console.log("hallo")</script>');
                             mywindow.document.write('</body></html>');
 
-                            mywindow.print();
+                            //mywindow.print();
                             //setTimeout(function () { window.print(); }, 500);
                             //mywindow.onfocus = function () { setTimeout(function () { window.close(); }, 500); }
-                            mywindow.close();
-
+                            //mywindow.close();
+                            setTimeout(function () {
+                                mywindow.print();
+                                mywindow.close();
+                            }, 500);
                     
                             Swal.fire({
                                 title: 'success',

@@ -61,12 +61,11 @@ function convertBirthday() {
 
 $(document).ready(function () {
     $("#print").hide();
-
     var date = new Date();
     $("#currentDate").text(date.toShortFormat());
     $("#currentDatePrint").text(date.toShortFormat());
     convertBirthday();
-    //getNilai();
+    getNilai();
     isZooming();
     getLookupBAA('KepalaBiroAdministrasiAkademik');
     
@@ -109,7 +108,7 @@ var sksTotal = 0;
 var Nilais;
 
 //NilaiGrades
-/*function getNilai() {
+function getNilai() {
     //var base_url = window.location.origin;
     $.ajax({
         url: '/Portal/TranskripMahasiswa/getTranskrip/',
@@ -118,22 +117,22 @@ var Nilais;
         success: function (resultTranskip) {
 
             Nilais = resultTranskip;
-            
-                $.ajax({
+            showValue(resultTranskip);
+                /*$.ajax({
                     url: "/Portal/TranskripMahasiswa/getLookupByTipe",
                     type: 'get',
                     datatype: 'html',
                     data: { Tipe: 'NilaiGrade' },
                     success: function (resultLookup) {
                         NilaiGrades = resultLookup;
-                        showValue(resultTranskip, resultLookup);
+                       
 
                     }
-                })
+                })*/
 
         }
     })
-}*/
+}
 
 function intToFloat(num, decPlaces) { return num.toFixed(decPlaces); }
 
@@ -205,19 +204,12 @@ function showValue(result) {
     var rowNilaiSks = 0;
     var sksTotal = 0;
 
-    //console.log(Nilais);
 
     for (var i = 0; i < result.length; i++) {
         if (i == 0) {
-            //console.log(Nilais[0].tanggalLahir);
-            var tempatLahir = Nilais[0].TempatLahir;
-            var tanggalLahir = convertBirthday(Nilais[0].TanggalLahir);
-            var ttl = tempatLahir + ' / ' + tanggalLahir;
-            var jenjangStudi = Nilais[0].JenjangStudi;
-            $('#name').text(Nilais[0].Nama);
-            $('#nim').text(Nilais[0].NIM);
-            $('#ttl').text(ttl);
-            $('#jenjangStudi').text(jenjangStudi);
+            //console.log(result[i].FlagCetak);
+            //$("#btnCetak").prop("disabled", false);
+            CheckStatusFeedback(result[i].FlagCetak);
         }
 
         var kodematakuliah = "<td>" + result[i].KodeMataKuliah + "</td>";
@@ -326,7 +318,7 @@ function showValue(result) {
 
 //---print
 function print(id, nim) {
-
+    var base_url = window.location.origin;
     var idMahasiswa = parseInt(id);
 
     swal.fire({
@@ -378,14 +370,15 @@ function print(id, nim) {
                         var data =  $("#print").html();
                         var mywindow = window.open('', '_blank');
                         mywindow.document.write('<html><head><title>Transkrip</title>');
-                        /*optional stylesheet*/ mywindow.document.write('<link rel="stylesheet" href="../../Content/Portal/Transkrip/print.css" type="text/css" />');
+                        /*optional stylesheet*/ mywindow.document.write('<link rel="stylesheet" href="' + base_url+'/Content/Portal/Transkrip/print.css" type="text/css" />');
                         mywindow.document.write('</head><body >');
                         mywindow.document.write(data);
                         mywindow.document.write('</body></html>');
 
-                       
-                        mywindow.print();
-                        mywindow.close();
+                        setTimeout(function () {
+                            mywindow.print();
+                            mywindow.close();
+                        }, 500);
                         $("#btnCetak").prop("disabled", true);
                         //$("#view").show();
                         //$("#print").hide();
@@ -465,11 +458,10 @@ function CheckStatusFeedback(FlagTranscript) {
                 $("#btnCetak").prop("disabled", true);
                 $("#sertifikatCetak").prop("disabled", true);
             } else {
-                checkStatusSertifikat();
 
-                if (FlagTranscript == true) {
+                if (FlagTranscript == true && status != 'Belum Feedback') {
                     $("#btnCetak").prop("disabled", true);
-                } else {
+                } else if( FlagTranscript == false && status == 'Belum Feedback'){
                     $("#btnCetak").prop("disabled", false);
                 }
             }
