@@ -78,6 +78,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             foreach (var item in transkrip)
             {
 
+                VMNilaiBobot  Nilai = _transkripService.GetBobotNilai(item.NilaiTotal);               
+                
+                //return View(model);
                 var row = new
                 {
                     ID = item.ID,
@@ -86,8 +89,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     KodeMataKuliah = item.JadwalKuliahs.KodeMataKuliah,
                     NamaMataKuliah = item.NamaMatakuliah,
                     SKS = item.JadwalKuliahs.SKS,
-                    //Nilai = item.Nilai,
-                    Grade = item.Grade,
+                    NilaiTotal = item.NilaiTotal,
+                    Nilai = Nilai.GRADE_POINTS,
+                    Grade = Nilai.DESCR,
                     STRM = item.JadwalKuliahs.STRM,
                     MataKuilahID = item.JadwalKuliahs.MataKuliahID,
 

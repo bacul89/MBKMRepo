@@ -98,8 +98,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
             //Console.WriteLine(getNilaiMahasiswa);
 
+
             foreach (var item in transkrip)
             {
+                VMNilaiBobot Nilai = _transkripService.GetBobotNilai(item.NilaiTotal);
 
                 var row = new
                 {
@@ -108,8 +110,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     KodeMataKuliah = item.JadwalKuliahs.KodeMataKuliah,
                     NamaMataKuliah = item.NamaMatakuliah,
                     SKS = item.JadwalKuliahs.SKS,
-                    Grade = item.Grade,
-                    STRM = item.JadwalKuliahs.STRM,
+                    Nilai = Nilai.GRADE_POINTS,
+                    Grade = Nilai.DESCR,
                     MataKuilahID = item.JadwalKuliahs.MataKuliahID,
 
                     //mahasiswa

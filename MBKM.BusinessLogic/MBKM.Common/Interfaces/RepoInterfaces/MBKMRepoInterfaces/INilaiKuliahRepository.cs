@@ -15,6 +15,7 @@ namespace MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces
         VMListNilaiKuliah GetNilaiMahasiswa();
         VMDNR GetDNR(int idJadwalKuliah);
         IEnumerable<VMMataKuliah> GetMatkulEn(string kodeMataKuliah, int mataKuilahID, int sTRM);
+        VMNilaiBobot GetBobotNilai(decimal nilaiTotal);
         VMNilaiDiakui GetNilaiDiakui(string Jenjang, string Strm, string MatkulId, string KodeMatkul, string Nim);
     }
 }
