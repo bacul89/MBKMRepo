@@ -4,13 +4,13 @@
     Layout = "";
     int i = 1;
     var mahasiswas = ((IEnumerable<MBKM.Entities.ViewModel.VMDHK>)ViewData["mahasiswas"]).ToList();
-    int index = 0;
-    for (int j = 0; j < 40; j++)
-    {
-        var tmp2 = new MBKM.Entities.ViewModel.VMDHK();
-        tmp2.Nama = mahasiswas[0].Nama + index++;
-        mahasiswas.Add(tmp2);
-    }
+    //int index = 0;
+    //for (int j = 0; j < 40; j++)
+    //{
+    //    var tmp2 = new MBKM.Entities.ViewModel.VMDHK();
+    //    tmp2.Nama = mahasiswas[0].Nama + index++;
+    //    mahasiswas.Add(tmp2);
+    //}
     int pageSize = 20;
     decimal tmp = (decimal)(mahasiswas.Count / (decimal)pageSize);
     int page = (int)Math.Ceiling(tmp);

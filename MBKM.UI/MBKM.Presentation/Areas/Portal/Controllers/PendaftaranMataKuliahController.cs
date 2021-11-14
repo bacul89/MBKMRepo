@@ -118,11 +118,27 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var result = GetMahasiswaByEmail(email);
             return new ContentResult { Content = JsonConvert.SerializeObject(_pmkService.GetFakultas(result.JenjangStudi, search)), ContentType = "application/json" };
         }
-        public ActionResult GetMataKuliahByProdi(string prodi, string lokasi, int strm)
+        public ActionResult GetInformasiKampus()
+        {
+            string email = Session["emailMahasiswa"] as string;
+            var mahasiswa = GetMahasiswaByEmail(email);
+            var result = _pmkService.GetInformasiKampusByIdProdi(mahasiswa.ProdiAsalID);
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
+        }
+        public ActionResult GetMataKuliahByProdi(string prodi, string lokasi, int strm, string matkul)
         {
             List<JadwalKuliah> jks = new List<JadwalKuliah>();
             List<string> jadwalKuliahs = new List<string>();
-            foreach (var item in _jkService.Find(jk => jk.NamaProdi == prodi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen).ToList())
+            var result = new List<JadwalKuliah>();
+            if (matkul != null || matkul.Length > 0)
+            {
+                result = _jkService.Find(jk => jk.NamaProdi == prodi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen && jk.KodeMataKuliah + " - " + jk.NamaMataKuliah == matkul).ToList();
+            } else
+            {
+                result = _jkService.Find(jk => jk.NamaProdi == prodi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen).ToList();
+            }
+
+            foreach (var item in result)
             {
                 if (!jadwalKuliahs.Contains(item.NamaMataKuliah))
                 {
@@ -144,13 +160,14 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var result = GetMahasiswaByEmail(email);
             return new ContentResult { Content = JsonConvert.SerializeObject(_pmkService.GetLokasiByProdi(result.JenjangStudi, namaProdi, search)), ContentType = "application/json" };
         }
-        public ActionResult GetProgram()
+        public ActionResult GetProgram(string search)
         {
             List<string> programs = new List<string>();
             List<JenisKerjasamaModel> jkm = new List<JenisKerjasamaModel>();
-            foreach (var item in _jenisKerjasamaService.GetAll())
+            var result = _jenisKerjasamaService.GetAll();
+            foreach (var item in result)
             {
-                if (!programs.Contains(item.JenisPertukaran))
+                if (!programs.Contains(item.JenisPertukaran) && item.JenisPertukaran.ToLower().Contains(search.ToLower()))
                 {
                     programs.Add(item.JenisPertukaran);
                     jkm.Add(item);
@@ -158,15 +175,15 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             }
             return new ContentResult { Content = JsonConvert.SerializeObject(jkm), ContentType = "application/json" };
         }
-        public ActionResult GetKegiatanByProgram(string program)
+        public ActionResult GetKegiatanByProgram(string program, string search)
         {
-            return new ContentResult { Content = JsonConvert.SerializeObject(_jenisKerjasamaService.Find(jk => jk.JenisPertukaran == program).ToList()), ContentType = "application/json" };
+            return new ContentResult { Content = JsonConvert.SerializeObject(_jenisKerjasamaService.Find(jk => jk.JenisPertukaran == program && jk.JenisKerjasama.Contains(search)).ToList()), ContentType = "application/json" };
         }
-        public ActionResult GetInstansiByJenisKerjasama(string idKerjasama)
+        public ActionResult GetInstansiByJenisKerjasama(string idKerjasama, string search)
         {
             List<string> instansis = new List<string>();
             List<VMLookup> pks = new List<VMLookup>();
-            var result = _perjanjianKerjasamaService.Find(pk => pk.JenisKerjasama == idKerjasama).ToList();
+            var result = _perjanjianKerjasamaService.Find(pk => pk.JenisKerjasama == idKerjasama && pk.NamaInstansi.Contains(search)).ToList();
             foreach (var item in result)
             {
                 if (!instansis.Contains(item.NamaInstansi))
@@ -184,9 +201,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var result = _perjanjianKerjasamaService.Find(pk => pk.NoPerjanjian == noKerjasama).FirstOrDefault();
             return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
-        public ActionResult GetNoKerjasamaByInstansi(string instansi, string idKerjasama)
+        public ActionResult GetNoKerjasamaByInstansi(string instansi, string idKerjasama, string search)
         {
-            return new ContentResult { Content = JsonConvert.SerializeObject(_perjanjianKerjasamaService.Find(pk => pk.NamaInstansi == instansi && pk.JenisKerjasama == idKerjasama).ToList()), ContentType = "application/json" };
+            return new ContentResult { Content = JsonConvert.SerializeObject(_perjanjianKerjasamaService.Find(pk => pk.NamaInstansi == instansi && pk.JenisKerjasama == idKerjasama && pk.NoPerjanjian.Contains(search)).ToList()), ContentType = "application/json" };
         }
         public ActionResult GetInformasiPertukaran()
         {
@@ -206,7 +223,21 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var informasiPertukaran = _informasiPertukaranService.Find(ip => ip.MahasiswaID == id).FirstOrDefault();
             return new ContentResult { Content = JsonConvert.SerializeObject(informasiPertukaran), ContentType = "application/json" };
         }
-        public ActionResult GetMataKuliahAsal(int idMatkul)
+        public ActionResult GetMatkulAsal(string fakultas, string prodi, string lokasi, string search, int strm)
+        {
+            var result = _jkService.Find(_ => _.NamaFakultas == fakultas &&  _.NamaProdi == prodi && _.Lokasi == lokasi && _.STRM == strm && _.FlagOpen && (_.KodeMataKuliah + " - " + _.NamaMataKuliah).Contains(search)).ToList();
+            List<string> kodeNama = new List<string>();
+            List<JadwalKuliah> matkulAsal = new List<JadwalKuliah>();
+            foreach (var item in result)
+            {
+                if (!kodeNama.Contains(item.KodeMataKuliah + " - " + item.NamaMataKuliah))
+                {
+                    kodeNama.Add(item.KodeMataKuliah + " - " + item.NamaMataKuliah);
+                    matkulAsal.Add(item);
+                }
+            }
+            return new ContentResult { Content = JsonConvert.SerializeObject(matkulAsal), ContentType = "application/json" };
+        }public ActionResult GetMataKuliahAsal(int idMatkul)
         {
             var result = _jkService.Get(idMatkul);
             string prodiIDAsal = Session["prodiIDAsal"] as string;

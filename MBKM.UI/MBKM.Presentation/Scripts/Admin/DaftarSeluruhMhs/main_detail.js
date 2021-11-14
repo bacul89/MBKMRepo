@@ -1,4 +1,93 @@
 ﻿var dMasterMhs = {}
+var isInternal = false;
+function prep(id) {
+    $.ajax({
+        url: '/Admin/DaftarSeluruhMahasiswa/GetMHS?id=' + id,
+        type: 'get'
+    }).then(function (response) {
+        $("#jenisKegiatanMBKM").select2({
+            placeholder: "-- Pilih Jenis Kegiatan --"
+        });
+        if (response.NIM == response.NIMAsal && response.NIM && response.NIMAsal) {
+        //if (1==1) {
+            isInternal = true;
+            $('#eksternal').hide();
+            setLookupValue("StatusKerjasama", "ADA KERJASAMA", "statusKerjasamaInternal");
+            $("#jenisKegiatanMBKM").prop("disabled", true);
+            $("#jenisProgramMBKM").select2({
+                placeholder: "-- Pilih Jenis Program --",
+                width: "100%",
+                ajax: {
+                    url: "/Admin/DaftarSeluruhMahasiswa/GetProgram",
+                    dataType: 'json',
+                    method: "POST",
+                    delay: 250,
+                    cache: false,
+                    data: function (params) {
+                        return {
+                            Search: params.term || ""
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: $.map(data, function (item) { return { id: item.JenisPertukaran, value: item.JenisPertukaran, text: item.JenisPertukaran } })
+                        };
+                    },
+                }
+            });
+            $("#jenisProgramMBKM").change(function () {
+                if (!$("#jenisProgramMBKM").val().includes('Non Pertukaran')) {
+                    $("#trNoSKTugas").hide();
+                    $("#trTanggalSKTugas").hide();
+                    $("#trJudulAktivitas").hide();
+                    $("#trLokasi").hide();
+                } else {
+                    $("#trNoSKTugas").show();
+                    $("#trTanggalSKTugas").show();
+                    $("#trJudulAktivitas").show();
+                    $("#trLokasi").show();
+                }
+                $("#jenisKegiatanMBKM").empty();
+                $("#jenisKegiatanMBKM").prop("disabled", false);
+
+                $("#jenisKegiatanMBKM").select2({
+                    placeholder: "-- Pilih Jenis Kegiatan --",
+                    width: "100%",
+                    ajax: {
+                        url: "/Admin/DaftarSeluruhMahasiswa/GetKegiatanByProgram",
+                        dataType: 'json',
+                        method: "POST",
+                        delay: 250,
+                        cache: false,
+                        data: function (params) {
+                            return {
+                                Search: params.term || "",
+                                program: $('#jenisProgramMBKM').val()
+                            };
+                        },
+                        processResults: function (data, params) {
+                            return {
+                                results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.JenisKerjasama } })
+                            };
+                        },
+                    }
+                });
+            });
+        } else {
+            isInternal = false;
+            $('#internal').hide();
+        }
+    });
+}
+function setLookupValue(tipe, value, id) {
+    $.ajax({
+        type: "GET",
+        url: "/Admin/DaftarSeluruhMahasiswa/getLookupByValue?tipe=" + tipe + "&value=" + value
+    }).then(function (response) {
+        var option = $("<option selected='selected'></option>").val(response.Nilai).text(response.Nama);
+        $("#" + id).append(option).trigger('change');
+    });
+}
 function DetailMhs(id) {
     $.LoadingOverlay("show");
     $.ajax({
@@ -11,6 +100,7 @@ function DetailMhs(id) {
             if ($('.data-content-modal').length) {
                 $('.data-content-modal').remove();
             }
+            prep(id);
             $('#modal-inner').append(e);
             $('.modal').modal('show');
             $("#Update").hide();
@@ -19,12 +109,12 @@ function DetailMhs(id) {
             $("#Edit").click(function () {
                 //$("input").removeAttr("disabled");
                 $("#statusBayarDiv").removeAttr("disabled");
+                $("#jenisProgramMBKM").removeAttr("disabled");
 
                 //$("select").removeAttr("disabled");
                 //$("textarea").removeAttr("disabled");
+
                 loadFromLookup("StatusKerjasama", "skj", "StatusKerjasama");
-                
-                //console.log(latest_valueskj);
                 $("#skj").change(function () {
                     $("#noKJ").prop('disabled', true);
                     $("#noKJ").empty();
@@ -36,6 +126,7 @@ function DetailMhs(id) {
                     }
                     
                 });
+
                 //$("#simpan").show();
                 $("#skj").removeAttr("disabled");
                 $("#sKerjaSama2").prop('hidden', true);
@@ -139,6 +230,9 @@ function loadNoKerjasama() {
     });
 }
 function UpdateKJ(id) {
+    if (isInternal) {
+        UpdateInternal(id);
+    }
     dMasterMhs = {}
     //getValueOnForm();
     //var b = $('#namaUniversitas').select2('data')[0].biaya;
@@ -191,6 +285,24 @@ function UpdateKJ(id) {
     });
         
     
+}
+function UpdateInternal(id) {
+    var data = new Object();
+    data.id = id;
+    data.JenisPertukaran = $('#jenisProgramMBKM').select2('data')[0].text;
+    data.JenisKerjasama = $('#jenisKegiatanMBKM').select2('data')[0].text;
+    console.log(id);
+    if ($("#jenisProgramMBKM").val().includes('Non Pertukaran')) {
+        data.JudulAktivitas = $('#judulAktivitas').val();
+        data.LokasiTugas = $('#lokasiTugas').val();
+        data.TanggalSK = $('#tanggalSKTugas').val();
+        data.NoSK = $('#noSKTugas').val();
+    }
+    $.ajax({
+        type: "POST",
+        url: "/Admin/DaftarseluruhMahasiswa/InsertInformasiPertukaran",
+        data: data
+    });
 }
 function loadFromLookup(tipe, id, nama) {
 

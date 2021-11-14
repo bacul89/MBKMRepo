@@ -53,6 +53,16 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return result;
             }
         }
+        public VMKampus GetInformasiKampusByIdProdi(string idProdi)
+        {
+            using (var context = new MBKMContext())
+            {
+                var idProdiParam = new SqlParameter("@IDProdi", idProdi);
+                var result = context.Database
+                    .SqlQuery<VMKampus>("GetInformasiKampusByIdProdi @IDProdi", idProdiParam).FirstOrDefault();
+                return result;
+            }
+        }
         public VMSemester getOngoingSemester(string jenjangStudi)
         {
             using (var context = new MBKMContext())
