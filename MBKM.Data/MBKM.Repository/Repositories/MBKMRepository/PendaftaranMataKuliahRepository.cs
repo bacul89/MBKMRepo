@@ -251,7 +251,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return result;
             }
         }
-        public IEnumerable<VMReportMahasiswaInternal> GetListPendaftaranInternalPertukaranKeluar(long strm)
+        public IEnumerable<VMReportMahasiswaInternalKeluar> GetListPendaftaranInternalPertukaranKeluar(long strm)
         {
             using (var context = new MBKMContext())
             {
@@ -287,7 +287,26 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                             InformasiPertukaran = pendaf.InformasiPertukaran,
                             NilaiKuliah = nilai
                         })
-                    .Where(z => !z.InformasiPertukaran.JenisPertukaran.ToLower().Contains("non") && z.InformasiPertukaran.JenisKerjasama.ToLower() == "internal" && z.JadwalKuliahs.ID == z.NilaiKuliah.JadwalKuliahID).ToList();
+                    .Where(z => !z.InformasiPertukaran.JenisPertukaran.ToLower().Contains("non") 
+                        && z.InformasiPertukaran.JenisKerjasama.ToLower().Contains("internal") 
+                        && z.InformasiPertukaran.JenisKerjasama.ToLower().Contains("luar")
+                        && z.JadwalKuliahs.ID == z.NilaiKuliah.JadwalKuliahID)
+                    .Join(context.PerjanjianKerjasamas,
+                        awal => awal.InformasiPertukaran.NoKerjasama,
+                        akhir => akhir.NoPerjanjian,
+                        (awal, akhir) => new VMReportMahasiswaInternalKeluar
+                        {
+                            MatkulKodeAsal = awal.MatkulKodeAsal,
+                            MatkulAsal = awal.MatkulAsal,
+                            MatkulIDAsal = awal.MatkulIDAsal,
+                            JadwalKuliahID = awal.JadwalKuliahID,
+                            JadwalKuliahs = awal.JadwalKuliahs,
+                            mahasiswas = awal.mahasiswas,
+                            InformasiPertukaran = awal.InformasiPertukaran,
+                            NilaiKuliah = awal.NilaiKuliah,
+                            PerjanjianKerjasama = akhir
+                        })
+                    .ToList();
 
                 return result;
             }

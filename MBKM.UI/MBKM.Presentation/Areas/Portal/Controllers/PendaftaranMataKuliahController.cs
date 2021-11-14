@@ -95,7 +95,10 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult FormPendaftaranInternalKeLuarAtma()
         {
-            return View();
+            VMPendaftaranJadwalKuliah model = (VMPendaftaranJadwalKuliah)TempData["Model"];
+
+
+            return View(model);
         }
         public ActionResult FormPendaftaranInternal(int idMatkul, string jenisKegiatan)
         {
@@ -104,7 +107,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             model.ID = idMatkul;
             if (jenisKegiatan.ToLower().Contains("internal ke luar atma jaya"))
             {
-                ViewData["Model"] = model;
+                TempData["Model"] = model;
                 return RedirectToAction("FormPendaftaranInternalKeLuarAtma");
             }
             return View(model);
@@ -274,7 +277,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             try
             {
                 Int64 id = GetMahasiswaByEmail(Session["emailMahasiswa"] as string).ID;
-                if (_pendaftaranMataKuliahService.Find(pmk => pmk.MahasiswaID == id && pmk.JadwalKuliahID == pendaftaranMataKuliah.JadwalKuliahID).FirstOrDefault() == null)
+                var cek = _pendaftaranMataKuliahService.Find(pmk => pmk.MahasiswaID == id && pmk.JadwalKuliahID == pendaftaranMataKuliah.JadwalKuliahID && !pmk.StatusPendaftaran.ToLower().Contains("rejected")).FirstOrDefault();
+                if (cek == null)
                 {
                     pendaftaranMataKuliah.MahasiswaID = id;
                     pendaftaranMataKuliah.IsActive = true;
@@ -326,7 +330,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     _approvalPendaftaranService.Save(approvalPendaftaran);
                     return Json(new ServiceResponse { status = 200, message = "Anda berhasil terdaftar, silahkan cek tracking pendaftaran untuk melihat status pendaftaran!" });
                 }
-                return Json(new ServiceResponse { status = 400, message = "Anda sudah mendaftar matakuliah ini!" });
+                if (cek.StatusPendaftaran.Contains("ACCEPTED BY MAHASISWA"))
+                {
+                    return Json(new ServiceResponse { status = 400, message = "Anda sudah mendaftar matakuliah ini!" });
+                }
+                return Json(new ServiceResponse { status = 400, message = "Pendaftaran anda sedang diproses, silahkan cek tracking pendaftaran untuk melihat status pendaftaran!" });
             }
             catch (Exception e)
                 {

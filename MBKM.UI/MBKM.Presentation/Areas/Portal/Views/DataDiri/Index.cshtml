@@ -503,6 +503,9 @@
                 type: "GET",
                 url: "@Url.Action("GetAllAttachment", "DataDiri")?id=" + id
             }).then(function (response) {
+                if (response.length == 0) {
+                    $("#dokumenPendukung").hide();
+                }
                 for (var i = 0; i < response.length; i++) {
                     var tmp = new Object();
                     tmp.FileType = response[i].FileType;

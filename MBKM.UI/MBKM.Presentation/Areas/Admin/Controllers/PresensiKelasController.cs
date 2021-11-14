@@ -70,7 +70,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
         public ActionResult GetMatkulByLokasi(string search, string jenjangStudi, string prodi, string lokasi)
         {
-            return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.GetMatkulByLokasi(search, jenjangStudi, prodi, lokasi)), ContentType = "application/json" };
+            var result = _absensiService.GetMatkulByLokasi(search, jenjangStudi, prodi, lokasi);
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
         public ActionResult GetSeksiByMatkul(string search, string jenjangStudi, string matkul, string lokasi)
         {

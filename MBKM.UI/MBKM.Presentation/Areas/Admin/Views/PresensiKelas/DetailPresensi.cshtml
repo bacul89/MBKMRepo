@@ -257,6 +257,9 @@
                     {
                         "data": "ID",
                         "render": function (data, type, row, meta) {
+                            if (row.CheckDosen) {
+                                return '<label class="container2"><input type="checkbox" checked disabled><span class="checkmark"></span></label>';
+                            }
                             return '<label class="container2"><input class="checkFlag" type="checkbox" id="checkDosen' + mahasiswaCount++ + '" value="' + data + '"><span class="checkmark"></span></label>';
                         }
                     },

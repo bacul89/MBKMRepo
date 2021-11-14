@@ -95,7 +95,23 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     "4.00"
                 });
             }
+            var semesterSekarang = dataSemester.Nama.Split(' ');
+            ViewData["TahunSemester"] = semesterSekarang.Last();
+            var strm = id.ToString().Substring(id.ToString().Length - 2); ;
+            if (strm == "10")
+            {
+                ViewData["jenisSemester"] = "Ganjil";
+            }
+            else if (strm == "20")
+            {
+                ViewData["jenisSemester"] = "Genap";
+            }
+            else if (strm == "30")
+            {
+                ViewData["jenisSemester"] = "Pendek";
+            }
 
+            ViewData["datas"] = final;
             return new ViewAsPdf("GetFilePdf");
         }
 

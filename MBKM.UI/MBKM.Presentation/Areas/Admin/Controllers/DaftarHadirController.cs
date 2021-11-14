@@ -25,9 +25,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private IMasterCapaianPembelajaranService _mcpService;
         private IAbsensiService _absensiService;
         private IMahasiswaService _mahasiswaService;
+        private IFeedbackMatkulService _feedbackMatkulService;
         private IPendaftaranMataKuliahService _pendaftaranMKService;
 
-        public DaftarHadirController(IPendaftaranMataKuliahService pendaftaranMKService,IMahasiswaService mahasiswaService ,IAbsensiService absensiService,ILinkFasilitasService linkFasilitasService,ICPLMatakuliahService cplMatakuliah, ILookupService lookupService, IJadwalKuliahService jkService, IJadwalUjianMBKMDetailService juService, IMasterCapaianPembelajaranService mcpService)
+        public DaftarHadirController(IFeedbackMatkulService feedbackMatkulService, IPendaftaranMataKuliahService pendaftaranMKService,IMahasiswaService mahasiswaService ,IAbsensiService absensiService,ILinkFasilitasService linkFasilitasService,ICPLMatakuliahService cplMatakuliah, ILookupService lookupService, IJadwalKuliahService jkService, IJadwalUjianMBKMDetailService juService, IMasterCapaianPembelajaranService mcpService)
         {
             _cplMatakuliah = cplMatakuliah;
             _lookupService = lookupService;
@@ -38,6 +39,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             _absensiService = absensiService;
             _mahasiswaService = mahasiswaService;
             _pendaftaranMKService = pendaftaranMKService;
+            _feedbackMatkulService = feedbackMatkulService;
         }
 
         public ActionResult Index()
@@ -46,81 +48,86 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             //ViewData["semester"] = data;
             var listSection = _linkFasilitasService.getSection();
             ViewData["listSection"] = listSection;
-            return View(_absensiService.GetTahunSemester());
+            return View();
         }
         public ActionResult DHK(int id)
         {
             var jks = _jkService.Find(jk => jk.ID == id).FirstOrDefault();
-            var sem = _absensiService.GetSemesterBySTRM(jks.STRM);
-            //List<Absensi> abs = _absensiService.Find(x => x.JadwalKuliahID == id).ToList();
+            var sem = _absensiService.GetSemesterBySTRM(jks.STRM).ToLower().Replace("odd semester", "SEMESTER GANJIL").Replace("even semester", "SEMESTER GENAP").Replace("short semester", "SEMESTER ANTARA");
             List<PendaftaranMataKuliah> pmk = _pendaftaranMKService.Find(x => x.JadwalKuliahID == id && x.StatusPendaftaran.ToLower().Contains("accepted")).ToList();
-            //var grupmhs = abs.GroupBy(x => x.MahasiswaID)
-            //    .Select(grp => grp.ToList())
-            //    .ToList();
-            //List<Mahasiswa> mhs = _mahasiswaService.Find(x => x.ID == abs.).ToList();
             var list = pmk.Select(x => new VMDHK()
             {
                 Nama = x.mahasiswas.Nama,
                 StudentID = x.mahasiswas.NIM
-            }) ;
+            });
+            
             ViewData["mahasiswas"] = list;
-            //var abs = _absensiService.GetSemesterBySTRM(jks.STRM);
             ViewData["semester"] = sem;
             ViewData["prodi"] = jks.NamaProdi;
             ViewData["kodeMK"] = jks.KodeMataKuliah;
             ViewData["namaMK"] = jks.NamaMataKuliah;
-            ViewData["sks"] = jks.SKS;
+            ViewData["sks"] = (int) float.Parse(jks.SKS);
             ViewData["dosen"] = jks.NamaDosen;
-            //kanan
             ViewData["seksi"] = jks.ClassSection;
-            //ViewData["komponen"] = jks.;
-            ViewData["hari"] = jks.Hari;
-            ViewData["jam"] = ""+jks.JamMasuk+"-"+jks.JamSelesai;
+            ViewData["hari"] = getHari(jks.Hari);
+            ViewData["jam"] = jks.JamMasuk + " - " + jks.JamSelesai;
             ViewData["ruang"] = jks.RuangKelas;
+            ViewData["dosens"] = _feedbackMatkulService.GetDosenMakulPertemuans(jks.KodeMataKuliah, jks.ClassSection, jks.STRM.ToString(), jks.FakultasID.ToString());
+            ViewData["komponen"] = _absensiService.GetKomponenDHK(id);
             return View();
         }
-        
-
-
-        //public JsonResult SearchList(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm)
-        //{
-        //    VMListJadwalUjian vmList = _juService.SearchListJadwalUjian(model, idProdi, lokasi, idFakultas, jenjangStudi, strm);
-        //    return Json(new
-        //    {
-        //        // this is what datatables wants sending back
-        //        draw = model.draw,
-        //        recordsTotal = vmList.TotalCount,
-        //        recordsFiltered = vmList.TotalFilterCount,
-        //        data = vmList.gridDatas
-        //    });
-        //}
-
-
-
+        public string getHari(string day)
+        {
+            Dictionary<string, string> days = new Dictionary<string, string>();
+            days.Add("monday", "SENIN");
+            days.Add("tuesday", "SELASA");
+            days.Add("wednesday", "RABU");
+            days.Add("thursday", "KAMIS");
+            days.Add("friday", "JUMAT");
+            days.Add("saturday", "SABTU");
+            days.Add("sunday", "MINGGU");
+            if (!days.ContainsKey(day.ToLower()))
+            {
+                return day.ToUpper();
+            }
+            return days[day.ToLower()];
+        }
+        public ActionResult SearchList(int strm, string jenjangStudi, string fakultas, string prodi, string lokasi, string matkul, string seksi)
+        {
+            var result = _jkService.Find(_ => _.STRM == strm && _.JenjangStudi == jenjangStudi && _.NamaFakultas == fakultas && _.NamaProdi == prodi && _.Lokasi == lokasi && _.KodeMataKuliah + " - " + _.NamaMataKuliah == matkul && _.ClassSection == seksi).ToList();
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
+        }
+        public ActionResult GetMatkulByLokasi(string search, int strm, string jenjangStudi, string prodi, string lokasi)
+        {
+            var cek = _jkService.Find(_ => _.STRM == strm && _.JenjangStudi == jenjangStudi && _.NamaProdi == prodi && _.Lokasi == lokasi).ToList();
+            var result = new List<VMLookup>();
+            foreach (var item in cek)
+            {
+                var tmp = new VMLookup();
+                tmp.Nama = item.KodeMataKuliah + " - " + item.NamaMataKuliah;
+                result.Add(tmp);
+            }
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
+        }
         /* Lookup --<> */
         public ActionResult getLookupByTipe(string tipe)
         {
             return Json(_lookupService.getLookupByTipe(tipe), JsonRequestBehavior.AllowGet);
         }
-
-
         /* Attribute Kuliah --<> */
         public ActionResult GetFakultas(string search, string JenjangStudi)
         {
 
             return Json(_mcpService.GetFakultas(JenjangStudi, search), JsonRequestBehavior.AllowGet);
         }
-
         public ActionResult GetProdiLocByFakultas(string JenjangStudi, string idFakultas, string search)
         {
             return Json(_cplMatakuliah.GetProdiLocByFakultas(JenjangStudi, idFakultas, search), JsonRequestBehavior.AllowGet);
         }
-
         public ActionResult GetProdiByFakultas(string JenjangStudi, string idFakultas, string search)
         {
             return Json(_mcpService.GetProdiByFakultas(JenjangStudi, idFakultas, search), JsonRequestBehavior.AllowGet);
         }
-
         public ActionResult GetLokasiByProdi(string JenjangStudi, string namaProdi, string search)
         {
             return Json(_mcpService.GetLokasiByProdi(JenjangStudi, namaProdi, search), JsonRequestBehavior.AllowGet);
