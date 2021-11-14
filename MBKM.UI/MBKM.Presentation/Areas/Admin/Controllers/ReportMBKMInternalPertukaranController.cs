@@ -57,8 +57,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             {
 
                 var checkNilai = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.MatkulIDAsal.ToString().PadLeft(6, '0'), d.MatkulKodeAsal, d.mahasiswas.ID.ToString());
-/*                var checkNilai = _nilaiKuliahService.GetNilaiDiakui("S1","2110", "001320", "FHK 214", "2015050251");
-*/              if(checkNilai == null)
+                /*var checkNilai = _nilaiKuliahService.GetNilaiDiakui("S1", "2110", "001320", "FHK 214", "2015050251");*/
+                var nilaiBobotDiakui = _nilaiKuliahService.GetNilaiGradeByNilaiTotal(Decimal.ToInt32(d.NilaiKuliah.NilaiTotal));
+                if (checkNilai == null)
                 {
                     final.Add(new String[]{
                         dataSemester.Nama,
@@ -73,7 +74,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         d.MatkulKodeAsal,
                         d.MatkulAsal,
                         "-",
-                        "-",
+                        nilaiBobotDiakui.GRADE_POINTS
                     });
                 }
                 else
@@ -91,7 +92,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         d.MatkulKodeAsal,
                         d.MatkulAsal,
                         checkNilai.NilaiDiakui,
-                        checkNilai.BobotDiakui,
+                         nilaiBobotDiakui.GRADE_POINTS
                     });
                 }
 
@@ -109,8 +110,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             foreach (var d in dataMahasiswa)
             {
                 var checkNilai = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.MatkulIDAsal.ToString().PadLeft(6, '0'), d.MatkulKodeAsal, d.mahasiswas.ID.ToString());
-                /*                var checkNilai = _nilaiKuliahService.GetNilaiDiakui("S1","2110", "001320", "FHK 214", "2015050251");
-                */
+                /*var checkNilai = _nilaiKuliahService.GetNilaiDiakui("S1", "2110", "001320", "FHK 214", "2015050251");*/
+                var nilaiBobotDiakui = _nilaiKuliahService.GetNilaiGradeByNilaiTotal(Decimal.ToInt32(d.NilaiKuliah.NilaiTotal));
                 if (checkNilai == null)
                 {
                     final.Add(new String[]{
@@ -126,7 +127,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         d.MatkulKodeAsal,
                         d.MatkulAsal,
                         "-",
-                        "-",
+                        nilaiBobotDiakui.GRADE_POINTS
                     });
                 }
                 else
@@ -144,7 +145,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         d.MatkulKodeAsal,
                         d.MatkulAsal,
                         checkNilai.NilaiDiakui,
-                        checkNilai.BobotDiakui,
+                         nilaiBobotDiakui.GRADE_POINTS
                     });
                 }
             }
@@ -178,8 +179,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             foreach (var d in dataMahasiswa)
             {
                 var checkNilai = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.MatkulIDAsal.ToString().PadLeft(6, '0'), d.MatkulKodeAsal, d.mahasiswas.ID.ToString());
-                /*                var checkNilai = _nilaiKuliahService.GetNilaiDiakui("S1","2110", "001320", "FHK 214", "2015050251");
-                */
+                /*var checkNilai = _nilaiKuliahService.GetNilaiDiakui("S1", "2110", "001320", "FHK 214", "2015050251");*/
+
+                var nilaiBobotDiakui = _nilaiKuliahService.GetNilaiGradeByNilaiTotal(Decimal.ToInt32(d.NilaiKuliah.NilaiTotal));
                 if (checkNilai == null)
                 {
                     final.Add(new String[]{
@@ -195,7 +197,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         d.MatkulKodeAsal,
                         d.MatkulAsal,
                         "-",
-                        "-",
+                        nilaiBobotDiakui.GRADE_POINTS
                     });
                 }
                 else
@@ -213,7 +215,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         d.MatkulKodeAsal,
                         d.MatkulAsal,
                         checkNilai.NilaiDiakui,
-                        checkNilai.BobotDiakui,
+                         nilaiBobotDiakui.GRADE_POINTS
                     });
                 }
             }

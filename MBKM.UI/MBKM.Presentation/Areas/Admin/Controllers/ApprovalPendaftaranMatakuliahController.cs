@@ -99,11 +99,6 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 }
                 else if (tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("internal") && tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("luar"))
                 {
-                    IList<CPLMatakuliah> tempIDAsal = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.CPLMatakuliahs.IDMataKUliah).ToList();
-                    IList<CPLMatakuliah> capaianAsal = tempIDAsal.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == data.PendaftaranMataKuliahs.JadwalKuliahs.ProdiID).ToList();
-                    ViewData["capaianTujuan"] = capaianAsal;
-                    ViewData["countCPTujuan"] = capaianAsal.Count();
-
                     ViewData["capaianAsal"] = capaianTujuan;
                     ViewData["countCPAsal"] = capaianTujuan.Count();
                 }

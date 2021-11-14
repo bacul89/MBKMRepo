@@ -143,6 +143,20 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             }
         }
 
+        public VMNilaiGrade GetNilaiGradeByNilaiTotal(int nilaiTotal)
+        {
+            using (var context = new MBKMContext())
+            {
+                var nilai = new SqlParameter("@Nilai", nilaiTotal);
+                var result = context.Database
+                    .SqlQuery<VMNilaiGrade>("GetGradeByNilai @Nilai", nilai).First();
+                return result;
+            }
+
+        }
+
+
+
     }
 
 
