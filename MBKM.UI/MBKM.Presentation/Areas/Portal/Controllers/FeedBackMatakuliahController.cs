@@ -52,8 +52,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult GetDataTable(int semester)
         {
             var email = HttpContext.Session["emailMahasiswa"].ToString();
-            /*var data1 = _pendaftaranMataKuliahService.Find(x => x.mahasiswas.Email == email && x.JadwalKuliahs.STRM == semester).ToList();*/
-            var data1 = _nilaiKuliahService.Find(x => x.Mahasiswas.Email == email && x.JadwalKuliahs.STRM == semester).ToList();
+            var data1 = _pendaftaranMataKuliahService.Find(x => x.mahasiswas.Email == email && x.JadwalKuliahs.STRM == semester).ToList();
+            /*            var data1 = _nilaiKuliahService.Find(x => x.Mahasiswas.Email == email && x.JadwalKuliahs.STRM == semester).ToList();
+            */
             var DescSemester = _feedbackMatkulService.GetSemesterByStrm(data1.First().JadwalKuliahs.STRM.ToString());
             List<String[]> final = new List<String[]>();
            

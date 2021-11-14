@@ -15,6 +15,7 @@ using System.Web.Mvc;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
+    [MBKMAuthorize]
     public class ReportInternalKeluarController : Controller
     {
         // GET: Admin/ReportInternalKeluar
@@ -50,7 +51,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             List<String[]> final = new List<String[]>();
             foreach (var d in dataMahasiswa)
             {
-                var checkNilai = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.MatkulIDAsal.ToString().PadLeft(6, '0'), d.MatkulKodeAsal, d.mahasiswas.ID.ToString());
+                var checkNilai = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.JadwalKuliahs.MataKuliahID.ToString().PadLeft(6, '0'), d.JadwalKuliahs.KodeMataKuliah, d.mahasiswas.ID.ToString());
                 if (checkNilai == null)
                 {
                     final.Add(new String[]{
@@ -100,7 +101,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             List<String[]> final = new List<String[]>();
             foreach (var d in dataMahasiswa)
             {
-                var checkNilai = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.MatkulIDAsal.ToString().PadLeft(6, '0'), d.MatkulKodeAsal, d.mahasiswas.ID.ToString());
+                var checkNilai = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.JadwalKuliahs.MataKuliahID.ToString().PadLeft(6, '0'), d.JadwalKuliahs.KodeMataKuliah, d.mahasiswas.ID.ToString());
                 if (checkNilai == null)
                 {
                     final.Add(new String[]{
@@ -172,7 +173,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             List<String[]> final = new List<String[]>();
             foreach (var d in dataMahasiswa)
             {
-                var checkNilai = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.MatkulIDAsal.ToString().PadLeft(6, '0'), d.MatkulKodeAsal, d.mahasiswas.ID.ToString());
+                var checkNilai = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.JadwalKuliahs.MataKuliahID.ToString().PadLeft(6, '0'), d.JadwalKuliahs.KodeMataKuliah, d.mahasiswas.ID.ToString());
                 if (checkNilai == null)
                 {
                     final.Add(new String[]{

@@ -283,24 +283,9 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                             
                         }
                         )
-                    .Join(context.NilaiKuliahs,
-                        pendaf => pendaf.mahasiswas.ID,
-                        nilai => nilai.MahasiswaID,
-                        (pendaf, nilai) => new VMReportMahasiswaInternal
-                        {
-                            MatkulKodeAsal = pendaf.MatkulKodeAsal,
-                            MatkulAsal = pendaf.MatkulAsal,
-                            MatkulIDAsal = pendaf.MatkulIDAsal,
-                            JadwalKuliahID = pendaf.JadwalKuliahID,
-                            JadwalKuliahs = pendaf.JadwalKuliahs,
-                            mahasiswas = pendaf.mahasiswas,
-                            InformasiPertukaran = pendaf.InformasiPertukaran,
-                            NilaiKuliah = nilai
-                        })
                     .Where(z => !z.InformasiPertukaran.JenisPertukaran.ToLower().Contains("non") 
                         && z.InformasiPertukaran.JenisKerjasama.ToLower().Contains("internal") 
-                        && z.InformasiPertukaran.JenisKerjasama.ToLower().Contains("luar")
-                        && z.JadwalKuliahs.ID == z.NilaiKuliah.JadwalKuliahID)
+                        && z.InformasiPertukaran.JenisKerjasama.ToLower().Contains("luar"))
                     .Join(context.PerjanjianKerjasamas,
                         awal => awal.InformasiPertukaran.NoKerjasama,
                         akhir => akhir.NoPerjanjian,
@@ -313,7 +298,6 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                             JadwalKuliahs = awal.JadwalKuliahs,
                             mahasiswas = awal.mahasiswas,
                             InformasiPertukaran = awal.InformasiPertukaran,
-                            NilaiKuliah = awal.NilaiKuliah,
                             PerjanjianKerjasama = akhir
                         })
                     .ToList();

@@ -17,5 +17,6 @@ namespace MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces
         IEnumerable<VMMataKuliah> GetMatkulEn(string kodeMataKuliah, int mataKuilahID, int sTRM);
         VMNilaiBobot GetBobotNilai(decimal nilaiTotal);
         VMNilaiDiakui GetNilaiDiakui(string Jenjang, string Strm, string MatkulId, string KodeMatkul, string Nim);
+        VMNilaiGrade GetNilaiGradeByNilaiTotal(int nilaiTotal);
     }
 }
