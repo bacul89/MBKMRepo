@@ -48,9 +48,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             var model = _jadwalKuliahService.Get(idMatkul);
             return View(model);
         }
-        public ActionResult GetKelas(string jenjangStudi, string fakultas, string lokasi, string prodi, string matkul, string seksi)
+        public ActionResult GetKelas(string jenjangStudi, string fakultas, string lokasi, string prodi, string matkul, string seksi, int strm)
         {
-            var result = _jadwalKuliahService.Find(_ => _.JenjangStudi == jenjangStudi && _.NamaFakultas == fakultas && _.Lokasi == lokasi && _.NamaProdi == prodi && _.KodeMataKuliah + " - " + _.NamaMataKuliah == matkul && _.ClassSection == seksi).ToList();
+            var result = _jadwalKuliahService.Find(_ => _.JenjangStudi == jenjangStudi && _.NamaFakultas == fakultas && _.Lokasi == lokasi && _.NamaProdi == prodi && _.KodeMataKuliah + " - " + _.NamaMataKuliah == matkul && _.ClassSection == seksi && _.FlagOpen && _.STRM == strm).ToList();
             return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
         public ActionResult GetBobot(string idMatkul)

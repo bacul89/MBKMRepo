@@ -126,7 +126,11 @@
             "data": "NoKerjasama",
             "name": "NoKerjasama",
             "render": function (data, type, row, meta) {
-                if (data != null) {
+                if (row.NamaUniversitas == 'UNIKA Atma Jaya' && row.NoKerjasamaInternal) {
+                    console.log(row)
+                    return '<div class="center">' + row.NoKerjasamaInternal + '</div>';
+                }
+                else if (data != null) {
                     return '<div class="center">' + data + '</div>';
                 }
                 else {

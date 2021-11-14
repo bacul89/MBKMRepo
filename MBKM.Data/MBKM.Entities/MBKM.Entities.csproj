@@ -115,6 +115,7 @@
     <Compile Include="ViewModel\VMDHK.cs" />
     <Compile Include="ViewModel\VMDNR.cs" />
     <Compile Include="ViewModel\VMJadwalUjian.cs" />
+    <Compile Include="ViewModel\VMKampus.cs" />
     <Compile Include="ViewModel\VMMasterCPL.cs" />
     <Compile Include="ViewModel\VMNilaiDiakui.cs" />
     <Compile Include="ViewModel\VMNilaiBobot.cs" />

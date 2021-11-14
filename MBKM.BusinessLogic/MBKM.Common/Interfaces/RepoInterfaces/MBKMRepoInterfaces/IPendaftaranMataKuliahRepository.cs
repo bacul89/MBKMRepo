@@ -13,8 +13,9 @@ namespace MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces
         IEnumerable<VMFakultas> GetFakultas(string jenjangStudi, string search);
         IEnumerable<VMProdi> GetProdiByFakultas(string jenjangStudi, string idFakultas, string search);
         IEnumerable<VMProdi> GetLokasiByProdi(string jenjangStudi, string namaProdi, string search);
+        VMKampus GetInformasiKampusByIdProdi(string idProdi);
 
-		VMSemester getOngoingSemester(string jenjangStudi);
+        VMSemester getOngoingSemester(string jenjangStudi);
 		VMListPendaftaranMataKuliah GetPendaftaranList(int Skip, int Length, string SearchParam, string SortBy, bool SortDir, int strm);
         VMListPendaftaranMataKuliah GetPendaftaranListFromMahasiswa(int Skip, int Length, string SearchParam, string SortBy, bool SortDir, string emailMahasiswa);
         IEnumerable<VMPendaftaranWithInformasipertukaran> GetListPendaftaranAndInformasiPertukaran(long strm);

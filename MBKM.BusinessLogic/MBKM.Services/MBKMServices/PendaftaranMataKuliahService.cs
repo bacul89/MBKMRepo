@@ -25,6 +25,7 @@ namespace MBKM.Services.MBKMServices
         IEnumerable<VMReportMahasiswaInternal> GetListPendaftaranInternalPertukaran(long strm);
         IEnumerable<VMReportMahasiswaEksternal> GetListPendaftaranEksternalPertukaran(long strm);
         IEnumerable<VMReportMahasiswaInternalKeluar> GetListPendaftaranInternalPertukaranKeluar(long strm);
+        VMKampus GetInformasiKampusByIdProdi(string idProdi);
     }
     public class PendaftaranMataKuliahService : EntityService<PendaftaranMataKuliah>, IPendaftaranMataKuliahService
     {
@@ -54,6 +55,10 @@ namespace MBKM.Services.MBKMServices
         public VMSemester getOngoingSemester(string jenjangStudi)
         {
             return _pmkRepository.getOngoingSemester(jenjangStudi);
+        }
+        public VMKampus GetInformasiKampusByIdProdi(string idProdi)
+        {
+            return _pmkRepository.GetInformasiKampusByIdProdi(idProdi);
         }
         public VMListPendaftaranMataKuliah GetPendaftaranMahasiswaDataTable(DataTableAjaxPostModel model, int strm)
         {

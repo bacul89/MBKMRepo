@@ -116,25 +116,25 @@
                     <tr id="trNoSKTugas" hidden>
                         <td style="text-align: right">No. SK Tugas</td>
                         <td style="width: 400px;">
-                            <input type="text" name="noSKTugas" id="noSKTugas" class="form-control input-md"></input type="text">
+                            <input type="text" name="noSKTugas" id="noSKTugas" class="form-control input-md" />
                         </td>
                     </tr>
                     <tr id="trTanggalSKTugas" hidden>
                         <td style="text-align: right">Tanggal SK Tugas</td>
                         <td style="width: 400px;">
-                            <input type="date" name="tanggalSKTugas" id="tanggalSKTugas" class="form-control input-md"></input type="text">
+                            <input type="date" name="tanggalSKTugas" id="tanggalSKTugas" class="form-control input-md" />
                         </td>
                     </tr>
                     <tr id="trJudulAktivitas" hidden>
                         <td style="text-align: right">Judul Aktivitas</td>
                         <td style="width: 400px;">
-                            <input type="text" name="judulAktivitas" id="judulAktivitas" class="form-control input-md"></input type="text">
+                            <input type="text" name="judulAktivitas" id="judulAktivitas" class="form-control input-md" />
                         </td>
                     </tr>
                     <tr id="trLokasi" hidden>
                         <td style="text-align: right">Lokasi</td>
                         <td style="width: 400px;">
-                            <input type="text" name="lokasiTugas" id="lokasiTugas" class="form-control input-md"></input type="text">
+                            <input type="text" name="lokasiTugas" id="lokasiTugas" class="form-control input-md" />
                         </td>
                     </tr>
                     <tr>
@@ -167,6 +167,13 @@
                         <select name="lokasi" id="lokasi" class="form-control input-md"></select>
                     </td>
                 </tr>
+                <tr id="trMatkul" hidden>
+                    <td style="text-align: right">Mata Kuliah Asal (Optional)</td>
+                    <td style="width: 400px;">
+                        <select name="mataKuliah" id="mataKuliah" class="form-control input-md"></select>
+                    </td>
+                </tr>
+
                 <tr>
                     <td style="text-align: right">Tahun Semester</td>
                     <td style="width: 400px;">
@@ -209,6 +216,7 @@
 @section Scripts{
     <script>
         var datatable = null;
+        var isInternalKeLuarAtma = false;
         $(document).ready(function () {
             loadFakultas();
             loadProgram();
@@ -242,9 +250,14 @@
                 return;
             }
             datatable.destroy();
+            var matkul = $('#mataKuliah').val();
+            if (!$('#mataKuliah').val()) {
+                matkul = "";
+            }
+            var url = '@Url.Action("GetMataKuliahByProdi","PendaftaranMataKuliah")?prodi=' + $('#prodi').val() + '&lokasi=' + $('#lokasi').val() + '&strm=' + $('#strm').val() + '&matkul=' + matkul;
             datatable = $('#hasilPencarian').DataTable({
                 ajax: {
-                    url: '@Url.Action("GetMataKuliahByProdi","PendaftaranMataKuliah")?prodi=' + $('#prodi').val() + '&lokasi=' + $('#lokasi').val() + '&strm=' + $('#strm').val(),
+                    url: url,
                     dataSrc: ''
                 },
                 "columnDefs": [{
@@ -512,12 +525,66 @@
                     }
                 });
                 $("#jenisKegiatanMBKM").change(function () {
+                    if ($("#jenisKegiatanMBKM").select2('data')[0].text.toLowerCase() == 'internal ke luar atma jaya') {
+                        isInternalKeLuarAtma = true;
+                        $.ajax({
+                            type: "POST",
+                            url: "@Url.Action("GetInformasiKampus", "PendaftaranMataKuliah")"
+                        }).then(function (response) {
+                            var option = $("<option selected='selected'></option>").val(response.Fakultas).text(response.Fakultas);
+                            $("#fakultas").append(option).trigger('change');
+                            $("#fakultas").prop("disabled", true);
+                            option = $("<option selected='selected'></option>").val(response.Prodi).text(response.Prodi);
+                            $("#prodi").append(option).trigger('change');
+                            $("#prodi").prop("disabled", true);
+                            option = $("<option selected='selected'></option>").val(response.Lokasi).text(response.Lokasi);
+                            $("#lokasi").append(option).trigger('change');
+                            $("#lokasi").prop("disabled", true);
+                            $("#trMatkul").show();
+
+                            $("#mataKuliah").select2({
+                                placeholder: "-- Pilih Mata Kuliah Asal --",
+                                width: "100%",
+                                ajax: {
+                                    url: "@Url.Action("GetMatkulAsal", "PendaftaranMataKuliah")",
+                                    dataType: 'json',
+                                    method: "POST",
+                                    delay: 250,
+                                    cache: false,
+                                    data: function (params) {
+                                        return {
+                                            Fakultas: $('#fakultas').val(),
+                                            STRM: $('#strm').val(),
+                                            Prodi: $('#prodi').val(),
+                                            Lokasi: $('#lokasi').val(),
+                                            Search: params.term || ""
+                                        };
+                                    },
+                                    processResults: function (data, params) {
+                                        return {
+                                            results: $.map(data, function (item) { return { id: item.KodeMataKuliah + " - " + item.NamaMataKuliah, value: item.KodeMataKuliah + " - " + item.NamaMataKuliah, text: item.KodeMataKuliah + " - " + item.NamaMataKuliah } })
+                                        };
+                                    },
+                                }
+                            });
+
+                        });
+                    } else {
+                        $("#fakultas").empty();
+                        $("#lokasi").empty();
+                        $("#prodi").empty();
+                        $("#fakultas").prop("disabled", false);
+                        $("#prodi").prop("disabled", true);
+                        $("#lokasi").prop("disabled", true);
+                        $("#trMatkul").hide();
+                        isInternalKeLuarAtma = false;
+                    }
                     if ($("#jenisKegiatanMBKM").select2('data')[0].text.toLowerCase() == 'internal') {
                         return;
                     }
                     $("#namaInstansi").empty();
                     $("#noKerjasama").empty();
-                    
+
                     $("#namaInstansi").prop("disabled", false);
                     $("#noKerjasama").prop("disabled", true);
 

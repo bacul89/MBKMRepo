@@ -189,7 +189,7 @@
             datatable.destroy();
             datatable = $('#hasilPencarian').DataTable({
                 ajax: {
-                    url: '@Url.Action("GetKelas", "Penilaian")?jenjangStudi=' + $('#jenjangStudi').val() + '&fakultas=' + $('#fakultas').val() + '&lokasi=' + $('#lokasi').val() + '&prodi=' + $('#prodi').val() + '&matkul=' + $('#mataKuliah').val() + '&seksi=' + $('#seksi').val(),
+                    url: '@Url.Action("GetKelas", "Penilaian")?jenjangStudi=' + $('#jenjangStudi').val() + '&fakultas=' + $('#fakultas').val() + '&lokasi=' + $('#lokasi').val() + '&prodi=' + $('#prodi').val() + '&matkul=' + $('#mataKuliah').val() + '&seksi=' + $('#seksi').val() + '&strm=' + $('#tahunSemester').val(),
                     dataSrc: ''
                 },
                 "columnDefs": [{

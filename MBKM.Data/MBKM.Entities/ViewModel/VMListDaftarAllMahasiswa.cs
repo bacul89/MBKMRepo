@@ -23,6 +23,7 @@ namespace MBKM.Entities.ViewModel
         public string Nama { get; set; }
         public string Gender { get; set; }
         public string NoKerjasama { get; set; }
+        public string NoKerjasamaInternal { get; set; }
         public string StatusKerjasama { get; set; }
         public string StatusVerifikasi { get; set; }
         public string Telepon { get; set; }
