@@ -66,7 +66,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             foreach (var d in data2)
             {
                 var dataCheck = data.Where(x => x.MahasiswaID == d.MahasiswaID && x.Status == false).Count();
-                var MatkulPendaftaranCheck = pendaftaran.Where(x => x.MahasiswaID == d.MahasiswaID).Count();
+                var MatkulPendaftaranCheck = pendaftaran.Where(x => x.MahasiswaID == d.MahasiswaID && x.StatusPendaftaran.ToLower().Contains("accepted")).Count();
                 var matkulFeedbackCheck = data3.Where(x => x.MahasiswaID == d.MahasiswaID).Count();
 
                 if (dataCheck == 0 && (matkulFeedbackCheck == MatkulPendaftaranCheck))
