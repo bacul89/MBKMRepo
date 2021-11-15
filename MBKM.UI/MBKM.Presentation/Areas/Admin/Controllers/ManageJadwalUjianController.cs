@@ -64,8 +64,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             var data = _jadwalUjianMBKMService.Get(dataID);
             /*var tempProdi = int.Parse(data.ProdiID);*/
-            var tempJadwalUjian = _pendaftaranMataKuliahService.Find(x => x.JadwalKuliahs.MataKuliahID == data.IDMatkul
-            && x.JadwalKuliahs.ClassSection == data.ClassSection
+            var tempJadwalUjian = _pendaftaranMataKuliahService.Find(x => x.JadwalKuliahs.MataKuliahID == data.IDMatkul && x.JadwalKuliahs.ClassSection == data.ClassSection
             /*&& x.JadwalKuliahs.ProdiID == tempProdi*/
             && x.StatusPendaftaran.Contains("ACCEPTED")
             
