@@ -138,7 +138,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 var data3 = data.GroupBy(z => new { z.MahasiswaID, z.Mahasiswas, z.JadwalID })
                     .Select(s => new { MahasiswaID = s.Key.MahasiswaID, Mahasiswas = s.Key.Mahasiswas }).ToList();
 
-                var pendaftaran = _pendaftaranMataKuliahService.Find(x => x.JadwalKuliahs.STRM == strm).ToList();
+                var pendaftaran = _pendaftaranMataKuliahService.Find(x => x.JadwalKuliahs.STRM == strm && x.MahasiswaID == mahasiswa.ID && x.StatusPendaftaran.ToLower().Contains("accepted")).ToList();
 
                 List<String[]> final = new List<String[]>();
                 var DescSemester = _feedbackMatkulService.GetSemesterByStrm(strmString.ToString());
@@ -197,9 +197,6 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             return View("PrintTranskrip", model);
 
         }*/
-
-
-
 
         //---<> Sertifikat
         [HttpPost]
@@ -307,7 +304,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var strmString = semester.ID;
             int strm = Int32.Parse(strmString.ToString());
 
-            var data = _feedbackMatkulService.Find(x => x.JadwalKuliahs.STRM == strm).Where(x => x.MahasiswaID == mahasiswa.ID)
+            var data = _feedbackMatkulService.Find(x => x.JadwalKuliahs.STRM == strm && x.MahasiswaID == mahasiswa.ID)
                 .GroupBy(z => new { z.MahasiswaID, z.StatusFeedBack, z.Mahasiswas, z.JadwalKuliahID })
                 .Select(s => new { MahasiswaID = s.Key.MahasiswaID, Status = s.Key.StatusFeedBack, Mahasiswas = s.Key.Mahasiswas, JadwalID = s.Key.JadwalKuliahID }).ToList();
 
@@ -317,7 +314,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var data3 = data.GroupBy(z => new { z.MahasiswaID, z.Mahasiswas, z.JadwalID })
                 .Select(s => new { MahasiswaID = s.Key.MahasiswaID, Mahasiswas = s.Key.Mahasiswas }).ToList();
 
-            var pendaftaran = _pendaftaranMataKuliahService.Find(x => x.JadwalKuliahs.STRM == strm).ToList();
+            var pendaftaran = _pendaftaranMataKuliahService.Find(x => x.JadwalKuliahs.STRM == strm && x.MahasiswaID == mahasiswa.ID && x.StatusPendaftaran.ToLower().Contains("accepted")).ToList();
 
             List<String[]> final = new List<String[]>();
             var DescSemester = _feedbackMatkulService.GetSemesterByStrm(strmString.ToString());

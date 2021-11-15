@@ -445,24 +445,30 @@ function printSertifikat() {
     })
 }
 
-
+var test;
 function CheckStatusFeedback(FlagTranscript) {
     $.ajax({
         url: '/Portal/TranskripMahasiswa/CheckStatusFeedback',
         type: 'POST',
         datatype: 'json',
         success: function (result) {
-           // console.log(result);
-            var status = result[5];
+           console.log(result);
+            var status = result[0][5];
+            var paymentStatus = result[0][6];
+
+            test = result;
+            console.log(status);
+            console.log(paymentStatus);
+            console.log(FlagTranscript);
             if (status == 'Belum Feedback') {
                 $("#btnCetak").prop("disabled", true);
                 $("#sertifikatCetak").prop("disabled", true);
             } else {
 
-                if (FlagTranscript == true && status != 'Belum Feedback') {
-                    $("#btnCetak").prop("disabled", true);
-                } else if( FlagTranscript == false && status == 'Belum Feedback'){
+                if (FlagTranscript == false && status == 'Sudah Feedback' && paymentStatus == "True") {
                     $("#btnCetak").prop("disabled", false);
+                } else if (FlagTranscript == true || status == 'Belum Feedback' || paymentStatus == "False"){
+                    $("#btnCetak").prop("disabled", true);
                 }
             }
         }
