@@ -13,7 +13,7 @@
     //"order": [[1, 'asc']],
     "proccessing": true,
     "serverSide": true,
-    "order": [[2, 'asc']],
+    "order": [[1, 'asc']],
     //"aaSorting": [[0, "asc"]],
     "ajax": {
         url: '/Admin/DaftarSeluruhMahasiswa/GetList',
