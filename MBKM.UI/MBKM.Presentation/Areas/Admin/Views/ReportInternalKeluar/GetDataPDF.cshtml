@@ -7,6 +7,58 @@
 
 <html>
 <head>
+    <style>
+        body{
+            padding:0px
+        }
+        .logo {
+            width: 65px
+        }
+        h1 {
+            margin: 3px 0px
+        }
+        .Title{
+            margin:26px 0
+        }
+
+        .Header {
+            margin: 15px 0 0 0
+        }
+        .pd0{
+            padding:0px;
+        }
+        .pd5 {
+            padding: 5px 0
+        }
+
+        .documentStyle{
+            border:solid 1px #222
+        }
+
+        .describe {
+            font-size: 18px!important;
+        }
+
+
+            th.mhsList.start, td.mhsList.start {
+                border-left: solid 1px;
+            }
+
+            th.mhsList {
+                border-bottom: solid 1px;
+                border-right: solid 1px;
+                border-top: solid 1px;
+                @*display: inline-block;*@
+                padding: 10px;
+            }
+
+            td.mhsList {
+                border: solid 1px;
+                @*display: inline-block;*@
+                padding: 7px 10px;
+            }
+
+    </style>
     <link rel="stylesheet" type="text/css" href="~/Content/Admin/inputResponsive.css">
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
@@ -14,6 +66,27 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
+    <div class="col-md-12 Header">
+        <div class="col-md-1 pd0">
+            <img class="logo" src="~/Asset/Lambang_Atma_Jaya.png" />
+        </div>
+        <div class="col-md-7 Title pd0">
+            <b>
+                <span> UNIVERSITAS KATOLIK INDONESIA</span>
+                <h1>ATMA JAYA</h1>
+            </b>
+        </div>
+        @*<div class="col-md-4 Title pd0">
+            <center>
+                <label>Kode Dokumen :</label> <br />
+                <b class="describe">
+                    FR-UAJ-02-92/R1
+                </b>
+            </center>
+
+
+        </div>*@
+    </div>
     <div class="container-fluid" style="width: 80vw; margin-left:auto; margin-right:auto; margin-top:70px">
         <div style="margin :20px 20px 20px 20px">
             <h3>REKAP NILAI MAHASISWA MBKM INTERNAL KELUAR ATMA JAYA - @ViewData["jenisSemester"].ToString() @ViewData["TahunSemester"].ToString()</h3>
