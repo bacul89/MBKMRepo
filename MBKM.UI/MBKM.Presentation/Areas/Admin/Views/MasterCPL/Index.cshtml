@@ -909,6 +909,7 @@
                 dataFilter.prodi = $('#inp_prodi :selected').val();
                 tableUser.destroy();
                 tableUser = $('#TableList').DataTable({
+                    "bInfo": false,
                     "columnDefs": [{
                         "searchable": false,
                         "orderable": false,
