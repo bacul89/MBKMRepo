@@ -98,7 +98,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             }
             catch (Exception e)
             {
-                return Json(new ServiceResponse { status = 500, message = "Data Gagal disumbit!!!" });
+                return Json(new ServiceResponse { status = 500, message = "Data Gagal disubmit!!!" });
             }
 
         }
