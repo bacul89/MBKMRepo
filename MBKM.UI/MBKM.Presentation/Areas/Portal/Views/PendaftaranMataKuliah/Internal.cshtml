@@ -254,7 +254,7 @@
             if (!$('#mataKuliah').val()) {
                 matkul = "";
             }
-            var url = '@Url.Action("GetMataKuliahByProdi","PendaftaranMataKuliah")?prodi=' + $('#prodi').val() + '&lokasi=' + $('#lokasi').val() + '&strm=' + $('#strm').val() + '&matkul=' + matkul;
+            var url = '@Url.Action("GetMataKuliahByProdi","PendaftaranMataKuliah")?fakultas=' + $('#fakultas').select2('data')[0].text + '&prodi=' + $('#prodi').val() + '&lokasi=' + $('#lokasi').val() + '&strm=' + $('#strm').val() + '&matkul=' + matkul;
             datatable = $('#hasilPencarian').DataTable({
                 ajax: {
                     url: url,
