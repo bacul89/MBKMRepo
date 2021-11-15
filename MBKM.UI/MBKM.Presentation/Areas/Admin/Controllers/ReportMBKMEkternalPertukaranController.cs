@@ -391,9 +391,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             {
                 FileName = dataSemester.Nama+" - ReportPertukaranExternal.pdf",
                 PageSize = Rotativa.Options.Size.A4,
-                PageOrientation = Orientation.Portrait,
+                PageOrientation = Orientation.Landscape,
                 //CustomSwitches = footer,
-                PageMargins = new Margins(10, 3, 20, 3)
+                PageMargins = new Margins(5, 3, 5, 3)
 
             };
 
