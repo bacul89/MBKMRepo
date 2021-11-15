@@ -119,8 +119,8 @@ $(document).ready(function () {
 
 function buttonHandler(param) {
     if (param == "open") {
-        $('#cari, #add').removeAttr("disabled");
-        $('#cari, #add').removeAttr("title");
+        $('#cari').removeAttr("disabled");
+        $('#cari').removeAttr("title");
     } else if (param == "close") {
         $('#cari, #add').attr("disabled", "disabled");
         //$().attr("disabled", "disabled");
@@ -262,7 +262,7 @@ function loadJenjangStudi(tipe, id, nama) {
                         },
                         processResults: function (data, params) {
 
-                            console.log(data);
+                            //console.log(data);
                             return {
                                 results: $.map(data, function (item) { return { id: item.ID, value: item.Kampus, text: item.Kampus } })
                             };
