@@ -130,12 +130,13 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             List<JadwalKuliah> jks = new List<JadwalKuliah>();
             List<string> jadwalKuliahs = new List<string>();
             var result = new List<JadwalKuliah>();
-            if (matkul != null || matkul.Length > 0)
+            if (matkul != null && matkul.Length > 0)
             {
                 result = _jkService.Find(jk => jk.NamaProdi == prodi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen && jk.KodeMataKuliah + " - " + jk.NamaMataKuliah == matkul).ToList();
             } else
             {
                 result = _jkService.Find(jk => jk.NamaProdi == prodi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen).ToList();
+                return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
             }
 
             foreach (var item in result)
