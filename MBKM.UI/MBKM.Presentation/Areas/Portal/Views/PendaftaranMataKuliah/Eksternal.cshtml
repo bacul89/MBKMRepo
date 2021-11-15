@@ -154,7 +154,7 @@
             datatable.destroy();
             datatable = $('#hasilPencarian').DataTable({
                 ajax: {
-                    url: '@Url.Action("GetMataKuliahByProdi","PendaftaranMataKuliah")?prodi=' + $('#prodi').val() + '&lokasi=' + $('#lokasi').val() + '&strm=' + $('#strm').val(),
+                    url: '@Url.Action("GetMataKuliahByProdi","PendaftaranMataKuliah")?fakultas=' + $('#fakultas').select2('data').text + '&prodi=' + $('#prodi').val() + '&lokasi=' + $('#lokasi').val() + '&strm=' + $('#strm').val(),
                     dataSrc: ''
                 },
                 "columnDefs": [{

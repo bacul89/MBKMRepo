@@ -125,17 +125,17 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var result = _pmkService.GetInformasiKampusByIdProdi(mahasiswa.ProdiAsalID);
             return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
-        public ActionResult GetMataKuliahByProdi(string prodi, string lokasi, int strm, string matkul)
+        public ActionResult GetMataKuliahByProdi(string fakultas, string prodi, string lokasi, int strm, string matkul)
         {
             List<JadwalKuliah> jks = new List<JadwalKuliah>();
             List<string> jadwalKuliahs = new List<string>();
             var result = new List<JadwalKuliah>();
             if (matkul != null && matkul.Length > 0)
             {
-                result = _jkService.Find(jk => jk.NamaProdi == prodi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen && jk.KodeMataKuliah + " - " + jk.NamaMataKuliah == matkul).ToList();
+                result = _jkService.Find(jk => jk.NamaFakultas == fakultas && jk.NamaProdi == prodi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen && jk.KodeMataKuliah + " - " + jk.NamaMataKuliah == matkul && jk.FakultasID != 99 && jk.FakultasID != 00 && jk.FakultasID != 88).ToList();
             } else
             {
-                result = _jkService.Find(jk => jk.NamaProdi == prodi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen).ToList();
+                result = _jkService.Find(jk => jk.NamaFakultas == fakultas && jk.NamaProdi == prodi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen && jk.FakultasID != 99 && jk.FakultasID != 00 && jk.FakultasID != 88).ToList();
                 return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
             }
 
