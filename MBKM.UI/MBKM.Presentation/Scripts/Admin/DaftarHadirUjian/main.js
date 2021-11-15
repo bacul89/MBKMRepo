@@ -650,10 +650,13 @@ function reloadDatatable() {
         //    //hide the second & fourth column
         //    { 'visible': false, 'targets': [5] }
         //]
+        //]
 
     });
 
-    controlTableResponsive();
+    setTimeout(function () {
+        controlTableResponsive();
+    }, 300);
 }
 
 
@@ -697,5 +700,9 @@ function isZooming() {
 
 
 function controlTableResponsive() {
-    $('#table-data-daftar-hadir-ujian').addClass('table-responsive');
+    if (datatable.data().count() > 0) {
+        $('#table-data-daftar-hadir-ujian').addClass('table-responsive');
+    } else {
+        $('#table-data-daftar-hadir-ujian').removeClass('table-responsive');
+    }
 }

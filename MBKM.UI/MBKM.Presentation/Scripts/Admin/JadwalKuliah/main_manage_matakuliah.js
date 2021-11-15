@@ -138,6 +138,9 @@ function reloadDatatable() {
         }*/
     });
 
+    setTimeout(function () {
+        controlButtonAdd();
+    }, 300);
 }
 
 
@@ -156,7 +159,7 @@ $('#add').click(function () {
     });
 
 
-    console.log(list);
+    //console.log(list);
     swal.fire({
         title: "Apakah Anda Yakin \n Submit Jadwal Untuk Perkuliah MBKM ?",
         type: "warning",
@@ -216,5 +219,17 @@ $('#add').click(function () {
     })
 
 
-
 });
+
+
+function controlButtonAdd(){
+    console.log(datatable.data().count());
+    if (datatable.data().count() > 0) {
+        $('#add').removeAttr("disabled");
+        $('#add').removeAttr("title");
+    } else {
+        $('#add').attr("disabled", "disabled");
+        //$().attr("disabled", "disabled");
+        $('#add').attr("title", "Mata Kuliah tidak ditemukan!");
+    }
+}

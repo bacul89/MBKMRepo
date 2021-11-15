@@ -30,11 +30,11 @@ h2 {
     border-radius: 0px;
     margin-top: 15px;
     margin-bottom: 15px;
-    padding: 10px 22px !important;
+    padding: 8px 15px !important;
 }
 
 .info {
-    font-size: 12px;
+    font-size: 11px;
     text-transform: uppercase;
 }
 
@@ -59,8 +59,8 @@ th.mhsList {
 
 td.mhsList {
     border: solid 1px;
-    padding: 10px 10px;
-    line-height: 12px;
+    padding: 9px 10px;
+    line-height: 11px;
 }
 
 
@@ -92,7 +92,7 @@ ol {
 }
 
 .padding0 {
-    padding: 10px 0px !important;
+    padding: 9px 0px !important;
 }
 
 .pading0 {
@@ -104,7 +104,7 @@ ol {
 }
 
 .heightDefault {
-    height: 32px;
+    height: 31px;
     padding: 0px !important;
 }
 

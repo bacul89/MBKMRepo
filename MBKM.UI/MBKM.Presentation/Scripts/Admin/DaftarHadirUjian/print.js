@@ -258,7 +258,7 @@ function generateSidebar(totalMhs) {
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td colspan="2" style=" height: 333px; padding: 15px; vertical-align: 10px;">
+                                            <td colspan="2" style=" height: 318px; padding: 15px; vertical-align: 10px;">
                                                 Waktu : .....Jam
                                             </td>
                                         </tr>
