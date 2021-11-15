@@ -161,8 +161,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ViewData["dataGrid"] = final;
 
 
-            return /*View();*/
-
+            return 
                 new ViewAsPdf("GetFile")
                 {
                     PageOrientation = Rotativa.Options.Orientation.Landscape,

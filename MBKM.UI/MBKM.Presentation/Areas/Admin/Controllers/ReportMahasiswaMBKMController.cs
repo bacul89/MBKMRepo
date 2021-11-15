@@ -11,6 +11,7 @@ using System.Linq;
 using MBKM.Presentation.Helper;
 using System.Web;
 using System.Web.Mvc;
+using OfficeOpenXml.Drawing;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
@@ -200,18 +201,72 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 }
             }
             ExcelPackage package = new ExcelPackage();
-
             var ws = package.Workbook.Worksheets.Add("REPORT MAHASISWA MBKM");
-            ws.Cells["A1"].Value = "No.";
-            ws.Cells["B1"].Value = "Tahun Semester";
-            ws.Cells["C1"].Value = "Jenjang";
-            ws.Cells["D1"].Value = "Fakultas";
-            ws.Cells["E1"].Value = "Program Studi";
-            ws.Cells["F1"].Value = "Lokasi";
-            ws.Cells["G1"].Value = "MBKM Pertukaran";
-            ws.Cells["H1"].Value = "MBKM  Pertukaran Ke Luar";
-            ws.Cells["I1"].Value = "MBKM Eksternal";
-            ws.Cells["J1"].Value = "MBKM Non Pertukaran";
+
+            double columnWidth = 2;
+            ws.Column(1).Width = columnWidth;
+            ws.Column(8).Width = columnWidth;
+            int RowIndex = 0;
+            int ColIndex = 0;
+
+            //Image.FromFile(@"D:\sample.png");
+            /*int Width = 320;
+            int Height = 200;*/
+
+            var dir = Server.MapPath("~/Asset");
+            var path = Path.Combine(dir, "Lambang_Atma_Jaya.png"); //validate the path for security or use other means to generate the path.
+            Image imageView = Image.FromFile(path);
+
+            ExcelPicture pic = ws.Drawings.AddPicture("Logo", imageView);
+            pic.SetPosition(RowIndex, 2, ColIndex, 15);
+            pic.SetSize(35, 48);
+
+
+            //ws.Column().AddPicture("Picture_Name", img);
+
+
+            ws.Cells["A1:A2"].Merge = true;
+            ws.Cells["B1:I1"].Merge = true;
+            ws.Cells["B2:I2"].Merge = true;
+            ws.Cells["A3:I4"].Merge = true;
+            //ws.Cells["Q1:Q2"].Merge = true;
+
+            ws.Row(1).Height = 15;
+            ws.Row(2).Height = 26;
+            ws.Column(1).Width = 17;
+
+            ws.Cells["B1:I1"].Style.Font.Bold = true;
+            ws.Cells["B2:I2"].Style.Font.Bold = true;
+            ws.Cells["B2:I2"].Style.Font.Size = 25;
+            ws.Cells["B2:I2"].Style.WrapText = true;
+            ws.Cells["B1:I1"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+            ws.Cells["B2:I2"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+            ws.Cells["A3:I4"].Style.Font.Bold = true;
+
+            ws.Cells["A3"].Value = "FORMULIR \nMATRIKS REPORT MAHASISWA MBKM";
+            ws.Cells["B1"].Value = "UNIVERSITAS KATOLIK INDONESIA";
+            ws.Cells["B2"].Value = "ATMA JAYA";
+
+            ws.Cells["A6:J6"].Style.Font.Bold = true;
+            ws.Cells["A6:J6"].Style.Border.Top.Style = ExcelBorderStyle.Thick;
+            ws.Cells["A6:J6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thick;
+            ws.Cells["A6:J6"].Style.Border.Left.Style = ExcelBorderStyle.Thick;
+            ws.Cells["A6:J6"].Style.Border.Right.Style = ExcelBorderStyle.Thick;
+            ws.Cells["A6:J6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Cells["A3:I4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+            ws.Cells["A3:I4"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+
+            ws.Cells["A6"].Value = "No.";
+            ws.Cells["B6"].Value = "Tahun Semester";
+            ws.Cells["C6"].Value = "Jenjang";
+            ws.Cells["D6"].Value = "Fakultas";
+            ws.Cells["E6"].Value = "Program Studi";
+            ws.Cells["F6"].Value = "Lokasi";
+            ws.Cells["G6"].Value = "MBKM Pertukaran";
+            ws.Cells["H6"].Value = "MBKM  Pertukaran Ke Luar";
+            ws.Cells["I6"].Value = "MBKM Eksternal";
+            ws.Cells["J6"].Value = "MBKM Non Pertukaran";
 
             var IndexTotal = 0;
 
@@ -220,27 +275,27 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 IndexTotal = IndexTotal + 1;
                 var tmp = final[i];
                 ws.Cells["A:J"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                ws.Cells["A1:J1"].Style.Fill.PatternType = ExcelFillStyle.Solid;
-                ws.Cells["A1:J1"].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+                ws.Cells["A6:J6"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                ws.Cells["A6:J6"].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
 
-                ws.Cells["A" + (i + 2)].Value = (i + 1);
-                ws.Cells["B" + (i + 2)].Value = tmp[0];
-                ws.Cells["C" + (i + 2)].Value = tmp[1];
-                ws.Cells["D" + (i + 2)].Value = tmp[2];
-                ws.Cells["E" + (i + 2)].Value = tmp[3];
-                ws.Cells["F" + (i + 2)].Value = tmp[4];
-                ws.Cells["G" + (i + 2)].Value = tmp[5];
-                ws.Cells["H" + (i + 2)].Value = tmp[6];
-                ws.Cells["I" + (i + 2)].Value = tmp[7];
-                ws.Cells["J" + (i + 2)].Value = tmp[8];
+                ws.Cells["A" + (i + 7)].Value = (i + 1);
+                ws.Cells["B" + (i + 7)].Value = tmp[0];
+                ws.Cells["C" + (i + 7)].Value = tmp[1];
+                ws.Cells["D" + (i + 7)].Value = tmp[2];
+                ws.Cells["E" + (i + 7)].Value = tmp[3];
+                ws.Cells["F" + (i + 7)].Value = tmp[4];
+                ws.Cells["G" + (i + 7)].Value = tmp[5];
+                ws.Cells["H" + (i + 7)].Value = tmp[6];
+                ws.Cells["I" + (i + 7)].Value = tmp[7];
+                ws.Cells["J" + (i + 7)].Value = tmp[8];
             }
 
-            ws.Cells["A" + (IndexTotal + 2) + ":F" + (IndexTotal + 2)].Merge = true;
-            ws.Cells["A" + (IndexTotal + 2)].Value = "TOTAL";
-            ws.Cells["G" + (IndexTotal + 2)].Value = totalInternalPertukaran;
-            ws.Cells["H" + (IndexTotal + 2)].Value = totalInternalKeluar;
-            ws.Cells["I" + (IndexTotal + 2)].Value = totalEksternal;
-            ws.Cells["J" + (IndexTotal + 2)].Value = totalInternalNonPertukaran;
+            ws.Cells["A" + (IndexTotal + 7) + ":F" + (IndexTotal + 7)].Merge = true;
+            ws.Cells["A" + (IndexTotal + 7)].Value = "TOTAL";
+            ws.Cells["G" + (IndexTotal + 7)].Value = totalInternalPertukaran;
+            ws.Cells["H" + (IndexTotal + 7)].Value = totalInternalKeluar;
+            ws.Cells["I" + (IndexTotal + 7)].Value = totalEksternal;
+            ws.Cells["J" + (IndexTotal + 7)].Value = totalInternalNonPertukaran;
 
             ws.Cells[ws.Dimension.Address].AutoFitColumns();
 
