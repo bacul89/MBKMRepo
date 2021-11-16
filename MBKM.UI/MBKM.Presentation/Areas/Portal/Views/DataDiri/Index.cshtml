@@ -179,6 +179,13 @@
                             </td>
                         </tr>
                         <tr>
+                            <td style="width: 20%;">Agama</td>
+                            <td>
+                                <select name="agama" id="agama" class="form-control input-md">
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
                             <td style="width: 20%;">Kewarganegaraan</td>
                             <td>
                                 <select name="kewarganegaraan" id="kewarganegaraan" class="form-control input-md">
@@ -369,6 +376,7 @@
                 }
             } catch (e) {
             }
+            loadFromLookup("Agama", "agama", "Agama");
             loadFromLookup("WargaNegara", "kewarganegaraan", "Kewarganegaraan");
             loadFromLookup("KontakDarurat", "hubungan", "Hubungan");
             loadFromLookup("Gender", "gender", "Jenis Kelamin");
@@ -400,6 +408,7 @@
 
                 data.append("TempatLahir", $("#tempatLahir").val());
                 data.append("TanggalLahir", $("#tanggalLahir").val());
+                data.append("Agama", $("#agama").val());
                 data.append("WargaNegara", $("#kewarganegaraan").val());
                 data.append("NoKTP", $("#noKtp").val());
                 data.append("Email", $("#email").val());
@@ -535,6 +544,9 @@
                 $("#tempatLahir").val(response.TempatLahir);
                 response.TanggalLahir = new Date(response.TanggalLahir)
                 $("#tanggalLahir").val(response.TanggalLahir.getFullYear() + "-" + appendZero(response.TanggalLahir.getMonth()+1, 2) + "-" + appendZero(response.TanggalLahir.getDate(), 2));
+                if (response.Agama != null) {
+                    setLookupValue("Agama", response.Agama, "agama");
+                }
                 if (response.WargaNegara != null) {
                     setLookupValue("WargaNegara", response.WargaNegara, "kewarganegaraan");
                 }
