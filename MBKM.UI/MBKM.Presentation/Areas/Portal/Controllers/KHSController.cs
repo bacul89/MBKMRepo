@@ -35,6 +35,12 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult Index()
         {
             var mahasiswa = GetMahasiswaByEmail(Session["emailMahasiswa"] as string);
+            if(mahasiswa.StatusVerifikasi !="AKTIF" || mahasiswa.NIM == null)
+            {
+                // return Content("<script language='javascript' type='text/javascript'>alert('Anda Tidak Dapat Mengakses KHS!');location.href='http://www.google.com';</script>");
+                TempData["alertMessage"] = "Anda Belum Bisa Mengakses KHS!";
+                return RedirectToAction("Index", "DataDiri");
+            }
             ViewData["nama"] = mahasiswa.Nama;
             ViewData["nim"] = mahasiswa.NIM;
             ViewData["univ"] = mahasiswa.NamaUniversitas;
