@@ -31,6 +31,12 @@
 
 </head>
 <style>
+    @@media print {
+        div.divFooter {
+            position: absolute;
+            bottom: 0;
+        }
+    }
 
     .box {
         border: solid 1px black;
@@ -41,6 +47,7 @@
     body {
         font-family: 'Roboto';
         padding-top: 0px;
+        position: relative;
     }
 
     a:hover {
@@ -210,25 +217,29 @@
     if (!cek)
     {
         <br />
-        <div class="container" style="width: 100%; bottom: 0">
-            HANYA DIISI UNTUK ABSENSI UJIAN (<i>ONLY APPLICABLE FOR EXAM ATTENDANCE</i>)
-            <table width="100%" border="1">
-                <tr>
-                    <td width="40%" scope="rowgroup" style="height:30px; text-align:center; vertical-align: middle">BERITA ACARA UJIAN</td>
-                    <td width="30%" scope="rowgroup" style="text-align: center; vertical-align: middle">NAMA PENGAWAS UJIAN</td>
-                    <td width="30%" scope="rowgroup" style="text-align: center; vertical-align: middle">PARAF</td>
-                </tr>
-                <tr>
-                    <td rowspan="2" scope="rowgroup" style="height: 90px;center; vertical-align: middle"></td>
-                    <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
-                    <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
-                </tr>
-                <tr>
-                    <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
-                    <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
-                </tr>
-            </table>
+        <div class="divFooter" style="width:100%">
+            <br />
+            <div class="container" style="width: 100%; bottom: 0;font-size:10px;">
+                HANYA DIISI UNTUK ABSENSI UJIAN (<i>ONLY APPLICABLE FOR EXAM ATTENDANCE</i>)
+                <table width="100%" border="1">
+                    <tr>
+                        <td width="40%" scope="rowgroup" style="height:30px; text-align:center; vertical-align: middle">BERITA ACARA UJIAN</td>
+                        <td width="30%" scope="rowgroup" style="text-align: center; vertical-align: middle">NAMA PENGAWAS UJIAN</td>
+                        <td width="30%" scope="rowgroup" style="text-align: center; vertical-align: middle">PARAF</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2" scope="rowgroup" style="height: 90px;center; vertical-align: middle"></td>
+                        <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
+                        <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
+                    </tr>
+                    <tr>
+                        <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
+                        <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
+                    </tr>
+                </table>
+            </div>
         </div>
+        
     }
     else
     {
@@ -311,24 +322,26 @@
             </div>
         </div>
         <br />
-        <div class="container" style="width: 100%; bottom: 0">
-            HANYA DIISI UNTUK ABSENSI UJIAN (<i>ONLY APPLICABLE FOR EXAM ATTENDANCE</i>)
-            <table width="100%" border="1">
-                <tr>
-                    <td width="40%" scope="rowgroup" style="height:30px; text-align:center; vertical-align: middle">BERITA ACARA UJIAN</td>
-                    <td width="30%" scope="rowgroup" style="text-align: center; vertical-align: middle">NAMA PENGAWAS UJIAN</td>
-                    <td width="30%" scope="rowgroup" style="text-align: center; vertical-align: middle">PARAF</td>
-                </tr>
-                <tr>
-                    <td rowspan="2" scope="rowgroup" style="height: 90px;center; vertical-align: middle"></td>
-                    <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
-                    <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
-                </tr>
-                <tr>
-                    <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
-                    <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
-                </tr>
-            </table>
+        <div class="divFooter" style="width:100%">
+            <div class="container" style="width: 100%; bottom: 0">
+                HANYA DIISI UNTUK ABSENSI UJIAN (<i>ONLY APPLICABLE FOR EXAM ATTENDANCE</i>)
+                <table width="100%" border="1">
+                    <tr>
+                        <td width="40%" scope="rowgroup" style="height:30px; text-align:center; vertical-align: middle">BERITA ACARA UJIAN</td>
+                        <td width="30%" scope="rowgroup" style="text-align: center; vertical-align: middle">NAMA PENGAWAS UJIAN</td>
+                        <td width="30%" scope="rowgroup" style="text-align: center; vertical-align: middle">PARAF</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2" scope="rowgroup" style="height: 90px;center; vertical-align: middle"></td>
+                        <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
+                        <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
+                    </tr>
+                    <tr>
+                        <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
+                        <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
+                    </tr>
+                </table>
+            </div>
         </div>
     }
 }
