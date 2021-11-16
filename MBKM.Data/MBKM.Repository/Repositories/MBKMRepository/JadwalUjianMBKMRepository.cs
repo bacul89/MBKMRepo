@@ -40,23 +40,25 @@ namespace MBKM.Repository.Repositories.MBKMRepository
 
                 mListJadwalUjian.TotalCount = result.Count();
 
-                var gridfilter = result
+                var gridfilter2 = result
                     .AsQueryable()
                     .Where(y => y.KodeMatkul.Contains(SearchParam)
                         || y.NamaMatkul.Contains(SearchParam)
                         || y.ClassSection.Contains(SearchParam)
                         || y.JamMulai.Contains(SearchParam)
                         || y.JamAkhir.Contains(SearchParam)
-                    )
-                    .GroupBy(x => new { /*x.ID,*/ x.KodeMatkul, x.NamaMatkul, x.ClassSection, x.TanggalUjian, x.JamMulai, x.JamAkhir }, (key, group) => 
+                        || y.KodeTipeUjian.Contains(SearchParam)
+                    );
+                var gridfilter = gridfilter2.AsQueryable()
+                    .GroupBy(x => new { x.KodeMatkul, x.KodeTipeUjian, x.NamaMatkul, x.ClassSection, x.TanggalUjian, x.JamMulai, x.JamAkhir}, (key, group) => 
                     new {
-                        /*ID = key.ID,*/
                         KodeMatkul = key.KodeMatkul,
                         NamaMatkul = key.NamaMatkul,
                         ClassSection = key.ClassSection,
                         TanggalUjian = key.TanggalUjian,
                         JamMulai = key.JamMulai,
                         JamAkhir = key.JamAkhir,
+                        KodeTipeUjian = key.KodeTipeUjian,
                         Result = group.ToList() })
                     .OrderBy(SortBy, SortDir);
 
@@ -70,6 +72,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                         TanggalUjian = z.TanggalUjian,
                         JamMulai = z.JamMulai,
                         JamAkhir = z.JamAkhir,
+                        KodeTipeUjian = z.KodeTipeUjian
                     })
                     .ToList();
                 mListJadwalUjian.TotalFilterCount = gridfilter.Count();
@@ -123,6 +126,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                         RuangUjian = z.RuangUjian,
                         Lokasi = z.Lokasi,
                         TipeUjian = z.TipeUjian,
+                        KodeTipeUjian = z.KodeTipeUjian
                     })
                     .ToList();
                 mListJadwalUjian.TotalFilterCount = gridfilter.Count();

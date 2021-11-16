@@ -1,10 +1,10 @@
 ﻿var datatable = null;
 $(document).ready(function () {
     datatable = $('#table-data-manage-ujian-mahasiswa').DataTable();
-
+    $("#inp_semester").select2({});
     $('#inp_jenjang').change(function () {
         $("#inp_fakultas").prop('selectedIndex', 0);
-        $("#inp_semester").prop('selectedIndex', 0);
+        /*$("#inp_semester").prop('selectedIndex', 0);*/
     })
 
     $('#inp_jenjang').change(function () {
@@ -30,7 +30,7 @@ $(document).ready(function () {
                 },
             }
         });
-        $("#inp_semester").select2({
+        /*$("#inp_semester").select2({
             placeholder: "-- Pilih Semester --",
             width: "100%",
             ajax: {
@@ -51,7 +51,7 @@ $(document).ready(function () {
                     };
                 },
             }
-        });
+        });*/
     })
 
 })
@@ -123,6 +123,13 @@ function GenerateDataTable() {
                                 <a href="javascript:void(0)" style="color:black" onclick="PopUpModal('${row.KodeMatkul}','${row.NamaMatkul}','${row.ClassSection}','${row.TanggalUjian}','${row.JamMulai}',)"> <i class="fas fa-file-search coral"></i></a>
                             </div>
                         </div>`;
+                    }
+                },
+                {
+                    //"title": "Jenis Ujian",
+                    "data": "KodeTipeUjian",
+                    "render": function (data, type, row, meta) {
+                        return '<div class="center">' + data + '</div>';
                     }
                 },
                 {

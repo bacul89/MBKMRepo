@@ -42,6 +42,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             IEnumerable<VMLookup> tempJenjang = _lookupService.getLookupByTipe("JenjangStudi");
             IEnumerable<VMLookup> tempJenisUjian = _lookupService.getLookupByTipe("JenisUjian");
+            IEnumerable<VMSemester> data = _jadwalUjianMBKMService.getAllSemester();
+            ViewData["semester"] = data;
             ViewData["Jenjang"] = tempJenjang;
             ViewData["JenisUjian"] = tempJenisUjian;
             return View();
