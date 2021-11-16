@@ -139,29 +139,34 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ViewData["jumlahSks"] = jumlahSks;
             ViewData["DateNow"] = DateTime.Now.ToString("dd MMMM yyyy");
 
-            var dataWarek = _lookupService.Find(x => x.Tipe == "WAREKAkademi").First();
+            var dataWarek = _lookupService.Find(x => x.Tipe == "WAREKAkademi").FirstOrDefault();
             ViewData["Warek"] = dataWarek.Nilai;
             List<CapaiaMatakuliahSertifkatDTO> final = new List<CapaiaMatakuliahSertifkatDTO>();
 
             var dataNilaiMahasiswa = _nilaiKuliahService.Find(x => x.MahasiswaID == id).ToList();
 
-/*            var dataPendaftaran = _pendaftaranMataKuliahService.Find(x => x.MahasiswaID == id).ToList();
-*/            foreach(var d in dataNilaiMahasiswa)
+            var CheckNilaiAvailable = dataNilaiMahasiswa.Count();
+            ViewData["checkNilai"] = CheckNilaiAvailable;
+            if (CheckNilaiAvailable != 0)
             {
-                IList<CPLMatakuliah> tempId = _cPLMatakuliahService.Find(x => x.IDMataKUliah == d.JadwalKuliahs.MataKuliahID).ToList();
-                IList<CPLMatakuliah> capaianTujuan = tempId.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == d.JadwalKuliahs.ProdiID).ToList();
-                final.Add(new CapaiaMatakuliahSertifkatDTO
+                foreach (var d in dataNilaiMahasiswa)
                 {
-                    namaMatkul = d.JadwalKuliahs.NamaMataKuliah,
-                    angka = d.NilaiTotal.ToString(),
-                    huruf = d.Grade,
-                    kompetensi = capaianTujuan
-                });
+                    IList<CPLMatakuliah> tempId = _cPLMatakuliahService.Find(x => x.IDMataKUliah == d.JadwalKuliahs.MataKuliahID).ToList();
+                    IList<CPLMatakuliah> capaianTujuan = tempId.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == d.JadwalKuliahs.ProdiID).ToList();
+                    final.Add(new CapaiaMatakuliahSertifkatDTO
+                    {
+                        namaMatkul = d.JadwalKuliahs.NamaMataKuliah,
+                        angka = d.NilaiTotal.ToString(),
+                        huruf = d.Grade,
+                        kompetensi = capaianTujuan
+                    });
+                }
+                ViewData["dataGrid"] = final;
             }
-            ViewData["dataGrid"] = final;
+            var dataPendaftaran = _pendaftaranMataKuliahService.Find(x => x.MahasiswaID == id).ToList();
 
 
-            return 
+            return
                 new ViewAsPdf("GetFile")
                 {
                     PageOrientation = Rotativa.Options.Orientation.Landscape,
