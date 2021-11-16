@@ -73,34 +73,51 @@
                         <th style="border: 1px solid black" class="zero-padding vertical-center center sorting">Huruf</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @{
-                        var i = 1;
-                        foreach (var dat in ViewData["dataGrid"] as List<MBKM.Presentation.Helper.CapaiaMatakuliahSertifkatDTO>)
-                        {
+                @{
+                    if (ViewData["checkNilai"].ToString() == "0")
+                    {
+                        <tbody>
                             <tr>
-                                <td style="border: 1px solid black" class="zero-padding vertical-center center sorting">@i</td>
-                                <td style="border: 1px solid black" class="zero-padding vertical-center center sorting">@dat.namaMatkul</td>
-                                <td style="border: 1px solid black" class="">
-                                    <ol>
-                                        @{
-                                            foreach (var z in dat.kompetensi as IList<MBKM.Entities.Models.MBKM.CPLMatakuliah>)
-                                            {
-                                                <li style="text-align:left">
-                                                    @z.MasterCapaianPembelajarans.Capaian;
-                                                </li>
-                                            }
-                                        }
-                                    </ol>
-                                </td>
-                                <td style="border: 1px solid black" class="zero-padding vertical-center center sorting">@dat.angka</td>
-                                <td style="border: 1px solid black" class="zero-padding vertical-center center sorting">@dat.huruf</td>
-                                
+                                <td style="border: 1px solid black" class="zero-padding vertical-center center sorting">-</td>
+                                <td style="border: 1px solid black" class="zero-padding vertical-center center sorting">-</td>
+                                <td style="border: 1px solid black" class="zero-padding vertical-center center sorting">-</td>
+                                <td style="border: 1px solid black" class="zero-padding vertical-center center sorting">-</td>
+                                <td style="border: 1px solid black" class="zero-padding vertical-center center sorting">-</td>
                             </tr>
-                            i = i + 1;
-                        }
+                        </tbody>
                     }
-                </tbody>
+                    else
+                    {
+                        <tbody>
+                            @{
+                                var i = 1;
+                                foreach (var dat in ViewData["dataGrid"] as List<MBKM.Presentation.Helper.CapaiaMatakuliahSertifkatDTO>)
+                                {
+                                    <tr>
+                                        <td style="border: 1px solid black" class="zero-padding vertical-center center sorting">@i</td>
+                                        <td style="border: 1px solid black" class="zero-padding vertical-center center sorting">@dat.namaMatkul</td>
+                                        <td style="border: 1px solid black" class="">
+                                            <ol>
+                                                @{
+                                                    foreach (var z in dat.kompetensi as IList<MBKM.Entities.Models.MBKM.CPLMatakuliah>)
+                                                    {
+                                                        <li style="text-align:left">
+                                                            @z.MasterCapaianPembelajarans.Capaian;
+                                                        </li>
+                                                    }
+                                                }
+                                            </ol>
+                                        </td>
+                                        <td style="border: 1px solid black" class="zero-padding vertical-center center sorting">@dat.angka</td>
+                                        <td style="border: 1px solid black" class="zero-padding vertical-center center sorting">@dat.huruf</td>
+
+                                    </tr>
+                                    i = i + 1;
+                                }
+                            }
+                        </tbody>
+                    }
+                }
             </table>
         </div>
     </div>
