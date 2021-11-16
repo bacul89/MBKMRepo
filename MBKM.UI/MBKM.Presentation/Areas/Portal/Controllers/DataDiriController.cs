@@ -79,6 +79,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 res.Gender = mahasiswa.Gender;
                 res.TempatLahir = mahasiswa.TempatLahir;
                 res.TanggalLahir = mahasiswa.TanggalLahir;
+                res.Agama = mahasiswa.Agama;
                 res.WargaNegara = mahasiswa.WargaNegara;
                 res.NoKTP = mahasiswa.NoKTP;
                 res.Email = mahasiswa.Email;
