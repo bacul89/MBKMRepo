@@ -251,8 +251,14 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 var smIndo2 = strmT.Replace("ODD Semester", "Semester Ganjil");
                 ViewData["sIndo"] = smIndo2;
             }
-            else {
+            else if(smIndo.Contains("EVEN"))
+            {
                 var smIndo2 = strmT.Replace("EVEN Semester", "Semester Genap");
+                ViewData["sIndo"] = smIndo2;
+            }
+            else 
+            {
+                var smIndo2 = strmT.ToLower().Replace("short semester", "SEMESTER ANTARA");
                 ViewData["sIndo"] = smIndo2;
             }
             //var mahasiswa = GetMahasiswaByEmail(Session["emailMahasiswa"] as string);
