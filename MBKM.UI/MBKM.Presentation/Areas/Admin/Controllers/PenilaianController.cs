@@ -92,7 +92,15 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
         public ActionResult GetMahasiswa(int idJadwalKuliah)
         {
-            var result = _pendaftaranMataKuliahService.Find(_ => _.JadwalKuliahID == idJadwalKuliah && _.StatusPendaftaran == "ACCEPTED BY MAHASISWA");
+            var list = _pendaftaranMataKuliahService.Find(_ => _.JadwalKuliahID == idJadwalKuliah && _.StatusPendaftaran == "ACCEPTED BY MAHASISWA");
+            var result = new List<VMPenilaian>();
+            foreach (var item in list)
+            {
+                var tmp = new VMPenilaian();
+                tmp.MataKuliah = item;
+                tmp.IsAbsent = isAbsent(item.MahasiswaID, item.JadwalKuliahID);
+                result.Add(tmp);
+            }
             return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
         public ActionResult ResetNilaiMahasiswa(IEnumerable<int> ids, int idJadwalKuliah, string flag)
@@ -365,6 +373,12 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public VMSemester getOngoingSemester(string jenjangStudi)
         {
             return _pendaftaranMataKuliahService.getOngoingSemester(jenjangStudi);
+        }
+        public bool isAbsent(long idMahasiswa, long idJadwalKuliah)
+        {
+            var present = _absensiService.Find(_=>_.MahasiswaID == idMahasiswa && _.JadwalKuliahID == idJadwalKuliah && _.CheckDosen).ToList().Count;
+            var total = _absensiService.Find(_=>_.MahasiswaID == idMahasiswa && _.JadwalKuliahID == idJadwalKuliah).ToList().Count;
+            return present / total >= 0.75;
         }
     }
 }

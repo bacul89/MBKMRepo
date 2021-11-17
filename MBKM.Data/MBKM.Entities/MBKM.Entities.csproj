@@ -117,6 +117,7 @@
     <Compile Include="ViewModel\VMJadwalUjian.cs" />
     <Compile Include="ViewModel\VMKampus.cs" />
     <Compile Include="ViewModel\VMMasterCPL.cs" />
+    <Compile Include="ViewModel\VMPenilaian.cs" />
     <Compile Include="ViewModel\VMReportMahasiswaEksternal.cs" />
     <Compile Include="ViewModel\VMPendaftaranWithInformasipertukaranKeluar.cs" />
     <Compile Include="ViewModel\VMReportMahasiswaInternal.cs" />
