@@ -410,7 +410,7 @@
 
 @section Scripts{
     <script>
-        var mahasiswa;
+        var mahasiswa = [];
         var ids = [];
         var subTables = [];
         var bobot;
@@ -603,9 +603,9 @@
                 ajax: {
                     url: '@Url.Action("GetMahasiswa", "Penilaian")?idJadwalKuliah=' + @Model.ID,
                     dataSrc: function (json) {
-                        mahasiswa = json;
                         for (var i = 0; i < json.length; i++) {
-                            ids.push(json[i].MahasiswaID);
+                            mahasiswa.push(json[i].MataKuliah);
+                            ids.push(json[i].MataKuliah.MahasiswaID);
                         }
                         loadTmpMainTable();
                         return json;
@@ -624,63 +624,63 @@
                         "data": null
                     },
                     {
-                        "data": "mahasiswas.NIM",
+                        "data": "MataKuliah.mahasiswas.NIM",
                         "render": function (data, type, row, meta) {
                             if (data == null) {
                                 data = '-';
                             }
-                            return '<div style="vertical-align: middle;">' + data + '</div>';
+                            return '<input type="hidden" id="isAbsent' + row.MataKuliah.MahasiswaID + '" value=' + row.IsAbsent + ' /><div style="vertical-align: middle;">' + data + '</div>';
                         }
                     },
                     {
-                        "data": "mahasiswas.Nama",
+                        "data": "MataKuliah.mahasiswas.Nama",
                         "render": function (data, type, row, meta) {
                             return '<div style="vertical-align: middle;">' + data + '</div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center;"><input size=2 class="inputNilai" type="text" id="MT' + row.MahasiswaID + '" disabled></div>';
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai" type="text" id="MT' + row.MataKuliah.MahasiswaID + '" disabled></div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center;"><input size=2 class="inputNilai" type="text" id="CW1' + row.MahasiswaID + '" disabled></div>';
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai" type="text" id="CW1' + row.MataKuliah.MahasiswaID + '" disabled></div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center;"><input size=2 class="inputNilai" type="text" id="CW2' + row.MahasiswaID + '" disabled></div>';
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai" type="text" id="CW2' + row.MataKuliah.MahasiswaID + '" disabled></div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center;"><input size=2 class="inputNilai" type="text" id="CW3' + row.MahasiswaID + '" disabled></div>';
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai" type="text" id="CW3' + row.MataKuliah.MahasiswaID + '" disabled></div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center;"><input size=2 class="inputNilai" type="text" id="CW4' + row.MahasiswaID + '" disabled></div>';
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai" type="text" id="CW4' + row.MataKuliah.MahasiswaID + '" disabled></div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center;"><input size=2 class="inputNilai" type="text" id="CW5' + row.MahasiswaID + '" disabled></div>';
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai" type="text" id="CW5' + row.MataKuliah.MahasiswaID + '" disabled></div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center;"><input size=2 class="inputNilai" type="text" id="FE' + row.MahasiswaID + '" disabled></div>';
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai" type="text" id="FE' + row.MataKuliah.MahasiswaID + '" disabled></div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center; vertical-align: middle;" id="Total' + row.MahasiswaID + '">0</div>';
+                            return '<div style="text-align:center; vertical-align: middle;" id="Total' + row.MataKuliah.MahasiswaID + '">0</div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center; vertical-align: middle;" id="Grade' + row.MahasiswaID + '">E</div>';
+                            return '<div style="text-align:center; vertical-align: middle;" id="Grade' + row.MataKuliah.MahasiswaID + '">E</div>';
                         }
                     }
                 ]
@@ -715,7 +715,7 @@
                         "data": null
                     },
                     {
-                        "data": "mahasiswas.NIM",
+                        "data": "MataKuliah.mahasiswas.NIM",
                         "render": function (data, type, row, meta) {
                             if (data == null) {
                                 data = '-';
@@ -724,64 +724,64 @@
                         }
                     },
                     {
-                        "data": "mahasiswas.Nama",
+                        "data": "MataKuliah.mahasiswas.Nama",
                         "render": function (data, type, row, meta) {
                             return '<div style="vertical-align: middle;">' + data + '</div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '1' + row.MahasiswaID + '"></div>';
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '1' + row.MataKuliah.MahasiswaID + '"></div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '2' + row.MahasiswaID + '"></div>';
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '2' + row.MataKuliah.MahasiswaID + '"></div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '3' + row.MahasiswaID + '"></div>';
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '3' + row.MataKuliah.MahasiswaID + '"></div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '4' + row.MahasiswaID + '"></div>';
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '4' + row.MataKuliah.MahasiswaID + '"></div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '5' + row.MahasiswaID + '"></div>';
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '5' + row.MataKuliah.MahasiswaID + '"></div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '6' + row.MahasiswaID + '"></div>';
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '6' + row.MataKuliah.MahasiswaID + '"></div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '7' + row.MahasiswaID + '"></div>';
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '7' + row.MataKuliah.MahasiswaID + '"></div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '8' + row.MahasiswaID + '"></div>';
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '8' + row.MataKuliah.MahasiswaID + '"></div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '9' + row.MahasiswaID + '"></div>';
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '9' + row.MataKuliah.MahasiswaID + '"></div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '10' + row.MahasiswaID + '"></div>';
+                            return '<div style="text-align:center;"><input size=2 class="inputNilai2" type="text" id="' + flag + '10' + row.MataKuliah.MahasiswaID + '"></div>';
                         }
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div style="text-align:center; vertical-align: middle;" id="Total' + flag + row.MahasiswaID + '">0</div>';
+                            return '<div style="text-align:center; vertical-align: middle;" id="Total' + flag + row.MataKuliah.MahasiswaID + '">0</div>';
                         }
                     }
                 ]
@@ -802,7 +802,6 @@
                 jenis = id.substring(0, 2);
                 idMahasiswa = id.substring(2);
             }
-
             var total = 0;
 
             var nilaiMT = $('#MT' + idMahasiswa).val();
@@ -829,9 +828,14 @@
             if (!nilaiCW5) nilaiCW5 = 0;
             total += (nilaiCW5 * bobot.fCW5 / 100);
 
-            var nilaiFE = $('#FE' + idMahasiswa).val();
-            if (!nilaiFE) nilaiFE = 0;
-            total += (nilaiFE * bobot.fFinal / 100);
+
+            if ($('#isAbsent' + idMahasiswa).val() == 'true') {
+                var nilaiFE = $('#FE' + idMahasiswa).val();
+                if (!nilaiFE) nilaiFE = 0;
+                total += (nilaiFE * bobot.fFinal / 100);
+            } else {
+                $('#FE' + idMahasiswa).val(0);
+            }
 
             $('#Total' + idMahasiswa).html(Math.trunc(total));
             var grade;

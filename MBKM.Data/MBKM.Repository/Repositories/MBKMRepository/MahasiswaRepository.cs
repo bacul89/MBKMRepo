@@ -25,8 +25,8 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 var PasswordParameter = new SqlParameter("@Password", Password);
 
                 var result = context.Database
-                    .SqlQuery<VMLogin>("GetLoginInternal @Password, @StudentID", PasswordParameter, studentIdParameter);
-                return result.FirstOrDefault();
+                    .SqlQuery<VMLogin>("GetLoginInternal @Password, @StudentID", PasswordParameter, studentIdParameter).FirstOrDefault();
+                return result;
             }
         }
 

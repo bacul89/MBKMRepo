@@ -25,13 +25,13 @@
             <div class="form-group row">
                 <label for="tanggalKerjasama" class="col-md-4 col-form-label">Tanggal Kerjasama</label>
                 <div class="col-md-8">
-                    <input id="TanggalMulai" type="text" name="TanggalMulai" class="form-control" value="@Model.TanggalMulai" disabled>
+                    <input id="TanggalMulai" type="text" name="TanggalMulai" class="form-control" value="@Model.TanggalMulai.ToString("yyyy-MM-dd")" disabled>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="tanggalBerakhir" class="col-md-4 col-form-label">Tanggal Berakhir</label>
                 <div class="col-md-8">
-                    <input id="TanggalAkhir" type="text" name="TanggalAkhir" class="form-control" value="@Model.TanggalAkhir" disabled>
+                    <input id="TanggalAkhir" type="text" name="TanggalAkhir" class="form-control" value="@Model.TanggalAkhir.ToString("yyyy-MM-dd")" disabled>
                 </div>
             </div>
             <div class="form-group row">

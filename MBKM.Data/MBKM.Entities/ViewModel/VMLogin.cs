@@ -21,6 +21,7 @@ namespace MBKM.Entities.ViewModel
         public Int64 IdMahasiswa { get; set; }
         public string JenjangStudi { get; set; }
         public string ProdiIDAsal { get; set; }
+        public decimal Semester { get; set; }
     }
 }
 
