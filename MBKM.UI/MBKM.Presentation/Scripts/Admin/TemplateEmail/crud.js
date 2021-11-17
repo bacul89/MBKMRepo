@@ -254,7 +254,7 @@ function DeleteDataTemplate(idt) {
                         Swal.fire({
                             title: 'Berhasil',
                             icon: 'success',
-                            html: 'Template Email Berhasil Diubah',
+                            html: 'Template Email Berhasil Dihapus',
                             showCloseButton: true,
                             showCancelButton: false,
                             focusConfirm: false,
