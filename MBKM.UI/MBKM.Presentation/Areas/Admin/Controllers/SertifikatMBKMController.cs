@@ -143,26 +143,43 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ViewData["Warek"] = dataWarek.Nilai;
             List<CapaiaMatakuliahSertifkatDTO> final = new List<CapaiaMatakuliahSertifkatDTO>();
 
-            var dataNilaiMahasiswa = _nilaiKuliahService.Find(x => x.MahasiswaID == id).ToList();
+            var PendaftaranMatakuliah = _pendaftaranMataKuliahService.Find(x => x.MahasiswaID == id).ToList();
+            var NilaiMahasiswa = _nilaiKuliahService.Find(x => x.MahasiswaID == id).ToList();
 
-            var CheckNilaiAvailable = dataNilaiMahasiswa.Count();
-            ViewData["checkNilai"] = CheckNilaiAvailable;
-            if (CheckNilaiAvailable != 0)
-            {
-                foreach (var d in dataNilaiMahasiswa)
+            var CheckNilaiAvailable = NilaiMahasiswa.Count();
+            
+                foreach (var d in PendaftaranMatakuliah)
                 {
                     IList<CPLMatakuliah> tempId = _cPLMatakuliahService.Find(x => x.IDMataKUliah == d.JadwalKuliahs.MataKuliahID).ToList();
                     IList<CPLMatakuliah> capaianTujuan = tempId.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == d.JadwalKuliahs.ProdiID).ToList();
-                    final.Add(new CapaiaMatakuliahSertifkatDTO
+                    var nilaiFinal = NilaiMahasiswa.Where(x => x.JadwalKuliahID == d.JadwalKuliahID).FirstOrDefault();
+
+                    if(nilaiFinal == null)
                     {
-                        namaMatkul = d.JadwalKuliahs.NamaMataKuliah,
-                        angka = d.NilaiTotal.ToString(),
-                        huruf = d.Grade,
-                        kompetensi = capaianTujuan
-                    });
+                        final.Add(new CapaiaMatakuliahSertifkatDTO
+                        {
+                            kodeMatakuliah = d.JadwalKuliahs.KodeMataKuliah,
+                            namaMatkul = d.JadwalKuliahs.NamaMataKuliah,
+                            angka = "-",
+                            huruf = "-",
+                            kompetensi = capaianTujuan
+                        });
+                    }
+                    else
+                    {
+                        final.Add(new CapaiaMatakuliahSertifkatDTO
+                        {
+                            kodeMatakuliah = d.JadwalKuliahs.KodeMataKuliah,
+                            namaMatkul = d.JadwalKuliahs.NamaMataKuliah,
+                            angka = nilaiFinal.NilaiTotal.ToString(),
+                            huruf = nilaiFinal.Grade,
+                            kompetensi = capaianTujuan
+                        });
+                    }
+
                 }
                 ViewData["dataGrid"] = final;
-            }
+            
             var dataPendaftaran = _pendaftaranMataKuliahService.Find(x => x.MahasiswaID == id).ToList();
 
 

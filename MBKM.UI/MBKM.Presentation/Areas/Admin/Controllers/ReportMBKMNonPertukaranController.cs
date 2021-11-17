@@ -64,24 +64,46 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 {
                     tglFinal = "-";
                 }
-
-                final.Add(new String[]{
-                    dataSemester.Nama,
-                    d.JadwalKuliahs.JenjangStudi,
-                    d.mahasiswas.NIM,
-                    d.mahasiswas.Nama,
-                    d.JadwalKuliahs.NamaProdi,
-                    d.InformasiPertukaran.JenisKerjasama,
-                    d.InformasiPertukaran.JudulAktivitas,
-                    d.InformasiPertukaran.LokasiTugas,
-                    d.InformasiPertukaran.NoSK,
-                    tglFinal,
-                    d.JadwalKuliahs.KodeMataKuliah,
-                    d.JadwalKuliahs.NamaMataKuliah,
-                    d.JadwalKuliahs.SKS,
-                    d.NilaiKuliah.NilaiTotal.ToString(),
-                    d.NilaiKuliah.Grade
-                });
+                if (d.NilaiKuliah != null)
+                {
+                    final.Add(new String[]{
+                        dataSemester.Nama,
+                        d.JadwalKuliahs.JenjangStudi,
+                        d.mahasiswas.NIM,
+                        d.mahasiswas.Nama,
+                        d.JadwalKuliahs.NamaProdi,
+                        d.InformasiPertukaran.JenisKerjasama,
+                        d.InformasiPertukaran.JudulAktivitas,
+                        d.InformasiPertukaran.LokasiTugas,
+                        d.InformasiPertukaran.NoSK,
+                        tglFinal,
+                        d.JadwalKuliahs.KodeMataKuliah,
+                        d.JadwalKuliahs.NamaMataKuliah,
+                        d.JadwalKuliahs.SKS,
+                        d.NilaiKuliah.NilaiTotal.ToString(),
+                        d.NilaiKuliah.Grade
+                    });
+                }
+                else
+                {
+                    final.Add(new String[]{
+                        dataSemester.Nama,
+                        d.JadwalKuliahs.JenjangStudi,
+                        d.mahasiswas.NIM,
+                        d.mahasiswas.Nama,
+                        d.JadwalKuliahs.NamaProdi,
+                        d.InformasiPertukaran.JenisKerjasama,
+                        d.InformasiPertukaran.JudulAktivitas,
+                        d.InformasiPertukaran.LokasiTugas,
+                        d.InformasiPertukaran.NoSK,
+                        tglFinal,
+                        d.JadwalKuliahs.KodeMataKuliah,
+                        d.JadwalKuliahs.NamaMataKuliah,
+                        d.JadwalKuliahs.SKS,
+                        "-",
+                        "-"
+                    });
+                }
             }
 
             return Json(final);
@@ -108,23 +130,46 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     tglFinal = "-";
                 }
 
-                final.Add(new String[]{
-                    dataSemester.Nama,
-                    d.JadwalKuliahs.JenjangStudi,
-                    d.mahasiswas.NIM,
-                    d.mahasiswas.Nama,
-                    d.JadwalKuliahs.NamaProdi,
-                    d.InformasiPertukaran.JenisKerjasama,
-                    d.InformasiPertukaran.JudulAktivitas,
-                    d.InformasiPertukaran.LokasiTugas,
-                    d.InformasiPertukaran.NoSK,
-                    tglFinal,
-                    d.JadwalKuliahs.KodeMataKuliah,
-                    d.JadwalKuliahs.NamaMataKuliah,
-                    d.JadwalKuliahs.SKS,
-                    d.NilaiKuliah.NilaiTotal.ToString(),
-                    d.NilaiKuliah.Grade
-                });
+                if (d.NilaiKuliah != null)
+                {
+                    final.Add(new String[]{
+                        dataSemester.Nama,
+                        d.JadwalKuliahs.JenjangStudi,
+                        d.mahasiswas.NIM,
+                        d.mahasiswas.Nama,
+                        d.JadwalKuliahs.NamaProdi,
+                        d.InformasiPertukaran.JenisKerjasama,
+                        d.InformasiPertukaran.JudulAktivitas,
+                        d.InformasiPertukaran.LokasiTugas,
+                        d.InformasiPertukaran.NoSK,
+                        tglFinal,
+                        d.JadwalKuliahs.KodeMataKuliah,
+                        d.JadwalKuliahs.NamaMataKuliah,
+                        d.JadwalKuliahs.SKS,
+                        d.NilaiKuliah.NilaiTotal.ToString(),
+                        d.NilaiKuliah.Grade
+                    });
+                }
+                else
+                {
+                    final.Add(new String[]{
+                        dataSemester.Nama,
+                        d.JadwalKuliahs.JenjangStudi,
+                        d.mahasiswas.NIM,
+                        d.mahasiswas.Nama,
+                        d.JadwalKuliahs.NamaProdi,
+                        d.InformasiPertukaran.JenisKerjasama,
+                        d.InformasiPertukaran.JudulAktivitas,
+                        d.InformasiPertukaran.LokasiTugas,
+                        d.InformasiPertukaran.NoSK,
+                        tglFinal,
+                        d.JadwalKuliahs.KodeMataKuliah,
+                        d.JadwalKuliahs.NamaMataKuliah,
+                        d.JadwalKuliahs.SKS,
+                        "-",
+                        "-"
+                    });
+                }
             }
             var semesterSekarang = dataSemester.Nama.Split(' ');
             ViewData["TahunSemester"] = semesterSekarang.Last();
@@ -207,7 +252,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ws.Cells["A6:P7"].Style.Border.Left.Style = ExcelBorderStyle.Thick;
             ws.Cells["A6:P7"].Style.Border.Right.Style = ExcelBorderStyle.Thick;
             ws.Cells["A6:P7"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            ws.Cells["A6:I4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+            ws.Cells["A3:I4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
             ws.Cells["A3:I4"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
 
             ws.Cells["A6:A7"].Merge = true;
@@ -273,8 +318,18 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 ws.Cells["L" + (i + 8)].Value = tmp.JadwalKuliahs.KodeMataKuliah;
                 ws.Cells["M" + (i + 8)].Value = tmp.JadwalKuliahs.NamaMataKuliah;
                 ws.Cells["N" + (i + 8)].Value = tmp.JadwalKuliahs.SKS;
-                ws.Cells["O" + (i + 8)].Value = tmp.NilaiKuliah.NilaiTotal.ToString();
-                ws.Cells["P" + (i + 8)].Value = tmp.NilaiKuliah.Grade;
+
+                if (tmp.NilaiKuliah != null)
+                {
+                    ws.Cells["O" + (i + 8)].Value = tmp.NilaiKuliah.NilaiTotal.ToString();
+                    ws.Cells["P" + (i + 8)].Value = tmp.NilaiKuliah.Grade;
+                }
+                else
+                {
+                    ws.Cells["O" + (i + 8)].Value = "-";
+                    ws.Cells["P" + (i + 8)].Value = "-";
+                }
+                    
                 ws.Cells[ws.Dimension.Address].AutoFitColumns();
             }
 
