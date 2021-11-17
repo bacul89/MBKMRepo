@@ -67,8 +67,16 @@ namespace MBKM.Repository.Repositories.MBKMRepository
         {
             using (var context = new MBKMContext())
             {
+                var result = new VMSemester();
+                if (jenjangStudi == "null" || jenjangStudi == null)
+                {
+                    result = context.Database
+                        .SqlQuery<VMSemester>("GetSemester").FirstOrDefault();
+                    return result;
+                }
+
                 var jenjangStudiParam = new SqlParameter("@JenjangStudi", jenjangStudi);
-                var result = context.Database
+                result = context.Database
                     .SqlQuery<VMSemester>("GetSemester @JenjangStudi", jenjangStudiParam).FirstOrDefault();
                 return result;
             }
