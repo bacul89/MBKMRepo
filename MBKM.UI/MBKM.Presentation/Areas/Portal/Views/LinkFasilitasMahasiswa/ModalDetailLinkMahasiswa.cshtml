@@ -75,31 +75,33 @@
         </div>*@
             <div class="form-group">
                 <label for="inp_SKS" class="col-sm-5 control-label">E-Learning Moodle:</label>
-                <div class="col-sm-3 control-label">
-                    <p><a class="overflow-ellipsis-ellipsis" href="@Model.LinkMoodle" target="_blank">@Model.LinkMoodle</a></p>
+                <div class="col-sm-3 control-label teswrap">
+                    @*<p><a class="overflow-ellipsis-ellipsis" href="@Model.LinkMoodle" target="_blank">@Model.LinkMoodle</a></p>*@
+                    <a  href="@Model.LinkMoodle" target="_blank">@Model.LinkMoodle</a>
 
 
                 </div>
             </div>
             <div class="form-group">
                 <label for="inp_SKS" class="col-sm-5 control-label">AtmaZeds:</label>
-                <div class="col-sm-3 control-label">
+                <div class="col-sm-3 control-label teswrap">
 
-                    <p><a class="overflow-ellipsis-ellipsis" href="@Model.LinkAtmaZeds" target="_blank">@Model.LinkAtmaZeds</a></p>
+                    @*<p><a class="overflow-ellipsis-ellipsis" href="@Model.LinkAtmaZeds" target="_blank">@Model.LinkAtmaZeds</a></p>*@
+                    <a  href="@Model.LinkAtmaZeds" target="_blank">@Model.LinkAtmaZeds</a>
                 </div>
             </div>
             <div class="form-group">
                 <label for="inp_SKS" class="col-sm-5 control-label">Microsoft Teams:</label>
-                <div class="col-sm-3 control-label">
+                <div class="col-sm-3 control-label teswrap">
                     @*<input type="url" class="form-control input-md input-pendaftaran input-data" name="inp_teams" id="inp_teams" value="@Model.LinkTeams" placeholder="-" disabled>*@
-                    <p><a class="overflow-ellipsis-ellipsis" href="@Model.LinkTeams" target="_blank">@Model.LinkTeams</a></p>
+                    <a href="@Model.LinkTeams" target="_blank">@Model.LinkTeams</a>
                 </div>
             </div>
             @* style di div sebelumnya  style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis " *@
             <div class="form-group">
                 <label for="inp_SKS" class="col-sm-5 control-label">Others:</label>
-                <div class="col-sm-3 control-label">
-                    <p><a class="overflow-ellipsis-ellipsis" href="@Model.LinkOthers" target="_blank">@Model.LinkOthers</a></p>
+                <div class="col-sm-3 control-label teswrap">
+                    <a  href="@Model.LinkOthers" target="_blank">@Model.LinkOthers</a>
                 </div>
             </div>
 
@@ -120,11 +122,11 @@
             console.log(a);*@
             alert("asd");
         });
-        const paras = document.querySelectorAll("a");
+        //const paras = document.querySelectorAll("a");
 
-        for (let para of paras) {
-            para.scroll(100, 0);
-        }
+        //for (let para of paras) {
+        //    para.scroll(100, 0);
+        //}
         
     </script>
 }
