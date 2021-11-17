@@ -169,33 +169,37 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             int ColIndex = 0;
 
             var dir = Server.MapPath("~/Asset");
-            var path = Path.Combine(dir, "Lambang_Atma_Jaya.png"); 
+            var path = Path.Combine(dir, "Lambang_Unika_Atma_Jaya.png"); //validate the path for security or use other means to generate the path.
             Image imageView = Image.FromFile(path);
 
             ExcelPicture pic = ws.Drawings.AddPicture("Logo", imageView);
             pic.SetPosition(RowIndex, 2, ColIndex, 15);
-            pic.SetSize(35, 48);
+            pic.SetSize(180, 70);
 
-            ws.Cells["A1:A2"].Merge = true;
-            ws.Cells["B1:I1"].Merge = true;
-            ws.Cells["B2:I2"].Merge = true;
-            ws.Cells["A3:I4"].Merge = true;
+
+            //ws.Column().AddPicture("Picture_Name", img);
+
+
+            ws.Cells["A1:B2"].Merge = true;
+            ws.Cells["C1:I1"].Merge = true;
+            ws.Cells["C2:I2"].Merge = true;
+            ws.Cells["C3:I4"].Merge = true;
+            //ws.Cells["Q1:Q2"].Merge = true;
 
             ws.Row(1).Height = 15;
             ws.Row(2).Height = 26;
             ws.Column(1).Width = 17;
 
-            ws.Cells["B1:I1"].Style.Font.Bold = true;
-            ws.Cells["B2:I2"].Style.Font.Bold = true;
-            ws.Cells["B2:I2"].Style.Font.Size = 25;
-            ws.Cells["B2:I2"].Style.WrapText = true;
-            ws.Cells["B1:I1"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-            ws.Cells["B2:I2"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-            ws.Cells["A3:I4"].Style.Font.Bold = true;
+            ws.Cells["C2:I3"].Style.Font.Bold = true;
+            ws.Cells["C2:I3"].Style.Font.Size = 15;
+            /*ws.Cells["B2:I3"].Style.WrapText = true;*/
+            ws.Cells["C2:I3"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+            /*ws.Cells["C2:I2"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;*/
+            /* ws.Cells["A3:I4"].Style.Font.Bold = true;*/
 
-            ws.Cells["A3"].Value = "FORMULIR \nMATRIKS MAHASISWA NON-PERTUKARAN MBKM";
-            ws.Cells["B1"].Value = "UNIVERSITAS KATOLIK INDONESIA";
-            ws.Cells["B2"].Value = "ATMA JAYA";
+            /*            ws.Cells["C1"].Value = "UNIVERSITAS KATOLIK INDONESIA";
+                        ws.Cells["C2"].Value = "ATMA JAYA";*/
+            ws.Cells["C2"].Value = "FORMULIR \nMATRIKS REPORT MAHASISWA NON-PERTUKARAN MBKM";
 
             ws.Cells["A6:P7"].Style.Font.Bold = true;
             ws.Cells["A6:P7"].Style.Border.Top.Style = ExcelBorderStyle.Thick;
