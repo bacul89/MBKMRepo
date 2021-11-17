@@ -18,16 +18,16 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         private IJadwalUjianMBKMService _jadwalUjianMBKMService;
         private IJadwalKuliahService _jadwalKuliahService;
         private IMahasiswaService _mahasiswaService;
+        private IFeedbackMatkulService _feedbackMatkulService;
 
-        public JadwalUjianController(IJadwalUjianMBKMDetailService jadwalUjianMBKMDetailService, IJadwalUjianMBKMService jadwalUjianMBKMService, IJadwalKuliahService jadwalKuliahService, IMahasiswaService mahasiswaService)
+        public JadwalUjianController(IJadwalUjianMBKMDetailService jadwalUjianMBKMDetailService, IJadwalUjianMBKMService jadwalUjianMBKMService, IJadwalKuliahService jadwalKuliahService, IMahasiswaService mahasiswaService, IFeedbackMatkulService feedbackMatkulService)
         {
             _jadwalUjianMBKMDetailService = jadwalUjianMBKMDetailService;
             _jadwalUjianMBKMService = jadwalUjianMBKMService;
             _jadwalKuliahService = jadwalKuliahService;
             _mahasiswaService = mahasiswaService;
+            _feedbackMatkulService = feedbackMatkulService;
         }
-
-
 
 
         // GET: Portal/JadwalUjian
@@ -63,6 +63,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult DaftarJadwalUjian(string semester)
         {
             var email = HttpContext.Session["emailMahasiswa"].ToString();
+            var dataSemester = _feedbackMatkulService.GetSemesterByStrm(semester);
             IList<JadwalUjianMBKMDetail> data = _jadwalUjianMBKMDetailService.Find(
                 x => x.Mahasiswas.Email == email
                 && x.JadwalUjianMBKMs.STRM == semester
@@ -75,10 +76,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             {
                 var ddd = dt.MahasiswaID.ToString();
                 var sks = dataSks.Where(x => x.MataKuliahID == dt.JadwalUjianMBKMs.IDMatkul).First().SKS;
+
                 final.Add(new String[]
                 {
                     ddd,
-                    dt.JadwalUjianMBKMs.STRM,
+                    dataSemester.Nama,
                     dt.JadwalUjianMBKMs.NamaMatkul,
                     dt.JadwalUjianMBKMs.TanggalUjian.ToString("dd/MM/yyyy"),
                     dt.JadwalUjianMBKMs.JamMulai,
