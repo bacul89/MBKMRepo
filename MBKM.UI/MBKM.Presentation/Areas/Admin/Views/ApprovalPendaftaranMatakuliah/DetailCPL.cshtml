@@ -173,7 +173,7 @@
                                 <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">DETAIL CAPAIAN PEMBELAJARAN PROGRAM STUDI ASAL</h5>
                                 <form class="form-horizontal">
                                     @{
-                                        if (ViewData["jenisKegiatan"].ToString().ToLower().Contains("internal") && !ViewData["jenisKegiatan"].ToString().ToLower().Contains("luar"))
+                                        if (ViewData["jenisProgram"].ToString().ToLower().Contains("pertukaran") && ViewData["jenisKegiatan"].ToString().ToLower().Contains("internal") && !ViewData["jenisKegiatan"].ToString().ToLower().Contains("luar"))
                                         {
                                             <div class="row">
                                                 <div class="col-sm-3 text-right">
@@ -222,7 +222,7 @@
                                                 </div>
                                             </div>
                                         }
-                                        else if (ViewData["jenisKegiatan"].ToString().ToLower().Contains("internal") && ViewData["jenisKegiatan"].ToString().ToLower().Contains("luar"))
+                                        else if (ViewData["jenisProgram"].ToString().ToLower().Contains("pertukaran") && ViewData["jenisKegiatan"].ToString().ToLower().Contains("internal") && ViewData["jenisKegiatan"].ToString().ToLower().Contains("luar"))
                                         {
                                             <div class="row">
                                                 <div class="col-sm-3 text-right">
@@ -278,7 +278,18 @@
                                                     <h4>Kode Mata Kuliah &nbsp :</h4>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                    <h4>-</h4>
+                                                    @{
+                                                        if (Model.PendaftaranMataKuliahs.MatkulKodeAsal == null || Model.PendaftaranMataKuliahs.MatkulKodeAsal == "")
+                                                        {
+
+
+                                                            <h4>-</h4>
+                                                        }
+                                                        else
+                                                        {
+                                                            <h4>@Model.PendaftaranMataKuliahs.MatkulKodeAsal</h4>
+                                                        }
+                                                    }
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -313,7 +324,7 @@
                         <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">DETAIL CAPAIAN PEMBELAJARAN PROGRAM STUDI YANG DITUJU</h5>
                         <form class="form-horizontal">
                             @{
-                                if (ViewData["jenisProgram"].ToString().ToLower().Contains("pertukaran") && ViewData["jenisKegiatan"].ToString().ToLower().Contains("luar"))
+                                if (ViewData["jenisProgram"].ToString().ToLower().Contains("pertukaran") && ViewData["jenisKegiatan"].ToString().ToLower().Contains("internal") && ViewData["jenisKegiatan"].ToString().ToLower().Contains("luar"))
                                 {
                                     <div class="row">
                                         <div class="col-sm-3 text-right">
@@ -321,7 +332,7 @@
                                         </div>
                                         <div class="col-sm-8">
                                             @{
-                                                if (Model.PendaftaranMataKuliahs.MatkulKodeAsal == null)
+                                                if (Model.PendaftaranMataKuliahs.MatkulKodeAsal == null || Model.PendaftaranMataKuliahs.MatkulKodeAsal == "")
                                                 {
                                                     <h4>-</h4>
                                                 }
@@ -348,7 +359,7 @@
                                                     <h4>@Model.PendaftaranMataKuliahs.MatkulAsal</h4>
                                                 }
                                             }
-                                            
+
                                         </div>
                                     </div>
                                 }
@@ -379,9 +390,9 @@
                                 <div class="col-sm-8">
 
                                     @{
-                                        if (ViewData["jenisProgram"].ToString().ToLower().Contains("pertukaran") && ViewData["jenisKegiatan"].ToString().ToLower().Contains("luar") && !ViewData["jenisKegiatan"].ToString().ToLower().Contains("eksternal"))
+                                        if (ViewData["jenisProgram"].ToString().ToLower().Contains("pertukaran") && ViewData["jenisKegiatan"].ToString().ToLower().Contains("internal") && ViewData["jenisKegiatan"].ToString().ToLower().Contains("luar"))
                                         {
-                                            if (Model.CPLAsal.Equals(0))
+                                            if (Model.CPLAsal == null)
                                             {
                                                 <div class="row" style="padding-bottom:10px">
                                                     <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">

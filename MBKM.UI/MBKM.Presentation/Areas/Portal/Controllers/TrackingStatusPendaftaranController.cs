@@ -70,6 +70,16 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             IList<ApprovalPendaftaran> dataApproval = _approvalPendaftaranService.Find(x => x.PendaftaranMataKuliahID == id).OrderByDescending(x => x.ID).ToList();
             ViewData["lastStatus"] = _approvalPendaftaranService.Find(x => x.PendaftaranMataKuliahID == id).Last().StatusPendaftaran;
             ViewData["status"] = dataApproval;
+            var email = HttpContext.Session["emailMahasiswa"].ToString();
+            var informasiPertukaran = _informasiPertukaranService.Find(x => x.Mahasiswas.Email == email && x.JenisKerjasama.ToLower().Contains("internal ke luar")).Count();
+            if(informasiPertukaran != 0)
+            {
+                ViewData["mahasiswaInternalKeluar"] = true;
+            }
+            else
+            {
+                ViewData["mahasiswaInternalKeluar"] = false;
+            }
             return View(data);
         }
 
@@ -114,7 +124,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     ViewData["jenisKegiatan"] = tmpInformasiPertukaran.JenisPertukaran;
                 }
 
-                if (data.CPLMatakuliahID != null)
+                if (data.CPLMatakuliahID != null && !tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("internal ke luar"))
                 {
                     IList<CPLMatakuliah> tempIDAsal = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.CPLMatakuliahs.IDMataKUliah).ToList();
                     IList<CPLMatakuliah> capaianAsal = tempIDAsal.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == data.PendaftaranMataKuliahs.JadwalKuliahs.ProdiID).ToList();
