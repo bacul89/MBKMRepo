@@ -178,7 +178,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult GetKegiatanByProgram(string program, string search)
         {
-            return new ContentResult { Content = JsonConvert.SerializeObject(_jenisKerjasamaService.Find(jk => jk.JenisPertukaran == program && jk.JenisKerjasama.Contains(search)).ToList()), ContentType = "application/json" };
+            var result = _jenisKerjasamaService.Find(jk => jk.JenisPertukaran == program && jk.JenisKerjasama.Contains(search) && !jk.JenisKerjasama.ToLower().Equals("eksternal dari luar atma jaya")).ToList();
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
         public ActionResult GetInstansiByJenisKerjasama(string idKerjasama, string search)
         {
