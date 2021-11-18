@@ -212,20 +212,20 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             int Height = 200;*/
             
             var dir = Server.MapPath("~/Asset");
-            var path = Path.Combine(dir, "Lambang_Atma_Jaya.png"); //validate the path for security or use other means to generate the path.
+            var path = Path.Combine(dir, "Report_Lambang_Atma_Jaya.png"); //validate the path for security or use other means to generate the path.
             Image imageView =  Image.FromFile(path);
 
             ExcelPicture pic = ws.Drawings.AddPicture("Logo", imageView);
             pic.SetPosition(RowIndex, 2, ColIndex, 15);
-            pic.SetSize(35, 48);
+            pic.SetSize(205, 50);
 
            
             //ws.Column().AddPicture("Picture_Name", img);
 
 
-            ws.Cells["A1:A2"].Merge = true;
-            ws.Cells["B1:I1"].Merge = true;
-            ws.Cells["B2:I2"].Merge = true;
+            ws.Cells["A1:D2"].Merge = true;
+            /*ws.Cells["B1:I1"].Merge = true;
+            ws.Cells["B2:I2"].Merge = true;*/
             ws.Cells["A3:I4"].Merge = true;
             //ws.Cells["Q1:Q2"].Merge = true;
 
@@ -233,17 +233,17 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ws.Row(2).Height = 26;
             ws.Column(1).Width = 17;
 
-            ws.Cells["B1:I1"].Style.Font.Bold = true;
+            /*ws.Cells["B1:I1"].Style.Font.Bold = true;
             ws.Cells["B2:I2"].Style.Font.Bold = true;
             ws.Cells["B2:I2"].Style.Font.Size = 25;
             ws.Cells["B2:I2"].Style.WrapText = true;
             ws.Cells["B1:I1"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-            ws.Cells["B2:I2"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+            ws.Cells["B2:I2"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;*/
             ws.Cells["A3:I4"].Style.Font.Bold = true;
 
             ws.Cells["A3"].Value = "FORMULIR \nMATRIKS MATAKULIAH PROGRAM MBKM NON PERTUKARAN";
-            ws.Cells["B1"].Value = "UNIVERSITAS KATOLIK INDONESIA";
-            ws.Cells["B2"].Value = "ATMA JAYA";
+            /*ws.Cells["B1"].Value = "UNIVERSITAS KATOLIK INDONESIA";
+            ws.Cells["B2"].Value = "ATMA JAYA";*/
 
             ws.Cells["A6:R6"].Style.Font.Bold = true;
             ws.Cells["A6:R6"].Style.Border.Top.Style = ExcelBorderStyle.Thick;
@@ -391,9 +391,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             {
                 FileName = dataSemester.Nama+" - ReportPertukaranExternal.pdf",
                 PageSize = Rotativa.Options.Size.A4,
-                PageOrientation = Orientation.Portrait,
+                PageOrientation = Orientation.Landscape,
                 //CustomSwitches = footer,
-                PageMargins = new Margins(10, 3, 20, 3)
+                PageMargins = new Margins(5, 3, 5, 3)
 
             };
 

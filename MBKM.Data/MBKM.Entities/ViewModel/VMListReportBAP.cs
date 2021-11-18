@@ -21,6 +21,7 @@ namespace MBKM.Entities.ViewModel
         public string COMMENTS { get; set; }
         public string NamaDosen { get; set; }
         public bool Present { get; set; }
+        public bool CheckDosen { get; set; }
        
     }
 }

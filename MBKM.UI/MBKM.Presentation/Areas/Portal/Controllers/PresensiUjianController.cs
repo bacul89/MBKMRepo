@@ -29,7 +29,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult Index()
         {
-            var mahasiswa = GetMahasiswaByEmail(Session["emailMahasiswa"] as string);
+            var mahasiswa = GetMahasiswaById(long.Parse(Session["idMahasiswa"] as string));
             var date1WeekAhead = DateTime.Today.AddDays(7);
             var date = DateTime.Today;
             var list = _jadwalUjianMBKMDetailService.Find(_ => _.MahasiswaID == mahasiswa.ID && _.IsActive && !_.IsDeleted && date1WeekAhead >= _.JadwalUjianMBKMs.TanggalUjian && date <= _.JadwalUjianMBKMs.TanggalUjian);
@@ -42,7 +42,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult GetPresensiUjian(int strm)
         {
-            var mahasiswa = GetMahasiswaByEmail(Session["emailMahasiswa"] as string);
+            var mahasiswa = GetMahasiswaById(long.Parse(Session["idMahasiswa"] as string));
             var date1WeekAhead = DateTime.Today.AddDays(7);
             var date = DateTime.Today;
             var result = _jadwalUjianMBKMDetailService.Find(_ => _.MahasiswaID == mahasiswa.ID && _.IsActive && !_.IsDeleted && date1WeekAhead >= _.JadwalUjianMBKMs.TanggalUjian && date <= _.JadwalUjianMBKMs.TanggalUjian).ToList();
@@ -68,9 +68,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 return Json(new ServiceResponse { status = 500, message = e.Message }, JsonRequestBehavior.AllowGet);
             }
         }
-        public Mahasiswa GetMahasiswaByEmail(string email)
+        public Mahasiswa GetMahasiswaById(long id)
         {
-            return _mahasiswaService.Find(m => m.Email == email).FirstOrDefault();
+            return _mahasiswaService.Find(m => m.ID == id).FirstOrDefault();
         }
     }
 }

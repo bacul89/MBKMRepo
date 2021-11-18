@@ -163,6 +163,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 new ViewAsPdf("getDataPdf")
                 {
                     PageOrientation = Rotativa.Options.Orientation.Landscape,
+                    FileName = "Report Pertukaran Internal Keluar Atmajaya-"+dataSemester.Nama+".pdf"
                 };
         }
 

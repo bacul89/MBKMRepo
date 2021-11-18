@@ -179,6 +179,13 @@
                             </td>
                         </tr>
                         <tr>
+                            <td style="width: 20%;">Agama</td>
+                            <td>
+                                <select name="agama" id="agama" class="form-control input-md">
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
                             <td style="width: 20%;">Kewarganegaraan</td>
                             <td>
                                 <select name="kewarganegaraan" id="kewarganegaraan" class="form-control input-md">
@@ -305,7 +312,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td style="width: 20%;">Jenjang Studi</td>
+                            <td style="width: 20%;">Jenjang Studi<h style="color: red;"> *</h></td>
                             <td>
                                 <select name="jenjangStudi" id="jenjangStudi" class="form-control input-md" required></select>
                             </td>
@@ -369,6 +376,7 @@
                 }
             } catch (e) {
             }
+            loadFromLookup("Agama", "agama", "Agama");
             loadFromLookup("WargaNegara", "kewarganegaraan", "Kewarganegaraan");
             loadFromLookup("KontakDarurat", "hubungan", "Hubungan");
             loadFromLookup("Gender", "gender", "Jenis Kelamin");
@@ -388,6 +396,9 @@
             }
         });
         $("#simpan").click(function () {
+            if (isEmpty("jenjangStudi", "Jenjang Studi")) {
+                return;
+            }
             $.ajax({
                 type: "GET",
                 url: "@Url.Action("GetDataMahasiswa", "DataDiri")"
@@ -400,6 +411,7 @@
 
                 data.append("TempatLahir", $("#tempatLahir").val());
                 data.append("TanggalLahir", $("#tanggalLahir").val());
+                data.append("Agama", $("#agama").val());
                 data.append("WargaNegara", $("#kewarganegaraan").val());
                 data.append("NoKTP", $("#noKtp").val());
                 data.append("Email", $("#email").val());
@@ -442,14 +454,16 @@
         });
         function generateTable() {
             $("#dokumenPendukung").show();
-            $('#tblPendukung').html('<table class="table" id="tablePendukung"><thead><tr style="background-color: white;"><td>No.</td><td>Tipe File</td><td>Nama File</td><td style="text-align: center;">Download</td></tr></thead></table>');
+            $('#tblPendukung').html('<table class="table" id="tablePendukung"><thead><tr style="background-color: white;"><td>No.</td><td>Tipe File</td><td>Nama File</td><td style="text-align: center;">Action</td></tr></thead></table>');
             var index = 1;
+            var isFoto, isKtp, isKim, isTranskrip, isSK;
             if ($('#fotoDiri')[0].files.length == 1) {
                 var tmp = new Object();
                 tmp.FileType = "FotoDiri";
                 tmp.FileName = $('#fotoDiri')[0].files[0].name;
                 tmp.URL = URL.createObjectURL($('#fotoDiri')[0].files[0]);
-                files["FotoDiri"] = tmp;
+                tmp.InputID = "#fotoDiri";
+                isFoto = tmp;
                 index++;
             }
             if ($('#fotoKTP')[0].files.length == 1) {
@@ -457,7 +471,8 @@
                 tmp.FileType = "KTP";
                 tmp.FileName = $('#fotoKTP')[0].files[0].name;
                 tmp.URL = URL.createObjectURL($('#fotoKTP')[0].files[0]);
-                files["KTP"] = tmp;
+                tmp.InputID = "#fotoKTP";
+                isKtp = tmp;
                 index++;
             }
             if ($('#fotoKIM')[0].files.length == 1) {
@@ -465,7 +480,8 @@
                 tmp.FileType = "FotoKIM";
                 tmp.FileName = $('#fotoKIM')[0].files[0].name;
                 tmp.URL = URL.createObjectURL($('#fotoKIM')[0].files[0]);
-                files["FotoKIM"] = tmp;
+                tmp.InputID = "#fotoKIM";
+                isKim = tmp;
                 index++;
             }
             if ($('#transkripNilai')[0].files.length == 1) {
@@ -473,7 +489,8 @@
                 tmp.FileType = "TranskripNilai";
                 tmp.FileName = $('#transkripNilai')[0].files[0].name;
                 tmp.URL = URL.createObjectURL($('#transkripNilai')[0].files[0]);
-                files["TranskripNilai"] = tmp;
+                tmp.InputID = "#transkripNilai";
+                isTranskrip = tmp;
                 index++;
             }
             if ($('#suratKeterangan')[0].files.length == 1) {
@@ -481,8 +498,34 @@
                 tmp.FileType = "SuratKeterangan";
                 tmp.FileName = $('#suratKeterangan')[0].files[0].name;
                 tmp.URL = URL.createObjectURL($('#suratKeterangan')[0].files[0]);
-                files["SuratKeterangan"] = tmp;
+                tmp.InputID = "#suratKeterangan";
+                isSK = tmp;
                 index++;
+            }
+            if (isFoto) {
+                files["FotoDiri"] = isFoto;
+            } else {
+                delete files["FotoDiri"];
+            }
+            if (isKtp) {
+                files["KTP"] = isKtp;
+            } else {
+                delete files["KTP"];
+            }
+            if (isKim) {
+                files["FotoKIM"] = isKim;
+            } else {
+                delete files["FotoKIM"];
+            }
+            if (isTranskrip) {
+                files["transkripNilai"] = isTranskrip;
+            } else {
+                delete files["transkripNilai"];
+            }
+            if (isSK) {
+                files["suratKeterangan"] = isSK;
+            } else {
+                delete files["suratKeterangan"];
             }
             if (index == 1) {
                 $("#dokumenPendukung").hide();
@@ -493,12 +536,12 @@
         function generateRow() {
             var i = 1;
             for (var key in files) {
-                $('#tablePendukung tr:last').after('<tr style="background-color: white;"><td>' + i++ + '.</td><td>' + key + '</td><td>' + files[key].FileName + '</td><td style="text-align: center;"><a href="' + files[key].URL + '" target="_blank"><i class="fas fa-file-download"></i></a></td></tr>');
+                $('#tablePendukung tr:last').after('<tr style="background-color: white;"><td>' + i++ + '.</td><td>' + key + '</td><td>' + files[key].FileName + '</td><td style="text-align: center;"><a href="' + files[key].URL + '" target="_blank"><i class="fas fa-file-download"></i></a> <a onclick="javascript: $(\'' + files[key].InputID + '\').val(\'\'); delete files.' + key + '; generateTable();"><i class="fas fa-trash"></i></a></td></tr>');
             }
         }
         function generateTableFromDB(id) {
             $("#dokumenPendukung").show();
-            $('#tblPendukung').html('<table class="table" id="tablePendukung"><thead><tr><td>No.</td><td>Tipe File</td><td>Nama File</td><td style="text-align: center;">Download</td></tr></thead></table>');
+            $('#tblPendukung').html('<table class="table" id="tablePendukung"><thead><tr><td>No.</td><td>Tipe File</td><td>Nama File</td><td style="text-align: center;">Action</td></tr></thead></table>');
             $.ajax({
                 type: "GET",
                 url: "@Url.Action("GetAllAttachment", "DataDiri")?id=" + id
@@ -521,6 +564,10 @@
                 type: "GET",
                 url: "@Url.Action("GetDataMahasiswa", "DataDiri")"
             }).then(function (response) {
+                console.log(response)
+                if (response.NIMAsal == response.NIM && response.NIMAsal && response.NIM) {
+                    $("#edit").hide();
+                }
                 $("#id").val(response.ID);
                 try {
                     if ("@ViewData["status"].ToString()" != "DAFTAR") {
@@ -535,6 +582,9 @@
                 $("#tempatLahir").val(response.TempatLahir);
                 response.TanggalLahir = new Date(response.TanggalLahir)
                 $("#tanggalLahir").val(response.TanggalLahir.getFullYear() + "-" + appendZero(response.TanggalLahir.getMonth()+1, 2) + "-" + appendZero(response.TanggalLahir.getDate(), 2));
+                if (response.Agama != null) {
+                    setLookupValue("Agama", response.Agama, "agama");
+                }
                 if (response.WargaNegara != null) {
                     setLookupValue("WargaNegara", response.WargaNegara, "kewarganegaraan");
                 }
@@ -598,6 +648,14 @@
                 string = "0" + string;
             }
             return string;
+        }
+        function isEmpty(id, nama) {
+            if (!$("#" + id).val()) {
+                alert(nama + ' tidak boleh kosong!');
+                $("#" + id).focus();
+                return true;
+            }
+            return false;
         }
     </script>
 }

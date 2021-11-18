@@ -54,7 +54,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             var jks = _jkService.Find(jk => jk.ID == id).FirstOrDefault();
             var sem = _absensiService.GetSemesterBySTRM(jks.STRM).ToLower().Replace("odd semester", "SEMESTER GANJIL").Replace("even semester", "SEMESTER GENAP").Replace("short semester", "SEMESTER ANTARA");
-            List<PendaftaranMataKuliah> pmk = _pendaftaranMKService.Find(x => x.JadwalKuliahID == id && x.StatusPendaftaran.ToLower().Contains("accepted")).ToList();
+            List<PendaftaranMataKuliah> pmk = _pendaftaranMKService.Find(x => x.JadwalKuliahID == id && x.StatusPendaftaran.ToLower().Contains("accepted") && (x.mahasiswas.NIM != x.mahasiswas.NIMAsal && x.mahasiswas.NIM != null && x.mahasiswas.NIMAsal != null)).ToList();
             var list = pmk.Select(x => new VMDHK()
             {
                 Nama = x.mahasiswas.Nama,

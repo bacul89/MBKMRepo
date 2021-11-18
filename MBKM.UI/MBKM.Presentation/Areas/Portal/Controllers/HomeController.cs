@@ -144,16 +144,18 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     mahasiswa2.UpdatedDate = DateTime.Now;
                     mahasiswa2.IsActive = true;
                     mahasiswa2.IsDeleted = false;
+                    mahasiswa2.Semester = a.Semester + "";
                     _mahasiswaService.Save(mahasiswa2);
                     Session["prodiIDAsal"] = a.ProdiIDAsal;
-                    PopulateSession(true, mahasiswa2.Email, mahasiswa2.Nama);
+                    PopulateSession(true, mahasiswa2.Email, mahasiswa2.ID + "", mahasiswa2.Semester + "", mahasiswa2.Nama);
                 } else
                 {
                     mahasiswa.Email = a.Email;
+                    mahasiswa.Semester = a.Semester + "";
                     mahasiswa.Password = hp(a.PasswordData);
                     _mahasiswaService.Save(mahasiswa);
                     Session["prodiIDAsal"] = a.ProdiIDAsal;
-                    PopulateSession(true, mahasiswa.Email, mahasiswa.Nama);
+                    PopulateSession(true, mahasiswa.Email, mahasiswa.ID + "", mahasiswa.Semester + "", mahasiswa.Nama);
                 }
                 return RedirectToAction("Index", "DataDiri");
             }
@@ -171,12 +173,12 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 TempData["alertMessage"] = "Silahkan aktivasi akun anda terlebih dahulu!";
                 return RedirectToAction("Index", "Home");
             } 
-            PopulateSession(true, res.Email, res.Nama);
+            PopulateSession(true, res.Email, res.ID + "", res.Semester + "", res.Nama);
             return RedirectToAction("Index", "DataDiri");
         }
         public ActionResult Logout()
         {
-            PopulateSession(false, null, null);
+            PopulateSession(false, null, null, null, null);
             return RedirectToAction("Index", "Home");
         }
         public Mahasiswa GetMahasiswaByEmail(string email)
@@ -202,10 +204,12 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             tos.Add(email);
             return emailHelper.SendMail(subject, body, ConfigurationManager.AppSettings["EmailFrom"], tos, null, null, true);
         }
-        public void PopulateSession(bool isLogin, string email, string nama)
+        public void PopulateSession(bool isLogin, string email, string id, string semester, string nama)
         {
             Session["isLogin"] = isLogin;
             Session["emailMahasiswa"] = email;
+            Session["idMahasiswa"] = id;
+            Session["semesterMahasiswa"] = semester;
             Session["nama"] = nama;
         }
         public string hp(string password)

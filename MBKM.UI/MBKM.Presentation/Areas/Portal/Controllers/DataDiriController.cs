@@ -31,15 +31,14 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult Index()
         {
-            string email = Session["emailMahasiswa"] as string;
-            Mahasiswa mahasiswa = GetMahasiswaByEmail(email);
+            var id = Session["idMahasiswa"] as string;
+            Mahasiswa mahasiswa = GetMahasiswaById(long.Parse(id));
             ViewData["status"] = mahasiswa.StatusVerifikasi;
             return View();
         }
         public ActionResult GetDataMahasiswa()
         {
-            string email = Session["emailMahasiswa"] as string;
-            var result = GetMahasiswaByEmail(email);
+            var result = GetMahasiswaById(long.Parse(Session["idMahasiswa"] as string));
             return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
         public ActionResult GetAllAttachment(int id)
@@ -79,6 +78,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 res.Gender = mahasiswa.Gender;
                 res.TempatLahir = mahasiswa.TempatLahir;
                 res.TanggalLahir = mahasiswa.TanggalLahir;
+                res.Agama = mahasiswa.Agama;
                 res.WargaNegara = mahasiswa.WargaNegara;
                 res.NoKTP = mahasiswa.NoKTP;
                 res.Email = mahasiswa.Email;
@@ -108,9 +108,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 return Json(new ServiceResponse { status = 500, message = e.Message });
             }
         }
-        public Mahasiswa GetMahasiswaByEmail(string email)
+        public Mahasiswa GetMahasiswaById(long id)
         {
-            return _mahasiswaService.Find(m => m.Email == email).FirstOrDefault();
+            return _mahasiswaService.Find(m => m.ID == id).FirstOrDefault();
         }
         byte[] GetFile(string s)
         {

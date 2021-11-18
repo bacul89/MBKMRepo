@@ -29,7 +29,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult Index()
         {
-            var mahasiswa = GetMahasiswaByEmail(Session["emailMahasiswa"] as string);
+            var mahasiswa = GetMahasiswaById(long.Parse(Session["idMahasiswa"] as string));
             var list = _pendaftaranMataKuliahService.Find(pmk => pmk.MahasiswaID == mahasiswa.ID && pmk.StatusPendaftaran == "ACCEPTED BY MAHASISWA").ToList();
             Dictionary<string, string> result = new Dictionary<string, string>();
             foreach (var item in list)
@@ -62,13 +62,13 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult GetAbsensi(int jadwalKuliahId)
         {
-            var mahasiswa = GetMahasiswaByEmail(Session["emailMahasiswa"] as string);
+            var mahasiswa = GetMahasiswaById(long.Parse(Session["idMahasiswa"] as string));
             List<Absensi> absensis = _absensiService.Find(a => a.JadwalKuliahID == jadwalKuliahId && a.MahasiswaID == mahasiswa.ID).OrderBy(a => a.TanggalAbsen).ToList();
             return new ContentResult { Content = JsonConvert.SerializeObject(absensis), ContentType = "application/json" };
         }
         public ActionResult GetJadwalKuliah(int strm)
         {
-            var mahasiswa = GetMahasiswaByEmail(Session["emailMahasiswa"] as string);
+            var mahasiswa = GetMahasiswaById(long.Parse(Session["idMahasiswa"] as string));
             List<PendaftaranMataKuliah> pmks = new List<PendaftaranMataKuliah>();
             if (strm != 0)
             {
@@ -84,9 +84,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var result = _pendaftaranMataKuliahService.Get(id);
             return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
-        public Mahasiswa GetMahasiswaByEmail(string email)
+        public Mahasiswa GetMahasiswaById(long id)
         {
-            return _mahasiswaService.Find(m => m.Email == email).FirstOrDefault();
+            return _mahasiswaService.Find(m => m.ID == id).FirstOrDefault();
         }
     }
 }

@@ -97,7 +97,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             int CountData = _absensiService.Find(x => x.MahasiswaID == MahasiswaID && x.JadwalKuliahID == JadwalKuliahID).Count();
             int CountDataPresent = _absensiService.Find(x => x.MahasiswaID == MahasiswaID && x.JadwalKuliahID == JadwalKuliahID
-                                    && x.Present == true).Count();
+                                    && x.CheckDosen == true).Count();
             double persen = 0;
             if (CountData > 0)
             {

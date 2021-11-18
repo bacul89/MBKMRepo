@@ -102,13 +102,13 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="text-align: right">Nama Instansi</td>
+                        <td style="text-align: right">Nama Instansi<h style="color: red;" class="mandatory" hidden> *</h></td>
                         <td style="width: 400px;">
                             <select name="namaInstansi" id="namaInstansi" class="form-control input-md"></select>
                         </td>
                     </tr>
                     <tr>
-                        <td style="text-align: right">No. Kerjasama</td>
+                        <td style="text-align: right">No. Kerjasama<h style="color: red;" class="mandatory" hidden> *</h></td>
                         <td style="width: 400px;">
                             <select name="noKerjasama" id="noKerjasama" class="form-control input-md"></select>
                         </td>
@@ -217,6 +217,7 @@
     <script>
         var datatable = null;
         var isInternalKeLuarAtma = false;
+        var isMandatory = false;
         $(document).ready(function () {
             loadFakultas();
             loadProgram();
@@ -254,7 +255,7 @@
             if (!$('#mataKuliah').val()) {
                 matkul = "";
             }
-            var url = '@Url.Action("GetMataKuliahByProdi","PendaftaranMataKuliah")?prodi=' + $('#prodi').val() + '&lokasi=' + $('#lokasi').val() + '&strm=' + $('#strm').val() + '&matkul=' + matkul;
+            var url = '@Url.Action("GetMataKuliahByProdi","PendaftaranMataKuliah")?fakultas=' + $('#fakultas').select2('data')[0].text + '&prodi=' + $('#prodi').val() + '&lokasi=' + $('#lokasi').val() + '&strm=' + $('#strm').val() + '&matkul=' + matkul;
             datatable = $('#hasilPencarian').DataTable({
                 ajax: {
                     url: url,
@@ -344,6 +345,10 @@
             $('#edit').hide();
         });
         $('#submit').click(function () {
+            if (isMandatory && !$('#noKerjasama').val()) {
+                alert('Form dengan tanda bintang (*) harus diisi!');
+                return;
+            }
             var data = new Object();
             data.JenisPertukaran = $('#jenisProgramMBKM').select2('data')[0].text;
             data.JenisKerjasama = $('#jenisKegiatanMBKM').select2('data')[0].text;
@@ -580,8 +585,21 @@
                         isInternalKeLuarAtma = false;
                     }
                     if ($("#jenisKegiatanMBKM").select2('data')[0].text.toLowerCase() == 'internal') {
+
+                        $(".mandatory").hide();
+                        isMandatory = false;
+
+                        $("#namaInstansi").empty();
+                        $("#noKerjasama").empty();
+
+                        $("#namaInstansi").prop("disabled", true);
+                        $("#noKerjasama").prop("disabled", true);
                         return;
                     }
+
+                    $(".mandatory").show();
+                    isMandatory = true;
+
                     $("#namaInstansi").empty();
                     $("#noKerjasama").empty();
 

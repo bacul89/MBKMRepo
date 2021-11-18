@@ -70,6 +70,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 result = _cplMatakuliahService
                 .Find(_ => _.MasterCapaianPembelajarans.JenjangStudi == jenjangStudi && _.MasterCapaianPembelajarans.NamaProdi == prodi && _.MasterCapaianPembelajarans.NamaFakultas == fakultas).ToList();
             }
+            result = result.OrderBy(_ => _.KodeMataKuliah).ToList();
             return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
         public ActionResult ExportPDF(string jenjangStudi, string fakultas, string prodi, string matkul)

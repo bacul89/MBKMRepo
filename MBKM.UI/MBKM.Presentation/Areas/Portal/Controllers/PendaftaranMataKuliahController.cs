@@ -43,7 +43,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult Index()
         {
-            var mahasiswa = GetMahasiswaByEmail(Session["emailMahasiswa"] as string);
+            var mahasiswa = GetMahasiswaById(long.Parse(Session["idMahasiswa"] as string));
             if (mahasiswa.StatusVerifikasi == "DAFTAR")
             {
                 TempData["alertMessage"] = "Tolong lengkapi data diri anda terlebih dahulu!";
@@ -67,7 +67,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult Internal()
         {
-            var mahasiswa = GetMahasiswaByEmail(Session["emailMahasiswa"] as string);
+            var mahasiswa = GetMahasiswaById(long.Parse(Session["idMahasiswa"] as string));
             if (mahasiswa.NIM != mahasiswa.NIMAsal)
             {
                 return RedirectToAction("Eksternal");
@@ -77,7 +77,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult Eksternal()
         {
-            var mahasiswa = GetMahasiswaByEmail(Session["emailMahasiswa"] as string);
+            var mahasiswa = GetMahasiswaById(long.Parse(Session["idMahasiswa"] as string));
             if (mahasiswa.NIM == mahasiswa.NIMAsal)
             {
                 return RedirectToAction("Internal");
@@ -90,7 +90,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var matkul = GetJadwalKuliah(idMatkul);
             VMPendaftaranJadwalKuliah model = new VMPendaftaranJadwalKuliah(matkul);
             model.ID = idMatkul;
-            model.NoKerjasama = GetMahasiswaByEmail(Session["emailMahasiswa"] as string).NoKerjasama;
+            model.NoKerjasama = GetMahasiswaById(long.Parse(Session["idMahasiswa"] as string)).NoKerjasama;
             return View(model);
         }
         public ActionResult FormPendaftaranInternalKeLuarAtma()
@@ -114,28 +114,27 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult GetFakultas(string search)
         {
-            string email = Session["emailMahasiswa"] as string;
-            var result = GetMahasiswaByEmail(email);
+            var result = GetMahasiswaById(long.Parse(Session["idMahasiswa"] as string));
             return new ContentResult { Content = JsonConvert.SerializeObject(_pmkService.GetFakultas(result.JenjangStudi, search)), ContentType = "application/json" };
         }
         public ActionResult GetInformasiKampus()
         {
-            string email = Session["emailMahasiswa"] as string;
-            var mahasiswa = GetMahasiswaByEmail(email);
+            var mahasiswa = GetMahasiswaById(long.Parse(Session["idMahasiswa"] as string));
             var result = _pmkService.GetInformasiKampusByIdProdi(mahasiswa.ProdiAsalID);
             return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
-        public ActionResult GetMataKuliahByProdi(string prodi, string lokasi, int strm, string matkul)
+        public ActionResult GetMataKuliahByProdi(string fakultas, string prodi, string lokasi, int strm, string matkul)
         {
             List<JadwalKuliah> jks = new List<JadwalKuliah>();
             List<string> jadwalKuliahs = new List<string>();
             var result = new List<JadwalKuliah>();
-            if (matkul != null || matkul.Length > 0)
+            if (matkul != null && matkul.Length > 0)
             {
-                result = _jkService.Find(jk => jk.NamaProdi == prodi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen && jk.KodeMataKuliah + " - " + jk.NamaMataKuliah == matkul).ToList();
+                result = _jkService.Find(jk => jk.NamaFakultas == fakultas && jk.NamaProdi == prodi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen && jk.KodeMataKuliah + " - " + jk.NamaMataKuliah == matkul && jk.FakultasID != 99 && jk.FakultasID != 00 && jk.FakultasID != 88).ToList();
             } else
             {
-                result = _jkService.Find(jk => jk.NamaProdi == prodi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen).ToList();
+                result = _jkService.Find(jk => jk.NamaFakultas == fakultas && jk.NamaProdi == prodi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen && jk.FakultasID != 99 && jk.FakultasID != 00 && jk.FakultasID != 88).ToList();
+                return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
             }
 
             foreach (var item in result)
@@ -150,14 +149,12 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult GetProdiByFakultas(string idFakultas, string search)
         {
-            string email = Session["emailMahasiswa"] as string;
-            var result = GetMahasiswaByEmail(email);
+            var result = GetMahasiswaById(long.Parse(Session["idMahasiswa"] as string));
             return new ContentResult { Content = JsonConvert.SerializeObject(_pmkService.GetProdiByFakultas(result.JenjangStudi, idFakultas, search)), ContentType = "application/json" };
         }
         public ActionResult GetLokasiByProdi(string namaProdi, string search)
         {
-            string email = Session["emailMahasiswa"] as string;
-            var result = GetMahasiswaByEmail(email);
+            var result = GetMahasiswaById(long.Parse(Session["idMahasiswa"] as string));
             return new ContentResult { Content = JsonConvert.SerializeObject(_pmkService.GetLokasiByProdi(result.JenjangStudi, namaProdi, search)), ContentType = "application/json" };
         }
         public ActionResult GetProgram(string search)
@@ -177,7 +174,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult GetKegiatanByProgram(string program, string search)
         {
-            return new ContentResult { Content = JsonConvert.SerializeObject(_jenisKerjasamaService.Find(jk => jk.JenisPertukaran == program && jk.JenisKerjasama.Contains(search)).ToList()), ContentType = "application/json" };
+            var result = _jenisKerjasamaService.Find(jk => jk.JenisPertukaran == program && jk.JenisKerjasama.Contains(search) && !jk.JenisKerjasama.ToLower().Equals("eksternal dari luar atma jaya")).ToList();
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
         public ActionResult GetInstansiByJenisKerjasama(string idKerjasama, string search)
         {
@@ -207,19 +205,19 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult GetInformasiPertukaran()
         {
-            Int64 id = GetMahasiswaByEmail(Session["emailMahasiswa"] as string).ID;
+            Int64 id = GetMahasiswaById(long.Parse(Session["idMahasiswa"] as string)).ID;
             return new ContentResult { Content = JsonConvert.SerializeObject(_informasiPertukaranService.Find(ip => ip.MahasiswaID == id).FirstOrDefault()), ContentType = "application/json" };
         }
         public ActionResult GetJenisKerjasama()
         {
-            string noKerjasama = GetMahasiswaByEmail(Session["emailMahasiswa"] as string).NoKerjasama;
+            string noKerjasama = GetMahasiswaById(long.Parse(Session["idMahasiswa"] as string)).NoKerjasama;
             int jenisKerjasamaID = int.Parse(_perjanjianKerjasamaService.Find(pk => pk.NoPerjanjian == noKerjasama).FirstOrDefault().JenisKerjasama);
             var jenisKerjasama = _jenisKerjasamaService.Find(jk => jk.ID == jenisKerjasamaID).FirstOrDefault();
             return new ContentResult { Content = JsonConvert.SerializeObject(jenisKerjasama), ContentType = "application/json" };
         }
         public ActionResult GetJenisKerjasamaInternal()
         {
-            Int64 id = GetMahasiswaByEmail(Session["emailMahasiswa"] as string).ID;
+            Int64 id = GetMahasiswaById(long.Parse(Session["idMahasiswa"] as string)).ID;
             var informasiPertukaran = _informasiPertukaranService.Find(ip => ip.MahasiswaID == id).FirstOrDefault();
             return new ContentResult { Content = JsonConvert.SerializeObject(informasiPertukaran), ContentType = "application/json" };
         }
@@ -259,11 +257,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             try
             {
-                Int64 id = GetMahasiswaByEmail(Session["emailMahasiswa"] as string).ID;
+                Int64 id = GetMahasiswaById(long.Parse(Session["idMahasiswa"] as string)).ID;
                 var ip = _informasiPertukaranService.Find(_ => _.MahasiswaID == id).FirstOrDefault();
                 if (ip == null)
                 {
-                    informasiPertukaran.STRM = (int) _pmkService.getOngoingSemester(GetMahasiswaByEmail(Session["emailMahasiswa"] as string).JenjangStudi).ID;
+                    informasiPertukaran.STRM = (int) _pmkService.getOngoingSemester(GetMahasiswaById(long.Parse(Session["idMahasiswa"] as string)).JenjangStudi).ID;
                     informasiPertukaran.MahasiswaID = id;
                     informasiPertukaran.IsActive = true;
                     informasiPertukaran.IsDeleted = false;
@@ -307,7 +305,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             try
             {
-                Int64 id = GetMahasiswaByEmail(Session["emailMahasiswa"] as string).ID;
+                Int64 id = GetMahasiswaById(long.Parse(Session["idMahasiswa"] as string)).ID;
                 var cek = _pendaftaranMataKuliahService.Find(pmk => pmk.MahasiswaID == id && pmk.JadwalKuliahID == pendaftaranMataKuliah.JadwalKuliahID && !pmk.StatusPendaftaran.ToLower().Contains("rejected")).FirstOrDefault();
                 if (cek == null)
                 {
@@ -376,9 +374,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             return _jkService.Get(id);
         }
-        public Mahasiswa GetMahasiswaByEmail(string email)
+        public Mahasiswa GetMahasiswaById(long id)
         {
-            return _mahasiswaService.Find(m => m.Email == email).FirstOrDefault();
+            return _mahasiswaService.Find(m => m.ID == id).FirstOrDefault();
         }
     }
 }
