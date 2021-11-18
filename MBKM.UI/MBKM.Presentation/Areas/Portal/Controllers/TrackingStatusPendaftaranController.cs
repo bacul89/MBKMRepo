@@ -20,8 +20,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         private IMahasiswaService _mahasiswaService;
         private IApprovalPendaftaranService _approvalPendaftaranService;
         private IInformasiPertukaranService _informasiPertukaranService;
+        private IFeedbackMatkulService _feedbackMatkulService;
 
-        public TrackingStatusPendaftaranController(IPendaftaranMataKuliahService pendaftaranMataKuliahService, ICPLMKPendaftaranService cPLMKPendaftaranService, ICPLMatakuliahService cPLMatakuliahService, IMahasiswaService mahasiswaService, IApprovalPendaftaranService approvalPendaftaranService, IInformasiPertukaranService informasiPertukaranService)
+        public TrackingStatusPendaftaranController(IPendaftaranMataKuliahService pendaftaranMataKuliahService, ICPLMKPendaftaranService cPLMKPendaftaranService, ICPLMatakuliahService cPLMatakuliahService, IMahasiswaService mahasiswaService, IApprovalPendaftaranService approvalPendaftaranService, IInformasiPertukaranService informasiPertukaranService, IFeedbackMatkulService feedbackMatkulService)
         {
             _pendaftaranMataKuliahService = pendaftaranMataKuliahService;
             _cPLMKPendaftaranService = cPLMKPendaftaranService;
@@ -29,7 +30,10 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             _mahasiswaService = mahasiswaService;
             _approvalPendaftaranService = approvalPendaftaranService;
             _informasiPertukaranService = informasiPertukaranService;
+            _feedbackMatkulService = feedbackMatkulService;
         }
+
+
 
 
         // GET: Portal/TrackingStatusPendaftaran
@@ -80,6 +84,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             {
                 ViewData["mahasiswaInternalKeluar"] = false;
             }
+            
             return View(data);
         }
 
@@ -156,6 +161,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 ViewData["disabled"] = "";
             }
             ViewData["catatanBaru"] = _approvalPendaftaranService.Find(x => x.PendaftaranMataKuliahID == data.PendaftaranMataKuliahID && (x.StatusPendaftaran.Contains("APPROVED") || x.StatusPendaftaran.Contains("REJECTED"))).FirstOrDefault().Catatan;
+            ViewData["semesterMahasiswa"] = _feedbackMatkulService.GetSemesterByStrm(data.PendaftaranMataKuliahs.JadwalKuliahs.STRM.ToString()).Nama;
             return View(data);
         }
 
