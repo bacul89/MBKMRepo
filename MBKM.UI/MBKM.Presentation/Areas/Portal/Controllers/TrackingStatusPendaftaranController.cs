@@ -162,6 +162,15 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             }
             ViewData["catatanBaru"] = _approvalPendaftaranService.Find(x => x.PendaftaranMataKuliahID == data.PendaftaranMataKuliahID && (x.StatusPendaftaran.Contains("APPROVED") || x.StatusPendaftaran.Contains("REJECTED"))).FirstOrDefault().Catatan;
             ViewData["semesterMahasiswa"] = _feedbackMatkulService.GetSemesterByStrm(data.PendaftaranMataKuliahs.JadwalKuliahs.STRM.ToString()).Nama;
+
+            if (data.PendaftaranMataKuliahs.mahasiswas.NoKerjasama == null)
+            {
+                ViewData["InformasiKerjasama"] = _informasiPertukaranService.Find(x => x.MahasiswaID == data.PendaftaranMataKuliahs.MahasiswaID).FirstOrDefault().NoKerjasama;
+            }
+            else
+            {
+                ViewData["InformasiKerjasama"] = data.PendaftaranMataKuliahs.mahasiswas.NoKerjasama;
+            }
             return View(data);
         }
 
