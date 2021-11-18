@@ -91,7 +91,10 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             using (var context = new MBKMContext())
             {
                 context.Configuration.LazyLoadingEnabled = false;
-                var result = context.PendaftaranMataKuliahs.Where(x => x.IsDeleted == false && x.StatusPendaftaran == "MENUNGGU APPROVAL KAPRODI/WR BIDANG AKADEMIK" && x.JadwalKuliahs.STRM == strm).Include(x => x.mahasiswas).Include(x => x.JadwalKuliahs);
+                var result = context.PendaftaranMataKuliahs.Where(x => x.IsDeleted == false && x.StatusPendaftaran == "MENUNGGU APPROVAL KAPRODI/WR BIDANG AKADEMIK" && x.JadwalKuliahs.STRM == strm)
+                    .Include(x => x.mahasiswas)
+                    .Include(x => x.JadwalKuliahs)
+                    ;
                 mListPendaftaranMataKuliah.TotalCount = result.Count();
                 var gridfilter = result
                     .AsQueryable()
@@ -106,7 +109,23 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                     || y.JadwalKuliahs.NamaProdi.Contains(SearchParam)
                     || y.JadwalKuliahs.KodeMataKuliah.Contains(SearchParam)
                     || y.JadwalKuliahs.NamaMataKuliah.Contains(SearchParam)
-                    ).OrderBy(SortBy, SortDir)
+                    ).GroupJoin(context.informasiPertukarans,
+                    pendaf => pendaf.MahasiswaID,
+                    inform => inform.MahasiswaID,
+                    (pendaftaran, informasi) => new VMPendaftaranWithInformasipertukaran
+                    {
+                        ID = pendaftaran.ID,
+                        DosenPembimbing = pendaftaran.DosenPembimbing,
+                        DosenID = pendaftaran.DosenID,
+                        Hasil = pendaftaran.Hasil,
+                        JadwalKuliahID = pendaftaran.JadwalKuliahID,
+                        JadwalKuliahs = pendaftaran.JadwalKuliahs,
+                        mahasiswas = pendaftaran.mahasiswas,
+                        MatkulKodeAsal = pendaftaran.MatkulKodeAsal,
+                        MatkulAsal = pendaftaran.MatkulAsal,
+                        StatusPendaftaran = pendaftaran.StatusPendaftaran,
+                        InformasiPertukaran = informasi.FirstOrDefault()
+                    }).OrderBy(SortBy, SortDir).ToList()
                     ;
                 mListPendaftaranMataKuliah.gridDatas = gridfilter.Skip(Skip).Take(Length)
                     .Select(z => new GridListPendaftaranMataKuliah
@@ -121,6 +140,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                         MatkulKodeAsal = z.MatkulKodeAsal,
                         MatkulAsal = z.MatkulAsal,
                         StatusPendaftaran = z.StatusPendaftaran,
+                        noKerjasama = (z.InformasiPertukaran == null ? "-" : (z.InformasiPertukaran.NoKerjasama == null ? "-" : z.InformasiPertukaran.NoKerjasama))
                     }).ToList();
                 mListPendaftaranMataKuliah.TotalFilterCount = gridfilter.Count();
                 return mListPendaftaranMataKuliah;
