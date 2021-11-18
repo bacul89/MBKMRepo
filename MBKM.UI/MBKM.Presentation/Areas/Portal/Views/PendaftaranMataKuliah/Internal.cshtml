@@ -494,11 +494,62 @@
                     $("#trTanggalSKTugas").hide();
                     $("#trJudulAktivitas").hide();
                     $("#trLokasi").hide();
+
+                    $("#fakultas").empty();
+                    $("#lokasi").empty();
+                    $("#prodi").empty();
+                    $("#fakultas").prop("disabled", false);
+                    $("#prodi").prop("disabled", true);
+                    $("#lokasi").prop("disabled", true);
+                    $("#trMatkul").hide();
+                    isInternalKeLuarAtma = false;
                 } else {
                     $("#trNoSKTugas").show();
                     $("#trTanggalSKTugas").show();
                     $("#trJudulAktivitas").show();
                     $("#trLokasi").show();
+                    isInternalKeLuarAtma = true;
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("GetInformasiKampus", "PendaftaranMataKuliah")"
+                    }).then(function (response) {
+                        var option = $("<option selected='selected'></option>").val(response.Fakultas).text(response.Fakultas);
+                        $("#fakultas").append(option).trigger('change');
+                        $("#fakultas").prop("disabled", true);
+                        option = $("<option selected='selected'></option>").val(response.Prodi).text(response.Prodi);
+                        $("#prodi").append(option).trigger('change');
+                        $("#prodi").prop("disabled", true);
+                        option = $("<option selected='selected'></option>").val(response.Lokasi).text(response.Lokasi);
+                        $("#lokasi").append(option).trigger('change');
+                        $("#lokasi").prop("disabled", true);
+                        $("#trMatkul").show();
+
+                        $("#mataKuliah").select2({
+                            placeholder: "-- Pilih Mata Kuliah Asal --",
+                            width: "100%",
+                            ajax: {
+                                url: "@Url.Action("GetMatkulAsal", "PendaftaranMataKuliah")",
+                                dataType: 'json',
+                                method: "POST",
+                                delay: 250,
+                                cache: false,
+                                data: function (params) {
+                                    return {
+                                        Fakultas: $('#fakultas').val(),
+                                        STRM: $('#strm').val(),
+                                        Prodi: $('#prodi').val(),
+                                        Lokasi: $('#lokasi').val(),
+                                        Search: params.term || ""
+                                    };
+                                },
+                                processResults: function (data, params) {
+                                    return {
+                                        results: $.map(data, function (item) { return { id: item.KodeMataKuliah + " - " + item.NamaMataKuliah, value: item.KodeMataKuliah + " - " + item.NamaMataKuliah, text: item.KodeMataKuliah + " - " + item.NamaMataKuliah } })
+                                    };
+                                },
+                            }
+                        });
+                    });
                 }
                 $("#jenisKegiatanMBKM").empty();
                 $("#namaInstansi").empty();
@@ -572,9 +623,8 @@
                                     },
                                 }
                             });
-
                         });
-                    } else {
+                    } else if ($("#jenisKegiatanMBKM").select2('data')[0].text.toLowerCase() == 'internal') {
                         $("#fakultas").empty();
                         $("#lokasi").empty();
                         $("#prodi").empty();
@@ -583,8 +633,6 @@
                         $("#lokasi").prop("disabled", true);
                         $("#trMatkul").hide();
                         isInternalKeLuarAtma = false;
-                    }
-                    if ($("#jenisKegiatanMBKM").select2('data')[0].text.toLowerCase() == 'internal') {
 
                         $(".mandatory").hide();
                         isMandatory = false;
