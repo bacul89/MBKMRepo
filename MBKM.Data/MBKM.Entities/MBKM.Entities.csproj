@@ -121,7 +121,6 @@
     <Compile Include="ViewModel\VMNilaiBobot.cs" />
     <Compile Include="ViewModel\VMNilaiGrade.cs" />
     <Compile Include="ViewModel\VMPenilaian.cs" />
-    <Compile Include="ViewModel\VMNilaiSertifikat.cs" />
     <Compile Include="ViewModel\VMReportMahasiswaEksternal.cs" />
     <Compile Include="ViewModel\VMPendaftaranWithInformasipertukaranKeluar.cs" />
     <Compile Include="ViewModel\VMReportMahasiswaInternal.cs" />
