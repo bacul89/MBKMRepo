@@ -203,10 +203,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             return new ContentResult { Content = JsonConvert.SerializeObject(_perjanjianKerjasamaService.Find(pk => pk.NamaInstansi == instansi && pk.JenisKerjasama == idKerjasama && pk.NoPerjanjian.Contains(search)).ToList()), ContentType = "application/json" };
         }
-        public ActionResult GetInformasiPertukaran()
+        public ActionResult GetInformasiPertukaran(int strm)
         {
-            Int64 id = GetMahasiswaById(long.Parse(Session["idMahasiswa"] as string)).ID;
-            return new ContentResult { Content = JsonConvert.SerializeObject(_informasiPertukaranService.Find(ip => ip.MahasiswaID == id).FirstOrDefault()), ContentType = "application/json" };
+            Int64 id = long.Parse(Session["idMahasiswa"] as string);
+            var result = _informasiPertukaranService.Find(ip => ip.MahasiswaID == id && ip.STRM == strm).FirstOrDefault();
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
         public ActionResult GetJenisKerjasama()
         {
