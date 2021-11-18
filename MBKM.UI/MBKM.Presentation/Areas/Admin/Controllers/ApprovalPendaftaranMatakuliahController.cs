@@ -78,7 +78,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 else if (tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("magang"))
                 {
                     ViewData["jenisProgram"] = "Non-Pertukaran";
-                    ViewData["jenisKegiatan"] = "magang";
+                    ViewData["jenisKegiatan"] = "Magang";
                 }
                 else if (tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("internal") && tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("luar"))
                 {
