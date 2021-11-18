@@ -9,7 +9,6 @@ $(document).ready(function () {
 
     $('#inp_jenjang').change(function () {
         $("#inp_fakultas").prop('selectedIndex', 0);
-        $("#inp_semester").prop('selectedIndex', 0);
     })
 
     $('#inp_jenjang').change(function () {

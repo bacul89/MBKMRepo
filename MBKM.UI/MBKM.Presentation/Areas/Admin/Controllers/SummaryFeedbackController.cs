@@ -184,7 +184,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             double rata2 = countResult / (double)final.Count();
 
             ViewData["dataResult"] = final;
-            ViewData["rata"] = rata2;
+            ViewData["rata"] = Math.Round(rata2, 2).ToString();
 
             return View();
         }
