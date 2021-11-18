@@ -270,6 +270,9 @@ function showValue(result) {
 
     gradeTotal = nilaiTotal / sksTotal;
 
+    if (isNaN(parseFloat(gradeTotal))) {
+        gradeTotal = 0;
+    }
 
 
     /*    var A = 4.00;
@@ -306,7 +309,7 @@ function showValue(result) {
 
     $("#data").html(html);
     $("#totalSks").html(sksTotal);
-    $("#totalGrade").html(intToFloat(gradeTotal, 2));
+    $("#totalGrade").html(intToFloat(gradeTotal, 2));   
 
 
 
