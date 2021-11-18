@@ -711,7 +711,7 @@
         function setInformasiPertukaran() {
             $.ajax({
                 type: "GET",
-                url: "@Url.Action("GetInformasiPertukaran", "PendaftaranMataKuliah")"
+                url: "@Url.Action("GetInformasiPertukaran", "PendaftaranMataKuliah")?strm=" + $('#strm').val()
             }).then(function (response) {
                 if (response != null) {
                     var option = $("<option selected='selected'></option>").val(response.JenisPertukaran).text(response.JenisPertukaran);
