@@ -116,7 +116,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 else if (tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("magang"))
                 {
                     ViewData["jenisProgram"] = "Non-Pertukaran";
-                    ViewData["jenisKegiatan"] = "magang";
+                    ViewData["jenisKegiatan"] = "Magang";
                 }
                 else if (tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("internal") && tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("luar"))
                 {
@@ -165,10 +165,19 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
 
             if (data.PendaftaranMataKuliahs.mahasiswas.NoKerjasama == null)
             {
-                ViewData["InformasiKerjasama"] = _informasiPertukaranService.Find(x => x.MahasiswaID == data.PendaftaranMataKuliahs.MahasiswaID).FirstOrDefault().NoKerjasama;
+                var informasiNoKerjasama = _informasiPertukaranService.Find(x => x.MahasiswaID == data.PendaftaranMataKuliahs.MahasiswaID).FirstOrDefault();
+                if (informasiNoKerjasama.NoKerjasama == null)
+                {
+                    ViewData["InformasiKerjasama"] = "-";
+                }
+                else
+                {
+                    ViewData["InformasiKerjasama"] = informasiNoKerjasama.NoKerjasama;
+                }
             }
             else
             {
+
                 ViewData["InformasiKerjasama"] = data.PendaftaranMataKuliahs.mahasiswas.NoKerjasama;
             }
             return View(data);
