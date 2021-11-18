@@ -31,12 +31,6 @@
 
 </head>
 <style>
-    @@media print {
-        div.divFooter {
-            position: absolute;
-            bottom: 0;
-        }
-    }
 
     .box {
         border: solid 1px black;
@@ -47,7 +41,6 @@
     body {
         font-family: 'Roboto';
         padding-top: 0px;
-        position: relative;
     }
 
     a:hover {
@@ -151,7 +144,7 @@
                                 @foreach (var item in (IEnumerable<MBKM.Entities.ViewModel.VMDosenMakulPertemuan>)ViewData["dosens"])
                                 {
                                     <div>
-                                        @item.Instructor_id - @item.NamaDosen
+                                        @item.NamaDosen
                                     </div>
                                 }
                             </td>
@@ -210,138 +203,6 @@
                     }
                 }
             </table>
-        </div>
-    }
-}
-@{
-    if (!cek)
-    {
-        <br />
-        <div class="divFooter" style="width:100%">
-            <br />
-            <div class="container" style="width: 100%; bottom: 0;font-size:10px;">
-                HANYA DIISI UNTUK ABSENSI UJIAN (<i>ONLY APPLICABLE FOR EXAM ATTENDANCE</i>)
-                <table width="100%" border="1">
-                    <tr>
-                        <td width="40%" scope="rowgroup" style="height:30px; text-align:center; vertical-align: middle">BERITA ACARA UJIAN</td>
-                        <td width="30%" scope="rowgroup" style="text-align: center; vertical-align: middle">NAMA PENGAWAS UJIAN</td>
-                        <td width="30%" scope="rowgroup" style="text-align: center; vertical-align: middle">PARAF</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2" scope="rowgroup" style="height: 90px;center; vertical-align: middle"></td>
-                        <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
-                        <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
-                    </tr>
-                    <tr>
-                        <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
-                        <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        
-    }
-    else
-    {
-        page++;
-        <div class="container" style="width: 100%; page-break-before: always; padding-top: 25px;">
-            @* box orange *@
-            <div style="border: solid; padding: 0px 15px;">
-                <img src="~/Asset/Lambang_Unika_Atma_Jaya.png" style="max-height: 75px; margin: 15px 25px;float:left" />
-                <h4 style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black; text-align:right">
-                    DAFTAR HADIR
-                    <br />
-                </h4>
-                <br />
-                <br />
-                <div id="daga">
-                    <table>
-                        <tr>
-                            <td style="font-weight:bold;">SEMESTER</td>
-                            <td style="padding:5px"> : </td>
-                            <td style="padding-right: 30px;">@ViewData["semester"].ToString()</td>
-
-                            <td style="font-weight:bold">SEKSI</td>
-                            <td style="padding:5px"> : </td>
-                            <td id="seksi">@ViewData["seksi"].ToString()</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight:bold">PROGRAM STUDI</td>
-                            <td style="padding:5px"> : </td>
-                            <td id="prodi">@ViewData["prodi"].ToString()</td>
-
-                            <td style="font-weight:bold">KOMPONEN</td>
-                            <td style="padding:5px"> : </td>
-                            <td>@ViewData["komponen"]</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight:bold;">KODE MATAKULIAH</td>
-                            <td style="padding:5px"> : </td>
-                            <td id="kodeMK">@ViewData["kodeMK"].ToString()</td>
-
-                            <td style="font-weight:bold">HARI</td>
-                            <td style="padding:5px"> : </td>
-                            <td id="hari">@ViewData["hari"].ToString()</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight:bold">NAMA MATAKULIAH</td>
-                            <td style="padding:5px"> : </td>
-                            <td id="namaMK">@ViewData["namaMK"].ToString()</td>
-
-                            <td style="font-weight:bold">JAM</td>
-                            <td style="padding:5px"> : </td>
-                            <td id="jam">@ViewData["jam"].ToString()</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight:bold;">SKS</td>
-                            <td style="padding:5px"> : </td>
-                            <td id="sks">@ViewData["sks"].ToString()</td>
-
-                            <td style="font-weight:bold">RUANG</td>
-                            <td style="padding:5px"> : </td>
-                            <td id="ruang">@ViewData["ruang"].ToString()</td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight:bold">DOSEN</td>
-                            <td style="padding:5px"> : </td>
-                            <td id="dosen">
-                                @foreach (var item in (IEnumerable<MBKM.Entities.ViewModel.VMDosenMakulPertemuan>)ViewData["dosens"])
-                                {
-                                    <div>
-                                        @item.Instructor_id - @item.NamaDosen
-                                    </div>
-                                }
-                            </td>
-
-                            <td style="font-weight:bold">HALAMAN</td>
-                            <td style="padding:5px"> : </td>
-                            <td>@page dari <a class="page">@page</a> </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <br />
-        <div class="divFooter" style="width:100%">
-            <div class="container" style="width: 100%; bottom: 0">
-                HANYA DIISI UNTUK ABSENSI UJIAN (<i>ONLY APPLICABLE FOR EXAM ATTENDANCE</i>)
-                <table width="100%" border="1">
-                    <tr>
-                        <td width="40%" scope="rowgroup" style="height:30px; text-align:center; vertical-align: middle">BERITA ACARA UJIAN</td>
-                        <td width="30%" scope="rowgroup" style="text-align: center; vertical-align: middle">NAMA PENGAWAS UJIAN</td>
-                        <td width="30%" scope="rowgroup" style="text-align: center; vertical-align: middle">PARAF</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2" scope="rowgroup" style="height: 90px;center; vertical-align: middle"></td>
-                        <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
-                        <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
-                    </tr>
-                    <tr>
-                        <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
-                        <td scope="rowgroup" style="text-align: center; vertical-align: middle"></td>
-                    </tr>
-                </table>
-            </div>
         </div>
     }
 }
