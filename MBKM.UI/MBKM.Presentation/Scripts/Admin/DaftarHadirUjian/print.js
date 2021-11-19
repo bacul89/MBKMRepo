@@ -17,6 +17,7 @@ function printDHU(Id) {
             var semester = result[1].Value;
             var mahasiswa = result[2].Value;
             var presensi = result[3].Value;
+            var jadwal = result[4].Value;
 
             //console.log(result[0].Value);
             //console.log(result[1].Value);
@@ -52,13 +53,20 @@ function printDHU(Id) {
                         }
                     }
                 }
-                mahasiswa[i].Persentage = parseInt((mahasiswa[i].Present / 14) * 100);
+
+                if (jadwal == 'MID') {
+                    mahasiswa[i].Persentage = parseInt((mahasiswa[i].Present / 8) * 100);
+                }else if (jadwal == 'SEM') {
+                    mahasiswa[i].Persentage = parseInt((mahasiswa[i].Present / 16) * 100);
+                }
+
             }
 
             
 
-            //console.log(mahasiswa);
-            //console.log(presensi);
+            /*console.log(mahasiswa);
+            console.log(jadwal);
+            console.log(jadwal.KodeTipeUjian);*/
 
 
 
