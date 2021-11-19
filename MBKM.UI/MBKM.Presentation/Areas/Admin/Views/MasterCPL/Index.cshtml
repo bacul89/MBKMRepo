@@ -682,7 +682,7 @@
                         Swal.fire({
                             title: 'Gagal!',
                             icon: 'error',
-                            html: 'EMAIL atau NIP telah terdaftar!',
+                            html: 'CPL Tersebut Telah Tersedia!',
                             showCloseButton: true,
                             showCancelButton: false,
                             focusConfirm: false,
@@ -804,6 +804,7 @@
                 formEdit.ID = $('#id_cpl').val();
                 formEdit.Kelompok = latest_valueKelompok;
                 formEdit.Kode = $('#kodeEdit').val();
+                formEdit.NamaProdi = $('#prodiEdits').val();
 
                 formEdit.Capaian = $('textarea[name=cplEdit]').val();
 
@@ -838,7 +839,22 @@
                             })
                             tableUser.ajax.reload(null, false);
                             $('#EditCPL').modal('hide');
-                        }
+                    }
+                     else if (response.status == 400) {
+                        Swal.fire({
+                            title: 'Gagal!',
+                            icon: 'error',
+                            html: 'CPL Tersebut Telah Tersedia!',
+                            showCloseButton: true,
+                            showCancelButton: false,
+                            focusConfirm: false,
+                            confirmButtonText: 'OK'
+                        })
+
+                        $('.modal').modal('hide');
+
+                        //$('#TambahUser')[0].reset();
+                    }
 
                 });
             }
