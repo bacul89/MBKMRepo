@@ -76,6 +76,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult ModalDetailMhs(int id)
         {
             var model = _mahasiswaService.Get(id);
+            //batas edit internal(menempelkan data) semoga bisa
+            var ip = _informasiPertukaranService.Find(_ => _.MahasiswaID == id).FirstOrDefault();
+            if (ip != null)
+            {
+            ViewData["infoPertukaran"] = ip.JenisPertukaran;
+
+            }
 
             return View("ModalDetailMhs", model);
         }
@@ -120,7 +127,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
         public ActionResult GetKegiatanByProgram(string program)
         {
-            return new ContentResult { Content = JsonConvert.SerializeObject(_jenisKerjasamaService.Find(jk => jk.JenisPertukaran == program).ToList()), ContentType = "application/json" };
+            return new ContentResult { Content = JsonConvert.SerializeObject(_jenisKerjasamaService.Find(jk => jk.JenisPertukaran == program && !jk.JenisKerjasama.ToLower().Equals("eksternal dari luar atma jaya")).ToList()), ContentType = "application/json" };
         }
         [HttpPost]
         public ActionResult InsertInformasiPertukaran(InformasiPertukaran informasiPertukaran, Int64 id)
