@@ -84,9 +84,11 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 StudentID = x.Mahasiswas.NIM
             });
 
+            
             ViewData["ujian"] = JsonConvert.SerializeObject(ujian);
             ViewData["semester"] = dataSemester.Nama;
             ViewData["mahasiswas"] = JsonConvert.SerializeObject(list);
+            
             return View("PrintDHU");
         }
 
@@ -141,6 +143,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ViewData["semester"] = dataSemester.Nama;
             ViewData["mahasiswas"] = list;
             ViewData["presensi"] = presensi;
+            ViewData["jadwal"] = jadwalUjian.KodeTipeUjian;
             return Json(ViewData, JsonRequestBehavior.AllowGet);
         }
 
