@@ -16,6 +16,7 @@ function printDHU(Id) {
             var ujian = result[0].Value;
             var semester = result[1].Value;
             var mahasiswa = result[2].Value;
+            var presensi = result[3].Value;
 
             //console.log(result[0].Value);
             //console.log(result[1].Value);
@@ -29,6 +30,38 @@ function printDHU(Id) {
             var defaultRow = 20;
             var page = 0;
             var pageTotal = getTotalPage(defaultRow, mahasiswa.length);
+
+            // new mhs
+            for (var i = 0; i < mahasiswa.length; i++) {
+                //console.log(1);
+                for (var j = 0; j < presensi.length; j++) {
+                    //console.log(mahasiswa[i].StudentID );
+                    //console.log(presensi[j].MahasiswaID);
+                    if (mahasiswa[i].MahasiswaID == presensi[j].MahasiswaID) {
+                        //console.log(3);
+                        if (presensi[j].Present == true) {
+                            mahasiswa[i].Present = mahasiswa[i].Present + 1;
+                        }
+
+                        if (presensi[j].CheckDosen == true) {
+                            mahasiswa[i].Checked = mahasiswa[i].Checked + 1;
+                        }
+
+                        if (presensi[j].LockedAbsen == true) {
+                            mahasiswa[i].Lock = mahasiswa[i].Lock + 1;
+                        }
+                    }
+                }
+                mahasiswa[i].Persentage = parseInt((mahasiswa[i].Present / 14) * 100);
+            }
+
+            
+
+            //console.log(mahasiswa);
+            //console.log(presensi);
+
+
+
 
             for (var i = 0; i < mahasiswa.length; i++) {
                 if (i % 20 == 0) {
@@ -111,7 +144,8 @@ function generateContent(mahasiswa, page, pageTotal, limit) {
     var numEnd = limitPage;
     var numStart = limitPage - limit;
     var data = mahasiswa;//filterData(mahasiswa, numStart, numEnd);
-
+    var asterisk = "";
+    var cekal = 0;
     //console.log(data);
 
 
@@ -121,8 +155,10 @@ function generateContent(mahasiswa, page, pageTotal, limit) {
             var num = i + 1;
             var nama = data[i].Nama;
             var nim = data[i].StudentID;
+            
             //var idCampus = mahasiswa[i].NoKerjasama;
-            tablemhs = tablemhs + '<tr><td class="mhsList start padding0"><center>' + num + '<center></td><td class="mhsList">' + nim + '</td><td class="mhsList">' + nama + '</td><td class="mhsList"></td></tr>'
+            if (data[i].Persentage < 75) { asterisk = "*"; cekal++ }
+            tablemhs = tablemhs + '<tr><td class="mhsList start padding0"><center>' + num + '<center></td><td class="mhsList">' + nim + '</td><td class="mhsList">' + nama + '</td><td class="mhsList" style="text-align:center;">'+ asterisk+'</td></tr>'
         }
 
         for (var i = 0; i < numEnd - data.length; i++) {
@@ -137,7 +173,8 @@ function generateContent(mahasiswa, page, pageTotal, limit) {
             var nama = data[i].Nama;
             var nim = data[i].StudentID;
             //var idCampus = mahasiswa[i].NoKerjasama;
-            tablemhs = tablemhs + '<tr><td class="mhsList start"><center>' + num + '<center></td><td class="mhsList">' + nim + '</td><td class="mhsList">' + nama + '</td><td class="mhsList"></td></tr>'
+            if (data[i].Persentage < 75) { asterisk = "*"; cekal++ }
+            tablemhs = tablemhs + '<tr><td class="mhsList start"><center>' + num + '<center></td><td class="mhsList">' + nim + '</td><td class="mhsList">' + nama + '</td><td class="mhsList" style="text-align:center;">' + asterisk +'</td></tr>'
         }
     }
 
@@ -168,14 +205,8 @@ function generateHeader(ujian, semester, page, pageTotal) {
 
     var header = `<div class="border col-md-12 col-lg-12 col-sm-12 col-xs-12  p0">
                             <div class="col-md-12 Header p0">
-                                <div class="col-md-1 col-sm-1 col-lg-1 col-xs-1 p0">
-                                    <img class="logo" src="${base_url}/Asset/Lambang_Atma_Jaya.png" />
-                                </div>
-                                <div class="col-md-6 col-sm-6 col-lg-6 col-xs-6 Title p0" style="padding-left: 25px;">
-                                    <b>
-                                        <span> UNIVERSITAS KATOLIK INDONESIA</span>
-                                        <h1>ATMA JAYA</h1>
-                                    </b>
+                                <div class="col-md-7 col-sm-7 col-lg-7 col-xs-7 p0">
+                                    <img class="logo" src="${base_url}/Asset/Lambang_Unika_Atma_Jaya.png" />
                                 </div>
                                 <div class="col-md-5 col-sm-5 col-lg-5 col-xs-5 Title p0">
                                     <div class="title-right">
