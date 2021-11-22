@@ -116,8 +116,19 @@ function getNilai() {
         datatype: 'json',
         success: function (resultTranskip) {
 
-            Nilais = resultTranskip;
-            showValue(resultTranskip);
+            if (resultTranskip.pertukaran == true) {
+                CheckStatusFeedback(true, 'internal');
+                html = "<tr><td>-</td><td>-</td><td style='text-align:right'>-</td><td style='text-align:right'>-</td></tr>";
+                $("#data").html(html);
+                $("#totalSks").html("-");
+                $("#totalGrade").html("-");
+            } else {
+                Nilais = resultTranskip.transkrip;
+                showValue(resultTranskip.transkrip);
+            }
+
+
+            
                 /*$.ajax({
                     url: "/Portal/TranskripMahasiswa/getLookupByTipe",
                     type: 'get',
@@ -209,7 +220,7 @@ function showValue(result) {
         if (i == 0) {
             //console.log(result[i].FlagCetak);
             //$("#btnCetak").prop("disabled", false);
-            CheckStatusFeedback(result[i].FlagCetak);
+            CheckStatusFeedback(result[i].FlagCetak, result.length);
         }
 
         var kodematakuliah = "<td>" + result[i].KodeMataKuliah + "</td>";
@@ -411,7 +422,7 @@ function checkStatusSertifikat() {
         datatype: 'JSON',
         success: function (e) {
 
-            //console.log(e);
+            //console.log("fhsaksfj : "+e.data);
 
             if (e.data == false) {
                 $("#sertifikatCetak").prop("disabled", false);
@@ -425,10 +436,96 @@ function checkStatusSertifikat() {
 
 }
 
-
 function printSertifikat() {
+    swal.fire({
+        title: "Sertifikat Nilai Hanya Dapat Tercetak Satu Kali \n Hubungi Pihak BAA Jika Terjadi Gagal Cetak",
+        type: "warning",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#06a956",
+        confirmButtonText: "Ok",
+        //closeOnConfirm: false
+    }).then((result) => {
+        $.LoadingOverlay("show");
+        $.ajax({
+            url: '/Portal/SertifikatMbkm/GetFile',
+            type: 'POST',
+            datatype: 'JSON',
+            success: function (e) {
+
+                console.log("try " + e.data);
+                var base_url = window.location.origin;
+
+                if (e.data != true) {
+
+                    var mywindow = window.open('', '_blank');
+                    mywindow.location = base_url + '/Portal/SertifikatMbkm/GetFile';
+                    setTimeout(function () {
+                        $.ajax({
+                            url: '/Portal/TranskripMahasiswa/UpdateStatusSertifikat',
+                            type: 'POST',
+                            datatype: 'JSON',
+                            success: function (e) {
+                                //console.log(e);
+                                //console.log(e.data);
+                                if (e.status == 500) {
+                                    $("#sertifikatCetak").prop("disabled", true);
+                                } else if (e.status == 200) {
+                                    $("#sertifikatCetak").prop("disabled", true);
+                                    Swal.fire({
+                                        title: 'success',
+                                        icon: 'success',
+                                        html: 'Cetak Berhasil',
+                                        showCloseButton: true,
+                                        showCancelButton: false,
+                                        focusConfirm: false,
+                                        confirmButtonText: 'OK'
+                                    })
+                                    //$("#sertifikatCetak").prop("disabled", false);
+                                }
+                                $.LoadingOverlay("hide");
+                            }, error: function (e) {
+                                $("#sertifikatCetak").prop("disabled", true);
+                                $.LoadingOverlay("hide");
+                            }
+                        })
+                       
+                    }, 500);
+
+
+                } else {
+                    //var location = 
+                    //window.location = base_url + '/Portal/TranskripMahasiswa';
+                    $.LoadingOverlay("hide");
+                    $("#sertifikatCetak").prop("disabled", true);
+                    swal.fire({
+                        title: "Cetak Sertifikat Gagal, Silahkan Hubungi Pihak BAA!!!",
+                        type: "warning",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#06a956",
+                        confirmButtonText: "Ok",
+                        //closeOnConfirm: false
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            
+                        }
+                    })
+                }
+            }, error: function (e) {
+                $("#sertifikatCetak").prop("disabled", true);
+            }
+        })
+    })
+
+
+
+}
+
+
+/*function printSertifikat() {
     var base_url = window.location.origin;
-    window.location = base_url + '/Portal/SertifikatMbkm/GetFile';
+    
 
 
     $.ajax({
@@ -446,36 +543,58 @@ function printSertifikat() {
             $("#sertifikatCetak").prop("disabled", true);
         }
     })
-}
+}*/
 
-var test;
-function CheckStatusFeedback(FlagTranscript) {
+var feedbackStatus;
+function CheckStatusFeedback(FlagTranscript, row) {
     $.ajax({
         url: '/Portal/TranskripMahasiswa/CheckStatusFeedback',
         type: 'POST',
         datatype: 'json',
         success: function (result) {
-           console.log(result);
-            var status = result[0][5];
-            var paymentStatus = result[0][6];
+            //console.log(result);
+            //var status = result[0][5];
+            //var paymentStatus = result[0][6];
 
-            test = result;
-            console.log(status);
+            feedbackStatus = result;
+            /*console.log(status);
             console.log(paymentStatus);
-            console.log(FlagTranscript);
-            if (status == 'Belum Feedback') {
-                $("#btnCetak").prop("disabled", true);
-                $("#sertifikatCetak").prop("disabled", true);
-            } else {
-
-                if (FlagTranscript == false && status == 'Sudah Feedback' && paymentStatus == "True") {
-                    $("#btnCetak").prop("disabled", false);
-                } else if (FlagTranscript == true || status == 'Belum Feedback' || paymentStatus == "False"){
+            console.log(FlagTranscript);*/
+            //console.log(row);
+            var checker = parseFeedback(result);
+                if (checker == true && (row == 'internal' || row == result.length)) {
+                    checkStatusSertifikat();
+                    //$("#sertifikatCetak").prop("disabled", false);
+                    if (FlagTranscript == false) {
+                        $("#btnCetak").prop("disabled", false);
+                    } else if (FlagTranscript == true) {
+                        $("#btnCetak").prop("disabled", true);
+                    }
+                } else {
                     $("#btnCetak").prop("disabled", true);
+                    $("#sertifikatCetak").prop("disabled", true);
+
                 }
-            }
+           
+
         }
     })
 
 }
 
+function parseFeedback(data) {
+    var tempFeedback, tempPayment;
+
+    for (var i = 0; i < data.length; i++) {
+        if (data[i][4] == "Sudah Feedback" && data[i][5] == 'True') {
+            tempFeedback = true;
+            tempPayment = true;
+        } else {
+            return false;
+        }
+    }
+
+    if (tempFeedback == true && tempPayment == true) {
+        return true
+    }
+}

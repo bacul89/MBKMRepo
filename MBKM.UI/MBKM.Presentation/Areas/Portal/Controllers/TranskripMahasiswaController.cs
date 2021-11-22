@@ -30,8 +30,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         private ILookupService _lookupService;
         private IPendaftaranMataKuliahService _pendaftaranMataKuliahService;
         private IFeedbackMatkulService _feedbackMatkulService;
+        private IInformasiPertukaranService _informasiPertukaranService;
 
-        public TranskripMahasiswaController(INilaiKuliahService transkripService, IJadwalKuliahMahasiswaService jkMhsService, IMahasiswaService mahasiswaService, ILookupService lookupService, IPendaftaranMataKuliahService pendaftaranMKService, IFeedbackMatkulService feedbackMatkulService)
+        public TranskripMahasiswaController(INilaiKuliahService transkripService, IJadwalKuliahMahasiswaService jkMhsService, IMahasiswaService mahasiswaService, ILookupService lookupService, IPendaftaranMataKuliahService pendaftaranMKService, IFeedbackMatkulService feedbackMatkulService, IInformasiPertukaranService informasiPertukaranService)
         {
             
             _transkripService = transkripService;
@@ -40,6 +41,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             _lookupService = lookupService;
             _pendaftaranMataKuliahService = pendaftaranMKService;
             _feedbackMatkulService = feedbackMatkulService;
+            _informasiPertukaranService = informasiPertukaranService;
         }
 
 
@@ -66,14 +68,24 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
 
 
             Mahasiswa mahasiswa = GetMahasiswaByEmail(email);
-            var transkrip = _transkripService.Find(m => m.MahasiswaID == mahasiswa.ID && m.IsActive == true && m.IsDeleted == false).ToList();
-            //return View(model);
+            VMSemester semester = _jkMhsService.getOngoingSemester(mahasiswa.JenjangStudi);
+            var strmString = semester.ID;
 
+            var cry = false;
+            try
+            {
+                var infoPertukaran = _informasiPertukaranService.Find(m => m.MahasiswaID == mahasiswa.ID && m.STRM == strmString).First();
+                cry = true;
+            }
+            catch
+            {
+                cry = false;
+            }
 
+           
 
             List<object> data = new List<object>();
-
-            //Console.WriteLine(getNilaiMahasiswa);
+            var transkrip = _transkripService.Find(m => m.MahasiswaID == mahasiswa.ID && m.IsActive == true && m.IsDeleted == false).ToList();
 
             foreach (var item in transkrip)
             {
@@ -100,15 +112,18 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 data.Add(row);
             }
 
-            /*            foreach (var item in transkrip)
-                        {
-                            if (!mapTranskrip.Contains(item.NamaMatakuliah))
-                            {
-                                MVTranskrip.Add(item);
-                                mapTranskrip.Add(item.JadwalKuliahs.KodeMataKuliah);
-                            }
-                        }*/
-            return new ContentResult { Content = JsonConvert.SerializeObject(data), ContentType = "application/json" };
+            var result = new
+            {
+
+                pertukaran = cry,
+                transkrip = data
+
+            };
+
+
+
+
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
 
         public Mahasiswa GetMahasiswaByEmail(string email)
@@ -304,7 +319,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var strmString = semester.ID;
             int strm = Int32.Parse(strmString.ToString());
 
-            var data = _feedbackMatkulService.Find(x => x.JadwalKuliahs.STRM == strm && x.MahasiswaID == mahasiswa.ID)
+            var data = _feedbackMatkulService.Find(x => x.JadwalKuliahs.STRM == strm && x.MahasiswaID == mahasiswa.ID && x.IsDeleted == false)
                 .GroupBy(z => new { z.MahasiswaID, z.StatusFeedBack, z.Mahasiswas, z.JadwalKuliahID })
                 .Select(s => new { MahasiswaID = s.Key.MahasiswaID, Status = s.Key.StatusFeedBack, Mahasiswas = s.Key.Mahasiswas, JadwalID = s.Key.JadwalKuliahID }).ToList();
 
@@ -314,41 +329,69 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var data3 = data.GroupBy(z => new { z.MahasiswaID, z.Mahasiswas, z.JadwalID })
                 .Select(s => new { MahasiswaID = s.Key.MahasiswaID, Mahasiswas = s.Key.Mahasiswas }).ToList();
 
-            var pendaftaran = _pendaftaranMataKuliahService.Find(x => x.JadwalKuliahs.STRM == strm && x.MahasiswaID == mahasiswa.ID && x.StatusPendaftaran.ToLower().Contains("accepted")).ToList();
+            var pendaftaran = _pendaftaranMataKuliahService.Find(x => x.JadwalKuliahs.STRM == strm && x.MahasiswaID == mahasiswa.ID && x.StatusPendaftaran.ToLower().Contains("accepted") && x.IsDeleted == false).ToList();
 
             List<String[]> final = new List<String[]>();
-            var DescSemester = _feedbackMatkulService.GetSemesterByStrm(strmString.ToString());
-            foreach (var d in data2)
-            {
-                var dataCheck = data.Where(x => x.MahasiswaID == d.MahasiswaID && x.Status == false).Count();
-                var MatkulPendaftaranCheck = pendaftaran.Where(x => x.MahasiswaID == d.MahasiswaID).Count();
-                var matkulFeedbackCheck = data3.Where(x => x.MahasiswaID == d.MahasiswaID).Count();
+            /*foreach (var d in pendaftaran)
+            {*/
+                //var dataCheck = data.Where(x => x.MahasiswaID == d.MahasiswaID && x.Status == false).Count();
+                //var MatkulPendaftaranCheck = pendaftaran.Where(x => x.MahasiswaID == d.MahasiswaID).Count();
+                //var matkulFeedbackCheck = data3.Where(x => x.MahasiswaID == d.MahasiswaID).Count();
+                foreach (var p in pendaftaran)
+                {
+                    
+                    int index = 0;
+                    long temp = 0;
+                    foreach (var e in data)
+                    {
+                        index++;
+                        if (e.JadwalID == p.JadwalKuliahID)
+                        {
+                        
+                            final.Add(new String[]{
+                                p.MahasiswaID.ToString(),
+                                p.JadwalKuliahs.NamaMataKuliah,
+                                p.JadwalKuliahs.KodeMataKuliah,
+                                p.JadwalKuliahs.MataKuliahID,
+                                "Sudah Feedback",                                
+                                mahasiswa.FlagBayar.ToString(),
+                                p.JadwalKuliahID.ToString(),
+                                //e.Status.ToString(),
+                            });
 
-                if (dataCheck == 0 && (matkulFeedbackCheck == MatkulPendaftaranCheck))
-                {
-                    final.Add(new String[]{
-                        d.MahasiswaID.ToString(),
-                        DescSemester.Nama,
-                        d.Mahasiswas.NamaUniversitas,
-                        d.Mahasiswas.NIM,
-                        d.Mahasiswas.Nama,
-                        "Sudah Feedback",
-                        d.Mahasiswas.FlagBayar.ToString()
-                    });
+                            temp = p.JadwalKuliahID;
+                        }
+
+                        if (data.Count() == index && p.JadwalKuliahID != temp)
+                        {
+                            final.Add(new String[]{
+                                    p.MahasiswaID.ToString(),
+                                    p.JadwalKuliahs.NamaMataKuliah,
+                                    p.JadwalKuliahs.KodeMataKuliah,
+                                    p.JadwalKuliahs.MataKuliahID,
+                                    "Belum Feedback",
+                                    mahasiswa.FlagBayar.ToString(),
+                                    p.JadwalKuliahID.ToString(),
+                                    //e.Status.ToString(),
+                                });
+                            temp = p.JadwalKuliahID;
+                        }
+
+
+                        /*else
+                        {
+                            final.Add(new String[]{
+                                p.MahasiswaID.ToString(),
+                                p.JadwalKuliahs.NamaMataKuliah,
+                                p.JadwalKuliahs.KodeMataKuliah,
+                                p.JadwalKuliahs.MataKuliahID,
+                                "Belum Feedback",
+                                mahasiswa.FlagBayar.ToString(),
+                            });
+                        }*/
+                    }
                 }
-                else
-                {
-                    final.Add(new String[]{
-                        d.MahasiswaID.ToString(),
-                        DescSemester.Nama,
-                        d.Mahasiswas.NamaUniversitas,
-                        d.Mahasiswas.NIM,
-                        d.Mahasiswas.Nama,
-                        "Belum Feedback",
-                        d.Mahasiswas.FlagBayar.ToString()
-                    });
-                }
-            }
+            /*}*/
             return Json(final);
         }
 

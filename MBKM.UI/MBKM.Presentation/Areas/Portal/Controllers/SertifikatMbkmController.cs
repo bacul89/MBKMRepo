@@ -1,6 +1,7 @@
 ﻿using MBKM.Entities.Models.MBKM;
 using MBKM.Entities.ViewModel;
 using MBKM.Presentation.Helper;
+using MBKM.Presentation.models;
 using MBKM.Services;
 using MBKM.Services.MBKMServices;
 using Rotativa;
@@ -54,67 +55,90 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             ViewData["namaMahasiswa"] = tmpMahasiswa.Nama;
             ViewData["nim"] = tmpMahasiswa.NIM;
 
-
-            var data = _pendaftaranMataKuliahService.Find(x => x.MahasiswaID == id).ToList();
-
-            var dataSemester = _feedbackMatkulService.GetSemesterByStrm(data.First().JadwalKuliahs.STRM.ToString());
-            var semesterSekarang = dataSemester.Nama.Split(' ');
-            ViewData["TahunSemester"] = semesterSekarang.Last();
-            var strm = data.First().JadwalKuliahs.STRM.ToString().Substring(data.First().JadwalKuliahs.STRM.ToString().Length - 2); ;
-            if (strm == "10")
+            var dataMahasiswa = _pendaftaranMataKuliahService.Find(z => z.MahasiswaID == id).First();
+            if (dataMahasiswa.FlagSertifikat == false)
             {
-                ViewData["jenisSemester"] = "Ganjil";
-            }
-            else if (strm == "20")
-            {
-                ViewData["jenisSemester"] = "Genap";
-            }
-            else if (strm == "30")
-            {
-                ViewData["jenisSemester"] = "Pendek";
-            }
+
+                /* new */
+
+                /* var tmpMahasiswa = _mahasiswaService.Get(id);
+                 ViewData["namaMahasiswa"] = tmpMahasiswa.Nama;
+                 ViewData["nim"] = tmpMahasiswa.NIM;*/
 
 
-            ViewData["jumlahMatkul"] = data.Count();
-            var jumlahSks = 0;
-            foreach (var d in data)
-            {
-                var dataSplit = d.JadwalKuliahs.SKS.Split('.');
-                jumlahSks = jumlahSks + Convert.ToInt16(dataSplit[0]);
-            }
+                var data = _pendaftaranMataKuliahService.Find(x => x.MahasiswaID == id).ToList();
 
-            ViewData["jumlahSks"] = jumlahSks;
-            ViewData["DateNow"] = DateTime.Now.ToString("dd MMMM yyyy");
-
-            var dataWarek = _lookupService.Find(x => x.Tipe == "WAREKAkademi").First();
-            ViewData["Warek"] = dataWarek.Nilai;
-            List<CapaiaMatakuliahSertifkatDTO> final = new List<CapaiaMatakuliahSertifkatDTO>();
-
-            var dataNilaiMahasiswa = _nilaiKuliahService.Find(x => x.MahasiswaID == id).ToList();
-
-            /*            var dataPendaftaran = _pendaftaranMataKuliahService.Find(x => x.MahasiswaID == id).ToList();
-            */
-            foreach (var d in dataNilaiMahasiswa)
-            {
-                IList<CPLMatakuliah> tempId = _cPLMatakuliahService.Find(x => x.IDMataKUliah == d.JadwalKuliahs.MataKuliahID).ToList();
-                IList<CPLMatakuliah> capaianTujuan = tempId.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == d.JadwalKuliahs.ProdiID).ToList();
-                final.Add(new CapaiaMatakuliahSertifkatDTO
+                var dataSemester = _feedbackMatkulService.GetSemesterByStrm(data.First().JadwalKuliahs.STRM.ToString());
+                var semesterSekarang = dataSemester.Nama.Split(' ');
+                ViewData["TahunSemester"] = semesterSekarang.Last();
+                var strm = data.First().JadwalKuliahs.STRM.ToString().Substring(data.First().JadwalKuliahs.STRM.ToString().Length - 2); ;
+                if (strm == "10")
                 {
-                    namaMatkul = d.JadwalKuliahs.NamaMataKuliah,
-                    angka = d.NilaiTotal.ToString(),
-                    huruf = d.Grade,
-                    kompetensi = capaianTujuan
-                });
+                    ViewData["jenisSemester"] = "Ganjil";
+                }
+                else if (strm == "20")
+                {
+                    ViewData["jenisSemester"] = "Genap";
+                }
+                else if (strm == "30")
+                {
+                    ViewData["jenisSemester"] = "Pendek";
+                }
+
+
+                ViewData["jumlahMatkul"] = data.Count();
+                var jumlahSks = 0;
+                foreach (var d in data)
+                {
+                    var dataSplit = d.JadwalKuliahs.SKS.Split('.');
+                    jumlahSks = jumlahSks + Convert.ToInt16(dataSplit[0]);
+                }
+
+                ViewData["jumlahSks"] = jumlahSks;
+                ViewData["DateNow"] = DateTime.Now.ToString("dd MMMM yyyy");
+
+                var dataWarek = _lookupService.Find(x => x.Tipe == "WAREKAkademi").FirstOrDefault();
+                ViewData["Warek"] = dataWarek.Nilai;
+                List<CapaiaMatakuliahSertifkatDTO> final = new List<CapaiaMatakuliahSertifkatDTO>();
+
+                var dataNilaiMahasiswa = _nilaiKuliahService.Find(x => x.MahasiswaID == id).ToList();
+
+                var CheckNilaiAvailable = dataNilaiMahasiswa.Count();
+                ViewData["checkNilai"] = CheckNilaiAvailable;
+                if (CheckNilaiAvailable != 0)
+                {
+                    foreach (var d in dataNilaiMahasiswa)
+                    {
+                        IList<CPLMatakuliah> tempId = _cPLMatakuliahService.Find(x => x.IDMataKUliah == d.JadwalKuliahs.MataKuliahID).ToList();
+                        IList<CPLMatakuliah> capaianTujuan = tempId.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == d.JadwalKuliahs.ProdiID).ToList();
+                        final.Add(new CapaiaMatakuliahSertifkatDTO
+                        {
+                            namaMatkul = d.JadwalKuliahs.NamaMataKuliah,
+                            angka = d.NilaiTotal.ToString(),
+                            huruf = d.Grade,
+                            kompetensi = capaianTujuan
+                        });
+                    }
+                    ViewData["dataGrid"] = final;
+                }
+                var dataPendaftaran = _pendaftaranMataKuliahService.Find(x => x.MahasiswaID == id).ToList();
+
+
+
+
+                return /*View();*/
+
+                new ViewAsPdf("GetFile")
+                {
+                    PageOrientation = Rotativa.Options.Orientation.Landscape,
+                    FileName = tmpMahasiswa.NIM + " - " + tmpMahasiswa.Nama + " - Sertifikat.pdf",
+                };
+
             }
-            ViewData["dataGrid"] = final;
-
-
-            return /*View();*/
-
-            new ViewAsPdf("GetFile")
+            else
             {
-                PageOrientation = Rotativa.Options.Orientation.Landscape,
-            };
+                return Json(new ServiceResponse { status = 200, message = "Cetak Gagal Silakhan Hubungi BAA!!!", data = dataMahasiswa.FlagSertifikat }, JsonRequestBehavior.AllowGet);
+            }
 
         }
     }
