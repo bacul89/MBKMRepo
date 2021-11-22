@@ -79,7 +79,8 @@ function loadMasterCPL() {
                     //search: params.term,
                     IDProdi: $('#prodiCari').val(),
                     IDFakultas: $('#fakultasCari').val(),
-                    Kelompok: $('#inp_kelompok').val()
+                    Kelompok: $('#inp_kelompok').val(),
+                    Kelompok: $('#inp_kelompok').val(),
                     
                     /*IDProdi: "0101",
                     IDFakultas: "0001",
