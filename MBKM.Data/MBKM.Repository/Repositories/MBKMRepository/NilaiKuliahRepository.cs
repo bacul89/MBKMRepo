@@ -106,7 +106,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                                                 FlagCetak = e1.FlagCetak
                                             }.toList();*/
 
-                var result = context.NilaiKuliahs.Where(x => x.IsActive && !x.IsDeleted);
+                var result = context.NilaiKuliahs.Where(x => x.IsActive && !x.IsDeleted && x.Mahasiswas.NIM != x.Mahasiswas.NIMAsal);
                 var gridfilter = result.AsQueryable()
                     .Select(z => new GridDataNilaiKuliah
                     {

@@ -98,7 +98,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
             VMDHU vmDHU = new VMDHU();
             var jadwalUjian = _juService.Get(ID);
-            List<JadwalUjianMBKMDetail> mahasiswa = _juDetailService.Find(x => x.JadwalUjianMBKMID == ID).ToList();
+            List<JadwalUjianMBKMDetail> mahasiswa = _juDetailService.Find(x => x.JadwalUjianMBKMID == ID && x.Mahasiswas.IsActive && !x.Mahasiswas.IsDeleted && x.Mahasiswas.NIM != x.Mahasiswas.NIMAsal).ToList();
             var dataSemester = _feedbackMatkulService.GetSemesterByStrm(jadwalUjian.STRM);
             var ujian = _juDetailService.GetAttrubuteDHU(jadwalUjian.ProdiID, jadwalUjian.Lokasi, jadwalUjian.FakultasID, jadwalUjian.JenjangStudi, jadwalUjian.STRM, jadwalUjian.IDMatkul, jadwalUjian.ClassSection).Where(x => x.ID == ID).First();
 

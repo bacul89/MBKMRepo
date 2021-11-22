@@ -118,6 +118,10 @@ function getNilai() {
 
             if (resultTranskip.pertukaran == true) {
                 CheckStatusFeedback(true, 'internal');
+                html = "<tr><td>-</td><td>-</td><td style='text-align:right'>-</td><td style='text-align:right'>-</td></tr>";
+                $("#data").html(html);
+                $("#totalSks").html("-");
+                $("#totalGrade").html("-");
             } else {
                 Nilais = resultTranskip.transkrip;
                 showValue(resultTranskip.transkrip);
