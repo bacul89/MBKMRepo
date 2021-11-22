@@ -64,14 +64,14 @@ namespace MBKM.Entities.ViewModel
         public string CampusID { get; set; }
         public string Nama { get; set; }
         public string Supp { get; set; }
-        public decimal MT { get; set; }
-        public decimal CW1 { get; set; }
-        public decimal CW2 { get; set; }
-        public decimal CW3 { get; set; }
-        public decimal CW4 { get; set; }
-        public decimal CW5 { get; set; }
-        public decimal Final { get; set; }
-        public decimal NilaiTotal { get; set; }
+        public int MT { get; set; }
+        public int CW1 { get; set; }
+        public int CW2 { get; set; }
+        public int CW3 { get; set; }
+        public int CW4 { get; set; }
+        public int CW5 { get; set; }
+        public int Final { get; set; }
+        public int NilaiTotal { get; set; }
         public string Grade { get; set; }
     }
 }
