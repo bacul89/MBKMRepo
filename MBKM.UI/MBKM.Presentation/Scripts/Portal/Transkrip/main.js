@@ -317,16 +317,17 @@ function showValue(result) {
         }*/
 
     //console.log(gradeTotal);
+    //console.log(Math.round(gradeTotal));
 
     $("#data").html(html);
     $("#totalSks").html(sksTotal);
-    $("#totalGrade").html(intToFloat(gradeTotal, 2));   
+    $("#totalGrade").html(Math.round(gradeTotal));
 
 
-
+    //intToFloat(gradeTotal, 2)
     $("#dataPrint").html(html);
     $("#totalSksPrint").html(sksTotal);
-    $("#totalGradePrint").html(intToFloat(gradeTotal, 2));
+    $("#totalGradePrint").html(Math.round(gradeTotal));
 }
 
 
