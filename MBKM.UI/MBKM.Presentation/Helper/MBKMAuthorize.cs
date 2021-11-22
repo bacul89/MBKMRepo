@@ -1,4 +1,5 @@
-﻿using MBKM.Services;
+﻿using MBKM.Entities.Models;
+using MBKM.Services;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -16,20 +17,52 @@ namespace MBKM.Presentation.Helper
         {
            
             string area = filterContext.RequestContext.RouteData.DataTokens["area"].ToString();
-
+            filterContext.HttpContext.Session["emailMahasiswa"] = null;
             if (area.ToLower() == "admin")
             {
+
                 if (filterContext.HttpContext.Session["nopegawai"] == null)
                 {
                     filterContext.Result = new RedirectResult("~/Admin/Adminlogin/Login");
                     return;
                 }
-                //TODO mengambil data menu berdasarkan Role ID
-                _menuRoleService = DependencyResolver.Current.GetService<IMenuRoleService>();
-                double RoleId = Double.Parse(filterContext.HttpContext.Session["RoleID"].ToString());
-                var menuRoleList = _menuRoleService.Find(x => x.IsActive == true && x.IsDeleted == false && x.RoleID == RoleId && x.IsView == true).ToList();
-                filterContext.HttpContext.Session["MenuList"] = menuRoleList.Select(x =>x.Menus).Where(y => y.MenuParent == null && y.IsActive == true && y.IsDeleted == false).ToList();
-                filterContext.HttpContext.Session["MenuListSub"] = menuRoleList.Select(x => x.Menus).Where(y => y.MenuParent != null && y.IsActive == true && y.IsDeleted == false).ToList();
+                string controllername = filterContext.RequestContext.RouteData.Values["controller"].ToString();
+                string actionname = filterContext.RequestContext.RouteData.Values["action"].ToString();
+                bool isauthorize = true;
+                string url = "/" + area + "/" + controllername;
+                if(controllername.ToLower() == "jadwalkuliah")
+                {
+                    if (actionname.ToLower() == "manage")
+                        url = url + "/" + actionname;
+                }
+                if (filterContext.HttpContext.Session["MenuList"] == null)
+                {
+                    //TODO mengambil data menu berdasarkan Role ID
+                    
+                    _menuRoleService = DependencyResolver.Current.GetService<IMenuRoleService>();
+                    double RoleId = Double.Parse(filterContext.HttpContext.Session["RoleID"].ToString());
+                    var menuRoleList = _menuRoleService.Find(x => x.IsActive == true && x.IsDeleted == false && x.RoleID == RoleId && x.IsView == true).ToList();
+                    filterContext.HttpContext.Session["MenuList"] = menuRoleList.Select(x => x.Menus).Where(y => y.MenuParent == null && y.IsActive == true && y.IsDeleted == false).OrderBy(x=>x.MenuOrder).ToList();
+                    filterContext.HttpContext.Session["MenuListSub"] = menuRoleList.Select(x => x.Menus).Where(y => y.MenuParent != null && y.IsActive == true && y.IsDeleted == false).ToList();
+                    isauthorize = menuRoleList.Any(x => x.IsView == true && x.Menus.MenuUrl.ToLower() == url.ToLower());
+                    filterContext.HttpContext.Session["MenuRole"] = menuRoleList;
+                    if (!isauthorize)
+                    {
+                        filterContext.Result = new RedirectResult("~/UnAuthorized");
+                        return;
+                    }
+
+                }
+                else
+                {
+                    var ListMenuRole = (List<MenuRole>)filterContext.HttpContext.Session["MenuRole"];
+                    isauthorize = ListMenuRole.Any(x => x.IsView == true && x.Menus.MenuUrl.ToLower() == url.ToLower());
+                    if (!isauthorize)
+                    {
+                        filterContext.Result = new RedirectResult("~/UnAuthorized");
+                        return;
+                    }
+                }
             }
             else if (area.ToLower() == "portal")
             {

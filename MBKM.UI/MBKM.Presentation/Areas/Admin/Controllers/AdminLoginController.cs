@@ -66,6 +66,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             Session["username"] = null;
             Session["nopegawai"] = null;
             Session["email"] = null;
+            Session["MenuList"] = null;
             return RedirectToAction("Login", "AdminLogin");
         }
     }
