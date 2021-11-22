@@ -68,6 +68,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             /*var tempProdi = int.Parse(data.ProdiID);*/
             var tempJadwalUjian = _pendaftaranMataKuliahService.Find(x => x.JadwalKuliahs.MataKuliahID == data.IDMatkul && x.JadwalKuliahs.ClassSection == data.ClassSection
             /*&& x.JadwalKuliahs.ProdiID == tempProdi*/
+            && x.mahasiswas.NIM != x.mahasiswas.NIMAsal
             && x.StatusPendaftaran.Contains("ACCEPTED")
             
             ).ToList();
