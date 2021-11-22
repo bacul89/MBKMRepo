@@ -16,6 +16,7 @@ namespace MBKM.Services.MBKMServices
     {
         IEnumerable<VMFakultas> GetFakultas(string jenjangStudi, string search);
         IEnumerable<VMProdi> GetProdiByFakultas(string jenjangStudi, string idFakultas, string search);
+        IEnumerable<VMFakultas> GetFakultasInternal(string jenjangStudi, string search, string fakultas);
         IEnumerable<VMProdi> GetLokasiByProdi(string jenjangStudi, string namaProdi, string search);
         VMSemester getOngoingSemester(string jenjangStudi);
         VMListPendaftaranMataKuliah GetPendaftaranMahasiswaDataTable(DataTableAjaxPostModel model, int strm);
@@ -42,6 +43,10 @@ namespace MBKM.Services.MBKMServices
         public IEnumerable<VMFakultas> GetFakultas(string jenjangStudi, string search)
         {
             return _pmkRepository.GetFakultas(jenjangStudi, search);
+        }
+        public IEnumerable<VMFakultas> GetFakultasInternal(string jenjangStudi, string search, string fakultas)
+        {
+            return _pmkRepository.GetFakultasInternal(jenjangStudi, search, fakultas);
         }
         public IEnumerable<VMProdi> GetProdiByFakultas(string jenjangStudi, string idFakultas, string search)
         {

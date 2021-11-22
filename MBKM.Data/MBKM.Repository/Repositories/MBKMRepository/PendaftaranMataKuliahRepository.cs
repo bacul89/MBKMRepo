@@ -29,6 +29,18 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return result;
             }
         }
+        public IEnumerable<VMFakultas> GetFakultasInternal(string jenjangStudi, string search, string fakultas)
+        {
+            using (var context = new MBKMContext())
+            {
+                var jenjangStudiParam = new SqlParameter("@JenjangStudi", jenjangStudi);
+                var fakultasParam = new SqlParameter("@Fakultas", fakultas);
+                var searchParam = new SqlParameter("@Search", search);
+                var result = context.Database
+                    .SqlQuery<VMFakultas>("GetFakultasInternal @JenjangStudi, @Fakultas, @Search", jenjangStudiParam, fakultasParam, searchParam).ToList();
+                return result;
+            }
+        }
         public IEnumerable<VMProdi> GetProdiByFakultas(string jenjangStudi, string idFakultas, string search)
         {
             using (var context = new MBKMContext())
