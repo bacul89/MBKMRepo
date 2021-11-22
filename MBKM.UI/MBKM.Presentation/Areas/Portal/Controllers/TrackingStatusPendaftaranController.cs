@@ -75,16 +75,32 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             ViewData["lastStatus"] = _approvalPendaftaranService.Find(x => x.PendaftaranMataKuliahID == id).Last().StatusPendaftaran;
             ViewData["status"] = dataApproval;
             var email = HttpContext.Session["emailMahasiswa"].ToString();
-            var informasiPertukaran = _informasiPertukaranService.Find(x => x.Mahasiswas.Email == email && x.JenisKerjasama.ToLower().Contains("internal ke luar")).Count();
-            if(informasiPertukaran != 0)
+            var dataInformasiPertukaran = _informasiPertukaranService.Find(x => x.Mahasiswas.Email == email).FirstOrDefault();
+            if (dataInformasiPertukaran != null)
             {
-                ViewData["mahasiswaInternalKeluar"] = true;
+                if (dataInformasiPertukaran.JenisKerjasama.ToLower().Contains("internal ke luar"))
+                {
+                    ViewData["mahasiswaInternalKeluar"] = true;
+                }
+                else
+                {
+                    ViewData["mahasiswaInternalKeluar"] = false;
+                }
+
+                if (dataInformasiPertukaran.JenisPertukaran.ToLower().Contains("non"))
+                {
+                    ViewData["mahasiswaNonPertukaran"] = true;
+                }
+                else
+                {
+                    ViewData["mahasiswaNonPertukaran"] = false;
+                }
             }
             else
             {
                 ViewData["mahasiswaInternalKeluar"] = false;
+                ViewData["mahasiswaNonPertukaran"] = false;
             }
-            
             return View(data);
         }
 
