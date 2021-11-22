@@ -383,11 +383,43 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult GetMasterCPL(string idProdi, string idFakultas, string Kelompok)
         {
 
-            /*var vMListCPL = ;*/
-            return new ContentResult
+
+            var final = _mcpService.Find(mcp => mcp.NamaProdi == idProdi && mcp.FakultasID == idFakultas && mcp.Kelompok == Kelompok).ToList();
+            //var final = _cplMatakuliah.GetMatkul(skip, take, searchBy, idProdi, idFakultas);
+            List<object> data = new List<object>();
+            string tempKode = "";
+            foreach (var p in final)
             {
-                Content = JsonConvert.SerializeObject(_mcpService.Find(mcp => mcp.NamaProdi == idProdi && mcp.FakultasID == idFakultas && mcp.Kelompok == Kelompok).ToList()),ContentType = "application/json"
-            };
+
+                if (tempKode != p.Kode)
+                {
+                    var q = new
+                    {
+                        Capaian = p.Capaian,
+                        Kelompok = p.Kelompok,
+                        Kode = p.Kode,
+                        ID = p.ID
+                    };
+                    data.Add(q);
+
+                    tempKode = p.Kode;
+                }
+                
+            }
+
+            return Json(data);
+
+            /*var vMListCPL = ;*/
+            /*return new ContentResult
+            {
+
+                
+
+                Content = JsonConvert.SerializeObject(_mcpService.Find(mcp => mcp.NamaProdi == idProdi && mcp.FakultasID == idFakultas && mcp.Kelompok == Kelompok).
+                //GroupBy(e => e.Kode).Take(1)
+                ToList()
+                ),ContentType = "application/json"
+            };*/
         }
         public ActionResult GetMasterCPLByID(int id)
         {
