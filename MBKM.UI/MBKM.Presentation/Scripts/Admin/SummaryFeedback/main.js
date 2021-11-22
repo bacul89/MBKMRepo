@@ -100,6 +100,20 @@ $(document).ready(function () {
                     "render": function (data, type, row, meta) {
                         return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
                     }
+                },
+                {
+                    /*Jumlah Mahasiswa Sudah Feedback*/
+                    "data": 6,
+                    "render": function (data, type, row, meta) {
+                        return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
+                    }
+                },
+                {
+                    /*Nilai Total*/
+                    "data": 7,
+                    "render": function (data, type, row, meta) {
+                        return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
+                    }
                 }
             ],
             "createdRow": function (row, data, index) {
@@ -213,6 +227,20 @@ function GenerateDataTable() {
                 {
                     /*Jumlah mahasiswa*/
                     "data": 7,
+                    "render": function (data, type, row, meta) {
+                        return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
+                    }
+                },
+                {
+                    /*Jumlah Mahasiswa Sudah Feedback*/
+                    "data": 8,
+                    "render": function (data, type, row, meta) {
+                        return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
+                    }
+                },
+                {
+                    /*Total Nilai*/
+                    "data": 9,
                     "render": function (data, type, row, meta) {
                         return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
                     }
