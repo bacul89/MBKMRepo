@@ -17,10 +17,10 @@ namespace MBKM.Presentation.Helper
         {
            
             string area = filterContext.RequestContext.RouteData.DataTokens["area"].ToString();
-            filterContext.HttpContext.Session["emailMahasiswa"] = null;
+            
             if (area.ToLower() == "admin")
             {
-
+                filterContext.HttpContext.Session["emailMahasiswa"] = null;
                 if (filterContext.HttpContext.Session["nopegawai"] == null)
                 {
                     filterContext.Result = new RedirectResult("~/Admin/Adminlogin/Login");
