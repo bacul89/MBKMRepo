@@ -590,8 +590,10 @@ function CheckStatusFeedback(FlagTranscript, row) {
                         $('#notif').show();
 
                         $("#btnCetak").prop("disabled", true);
+                        $('#notif').text(alert);
                     } else if (FlagTranscript == false) {
                         $("#btnCetak").prop("disabled", false);
+
                     }
                 } else if (row == 'internal') {
                     checkStatusSertifikat();
@@ -602,6 +604,7 @@ function CheckStatusFeedback(FlagTranscript, row) {
 
                     $("#btnCetak").prop("disabled", true);
                     $("#sertifikatCetak").prop("disabled", true);
+                    $('#notif').text(alert);
                 }
             } else {
                 alert = "Silahkan Melengkapi Feedback terlebih dahulu, untuk mengaktifkan tombol cetak!"
@@ -609,10 +612,11 @@ function CheckStatusFeedback(FlagTranscript, row) {
 
                 $("#btnCetak").prop("disabled", true);
                 $("#sertifikatCetak").prop("disabled", true);
+                $('#notif').text(alert);
             }
 
 
-            $('#notif').text(alert);
+            
 
         }
     })

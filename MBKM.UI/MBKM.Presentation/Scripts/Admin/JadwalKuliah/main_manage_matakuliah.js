@@ -118,11 +118,20 @@ function reloadDatatable() {
                 "title": "MBKM",
                 "data": "ID",
                 "render": function (data, type, row, meta) {
-                    return `<div class="row justify-content-center">
+                    if (row.FlagOpen == true) {
+                        return `<div class="row justify-content-center">
+                            <div class="col" style="text-align:center">
+                                <input type="checkbox" id="mbkm-flag" checked disabled value="${data}">
+                            </div>
+                        </div>`;
+                    } else {
+                        return `<div class="row justify-content-center">
                             <div class="col" style="text-align:center">
                                 <input type="checkbox" id="mbkm-flag" value="${data}">
                             </div>
-                        </div>`;//<a href="javascript:void(0)" style="color:black" onclick="DeleteUserGetID('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
+                        </div>`;
+                    }
+                    //<a href="javascript:void(0)" style="color:black" onclick="DeleteUserGetID('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
                     //<a href="javascript:void(0)" style="color:black" onclick="DetailMasterCPL('${data}')"> <i class="fas fa-file-search coral"></i></a>
                 }
             },
