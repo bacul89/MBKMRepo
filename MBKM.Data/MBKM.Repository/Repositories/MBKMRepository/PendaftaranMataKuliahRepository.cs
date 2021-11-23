@@ -103,7 +103,9 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             using (var context = new MBKMContext())
             {
                 context.Configuration.LazyLoadingEnabled = false;
-                var result = context.PendaftaranMataKuliahs.Where(x => x.IsDeleted == false && x.StatusPendaftaran == "MENUNGGU APPROVAL KAPRODI/WR BIDANG AKADEMIK" && x.JadwalKuliahs.STRM == strm 
+                var result = context.PendaftaranMataKuliahs.Where(x => x.IsDeleted == false 
+                    && x.StatusPendaftaran == "MENUNGGU APPROVAL KAPRODI/WR BIDANG AKADEMIK" 
+                    && x.JadwalKuliahs.STRM == strm 
                     && ((x.mahasiswas.NIM != x.mahasiswas.NIMAsal && x.JadwalKuliahs.NamaProdi.ToLower().Contains(prodi))
                     || (x.mahasiswas.NIM == x.mahasiswas.NIMAsal && x.mahasiswas.ProdiAsal.ToLower().Contains(prodi)))
                     )
