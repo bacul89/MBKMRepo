@@ -3,6 +3,7 @@
     ViewBag.Title = "Manage Mata Kuliah MBKM - SIMBKM";
     Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
 }
+@model MBKM.Entities.ViewModel.VMSemester
 
 @section css{
 
@@ -29,7 +30,8 @@
                         <div class="form-group">
                             <label for="inp_tahunAjaran" class="col-sm-3 control-label">Tahun Semester</label>
                             <div class="col-sm-9">
-                                <select name="tahunAjaranCari" id="tahunAjaranCari" class="form-control input-md" >
+                                <select name="tahunAjaranCari" id="tahunAjaranCari" class="form-control input-md">
+                                    <option value="@Model.ID" selected>@Model.Nama</option>
                                 </select>
                             </div>
                         </div>
@@ -38,7 +40,6 @@
                             <label for="inp_jenjang" class="col-sm-3 control-label">Jenjang Studi</label>
                             <div class="col-sm-9">
                                 <select name="jenjangCari" id="jenjangCari" class="form-control input-md">
-                                    @*<option value="" selected disabled>-- Pilih Authority Approval --</option>*@
                                 </select>
                             </div>
                         </div>
