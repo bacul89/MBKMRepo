@@ -52,6 +52,11 @@
             <hr />
             <div class="container" style="width: 100%;">
 
+
+
+                <div id="notif" class="alert alert-warning" role="alert" hidden>
+                </div>
+
                 <button id="btnCetak" class="btn btn-success" onclick="print(@Model.ID, '@Model.NIM')" disabled> Cetak Transkip <span class="fa fa-print"></span></button>
                 <button id="sertifikatCetak" class="btn btn-danger" onclick="printSertifikat()" disabled> Cetak Sertifikat <span class="fa fa-print"></span></button>
 

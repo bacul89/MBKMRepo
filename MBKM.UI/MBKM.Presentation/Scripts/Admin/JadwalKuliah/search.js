@@ -2,7 +2,7 @@
 var datatable = null;
 
 $(document).ready(function () {
-    $("#jenjangCari").prop("disabled", true);
+    //$("#jenjangCari").prop("disabled", true);
     $("#fakultasCari").prop("disabled", true);
     $("#prodiCari").prop("disabled", true);
     $("#lokasiCari").prop("disabled", true);
@@ -19,9 +19,9 @@ $(document).ready(function () {
     $("#lokasiCari").select2({
         placeholder: "-- Pilih Lokasi --"
     });
-    $("#tahunAjaranCari").select2({
+    /*$("#tahunAjaranCari").select2({
         placeholder: "-- Pilih Tahun Ajaran --"
-    });
+    });*/
 
     
 
@@ -37,7 +37,7 @@ $(document).ready(function () {
     $("#prodiIdCari").val('');
     $("#lokasiCari").empty();
     $("#matakuliahCari").empty();
-    $("#tahunAjaranCari").empty();
+    //$("#tahunAjaranCari").empty();
     $("#jenjangCari").empty();
     $("#prodiCari").prop("disabled", true);
     $("#lokasiCari").prop("disabled", true);

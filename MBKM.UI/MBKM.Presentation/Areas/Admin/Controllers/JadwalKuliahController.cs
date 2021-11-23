@@ -26,29 +26,34 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private IJadwalKuliahService _jkService;
         private ILookupService _lookupService;
         private IMasterCapaianPembelajaranService _mcpService;
+        private IJadwalKuliahMahasiswaService _jkMhsService;
 
 
 
-
-        public JadwalKuliahController(IJadwalKuliahService jkService, ILookupService lookupService, IMasterCapaianPembelajaranService mcpService)
+        public JadwalKuliahController(IJadwalKuliahService jkService, ILookupService lookupService, IMasterCapaianPembelajaranService mcpService, IJadwalKuliahMahasiswaService jkMahasiswaService)
         {
             _jkService = jkService;
             _lookupService = lookupService;
             _mcpService = mcpService;
+            _jkMhsService = jkMahasiswaService;
         }
 
 
         // GET: Admin/JadwalKuliah
         public ActionResult Index()
         {
+            VMSemester model = _jkMhsService.getOngoingSemester("S1");
+            return View(model);
             //Session["username"] = "Smitty Werben Jeger Man Jensen";
-            return View();
+            //return View();
         }
 
         public ActionResult Manage()
         {
+            VMSemester model = _jkMhsService.getOngoingSemester("S1");
+            return View(model);
             //Session["username"] = "Smitty Werben Jeger Man Jensen";
-            return View();
+            //return View();
         }
 
         public JsonResult SearchList(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm)
@@ -103,7 +108,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
         }
 
-
+        [HttpPost]
         public ActionResult GetMataKuliah(string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm)
         {
             List<JadwalKuliah> MVJadwal = new List<JadwalKuliah>();
@@ -118,8 +123,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 dataMap.FakultasID == idFakultasInt &&
                 dataMap.Lokasi == lokasi &&
                 dataMap.JenjangStudi == jenjangStudi &&
-                dataMap.STRM == strmInt &&
-                dataMap.FlagOpen == false
+                dataMap.STRM == strmInt
+                //&& dataMap.FlagOpen == false
 
             ).ToList())
             {
