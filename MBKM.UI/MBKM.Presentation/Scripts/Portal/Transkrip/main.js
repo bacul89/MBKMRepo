@@ -547,13 +547,14 @@ function printSertifikat() {
 }*/
 
 var feedbackStatus;
+var alert;
 function CheckStatusFeedback(FlagTranscript, row) {
     $.ajax({
         url: '/Portal/TranskripMahasiswa/CheckStatusFeedback',
         type: 'POST',
         datatype: 'json',
         success: function (result) {
-            //console.log(result);
+            console.log(result);
             //var status = result[0][5];
             //var paymentStatus = result[0][6];
 
@@ -562,21 +563,56 @@ function CheckStatusFeedback(FlagTranscript, row) {
             console.log(paymentStatus);
             console.log(FlagTranscript);*/
             //console.log(row);
-            var checker = parseFeedback(result);
-                if (checker == true && (row == 'internal' || row == result.length)) {
-                    checkStatusSertifikat();
+            
+                /*if (checker == true && (row == 'internal' || row == result.length)) {
+                    
                     //$("#sertifikatCetak").prop("disabled", false);
                     if (FlagTranscript == false) {
-                        $("#btnCetak").prop("disabled", false);
-                    } else if (FlagTranscript == true) {
-                        $("#btnCetak").prop("disabled", true);
+                        
+                    }  if (FlagTranscript == true) {
+                        
                     }
                 } else {
+                    
+
+                }*/
+
+
+            
+            var checker = parseFeedback(result);
+            //console.log(checker);
+            //console.log(row);
+            if (checker == true) {
+                if (row != 'internal' && row == result.length) {
+                    checkStatusSertifikat();
+                    if (FlagTranscript == true) {
+                        alert = "Cetak Transkrip telah dilakukan, silahkan hubungi BAA untuk mengaktifkan kembali tombol cetak!";
+                        $('#notif').show();
+
+                        $("#btnCetak").prop("disabled", true);
+                    } else if (FlagTranscript == false) {
+                        $("#btnCetak").prop("disabled", false);
+                    }
+                } else if (row == 'internal') {
+                    checkStatusSertifikat();
+                    $("#btnCetak").prop("disabled", true);
+                } else {
+                    alert = "Nilai Transkrip Belum Lengkap, Menunggu Penilaian dari Dosen!";
+                    $('#notif').show();
+
                     $("#btnCetak").prop("disabled", true);
                     $("#sertifikatCetak").prop("disabled", true);
-
                 }
-           
+            } else {
+                alert = "Silahkan Melengkapi Feedback terlebih dahulu, untuk mengaktifkan tombol cetak!"
+                $('#notif').show();
+
+                $("#btnCetak").prop("disabled", true);
+                $("#sertifikatCetak").prop("disabled", true);
+            }
+
+
+            $('#notif').text(alert);
 
         }
     })
