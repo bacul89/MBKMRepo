@@ -10,5 +10,7 @@ namespace MBKM.Entities.ViewModel
     {
         public string NilaiDiakui { get; set; }
         public string BobotDiakui { get; set; }
+        public string NilaiAngkaFinal { get; set; }
+
     }
 }
