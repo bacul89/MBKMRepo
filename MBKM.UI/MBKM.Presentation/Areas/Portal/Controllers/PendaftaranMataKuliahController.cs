@@ -287,6 +287,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     }
                 } else
                 {
+                    ip.JenisKerjasama = informasiPertukaran.JenisKerjasama;
+                    ip.NoKerjasama = informasiPertukaran.NoKerjasama;
                     ip.JudulAktivitas = informasiPertukaran.JudulAktivitas;
                     ip.LokasiTugas = informasiPertukaran.LokasiTugas;
                     ip.TanggalSK = informasiPertukaran.TanggalSK;

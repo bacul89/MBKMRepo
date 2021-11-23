@@ -342,6 +342,9 @@
             $("#tanggalSKTugas").prop("disabled", false);
             $("#judulAktivitas").prop("disabled", false);
             $("#lokasiTugas").prop("disabled", false);
+            $("#jenisKegiatanMBKM").prop("disabled", false);
+            $("#namaInstansi").prop("disabled", false);
+            $("#noKerjasama").prop("disabled", false);
             $('#submit').show();
             $('#edit').hide();
         });
@@ -371,9 +374,7 @@
                 alert(response.message);
                 if (response.status == 200) {
                     $('#submit').hide();
-                    if ($("#jenisProgramMBKM").val().includes('Non Pertukaran')) {
-                        $('#edit').show();
-                    }
+                    $('#edit').show();
                     $("#jenisProgramMBKM").prop("disabled", true);
                     $("#jenisKegiatanMBKM").prop("disabled", true);
                     $("#namaInstansi").prop("disabled", true);
@@ -741,8 +742,8 @@
                             $("#noKerjasama").prop("disabled", true);
                         });
                     }
+                    $('#edit').show();
                     if (response.JenisPertukaran.includes('Non Pertukaran')) {
-                        $('#edit').show();
                         $("#trNoSKTugas").show();
                         $("#trTanggalSKTugas").show();
                         $("#trJudulAktivitas").show();
