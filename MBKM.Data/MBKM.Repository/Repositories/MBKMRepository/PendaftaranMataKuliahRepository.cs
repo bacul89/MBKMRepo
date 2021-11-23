@@ -276,7 +276,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                     .GroupJoin(context.informasiPertukarans,
                         pendaftaran => pendaftaran.MahasiswaID,
                         informasi => informasi.MahasiswaID,
-                        (pendaftaran, informasi) => new VMPendaftaranWithInformasipertukaran
+                        (pendaftaran, informasi) => new VMReportMahasiswaInternal
                         {
                             MatkulKodeAsal = pendaftaran.MatkulKodeAsal,
                             MatkulAsal = pendaftaran.MatkulAsal,
@@ -287,7 +287,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                             InformasiPertukaran = informasi.FirstOrDefault()
                         }
                         )
-                    .GroupJoin(context.NilaiKuliahs,
+                    /*.GroupJoin(context.NilaiKuliahs,
                         pendaf => pendaf.mahasiswas.ID,
                         nilai => nilai.MahasiswaID,
                         (pendaf, nilai) => new VMReportMahasiswaInternal
@@ -300,7 +300,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                             mahasiswas = pendaf.mahasiswas,
                             InformasiPertukaran = pendaf.InformasiPertukaran,
                             NilaiKuliah = nilai.Where(c => c.JadwalKuliahID == pendaf.JadwalKuliahID).FirstOrDefault()
-                        })
+                        })*/
                     .Where(z => !z.InformasiPertukaran.JenisPertukaran.ToLower().Contains("non") && z.InformasiPertukaran.JenisKerjasama.ToLower() == "internal").ToList();
 
                 return result;
