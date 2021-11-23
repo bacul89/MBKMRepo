@@ -19,6 +19,7 @@ $(document).ready(function () {
     $("#lokasiCari").select2({
         placeholder: "-- Pilih Lokasi --"
     });
+    loadJenjangStudi("JenjangStudi", "jenjang", "Jenjang Studi");
     /*$("#tahunAjaranCari").select2({
         placeholder: "-- Pilih Tahun Ajaran --"
     });*/
@@ -109,7 +110,7 @@ $(document).ready(function () {
         //$("#tahunAjaranCari").prop("disabled", true);
         $("#fakultasCari").prop("disabled", true);
         $("#jenjangCari").prop("disabled", false);
-        loadJenjangStudi("JenjangStudi", "jenjang", "Jenjang Studi");
+        
 
     });
 
