@@ -140,7 +140,17 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult GetAllApprovalPMK(DataTableAjaxPostModel model, int strm)
         {
-            var data = _pendaftaranMataKuliahService.GetPendaftaranMahasiswaDataTable(model, strm);
+
+            var prodi = HttpContext.Session["NamaProdi"].ToString();
+            VMListPendaftaranMataKuliah data = new VMListPendaftaranMataKuliah();
+            if(prodi != null)
+            {
+                 data = _pendaftaranMataKuliahService.GetPendaftaranMahasiswaDataTable(model, strm, prodi);
+            }
+            else
+            {
+                 data = _pendaftaranMataKuliahService.GetPendaftaranMahasiswaDataTable(model, strm, "");
+            }
 
             return Json(new
                 {

@@ -93,7 +93,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return result;
             }
         }        
-        public VMListPendaftaranMataKuliah GetPendaftaranList(int Skip, int Length, string SearchParam, string SortBy, bool SortDir, int strm)
+        public VMListPendaftaranMataKuliah GetPendaftaranList(int Skip, int Length, string SearchParam, string SortBy, bool SortDir, int strm, string prodi)
         {
             VMListPendaftaranMataKuliah mListPendaftaranMataKuliah = new VMListPendaftaranMataKuliah();
             if (String.IsNullOrEmpty(SearchParam))
@@ -103,7 +103,10 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             using (var context = new MBKMContext())
             {
                 context.Configuration.LazyLoadingEnabled = false;
-                var result = context.PendaftaranMataKuliahs.Where(x => x.IsDeleted == false && x.StatusPendaftaran == "MENUNGGU APPROVAL KAPRODI/WR BIDANG AKADEMIK" && x.JadwalKuliahs.STRM == strm)
+                var result = context.PendaftaranMataKuliahs.Where(x => x.IsDeleted == false && x.StatusPendaftaran == "MENUNGGU APPROVAL KAPRODI/WR BIDANG AKADEMIK" && x.JadwalKuliahs.STRM == strm 
+                    && ((x.mahasiswas.NIM != x.mahasiswas.NIMAsal && x.JadwalKuliahs.NamaProdi.ToLower().Contains(prodi))
+                    || (x.mahasiswas.NIM == x.mahasiswas.NIMAsal && x.mahasiswas.ProdiAsal.ToLower().Contains(prodi)))
+                    )
                     .Include(x => x.mahasiswas)
                     .Include(x => x.JadwalKuliahs)
                     ;
