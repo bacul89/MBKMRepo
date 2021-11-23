@@ -52,43 +52,40 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             List<String[]> final = new List<String[]>();
             foreach (var d in dataMahasiswa)
             {
-                var checkNilai = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.JadwalKuliahs.MataKuliahID.ToString().PadLeft(6, '0'), d.JadwalKuliahs.KodeMataKuliah, d.mahasiswas.ID.ToString());
-                if (checkNilai == null)
+
+                var checkNilaiDiakui = new VMNilaiDiakui();
+                var nilaiDiakui = " ";
+                var nilaiBobotDiakui = new VMNilaiGrade();
+                
+                checkNilaiDiakui = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.JadwalKuliahs.MataKuliahID, d.JadwalKuliahs.KodeMataKuliah, d.mahasiswas.ID.ToString());
+                if (checkNilaiDiakui == null)
                 {
-                    final.Add(new String[]{
-                         dataSemester.Nama,
-                        d.JadwalKuliahs.JenjangStudi,
-                        d.mahasiswas.NIM,
-                        d.mahasiswas.Nama,
-                        d.JadwalKuliahs.NamaProdi,
-                        d.PerjanjianKerjasama.Instansi,
-                        d.MatkulAsal,
-                        d.JadwalKuliahs.SKS,
-                        "-",
-                        d.JadwalKuliahs.KodeMataKuliah,
-                        d.JadwalKuliahs.NamaMataKuliah,
-                        "-",
-                        "-",
-                    });
+                    nilaiDiakui = "-";
+                    nilaiBobotDiakui.GRADE_POINTS = "-";
                 }
                 else
                 {
-                    final.Add(new String[]{
-                        dataSemester.Nama,
-                        d.JadwalKuliahs.JenjangStudi,
-                        d.mahasiswas.NIM,
-                        d.mahasiswas.Nama,
-                        d.JadwalKuliahs.NamaProdi,
-                        d.PerjanjianKerjasama.Instansi,
-                        d.MatkulAsal,
-                        d.JadwalKuliahs.SKS,
-                        "-",
-                        d.JadwalKuliahs.KodeMataKuliah,
-                        d.JadwalKuliahs.NamaMataKuliah,
-                        checkNilai.NilaiDiakui,
-                        checkNilai.BobotDiakui,
-                    });
+                    nilaiDiakui = checkNilaiDiakui.NilaiDiakui;
+                    nilaiBobotDiakui.GRADE_POINTS = checkNilaiDiakui.BobotDiakui;
                 }
+                
+
+                final.Add(new String[]{
+                    dataSemester.Nama,
+                    d.JadwalKuliahs.JenjangStudi,
+                    d.mahasiswas.NIM,
+                    d.mahasiswas.Nama,
+                    d.JadwalKuliahs.NamaProdi,
+                    d.PerjanjianKerjasama.Instansi,
+                    d.MatkulAsal,
+                    d.JadwalKuliahs.SKS,
+                    nilaiDiakui,
+                    d.JadwalKuliahs.KodeMataKuliah,
+                    d.JadwalKuliahs.NamaMataKuliah,
+                    nilaiDiakui,
+                    nilaiBobotDiakui.GRADE_POINTS,
+                });
+                
             }
 
             return Json(final);
@@ -102,43 +99,39 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             List<String[]> final = new List<String[]>();
             foreach (var d in dataMahasiswa)
             {
-                var checkNilai = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.JadwalKuliahs.MataKuliahID.ToString().PadLeft(6, '0'), d.JadwalKuliahs.KodeMataKuliah, d.mahasiswas.ID.ToString());
-                if (checkNilai == null)
+                var checkNilaiDiakui = new VMNilaiDiakui();
+                var nilaiDiakui = " ";
+                var nilaiBobotDiakui = new VMNilaiGrade();
+               
+                checkNilaiDiakui = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.JadwalKuliahs.MataKuliahID, d.JadwalKuliahs.KodeMataKuliah, d.mahasiswas.ID.ToString());
+                if (checkNilaiDiakui == null)
                 {
-                    final.Add(new String[]{
-                         dataSemester.Nama,
-                        d.JadwalKuliahs.JenjangStudi,
-                        d.mahasiswas.NIM,
-                        d.mahasiswas.Nama,
-                        d.JadwalKuliahs.NamaProdi,
-                        d.PerjanjianKerjasama.Instansi,
-                        d.MatkulAsal,
-                        d.JadwalKuliahs.SKS,
-                        "-",
-                        d.JadwalKuliahs.KodeMataKuliah,
-                        d.JadwalKuliahs.NamaMataKuliah,
-                        "-",
-                        "-",
-                    });
+                    nilaiDiakui = "-";
+                    nilaiBobotDiakui.GRADE_POINTS = "-";
                 }
                 else
                 {
-                    final.Add(new String[]{
-                        dataSemester.Nama,
-                        d.JadwalKuliahs.JenjangStudi,
-                        d.mahasiswas.NIM,
-                        d.mahasiswas.Nama,
-                        d.JadwalKuliahs.NamaProdi,
-                        d.PerjanjianKerjasama.Instansi,
-                        d.MatkulAsal,
-                        d.JadwalKuliahs.SKS,
-                        "-",
-                        d.JadwalKuliahs.KodeMataKuliah,
-                        d.JadwalKuliahs.NamaMataKuliah,
-                        checkNilai.NilaiDiakui,
-                        checkNilai.BobotDiakui,
-                    });
+                    nilaiDiakui = checkNilaiDiakui.NilaiDiakui;
+                    nilaiBobotDiakui.GRADE_POINTS = checkNilaiDiakui.BobotDiakui;
                 }
+                
+
+                final.Add(new String[]{
+                    dataSemester.Nama,
+                    d.JadwalKuliahs.JenjangStudi,
+                    d.mahasiswas.NIM,
+                    d.mahasiswas.Nama,
+                    d.JadwalKuliahs.NamaProdi,
+                    d.PerjanjianKerjasama.Instansi,
+                    d.MatkulAsal,
+                    d.JadwalKuliahs.SKS,
+                    nilaiDiakui,
+                    d.JadwalKuliahs.KodeMataKuliah,
+                    d.JadwalKuliahs.NamaMataKuliah,
+                    nilaiDiakui,
+                    nilaiBobotDiakui.GRADE_POINTS,
+                });
+
             }
 
             var semesterSekarang = dataSemester.Nama.Split(' ');
@@ -258,7 +251,26 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             {
                 IndexTotal = IndexTotal + 1;
                 var tmp = result[i];
-                var checkNilai = _nilaiKuliahService.GetNilaiDiakui(tmp.JadwalKuliahs.JenjangStudi, tmp.JadwalKuliahs.STRM.ToString(), tmp.JadwalKuliahs.MataKuliahID.ToString().PadLeft(6, '0'), tmp.JadwalKuliahs.KodeMataKuliah, tmp.mahasiswas.ID.ToString());
+
+                var checkNilaiDiakui = new VMNilaiDiakui();
+                var nilaiDiakui = " ";
+                var nilaiBobotDiakui = new VMNilaiGrade();
+                
+                checkNilaiDiakui = _nilaiKuliahService.GetNilaiDiakui(tmp.JadwalKuliahs.JenjangStudi, tmp.JadwalKuliahs.STRM.ToString(), tmp.JadwalKuliahs.MataKuliahID, tmp.JadwalKuliahs.KodeMataKuliah, tmp.mahasiswas.ID.ToString());
+                if (checkNilaiDiakui == null)
+                {
+                    nilaiDiakui = "-";
+                    nilaiBobotDiakui.GRADE_POINTS = "-";
+                }
+                else
+                {
+                    nilaiDiakui = checkNilaiDiakui.NilaiDiakui;
+                    nilaiBobotDiakui.GRADE_POINTS = checkNilaiDiakui.BobotDiakui;
+                }
+                
+
+
+
 
                 ws.Cells["A" + (i + 8)].Value = (i + 1);
                 ws.Cells["B" + (i + 8)].Value = dataSemester.Nama;
@@ -269,19 +281,12 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 ws.Cells["G" + (i + 8)].Value = tmp.PerjanjianKerjasama.Instansi;
                 ws.Cells["H" + (i + 8)].Value = tmp.MatkulAsal;
                 ws.Cells["I" + (i + 8)].Value = tmp.JadwalKuliahs.SKS;
-                ws.Cells["J" + (i + 8)].Value = "-";
+                ws.Cells["J" + (i + 8)].Value = nilaiDiakui;
                 ws.Cells["K" + (i + 8)].Value = tmp.JadwalKuliahs.KodeMataKuliah;
                 ws.Cells["L" + (i + 8)].Value = tmp.JadwalKuliahs.NamaMataKuliah;
-                if (checkNilai == null)
-                {
-                    ws.Cells["M" + (i + 8)].Value = "-";
-                    ws.Cells["N" + (i + 8)].Value = "-";
-                }
-                else
-                {
-                    ws.Cells["M" + (i + 8)].Value = checkNilai.NilaiDiakui;
-                    ws.Cells["N" + (i + 8)].Value = checkNilai.BobotDiakui;
-                }
+                ws.Cells["M" + (i + 8)].Value = nilaiDiakui;
+                ws.Cells["N" + (i + 8)].Value = nilaiBobotDiakui.GRADE_POINTS;
+               
                 ws.Cells[ws.Dimension.Address].AutoFitColumns();
             }
 
