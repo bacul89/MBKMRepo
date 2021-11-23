@@ -121,7 +121,7 @@ function reloadDatatable() {
                     if (row.FlagOpen == true) {
                         return `<div class="row justify-content-center">
                             <div class="col" style="text-align:center">
-                                <input type="checkbox" id="mbkm-flag" checked value="${data}">
+                                <input type="checkbox" id="mbkm-flag" checked disabled value="${data}">
                             </div>
                         </div>`;
                     } else {
