@@ -131,8 +131,8 @@ function PostUpdate() {
         error: function (e) {
             Swal.fire({
                 title: 'Berhasil',
-                icon: 'success',
-                html: 'Data Role Berhasil Diubah',
+                icon: 'error',
+                html: 'Data Role Gagal Diubah',
                 showCloseButton: true,
                 showCancelButton: false,
                 focusConfirm: false,
