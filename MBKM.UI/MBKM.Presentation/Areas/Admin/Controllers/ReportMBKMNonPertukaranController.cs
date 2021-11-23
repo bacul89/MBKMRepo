@@ -24,8 +24,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private IFeedbackMatkulService _feedbackMatkulService;
         private IJadwalKuliahService _jadwalKuliahService;
         private IJadwalUjianMBKMService _jadwalUjianMBKMService;
+        private INilaiKuliahService _nilaiKuliahService;
 
-        public ReportMBKMNonPertukaranController(IPendaftaranMataKuliahService pendaftaranMataKuliahService, IMahasiswaService mahasiswaService, IInformasiPertukaranService informasiPertukaranService, IFeedbackMatkulService feedbackMatkulService, IJadwalKuliahService jadwalKuliahService, IJadwalUjianMBKMService jadwalUjianMBKMService)
+        public ReportMBKMNonPertukaranController(IPendaftaranMataKuliahService pendaftaranMataKuliahService, IMahasiswaService mahasiswaService, IInformasiPertukaranService informasiPertukaranService, IFeedbackMatkulService feedbackMatkulService, IJadwalKuliahService jadwalKuliahService, IJadwalUjianMBKMService jadwalUjianMBKMService, INilaiKuliahService nilaiKuliahService)
         {
             _pendaftaranMataKuliahService = pendaftaranMataKuliahService;
             _mahasiswaService = mahasiswaService;
@@ -33,8 +34,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             _feedbackMatkulService = feedbackMatkulService;
             _jadwalKuliahService = jadwalKuliahService;
             _jadwalUjianMBKMService = jadwalUjianMBKMService;
+            _nilaiKuliahService = nilaiKuliahService;
         }
-
 
         // GET: Admin/ReportMBKMNonPertukaran
         public ActionResult Index()
@@ -54,7 +55,22 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             foreach(var d in dataMahasiswa)
             {
                 var tglFinal = "";
-
+                var checkNilaiDiakui = new VMNilaiDiakui();
+                var nilaiDiakui = " ";
+                var nilaiBobotDiakui = new VMNilaiGrade();
+               
+                checkNilaiDiakui = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.JadwalKuliahs.MataKuliahID, d.JadwalKuliahs.KodeMataKuliah, d.mahasiswas.ID.ToString());
+                if (checkNilaiDiakui == null)
+                {
+                    nilaiDiakui = "-";
+                    nilaiBobotDiakui.GRADE_POINTS = "-";
+                }
+                else
+                {
+                    nilaiDiakui = checkNilaiDiakui.NilaiDiakui;
+                    nilaiBobotDiakui.GRADE_POINTS = checkNilaiDiakui.BobotDiakui;
+                }
+                
                 if (d.InformasiPertukaran.TanggalSK.ToString() != null)
                 {
                     var tgl = d.InformasiPertukaran.TanggalSK.ToString().Split(' ');
@@ -64,46 +80,25 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 {
                     tglFinal = "-";
                 }
-                if (d.NilaiKuliah != null)
-                {
-                    final.Add(new String[]{
-                        dataSemester.Nama,
-                        d.JadwalKuliahs.JenjangStudi,
-                        d.mahasiswas.NIM,
-                        d.mahasiswas.Nama,
-                        d.JadwalKuliahs.NamaProdi,
-                        d.InformasiPertukaran.JenisKerjasama,
-                        d.InformasiPertukaran.JudulAktivitas,
-                        d.InformasiPertukaran.LokasiTugas,
-                        d.InformasiPertukaran.NoSK,
-                        tglFinal,
-                        d.JadwalKuliahs.KodeMataKuliah,
-                        d.JadwalKuliahs.NamaMataKuliah,
-                        d.JadwalKuliahs.SKS,
-                        d.NilaiKuliah.NilaiTotal.ToString(),
-                        d.NilaiKuliah.Grade
-                    });
-                }
-                else
-                {
-                    final.Add(new String[]{
-                        dataSemester.Nama,
-                        d.JadwalKuliahs.JenjangStudi,
-                        d.mahasiswas.NIM,
-                        d.mahasiswas.Nama,
-                        d.JadwalKuliahs.NamaProdi,
-                        d.InformasiPertukaran.JenisKerjasama,
-                        d.InformasiPertukaran.JudulAktivitas,
-                        d.InformasiPertukaran.LokasiTugas,
-                        d.InformasiPertukaran.NoSK,
-                        tglFinal,
-                        d.JadwalKuliahs.KodeMataKuliah,
-                        d.JadwalKuliahs.NamaMataKuliah,
-                        d.JadwalKuliahs.SKS,
-                        "-",
-                        "-"
-                    });
-                }
+
+                final.Add(new String[]{
+                    dataSemester.Nama,
+                    d.JadwalKuliahs.JenjangStudi,
+                    d.mahasiswas.NIM,
+                    d.mahasiswas.Nama,
+                    d.JadwalKuliahs.NamaProdi,
+                    d.InformasiPertukaran.JenisKerjasama,
+                    d.InformasiPertukaran.JudulAktivitas,
+                    d.InformasiPertukaran.LokasiTugas,
+                    d.InformasiPertukaran.NoSK,
+                    tglFinal,
+                    d.JadwalKuliahs.KodeMataKuliah,
+                    d.JadwalKuliahs.NamaMataKuliah,
+                    d.JadwalKuliahs.SKS,
+                    nilaiDiakui,
+                    nilaiBobotDiakui.GRADE_POINTS
+                });
+               
             }
 
             return Json(final);
@@ -119,6 +114,21 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             foreach (var d in dataMahasiswa)
             {
                 var tglFinal = "";
+                var checkNilaiDiakui = new VMNilaiDiakui();
+                var nilaiDiakui = " ";
+                var nilaiBobotDiakui = new VMNilaiGrade();
+
+                checkNilaiDiakui = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.JadwalKuliahs.MataKuliahID, d.JadwalKuliahs.KodeMataKuliah, d.mahasiswas.ID.ToString());
+                if (checkNilaiDiakui == null)
+                {
+                    nilaiDiakui = "-";
+                    nilaiBobotDiakui.GRADE_POINTS = "-";
+                }
+                else
+                {
+                    nilaiDiakui = checkNilaiDiakui.NilaiDiakui;
+                    nilaiBobotDiakui.GRADE_POINTS = checkNilaiDiakui.BobotDiakui;
+                }
 
                 if (d.InformasiPertukaran.TanggalSK.ToString() != null)
                 {
@@ -130,46 +140,24 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     tglFinal = "-";
                 }
 
-                if (d.NilaiKuliah != null)
-                {
-                    final.Add(new String[]{
-                        dataSemester.Nama,
-                        d.JadwalKuliahs.JenjangStudi,
-                        d.mahasiswas.NIM,
-                        d.mahasiswas.Nama,
-                        d.JadwalKuliahs.NamaProdi,
-                        d.InformasiPertukaran.JenisKerjasama,
-                        d.InformasiPertukaran.JudulAktivitas,
-                        d.InformasiPertukaran.LokasiTugas,
-                        d.InformasiPertukaran.NoSK,
-                        tglFinal,
-                        d.JadwalKuliahs.KodeMataKuliah,
-                        d.JadwalKuliahs.NamaMataKuliah,
-                        d.JadwalKuliahs.SKS,
-                        d.NilaiKuliah.NilaiTotal.ToString(),
-                        d.NilaiKuliah.Grade
-                    });
-                }
-                else
-                {
-                    final.Add(new String[]{
-                        dataSemester.Nama,
-                        d.JadwalKuliahs.JenjangStudi,
-                        d.mahasiswas.NIM,
-                        d.mahasiswas.Nama,
-                        d.JadwalKuliahs.NamaProdi,
-                        d.InformasiPertukaran.JenisKerjasama,
-                        d.InformasiPertukaran.JudulAktivitas,
-                        d.InformasiPertukaran.LokasiTugas,
-                        d.InformasiPertukaran.NoSK,
-                        tglFinal,
-                        d.JadwalKuliahs.KodeMataKuliah,
-                        d.JadwalKuliahs.NamaMataKuliah,
-                        d.JadwalKuliahs.SKS,
-                        "-",
-                        "-"
-                    });
-                }
+                final.Add(new String[]{
+                    dataSemester.Nama,
+                    d.JadwalKuliahs.JenjangStudi,
+                    d.mahasiswas.NIM,
+                    d.mahasiswas.Nama,
+                    d.JadwalKuliahs.NamaProdi,
+                    d.InformasiPertukaran.JenisKerjasama,
+                    d.InformasiPertukaran.JudulAktivitas,
+                    d.InformasiPertukaran.LokasiTugas,
+                    d.InformasiPertukaran.NoSK,
+                    tglFinal,
+                    d.JadwalKuliahs.KodeMataKuliah,
+                    d.JadwalKuliahs.NamaMataKuliah,
+                    d.JadwalKuliahs.SKS,
+                    nilaiDiakui,
+                    nilaiBobotDiakui.GRADE_POINTS
+                });
+
             }
             var semesterSekarang = dataSemester.Nama.Split(' ');
             ViewData["TahunSemester"] = semesterSekarang.Last();
@@ -293,6 +281,21 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 var tmp = result[i];
 
                 var tglFinal = "";
+                var checkNilaiDiakui = new VMNilaiDiakui();
+                var nilaiDiakui = " ";
+                var nilaiBobotDiakui = new VMNilaiGrade();
+
+                checkNilaiDiakui = _nilaiKuliahService.GetNilaiDiakui(tmp.JadwalKuliahs.JenjangStudi, tmp.JadwalKuliahs.STRM.ToString(), tmp.JadwalKuliahs.MataKuliahID, tmp.JadwalKuliahs.KodeMataKuliah, tmp.mahasiswas.ID.ToString());
+                if (checkNilaiDiakui == null)
+                {
+                    nilaiDiakui = "-";
+                    nilaiBobotDiakui.GRADE_POINTS = "-";
+                }
+                else
+                {
+                    nilaiDiakui = checkNilaiDiakui.NilaiDiakui;
+                    nilaiBobotDiakui.GRADE_POINTS = checkNilaiDiakui.BobotDiakui;
+                }
 
                 if (tmp.InformasiPertukaran.TanggalSK.ToString() != null)
                 {
@@ -318,17 +321,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 ws.Cells["L" + (i + 8)].Value = tmp.JadwalKuliahs.KodeMataKuliah;
                 ws.Cells["M" + (i + 8)].Value = tmp.JadwalKuliahs.NamaMataKuliah;
                 ws.Cells["N" + (i + 8)].Value = tmp.JadwalKuliahs.SKS;
-
-                if (tmp.NilaiKuliah != null)
-                {
-                    ws.Cells["O" + (i + 8)].Value = tmp.NilaiKuliah.NilaiTotal.ToString();
-                    ws.Cells["P" + (i + 8)].Value = tmp.NilaiKuliah.Grade;
-                }
-                else
-                {
-                    ws.Cells["O" + (i + 8)].Value = "-";
-                    ws.Cells["P" + (i + 8)].Value = "-";
-                }
+                ws.Cells["O" + (i + 8)].Value = nilaiDiakui;
+                ws.Cells["P" + (i + 8)].Value = nilaiBobotDiakui.GRADE_POINTS;
                     
                 ws.Cells[ws.Dimension.Address].AutoFitColumns();
             }
