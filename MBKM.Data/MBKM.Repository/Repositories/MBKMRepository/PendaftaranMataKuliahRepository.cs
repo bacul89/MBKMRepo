@@ -93,7 +93,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return result;
             }
         }        
-        public VMListPendaftaranMataKuliah GetPendaftaranList(int Skip, int Length, string SearchParam, string SortBy, bool SortDir, int strm, string prodi)
+        public VMListPendaftaranMataKuliah GetPendaftaranList(int Skip, int Length, string SearchParam, string SortBy, bool SortDir, int strm, string prodi, string role)
         {
             VMListPendaftaranMataKuliah mListPendaftaranMataKuliah = new VMListPendaftaranMataKuliah();
             if (String.IsNullOrEmpty(SearchParam))
@@ -103,15 +103,43 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             using (var context = new MBKMContext())
             {
                 context.Configuration.LazyLoadingEnabled = false;
-                var result = context.PendaftaranMataKuliahs.Where(x => x.IsDeleted == false 
-                    && x.StatusPendaftaran == "MENUNGGU APPROVAL KAPRODI/WR BIDANG AKADEMIK" 
-                    && x.JadwalKuliahs.STRM == strm 
-                    && ((x.mahasiswas.NIM != x.mahasiswas.NIMAsal && x.JadwalKuliahs.NamaProdi.ToLower().Contains(prodi))
-                    || (x.mahasiswas.NIM == x.mahasiswas.NIMAsal && x.mahasiswas.ProdiAsal.ToLower().Contains(prodi)))
+                IQueryable<PendaftaranMataKuliah> result;
+                if (role.ToLower().Contains("wakil rektor"))
+                {
+                     result = context.PendaftaranMataKuliahs.Where(x => x.IsDeleted == false
+                    && x.StatusPendaftaran == "MENUNGGU APPROVAL KAPRODI/WR BIDANG AKADEMIK"
+                    && x.JadwalKuliahs.STRM == strm
+                    && x.mahasiswas.Approval.ToLower().Contains("warek"))
+                    .Include(x => x.mahasiswas)
+                    .Include(x => x.JadwalKuliahs)
+                    ;
+                }
+                else if (role.ToLower().Contains("kepala program"))
+                {
+                    result = context.PendaftaranMataKuliahs.Where(x => x.IsDeleted == false
+                    && x.StatusPendaftaran == "MENUNGGU APPROVAL KAPRODI/WR BIDANG AKADEMIK"
+                    && x.JadwalKuliahs.STRM == strm
+                    && x.mahasiswas.Approval.ToLower().Contains("kaprodi") && 
+                    (
+                        (x.mahasiswas.NIM != x.mahasiswas.NIMAsal && x.JadwalKuliahs.NamaProdi.ToLower().Contains(prodi)) 
+                        ||
+                        (x.mahasiswas.NIM == x.mahasiswas.NIMAsal && x.mahasiswas.ProdiAsal.ToLower().Contains(prodi))
+                    ))
+                    .Include(x => x.mahasiswas)
+                    .Include(x => x.JadwalKuliahs)
+                    ;
+                }
+                else
+                {
+                    result = context.PendaftaranMataKuliahs.Where(x => x.IsDeleted == false
+                    && x.StatusPendaftaran == "MENUNGGU APPROVAL KAPRODI/WR BIDANG AKADEMIK"
+                    && x.JadwalKuliahs.STRM == strm
                     )
                     .Include(x => x.mahasiswas)
                     .Include(x => x.JadwalKuliahs)
                     ;
+                }
+
                 mListPendaftaranMataKuliah.TotalCount = result.Count();
                 var gridfilter = result
                     .AsQueryable()

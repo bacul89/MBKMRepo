@@ -143,13 +143,18 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
             var prodi = HttpContext.Session["NamaProdi"].ToString();
             VMListPendaftaranMataKuliah data = new VMListPendaftaranMataKuliah();
-            if(prodi != null)
+            var Role = HttpContext.Session["RoleName"].ToString();
+            if(Role.ToLower().Contains("wakil rektor"))
             {
-                 data = _pendaftaranMataKuliahService.GetPendaftaranMahasiswaDataTable(model, strm, prodi);
+                data = _pendaftaranMataKuliahService.GetPendaftaranMahasiswaDataTable(model, strm, "", Role);
+            }
+            else if (Role.ToLower().Contains("kepala program"))
+            {
+                 data = _pendaftaranMataKuliahService.GetPendaftaranMahasiswaDataTable(model, strm, prodi, Role);
             }
             else
             {
-                 data = _pendaftaranMataKuliahService.GetPendaftaranMahasiswaDataTable(model, strm, "");
+                 data = _pendaftaranMataKuliahService.GetPendaftaranMahasiswaDataTable(model, strm, "", "");
             }
 
             return Json(new
