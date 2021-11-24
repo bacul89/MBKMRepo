@@ -10,7 +10,7 @@
             datatype: 'json',
             success: function (result) {
 
-                console.log(result);
+                //console.log(result);
                 /*console.log();*/
                 /*NIM
                 nama           
@@ -24,12 +24,12 @@
                 } else {
                     $("#NIM").text("NIM tidak tersedia..");
                 }
-                console.log(result.pertukaran);
+                /*console.log(result.pertukaran);
                 if (result.pertukaran == true) {
                     $("#prodi").text(result.Prodi);
                 } else {
                     $("#prodi").hide();                    
-                }
+                }*/
                 
                 $("#nama").text(result.Nama);
                 $("#universitas").text(result.NamaUniversitas);
