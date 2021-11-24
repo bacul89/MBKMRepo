@@ -47,14 +47,14 @@
     <div class="card center-block" style="background-color: white; width: 100%; padding: 0px">
         <div class="card-body responsive-content" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; padding: 0px">
             <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
-                TRANSKRIP NILAI<br />
+                TRANSKRIP NILAI &Aacute; SERTIFIKAT MBKM<br />
             </h4>
             <hr />
             <div class="container" style="width: 100%;">
 
-
-
                 <div id="notif" class="alert alert-warning" role="alert" hidden>
+                </div>
+                <div id="notif-sertifikat" class="alert alert-warning" role="alert" hidden>
                 </div>
 
                 <button id="btnCetak" class="btn btn-success" onclick="print(@Model.ID, '@Model.NIM')" disabled> Cetak Transkip <span class="fa fa-print"></span></button>
@@ -140,9 +140,10 @@
                                 Kepala Biro Admisitrasi Akademik<br>
                                 <i class="en no-padding">Head of Academic Administration Bureau</i>
                                 <br />
-                                <br />
-                                <br />
-                                <br />
+                                @*<br />
+                        <br />
+                        <br />*@
+                                <img src="~/Asset/tanda_tangan_BAA.png" alt="Alternate Text" />
                                 <br />
                                 <span id="baaName"></span>
                                 <br />
@@ -169,7 +170,7 @@
 
 
                 @*style="display:none"*@
-                <div id="print">
+                <div id="print" style="display:show">
                     <style>
                         .box-print-foot {
                             border-bottom: 1px solid
@@ -315,9 +316,10 @@
                                 <div style="">Kepala Biro Admisitrasi Akademik</div>
                                 <div style=""><i class="en no-padding">Head of Academic Administration Bureau</i></div>
                                 <br />
-                                <br />
-                                <br />
-                                <br />
+                                @*<br />
+                        <br />
+                        <br />*@
+                                <img src="~/Asset/tanda_tangan_BAA.png" alt="Alternate Text" />
                                 <br />
                                 <span id="baaNamePrint"></span>
                                 <br />
