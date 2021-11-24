@@ -127,27 +127,60 @@ var tableUser = $('#TableList').DataTable({
 });
 function validationCustom2() {
     var isValid;
-    $(".input-data").each(function () {
-        var element = $(this);
-        if (element.val() == "") {
-            return isValid = false;
-        } else {
-            return isValid = true;
-        }
-    });
-    return isValid;
+    var namaRole = document.getElementById("idRole");
+    var selectedRole = namaRole.options[namaRole.selectedIndex].text;
+    //if bukan role spesial (Kaprodi)
+    if (selectedRole == "Kepala Program Studi") {
+        $(".input-data").each(function () {
+            var element = $(this);
+            if (element.val() == "") {
+                return isValid = false;
+            } else {
+                return isValid = true;
+            }
+        });
+        return isValid;
+    }
+    else {
+        $('.input-data').not($('#idProdi')).each(function () {
+            var element = $(this).not($('#idProdi'));
+            if (element.val() == "") {
+                return isValid = false;
+            } else {
+                return isValid = true;
+            }
+        });
+        return isValid;
+    }
+    
 }
 function validationCustomEditUser() {
     var isValid;
-    $(".asd").each(function () {
-        var element = $(this);
-        if (element.val() == "") {
-            return isValid = false;
-        } else {
-            return isValid = true;
-        }
-    });
-    return isValid;
+    var namaRole = document.getElementById("idRole");
+    var selectedRole = namaRole.options[namaRole.selectedIndex].text;
+    if (selectedRole == "Kepala Program Studi") {
+        $(".asd").each(function () {
+            var element = $(this);
+            if (element.val() == "") {
+                return isValid = false;
+            } else {
+                return isValid = true;
+            }
+        });
+        return isValid;
+    }
+    else {
+        $(".asd").not($('#idProdi')).each(function () {
+            var element = $(this).not($('#idProdi'));
+            if (element.val() == "") {
+                return isValid = false;
+            } else {
+                return isValid = true;
+            }
+        });
+        return isValid;
+    }
+    
 }
 function DeleteDataUser(idt) {
     swal.fire({
