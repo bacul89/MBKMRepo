@@ -428,7 +428,10 @@ function checkStatusSertifikat() {
             if (e.data == false) {
                 $("#sertifikatCetak").prop("disabled", false);
             } else {
-                $("#sertifikatCetak").prop("disabled", true);                
+                $("#sertifikatCetak").prop("disabled", true);
+                var alert = "Cetak Sertifikat telah dilakukan, silahkan hubungi BAA untuk mencetak Sertifikat!";
+                $('#notif-sertifikat').text(alert);
+                $('#notif-sertifikat').show();
             }
         }, error: function (e) {
             $("#sertifikatCetak").prop("disabled", true);
@@ -563,61 +566,67 @@ function CheckStatusFeedback(FlagTranscript, row) {
             console.log(paymentStatus);
             console.log(FlagTranscript);*/
             //console.log(row);
-            
-                /*if (checker == true && (row == 'internal' || row == result.length)) {
+
+            /*if (checker == true && (row == 'internal' || row == result.length)) {
+                
+                //$("#sertifikatCetak").prop("disabled", false);
+                if (FlagTranscript == false) {
                     
-                    //$("#sertifikatCetak").prop("disabled", false);
-                    if (FlagTranscript == false) {
-                        
-                    }  if (FlagTranscript == true) {
-                        
-                    }
-                } else {
+                }  if (FlagTranscript == true) {
                     
+                }
+            } else {
+                
 
-                }*/
+            }*/
 
 
-            
+
             var checker = parseFeedback(result);
             //console.log(checker);
             //console.log(row);
-            if (checker == true) {
-                if (row != 'internal' && row == result.length) {
-                    checkStatusSertifikat();
-                    if (FlagTranscript == true) {
-                        alert = "Cetak Transkrip telah dilakukan, silahkan hubungi BAA untuk mengaktifkan kembali tombol cetak!";
-                        $('#notif').show();
+
+            if (row == 'internal') {
+                checkStatusSertifikat();
+                $("#btnCetak").prop("disabled", true);
+               
+            } else {
+                if (checker == true) {
+                    if (row != 'internal' && row == result.length) {
+                        checkStatusSertifikat();
+                        if (FlagTranscript == true) {
+                            alert = "Cetak Transkrip telah dilakukan, silahkan hubungi BAA untuk mengaktifkan kembali tombol cetak!";
+                            
+
+                            $("#btnCetak").prop("disabled", true);
+                            $('#notif').text(alert);
+                            $('#notif').show();
+                        } else if (FlagTranscript == false) {
+                            $("#btnCetak").prop("disabled", false);
+
+                        }
+                    } else if (row == 'internal') {
+                        checkStatusSertifikat();
+                        $("#btnCetak").prop("disabled", true);
+                    } else {
+                        alert = "Nilai Transkrip Belum Lengkap, Menunggu Penilaian dari Dosen!";
+                        
 
                         $("#btnCetak").prop("disabled", true);
+                        $("#sertifikatCetak").prop("disabled", true);
                         $('#notif').text(alert);
-                    } else if (FlagTranscript == false) {
-                        $("#btnCetak").prop("disabled", false);
-
+                        $('#notif').show();
                     }
-                } else if (row == 'internal') {
-                    checkStatusSertifikat();
-                    $("#btnCetak").prop("disabled", true);
                 } else {
-                    alert = "Nilai Transkrip Belum Lengkap, Menunggu Penilaian dari Dosen!";
-                    $('#notif').show();
+                    alert = "Silahkan Melengkapi Feedback terlebih dahulu, untuk mengaktifkan tombol cetak!"
+                    
 
                     $("#btnCetak").prop("disabled", true);
                     $("#sertifikatCetak").prop("disabled", true);
                     $('#notif').text(alert);
+                    $('#notif').show();
                 }
-            } else {
-                alert = "Silahkan Melengkapi Feedback terlebih dahulu, untuk mengaktifkan tombol cetak!"
-                $('#notif').show();
-
-                $("#btnCetak").prop("disabled", true);
-                $("#sertifikatCetak").prop("disabled", true);
-                $('#notif').text(alert);
             }
-
-
-            
-
         }
     })
 
