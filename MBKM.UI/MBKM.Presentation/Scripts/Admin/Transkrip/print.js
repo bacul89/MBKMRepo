@@ -287,17 +287,16 @@ function showValue(result) {
             gradeFinal = gE;
         }*/
 
-    console.log(gradeTotal);
-
+    //console.log(gradeTotal);
     $("#data").html(html);
     $("#totalSks").html(sksTotal);
-    $("#totalGrade").html(intToFloat(gradeTotal, 2));
+    $("#totalGrade").html(gradeTotal.toFixed(2));
 
 
 
     $("#dataPrint").html(html);
     $("#totalSksPrint").html(sksTotal);
-    $("#totalGradePrint").html(intToFloat(gradeTotal, 2));
+    $("#totalGradePrint").html(gradeTotal.toFixed(2));
 }
 
 

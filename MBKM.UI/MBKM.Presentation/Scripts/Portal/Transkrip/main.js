@@ -117,11 +117,7 @@ function getNilai() {
         success: function (resultTranskip) {
 
             if (resultTranskip.pertukaran == true) {
-                CheckStatusFeedback(true, 'internal');
-                html = "<tr><td>-</td><td>-</td><td style='text-align:right'>-</td><td style='text-align:right'>-</td></tr>";
-                $("#data").html(html);
-                $("#totalSks").html("-");
-                $("#totalGrade").html("-");
+                CheckStatusFeedback(true, 'internal');                
             } else {
                 Nilais = resultTranskip.transkrip;
                 showValue(resultTranskip.transkrip);
@@ -317,17 +313,17 @@ function showValue(result) {
         }*/
 
     //console.log(gradeTotal);
-    //console.log(Math.round(gradeTotal));
-
+    //console.log(gradeTotal.toFixed(2));
+    
     $("#data").html(html);
     $("#totalSks").html(sksTotal);
-    $("#totalGrade").html(Math.round(gradeTotal));
+    $("#totalGrade").html(gradeTotal.toFixed(2));
 
 
     //intToFloat(gradeTotal, 2)
     $("#dataPrint").html(html);
     $("#totalSksPrint").html(sksTotal);
-    $("#totalGradePrint").html(Math.round(gradeTotal));
+    $("#totalGradePrint").html(gradeTotal.toFixed(2));
 }
 
 
@@ -579,7 +575,26 @@ function CheckStatusFeedback(FlagTranscript, row) {
                 
 
             }*/
+            
+            if (row == 'internal') {
+                var html = "";
+                for (var i = 0; i < result.length; i++) {
+                    var mkEn = "<i style='text-align:left;' class='en'>" + result[i][7] + "</i>";
+                    var matakuliah = result[i][1] + mkEn;
+                    html = html + "<tr><td>" + result[i][2] + "</td><td>" + matakuliah + "</td><td style='text-align:right'>-</td><td style='text-align:right'>-</td></tr>";
+                }
 
+
+
+                $("#data").html(html);
+                $("#totalSks").html("-");
+                $("#totalGrade").html("-");
+                $("#btnCetak").hide();
+                $("#PageTitle").text("SERTIFIKAT MBKM");
+            } else {
+                $("#PageTitle").text("TRANSKRIP NILAI & SERTIFIKAT MBKM");
+
+            }
 
 
             var checker = parseFeedback(result);
@@ -634,6 +649,8 @@ function CheckStatusFeedback(FlagTranscript, row) {
                 $('#notif').text(alert);
                 $('#notif').show();
             }
+
+            
 
 
         }
