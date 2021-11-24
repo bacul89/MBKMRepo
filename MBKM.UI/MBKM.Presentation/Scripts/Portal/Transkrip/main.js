@@ -557,7 +557,7 @@ function CheckStatusFeedback(FlagTranscript, row) {
         type: 'POST',
         datatype: 'json',
         success: function (result) {
-            console.log(result);
+            //console.log(result);
             //var status = result[0][5];
             //var paymentStatus = result[0][6];
 
@@ -584,49 +584,58 @@ function CheckStatusFeedback(FlagTranscript, row) {
 
             var checker = parseFeedback(result);
             //console.log(checker);
-            //console.log(row);
+            //console.log(FLAGBAYAR);
 
-            if (row == 'internal') {
-                checkStatusSertifikat();
-                $("#btnCetak").prop("disabled", true);
-               
-            } else {
-                if (checker == true) {
-                    if (row != 'internal' && row == result.length) {
-                        checkStatusSertifikat();
-                        if (FlagTranscript == true) {
-                            alert = "Cetak Transkrip telah dilakukan, silahkan hubungi BAA untuk mengaktifkan kembali tombol cetak!";
-                            
+            
+            if (FLAGBAYAR == 'True') {
+                if (row == 'internal') {
+                    checkStatusSertifikat();
+                    $("#btnCetak").prop("disabled", true);
+
+                } else {
+                    if (checker == true) {
+                        if (row != 'internal' && row == result.length) {
+                            checkStatusSertifikat();
+                            if (FlagTranscript == true) {
+                                alert = "Cetak Transkrip telah dilakukan, silahkan hubungi BAA untuk mengaktifkan kembali tombol cetak!";
+
+
+                                $("#btnCetak").prop("disabled", true);
+                                $('#notif').text(alert);
+                                $('#notif').show();
+                            } else if (FlagTranscript == false) {
+                                $("#btnCetak").prop("disabled", false);
+
+                            }
+                        } else if (row == 'internal') {
+                            checkStatusSertifikat();
+                            $("#btnCetak").prop("disabled", true);
+                        } else {
+                            alert = "Nilai Transkrip Belum Lengkap, Menunggu Penilaian dari Dosen!";
+
 
                             $("#btnCetak").prop("disabled", true);
+                            $("#sertifikatCetak").prop("disabled", true);
                             $('#notif').text(alert);
                             $('#notif').show();
-                        } else if (FlagTranscript == false) {
-                            $("#btnCetak").prop("disabled", false);
-
                         }
-                    } else if (row == 'internal') {
-                        checkStatusSertifikat();
-                        $("#btnCetak").prop("disabled", true);
                     } else {
-                        alert = "Nilai Transkrip Belum Lengkap, Menunggu Penilaian dari Dosen!";
-                        
+                        alert = "Silahkan Melengkapi Feedback terlebih dahulu, untuk mengaktifkan tombol cetak!"
+
 
                         $("#btnCetak").prop("disabled", true);
                         $("#sertifikatCetak").prop("disabled", true);
                         $('#notif').text(alert);
                         $('#notif').show();
                     }
-                } else {
-                    alert = "Silahkan Melengkapi Feedback terlebih dahulu, untuk mengaktifkan tombol cetak!"
-                    
-
-                    $("#btnCetak").prop("disabled", true);
-                    $("#sertifikatCetak").prop("disabled", true);
-                    $('#notif').text(alert);
-                    $('#notif').show();
                 }
+            } else {
+                alert = "Belum Bayar!";
+                $('#notif').text(alert);
+                $('#notif').show();
             }
+
+
         }
     })
 

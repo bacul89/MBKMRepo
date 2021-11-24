@@ -47,7 +47,7 @@
     <div class="card center-block" style="background-color: white; width: 100%; padding: 0px">
         <div class="card-body responsive-content" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; padding: 0px">
             <h4 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 30px; color: black;">
-                TRANSKRIP NILAI &Aacute; SERTIFIKAT MBKM<br />
+                TRANSKRIP NILAI & SERTIFIKAT MBKM<br />
             </h4>
             <hr />
             <div class="container" style="width: 100%;">
@@ -141,8 +141,8 @@
                                 <i class="en no-padding">Head of Academic Administration Bureau</i>
                                 <br />
                                 @*<br />
-                        <br />
-                        <br />*@
+                                    <br />
+                                    <br />*@
                                 <img src="~/Asset/tanda_tangan_BAA.png" alt="Alternate Text" />
                                 <br />
                                 <span id="baaName"></span>
@@ -206,36 +206,36 @@
                     </style>
                     <div class="box-print col-md-12">
                         @*<div width="100%">
-                    <div class="header" style="float:left">
-                        <div>Nama <i class="en">Name</i></div>
-                        <div>N.I.M. <i class="en">Student Identity Number</i></div>
-                        <div>Tempat / Tanggal Lahir <i class="en">Place & Date of Birth</i></div>
-                        <div>Jenjang Studi <i class="en">Program of Education</i></div>
-                        <div>Nomor Keputusan Pendirian Perguruan Tinggi <div><i class="en no-padding">University Constitutional Document Number</i></div></div>
-                    </div>
-                    <div class="header" style="float:left">
-                        <div style="padding: 0px 5px"> : </div>
-                        <div style="padding: 0px 5px"> : </div>
-                        <div style="padding: 0px 5px"> : </div>
-                        <div style="padding: 0px 5px"> : </div>
-                        <div style="padding: 0px 5px"> : </div>
-                    </div>
-                    <div class="header" style="float:left">
-                        <div> @Model.Nama </div>
-                        <div> @Model.NIMAsal </div>
-                        <div> @Model.TempatLahir / <span id="birthdayView"> @Model.TanggalLahir</span></div>
-                        <div> @Model.JenjangStudi </div>
-                        <div>
-                            Akte Notaris No. 3 tanggal 1 Juni 1960 <i class="en">Notarial Deed No. 3 dated 1 June 1960</i>
-                            <div>& No. 17/B.S.T/P/62 tanggal <i class="en">dated 21 Januari January 1963</i></div>
-                        </div>
-                    </div>
-                </div>*@
+                                <div class="header" style="float:left">
+                                    <div>Nama <i class="en">Name</i></div>
+                                    <div>N.I.M. <i class="en">Student Identity Number</i></div>
+                                    <div>Tempat / Tanggal Lahir <i class="en">Place & Date of Birth</i></div>
+                                    <div>Jenjang Studi <i class="en">Program of Education</i></div>
+                                    <div>Nomor Keputusan Pendirian Perguruan Tinggi <div><i class="en no-padding">University Constitutional Document Number</i></div></div>
+                                </div>
+                                <div class="header" style="float:left">
+                                    <div style="padding: 0px 5px"> : </div>
+                                    <div style="padding: 0px 5px"> : </div>
+                                    <div style="padding: 0px 5px"> : </div>
+                                    <div style="padding: 0px 5px"> : </div>
+                                    <div style="padding: 0px 5px"> : </div>
+                                </div>
+                                <div class="header" style="float:left">
+                                    <div> @Model.Nama </div>
+                                    <div> @Model.NIMAsal </div>
+                                    <div> @Model.TempatLahir / <span id="birthdayView"> @Model.TanggalLahir</span></div>
+                                    <div> @Model.JenjangStudi </div>
+                                    <div>
+                                        Akte Notaris No. 3 tanggal 1 Juni 1960 <i class="en">Notarial Deed No. 3 dated 1 June 1960</i>
+                                        <div>& No. 17/B.S.T/P/62 tanggal <i class="en">dated 21 Januari January 1963</i></div>
+                                    </div>
+                                </div>
+                            </div>*@
                         <table width="100%">
                             <tr>
 
                                 <!--Faculty
-                    Program of Study-->
+                                Program of Study-->
                                 <td width="36%">Nama <i class="en">Name</i></td>
                                 <td width="2%" style="padding: 0px 5px; ve"> : </td>
                                 <td id="name" width="80%">@Model.Nama</td>
@@ -317,8 +317,8 @@
                                 <div style=""><i class="en no-padding">Head of Academic Administration Bureau</i></div>
                                 <br />
                                 @*<br />
-                        <br />
-                        <br />*@
+                                    <br />
+                                    <br />*@
                                 <img src="~/Asset/tanda_tangan_BAA.png" alt="Alternate Text" />
                                 <br />
                                 <span id="baaNamePrint"></span>
@@ -355,6 +355,9 @@
 
 
 @section scripts{
+    <script type="text/javascript">
+        var FLAGBAYAR = '@Model.FlagBayar';
+    </script>
     <script src="~/Scripts/Portal/Transkrip/main.js"></script>
     <script src="~/Scripts/loading/loadingoverlay.min.js"></script>
 }
