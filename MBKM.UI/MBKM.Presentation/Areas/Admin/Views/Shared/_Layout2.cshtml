@@ -91,7 +91,7 @@
                             i++;
                             string namsub = "submenu" +i.ToString();
                             <li>
-                                <a href="#" id="btn-1" data-toggle="collapse" data-target="#@namsub" aria-expanded="false"><i class="@parent.MenuIcon"></i> @parent.MenuName</a>
+                                <a href="@parent.MenuUrl" id="btn-1" data-toggle="collapse" data-target="#@namsub" aria-expanded="false"><i class="@parent.MenuIcon"></i> @parent.MenuName</a>
                                 <ul class="nav collapse" id="@namsub" role="menu" aria-labelledby="btn-1">
                                     @foreach (var subMenu in (menuSub).Where(x => x.MenuParent == parent.ID.ToString()))
                                     {

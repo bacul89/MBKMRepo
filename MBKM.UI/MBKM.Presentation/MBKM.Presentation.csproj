@@ -223,7 +223,9 @@
     <Content Include="Asset\Lambang_Atma_Jaya.png" />
     <Content Include="Asset\Lambang_Unika_Atma_Jaya.png" />
     <Content Include="Asset\profile.png" />
+    <Content Include="Asset\Report_Lambang_Atma_Jaya.png" />
     <Content Include="Asset\SeekPng.com_megaphone-png_311331.png" />
+    <Content Include="Asset\tanda_tangan_BAA.png" />
     <Content Include="Asset\TTD-Warek.png" />
     <Content Include="Content\Admin\PrintDHU.css" />
     <Content Include="Content\Admin\PrintDHUStyle.css" />
