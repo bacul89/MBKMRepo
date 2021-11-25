@@ -34,10 +34,10 @@
                     <input type="email" class="form-control input-pendaftaran asd" value="@Model.Email" id="txtemail" placeholder="Input Alamat Email">
                 </div>
             </div>
-            <div class="form-group" hidden ="hidden">
+            <div class="form-group" hidden="hidden">
                 <label for="password" class="col-sm-3 control-label">Password</label>
                 <div class="col-sm-9">
-                    <input type="password" class="form-control input-pendaftaran asd" value="@Model.Password" id="txtpassword"hidden="hidden" disabled="disabled" placeholder="Input Password">
+                    <input type="password" class="form-control input-pendaftaran asd" value="@Model.Password" id="txtpassword" hidden="hidden" disabled="disabled" placeholder="Input Password">
                 </div>
             </div>
             <div class="form-group row">
@@ -49,7 +49,14 @@
                     </div>
                 }
             </div>
-            <div class="form-group row">
+            <div id="divSpecialRole" class="form-group row" hidden>
+                <label class="col-sm-3 control-label">HiddenIfNotKaprodi</label>
+                <div class="col-sm-9">
+                    <input type="text" value="" class="form-control input-pendaftaran input-data" disabled="disabled" id="specialRole" name="specialRole">
+
+                </div>
+            </div>
+            <div id="divProdi" class="form-group row">
                 @if (ViewBag.listProdi != null)
                 {
                     <label for="idProdi" class="col-sm-3 control-label">Prodi</label>
@@ -66,28 +73,28 @@
                 {
 
 
-            <div class="col-sm-9">
+                    <div class="col-sm-9">
 
-                <label class="radio-inline input-pendaftaran">
-                    <input type="radio" name="inpStatus" id="inp_status" value="1" checked> Aktif
-                </label>
-                <label class="radio-inline input-pendaftaran">
-                    <input type="radio" name="inpStatus" id="inp_status" value="0"> Tidak Aktif
-                </label>
-            </div>
+                        <label class="radio-inline input-pendaftaran">
+                            <input type="radio" name="inpStatus" id="inp_status" value="1" checked> Aktif
+                        </label>
+                        <label class="radio-inline input-pendaftaran">
+                            <input type="radio" name="inpStatus" id="inp_status" value="0"> Tidak Aktif
+                        </label>
+                    </div>
 
                 }
                 @if (Model.IsActive == false)
                 {
-            <div class="col-sm-9">
+                    <div class="col-sm-9">
 
-                <label class="radio-inline input-pendaftaran">
-                    <input type="radio" name="inpStatus" id="inp_status" value="1"> Aktif
-                </label>
-                <label class="radio-inline input-pendaftaran">
-                    <input type="radio" name="inpStatus" id="inp_status" value="0" checked> Tidak Aktif
-                </label>
-            </div>
+                        <label class="radio-inline input-pendaftaran">
+                            <input type="radio" name="inpStatus" id="inp_status" value="1"> Aktif
+                        </label>
+                        <label class="radio-inline input-pendaftaran">
+                            <input type="radio" name="inpStatus" id="inp_status" value="0" checked> Tidak Aktif
+                        </label>
+                    </div>
                 }
             </div>
             <div class="form-group">
