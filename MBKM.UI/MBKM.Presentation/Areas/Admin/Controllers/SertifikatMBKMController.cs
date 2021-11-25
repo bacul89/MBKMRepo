@@ -49,7 +49,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult GetDataTable(int strm)
         {
             
-            var data = _feedbackMatkulService.Find(x => x.JadwalKuliahs.STRM == strm)
+            var data = _feedbackMatkulService.Find(x => x.JadwalKuliahs.STRM == strm && x.Mahasiswas.NIM != x.Mahasiswas.NIMAsal)
                 .GroupBy(z => new {z.MahasiswaID, z.StatusFeedBack, z.Mahasiswas, z.JadwalKuliahID })
                 .Select(s => new {MahasiswaID = s.Key.MahasiswaID, Status = s.Key.StatusFeedBack, Mahasiswas = s.Key.Mahasiswas, JadwalID = s.Key.JadwalKuliahID }).ToList();
             
@@ -97,6 +97,25 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         d.Mahasiswas.FlagBayar.ToString()
                     });
                 }
+            }
+
+            var MahasiswaINternal = _pendaftaranMataKuliahService.Find(x => x.JadwalKuliahs.STRM == strm && x.mahasiswas.NIM == x.mahasiswas.NIMAsal && x.StatusPendaftaran.ToLower().Contains("accepted"))
+                    .GroupBy(z => new { z.MahasiswaID, z.mahasiswas })
+                    .Select(s => new { MahasiswaID = s.Key.MahasiswaID, mahasiswas = s.Key.mahasiswas })
+                    .ToList();
+            foreach (var f in MahasiswaINternal)
+            {
+                final.Add(new String[]{
+                        f.MahasiswaID.ToString(),
+                        DescSemester.Nama,
+                        f.mahasiswas.JenjangStudi,
+                        f.mahasiswas.NamaUniversitas,
+                        f.mahasiswas.NIM,
+                        f.mahasiswas.Nama,
+                        f.mahasiswas.NoKerjasama,
+                        "Sudah Feedback",
+                        f.mahasiswas.FlagBayar.ToString()
+                    });
             }
             return Json(final);
         }
@@ -152,9 +171,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 {
                     IList<CPLMatakuliah> tempId = _cPLMatakuliahService.Find(x => x.IDMataKUliah == d.JadwalKuliahs.MataKuliahID).ToList();
                     IList<CPLMatakuliah> capaianTujuan = tempId.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == d.JadwalKuliahs.ProdiID).ToList();
-                    var nilaiFinal = NilaiMahasiswa.Where(x => x.JadwalKuliahID == d.JadwalKuliahID).FirstOrDefault();
+                    var nilaiFinal = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.JadwalKuliahs.MataKuliahID, d.JadwalKuliahs.KodeMataKuliah, d.mahasiswas.ID.ToString());
 
-                    if(nilaiFinal == null)
+                if (nilaiFinal == null)
                     {
                         final.Add(new CapaiaMatakuliahSertifkatDTO
                         {
@@ -171,8 +190,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         {
                             kodeMatakuliah = d.JadwalKuliahs.KodeMataKuliah,
                             namaMatkul = d.JadwalKuliahs.NamaMataKuliah,
-                            angka = nilaiFinal.NilaiTotal.ToString(),
-                            huruf = nilaiFinal.Grade,
+                            angka = nilaiFinal.NilaiAngkaFinal,
+                            huruf = nilaiFinal.NilaiDiakui,
                             kompetensi = capaianTujuan
                         });
                     }
