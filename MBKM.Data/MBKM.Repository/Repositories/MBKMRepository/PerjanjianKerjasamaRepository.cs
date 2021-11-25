@@ -66,33 +66,36 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return mListmodel;
             }
         }
-
         public List<VMLookupNoKerjasama> getNamaInstansi(int Skip, int Length, string Search)
         {
+            
             using (var context = new MBKMContext())
             {
                 //var result = context.PerjanjianKerjasamas.Where(x => x.NamaInstansi.Contains(Search))
                 //    .GroupBy(x => x.NamaInstansi).Select(x => x.FirstOrDefault());
-                var result = context.PerjanjianKerjasamas.Where(x => x.NamaInstansi.Contains(Search))
+                var getJenis = context.JenisKerjasamaModels.Where(x => x.JenisKerjasama.ToLower().Contains("eksternal")).Select(y=>y.ID).SingleOrDefault();
+               // getJenis.
+                var result = context.PerjanjianKerjasamas.Where(x => x.JenisKerjasama == getJenis.ToString() && x.NamaInstansi.Contains(Search))
                     .Select(x => x.NamaInstansi).Distinct();
                 //var result2 = new List<VMLookupNoKerjasama>();
                 var result2 = result.Select(y => new VMLookupNoKerjasama
-                    {
-                        ID = 0,
-                        NoKerjasama = y.ToString(),
-                        NamaInstansi = y.ToString(),
-                        Biaya = 0
-                    }).OrderBy("NamaInstansi").Skip(Skip).Take(Length)
+                {
+                    ID = 0,
+                    NoKerjasama = y.ToString(),
+                    NamaInstansi = y.ToString(),
+                    Biaya = 0
+                }).OrderBy("NamaInstansi").Skip(Skip).Take(Length)
                     .ToList();
                 return result2;
             }
         }
-
+        
         public List<VMLookupNoKerjasama> getNoKerjasama(int Skip, int Length, string Search, string NamaInstansi)
         {
             using (var context = new MBKMContext())
             {
-                var result = context.PerjanjianKerjasamas.Where(x => x.NoPerjanjian.Contains(Search) && x.NamaInstansi == NamaInstansi)
+                var getJenis = context.JenisKerjasamaModels.Where(x => x.JenisKerjasama.ToLower().Contains("eksternal")).Select(y => y.ID).SingleOrDefault();
+                var result = context.PerjanjianKerjasamas.Where(x => x.NoPerjanjian.Contains(Search) && x.NamaInstansi == NamaInstansi && x.JenisKerjasama ==getJenis.ToString())
                     .OrderBy("NoPerjanjian").Skip(Skip).Take(Length).Select(x => new VMLookupNoKerjasama
                     {
                         ID = x.ID,

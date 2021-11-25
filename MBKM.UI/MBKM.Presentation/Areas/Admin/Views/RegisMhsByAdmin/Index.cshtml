@@ -296,9 +296,9 @@
                         };
                     },
                     processResults: function (data, params) {
-                        var page = params.page || 1;
+                        var page = params.page - 1 || 1;
                         return {
-                            results: $.map(data, function (item) { return { id: item.NoKerjasama, value: item.NoKerjasama, biaya: item.Biaya, nama: item.NamaInstansi, text: item.NamaInstansi } }),
+                            results: $.map(data, function (item) { return { id: item.NoKerjasama, value: item.NoKerjasama, nama: item.NamaInstansi, text: item.NamaInstansi } }),
                             pagination: {
                                 more: (page * 10) <= data.length
                             }
@@ -321,14 +321,14 @@
                         return {
                             Length: "10",
                             Search: params.term || "",
-                            Skip: params.page - 1 || 0,
+                            Skip: (params.page - 1) * 10 || 0,
                             NamaInstansi: $('#namaUniversitas').select2('data')[0].nama
                         };
                     },
                     processResults: function (data, params) {
-                        var page = params.page || 1;
+                        var page = params.page - 1 || 1;
                         return {
-                            results: $.map(data, function (item) { return { id: item.NoKerjasama, value: item.NoKerjasama, text: item.NoKerjasama } }),
+                            results: $.map(data, function (item) { return { id: item.NoKerjasama, value: item.NoKerjasama, biaya: item.Biaya, nama: item.NamaInstansi, text: item.NoKerjasama } }),
                             pagination: {
                                 more: (page * 10) <= data.length
                             }
