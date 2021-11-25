@@ -356,6 +356,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                                 "Sudah Feedback",                                
                                 mahasiswa.FlagBayar.ToString(),
                                 p.JadwalKuliahID.ToString(),
+                                GetMatkulEn(p.JadwalKuliahs.KodeMataKuliah, Int32.Parse(p.JadwalKuliahs.MataKuliahID), strm)
                                 //e.Status.ToString(),
                             });
 
@@ -372,6 +373,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                                     "Belum Feedback",
                                     mahasiswa.FlagBayar.ToString(),
                                     p.JadwalKuliahID.ToString(),
+                                    GetMatkulEn(p.JadwalKuliahs.KodeMataKuliah, Int32.Parse(p.JadwalKuliahs.MataKuliahID), strm)
                                     //e.Status.ToString(),
                                 });
                             temp = p.JadwalKuliahID;
