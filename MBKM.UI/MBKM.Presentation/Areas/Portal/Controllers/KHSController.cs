@@ -35,7 +35,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult Index()
         {
             var mahasiswa = GetMahasiswaByEmail(Session["emailMahasiswa"] as string);
-            if(mahasiswa.StatusVerifikasi !="AKTIF" || mahasiswa.NIM == null)
+            if(mahasiswa.StatusVerifikasi !="AKTIF" || mahasiswa.NIM == null || mahasiswa.NIM == mahasiswa.NIMAsal)
             {
                  return Content("<script language='javascript' type='text/javascript'>alert('Anda Tidak Dapat Mengakses KHS!');window.location='/datadiri/index';</script>");
                 //TempData["alertMessageS"] = "Anda Belum Bisa Mengakses KHS!";
