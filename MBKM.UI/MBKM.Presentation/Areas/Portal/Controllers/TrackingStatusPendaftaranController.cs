@@ -20,8 +20,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         private IMahasiswaService _mahasiswaService;
         private IApprovalPendaftaranService _approvalPendaftaranService;
         private IInformasiPertukaranService _informasiPertukaranService;
+        private IFeedbackMatkulService _feedbackMatkulService;
 
-        public TrackingStatusPendaftaranController(IPendaftaranMataKuliahService pendaftaranMataKuliahService, ICPLMKPendaftaranService cPLMKPendaftaranService, ICPLMatakuliahService cPLMatakuliahService, IMahasiswaService mahasiswaService, IApprovalPendaftaranService approvalPendaftaranService, IInformasiPertukaranService informasiPertukaranService)
+        public TrackingStatusPendaftaranController(IPendaftaranMataKuliahService pendaftaranMataKuliahService, ICPLMKPendaftaranService cPLMKPendaftaranService, ICPLMatakuliahService cPLMatakuliahService, IMahasiswaService mahasiswaService, IApprovalPendaftaranService approvalPendaftaranService, IInformasiPertukaranService informasiPertukaranService, IFeedbackMatkulService feedbackMatkulService)
         {
             _pendaftaranMataKuliahService = pendaftaranMataKuliahService;
             _cPLMKPendaftaranService = cPLMKPendaftaranService;
@@ -29,7 +30,10 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             _mahasiswaService = mahasiswaService;
             _approvalPendaftaranService = approvalPendaftaranService;
             _informasiPertukaranService = informasiPertukaranService;
+            _feedbackMatkulService = feedbackMatkulService;
         }
+
+
 
 
         // GET: Portal/TrackingStatusPendaftaran
@@ -71,14 +75,31 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             ViewData["lastStatus"] = _approvalPendaftaranService.Find(x => x.PendaftaranMataKuliahID == id).Last().StatusPendaftaran;
             ViewData["status"] = dataApproval;
             var email = HttpContext.Session["emailMahasiswa"].ToString();
-            var informasiPertukaran = _informasiPertukaranService.Find(x => x.Mahasiswas.Email == email && x.JenisKerjasama.ToLower().Contains("internal ke luar")).Count();
-            if(informasiPertukaran != 0)
+            var dataInformasiPertukaran = _informasiPertukaranService.Find(x => x.Mahasiswas.Email == email).FirstOrDefault();
+            if (dataInformasiPertukaran != null)
             {
-                ViewData["mahasiswaInternalKeluar"] = true;
+                if (dataInformasiPertukaran.JenisKerjasama.ToLower().Contains("internal ke luar"))
+                {
+                    ViewData["mahasiswaInternalKeluar"] = true;
+                }
+                else
+                {
+                    ViewData["mahasiswaInternalKeluar"] = false;
+                }
+
+                if (dataInformasiPertukaran.JenisPertukaran.ToLower().Contains("non"))
+                {
+                    ViewData["mahasiswaNonPertukaran"] = true;
+                }
+                else
+                {
+                    ViewData["mahasiswaNonPertukaran"] = false;
+                }
             }
             else
             {
                 ViewData["mahasiswaInternalKeluar"] = false;
+                ViewData["mahasiswaNonPertukaran"] = false;
             }
             return View(data);
         }
@@ -111,7 +132,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 else if (tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("magang"))
                 {
                     ViewData["jenisProgram"] = "Non-Pertukaran";
-                    ViewData["jenisKegiatan"] = "magang";
+                    ViewData["jenisKegiatan"] = "Magang";
                 }
                 else if (tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("internal") && tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("luar"))
                 {
@@ -156,6 +177,25 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 ViewData["disabled"] = "";
             }
             ViewData["catatanBaru"] = _approvalPendaftaranService.Find(x => x.PendaftaranMataKuliahID == data.PendaftaranMataKuliahID && (x.StatusPendaftaran.Contains("APPROVED") || x.StatusPendaftaran.Contains("REJECTED"))).FirstOrDefault().Catatan;
+            ViewData["semesterMahasiswa"] = _feedbackMatkulService.GetSemesterByStrm(data.PendaftaranMataKuliahs.JadwalKuliahs.STRM.ToString()).Nama;
+
+            if (data.PendaftaranMataKuliahs.mahasiswas.NoKerjasama == null)
+            {
+                var informasiNoKerjasama = _informasiPertukaranService.Find(x => x.MahasiswaID == data.PendaftaranMataKuliahs.MahasiswaID).FirstOrDefault();
+                if (informasiNoKerjasama.NoKerjasama == null)
+                {
+                    ViewData["InformasiKerjasama"] = "-";
+                }
+                else
+                {
+                    ViewData["InformasiKerjasama"] = informasiNoKerjasama.NoKerjasama;
+                }
+            }
+            else
+            {
+
+                ViewData["InformasiKerjasama"] = data.PendaftaranMataKuliahs.mahasiswas.NoKerjasama;
+            }
             return View(data);
         }
 

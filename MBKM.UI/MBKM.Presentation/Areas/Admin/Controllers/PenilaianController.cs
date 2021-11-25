@@ -92,7 +92,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
         public ActionResult GetMahasiswa(int idJadwalKuliah)
         {
-            var list = _pendaftaranMataKuliahService.Find(_ => _.JadwalKuliahID == idJadwalKuliah && _.StatusPendaftaran == "ACCEPTED BY MAHASISWA");
+            var list = _pendaftaranMataKuliahService.Find(_ => _.JadwalKuliahID == idJadwalKuliah && _.StatusPendaftaran == "ACCEPTED BY MAHASISWA" && (_.mahasiswas.NIM != _.mahasiswas.NIMAsal && _.mahasiswas.NIM != null && _.mahasiswas.NIMAsal != null));
             var result = new List<VMPenilaian>();
             foreach (var item in list)
             {

@@ -144,14 +144,14 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     mahasiswa2.UpdatedDate = DateTime.Now;
                     mahasiswa2.IsActive = true;
                     mahasiswa2.IsDeleted = false;
-                    mahasiswa2.Semester = a.Semester + "";
+                    mahasiswa2.Semester = ((int) a.Semester) + "";
                     _mahasiswaService.Save(mahasiswa2);
                     Session["prodiIDAsal"] = a.ProdiIDAsal;
                     PopulateSession(true, mahasiswa2.Email, mahasiswa2.ID + "", mahasiswa2.Semester + "", mahasiswa2.Nama);
                 } else
                 {
                     mahasiswa.Email = a.Email;
-                    mahasiswa.Semester = a.Semester + "";
+                    mahasiswa.Semester = ((int)a.Semester) + "";
                     mahasiswa.Password = hp(a.PasswordData);
                     _mahasiswaService.Save(mahasiswa);
                     Session["prodiIDAsal"] = a.ProdiIDAsal;

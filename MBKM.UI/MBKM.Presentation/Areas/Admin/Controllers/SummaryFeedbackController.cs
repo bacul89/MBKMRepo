@@ -77,9 +77,31 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             foreach (var d in data1)
             {
                 var jumlahMahasiswa = 0;
-                 jumlahMahasiswa = _pendaftaranMataKuliahService.Find(x => x.JadwalKuliahID == d.JadwalId && x.JadwalKuliahs.STRM == tahunSemester && x.StatusPendaftaran.Contains("ACCEPTED")).Count();
+                 jumlahMahasiswa = _pendaftaranMataKuliahService.Find(x => x.JadwalKuliahID == d.JadwalId && x.JadwalKuliahs.STRM == tahunSemester && x.StatusPendaftaran.Contains("ACCEPTED") && x.mahasiswas.NIM != x.mahasiswas.NIMAsal).Count();
                 var dosenTmp = d.namaDosen.Split('-');
-                if(dosenTmp.Count() == 1)
+                var countRespondent = _feedbackMatkulService.Find(x => x.DosenID == d.dosenId && x.JadwalKuliahID == d.JadwalId && x.Mahasiswas.NIM != x.Mahasiswas.NIMAsal).Count();
+                var data = _feedbackMatkulDetailService.Find(x => x.FeedbackMatkuls.JadwalKuliahID == d.JadwalId && x.FeedbackMatkuls.DosenID == d.dosenId && x.FeedbackMatkuls.Mahasiswas.NIM != x.FeedbackMatkuls.Mahasiswas.NIMAsal)
+                    .GroupBy(g => new { g.KategoriPertanyaan }).Select(s => new
+                    {
+                        col1 = s.Sum(c => c.Nilai),
+                        col2 = s.Key.KategoriPertanyaan,
+                        col3 = s.Count()
+                    }).ToList();
+
+                /*total jawaban per kategori semua siswa / (jml pertanyaan per kateogri * 4 * jml siswa)*/
+                double countResult = 0;
+                List<String[]> tmpfinal= new List<String[]>();
+                foreach (var q in data)
+                {
+                    var getCountAsk = _feedbackMatkulDetailService.Find(x => x.FeedbackMatkuls.JadwalKuliahID == d.JadwalId && x.FeedbackMatkuls.DosenID == d.dosenId && x.KategoriPertanyaan == q.col2)
+                        .GroupBy(s => new { s.PertanyaanID }).Count();
+
+                    double perhitungan = q.col1 / (double)(getCountAsk * 4 * countRespondent);
+                    countResult = countResult + perhitungan;
+                }
+                double rata2 = countResult / (double)data.Count();
+
+                if (dosenTmp.Count() == 1)
                 {
                     final.Add(new String[]{
                         d.JadwalId.ToString(),
@@ -90,7 +112,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         d.Jadwals.NamaMataKuliah,
                         d.Jadwals.ClassSection,
                         jumlahMahasiswa.ToString(),
-                    });
+                        countRespondent.ToString(),
+                        Math.Round(rata2, 2).ToString(),
+                });
                 }
                 else
                 {
@@ -103,6 +127,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         d.Jadwals.NamaMataKuliah,
                         d.Jadwals.ClassSection,
                         jumlahMahasiswa.ToString(),
+                        countRespondent.ToString(),
+                        Math.Round(rata2, 2).ToString(),
                     }); 
                 }
                 
@@ -134,7 +160,31 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             List<String[]> final = new List<String[]>();
             foreach (var d in data1)
             {
-                var jumlahMahasiswa = _pendaftaranMataKuliahService.Find(x => x.JadwalKuliahID == d.JadwalId && x.JadwalKuliahs.STRM == tahunSemester && x.StatusPendaftaran.Contains("ACCEPTED")).Count();
+
+                var countRespondent = _feedbackMatkulService.Find(x => x.DosenID == idDosen && x.JadwalKuliahID == d.JadwalId && x.Mahasiswas.NIM != x.Mahasiswas.NIMAsal).Count();
+                var data = _feedbackMatkulDetailService.Find(x => x.FeedbackMatkuls.JadwalKuliahID == d.JadwalId && x.FeedbackMatkuls.DosenID == idDosen && x.FeedbackMatkuls.Mahasiswas.NIM != x.FeedbackMatkuls.Mahasiswas.NIMAsal)
+                    .GroupBy(g => new { g.KategoriPertanyaan }).Select(s => new
+                    {
+                        col1 = s.Sum(c => c.Nilai),
+                        col2 = s.Key.KategoriPertanyaan,
+                        col3 = s.Count()
+                    }).ToList();
+
+                /*total jawaban per kategori semua siswa / (jml pertanyaan per kateogri * 4 * jml siswa)*/
+                double countResult = 0;
+                List<String[]> tmpfinal = new List<String[]>();
+                foreach (var q in data)
+                {
+                    var getCountAsk = _feedbackMatkulDetailService.Find(x => x.FeedbackMatkuls.JadwalKuliahID == d.JadwalId && x.FeedbackMatkuls.DosenID == idDosen && x.KategoriPertanyaan == q.col2)
+                        .GroupBy(s => new { s.PertanyaanID }).Count();
+
+                    double perhitungan = q.col1 / (double)(getCountAsk * 4 * countRespondent);
+                    countResult = countResult + perhitungan;
+                }
+                double rata2 = countResult / (double)data.Count();
+
+
+                var jumlahMahasiswa = _pendaftaranMataKuliahService.Find(x => x.JadwalKuliahID == d.JadwalId && x.JadwalKuliahs.STRM == tahunSemester && x.StatusPendaftaran.Contains("ACCEPTED") && x.mahasiswas.NIM != x.mahasiswas.NIMAsal).Count();
                 final.Add(new String[]{
                     d.JadwalId.ToString(),
                     dataSemester.Nama,
@@ -142,6 +192,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     d.Jadwals.NamaMataKuliah,
                     d.Jadwals.ClassSection,
                     jumlahMahasiswa.ToString(),
+                    countRespondent.ToString(),
+                    Math.Round(rata2, 2).ToString(),
                 });
 
             }
@@ -157,8 +209,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             {
                 dosenId = HttpContext.Session["nopegawai"].ToString();
             }
-            var countRespondent = _feedbackMatkulService.Find(x => x.DosenID == dosenId && x.JadwalKuliahID == idData).Count();
-            var data = _feedbackMatkulDetailService.Find(x => x.FeedbackMatkuls.JadwalKuliahID == idData && x.FeedbackMatkuls.DosenID == dosenId)
+            var countRespondent = _feedbackMatkulService.Find(x => x.DosenID == dosenId && x.JadwalKuliahID == idData && x.Mahasiswas.NIM != x.Mahasiswas.NIMAsal).Count();
+            var data = _feedbackMatkulDetailService.Find(x => x.FeedbackMatkuls.JadwalKuliahID == idData && x.FeedbackMatkuls.DosenID == dosenId && x.FeedbackMatkuls.Mahasiswas.NIM != x.FeedbackMatkuls.Mahasiswas.NIMAsal)
                 .GroupBy(g => new { g.KategoriPertanyaan }).Select(s => new
                 {
                     col1 = s.Sum(c => c.Nilai),
@@ -184,7 +236,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             double rata2 = countResult / (double)final.Count();
 
             ViewData["dataResult"] = final;
-            ViewData["rata"] = rata2;
+            ViewData["rata"] = Math.Round(rata2, 2).ToString();
 
             return View();
         }

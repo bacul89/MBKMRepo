@@ -10,6 +10,7 @@ namespace MBKM.Presentation.Helper
     {
         public string namaMatkul { get; set; }
         public IList<CPLMatakuliah> kompetensi { get; set; }
+        public string kodeMatakuliah { get; set; }
         public string angka { get; set; }
         public string huruf { get; set; }
 

@@ -128,7 +128,7 @@
                     <tr id="trJudulAktivitas" hidden>
                         <td style="text-align: right">Judul Aktivitas</td>
                         <td style="width: 400px;">
-                            <input type="text" name="judulAktivitas" id="judulAktivitas" class="form-control input-md" />
+                            <textarea name="judulAktivitas" id="judulAktivitas" class="form-control" rows="5" > </textarea>
                         </td>
                     </tr>
                     <tr id="trLokasi" hidden>
@@ -218,6 +218,7 @@
         var datatable = null;
         var isInternalKeLuarAtma = false;
         var isMandatory = false;
+        var urlFakultas = "@Url.Action("GetFakultas", "PendaftaranMataKuliah")";
         $(document).ready(function () {
             loadFakultas();
             loadProgram();
@@ -387,11 +388,14 @@
         function loadFakultas() {
             $("#prodi").prop("disabled", true);
             $("#lokasi").prop("disabled", true);
+
             $("#fakultas").select2({
                 placeholder: "-- Pilih Fakultas --",
                 width: "100%",
                 ajax: {
-                    url: "@Url.Action("GetFakultas", "PendaftaranMataKuliah")",
+                    url: function () {
+                        return urlFakultas;
+                    },
                     dataType: 'json',
                     method: "POST",
                     delay: 250,
@@ -494,11 +498,62 @@
                     $("#trTanggalSKTugas").hide();
                     $("#trJudulAktivitas").hide();
                     $("#trLokasi").hide();
+
+                    $("#fakultas").empty();
+                    $("#lokasi").empty();
+                    $("#prodi").empty();
+                    $("#fakultas").prop("disabled", false);
+                    $("#prodi").prop("disabled", true);
+                    $("#lokasi").prop("disabled", true);
+                    $("#trMatkul").hide();
+                    isInternalKeLuarAtma = false;
                 } else {
                     $("#trNoSKTugas").show();
                     $("#trTanggalSKTugas").show();
                     $("#trJudulAktivitas").show();
                     $("#trLokasi").show();
+                    isInternalKeLuarAtma = true;
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("GetInformasiKampus", "PendaftaranMataKuliah")"
+                    }).then(function (response) {
+                        var option = $("<option selected='selected'></option>").val(response.Fakultas).text(response.Fakultas);
+                        $("#fakultas").append(option).trigger('change');
+                        $("#fakultas").prop("disabled", true);
+                        option = $("<option selected='selected'></option>").val(response.Prodi).text(response.Prodi);
+                        $("#prodi").append(option).trigger('change');
+                        $("#prodi").prop("disabled", true);
+                        option = $("<option selected='selected'></option>").val(response.Lokasi).text(response.Lokasi);
+                        $("#lokasi").append(option).trigger('change');
+                        $("#lokasi").prop("disabled", true);
+                        $("#trMatkul").show();
+
+                        $("#mataKuliah").select2({
+                            placeholder: "-- Pilih Mata Kuliah Asal --",
+                            width: "100%",
+                            ajax: {
+                                url: "@Url.Action("GetMatkulAsal", "PendaftaranMataKuliah")",
+                                dataType: 'json',
+                                method: "POST",
+                                delay: 250,
+                                cache: false,
+                                data: function (params) {
+                                    return {
+                                        Fakultas: $('#fakultas').val(),
+                                        STRM: $('#strm').val(),
+                                        Prodi: $('#prodi').val(),
+                                        Lokasi: $('#lokasi').val(),
+                                        Search: params.term || ""
+                                    };
+                                },
+                                processResults: function (data, params) {
+                                    return {
+                                        results: $.map(data, function (item) { return { id: item.KodeMataKuliah + " - " + item.NamaMataKuliah, value: item.KodeMataKuliah + " - " + item.NamaMataKuliah, text: item.KodeMataKuliah + " - " + item.NamaMataKuliah } })
+                                    };
+                                },
+                            }
+                        });
+                    });
                 }
                 $("#jenisKegiatanMBKM").empty();
                 $("#namaInstansi").empty();
@@ -532,6 +587,7 @@
                 $("#jenisKegiatanMBKM").change(function () {
                     if ($("#jenisKegiatanMBKM").select2('data')[0].text.toLowerCase() == 'internal ke luar atma jaya') {
                         isInternalKeLuarAtma = true;
+                        urlFakultas = "@Url.Action("GetFakultas", "PendaftaranMataKuliah")";
                         $.ajax({
                             type: "POST",
                             url: "@Url.Action("GetInformasiKampus", "PendaftaranMataKuliah")"
@@ -572,9 +628,8 @@
                                     },
                                 }
                             });
-
                         });
-                    } else {
+                    } else if ($("#jenisKegiatanMBKM").select2('data')[0].text.toLowerCase() == 'internal') {
                         $("#fakultas").empty();
                         $("#lokasi").empty();
                         $("#prodi").empty();
@@ -583,8 +638,6 @@
                         $("#lokasi").prop("disabled", true);
                         $("#trMatkul").hide();
                         isInternalKeLuarAtma = false;
-                    }
-                    if ($("#jenisKegiatanMBKM").select2('data')[0].text.toLowerCase() == 'internal') {
 
                         $(".mandatory").hide();
                         isMandatory = false;
@@ -594,7 +647,10 @@
 
                         $("#namaInstansi").prop("disabled", true);
                         $("#noKerjasama").prop("disabled", true);
+                        urlFakultas = "@Url.Action("GetFakultasInternal", "PendaftaranMataKuliah")";
                         return;
+                    } else {
+                        urlFakultas = "@Url.Action("GetFakultas", "PendaftaranMataKuliah")";
                     }
 
                     $(".mandatory").show();
@@ -663,7 +719,7 @@
         function setInformasiPertukaran() {
             $.ajax({
                 type: "GET",
-                url: "@Url.Action("GetInformasiPertukaran", "PendaftaranMataKuliah")"
+                url: "@Url.Action("GetInformasiPertukaran", "PendaftaranMataKuliah")?strm=" + $('#strm').val()
             }).then(function (response) {
                 if (response != null) {
                     var option = $("<option selected='selected'></option>").val(response.JenisPertukaran).text(response.JenisPertukaran);
@@ -693,8 +749,10 @@
                         $("#trLokasi").show();
 
                         $("#noSKTugas").val(response.NoSK);
-                        var date = new Date(response.TanggalSK)
-                        $("#tanggalSKTugas").val(date.getFullYear() + "-" + appendZero(date.getMonth() + 1, 2) + "-" + appendZero(date.getDate(), 2));
+                        if (response.TanggalSK) {
+                            var date = new Date(response.TanggalSK)
+                            $("#tanggalSKTugas").val(date.getFullYear() + "-" + appendZero(date.getMonth() + 1, 2) + "-" + appendZero(date.getDate(), 2));
+                        }
                         $("#judulAktivitas").val(response.JudulAktivitas);
                         $("#lokasiTugas").val(response.LokasiTugas);
 

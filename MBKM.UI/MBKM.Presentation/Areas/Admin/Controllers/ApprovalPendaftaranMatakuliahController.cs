@@ -24,8 +24,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private ICPLMatakuliahService _cPLMatakuliahService;
         private IUserService _userService;
         private IJadwalUjianMBKMService _jadwalUjianMBKMService;
+        private IFeedbackMatkulService _feedbackMatkulService;
 
-        public ApprovalPendaftaranMatakuliahController(IApprovalPendaftaranService approvalPendaftaranService, IPendaftaranMataKuliahService pendaftaranMataKuliahService, ICPLMKPendaftaranService cPLMKPendaftaranService, IInformasiPertukaranService informasiPertukaranService, IMahasiswaService mahasiswaService, ICPLMatakuliahService cPLMatakuliahService, IUserService userService, IJadwalUjianMBKMService jadwalUjianMBKMService)
+        public ApprovalPendaftaranMatakuliahController(IApprovalPendaftaranService approvalPendaftaranService, IPendaftaranMataKuliahService pendaftaranMataKuliahService, ICPLMKPendaftaranService cPLMKPendaftaranService, IInformasiPertukaranService informasiPertukaranService, IMahasiswaService mahasiswaService, ICPLMatakuliahService cPLMatakuliahService, IUserService userService, IJadwalUjianMBKMService jadwalUjianMBKMService, IFeedbackMatkulService feedbackMatkulService)
         {
             _approvalPendaftaranService = approvalPendaftaranService;
             _pendaftaranMataKuliahService = pendaftaranMataKuliahService;
@@ -35,7 +36,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             _cPLMatakuliahService = cPLMatakuliahService;
             _userService = userService;
             _jadwalUjianMBKMService = jadwalUjianMBKMService;
+            _feedbackMatkulService = feedbackMatkulService;
         }
+
+
 
         // GET: Admin/ApprovalPendaftaranMatakuliah
         public ActionResult Index()
@@ -74,7 +78,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 else if (tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("magang"))
                 {
                     ViewData["jenisProgram"] = "Non-Pertukaran";
-                    ViewData["jenisKegiatan"] = "magang";
+                    ViewData["jenisKegiatan"] = "Magang";
                 }
                 else if (tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("internal") && tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("luar"))
                 {
@@ -109,6 +113,27 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 }
 
             }
+
+            ViewData["semesterMahasiswa"] = _feedbackMatkulService.GetSemesterByStrm(data.PendaftaranMataKuliahs.JadwalKuliahs.STRM.ToString()).Nama;
+
+            if (data.PendaftaranMataKuliahs.mahasiswas.NoKerjasama == null)
+            {
+                var informasiNoKerjasama = _informasiPertukaranService.Find(x => x.MahasiswaID == data.PendaftaranMataKuliahs.MahasiswaID).FirstOrDefault();
+                if(informasiNoKerjasama.NoKerjasama == null)
+                {
+                    ViewData["InformasiKerjasama"] = "-";
+                }
+                else
+                {
+                    ViewData["InformasiKerjasama"] = informasiNoKerjasama.NoKerjasama;
+                }
+            }
+            else
+            {
+
+                ViewData["InformasiKerjasama"] = data.PendaftaranMataKuliahs.mahasiswas.NoKerjasama;
+            }
+
             return View(data);
         }
         

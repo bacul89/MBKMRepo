@@ -62,7 +62,7 @@
                                 <h4>Semester &nbsp:</h4>
                             </div>
                             <div class="col-sm-8">
-                                <h4>@Model.PendaftaranMataKuliahs.mahasiswas.Semester</h4>
+                                <h4>@ViewData["semesterMahasiswa"].ToString()</h4>
                             </div>
                         </div>
                         <div class="row">
@@ -85,20 +85,9 @@
                             <div class="col-sm-3 text-right">
                                 <h4>No. Kerjasama &nbsp:</h4>
                             </div>
-                            @{
-                                if (Model.PendaftaranMataKuliahs.mahasiswas.NoKerjasama == null || Model.PendaftaranMataKuliahs.mahasiswas.NoKerjasama == "")
-                                {
-                                    <div class="col-sm-8">
-                                        <h4>-</h4>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="col-sm-8">
-                                        <h4>@Model.PendaftaranMataKuliahs.mahasiswas.NoKerjasama</h4>
-                                    </div>
-                                }
-                            }
+                            <div class="col-sm-8">
+                                <h4>@ViewData["InformasiKerjasama"].ToString()</h4>
+                            </div>
                         </div>
                         <br />
                         <div class="row">
@@ -176,56 +165,104 @@
                                 <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">DETAIL CAPAIAN PEMBELAJARAN PROGRAM STUDI ASAL</h5>
                                 <form class="form-horizontal">
                                     @{
-                                        if (ViewData["jenisKegiatan"].ToString().ToLower().Contains("internal") && !ViewData["jenisKegiatan"].ToString().ToLower().Contains("luar"))
+                                        if (ViewData["jenisProgram"].ToString().ToLower().Contains("pertukaran") && ViewData["jenisKegiatan"].ToString().ToLower().Contains("internal") && !ViewData["jenisKegiatan"].ToString().ToLower().Contains("luar"))
                                         {
-                                            <div class="row">
-                                                <div class="col-sm-3 text-right">
-                                                    <h4>Kode Mata Kuliah &nbsp :</h4>
+                                            if (@Model.CPLMatakuliahID != null)
+                                            {
+                                                <div class="row">
+                                                    <div class="col-sm-3 text-right">
+                                                        <h4>Kode Mata Kuliah &nbsp :</h4>
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        <h4>@Model.CPLMatakuliahs.KodeMataKuliah</h4>
+                                                    </div>
                                                 </div>
-                                                <div class="col-sm-8">
-                                                    <h4>@Model.CPLMatakuliahs.KodeMataKuliah</h4>
+                                                <div class="row">
+                                                    <div class="col-sm-3 text-right">
+                                                        <h4>Nama Mata Kuliah &nbsp :</h4>
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        <h4>@Model.CPLMatakuliahs.NamaMataKuliah</h4>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-3 text-right">
-                                                    <h4>Nama Mata Kuliah &nbsp :</h4>
-                                                </div>
-                                                <div class="col-sm-8">
-                                                    <h4>@Model.CPLMatakuliahs.NamaMataKuliah</h4>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-3 text-right">
-                                                    <h4>Capaian Pembelajaran &nbsp:</h4>
-                                                </div>
-                                                <div class="col-sm-8">
-                                                    @{
-                                                        if (ViewData["countCPAsal"].Equals(0))
-                                                        {
-                                                            <div class="row" style="padding-bottom:10px">
-                                                                <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">
-                                                                    <h4>Tidak Ada Capaian</h4>
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                        else
-                                                        {
-                                                            foreach (var dat in ViewData["capaianAsal"] as IList<MBKM.Entities.Models.MBKM.CPLMatakuliah>)
+                                                <div class="row">
+                                                    <div class="col-sm-3 text-right">
+                                                        <h4>Capaian Pembelajaran &nbsp:</h4>
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        @{
+                                                            if (ViewData["countCPAsal"].Equals(0))
                                                             {
                                                                 <div class="row" style="padding-bottom:10px">
                                                                     <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">
-                                                                        <h4>@dat.MasterCapaianPembelajarans.Capaian</h4>
+                                                                        <h4>Tidak Ada Capaian</h4>
                                                                     </div>
                                                                 </div>
                                                             }
+                                                            else
+                                                            {
+                                                                foreach (var dat in ViewData["capaianAsal"] as IList<MBKM.Entities.Models.MBKM.CPLMatakuliah>)
+                                                                {
+                                                                    <div class="row" style="padding-bottom:10px">
+                                                                        <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">
+                                                                            <h4>@dat.MasterCapaianPembelajarans.Capaian</h4>
+                                                                        </div>
+                                                                    </div>
+                                                                }
+
+                                                            }
+
+
 
                                                         }
-
-                                                    }
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="row">
+                                                    <div class="col-sm-3 text-right">
+                                                        <h4>Kode Mata Kuliah &nbsp :</h4>
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        @{
+                                                            if (Model.PendaftaranMataKuliahs.MatkulKodeAsal == null || Model.PendaftaranMataKuliahs.MatkulKodeAsal == "")
+                                                            {
+
+
+                                                                <h4>-</h4>
+                                                            }
+                                                            else
+                                                            {
+                                                                <h4>@Model.PendaftaranMataKuliahs.MatkulKodeAsal</h4>
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-3 text-right">
+                                                        <h4>Nama Mata Kuliah &nbsp :</h4>
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        <h4>@Model.PendaftaranMataKuliahs.MatkulAsal</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-sm-3 text-right">
+                                                        <h4>Capaian Pembelajaran &nbsp:</h4>
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        <div class="row" style="padding-bottom:10px">
+                                                            <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate;">
+                                                                <h4>@Model.CPLAsal</h4>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+
                                         }
-                                        else if (ViewData["jenisKegiatan"].ToString().ToLower().Contains("internal") && ViewData["jenisKegiatan"].ToString().ToLower().Contains("luar"))
+                                        else if (ViewData["jenisProgram"].ToString().ToLower().Contains("pertukaran") && ViewData["jenisKegiatan"].ToString().ToLower().Contains("internal") && ViewData["jenisKegiatan"].ToString().ToLower().Contains("luar"))
                                         {
                                             <div class="row">
                                                 <div class="col-sm-3 text-right">

@@ -114,8 +114,16 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult GetFakultas(string search)
         {
-            var result = GetMahasiswaById(long.Parse(Session["idMahasiswa"] as string));
-            return new ContentResult { Content = JsonConvert.SerializeObject(_pmkService.GetFakultas(result.JenjangStudi, search)), ContentType = "application/json" };
+            var mahasiswa = GetMahasiswaById(long.Parse(Session["idMahasiswa"] as string));
+            var result = _pmkService.GetFakultas(mahasiswa.JenjangStudi, search);
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
+        }
+        public ActionResult GetFakultasInternal(string search)
+        {
+            var mahasiswa = GetMahasiswaById(long.Parse(Session["idMahasiswa"] as string));
+            var univ = _pmkService.GetInformasiKampusByIdProdi(mahasiswa.ProdiAsalID);
+            var result = _pmkService.GetFakultasInternal(mahasiswa.JenjangStudi, search, univ.Fakultas);
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
         public ActionResult GetInformasiKampus()
         {
@@ -203,10 +211,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             return new ContentResult { Content = JsonConvert.SerializeObject(_perjanjianKerjasamaService.Find(pk => pk.NamaInstansi == instansi && pk.JenisKerjasama == idKerjasama && pk.NoPerjanjian.Contains(search)).ToList()), ContentType = "application/json" };
         }
-        public ActionResult GetInformasiPertukaran()
+        public ActionResult GetInformasiPertukaran(int strm)
         {
-            Int64 id = GetMahasiswaById(long.Parse(Session["idMahasiswa"] as string)).ID;
-            return new ContentResult { Content = JsonConvert.SerializeObject(_informasiPertukaranService.Find(ip => ip.MahasiswaID == id).FirstOrDefault()), ContentType = "application/json" };
+            Int64 id = long.Parse(Session["idMahasiswa"] as string);
+            var result = _informasiPertukaranService.Find(ip => ip.MahasiswaID == id && ip.STRM == strm).FirstOrDefault();
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
         public ActionResult GetJenisKerjasama()
         {

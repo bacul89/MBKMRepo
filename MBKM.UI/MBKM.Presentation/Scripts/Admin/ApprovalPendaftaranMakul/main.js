@@ -140,7 +140,7 @@ $(document).ready(function () {
                 "data": "mahasiswas.NoKerjasama",
                 "render": function (data, type, row, meta) {
                     if (data == null) {
-                        return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                        return '<div class="center vertical-center" style="font-size: 0.8vw">' + row.noKerjasama +'</div>';
                     }
                     return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
                 }
@@ -298,7 +298,7 @@ $(document).ready(function () {
                     "data": "mahasiswas.NoKerjasama",
                     "render": function (data, type, row, meta) {
                         if (data == null) {
-                            return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                            return '<div class="center vertical-center" style="font-size: 0.8vw">' + row.noKerjasama +'</div>';
                         }
                         return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
                     }

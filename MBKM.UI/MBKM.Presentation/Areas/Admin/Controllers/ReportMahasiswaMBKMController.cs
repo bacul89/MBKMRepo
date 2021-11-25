@@ -156,7 +156,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
         public ActionResult GetFileExcel(int id)
         {
-            var fileDownloadName = "Report Nilai Mahasiswa MBKM.xlsx";
+            var fileDownloadName = "Report Jumlah Mahasiswa MBKM.xlsx";
             var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
             var dataProdi = _mahasiswaService.GetAllDataProdi();
@@ -244,7 +244,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
             /*            ws.Cells["C1"].Value = "UNIVERSITAS KATOLIK INDONESIA";
                         ws.Cells["C2"].Value = "ATMA JAYA";*/
-            ws.Cells["C2"].Value = "FORMULIR \nMATRIKS REPORT MAHASISWA MBKM";
+            ws.Cells["C2"].Value = "FORMULIR \nMATRIKS REPORT JUMLAH MAHASISWA MBKM";
 
             ws.Cells["A6:J6"].Style.Font.Bold = true;
             ws.Cells["A6:J6"].Style.Border.Top.Style = ExcelBorderStyle.Thick;
