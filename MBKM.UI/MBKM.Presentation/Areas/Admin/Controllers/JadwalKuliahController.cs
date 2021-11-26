@@ -92,13 +92,15 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 for (int i = 0; i < list.Length; i++)
                 {
                     id = list[i];
+
+                    var data = _jkService.Get(id);
+                    data.FlagOpen = true;
+                    data.UpdatedBy = Session["username"] as string;
+
+                    _jkService.Save(data);
                 }
 
-                var data = _jkService.Get(id);
-                data.FlagOpen = true;
-                data.UpdatedBy = Session["username"] as string;
 
-                _jkService.Save(data);
                 return Json(new ServiceResponse { status = 200, message = "Data Berhasil Tersubmit" });
             }
             catch (Exception e)
