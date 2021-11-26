@@ -147,6 +147,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminLoginController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ManageJadwalKuliahController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReportCPLMatkulController.cs" />
     <Compile Include="Areas\Admin\Controllers\DaftarHadirController.cs" />
     <Compile Include="Areas\Admin\Controllers\DaftarHadirUjianController.cs" />
@@ -259,6 +260,8 @@
     <Content Include="Scripts\Admin\LinkFasilitasAdmin\crud.js" />
     <Content Include="Scripts\Admin\JadwalUjian\detailJadwalUjian.js" />
     <Content Include="Scripts\Admin\JadwalUjian\main.js" />
+    <Content Include="Scripts\Admin\ManageJadwalKuliah\main.js" />
+    <Content Include="Scripts\Admin\ManageJadwalKuliah\search.js" />
     <Content Include="Scripts\Admin\ManageUjian\detailManageUjian.js" />
     <Content Include="Scripts\Admin\ManageUjian\main.js" />
     <Content Include="Scripts\Admin\JadwalKuliah\main.js" />
@@ -596,6 +599,7 @@
     <Content Include="Areas\Admin\Views\ReportMBKMEkternalPertukaran\ExportPDF.cshtml" />
     <Content Include="Areas\Admin\Views\DaftarHadir\DHK.cshtml" />
     <Content Include="Areas\Admin\Views\ReportInternalKeluar\GetDataPDF.cshtml" />
+    <Content Include="Areas\Admin\Views\ManageJadwalKuliah\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\mbkm - Web Deploy.pubxml" />
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />

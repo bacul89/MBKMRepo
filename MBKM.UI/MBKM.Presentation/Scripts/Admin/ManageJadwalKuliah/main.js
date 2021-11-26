@@ -36,25 +36,25 @@ function reloadDatatable() {
             "info": false
         });*/
         //"order": [[1, 'asc']],
-        paging : false,
-        ordering : false,
-        info : false,
+        paging: false,
+        ordering: false,
+        info: false,
         /*"proccessing": true,
         "serverSide": true,*/
         //"order": [[1, 'asc']],
         //"aaSorting": [[0, "asc"]],
         ajax: {
-            url: '/Admin/JadwalKuliah/GetMataKuliah?' + variable,
+            url: '/Admin/ManageJadwalKuliah/GetMataKuliah?' + variable,
             dataSrc: '',
             type: 'POST'
         },
-/*        "language": {
-            "emptyTable": "No record found.",
-            "processing":
-                '<i class="fa fa-spinner fa-spin fa-3x fa-fw" style="color:#2a2b2b;"></i><span class="sr-only">Loading...</span> ',
-            "search": "Search:",
-            "searchPlaceholder": ""
-        },*/
+        /*        "language": {
+                    "emptyTable": "No record found.",
+                    "processing":
+                        '<i class="fa fa-spinner fa-spin fa-3x fa-fw" style="color:#2a2b2b;"></i><span class="sr-only">Loading...</span> ',
+                    "search": "Search:",
+                    "searchPlaceholder": ""
+                },*/
         "columns": [
             /*{
                 "title": "Action",
@@ -137,14 +137,14 @@ function reloadDatatable() {
             },
 
         ],
-/*        "createdRow": function (row, data, index) {
-            $('td', row).css({
-                'border': '1px solid coral',
-                'border-collapse': 'collapse',
-                'vertical-align': 'center',
-            });
-
-        }*/
+        /*        "createdRow": function (row, data, index) {
+                    $('td', row).css({
+                        'border': '1px solid coral',
+                        'border-collapse': 'collapse',
+                        'vertical-align': 'center',
+                    });
+        
+                }*/
     });
 
     setTimeout(function () {
@@ -181,7 +181,7 @@ $('#add').click(function () {
         if (result.isConfirmed) {
             $.LoadingOverlay("show");
             $.ajax({
-                url: '/Admin/JadwalKuliah/Publish',
+                url: '/Admin/ManageJadwalKuliah/Publish',
                 type: 'post',
                 data: {
                     list: list
@@ -231,7 +231,7 @@ $('#add').click(function () {
 });
 
 
-function controlButtonAdd(){
+function controlButtonAdd() {
     console.log(datatable.data().count());
     if (datatable.data().count() > 0) {
         $('#add').removeAttr("disabled");
