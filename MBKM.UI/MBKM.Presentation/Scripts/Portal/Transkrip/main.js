@@ -59,11 +59,8 @@ function convertBirthday() {
 
 
 
-/* --responsive */
 $(document).ready(function () {
-    checkStatusSertifikat();
     $("#print").hide();
-
     var date = new Date();
     $("#currentDate").text(date.toShortFormat());
     $("#currentDatePrint").text(date.toShortFormat());
@@ -108,8 +105,9 @@ function isZooming() {
 //---Grade
 var gradeFinal = "";
 var sksTotal = 0;
-var Nilais, NilaiGrades;
+var Nilais;
 
+//NilaiGrades
 function getNilai() {
     //var base_url = window.location.origin;
     $.ajax({
@@ -118,19 +116,26 @@ function getNilai() {
         datatype: 'json',
         success: function (resultTranskip) {
 
-            Nilais = resultTranskip;
+            if (resultTranskip.pertukaran == true) {
+                CheckStatusFeedback(true, 'internal');                
+            } else {
+                Nilais = resultTranskip.transkrip;
+                showValue(resultTranskip.transkrip);
+            }
+
+
             
-                $.ajax({
+                /*$.ajax({
                     url: "/Portal/TranskripMahasiswa/getLookupByTipe",
                     type: 'get',
                     datatype: 'html',
                     data: { Tipe: 'NilaiGrade' },
                     success: function (resultLookup) {
                         NilaiGrades = resultLookup;
-                        showValue(resultTranskip, resultLookup);
+                       
 
                     }
-                })
+                })*/
 
         }
     })
@@ -138,9 +143,7 @@ function getNilai() {
 
 function intToFloat(num, decPlaces) { return num.toFixed(decPlaces); }
 
-function showValue(result, NilaiGrades) {
-
-    
+function showValue(result) {
     //let NilaiGrades = loadFromLookup('NilaiGrade');
 
     //console.log(NilaiGrades.A);
@@ -171,7 +174,7 @@ function showValue(result, NilaiGrades) {
     var bE = '0';*/
 
 
-    var gA = NilaiGrades[0].Nama;
+    /*var gA = NilaiGrades[0].Nama;
     var gAmin = NilaiGrades[1].Nama;
     var gBplus = NilaiGrades[2].Nama;
     var gB = NilaiGrades[3].Nama;
@@ -202,31 +205,37 @@ function showValue(result, NilaiGrades) {
     var Cplus = parseFloat(bCplus);
     var C = parseFloat(bC);
     var D = parseFloat(bD);
-    var E = parseFloat(bE);
+    var E = parseFloat(bE);*/
 
     var nilaiTotal = 0;
     var rowNilaiSks = 0;
+    var sksTotal = 0;
 
 
     for (var i = 0; i < result.length; i++) {
-        if (i == 0 && result[0].FlagCetak == false) {
-            $("#btnCetak").prop("disabled", false);
-        } else if (i == 0 && result[0].FlagCetak == true){
-            $("#btnCetak").prop("disabled", true);
+        if (i == 0) {
+            //console.log(result[i].FlagCetak);
+            //$("#btnCetak").prop("disabled", false);
+            CheckStatusFeedback(result[i].FlagCetak, result.length);
         }
 
         var kodematakuliah = "<td>" + result[i].KodeMataKuliah + "</td>";
+
         var mkEn = "<i style='text-align:left;' class='en'>" + result[i].NamaMataKuliahEN + "</i>";
         var matakuliah = "<td>" + result[i].NamaMataKuliah + mkEn + "</td>";
-        
+
         var sksInt = parseInt(result[i].SKS);
         var sks = "<td style='text-align:right;'>" + sksInt + "</td>";
 
         var grade = result[i].Grade;
         var gradeHtml = "<td style='float:right;'><div style='width: 14px;text-align: left; position:relative;'>" + grade + "</div></td>";
 
-        
-        
+        var bobot = parseFloat(result[i].Nilai);
+
+        //console.log(result[i].Nilai);
+        //console.log(bobot);
+
+        //bobotTotal = bobotTotal + bobot;
         //var nilai = result[i].Nilai;
 
 
@@ -234,11 +243,11 @@ function showValue(result, NilaiGrades) {
         sksTotal = sksTotal + sksInt;
 
         row = "<tr>" + kodematakuliah + matakuliah + sks + gradeHtml + "</tr>";
-
+        rowNilaiSks = sksInt * bobot;
 
         //console.log("sks : " + sksInt);
         //console.log("grade : " + grade);
-        if (grade == gA) {
+        /*if (grade == gA) {
             rowNilaiSks = sksInt * A;
         } else if (grade == gAmin) {
             rowNilaiSks = sksInt * Amin;
@@ -256,7 +265,7 @@ function showValue(result, NilaiGrades) {
             rowNilaiSks = sksInt * D;
         } else if (grade == gE) {
             rowNilaiSks = sksInt * E;
-        }
+        }*/
         //console.log("sks k:"+rowNilaiSks);
         nilaiTotal = nilaiTotal + rowNilaiSks;
         //console.log(rowNilaiSks);
@@ -268,54 +277,59 @@ function showValue(result, NilaiGrades) {
 
     gradeTotal = nilaiTotal / sksTotal;
 
+    if (isNaN(parseFloat(gradeTotal))) {
+        gradeTotal = 0;
+    }
 
 
-/*    var A = 4.00;
-    var Amin = 3.70;
-    var Bplus = 3.30;
-    var B = 3.00;
-    var Bmin = 2.70;
-    var Cplus = 2.30;
-    var C = 2.00;
-    var D = 1.00;
-    var E = 0;
+    /*    var A = 4.00;
+        var Amin = 3.70;
+        var Bplus = 3.30;
+        var B = 3.00;
+        var Bmin = 2.70;
+        var Cplus = 2.30;
+        var C = 2.00;
+        var D = 1.00;
+        var E = 0;
+    
+        if (gradeTotal == A) {
+            gradeFinal = gA;
+        } else if (gradeTotal >= Amin && gradeTotal <= A) {
+            gradeFinal = gAmin;
+        } else if (gradeTotal >= Bplus && gradeTotal <= Amin) {
+            gradeFinal = gBplus;
+        } else if (gradeTotal >= B && gradeTotal <= Bplus) {
+            gradeFinal = gB;
+        } else if (gradeTotal >= Bmin && gradeTotal <= B) {
+            gradeFinal = gBmin;
+        } else if (gradeTotal >= Cplus && gradeTotal <= Bmin) {
+            gradeFinal = gCplus;
+        } else if (gradeTotal >= C && gradeTotal <= Cplus) {
+            gradeFinal = gC;
+        } else if (gradeTotal >= D && gradeTotal <= C) {
+            gradeFinal = gD;
+        } else if (gradeTotal >= E && gradeTotal <= D) {
+            gradeFinal = gE;
+        }*/
 
-    if (gradeTotal == A) {
-        gradeFinal = gA;
-    } else if (gradeTotal >= Amin && gradeTotal <= A) {
-        gradeFinal = gAmin;
-    } else if (gradeTotal >= Bplus && gradeTotal <= Amin) {
-        gradeFinal = gBplus;
-    } else if (gradeTotal >= B && gradeTotal <= Bplus) {
-        gradeFinal = gB;
-    } else if (gradeTotal >= Bmin && gradeTotal <= B) {
-        gradeFinal = gBmin;
-    } else if (gradeTotal >= Cplus && gradeTotal <= Bmin) {
-        gradeFinal = gCplus;
-    } else if (gradeTotal >= C && gradeTotal <= Cplus) {
-        gradeFinal = gC;
-    } else if (gradeTotal >= D && gradeTotal <= C) {
-        gradeFinal = gD;
-    } else if (gradeTotal >= E && gradeTotal <= D) {
-        gradeFinal = gE;
-    }*/
-
+    //console.log(gradeTotal);
+    //console.log(gradeTotal.toFixed(2));
+    
     $("#data").html(html);
     $("#totalSks").html(sksTotal);
-    $("#totalGrade").html(intToFloat(gradeTotal, 2));
-    
-    
+    $("#totalGrade").html(gradeTotal.toFixed(2));
 
+
+    //intToFloat(gradeTotal, 2)
     $("#dataPrint").html(html);
     $("#totalSksPrint").html(sksTotal);
-    $("#totalGradePrint").html(intToFloat(gradeTotal, 2));
-
+    $("#totalGradePrint").html(gradeTotal.toFixed(2));
 }
 
 
 //---print
 function print(id, nim) {
-
+    var base_url = window.location.origin;
     var idMahasiswa = parseInt(id);
 
     swal.fire({
@@ -367,14 +381,15 @@ function print(id, nim) {
                         var data =  $("#print").html();
                         var mywindow = window.open('', '_blank');
                         mywindow.document.write('<html><head><title>Transkrip</title>');
-                        /*optional stylesheet*/ mywindow.document.write('<link rel="stylesheet" href="../../Content/Portal/Transkrip/print.css" type="text/css" />');
+                        /*optional stylesheet*/ mywindow.document.write('<link rel="stylesheet" href="' + base_url+'/Content/Portal/Transkrip/print.css" type="text/css" />');
                         mywindow.document.write('</head><body >');
                         mywindow.document.write(data);
                         mywindow.document.write('</body></html>');
 
-                       
-                        mywindow.print();
-                        mywindow.close();
+                        setTimeout(function () {
+                            mywindow.print();
+                            mywindow.close();
+                        }, 500);
                         $("#btnCetak").prop("disabled", true);
                         //$("#view").show();
                         //$("#print").hide();
@@ -404,12 +419,15 @@ function checkStatusSertifikat() {
         datatype: 'JSON',
         success: function (e) {
 
-            //console.log(e);
+            //console.log("fhsaksfj : "+e.data);
 
             if (e.data == false) {
                 $("#sertifikatCetak").prop("disabled", false);
             } else {
-                $("#sertifikatCetak").prop("disabled", true);                
+                $("#sertifikatCetak").prop("disabled", true);
+                var alert = "Cetak Sertifikat telah dilakukan, silahkan hubungi BAA untuk mencetak Sertifikat!";
+                $('#notif-sertifikat').text(alert);
+                $('#notif-sertifikat').show();
             }
         }, error: function (e) {
             $("#sertifikatCetak").prop("disabled", true);
@@ -418,10 +436,96 @@ function checkStatusSertifikat() {
 
 }
 
-
 function printSertifikat() {
+    swal.fire({
+        title: "Sertifikat Nilai Hanya Dapat Tercetak Satu Kali \n Hubungi Pihak BAA Jika Terjadi Gagal Cetak",
+        type: "warning",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#06a956",
+        confirmButtonText: "Ok",
+        //closeOnConfirm: false
+    }).then((result) => {
+        $.LoadingOverlay("show");
+        $.ajax({
+            url: '/Portal/SertifikatMbkm/GetFile',
+            type: 'POST',
+            datatype: 'JSON',
+            success: function (e) {
+
+                console.log("try " + e.data);
+                var base_url = window.location.origin;
+
+                if (e.data != true) {
+
+                    var mywindow = window.open('', '_blank');
+                    mywindow.location = base_url + '/Portal/SertifikatMbkm/GetFile';
+                    setTimeout(function () {
+                        $.ajax({
+                            url: '/Portal/TranskripMahasiswa/UpdateStatusSertifikat',
+                            type: 'POST',
+                            datatype: 'JSON',
+                            success: function (e) {
+                                //console.log(e);
+                                //console.log(e.data);
+                                if (e.status == 500) {
+                                    $("#sertifikatCetak").prop("disabled", true);
+                                } else if (e.status == 200) {
+                                    $("#sertifikatCetak").prop("disabled", true);
+                                    Swal.fire({
+                                        title: 'success',
+                                        icon: 'success',
+                                        html: 'Cetak Berhasil',
+                                        showCloseButton: true,
+                                        showCancelButton: false,
+                                        focusConfirm: false,
+                                        confirmButtonText: 'OK'
+                                    })
+                                    //$("#sertifikatCetak").prop("disabled", false);
+                                }
+                                $.LoadingOverlay("hide");
+                            }, error: function (e) {
+                                $("#sertifikatCetak").prop("disabled", true);
+                                $.LoadingOverlay("hide");
+                            }
+                        })
+                       
+                    }, 500);
+
+
+                } else {
+                    //var location = 
+                    //window.location = base_url + '/Portal/TranskripMahasiswa';
+                    $.LoadingOverlay("hide");
+                    $("#sertifikatCetak").prop("disabled", true);
+                    swal.fire({
+                        title: "Cetak Sertifikat Gagal, Silahkan Hubungi Pihak BAA!!!",
+                        type: "warning",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#06a956",
+                        confirmButtonText: "Ok",
+                        //closeOnConfirm: false
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            
+                        }
+                    })
+                }
+            }, error: function (e) {
+                $("#sertifikatCetak").prop("disabled", true);
+            }
+        })
+    })
+
+
+
+}
+
+
+/*function printSertifikat() {
     var base_url = window.location.origin;
-    window.location = base_url + '/Portal/SertifikatMbkm/GetFile';
+    
 
 
     $.ajax({
@@ -439,4 +543,134 @@ function printSertifikat() {
             $("#sertifikatCetak").prop("disabled", true);
         }
     })
+}*/
+
+var feedbackStatus;
+var alert;
+function CheckStatusFeedback(FlagTranscript, row) {
+    $.ajax({
+        url: '/Portal/TranskripMahasiswa/CheckStatusFeedback',
+        type: 'POST',
+        datatype: 'json',
+        success: function (result) {
+            //console.log(result);
+            //var status = result[0][5];
+            //var paymentStatus = result[0][6];
+
+            feedbackStatus = result;
+            /*console.log(status);
+            console.log(paymentStatus);
+            console.log(FlagTranscript);*/
+            //console.log(row);
+
+            /*if (checker == true && (row == 'internal' || row == result.length)) {
+                
+                //$("#sertifikatCetak").prop("disabled", false);
+                if (FlagTranscript == false) {
+                    
+                }  if (FlagTranscript == true) {
+                    
+                }
+            } else {
+                
+
+            }*/
+            
+            if (row == 'internal') {
+                var html = "";
+                for (var i = 0; i < result.length; i++) {
+                    var mkEn = "<i style='text-align:left;' class='en'>" + result[i][7] + "</i>";
+                    var matakuliah = result[i][1] + mkEn;
+                    html = html + "<tr><td>" + result[i][2] + "</td><td>" + matakuliah + "</td><td style='text-align:right'>-</td><td style='text-align:right'>-</td></tr>";
+                }
+
+
+
+                $("#data").html(html);
+                $("#totalSks").html("-");
+                $("#totalGrade").html("-");
+                $("#btnCetak").hide();
+                $("#PageTitle").text("SERTIFIKAT MBKM");
+            } else {
+                $("#PageTitle").text("TRANSKRIP NILAI & SERTIFIKAT MBKM");
+
+            }
+
+
+            var checker = parseFeedback(result);
+            //console.log(checker);
+            //console.log(FLAGBAYAR);
+
+            
+            if (FLAGBAYAR == 'True') {
+                if (row == 'internal') {
+                    checkStatusSertifikat();
+                    $("#btnCetak").prop("disabled", true);
+
+                } else {
+                    if (checker == true) {
+                        if (row != 'internal' && row == result.length) {
+                            checkStatusSertifikat();
+                            if (FlagTranscript == true) {
+                                alert = "Cetak Transkrip telah dilakukan, silahkan hubungi BAA untuk mengaktifkan kembali tombol cetak!";
+
+
+                                $("#btnCetak").prop("disabled", true);
+                                $('#notif').text(alert);
+                                $('#notif').show();
+                            } else if (FlagTranscript == false) {
+                                $("#btnCetak").prop("disabled", false);
+
+                            }
+                        } else if (row == 'internal') {
+                            checkStatusSertifikat();
+                            $("#btnCetak").prop("disabled", true);
+                        } else {
+                            alert = "Nilai Transkrip Belum Lengkap, Menunggu Penilaian dari Dosen!";
+
+
+                            $("#btnCetak").prop("disabled", true);
+                            $("#sertifikatCetak").prop("disabled", true);
+                            $('#notif').text(alert);
+                            $('#notif').show();
+                        }
+                    } else {
+                        alert = "Silahkan Melengkapi Feedback terlebih dahulu, untuk mengaktifkan tombol cetak!"
+
+
+                        $("#btnCetak").prop("disabled", true);
+                        $("#sertifikatCetak").prop("disabled", true);
+                        $('#notif').text(alert);
+                        $('#notif').show();
+                    }
+                }
+            } else {
+                alert = "Belum Bayar!";
+                $('#notif').text(alert);
+                $('#notif').show();
+            }
+
+            
+
+
+        }
+    })
+
+}
+
+function parseFeedback(data) {
+    var tempFeedback, tempPayment;
+
+    for (var i = 0; i < data.length; i++) {
+        if (data[i][4] == "Sudah Feedback" && data[i][5] == 'True') {
+            tempFeedback = true;
+            tempPayment = true;
+        } else {
+            return false;
+        }
+    }
+
+    if (tempFeedback == true && tempPayment == true) {
+        return true
+    }
 }

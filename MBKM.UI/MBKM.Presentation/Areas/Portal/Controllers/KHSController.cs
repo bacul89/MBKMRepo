@@ -35,6 +35,12 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult Index()
         {
             var mahasiswa = GetMahasiswaByEmail(Session["emailMahasiswa"] as string);
+            if(mahasiswa.StatusVerifikasi !="AKTIF" || mahasiswa.NIM == null || mahasiswa.NIM == mahasiswa.NIMAsal)
+            {
+                 return Content("<script language='javascript' type='text/javascript'>alert('Anda Tidak Dapat Mengakses KHS!');window.location='/datadiri/index';</script>");
+                //TempData["alertMessageS"] = "Anda Belum Bisa Mengakses KHS!";
+                //return RedirectToAction("Index", "datadiri");
+            }
             ViewData["nama"] = mahasiswa.Nama;
             ViewData["nim"] = mahasiswa.NIM;
             ViewData["univ"] = mahasiswa.NamaUniversitas;
@@ -251,8 +257,14 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 var smIndo2 = strmT.Replace("ODD Semester", "Semester Ganjil");
                 ViewData["sIndo"] = smIndo2;
             }
-            else {
+            else if(smIndo.Contains("EVEN"))
+            {
                 var smIndo2 = strmT.Replace("EVEN Semester", "Semester Genap");
+                ViewData["sIndo"] = smIndo2;
+            }
+            else 
+            {
+                var smIndo2 = strmT.ToLower().Replace("short semester", "SEMESTER ANTARA");
                 ViewData["sIndo"] = smIndo2;
             }
             //var mahasiswa = GetMahasiswaByEmail(Session["emailMahasiswa"] as string);

@@ -2,7 +2,7 @@
 var datatable = null;
 
 $(document).ready(function () {
-    $("#jenjangCari").prop("disabled", true);
+    //$("#jenjangCari").prop("disabled", true);
     $("#fakultasCari").prop("disabled", true);
     $("#prodiCari").prop("disabled", true);
     $("#lokasiCari").prop("disabled", true);
@@ -19,9 +19,10 @@ $(document).ready(function () {
     $("#lokasiCari").select2({
         placeholder: "-- Pilih Lokasi --"
     });
-    $("#tahunAjaranCari").select2({
+    loadJenjangStudi("JenjangStudi", "jenjang", "Jenjang Studi");
+    /*$("#tahunAjaranCari").select2({
         placeholder: "-- Pilih Tahun Ajaran --"
-    });
+    });*/
 
     
 
@@ -37,7 +38,7 @@ $(document).ready(function () {
     $("#prodiIdCari").val('');
     $("#lokasiCari").empty();
     $("#matakuliahCari").empty();
-    $("#tahunAjaranCari").empty();
+    //$("#tahunAjaranCari").empty();
     $("#jenjangCari").empty();
     $("#prodiCari").prop("disabled", true);
     $("#lokasiCari").prop("disabled", true);
@@ -109,7 +110,7 @@ $(document).ready(function () {
         //$("#tahunAjaranCari").prop("disabled", true);
         $("#fakultasCari").prop("disabled", true);
         $("#jenjangCari").prop("disabled", false);
-        loadJenjangStudi("JenjangStudi", "jenjang", "Jenjang Studi");
+        
 
     });
 
@@ -119,8 +120,8 @@ $(document).ready(function () {
 
 function buttonHandler(param) {
     if (param == "open") {
-        $('#cari, #add').removeAttr("disabled");
-        $('#cari, #add').removeAttr("title");
+        $('#cari').removeAttr("disabled");
+        $('#cari').removeAttr("title");
     } else if (param == "close") {
         $('#cari, #add').attr("disabled", "disabled");
         //$().attr("disabled", "disabled");
@@ -262,7 +263,7 @@ function loadJenjangStudi(tipe, id, nama) {
                         },
                         processResults: function (data, params) {
 
-                            console.log(data);
+                            //console.log(data);
                             return {
                                 results: $.map(data, function (item) { return { id: item.ID, value: item.Kampus, text: item.Kampus } })
                             };

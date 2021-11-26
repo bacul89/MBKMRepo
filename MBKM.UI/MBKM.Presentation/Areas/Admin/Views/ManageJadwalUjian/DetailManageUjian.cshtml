@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Detail Manage Ujian";
+    ViewBag.Title = "DETAIL MANAGE JADWAL UJIAN";
     Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
 }
 @section css{
@@ -116,7 +116,7 @@
                                 <h4>Tanggal Ujian &nbsp:</h4>
                             </div>
                             <div class="col-sm-8">
-                                <h4>@Model.TanggalUjian</h4>
+                                <h4>@Model.TanggalUjian.ToString("dd/MM/yyyy")</h4>
                             </div>
                         </div>
                         <div class="row">

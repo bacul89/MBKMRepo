@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MBKM.Presentation.Helper;
+using MBKM.Entities.ViewModel;
 
 namespace MBKM.Presentation.Areas.Portal.Controllers
 {
@@ -17,11 +18,15 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
 
         private IMahasiswaService _mahasiswaService;
         private IAttachmentService _attachmentService;
+        private IInformasiPertukaranService _informasiPertukaranService;
+        private IJadwalKuliahMahasiswaService _jkMhsService;
 
-        public NimDigitalController(IMahasiswaService mahasiswaService, IAttachmentService attachmentService)
+        public NimDigitalController(IMahasiswaService mahasiswaService, IAttachmentService attachmentService, IInformasiPertukaranService informasiPertukaranService, IJadwalKuliahMahasiswaService jkMhsService)
         {
             _mahasiswaService = mahasiswaService;
             _attachmentService = attachmentService;
+            _informasiPertukaranService = informasiPertukaranService;
+            _jkMhsService = jkMhsService;
         }
 
         public ActionResult Index()
@@ -38,6 +43,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             string email = Session["emailMahasiswa"] as string;
 
             var ma = _mahasiswaService.Find(x => x.Email == email).First();
+
+            
+            VMSemester semester = _jkMhsService.getOngoingSemester(ma.JenjangStudi);
+
+
             var photoprofile = "none";
             try
             {
@@ -48,13 +58,26 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             {
                 photoprofile = "Asset/default-photo-profile.png";
             }
-            
+
+            var infoPertukaran = false;
+            try
+            {
+                var Pertukaran = _informasiPertukaranService.Find(m => m.MahasiswaID == ma.ID && m.STRM == semester.ID).First();
+                infoPertukaran = true;
+            }
+            catch
+            {
+                infoPertukaran = false;
+            }
+
+
             return Json(new {
                 Nama = ma.Nama,
                 NIM = ma.NIM,
                 Prodi = ma.ProdiAsal,
                 PhotoProfile = photoprofile,
-                NamaUniversitas = ma.NamaUniversitas
+                NamaUniversitas = "Universitas Katolik Atma Jaya",
+                pertukaran = infoPertukaran
             }, JsonRequestBehavior.AllowGet);
 
         }

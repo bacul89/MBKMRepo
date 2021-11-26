@@ -114,7 +114,7 @@
                             <div id="NIM"><i>Loading...</i></div>
                             <div id="nama"><i>Loading...</i></div>
                             <div id="universitas"><i>Loading...</i></div>
-                            <div id="prodi"><i>Loading...</i></div>
+                            @*<div id="prodi"><i>Loading...</i></div>*@
                         </div>
                         <div class=" paddingZero">
                             <img id="photoprofile" class="right" />
@@ -128,42 +128,4 @@
 
 @section scripts{
     <script src="~/Scripts/Portal/NimDigital/main.js"></script>
-    <script>
-        $(document).ready(function () {
-
-            isZooming();
-        });
-
-
-        $(window).resize(function () {
-            isZooming();
-        });
-
-
-        function isZooming() {
-            var defaultH = 600;
-            var square = $('.responsive-content');
-            var screenH = $(document).height();
-            //console.log("dfH :"+defaultH);
-            //console.log("wnH :"+screenH);
-
-
-                if (defaultH < screenH) {
-
-                    var footer = 60;
-                    var header = 105;
-                    var contentHeight = screenH - header - footer;
-
-                    if (defaultH < contentHeight) {
-                        square.css('height', contentHeight);
-                    } else {
-                        square.css('height', defaultH);
-                    }
-                    
-
-                } else {
-                    square.css('height', defaultH);
-                }
-        }
-    </script>
 }

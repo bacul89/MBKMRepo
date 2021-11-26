@@ -106,7 +106,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                                                 FlagCetak = e1.FlagCetak
                                             }.toList();*/
 
-                var result = context.NilaiKuliahs.Where(x => x.IsActive && !x.IsDeleted);
+                var result = context.NilaiKuliahs.Where(x => x.IsActive && !x.IsDeleted && x.Mahasiswas.NIM != x.Mahasiswas.NIMAsal);
                 var gridfilter = result.AsQueryable()
                     .Select(z => new GridDataNilaiKuliah
                     {
@@ -125,6 +125,50 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             }
 
         }
+
+
+        public VMNilaiDiakui GetNilaiDiakui(string Jenjang, string Strm, string MatkulId, string KodeMatkul, string Nim)
+        {
+            using (var context = new MBKMContext())
+            {
+
+                var jenjang = new SqlParameter("@JenjangStudi", Jenjang);
+                var strm = new SqlParameter("@STRM", Strm);
+                var matkulId = new SqlParameter("@MatkulID", MatkulId);
+                var kodeMatkul = new SqlParameter("@KodeMatkul", KodeMatkul);
+                var nim = new SqlParameter("@NIM", Nim);
+                var result = context.Database
+                    .SqlQuery<VMNilaiDiakui>("GetNilaiDiakui @JenjangStudi, @STRM, @MatkulID, @KodeMatkul, @NIM", jenjang, strm, matkulId, kodeMatkul, nim).FirstOrDefault();
+                return result;
+            }
+        }
+
+
+        public VMNilaiBobot GetBobotNilai(decimal Nilai)
+        {
+            using (var context = new MBKMContext())
+            {
+                //.ToInt32(value);
+                //int nilaiInt = Int32.Parse(nilaiTotal);
+                var courseParam = new SqlParameter("@Nilai", Nilai);
+                var result = context.Database
+                    .SqlQuery<VMNilaiBobot>("GetGradeByNilai @Nilai", courseParam).First();
+                return result;
+            }
+        }
+        public VMNilaiGrade GetNilaiGradeByNilaiTotal(int nilaiTotal)
+        {
+            using (var context = new MBKMContext())
+            {
+                var nilai = new SqlParameter("@Nilai", nilaiTotal);
+                var result = context.Database
+                    .SqlQuery<VMNilaiGrade>("GetGradeByNilai @Nilai", nilai).First();
+                return result;
+            }
+
+        }
+
+
 
     }
 

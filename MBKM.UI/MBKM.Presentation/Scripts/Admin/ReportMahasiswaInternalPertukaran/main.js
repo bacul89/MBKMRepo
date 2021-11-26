@@ -21,6 +21,9 @@ $(document).ready(function () {
                 /*Semester*/
                 "data": 0,
                 "render": function (data, type, row, meta) {
+                    if (data == null) {
+                        return '<div class="center vertical-center" style="font-size: 0.6vw"> - </div>';
+                    }
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
@@ -28,6 +31,9 @@ $(document).ready(function () {
                 /*jenjang*/
                 "data": 1,
                 "render": function (data, type, row, meta) {
+                    if (data == null) {
+                        return '<div class="center vertical-center" style="font-size: 0.6vw"> - </div>';
+                    }
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
@@ -35,6 +41,9 @@ $(document).ready(function () {
                 /*nim*/
                 "data": 2,
                 "render": function (data, type, row, meta) {
+                    if (data == null) {
+                        return '<div class="center vertical-center" style="font-size: 0.6vw"> - </div>';
+                    }
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
@@ -42,6 +51,9 @@ $(document).ready(function () {
                 /*nama*/
                 "data": 3,
                 "render": function (data, type, row, meta) {
+                    if (data == null) {
+                        return '<div class="center vertical-center" style="font-size: 0.6vw"> - </div>';
+                    }
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
@@ -49,6 +61,9 @@ $(document).ready(function () {
                 /*prodi*/
                 "data": 4,
                 "render": function (data, type, row, meta) {
+                    if (data == null) {
+                        return '<div class="center vertical-center" style="font-size: 0.6vw"> - </div>';
+                    }
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
@@ -56,6 +71,9 @@ $(document).ready(function () {
                 /*Kode Makul*/
                 "data": 5,
                 "render": function (data, type, row, meta) {
+                    if (data == null) {
+                        return '<div class="center vertical-center" style="font-size: 0.6vw"> - </div>';
+                    }
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
@@ -63,6 +81,9 @@ $(document).ready(function () {
                 /*Nama MK*/
                 "data": 6,
                 "render": function (data, type, row, meta) {
+                    if (data == null) {
+                        return '<div class="center vertical-center" style="font-size: 0.6vw"> - </div>';
+                    }
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
@@ -70,6 +91,9 @@ $(document).ready(function () {
                 /*SKS */
                 "data": 7,
                 "render": function (data, type, row, meta) {
+                    if (data == null) {
+                        return '<div class="center vertical-center" style="font-size: 0.6vw"> - </div>';
+                    }
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
@@ -77,6 +101,9 @@ $(document).ready(function () {
                 /*Nilai asal*/
                 "data": 8,
                 "render": function (data, type, row, meta) {
+                    if (data == null) {
+                        return '<div class="center vertical-center" style="font-size: 0.6vw"> - </div>';
+                    }
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
@@ -84,6 +111,9 @@ $(document).ready(function () {
                 /*Nilai kode makul*/
                 "data": 9,
                 "render": function (data, type, row, meta) {
+                    if (data == null) {
+                        return '<div class="center vertical-center" style="font-size: 0.6vw"> - </div>';
+                    }
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
@@ -91,6 +121,9 @@ $(document).ready(function () {
                 /*kjode Makul diakui */
                 "data": 10,
                 "render": function (data, type, row, meta) {
+                    if (data == null) {
+                        return '<div class="center vertical-center" style="font-size: 0.6vw"> - </div>';
+                    }
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
@@ -98,6 +131,9 @@ $(document).ready(function () {
                 /*nama mk diakui mk*/
                 "data": 11,
                 "render": function (data, type, row, meta) {
+                    if (data == null) {
+                        return '<div class="center vertical-center" style="font-size: 0.6vw"> - </div>';
+                    }
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
@@ -105,6 +141,9 @@ $(document).ready(function () {
                 /*huruf*/
                 "data": 12,
                 "render": function (data, type, row, meta) {
+                    if (data == null) {
+                        return '<div class="center vertical-center" style="font-size: 0.6vw"> - </div>';
+                    }
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
@@ -142,6 +181,9 @@ $(document).ready(function () {
                     /*Semester*/
                     "data": 0,
                     "render": function (data, type, row, meta) {
+                        if (data == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.6vw"> - </div>';
+                        }
                         return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                     }
                 },
@@ -149,6 +191,9 @@ $(document).ready(function () {
                     /*jenjang*/
                     "data": 1,
                     "render": function (data, type, row, meta) {
+                        if (data == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.6vw"> - </div>';
+                        }
                         return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                     }
                 },
@@ -156,6 +201,9 @@ $(document).ready(function () {
                     /*nim*/
                     "data": 2,
                     "render": function (data, type, row, meta) {
+                        if (data == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.6vw"> - </div>';
+                        }
                         return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                     }
                 },
@@ -163,6 +211,9 @@ $(document).ready(function () {
                     /*nama*/
                     "data": 3,
                     "render": function (data, type, row, meta) {
+                        if (data == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.6vw"> - </div>';
+                        }
                         return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                     }
                 },
@@ -170,6 +221,9 @@ $(document).ready(function () {
                     /*prodi*/
                     "data": 4,
                     "render": function (data, type, row, meta) {
+                        if (data == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.6vw"> - </div>';
+                        }
                         return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                     }
                 },
@@ -177,6 +231,9 @@ $(document).ready(function () {
                     /*Kode Makul*/
                     "data": 5,
                     "render": function (data, type, row, meta) {
+                        if (data == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.6vw"> - </div>';
+                        }
                         return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                     }
                 },
@@ -184,6 +241,9 @@ $(document).ready(function () {
                     /*Nama MK*/
                     "data": 6,
                     "render": function (data, type, row, meta) {
+                        if (data == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.6vw"> - </div>';
+                        }
                         return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                     }
                 },
@@ -191,6 +251,9 @@ $(document).ready(function () {
                     /*SKS */
                     "data": 7,
                     "render": function (data, type, row, meta) {
+                        if (data == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.6vw"> - </div>';
+                        }
                         return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                     }
                 },
@@ -198,6 +261,9 @@ $(document).ready(function () {
                     /*Nilai asal*/
                     "data": 8,
                     "render": function (data, type, row, meta) {
+                        if (data == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.6vw"> - </div>';
+                        }
                         return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                     }
                 },
@@ -205,6 +271,9 @@ $(document).ready(function () {
                     /*Nilai kode makul*/
                     "data": 9,
                     "render": function (data, type, row, meta) {
+                        if (data == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.6vw"> - </div>';
+                        }
                         return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                     }
                 },
@@ -212,6 +281,9 @@ $(document).ready(function () {
                     /*kjode Makul diakui */
                     "data": 10,
                     "render": function (data, type, row, meta) {
+                        if (data == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.6vw"> - </div>';
+                        }
                         return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                     }
                 },
@@ -219,6 +291,9 @@ $(document).ready(function () {
                     /*nama mk diakui mk*/
                     "data": 11,
                     "render": function (data, type, row, meta) {
+                        if (data == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.6vw"> - </div>';
+                        }
                         return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                     }
                 },
@@ -226,6 +301,9 @@ $(document).ready(function () {
                     /*huruf*/
                     "data": 12,
                     "render": function (data, type, row, meta) {
+                        if (data == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.6vw"> - </div>';
+                        }
                         return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                     }
                 },

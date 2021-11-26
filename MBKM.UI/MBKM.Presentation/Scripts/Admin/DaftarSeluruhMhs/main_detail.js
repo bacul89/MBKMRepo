@@ -11,6 +11,7 @@ function prep(id) {
         if (response.NIM == response.NIMAsal && response.NIM && response.NIMAsal) {
         //if (1==1) {
             isInternal = true;
+
             $('#eksternal').hide();
             setLookupValue("StatusKerjasama", "ADA KERJASAMA", "statusKerjasamaInternal");
             $("#jenisKegiatanMBKM").prop("disabled", true);

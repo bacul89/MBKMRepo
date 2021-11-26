@@ -43,6 +43,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             IEnumerable<VMLookup> tempJenjang =   _lookupService.getLookupByTipe("JenjangStudi");
             IEnumerable<VMLookup> tempJenisUjian =   _lookupService.getLookupByTipe("JenisUjian");
+            IEnumerable<VMSemester> data = _jadwalUjianMBKMService.getAllSemester();
+            ViewData["semester"] = data;
             ViewData["Jenjang"] = tempJenjang;
             ViewData["JenisUjian"] = tempJenisUjian;
             return View();
@@ -64,9 +66,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             var data = _jadwalUjianMBKMService.Get(dataID);
             /*var tempProdi = int.Parse(data.ProdiID);*/
-            var tempJadwalUjian = _pendaftaranMataKuliahService.Find(x => x.JadwalKuliahs.MataKuliahID == data.IDMatkul
-            && x.JadwalKuliahs.ClassSection == data.ClassSection
+            var tempJadwalUjian = _pendaftaranMataKuliahService.Find(x => x.JadwalKuliahs.MataKuliahID == data.IDMatkul && x.JadwalKuliahs.ClassSection == data.ClassSection
             /*&& x.JadwalKuliahs.ProdiID == tempProdi*/
+            && x.mahasiswas.NIM != x.mahasiswas.NIMAsal
             && x.StatusPendaftaran.Contains("ACCEPTED")
             
             ).ToList();

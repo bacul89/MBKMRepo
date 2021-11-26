@@ -49,7 +49,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult GetDataTable(int strm)
         {
             
-            var data = _feedbackMatkulService.Find(x => x.JadwalKuliahs.STRM == strm)
+            var data = _feedbackMatkulService.Find(x => x.JadwalKuliahs.STRM == strm && x.Mahasiswas.NIM != x.Mahasiswas.NIMAsal)
                 .GroupBy(z => new {z.MahasiswaID, z.StatusFeedBack, z.Mahasiswas, z.JadwalKuliahID })
                 .Select(s => new {MahasiswaID = s.Key.MahasiswaID, Status = s.Key.StatusFeedBack, Mahasiswas = s.Key.Mahasiswas, JadwalID = s.Key.JadwalKuliahID }).ToList();
             
@@ -66,7 +66,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             foreach (var d in data2)
             {
                 var dataCheck = data.Where(x => x.MahasiswaID == d.MahasiswaID && x.Status == false).Count();
-                var MatkulPendaftaranCheck = pendaftaran.Where(x => x.MahasiswaID == d.MahasiswaID).Count();
+                var MatkulPendaftaranCheck = pendaftaran.Where(x => x.MahasiswaID == d.MahasiswaID && x.StatusPendaftaran.ToLower().Contains("accepted")).Count();
                 var matkulFeedbackCheck = data3.Where(x => x.MahasiswaID == d.MahasiswaID).Count();
 
                 if (dataCheck == 0 && (matkulFeedbackCheck == MatkulPendaftaranCheck))
@@ -97,6 +97,25 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         d.Mahasiswas.FlagBayar.ToString()
                     });
                 }
+            }
+
+            var MahasiswaINternal = _pendaftaranMataKuliahService.Find(x => x.JadwalKuliahs.STRM == strm && x.mahasiswas.NIM == x.mahasiswas.NIMAsal && x.StatusPendaftaran.ToLower().Contains("accepted"))
+                    .GroupBy(z => new { z.MahasiswaID, z.mahasiswas })
+                    .Select(s => new { MahasiswaID = s.Key.MahasiswaID, mahasiswas = s.Key.mahasiswas })
+                    .ToList();
+            foreach (var f in MahasiswaINternal)
+            {
+                final.Add(new String[]{
+                        f.MahasiswaID.ToString(),
+                        DescSemester.Nama,
+                        f.mahasiswas.JenjangStudi,
+                        f.mahasiswas.NamaUniversitas,
+                        f.mahasiswas.NIM,
+                        f.mahasiswas.Nama,
+                        f.mahasiswas.NoKerjasama,
+                        "Sudah Feedback",
+                        f.mahasiswas.FlagBayar.ToString()
+                    });
             }
             return Json(final);
         }
@@ -139,30 +158,51 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ViewData["jumlahSks"] = jumlahSks;
             ViewData["DateNow"] = DateTime.Now.ToString("dd MMMM yyyy");
 
-            var dataWarek = _lookupService.Find(x => x.Tipe == "WAREKAkademi").First();
+            var dataWarek = _lookupService.Find(x => x.Tipe == "WAREKAkademi").FirstOrDefault();
             ViewData["Warek"] = dataWarek.Nilai;
             List<CapaiaMatakuliahSertifkatDTO> final = new List<CapaiaMatakuliahSertifkatDTO>();
 
-            var dataNilaiMahasiswa = _nilaiKuliahService.Find(x => x.MahasiswaID == id).ToList();
+            var PendaftaranMatakuliah = _pendaftaranMataKuliahService.Find(x => x.MahasiswaID == id).ToList();
+            var NilaiMahasiswa = _nilaiKuliahService.Find(x => x.MahasiswaID == id).ToList();
 
-/*            var dataPendaftaran = _pendaftaranMataKuliahService.Find(x => x.MahasiswaID == id).ToList();
-*/            foreach(var d in dataNilaiMahasiswa)
-            {
-                IList<CPLMatakuliah> tempId = _cPLMatakuliahService.Find(x => x.IDMataKUliah == d.JadwalKuliahs.MataKuliahID).ToList();
-                IList<CPLMatakuliah> capaianTujuan = tempId.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == d.JadwalKuliahs.ProdiID).ToList();
-                final.Add(new CapaiaMatakuliahSertifkatDTO
+            var CheckNilaiAvailable = NilaiMahasiswa.Count();
+            
+                foreach (var d in PendaftaranMatakuliah)
                 {
-                    namaMatkul = d.JadwalKuliahs.NamaMataKuliah,
-                    angka = d.NilaiTotal.ToString(),
-                    huruf = d.Grade,
-                    kompetensi = capaianTujuan
-                });
-            }
-            ViewData["dataGrid"] = final;
+                    IList<CPLMatakuliah> tempId = _cPLMatakuliahService.Find(x => x.IDMataKUliah == d.JadwalKuliahs.MataKuliahID).ToList();
+                    IList<CPLMatakuliah> capaianTujuan = tempId.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == d.JadwalKuliahs.ProdiID).ToList();
+                    var nilaiFinal = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.JadwalKuliahs.MataKuliahID, d.JadwalKuliahs.KodeMataKuliah, d.mahasiswas.ID.ToString());
+
+                if (nilaiFinal == null)
+                    {
+                        final.Add(new CapaiaMatakuliahSertifkatDTO
+                        {
+                            kodeMatakuliah = d.JadwalKuliahs.KodeMataKuliah,
+                            namaMatkul = d.JadwalKuliahs.NamaMataKuliah,
+                            angka = "-",
+                            huruf = "-",
+                            kompetensi = capaianTujuan
+                        });
+                    }
+                    else
+                    {
+                        final.Add(new CapaiaMatakuliahSertifkatDTO
+                        {
+                            kodeMatakuliah = d.JadwalKuliahs.KodeMataKuliah,
+                            namaMatkul = d.JadwalKuliahs.NamaMataKuliah,
+                            angka = nilaiFinal.NilaiAngkaFinal,
+                            huruf = nilaiFinal.NilaiDiakui,
+                            kompetensi = capaianTujuan
+                        });
+                    }
+
+                }
+                ViewData["dataGrid"] = final;
+            
+            var dataPendaftaran = _pendaftaranMataKuliahService.Find(x => x.MahasiswaID == id).ToList();
 
 
-            return /*View();*/
-
+            return
                 new ViewAsPdf("GetFile")
                 {
                     PageOrientation = Rotativa.Options.Orientation.Landscape,

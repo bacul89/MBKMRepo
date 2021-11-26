@@ -1,0 +1,146 @@
+﻿.page {
+    size: 9.25in 7in;
+    margin: 0 !important;
+}
+
+body {
+    size: portrait;
+    font-size: 12px
+}
+
+.logo {
+    width: 192px;
+}
+
+h1 {
+    margin: 3px 0px
+}
+
+h2 {
+    font-size: 21px;
+    margin: 0px;
+}
+
+.Title {
+    margin: 16px 0
+}
+
+.border {
+    border: solid 1px;
+    border-radius: 0px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 8px 15px !important;
+}
+
+.info {
+    font-size: 11px;
+    text-transform: uppercase;
+}
+
+.title-right {
+    text-align: right;
+}
+
+.title h1, .title h2 {
+    margin: 0;
+}
+
+th.mhsList.start, td.mhsList.start {
+    border-left: solid 1px;
+}
+
+th.mhsList {
+    border-bottom: solid 1px;
+    border-right: solid 1px;
+    border-top: solid 1px;
+    padding: 3px 10px;
+}
+
+td.mhsList {
+    border: solid 1px;
+    padding: 9px 10px;
+    line-height: 11px;
+}
+
+
+h3 {
+    margin: 0;
+}
+
+ol {
+    margin: 0px;
+    padding: 0px 15px;
+}
+
+.content table {
+    float: left;
+    position: relative;
+}
+
+.left {
+    float: left
+}
+
+
+.berita th, .berita td {
+    border: solid 1px;
+}
+
+.borderNone {
+    border: 0px !important;
+}
+
+.padding0 {
+    padding: 9px 0px !important;
+}
+
+.pading0 {
+    padding: 5px 0px
+}
+
+.pading5 {
+    padding: 5px 5px
+}
+
+.heightDefault {
+    height: 31px;
+    padding: 0px !important;
+}
+
+.breakhere {
+    page-break-after: always
+}
+
+.p0 {
+    padding: 0px
+}
+
+
+.p-tb10 {
+    padding: 1px 0px;
+    line-height: 18px;
+    width: 18%;
+    vertical-align: top;
+}
+
+.p-tb8 {
+    padding: 1px 0px;
+    line-height: 18px;
+    width: 12%;
+    vertical-align: top;
+}
+
+.p-tb10lr5 {
+    padding: 1px 0px;
+    vertical-align: top;
+    width: 2px;
+}
+
+.space {
+    width: 5px;
+}
+
+table {
+    font-size: 12px
+}

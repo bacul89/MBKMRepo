@@ -15,9 +15,16 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
+   
+
     <div class="container-fluid" style="width: 70vw; margin-left:auto; margin-right:auto; margin-top:70px">
+        <div class="row Header">
+            <div class="col-3">
+                <img class="logo" width="100%" src="~/Asset/Lambang_Unika_Atma_Jaya.png" />
+            </div>
+        </div>
         <div style="margin :20px 20px 20px 20px">
-            <h3>REKAP NILAI MAHASISWA MBKM GANJIL - @ViewData["jenisSemester"].ToString() @ViewData["TahunSemester"].ToString()</h3>
+            <h3>REKAP JUMLAH MAHASISWA MBKM GANJIL - @ViewData["jenisSemester"].ToString() @ViewData["TahunSemester"].ToString()</h3>
             <table id="table-data-rekap-mahasiswa" class="table table-bordered">
                 <thead style="background-color: lightgray; display: table-header-group;">
                     <tr>

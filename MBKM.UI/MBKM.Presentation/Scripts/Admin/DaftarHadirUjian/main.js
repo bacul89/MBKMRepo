@@ -1,17 +1,15 @@
 ﻿var datatable = null;
 $(document).ready(function () {
-    $("#jenjangCari").prop("disabled", true);
-    $("#fakultasCari").prop("disabled", true);
+    /*$("#jenjangCari").prop("disabled", true);*/
     $("#fakultasCari").prop("disabled", true);
     $("#prodiCari").prop("disabled", true);
     $("#lokasiCari").prop("disabled", true);
     $("#matakuliahCari").prop("disabled", true);
     $("#seksiCari").prop("disabled", true);
+
     $("#jenjangCari").select2({
         placeholder: "-- Pilih Jenjang Studi --"
-    });
-
-    
+    });    
 
     $("#fakultasCari").select2({
         placeholder: "-- Pilih Fakultas --"
@@ -32,7 +30,7 @@ $(document).ready(function () {
 
 
     datatable = $('#table-data-daftar-hadir-ujian').DataTable();
-
+    loadJenjangStudi("JenjangStudi", "jenjang", "Jenjang Studi");
 
 });
 
@@ -53,7 +51,7 @@ $('#tahunAjaranCari').select2({
     //multiple: true,
     width: "100%",
     ajax: {
-        url: "/DaftarHadirUjian/GetSemesterAll",
+        url: "/Admin/DaftarHadirUjian/GetSemesterAll",
         type: 'POST',
         dataType: 'json',
         //quietMillis: 50,
@@ -97,7 +95,7 @@ $("#tahunAjaranCari").change(function () {
     $("#jenjangCari").prop("disabled", false);
     loadJenjangStudi("JenjangStudi", "jenjang", "Jenjang Studi");
 
-    $("#fakultasCari").prop("disabled", true);
+    /*$("#fakultasCari").prop("disabled", true);*/
     $("#fakultasCari").prop("disabled", true);
     $("#prodiCari").prop("disabled", true);
     $("#lokasiCari").prop("disabled", true);
@@ -190,29 +188,7 @@ function loadJenjangStudi(tipe, id, nama) {
             $("#seksiCari").prop("disabled", true);
 
             $("#prodiCari").prop("disabled", false);
-            /*$("#prodiCari").select2({
-                placeholder: "-- Pilih Program Studi --",
-                width: "100%",
-                ajax: {
-                    url: "s",
-                    dataType: 'json',
-                    method: "POST",
-                    delay: 250,
-                    cache: false,
-                    data: function (params) {
-                        return {
-                            Search: params.term || "",
-                            JenjangStudi: $('#' + id + "Cari").val(),
-                            IdFakultas: $('#fakultasCari').val()
-                        };
-                    },
-                    processResults: function (data, params) {
-                        return {
-                            results: $.map(data, function (item) { return { id: item.IDProdi, value: item.NamProdi, text: item.NamProdi + ' - ' + item.Lokasi, lokasi: item.Lokasi } })
-                        };
-                    },
-                }
-            });*/
+
 
             $("#prodiCari").select2({
                 placeholder: "-- Pilih Program Studi --",
@@ -231,7 +207,7 @@ function loadJenjangStudi(tipe, id, nama) {
                         };
                     },
                     processResults: function (data, params) {
-                        console.log(data);
+                        //console.log(data);
                         return {
                             results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
                         };
@@ -240,7 +216,6 @@ function loadJenjangStudi(tipe, id, nama) {
             });
 
             $("#prodiCari").change(function () {
-                //console.log("select2");
 
                 buttonHandler("close");
                 $("#lokasiCari").empty();
@@ -322,7 +297,8 @@ function loadJenjangStudi(tipe, id, nama) {
                         //multiple: true,
                         width: "100%",
                         ajax: {
-                            url: "/Admin/DaftarHadirUjian/GetMataKuliah",
+                            //url: "/Admin/DaftarHadirUjian/GetMataKuliah",
+                            url: "/Admin/JadwalKuliah/GetMataKuliahFlag",
                             type: 'POST',
                             dataType: 'json',
 
@@ -333,10 +309,14 @@ function loadJenjangStudi(tipe, id, nama) {
                                 return {
                                     take: 10,
                                     searchBy: params.term || "",
-                                    skip: params.page || 1,                                    
+                                    skip: params.page || 0,                                    
                                     //idProdi: $('#lokasiCari').select2('data')[0].id,
                                     idProdi: $('#prodiCari').val(),
-                                    idFakultas: $('#fakultasCari').val()
+                                    idProdi: $('#lokasiCari').select2('data')[0].id,
+                                    idFakultas: $('#fakultasCari').val(),
+                                    jenjangStudi: $('#jenjangCari').val(),
+                                    strm: $('#tahunAjaranCari').select2('data')[0].id,
+                                    lokasi: $('#lokasiCari').select2('data')[0].value
                                 };
                             },
 
@@ -348,7 +328,7 @@ function loadJenjangStudi(tipe, id, nama) {
 
 
                                 return {
-                                    results: $.map(data, function (item) { return { id: item.id, value: item.id, text: item.kode + ' - ' + item.text, name: item.text, kode: item.kode } }),
+                                    results: $.map(data, function (item) { return { id: item.MataKuliahID, value: item.MataKuliahID, text: item.KodeMataKuliah + ' - ' + item.NamaMataKuliah, name: item.NamaMataKuliah, kode: item.KodeMataKuliah } }),
                                     pagination: {
                                         more: data.length > 0 && data.length == 10
                                     }
@@ -440,7 +420,7 @@ function loadJenjangStudi(tipe, id, nama) {
                             //multiple: true,
                             width: "100%",
                             ajax: {
-                                url: "/DaftarHadirUjian/GetSection",
+                                url: "/Admin/DaftarHadirUjian/GetSection",
                                 type: 'POST',
                                 dataType: 'json',
                                 //quietMillis: 50,
@@ -496,15 +476,15 @@ function buttonHandler(param) {
 //---<> datatable
 $('#cari').click(function () {
 
-    console.log('halloo');
+    //console.log('halloo');
     reloadDatatable();
 });
 
 function reloadDatatable() {
-    console.log($('#lokasiCari').select2('data')[0].id);
+    /*console.log($('#lokasiCari').select2('data')[0].id);
     console.log($('#lokasiCari').select2('data')[0].Kampus);
     console.log($('#lokasiCari').select2('data')[0].kampus);
-    console.log($('#lokasiCari').val());
+    console.log($('#lokasiCari').val());*/
     var base_url = window.location.origin;
     var variable =
         'idProdi=' + $('#lokasiCari').select2('data')[0].id +
@@ -551,10 +531,11 @@ function reloadDatatable() {
                 "render": function (data, type, row, meta) {
                     return `<div class="row justify-content-center">
                             <div class="col" style="text-align:center">
-                                <a href="${base_url}/Admin/DaftarHadirUjian/PrintDHU/${data}"  style="color:black" target="_blank"> <i class="fas fa-print coral" ></i></a>
+                               
+                                <a javascript:void(0) onclick="printDHU(${data})"  style="color:black" target="_blank"> <i class="fas fa-print coral" ></i></a>
                             </div>
                         </div>`;
-                }//javascript:void(0) // onclick="printDHU()"
+                }//javascript:void(0) // onclick="printDHU()" /* <a href="${base_url}/Admin/DaftarHadirUjian/PrintDHU/${data}"  style="color:black" target="_blank"> <i class="fas fa-print coral" ></i></a>*/
             },
             {
                 //"title": "No",
@@ -576,7 +557,7 @@ function reloadDatatable() {
                 "data": "JenjangStudi",
                 "name": "JenjangStudi",
                 "render": function (data, type, row, meta) {
-                    return '<div class="center">' + data + '</div>';
+                    return '<div class="center">' + $('#jenjangCari').select2('data')[0].text + '</div>';
                 }
             },
 
@@ -669,60 +650,15 @@ function reloadDatatable() {
         //    //hide the second & fourth column
         //    { 'visible': false, 'targets': [5] }
         //]
+        //]
 
     });
-    /* datatable = $('#table-data-master-mapping-cpl').DataTable({
-        ajax: {
-            url: '@Url.Action("SearchList", "JadwalKuliah")?' + varibale,
-            dataSrc: ''
-        },
-        "columns": [
-            {
-                "data": "ID",
-                "render": function (data, type, row, meta) {
-                    return `<div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick="javascript:$('#idMatkul').val(${data}); $('#daftarMatkul').submit();"><i class="fas fa-edit"></i></a></div>`;
-                }
-            },
-            {
-                "data": null,
-                "render": function (data, type, full, meta) {
-                    return '<div style="text-align:center; vertical-align: middle;">' + (meta.row + 1) + '</div>';
-                }
-            },
-            {
-                "data": "KodeMataKuliah",
-                "render": function (data, type, row, meta) {
-                    return '<div style="text-align:center; vertical-align: middle;">' + data + '</div>';
-                }
-            },
-            {
-                "data": "NamaMataKuliah",
-                "render": function (data, type, row, meta) {
-                    return '<div class="center">' + data + '</div>';
-                }
-            },
-            {
-                "data": null,
-                "render": function (data, type, full, meta) {
-                    return meta.row + 1;
-                }
-            },
-            {
-                "data": null,
-                "render": function (data, type, full, meta) {
-                    return meta.row + 1;
-                }
-            },
-            {
-                "data": null,
-                "render": function (data, type, full, meta) {
-                    return meta.row + 1;
-                }
-            }
 
-        ]
-    });*/
+    setTimeout(function () {
+        controlTableResponsive();
+    }, 300);
 }
+
 
 
 
@@ -759,5 +695,14 @@ function isZooming() {
 
     } else {
         square.css('min-height', defaultH);
+    }
+}
+
+
+function controlTableResponsive() {
+    if (datatable.data().count() > 0) {
+        $('#table-data-daftar-hadir-ujian').addClass('table-responsive');
+    } else {
+        $('#table-data-daftar-hadir-ujian').removeClass('table-responsive');
     }
 }

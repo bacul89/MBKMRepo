@@ -80,79 +80,30 @@
     <div class="body-content split right">
         <nav>
             <ul class="nav split left">
-                <li>
-                    <a href="#" id="btn-1" data-toggle="collapse" data-target="#submenu1" aria-expanded="false"><i class="fas fa-hands-helping"></i> Manage Perjanjian Kerjasama</a>
-                    <ul class="nav collapse" id="submenu1" role="menu" aria-labelledby="btn-1">
-                        <li><a href="@Url.Action("Index","PerjanjianKerjasama")">Daftar Perjanjian Kerjasama</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" id="btn-1" data-toggle="collapse" data-target="#submenu2" aria-expanded="false"><i class="fas fa-book"></i> Perkuliahan MBKM</a>
-                    <ul class="nav collapse" id="submenu2" role="menu" aria-labelledby="btn-1">
-                        <li><a href="@Url.Action("Index","JadwalKuliah")">Jadwal Perkuliahan MBKM</a></li>
-                        <li><a href="@Url.Action("Index","JadwalUjian")">Jadwal Ujian MBKM</a></li>
-                        <li><a href="@Url.Action("Index","LinkFasilitasAdmin")">Link Fasilitas Perkuliahan</a></li>
-                        <li><a href="@Url.Action("Index","PresensiKelas")">Presensi Kelas</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" id="btn-1" data-toggle="collapse" data-target="#submenu3" aria-expanded="false"><i class="fas fa-user-friends"></i> Manage Mahasiswa</a>
-                    <ul class="nav collapse" id="submenu3" role="menu" aria-labelledby="btn-1">
-                        <li><a href="@Url.Action("Index","VerifikasiMahasiswa")">Verifikasi Mahasiswa</a></li>
-                        <li><a href="@Url.Action("Index","DaftarSeluruhMahasiswa")">Daftar Seluruh Mahasiswa</a></li>
-                        <li><a href="@Url.Action("Index","ApprovalPendaftaranMatakuliah")">Approval Pendaftaran Mata Kuliah</a></li>
-                        @*<li><a href="@Url.Action("Index","PresensiKelas")">Presensi Kelas</a></li>*@
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" id="btn-1" data-toggle="collapse" data-target="#submenu4" aria-expanded="false"><i class="fas fa-warehouse"></i> Administrasi MBKM</a>
-                    <ul class="nav collapse" id="submenu4" role="menu" aria-labelledby="btn-1">
-                        <li><a href="@Url.Action("Index","JadwalKuliah/manage")">Manage Mata Kuliah MBKM</a></li>
-                        <li><a href="@Url.Action("Index","ManageJadwalUjian")">Manage Ujian MBKM</a></li>
-                        <li><a href="@Url.Action("Index","DaftarHadirUjian")">Daftar Hadir Ujian</a></li>
-                        <li><a href="@Url.Action("Index","DaftarHadir")">Cetak DHK</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" id="btn-1" data-toggle="collapse" data-target="#submenu5" aria-expanded="false"><i class="fas fa-sign-out-alt"></i> Output MBKM</a>
-                    <ul class="nav collapse" id="submenu5" role="menu" aria-labelledby="btn-1">
-                        <li><a href="@Url.Action("Index","Penilaian")">Penilaian MBKM   </a></li>
-                        <li><a href="@Url.Action("Index","Transkrip")">Transkrip Nilai</a></li>
-                        <li><a href="@Url.Action("Index","MasterCPL")">Master CPL</a></li>
-                        <li><a href="@Url.Action("Index","MasterMapingCapaianPembelajaran")">Mapping CPL Per Mata Kuliah</a></li>
-                        <li><a href="@Url.Action("Index","SummaryFeedback")">Summary Feedback</a></li>
-                        <li><a href="@Url.Action("Index","SertifikatMBKM")">Sertifikat</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" id="btn-1" data-toggle="collapse" data-target="#submenu6" aria-expanded="false"><i class="fas fa-user-circle"></i> Roles Management</a>
-                    <ul class="nav collapse" id="submenu6" role="menu" aria-labelledby="btn-1">
-                        <li><a href="@Url.Action("Index","UserManage")">Manage Login User</a></li>
-                        <li><a href="@Url.Action("Index","MasterLookup")">Manage Master Lookup</a></li>
-                        <li><a href="@Url.Action("Index","TemplateEmail")">Manage Template Email</a></li>
-                        <li><a href="@Url.Action("Index","RegisMhsByAdmin")">Registrasi Mahasiswa MBKM</a></li>
-                        <li><a href="@Url.Action("Index","Role")">Manage Role</a></li>
-                        <li><a href="@Url.Action("Index","Menu")">Manage Menu</a></li>
-                        <li><a href="@Url.Action("Index","MenuRole")">Manage Menu Role</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" id="btn-1" data-toggle="collapse" data-target="#submenu7" aria-expanded="false"><i class="fas fa-paper-plane"></i> Reports Kompetensi MBKM</a>
-                    <ul class="nav collapse" id="submenu7" role="menu" aria-labelledby="btn-1">
-                        <li><a href="@Url.Action("Index","ReportCPLMatkul")">CPL Per Mata Kuliah</a></li>
-                        <li><a href="@Url.Action("Index","DaftarMatkul")">Daftar Mata Kuliah MBKM</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#" id="btn-1" data-toggle="collapse" data-target="#submenu8" aria-expanded="false"><i class="fas fa-user-circle"></i>Reports MBKM</a>
-                    <ul class="nav collapse" id="submenu8" role="menu" aria-labelledby="btn-1">
-                        <li><a href="@Url.Action("Index","ReportMahasiswaMBKM")">Rekap Mahasiswa MBKM</a></li>
-                        <li><a href="@Url.Action("Index","ReportMBKMInternalPertukaran")">MBKM Pertukaran Internal</a></li>
-                        <li><a href="@Url.Action("Index","ReportInternalKeluar")">MBKM Pertukaran Internal Ke Luar Atma Jaya</a></li>
-                        <li><a href="@Url.Action("Index","ReportMBKMEkternalPertukaran")">MBKM Pertukaran Eksternal</a></li>
-                        <li><a href="@Url.Action("Index","ReportMBKMNonPertukaran")">MBKM Non Pertukaran</a></li>
-                    </ul>
-                </li>
+                @{
+                    var menuParent = (List<MBKM.Entities.Models.Menu>)Session["MenuList"];
+                    var menuSub = (List<MBKM.Entities.Models.Menu>)Session["MenuListSub"];
+                    if (menuParent != null)
+                    {
+                        int i = 0;
+                        foreach (var parent in menuParent)
+                        {
+                            i++;
+                            string namsub = "submenu" +i.ToString();
+                            <li>
+                                <a href="@parent.MenuUrl" id="btn-1" data-toggle="collapse" data-target="#@namsub" aria-expanded="false"><i class="@parent.MenuIcon"></i> @parent.MenuName</a>
+                                <ul class="nav collapse" id="@namsub" role="menu" aria-labelledby="btn-1">
+                                    @foreach (var subMenu in (menuSub).Where(x => x.MenuParent == parent.ID.ToString()))
+                                    {
+
+                                        <li><a href="@subMenu.MenuUrl"> @subMenu.MenuName</a></li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+
+                    }
+                }
             </ul>
         </nav>
 

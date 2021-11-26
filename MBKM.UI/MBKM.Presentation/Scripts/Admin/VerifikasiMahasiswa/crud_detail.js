@@ -1,20 +1,37 @@
 ﻿var dataVerifikasi = {}
 
 $(document).ready(function () {
-    $('#inp_noKerjaSama').change(function () {
-        $.ajax({
-            url: '/Admin/VerifikasiMahasiswa/GetDataBiaya',
-            data: {
-                id: $('select[name="inp_noKerjaSama"] option').filter(':selected').val()
-            },
-            dataType: 'json',
-            type: 'post',
-            success: function (w) {
-                $('input[name=inp_biaya]').val(w.BiayaKuliah);
-                $('#inp_biaya').focus();
+    $('#inp_statusKerjaSama').change(function () {
+        if ($("#editVerifikasiButton").hasClass("hidden")) {
+            if ($('select[name="inp_statusKerjaSama"] option').filter(':selected').val().includes("TIDAK")) {
+                console.log("asdasd");
+                $('input[name=inp_biaya]').val(0).prop('disabled', true);
+                $('#inp_noKerjaSama option:eq(1)').val("");
+                $('select[name="inp_noKerjaSama"]').prop('disabled', true);
+
+            } else {
+                $('input[name=inp_biaya]').val(0).prop('disabled', false);;
+                $('select[name="inp_noKerjaSama"]').prop('disabled', false);
             }
-        })
+        }
+    })
+
+    
+    $('#inp_noKerjaSama').change(function () {
+            $.ajax({
+                url: '/Admin/VerifikasiMahasiswa/GetDataBiaya',
+                data: {
+                    id: $('select[name="inp_noKerjaSama"] option').filter(':selected').val()
+                },
+                dataType: 'json',
+                type: 'post',
+                success: function (w) {
+                    $('input[name=inp_biaya]').val(w.BiayaKuliah);
+                    $('#inp_biaya').focus();
+                }
+            })
     });
+    
 })
 
 function getValueOnForm() {
@@ -23,9 +40,14 @@ function getValueOnForm() {
     dataVerifikasi.FlagBayar = $("input[name=inp_pembayaran]:checked").val();
 
     var biayaTmp = $('input[name=inp_biaya]').val();
-    var biayaT1 = biayaTmp.split(" ");
-    var biayaT2 = biayaT1[1].split(",");
-    var final = biayaT2[0].replace(/\./g, "");
+    if (biayaTmp != 0) {
+        var biayaT1 = biayaTmp.split(" ");
+        var biayaT2 = biayaT1[1].split(",");
+        var final = biayaT2[0].replace(/\./g, "");
+    } else {
+        var final = biayaTmp;
+    }
+    
     dataVerifikasi.BiayaKuliah = final;
 
     var StatusVerifikasi = $('input[name=inp_verifikasi]:checked').val();

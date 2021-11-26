@@ -41,7 +41,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             var email = HttpContext.Session["emailMahasiswa"].ToString();
             var jenjang = _mahasiswaService.Find(x => x.Email == email).First().JenjangStudi;
-            var dataSemester = _mahasiswaService.GetDataSemester(jenjang).First().ID;
+            var dataSemester = _mahasiswaService.GetDataSemester(null).First().ID;
             ViewData["firstSemester"] = dataSemester.ToString();
             IEnumerable<VMSemester> data = _jadwalUjianMBKMService.getAllSemester();
             ViewData["semester"] = data;
@@ -52,9 +52,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult GetDataTable(int semester)
         {
             var email = HttpContext.Session["emailMahasiswa"].ToString();
-            /*var data1 = _pendaftaranMataKuliahService.Find(x => x.mahasiswas.Email == email && x.JadwalKuliahs.STRM == semester).ToList();*/
-            var data1 = _nilaiKuliahService.Find(x => x.Mahasiswas.Email == email && x.JadwalKuliahs.STRM == semester).ToList();
-            var DescSemester = _feedbackMatkulService.GetSemesterByStrm(data1.First().JadwalKuliahs.STRM.ToString());
+            var data1 = _pendaftaranMataKuliahService.Find(x => x.mahasiswas.Email == email && x.JadwalKuliahs.STRM == semester && x.StatusPendaftaran.ToLower().Contains("accepted")).ToList();
+
+            var DescSemester = _feedbackMatkulService.GetSemesterByStrm(semester.ToString());
             List<String[]> final = new List<String[]>();
            
             foreach (var d in data1)

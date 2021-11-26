@@ -14,11 +14,19 @@ $(document).ready(function () {
             {
                 "data": 0,
                 "render": function (data, type, row, meta) {
-                    return `<div class="row justify-content-center">
+                    if (row[6].includes("Sudah")) {
+                        return `<div class="row justify-content-center">
+                                <div class="col" style="text-align:center">
+                                    <a href="javascript:void(0)" style="color:black" onclick="Finished()"> <i class="fas fa-edit coral" ></i></a>
+                                 </div>
+                            </div>`;
+                    } else {
+                        return `<div class="row justify-content-center">
                                 <div class="col" style="text-align:center">
                                     <a href="javascript:void(0)" style="color:black" onclick="redirectData('${row[0]}','${row[7]}','${row[8]}')"> <i class="fas fa-edit coral" ></i></a>
                                  </div>
                             </div>`;
+                    }
                 }
             },
             {
@@ -165,4 +173,15 @@ $(document).ready(function () {
 
 function redirectData(id, ff, strm) {
     window.location.href = "/Portal/FeedBackMatakuliah/DetailFeedBackMatakuliah/?id=" + id + "&ff=" + ff + "&strm=" + strm;
+}
+function Finished() {
+    Swal.fire({
+        title: 'Oppss',
+        icon: 'error',
+        html: 'Anda sudah Melakukan Feedback Untuk Mata Kuliah Ini',
+        showCloseButton: true,
+        showCancelButton: false,
+        focusConfirm: false,
+        confirmButtonText: 'OK'
+    })
 }

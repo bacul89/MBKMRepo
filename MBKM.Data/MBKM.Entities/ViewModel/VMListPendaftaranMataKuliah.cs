@@ -34,6 +34,6 @@ namespace MBKM.Entities.ViewModel
         public virtual ICollection<CPLMatakuliah> CPLMatakuliahs { get; set; }*/
         public string StatusPendaftaran { get; set; }
 
-
+        public string noKerjasama { get; set; }
     }
 }

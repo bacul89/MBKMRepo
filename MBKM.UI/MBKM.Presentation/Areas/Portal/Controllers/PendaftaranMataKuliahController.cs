@@ -214,7 +214,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult GetNoKerjasamaByInstansi(string instansi, string idKerjasama, string search)
         {
-            return new ContentResult { Content = JsonConvert.SerializeObject(_perjanjianKerjasamaService.Find(pk => pk.NamaInstansi == instansi && pk.JenisKerjasama == idKerjasama && pk.NoPerjanjian.Contains(search)).ToList()), ContentType = "application/json" };
+            return new ContentResult { Content = JsonConvert.SerializeObject(_perjanjianKerjasamaService.Find(pk => pk.NamaInstansi == instansi && pk.JenisKerjasama == idKerjasama 
+            && pk.NoPerjanjian.Contains(search) && pk.TanggalAkhir >= DateTime.Now ).ToList()), ContentType = "application/json" };
         }
         public ActionResult GetInformasiPertukaran(int strm)
         {

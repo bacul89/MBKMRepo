@@ -24,8 +24,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private ICPLMatakuliahService _cPLMatakuliahService;
         private IUserService _userService;
         private IJadwalUjianMBKMService _jadwalUjianMBKMService;
+        private IFeedbackMatkulService _feedbackMatkulService;
 
-        public ApprovalPendaftaranMatakuliahController(IApprovalPendaftaranService approvalPendaftaranService, IPendaftaranMataKuliahService pendaftaranMataKuliahService, ICPLMKPendaftaranService cPLMKPendaftaranService, IInformasiPertukaranService informasiPertukaranService, IMahasiswaService mahasiswaService, ICPLMatakuliahService cPLMatakuliahService, IUserService userService, IJadwalUjianMBKMService jadwalUjianMBKMService)
+        public ApprovalPendaftaranMatakuliahController(IApprovalPendaftaranService approvalPendaftaranService, IPendaftaranMataKuliahService pendaftaranMataKuliahService, ICPLMKPendaftaranService cPLMKPendaftaranService, IInformasiPertukaranService informasiPertukaranService, IMahasiswaService mahasiswaService, ICPLMatakuliahService cPLMatakuliahService, IUserService userService, IJadwalUjianMBKMService jadwalUjianMBKMService, IFeedbackMatkulService feedbackMatkulService)
         {
             _approvalPendaftaranService = approvalPendaftaranService;
             _pendaftaranMataKuliahService = pendaftaranMataKuliahService;
@@ -35,7 +36,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             _cPLMatakuliahService = cPLMatakuliahService;
             _userService = userService;
             _jadwalUjianMBKMService = jadwalUjianMBKMService;
+            _feedbackMatkulService = feedbackMatkulService;
         }
+
+
 
         // GET: Admin/ApprovalPendaftaranMatakuliah
         public ActionResult Index()
@@ -74,7 +78,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 else if (tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("magang"))
                 {
                     ViewData["jenisProgram"] = "Non-Pertukaran";
-                    ViewData["jenisKegiatan"] = "magang";
+                    ViewData["jenisKegiatan"] = "Magang";
                 }
                 else if (tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("internal") && tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("luar"))
                 {
@@ -87,7 +91,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     ViewData["jenisKegiatan"] = tmpInformasiPertukaran.JenisPertukaran;
                 }
 
-                if (data.CPLMatakuliahID != null)
+                if (data.CPLMatakuliahID != null && !tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("internal ke luar"))
                 {
                     IList<CPLMatakuliah> tempIDAsal = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.CPLMatakuliahs.IDMataKUliah).ToList();
                     IList<CPLMatakuliah> capaianAsal = tempIDAsal.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == data.PendaftaranMataKuliahs.JadwalKuliahs.ProdiID).ToList();
@@ -99,11 +103,6 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 }
                 else if (tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("internal") && tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("luar"))
                 {
-                    IList<CPLMatakuliah> tempIDAsal = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.CPLMatakuliahs.IDMataKUliah).ToList();
-                    IList<CPLMatakuliah> capaianAsal = tempIDAsal.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == data.PendaftaranMataKuliahs.JadwalKuliahs.ProdiID).ToList();
-                    ViewData["capaianTujuan"] = capaianAsal;
-                    ViewData["countCPTujuan"] = capaianAsal.Count();
-
                     ViewData["capaianAsal"] = capaianTujuan;
                     ViewData["countCPAsal"] = capaianTujuan.Count();
                 }
@@ -114,13 +113,49 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 }
 
             }
+
+            ViewData["semesterMahasiswa"] = _feedbackMatkulService.GetSemesterByStrm(data.PendaftaranMataKuliahs.JadwalKuliahs.STRM.ToString()).Nama;
+
+            if (data.PendaftaranMataKuliahs.mahasiswas.NoKerjasama == null)
+            {
+                var informasiNoKerjasama = _informasiPertukaranService.Find(x => x.MahasiswaID == data.PendaftaranMataKuliahs.MahasiswaID).FirstOrDefault();
+                if(informasiNoKerjasama == null || informasiNoKerjasama.NoKerjasama == null)
+                {
+                    ViewData["InformasiKerjasama"] = "-";
+                }
+                else
+                {
+                    ViewData["InformasiKerjasama"] = informasiNoKerjasama.NoKerjasama;
+                }
+            }
+            else
+            {
+
+                ViewData["InformasiKerjasama"] = data.PendaftaranMataKuliahs.mahasiswas.NoKerjasama;
+            }
+
             return View(data);
         }
         
         [HttpPost]
         public JsonResult GetAllApprovalPMK(DataTableAjaxPostModel model, int strm)
         {
-            var data = _pendaftaranMataKuliahService.GetPendaftaranMahasiswaDataTable(model, strm);
+
+            var prodi = HttpContext.Session["NamaProdi"].ToString();
+            VMListPendaftaranMataKuliah data = new VMListPendaftaranMataKuliah();
+            var Role = HttpContext.Session["RoleName"].ToString();
+            if(Role.ToLower().Contains("wakil rektor"))
+            {
+                data = _pendaftaranMataKuliahService.GetPendaftaranMahasiswaDataTable(model, strm, "", Role);
+            }
+            else if (Role.ToLower().Contains("kepala program"))
+            {
+                 data = _pendaftaranMataKuliahService.GetPendaftaranMahasiswaDataTable(model, strm, prodi, Role);
+            }
+            else
+            {
+                 data = _pendaftaranMataKuliahService.GetPendaftaranMahasiswaDataTable(model, strm, "", "");
+            }
 
             return Json(new
                 {

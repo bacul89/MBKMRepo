@@ -46,6 +46,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         Session["email"] = modeldata.Email;
                         Session["RoleName"] = modeldata.Roles.RoleName;
                         Session["RoleID"] = modeldata.RoleID.ToString();
+                        Session["NamaProdi"] = modeldata.NamaProdi.ToString();
                         return RedirectToAction("Index", "Home");
                     }
                     else
@@ -66,6 +67,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             Session["username"] = null;
             Session["nopegawai"] = null;
             Session["email"] = null;
+            Session["MenuList"] = null;
+            Session["NamaProdi"] = null;
             return RedirectToAction("Login", "AdminLogin");
         }
     }

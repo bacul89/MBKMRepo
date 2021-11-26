@@ -43,21 +43,28 @@
                     <input type="password" class="form-control input-pendaftaran input-data" id="txtpassword" placeholder="Input Password">
                 </div>
             </div>
-            <div class="form-group row">
+            <div id="divRole" class="form-group row">
                 @if (ViewBag.listJabatan != null)
                 {
                     <label for="IdRole" class="col-sm-3 control-label">Jabatan</label>
                     <div class="col-sm-9">
-                        @Html.DropDownListFor(model => model.Nilai, ViewBag.listJabatan as SelectList, "--Pilih Jabatan--", new { @class = "form-control input-pendaftaran input-data", @id = "idRole", @name= "idRole" })
+                        @Html.DropDownListFor(model => model.Nilai, ViewBag.listJabatan as SelectList, "--Pilih Jabatan--", new { @class = "form-control input-pendaftaran input-data", @id = "idRole", @name = "idRole" })
                     </div>
                 }
             </div>
-            <div class="form-group row">
+            <div id="divSpecialRole" class="form-group row" hidden>
+                <label class="col-sm-3 control-label" >tempelIfNotKaprodi</label>
+                <div class="col-sm-9">
+                    <input type="text" value="" class="form-control input-pendaftaran" disabled="disabled" id="specialRole" name="specialRole">
+
+                </div>
+            </div>
+            <div id="divProdi" class="form-group row">
                 @if (ViewBag.listProdi != null)
                 {
                     <label for="idProdi" class="col-sm-3 control-label">Prodi</label>
                     <div class="col-sm-9">
-                       @* @Html.DropDownList("IDProdiAndNamaProdi", ViewBag.listProdi as SelectList, "First Option", new { name = "Name", id = "id" })*@
+                        @* @Html.DropDownList("IDProdiAndNamaProdi", ViewBag.listProdi as SelectList, "First Option", new { name = "Name", id = "id" })*@
                         @Html.DropDownListFor(model => model.Nama, ViewBag.listProdi as SelectList, "--Pilih Prodi/unit--", new { @class = "form-control input-pendaftaran input-data", @id = "idProdi", @name = "idProdi" })
                     </div>
                 }
@@ -66,7 +73,7 @@
                 <label for="inp_status" class="col-sm-3 control-label">Status</label>
                 <div class="col-sm-9">
                     <label class="radio-inline input-pendaftaran">
-                        <input type="radio" name="inpStatus" id="inp_status" value="1"> Aktif
+                        <input type="radio" name="inpStatus" id="inp_status" value="1" checked> Aktif
                     </label>
                     <label class="radio-inline input-pendaftaran">
                         <input type="radio" name="inpStatus" id="inp_status" value="0"> Tidak Aktif

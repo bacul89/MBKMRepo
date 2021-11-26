@@ -118,11 +118,20 @@ function reloadDatatable() {
                 "title": "MBKM",
                 "data": "ID",
                 "render": function (data, type, row, meta) {
-                    return `<div class="row justify-content-center">
+                    if (row.FlagOpen == true) {
+                        return `<div class="row justify-content-center">
+                            <div class="col" style="text-align:center">
+                                <input type="checkbox" id="mbkm-flag" checked disabled value="${data}">
+                            </div>
+                        </div>`;
+                    } else {
+                        return `<div class="row justify-content-center">
                             <div class="col" style="text-align:center">
                                 <input type="checkbox" id="mbkm-flag" value="${data}">
                             </div>
-                        </div>`;//<a href="javascript:void(0)" style="color:black" onclick="DeleteUserGetID('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
+                        </div>`;
+                    }
+                    //<a href="javascript:void(0)" style="color:black" onclick="DeleteUserGetID('${data}')">  <i class="fas fa-trash-alt coral"></i></a>
                     //<a href="javascript:void(0)" style="color:black" onclick="DetailMasterCPL('${data}')"> <i class="fas fa-file-search coral"></i></a>
                 }
             },
@@ -138,6 +147,9 @@ function reloadDatatable() {
         }*/
     });
 
+    setTimeout(function () {
+        controlButtonAdd();
+    }, 300);
 }
 
 
@@ -156,7 +168,7 @@ $('#add').click(function () {
     });
 
 
-    console.log(list);
+    //console.log(list);
     swal.fire({
         title: "Apakah Anda Yakin \n Submit Jadwal Untuk Perkuliah MBKM ?",
         type: "warning",
@@ -216,5 +228,17 @@ $('#add').click(function () {
     })
 
 
-
 });
+
+
+function controlButtonAdd(){
+    console.log(datatable.data().count());
+    if (datatable.data().count() > 0) {
+        $('#add').removeAttr("disabled");
+        $('#add').removeAttr("title");
+    } else {
+        $('#add').attr("disabled", "disabled");
+        //$().attr("disabled", "disabled");
+        $('#add').attr("title", "Mata Kuliah tidak ditemukan!");
+    }
+}

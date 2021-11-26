@@ -76,7 +76,7 @@ var dataTable = $('#table-data-email-template').DataTable({
                 return '<div class="center">' + data + '</div>';
             }
         },
-        {
+        /*{
             "data": "IsActive",
             "render": function (data, type, row, meta) {
                 if (data) {
@@ -86,7 +86,7 @@ var dataTable = $('#table-data-email-template').DataTable({
                 }
 
             }
-        },
+        },*/
     ],
     "createdRow": function (row, data, index) {
         $('td', row).css({

@@ -11,6 +11,8 @@ using MBKM.Presentation.Helper;
 using System.Web;
 using System.Web.Mvc;
 using Rotativa;
+using MBKM.Entities.Models.MBKM;
+using OfficeOpenXml.Drawing;
 
 namespace MBKM.Presentation.Areas.Admin.Controllers
 {
@@ -23,8 +25,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private IFeedbackMatkulService _feedbackMatkulService;
         private IJadwalKuliahService _jadwalKuliahService;
         private IJadwalUjianMBKMService _jadwalUjianMBKMService;
+        private INilaiKuliahService _nilaiKuliahService;
 
-        public ReportMBKMInternalPertukaranController(IPendaftaranMataKuliahService pendaftaranMataKuliahService, IMahasiswaService mahasiswaService, IInformasiPertukaranService informasiPertukaranService, IFeedbackMatkulService feedbackMatkulService, IJadwalKuliahService jadwalKuliahService, IJadwalUjianMBKMService jadwalUjianMBKMService)
+        public ReportMBKMInternalPertukaranController(IPendaftaranMataKuliahService pendaftaranMataKuliahService, IMahasiswaService mahasiswaService, IInformasiPertukaranService informasiPertukaranService, IFeedbackMatkulService feedbackMatkulService, IJadwalKuliahService jadwalKuliahService, IJadwalUjianMBKMService jadwalUjianMBKMService, INilaiKuliahService nilaiKuliahService)
         {
             _pendaftaranMataKuliahService = pendaftaranMataKuliahService;
             _mahasiswaService = mahasiswaService;
@@ -32,7 +35,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             _feedbackMatkulService = feedbackMatkulService;
             _jadwalKuliahService = jadwalKuliahService;
             _jadwalUjianMBKMService = jadwalUjianMBKMService;
+            _nilaiKuliahService = nilaiKuliahService;
         }
+
+
 
         // GET: Admin/ReportMBKMInternalPertukaran
         public ActionResult Index()
@@ -45,12 +51,30 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
         public ActionResult DataTable(int strm)
         {
+
             var dataMahasiswa = _pendaftaranMataKuliahService.GetListPendaftaranInternalPertukaran(strm);
             var dataSemester = _feedbackMatkulService.GetSemesterByStrm(strm.ToString());
 
             List<String[]> final = new List<String[]>();
             foreach (var d in dataMahasiswa)
             {
+
+                var checkNilaiDiakui = new VMNilaiDiakui();
+                var nilaiDiakui = " ";
+                var nilaiBobotDiakui = new VMNilaiGrade();
+               
+                checkNilaiDiakui = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.JadwalKuliahs.MataKuliahID, d.JadwalKuliahs.KodeMataKuliah, d.mahasiswas.ID.ToString());
+                if (checkNilaiDiakui == null)
+                {
+                    nilaiDiakui = "-";
+                    nilaiBobotDiakui.GRADE_POINTS = "-";
+                }
+                else
+                {
+                    nilaiDiakui = checkNilaiDiakui.NilaiDiakui;
+                    nilaiBobotDiakui.GRADE_POINTS = checkNilaiDiakui.BobotDiakui;
+                }
+                
                 final.Add(new String[]{
                     dataSemester.Nama,
                     d.JadwalKuliahs.JenjangStudi,
@@ -60,12 +84,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     d.JadwalKuliahs.KodeMataKuliah,
                     d.JadwalKuliahs.NamaMataKuliah,
                     d.JadwalKuliahs.SKS,
-                    d.NilaiKuliah.Grade,
+                    nilaiDiakui,
                     d.MatkulKodeAsal,
                     d.MatkulAsal,
-                    "A",
-                    "4.00"
+                    nilaiDiakui,
+                    nilaiBobotDiakui.GRADE_POINTS
                 });
+
             }
             return Json(final);
         }
@@ -79,6 +104,22 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             List<String[]> final = new List<String[]>();
             foreach (var d in dataMahasiswa)
             {
+                var checkNilaiDiakui = new VMNilaiDiakui();
+                var nilaiDiakui = " ";
+                var nilaiBobotDiakui = new VMNilaiGrade();
+                
+                checkNilaiDiakui = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.JadwalKuliahs.MataKuliahID, d.JadwalKuliahs.KodeMataKuliah, d.mahasiswas.ID.ToString());
+                if (checkNilaiDiakui == null)
+                {
+                    nilaiDiakui = "-";
+                    nilaiBobotDiakui.GRADE_POINTS = "-";
+                }
+                else
+                {
+                    nilaiDiakui = checkNilaiDiakui.NilaiDiakui;
+                    nilaiBobotDiakui.GRADE_POINTS = checkNilaiDiakui.BobotDiakui;
+                }
+                
                 final.Add(new String[]{
                     dataSemester.Nama,
                     d.JadwalKuliahs.JenjangStudi,
@@ -88,11 +129,11 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     d.JadwalKuliahs.KodeMataKuliah,
                     d.JadwalKuliahs.NamaMataKuliah,
                     d.JadwalKuliahs.SKS,
-                    d.NilaiKuliah.Grade,
+                    nilaiDiakui,
                     d.MatkulKodeAsal,
                     d.MatkulAsal,
-                    "A",
-                    "4.00"
+                    nilaiDiakui,
+                    nilaiBobotDiakui.GRADE_POINTS
                 });
             }
             var semesterSekarang = dataSemester.Nama.Split(' ');
@@ -118,87 +159,144 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
         public ActionResult GetFileExcel(int id)
         {
-            var dataMahasiswa = _pendaftaranMataKuliahService.GetListPendaftaranInternalPertukaran(id);
-            var dataSemester = _feedbackMatkulService.GetSemesterByStrm(id.ToString());
-
-            List<String[]> final = new List<String[]>();
-            foreach (var d in dataMahasiswa)
-            {
-                final.Add(new String[]{
-                    dataSemester.Nama,
-                    d.JadwalKuliahs.JenjangStudi,
-                    d.mahasiswas.NIM,
-                    d.mahasiswas.Nama,
-                    d.JadwalKuliahs.NamaProdi,
-                    d.JadwalKuliahs.KodeMataKuliah,
-                    d.JadwalKuliahs.NamaMataKuliah,
-                    d.JadwalKuliahs.SKS,
-                    d.NilaiKuliah.Grade,
-                    d.MatkulKodeAsal,
-                    d.MatkulAsal,
-                    "A",
-                    "4.00"
-                });
-            }
+            var result = new List<VMReportMahasiswaInternal>();
+            result = _pendaftaranMataKuliahService.GetListPendaftaranInternalPertukaran(id).ToList();
+            IEnumerable<VMReportMahasiswaInternal> dataMahasiswa = _pendaftaranMataKuliahService.GetListPendaftaranInternalPertukaran(id);
+            var dataSemester = _feedbackMatkulService.GetSemesterByStrm(id.ToString());            
 
             ExcelPackage package = new ExcelPackage();
-
             var ws = package.Workbook.Worksheets.Add("REPORT MAHASISWA INTERNAL PERTUKARAN MBKM");
 
+            double columnWidth = 2;
+            ws.Column(1).Width = columnWidth;
+            ws.Column(8).Width = columnWidth;
+            int RowIndex = 0;
+            int ColIndex = 0;
 
-            ws.Cells["A1:A2"].Merge = true;
-            ws.Cells["A1"].Value = "No.";
-            ws.Cells["B1:B2"].Merge = true;
-            ws.Cells["B1"].Value = "Tahun Semester";
-            ws.Cells["C1:C2"].Merge = true;
-            ws.Cells["C1"].Value = "Jenjang";
-            ws.Cells["D1:D2"].Merge = true;
-            ws.Cells["D1"].Value = "NIM";
-            ws.Cells["E1:E2"].Merge = true;
-            ws.Cells["E1"].Value = "Nama Mahasiswa";
-            ws.Cells["F1:M1"].Merge = true;
-            ws.Cells["F1"].Value = "Nilai Transfer";
-            ws.Cells["F2"].Value = "Kode Mata Kuliah Asal";
-            ws.Cells["G2"].Value = "Nama Mata Kuliah Asal";
-            ws.Cells["H2"].Value = "SKS";
-            ws.Cells["I2"].Value = "Nilai Huruf Asal";
-            ws.Cells["J2"].Value = "Kode Mata Kuliah Diakui";
-            ws.Cells["K2"].Value = "Nama Mata Kuliah Diakui";
-            ws.Cells["L2"].Value = "Nilai Huruf Matakuliah Diakui";
-            ws.Cells["M2"].Value = "Bobot Huruf";
-            ws.Cells["A1:M2"].AutoFitColumns();
+            //Image.FromFile(@"D:\sample.png");
+            /*int Width = 320;
+            int Height = 200;*/
+
+            var dir = Server.MapPath("~/Asset");
+            var path = Path.Combine(dir, "Lambang_Unika_Atma_Jaya.png"); //validate the path for security or use other means to generate the path.
+            Image imageView = Image.FromFile(path);
+
+            ExcelPicture pic = ws.Drawings.AddPicture("Logo", imageView);
+            pic.SetPosition(RowIndex, 2, ColIndex, 15);
+            pic.SetSize(180, 70);
+
+
+            //ws.Column().AddPicture("Picture_Name", img);
+
+
+            ws.Cells["A1:B2"].Merge = true;
+            ws.Cells["C1:I1"].Merge = true;
+            ws.Cells["C2:I2"].Merge = true;
+            ws.Cells["C3:I4"].Merge = true;
+            //ws.Cells["Q1:Q2"].Merge = true;
+
+            ws.Row(1).Height = 15;
+            ws.Row(2).Height = 26;
+            ws.Column(1).Width = 17;
+
+            ws.Cells["C2:I3"].Style.Font.Bold = true;
+            ws.Cells["C2:I3"].Style.Font.Size = 15;
+            /*ws.Cells["B2:I3"].Style.WrapText = true;*/
+            ws.Cells["C2:I3"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+            /*ws.Cells["C2:I2"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;*/
+           /* ws.Cells["A3:I4"].Style.Font.Bold = true;*/
+
+/*            ws.Cells["C1"].Value = "UNIVERSITAS KATOLIK INDONESIA";
+            ws.Cells["C2"].Value = "ATMA JAYA";*/
+            ws.Cells["C2"].Value = "FORMULIR \nMATRIKS REPORT MAHASISWA INTERNAL PERTUKARAN MBKM";
+
+            ws.Cells["A6:N6"].Style.Font.Bold = true;
+            ws.Cells["A6:N6"].Style.Border.Top.Style = ExcelBorderStyle.Thick;
+            ws.Cells["A6:N6"].Style.Border.Bottom.Style = ExcelBorderStyle.Thick;
+            ws.Cells["A6:N6"].Style.Border.Left.Style = ExcelBorderStyle.Thick;
+            ws.Cells["A6:N6"].Style.Border.Right.Style = ExcelBorderStyle.Thick;
+            ws.Cells["A6:N6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Cells["A3:I4"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+            ws.Cells["A3:I4"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+
+            ws.Cells["A6:A7"].Merge = true;
+            ws.Cells["A6"].Value = "No.";
+            ws.Cells["B6:B7"].Merge = true;
+            ws.Cells["B6"].Value = "Tahun Semester";
+            ws.Cells["C6:C7"].Merge = true;
+            ws.Cells["C6"].Value = "Jenjang";
+            ws.Cells["D6:D7"].Merge = true;
+            ws.Cells["D6"].Value = "NIM";
+            ws.Cells["E6:E7"].Merge = true;
+            ws.Cells["E6"].Value = "Nama Mahasiswa"; 
+            ws.Cells["F6:F7"].Merge = true;
+            ws.Cells["F6"].Value = "Nama Prodi";
+            ws.Cells["G6:N6"].Merge = true;
+            ws.Cells["G6"].Value = "Nilai Transfer";
+            ws.Cells["G7"].Value = "Kode Mata Kuliah Asal";
+            ws.Cells["H7"].Value = "Nama Mata Kuliah Asal";
+            ws.Cells["I7"].Value = "SKS";
+            ws.Cells["J7"].Value = "Nilai Huruf Asal";
+            ws.Cells["K7"].Value = "Kode Mata Kuliah Diakui";
+            ws.Cells["L7"].Value = "Nama Mata Kuliah Diakui";
+            ws.Cells["M7"].Value = "Nilai Huruf Matakuliah Diakui";
+            ws.Cells["N7"].Value = "Bobot Huruf";
+            ws.Cells["A6:N7"].AutoFitColumns();
             var IndexTotal = 0;
 
-            for (int i = 0; i < final.Count; i++)
+            for (int i = 0; i < result.Count; i++)
             {
+
                 IndexTotal = IndexTotal + 1;
-                var tmp = final[i];
-                ws.Cells["A" + (i + 3)].Value = (i + 1);
-                ws.Cells["B" + (i + 3)].Value = tmp[0];
-                ws.Cells["C" + (i + 3)].Value = tmp[1];
-                ws.Cells["D" + (i + 3)].Value = tmp[2];
-                ws.Cells["E" + (i + 3)].Value = tmp[3];
-                ws.Cells["F" + (i + 3)].Value = tmp[4];
-                ws.Cells["G" + (i + 3)].Value = tmp[5];
-                ws.Cells["H" + (i + 3)].Value = tmp[6];
-                ws.Cells["I" + (i + 3)].Value = tmp[7];
-                ws.Cells["J" + (i + 3)].Value = tmp[8];
-                ws.Cells["K" + (i + 3)].Value = tmp[9];
-                ws.Cells["L" + (i + 3)].Value = tmp[10];
-                ws.Cells["M" + (i + 3)].Value = tmp[11];
+                var tmp = result[i];
+                var checkNilai2 = new VMNilaiDiakui();
+                var nilaiDiakui = " ";
+                var nilaiBobotDiakui = new VMNilaiGrade();
+                
+                checkNilai2 = _nilaiKuliahService.GetNilaiDiakui(tmp.JadwalKuliahs.JenjangStudi, tmp.JadwalKuliahs.STRM.ToString(), tmp.JadwalKuliahs.MataKuliahID, tmp.JadwalKuliahs.KodeMataKuliah, tmp.mahasiswas.ID.ToString());
+                if (checkNilai2 == null)
+                {
+                    nilaiDiakui = "-";
+                    nilaiBobotDiakui.GRADE_POINTS = "-";
+                }
+                else
+                {
+                    nilaiDiakui = checkNilai2.NilaiDiakui;
+                    nilaiBobotDiakui.GRADE_POINTS = checkNilai2.BobotDiakui;
+                }
+                
+
+
+                ws.Cells["A" + (i + 8)].Value = (i + 1);
+                ws.Cells["B" + (i + 8)].Value = dataSemester.Nama;
+                ws.Cells["C" + (i + 8)].Value = tmp.JadwalKuliahs.JenjangStudi;
+                ws.Cells["D" + (i + 8)].Value = tmp.mahasiswas.NIM;
+                ws.Cells["E" + (i + 8)].Value = tmp.mahasiswas.Nama;
+                ws.Cells["F" + (i + 8)].Value = tmp.JadwalKuliahs.NamaProdi;
+                ws.Cells["G" + (i + 8)].Value = tmp.JadwalKuliahs.KodeMataKuliah;
+                ws.Cells["H" + (i + 8)].Value = tmp.JadwalKuliahs.NamaMataKuliah;
+                ws.Cells["I" + (i + 8)].Value = tmp.JadwalKuliahs.SKS;
+
+                ws.Cells["J" + (i + 8)].Value = nilaiDiakui;
+                ws.Cells["K" + (i + 8)].Value = tmp.MatkulKodeAsal;
+                ws.Cells["L" + (i + 8)].Value = tmp.MatkulAsal;
+                ws.Cells["M" + (i + 8)].Value = nilaiDiakui;
+                ws.Cells["N" + (i + 8)].Value = nilaiBobotDiakui.GRADE_POINTS;
+                
+                
                 ws.Cells[ws.Dimension.Address].AutoFitColumns();
             }
 
-            ws.Cells["A1:M2"].Style.Border.Top.Style = ExcelBorderStyle.Hair;
-            ws.Cells["A1:M2"].Style.Border.Right.Style = ExcelBorderStyle.Hair;
-            ws.Cells["A1:M2"].Style.Border.Bottom.Style = ExcelBorderStyle.Hair;
-            ws.Cells["A1:M2"].Style.Border.Left.Style = ExcelBorderStyle.Hair;
+            ws.Cells["A6:N7"].Style.Border.Top.Style = ExcelBorderStyle.Hair;
+            ws.Cells["A6:N7"].Style.Border.Right.Style = ExcelBorderStyle.Hair;
+            ws.Cells["A6:N7"].Style.Border.Bottom.Style = ExcelBorderStyle.Hair;
+            ws.Cells["A6:N7"].Style.Border.Left.Style = ExcelBorderStyle.Hair;
 
-            ws.Cells["A:M"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            ws.Cells["A1:M2"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-            ws.Cells["A1:M2"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-            ws.Cells["A1:M2"].Style.Fill.PatternType = ExcelFillStyle.Solid;
-            ws.Cells["A1:M2"].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
+            ws.Cells["A:N"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Cells["A6:N7"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ws.Cells["A6:N7"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+            ws.Cells["A6:N7"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+            ws.Cells["A6:N7"].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
 
 
             var fileDownloadName = "Report Nilai Mahasiswa Internal Pertukaran MBKM.xlsx";

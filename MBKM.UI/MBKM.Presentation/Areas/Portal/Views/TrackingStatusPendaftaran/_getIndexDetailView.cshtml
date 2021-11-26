@@ -14,146 +14,254 @@
         </h5>
     </div>
     <div class="modal-body">
-        <div class="container" style="width: 100%; padding-bottom: 15px;">
-            <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
-                <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">MATA KULIAH TUJUAN</h5>
-                <input type="hidden" value="@ViewData["disabled"].ToString()" id="statusDisable" disabled />
-                <form class="form-horizontal">
-                    <div class="row">
-                        <div class="col-sm-4 text-right">
-                            <h4>Fakultas &nbsp:</h4>
-                        </div>
-                        <div class="col-sm-8">
-                            <h4>@Model.JadwalKuliahs.NamaFakultas</h4>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4 text-right">
-                            <h4>Program Studi &nbsp:</h4>
-                        </div>
-                        <div class="col-sm-8">
-                            <h4>@Model.JadwalKuliahs.NamaProdi</h4>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4 text-right">
-                            <h4>Lokasi &nbsp:</h4>
-                        </div>
-                        <div class="col-sm-8">
-                            <h4>@Model.JadwalKuliahs.Lokasi</h4>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4 text-right">
-                            <h4>Kode Mata Kuliah &nbsp:</h4>
-                        </div>
-                        <div class="col-sm-8">
-                            <h4>@Model.JadwalKuliahs.KodeMataKuliah</h4>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4 text-right">
-                            <h4>Nama Mata Kuliah &nbsp:</h4>
-                        </div>
-                        <div class="col-sm-8">
-                            <h4>@Model.JadwalKuliahs.NamaMataKuliah</h4>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4 text-right">
-                            <h4>SKS &nbsp:</h4>
-                        </div>
-                        <div class="col-sm-8">
-                            <h4>@Model.JadwalKuliahs.SKS</h4>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4 text-right">
-                            <h4>Seksi &nbsp:</h4>
-                        </div>
-                        <div class="col-sm-8">
-                            <h4>@Model.JadwalKuliahs.ClassSection</h4>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4 text-right">
-                            <h4>Hari &nbsp:</h4>
-                        </div>
-                        <div class="col-sm-8">
-                            <h4>@Model.JadwalKuliahs.Hari</h4>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4 text-right">
-                            <h4>Waktu &nbsp:</h4>
-                        </div>
-                        <div class="col-sm-8">
-                            <h4>@Model.JadwalKuliahs.JamMasuk - @Model.JadwalKuliahs.JamSelesai</h4>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4 text-right">
-                            <h4>Nama Dosen &nbsp:</h4>
-                        </div>
-                        <div class="col-sm-8">
-                            <h4>@Model.JadwalKuliahs.NamaDosen</h4>
-                        </div>
+        @{
+            if (ViewData["mahasiswaInternalKeluar"].ToString() == "True")
+            {
+                <div class="container" style="width: 100%; padding-bottom: 15px;">
+                    <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
+                        <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">MATA KULIAH TUJUAN</h5>
+                        <input type="hidden" value="@ViewData["disabled"].ToString()" id="statusDisable" disabled />
+                        <form class="form-horizontal">
+                            <div class="row">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Mata Kuliah &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>@Model.MatkulAsal</h4>
+                                </div>
+                            </div>
+                            <br />
+                        </form>
                     </div>
                     <br />
-                </form>
-            </div>
-            <br />
-            <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
-                <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">MATA KULIAH ASAL</h5>
-                <form class="form-horizontal">
-                    <div class="row">
-                        <div class="col-sm-4 text-right">
-                            <h4>Mata Kuliah &nbsp:</h4>
-                        </div>
-                        <div class="col-sm-8">
-                            <h4>@Model.MatkulAsal</h4>
-                        </div>
+                    <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
+                        <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">MATA KULIAH ASAL</h5>
+                        <form class="form-horizontal">
+                            <div class="row">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Fakultas &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>@Model.JadwalKuliahs.NamaFakultas</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Program Studi &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>@Model.JadwalKuliahs.NamaProdi</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Lokasi &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>@Model.JadwalKuliahs.Lokasi</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Kode Mata Kuliah &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <h4>@Model.JadwalKuliahs.KodeMataKuliah</h4>
+                                </div>
+                            </div>
+                            <br />
+                        </form>
                     </div>
                     <br />
-                </form>
-            </div>
-            <br />
-            <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
-                <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">STATUS PENDAFTARAN</h5>
-                <form class="form-horizontal">
-                    
-                    <div class="row">
-                        <div class="col-sm-4 text-right">
-                            <h4>Status &nbsp:</h4>
-                        </div>
-                        <div class="col-sm-8">
-                            <a id="linkDetail" onclick="redirectToDetail('@Model.ID')" href="javascript:void();"><button type="button" class="btn btn-warning btn-sm onOff">Lihat</button></a>
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <div class="col-sm-4 text-right">
-                            <h4>Status Pendaftaran &nbsp:</h4>
-                        </div>
-                        <div class="col-sm-7">
-                            @{
-                                foreach (var data in ViewData["status"] as IList<MBKM.Entities.Models.MBKM.ApprovalPendaftaran>)
-                                {
-                                    if (ViewData["lastStatus"] != data.StatusPendaftaran)
-                                    {
-                                        <div class="col-sm-12 center">||</div>
+                    <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
+                        <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">STATUS PENDAFTARAN</h5>
+                        <form class="form-horizontal">
 
-                                    }
-                                    <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate; @{if (ViewData["lastStatus"] != data.StatusPendaftaran) { <text> background-color:lightgrey;</text>} } ">
-                                        <h4>@data.StatusPendaftaran</h4>
-                                    </div>
-                                }
-                            }
-                        </div>
+                            <div class="row">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Status &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-8">
+                                    <a id="linkDetail" onclick="redirectToDetail('@Model.ID')" href="javascript:void();"><button type="button" class="btn btn-warning btn-sm onOff">Lihat</button></a>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-4 text-right">
+                                    <h4>Status Pendaftaran &nbsp:</h4>
+                                </div>
+                                <div class="col-sm-7">
+                                    @{
+                                        foreach (var data in ViewData["status"] as IList<MBKM.Entities.Models.MBKM.ApprovalPendaftaran>)
+                                        {
+                                            if (ViewData["lastStatus"] != data.StatusPendaftaran)
+                                            {
+                                                <div class="col-sm-12 center">||</div>
+
+                                            }
+                                            <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate; @{if (ViewData["lastStatus"] != data.StatusPendaftaran) { <text> background-color:lightgrey;</text>} } ">
+                                                <h4>@data.StatusPendaftaran</h4>
+                                            </div>
+                                        }
+
+
+}
+                                </div>
+                            </div>
+                            <br />
+                        </form>
                     </div>
-                    <br />
-                </form>
-            </div>
+                </div>
+            }
+            else
+            {
+    <div class="container" style="width: 100%; padding-bottom: 15px;">
+        <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
+            <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">MATA KULIAH TUJUAN</h5>
+            <input type="hidden" value="@ViewData["disabled"].ToString()" id="statusDisable" disabled />
+            <form class="form-horizontal">
+                <div class="row">
+                    <div class="col-sm-4 text-right">
+                        <h4>Fakultas &nbsp:</h4>
+                    </div>
+                    <div class="col-sm-8">
+                        <h4>@Model.JadwalKuliahs.NamaFakultas</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 text-right">
+                        <h4>Program Studi &nbsp:</h4>
+                    </div>
+                    <div class="col-sm-8">
+                        <h4>@Model.JadwalKuliahs.NamaProdi</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 text-right">
+                        <h4>Lokasi &nbsp:</h4>
+                    </div>
+                    <div class="col-sm-8">
+                        <h4>@Model.JadwalKuliahs.Lokasi</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 text-right">
+                        <h4>Kode Mata Kuliah &nbsp:</h4>
+                    </div>
+                    <div class="col-sm-8">
+                        <h4>@Model.JadwalKuliahs.KodeMataKuliah</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 text-right">
+                        <h4>Nama Mata Kuliah &nbsp:</h4>
+                    </div>
+                    <div class="col-sm-8">
+                        <h4>@Model.JadwalKuliahs.NamaMataKuliah</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 text-right">
+                        <h4>SKS &nbsp:</h4>
+                    </div>
+                    <div class="col-sm-8">
+                        <h4>@Model.JadwalKuliahs.SKS</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 text-right">
+                        <h4>Seksi &nbsp:</h4>
+                    </div>
+                    <div class="col-sm-8">
+                        <h4>@Model.JadwalKuliahs.ClassSection</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 text-right">
+                        <h4>Hari &nbsp:</h4>
+                    </div>
+                    <div class="col-sm-8">
+                        <h4>@Model.JadwalKuliahs.Hari</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 text-right">
+                        <h4>Waktu &nbsp:</h4>
+                    </div>
+                    <div class="col-sm-8">
+                        <h4>@Model.JadwalKuliahs.JamMasuk - @Model.JadwalKuliahs.JamSelesai</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4 text-right">
+                        <h4>Nama Dosen &nbsp:</h4>
+                    </div>
+                    <div class="col-sm-8">
+                        <h4>@Model.JadwalKuliahs.NamaDosen</h4>
+                    </div>
+                </div>
+                <br />
+            </form>
         </div>
+        @{
+            if (ViewData["mahasiswaNonPertukaran"].ToString() == "False")
+            {
+                <br />
+                <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
+                    <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">MATA KULIAH ASAL</h5>
+                    <form class="form-horizontal">
+                        <div class="row">
+                            <div class="col-sm-4 text-right">
+                                <h4>Mata Kuliah &nbsp:</h4>
+                            </div>
+                            <div class="col-sm-8">
+                                <h4>@Model.MatkulAsal</h4>
+                            </div>
+                        </div>
+                        <br />
+                    </form>
+                </div>
+            }
+        }
+        <br />
+        <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border:3px solid coral">
+            <h5 class="card-title" style="background-color: #FF8A04; padding: 15px; font-weight: bold; font-size: 24px; color: black;">STATUS PENDAFTARAN</h5>
+            <form class="form-horizontal">
+
+                <div class="row">
+                    <div class="col-sm-4 text-right">
+                        <h4>Status &nbsp:</h4>
+                    </div>
+                    <div class="col-sm-8">
+                        <a id="linkDetail" onclick="redirectToDetail('@Model.ID')" href="javascript:void();"><button type="button" class="btn btn-warning btn-sm onOff">Lihat</button></a>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-4 text-right">
+                        <h4>Status Pendaftaran &nbsp:</h4>
+                    </div>
+                    <div class="col-sm-7">
+                        @{
+                            foreach (var data in ViewData["status"] as IList<MBKM.Entities.Models.MBKM.ApprovalPendaftaran>)
+                            {
+                                if (ViewData["lastStatus"] != data.StatusPendaftaran)
+                                {
+                                    <div class="col-sm-12 center">||</div>
+
+                                }
+                                <div class="col-sm-12" style="border: 1px solid coral; border-spacing: 100px; border-collapse: separate; @{if (ViewData["lastStatus"] != data.StatusPendaftaran) { <text> background-color:lightgrey;</text>} } ">
+                                    <h4>@data.StatusPendaftaran</h4>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+    </div>
+            }
+        }
     </div>
 </div>
