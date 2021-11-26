@@ -42,7 +42,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult Index()
         {
 
-            Session["username"] = "Smitty Werben Jeger Man Jensen";
+            //Session["username"] = "Smitty Werben Jeger Man Jensen";
             VMSemester model = _jkMhsService.getOngoingSemester("S1");
             return View(model);
             //Session["username"] = "Smitty Werben Jeger Man Jensen";
