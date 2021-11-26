@@ -43,7 +43,7 @@ namespace MBKM.Presentation.Helper
                     double RoleId = Double.Parse(filterContext.HttpContext.Session["RoleID"].ToString());
                     var menuRoleList = _menuRoleService.Find(x => x.IsActive == true && x.IsDeleted == false && x.RoleID == RoleId && x.IsView == true).ToList();
                     filterContext.HttpContext.Session["MenuList"] = menuRoleList.Select(x => x.Menus).Where(y => y.MenuParent == null && y.IsActive == true && y.IsDeleted == false).OrderBy(x=>x.MenuOrder).ToList();
-                    filterContext.HttpContext.Session["MenuListSub"] = menuRoleList.Select(x => x.Menus).Where(y => y.MenuParent != null && y.IsActive == true && y.IsDeleted == false).ToList();
+                    filterContext.HttpContext.Session["MenuListSub"] = menuRoleList.Select(x => x.Menus).Where(y => y.MenuParent != null && y.IsActive == true && y.IsDeleted == false).OrderBy(x => x.MenuOrder).ToList();
                     isauthorize = menuRoleList.Any(x => x.IsView == true && x.Menus.MenuUrl.ToLower() == url.ToLower());
                     filterContext.HttpContext.Session["MenuRole"] = menuRoleList;
                     if (!isauthorize)
