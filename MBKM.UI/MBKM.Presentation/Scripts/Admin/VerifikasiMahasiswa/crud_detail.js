@@ -2,17 +2,13 @@
 
 $(document).ready(function () {
     $('#inp_statusKerjaSama').change(function () {
-        if ($("#editVerifikasiButton").hasClass("hidden")) {
-            if ($('select[name="inp_statusKerjaSama"] option').filter(':selected').val().includes("TIDAK")) {
-                console.log("asdasd");
-                $('input[name=inp_biaya]').val(0).prop('disabled', true);
-                $('#inp_noKerjaSama option:eq(1)').val("");
-                $('select[name="inp_noKerjaSama"]').prop('disabled', true);
-
-            } else {
-                $('input[name=inp_biaya]').val(0).prop('disabled', false);;
-                $('select[name="inp_noKerjaSama"]').prop('disabled', false);
-            }
+        if ($('select[name="inp_statusKerjaSama"] option').filter(':selected').val().includes("TIDAK")) {
+            console.log("asdasd");
+            $('input[name=inp_biaya]').val(0).prop('disabled', true);
+            $('select[name="inp_noKerjaSama"]').prop('disabled', true);
+        } else {
+            $('input[name=inp_biaya]').val(0).prop('disabled', false);;
+            $('select[name="inp_noKerjaSama"]').prop('disabled', false);
         }
     })
 
@@ -36,7 +32,11 @@ $(document).ready(function () {
 
 function getValueOnForm() {
     dataVerifikasi.StatusKerjasama = $('select[name="inp_statusKerjaSama"] option').filter(':selected').val()
-    dataVerifikasi.NoKerjasama = $('select[name="inp_noKerjaSama"] option').filter(':selected').text()
+    if ($('select[name="inp_statusKerjaSama"] option').filter(':selected').val().includes("TIDAK")) {
+        dataVerifikasi.NoKerjasama = null
+    } else {
+        dataVerifikasi.NoKerjasama = $('select[name="inp_noKerjaSama"] option').filter(':selected').text()
+    }
     dataVerifikasi.FlagBayar = $("input[name=inp_pembayaran]:checked").val();
 
     var biayaTmp = $('input[name=inp_biaya]').val();
@@ -62,9 +62,14 @@ function getValueOnForm() {
 function ValidationStatusApproval() {
     if (!$("input[name=inp_verifikasi]:checked").val()) {
         return false;
-    } else if (!$("input[name=inp_pembayaran]:checked").val()){
+    } else if ($("input[name=inp_verifikasi]:checked").val().includes("DITOLAK")) {
+        return true;
+    } else if (!$("input[name=inp_pembayaran]:checked").val()) {
         return false;
-    } else {
+    } else if (!$('select[name="inp_approval"] option').filter(':selected').val()) {
+        return false;
+    }
+    else {
         return true;
     }
 }
@@ -136,7 +141,7 @@ function PostDataUpdate() {
         Swal.fire({
             title: 'Oppss',
             icon: 'warning',
-            html: 'Masukkan Status Verifikasi dan Status Pembayaran!',
+            html: 'Masukkan Status Verifikasi, Status Pembayaran dan Tujuan Approval!',
             showCloseButton: true,
             showCancelButton: false,
             focusConfirm: false,
