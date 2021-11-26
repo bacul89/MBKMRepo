@@ -1,9 +1,11 @@
 ﻿using MBKM.Common.Helpers;
 using MBKM.Entities.Models.MBKM;
+using MBKM.Entities.ViewModel;
 using MBKM.Presentation.Helper;
 using MBKM.Presentation.models;
 using MBKM.Services;
 using MBKM.Services.MBKMServices;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -32,9 +34,23 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             return View();
         }
-        public JsonResult GetNamaInstansi(int Skip, int Length, string Search)
+
+        //public JsonResult GetNamaInstansi(int Skip, int Length, string Search)
+        public ActionResult GetNamaInstansi(int Skip, int Length, string Search)
         {
-            return Json(_perjanjianKerjasamaService.getNamaInstansi(Skip, Length, Search), JsonRequestBehavior.AllowGet);
+            //before 
+            //return Json(_perjanjianKerjasamaService.getNamaInstansi(Skip, Length, Search), JsonRequestBehavior.AllowGet);
+            List<string> instansis = new List<string>();
+            List<VMLookupNoKerjasama> pks = new List<VMLookupNoKerjasama>();
+            foreach (var item in _perjanjianKerjasamaService.getNamaInstansi(Skip, Length, Search))
+            {
+                if (!instansis.Contains(item.NamaInstansi))
+                {
+                    instansis.Add(item.NamaInstansi);
+                    pks.Add(item);
+                }
+            }
+            return new ContentResult { Content = JsonConvert.SerializeObject(pks), ContentType = "application/json" };
         }
         public JsonResult GetNoKerjasama(int Skip, int Length, string Search, string NamaInstansi)
         {
