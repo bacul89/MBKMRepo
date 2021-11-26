@@ -391,7 +391,7 @@
             //multiple: true,
             width: "100%",
             ajax: {
-                url: "/Admin/DaftarHadirUjian/GetSemesterAll",
+                url: "/Admin/LinkFasilitasAdmin/GetSemesterAll",
                 type: 'POST',
                 dataType: 'json',
                 //quietMillis: 50,
@@ -449,7 +449,7 @@ function loadJenjangStudi(tipe, id, nama) {
         placeholder: "-- Pilih " + nama + " --",
         width: "100%",
         ajax: {
-            url: "/Admin/DaftarHadirUjian/getLookupByTipe",
+            url: "/Admin/LinkFasilitasAdmin/getLookupByTipe",
             dataType: 'json',
             method: "POST",
             delay: 250,
@@ -485,7 +485,7 @@ function loadJenjangStudi(tipe, id, nama) {
             placeholder: "-- Pilih Fakultas --",
             width: "100%",
             ajax: {
-                url: "/Admin/DaftarHadirUjian/GetFakultas",
+                url: "/Admin/LinkFasilitasAdmin/GetFakultas",
                 dataType: 'json',
                 method: "POST",
                 delay: 250,
@@ -544,7 +544,7 @@ function loadJenjangStudi(tipe, id, nama) {
                 placeholder: "-- Pilih Program Studi --",
                 width: "100%",
                 ajax: {
-                    url: "/Admin/DaftarHadirUjian/GetProdiByFakultas",
+                    url: "/Admin/linkfasilitasadmin/GetProdiByFakultas",
                     dataType: 'json',
                     method: "POST",
                     delay: 250,
@@ -584,7 +584,7 @@ function loadJenjangStudi(tipe, id, nama) {
                     placeholder: "-- Pilih Lokasi --",
                     width: "100%",
                     ajax: {
-                        url: "/Admin/DaftarHadirUjian/GetLokasiByProdi",
+                        url: "/Admin/LinkFasilitasAdmin/GetLokasiByProdi",
                         dataType: 'json',
                         method: "POST",
                         delay: 250,
@@ -649,7 +649,7 @@ function loadJenjangStudi(tipe, id, nama) {
                         width: "100%",
                         ajax: {
                             //url: "/Admin/DaftarHadirUjian/GetMataKuliah",
-                            url: "/Admin/JadwalKuliah/GetMataKuliahFlag",
+                            url: "/Admin/LinkFasilitasAdmin/GetMataKuliahFlag",
                             type: 'POST',
                             dataType: 'json',
 
@@ -771,7 +771,7 @@ function loadJenjangStudi(tipe, id, nama) {
                             //multiple: true,
                             width: "100%",
                             ajax: {
-                                url: "/Admin/DaftarHadirUjian/GetSection",
+                                url: "/Admin/LinkFasilitasAdmin/GetSection",
                                 type: 'POST',
                                 dataType: 'json',
                                 //quietMillis: 50,

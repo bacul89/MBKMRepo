@@ -347,7 +347,7 @@
             $('input[name=inp_status]').prop('checked', false);
         }
         $(document).ready(function () {
-            loadFakultas();
+            //loadFakultas();
             //loadFakultasEdit();
             loadFromLookup("JenjangStudi", "jenjang", "JenjangStudi");
             //loadFromLookup("JenjangStudi", "jenjangEdit", "JenjangStudi");
@@ -430,149 +430,7 @@
             
 
         });
-        function loadFakultas() {
-           
-
-            $("#prodi").prop("disabled", true);
-            $("#prodi2").prop("disabled", true);
-            $("#lokasi").prop("disabled", true);
-            $("#fakultas").prop("disabled", true);
-
-            $("#fakultas").select2({
-                multiple: false,
-                placeholder: "-- Pilih Fakultas --",
-                width: "100%",
-                ajax: {
-                    url: "@Url.Action("GetFakultas", "MasterCPL")",
-                    dataType: 'json',
-                    method: "POST",
-                    delay: 250,
-                    cache: false,
-                    data: function (params) {
-                        return {
-                            Search: params.term || "",
-                            Jenjang: $('#jenjang').val()
-                        };
-                    },
-                    processResults: function (data, params) {
-                        return {
-                            results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
-                        };
-                    },
-                }
-            });
-            $('#fakultas').on('select2:select', function (e) {
-                console.log(e.params.data.text);
-            });
-            $("#jenjang").change(function () {
-                $("#fakultas").empty();
-                $("#fakultas").prop("disabled",false);
-                $("#lokasi").empty();
-                $("#lokasi").prop("disabled", true);
-                $("#prodi").empty();
-                $("#prodi2").empty();
-                $("#prodi").prop("disabled", true);
-                $("#prodi2").prop("disabled", true);
-                //$("#lokasi").prop("disabled", true);
-            });
-            $("#fakultas").change(function () {
-                //$('#fakultas').val(null).trigger('change');
-                var latest_value = $("option:selected:first", this).text();
-                //alert(latest_value);
-                $("#prodi2").empty();
-                $("#prodi").empty();
-                $("#prodi2").prop("disabled", false);
-                $("#prodi").prop("disabled", false);
-                $("#lokasi").prop("disabled", true);
-                $("#lokasi").empty();
-                //-----------------------------------------------------------------------------
-                $("#prodi2").select2({
-                    placeholder: "-- Pilih Program Studi --",
-                    width: "100%",
-                    ajax: {
-                        url: "/Admin/MasterCPL/GetProdiLocByFakultas",
-                        dataType: 'json',
-                        method: "POST",
-                        delay: 250,
-                        cache: false,
-                        data: function (params) {
-                            return {
-                                Search: params.term || "",
-                                //JenjangStudi: $('#' + id + "Cari").val(),
-                                JenjangStudi: $('#jenjang').val(),
-                                IdFakultas: $('#fakultas').val()
-                            };
-                        },
-                        processResults: function (data, params) {
-                            return {
-                                results: $.map(data, function (item) { return { id: item.NamProdi, value: item.NamProdi, text: item.NamProdi } })
-                            };
-                        },
-                    }
-                });
-                //============================================================================================
-                $("#prodi").select2({
-                    multiple: false,
-                    placeholder: "-- Pilih Program Studi --",
-                    width: "100%",
-                    ajax: {
-                        url: "@Url.Action("GetProdiByFakultas", "MasterCPL")",
-                        dataType: 'json',
-                        method: "POST",
-                        delay: 250,
-                        cache: false,
-                        data: function (params) {
-                            return {
-                                Search: params.term || "",
-                                IDFakultas: $('#fakultas').val(),
-                                Jenjang: $('#jenjang').val()
-                            };
-                        },
-                        processResults: function (data, params) {
-                            return {
-                                results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
-
-                            };
-                        },
-                    }
-                });
-                $("#prodi").change(function () {
-                    $("#lokasi").empty();
-
-
-                    $("#lokasi").prop("disabled",false);
-
-                    $("#lokasi").select2({
-                        placeholder: "-- Pilih Lokasi --",
-                        width: "100%",
-                        ajax: {
-                            url: "@Url.Action("GetLokasiByProdi", "MasterCPL")",
-                            dataType: 'json',
-                            method: "POST",
-                            delay: 250,
-                            cache: false,
-                            data: function (params) {
-                                return {
-                                    Search: params.term || "",
-                                    NamaProdi: $('#prodi').val(),
-                                    Jenjang: $('#jenjang').val()
-                                };
-                            },
-                            processResults: function (data, params) {
-                                return {
-                                    results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Kampus } })
-                                };
-                            },
-                        }
-                    });
-                    
-                });
-                $('#lokasi').on('select2:select', function (e) {
-                    console.log(e.params.data.id);
-                    //alert(e.params.data.id)
-                });
-            });
-        }
+        
 
         //batas crud detail
         function DetailMasterCPL(fakultasId, prodiNama, jenjangID, capaiandd, kodedd, kelompokdd) {
