@@ -329,7 +329,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                             InformasiPertukaran = pendaf.InformasiPertukaran,
                             NilaiKuliah = nilai.Where(c => c.JadwalKuliahID == pendaf.JadwalKuliahID).FirstOrDefault()
                         })*/
-                    .Where(z => z.InformasiPertukaran.JenisKerjasama.Contains("Internal")).ToList();
+                    .Where(z => !z.InformasiPertukaran.JenisPertukaran.ToLower().Contains("non") && z.InformasiPertukaran.JenisKerjasama.ToLower() == "internal").ToList();
 
                 return result;
             }
