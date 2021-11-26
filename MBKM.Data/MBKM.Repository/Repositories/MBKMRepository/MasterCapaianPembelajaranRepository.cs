@@ -111,14 +111,15 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                         JenjangStudi = z.JenjangStudi
                     })
                     .OrderBy(SortBy, SortDir);
-                mListCPL.gridDatas = gridfilter.Skip(Skip).Take(Length).GroupBy(s => new
+                mListCPL.gridDatas = gridfilter.Skip(Skip).Take(Length).Distinct().GroupBy(s => new
                 {
                     s.JenjangStudi,
                     s.Kode,
                     s.FakultasID,
                     s.Kelompok,
                     s.Capaian,
-                    s.NamaProdi
+                    s.NamaProdi//,
+                    //s.CreatedBy
                 }).Select(n => new GridDataCPL
                 {
                     JenjangStudi = n.Key.JenjangStudi,
