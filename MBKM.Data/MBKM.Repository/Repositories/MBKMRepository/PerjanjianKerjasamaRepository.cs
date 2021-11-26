@@ -23,7 +23,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             using (var context = new MBKMContext())
             {
                 var result = context.PerjanjianKerjasamas.Where(x => x.NoPerjanjian == NoKerjasama)
-                    .Select(x => x.BiayaKuliah).SingleOrDefault();
+                    .Select(x => x.BiayaKuliah).FirstOrDefault();
                     
                 return result;
             }
