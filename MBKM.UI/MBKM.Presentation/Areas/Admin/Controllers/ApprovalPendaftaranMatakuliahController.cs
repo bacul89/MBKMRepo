@@ -119,7 +119,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             if (data.PendaftaranMataKuliahs.mahasiswas.NoKerjasama == null)
             {
                 var informasiNoKerjasama = _informasiPertukaranService.Find(x => x.MahasiswaID == data.PendaftaranMataKuliahs.MahasiswaID).FirstOrDefault();
-                if(informasiNoKerjasama.NoKerjasama == null)
+                if(informasiNoKerjasama == null || informasiNoKerjasama.NoKerjasama == null)
                 {
                     ViewData["InformasiKerjasama"] = "-";
                 }
