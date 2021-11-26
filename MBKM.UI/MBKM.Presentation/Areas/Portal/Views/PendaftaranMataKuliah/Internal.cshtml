@@ -173,11 +173,10 @@
                         <select name="mataKuliah" id="mataKuliah" class="form-control input-md"></select>
                     </td>
                 </tr>
-
                 <tr>
                     <td style="text-align: right">Tahun Semester</td>
                     <td style="width: 400px;">
-                        <input type="text" name="tahunSemester" id="tahunSemester" class="form-control input-md" value="@Model.Nama" disabled></input>
+                        <select name="tahunSemester" id="tahunSemester" class="form-control input-md"></select>
                     </td>
                 </tr>
                 <tr>
@@ -222,7 +221,6 @@
         $(document).ready(function () {
             loadFakultas();
             loadProgram();
-            setInformasiPertukaran();
             $("#prodi").select2({
                 placeholder: "-- Pilih Program Studi --"
             });
@@ -247,7 +245,7 @@
                 alert('Tolong input informasi pertukan terlebih dahulu!');
                 return;
             }
-            if (!$('#fakultas').val() || !$('#prodi').val() || !$('#lokasi').val()) {
+            if (!$('#fakultas').val() || !$('#prodi').val() || !$('#lokasi').val() || !$('#tahunSemester').val()) {
                 alert('Tolong lengkapi data pencarian!');
                 return;
             }
@@ -256,7 +254,7 @@
             if (!$('#mataKuliah').val()) {
                 matkul = "";
             }
-            var url = '@Url.Action("GetMataKuliahByProdi","PendaftaranMataKuliah")?fakultas=' + $('#fakultas').select2('data')[0].text + '&prodi=' + $('#prodi').val() + '&lokasi=' + $('#lokasi').val() + '&strm=' + $('#strm').val() + '&matkul=' + matkul;
+            var url = '@Url.Action("GetMataKuliahByProdi","PendaftaranMataKuliah")?fakultas=' + $('#fakultas').select2('data')[0].text + '&prodi=' + $('#prodi').val() + '&lokasi=' + $('#lokasi').val() + '&strm=' + $('#tahunSemester').val() + '&matkul=' + matkul;
             datatable = $('#hasilPencarian').DataTable({
                 ajax: {
                     url: url,
@@ -356,7 +354,7 @@
             var data = new Object();
             data.JenisPertukaran = $('#jenisProgramMBKM').select2('data')[0].text;
             data.JenisKerjasama = $('#jenisKegiatanMBKM').select2('data')[0].text;
-            data.STRM = $('#strm').val();
+            data.STRM = $('#tahunSemester').val();
             if ($('#noKerjasama').val()) {
                 data.NoKerjasama = $('#noKerjasama').select2('data')[0].text;
             }
@@ -389,6 +387,33 @@
         function loadFakultas() {
             $("#prodi").prop("disabled", true);
             $("#lokasi").prop("disabled", true);
+
+            $("#tahunSemester").select2({
+                placeholder: "-- Pilih Tahun Semester --",
+                width: "100%",
+                ajax: {
+                    url: "@Url.Action("GetSemesterAll2", "PendaftaranMataKuliah")",
+                    dataType: 'json',
+                    method: "POST",
+                    delay: 250,
+                    cache: false,
+                    processResults: function (data, params) {
+                        return {
+                            results: $.map(data, function (item) { return { id: item.Nilai, value: item.Nilai, text: item.Nama } })
+                        };
+                    }
+                }
+            });
+
+            $("#tahunSemester").change(function () {
+                $('#mataKuliah').empty();
+                setInformasiPertukaran();
+            });
+
+            var option = $("<option selected='selected'></option>").val('@Model.ID').text('@Model.Nama');
+            $("#tahunSemester").append(option).trigger('change');
+
+            setInformasiPertukaran();
 
             $("#fakultas").select2({
                 placeholder: "-- Pilih Fakultas --",
@@ -541,7 +566,7 @@
                                 data: function (params) {
                                     return {
                                         Fakultas: $('#fakultas').val(),
-                                        STRM: $('#strm').val(),
+                                        STRM: $('#tahunSemester').val(),
                                         Prodi: $('#prodi').val(),
                                         Lokasi: $('#lokasi').val(),
                                         Search: params.term || ""
@@ -616,7 +641,7 @@
                                     data: function (params) {
                                         return {
                                             Fakultas: $('#fakultas').val(),
-                                            STRM: $('#strm').val(),
+                                            STRM: $('#tahunSemester').val(),
                                             Prodi: $('#prodi').val(),
                                             Lokasi: $('#lokasi').val(),
                                             Search: params.term || ""
@@ -720,7 +745,7 @@
         function setInformasiPertukaran() {
             $.ajax({
                 type: "GET",
-                url: "@Url.Action("GetInformasiPertukaran", "PendaftaranMataKuliah")?strm=" + $('#strm').val()
+                url: "@Url.Action("GetInformasiPertukaran", "PendaftaranMataKuliah")?strm=" + $('#tahunSemester').val()
             }).then(function (response) {
                 if (response != null) {
                     var option = $("<option selected='selected'></option>").val(response.JenisPertukaran).text(response.JenisPertukaran);
@@ -763,6 +788,17 @@
                         $("#lokasiTugas").prop("disabled", true);
                     }
                     $('#submit').hide();
+                } else {
+                    $("#jenisProgramMBKM").prop("disabled", false);
+                    $("#jenisKegiatanMBKM").prop("disabled", true);
+                    $("#namaInstansi").prop("disabled", true);
+                    $("#noKerjasama").prop("disabled", true);
+                    $("#jenisProgramMBKM").empty();
+                    $("#jenisKegiatanMBKM").empty();
+                    $("#namaInstansi").empty();
+                    $("#noKerjasama").empty();
+                    $('#edit').hide();
+                    $('#submit').show();
                 }
             });
         }
