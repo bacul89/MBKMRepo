@@ -260,6 +260,9 @@
                             if (row.CheckDosen) {
                                 return '<label class="container2"><input type="checkbox" checked disabled><span class="checkmark"></span></label>';
                             }
+                            if (row.Present) {
+                                return '<label class="container2"><input class="checkFlag" type="checkbox" id="checkDosen' + mahasiswaCount++ + '" value="' + data + '" checked><span class="checkmark"></span></label>';
+                            }
                             return '<label class="container2"><input class="checkFlag" type="checkbox" id="checkDosen' + mahasiswaCount++ + '" value="' + data + '"><span class="checkmark"></span></label>';
                         }
                     },

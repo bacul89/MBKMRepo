@@ -428,7 +428,9 @@
             if ('@Model.IsActive'.toLowerCase() == 'false') {
                 $('#reset').hide();
                 $('#simpan').hide();
-                $('#unlockSubmit').show();
+                if ('@HttpContext.Current.Session["RoleName"].ToString()' == 'BAA') {
+                    $('#unlockSubmit').show();
+                }
                 $('#cetak').show();
             }
         });
