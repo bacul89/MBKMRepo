@@ -512,12 +512,9 @@
     <Content Include="Areas\Portal\Views\NimDigital\Index.cshtml" />
     <Content Include="Areas\Admin\Views\DaftarSeluruhMahasiswa\Index.cshtml" />
     <Content Include="Areas\Admin\Views\MasterCPL\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\MasterCPL\ModalCreateCPL.cshtml" />
     <Content Include="Areas\Admin\Views\MasterMapingCapaianPembelajaran\Index.cshtml" />
     <Content Include="Areas\Admin\Views\MenuRole\AddMenuRole.cshtml" />
     <Content Include="Areas\Admin\Views\MenuRole\DetailMenuRole.cshtml" />
-    <Content Include="Areas\Admin\Views\MasterCPL\ModalDetailMasterCpl.cshtml" />
-    <Content Include="Areas\Admin\Views\MasterCPL\ModalUpdateMasterCpl.cshtml" />
     <Content Include="Areas\Admin\Views\MasterMapingCapaianPembelajaran\ModalCreateMasterMapingCapaianPembelajaran.cshtml" />
     <Content Include="Areas\Admin\Views\MasterMapingCapaianPembelajaran\ModalUpdateMasterMapingCapaianPembelajaran.cshtml" />
     <Content Include="Areas\Admin\Views\MasterMapingCapaianPembelajaran\ModalDetailMasterMapingCapaianPembelajaran.cshtml" />
