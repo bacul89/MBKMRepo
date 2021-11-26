@@ -23,7 +23,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             using (var context = new MBKMContext())
             {
                 var result = context.PerjanjianKerjasamas.Where(x => x.NoPerjanjian == NoKerjasama)
-                    .Select(x => x.BiayaKuliah).SingleOrDefault();
+                    .Select(x => x.BiayaKuliah).FirstOrDefault();
                     
                 return result;
             }
@@ -73,7 +73,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             {
                 //var result = context.PerjanjianKerjasamas.Where(x => x.NamaInstansi.Contains(Search))
                 //    .GroupBy(x => x.NamaInstansi).Select(x => x.FirstOrDefault());
-                var getJenis = context.JenisKerjasamaModels.Where(x => x.JenisKerjasama.ToLower().Contains("eksternal")).Select(y=>y.ID).SingleOrDefault();
+                var getJenis = context.JenisKerjasamaModels.Where(x => x.JenisKerjasama.ToLower().Contains("eksternal")).Select(y=>y.ID).FirstOrDefault();
                // getJenis.
                 var result = context.PerjanjianKerjasamas.Where(x => x.JenisKerjasama == getJenis.ToString() && x.NamaInstansi.Contains(Search))
                     .Select(x => x.NamaInstansi).Distinct();
@@ -95,8 +95,8 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             using (var context = new MBKMContext())
             {
                 var today = DateTime.Now;
-                var getJenis = context.JenisKerjasamaModels.Where(x => x.JenisKerjasama.ToLower().Contains("eksternal")).Select(y => y.ID).SingleOrDefault();
-                var result = context.PerjanjianKerjasamas.Where(x => x.NoPerjanjian.Contains(Search) && x.NamaInstansi == NamaInstansi && x.JenisKerjasama ==getJenis.ToString() && (x.TanggalMulai<today && x.TanggalAkhir>today))
+                var getJenis = context.JenisKerjasamaModels.Where(x => x.JenisKerjasama.ToLower().Contains("eksternal")).Select(y => y.ID).FirstOrDefault();
+                var result = context.PerjanjianKerjasamas.Where(x => x.NoPerjanjian.Contains(Search) && x.NamaInstansi == NamaInstansi && x.JenisKerjasama ==getJenis.ToString() &&  x.TanggalAkhir >= today)
                     .OrderBy("NoPerjanjian").Skip(Skip).Take(Length).Select(x => new VMLookupNoKerjasama
                     {
                         ID = x.ID,
