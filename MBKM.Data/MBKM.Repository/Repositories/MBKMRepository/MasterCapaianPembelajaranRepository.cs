@@ -95,9 +95,14 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             }
             using (var context = new MBKMContext())
             {
-
-                var result = context.MasterCPLS.Where(x => x.IsDeleted == false && x.NamaProdi.Contains(prodi)  && x.JenjangStudi == jenjang && x.FakultasID.Contains(fakultas));
+                //Any() sebagai where exist => ambil duplicate item lalu ambil yg id nya paling kecil saja untuk griddata nya ^_^
+                //sorting di javascript menggunakan kelompok sebagai default, karena ID tidak dapat ditampilkan, jika ditampilkan duplikat redundant lagi ~_~
+                var result = context.MasterCPLS.Where(x => x.IsDeleted == false && x.NamaProdi.Contains(prodi)  && x.JenjangStudi == jenjang && x.FakultasID.Contains(fakultas) && 
+                context.MasterCPLS.Any(s=> s.Kelompok == x.Kelompok && s.Capaian == x.Capaian && s.Kode == x.Kode && s.FakultasID == x.FakultasID && s.NamaProdi == x.NamaProdi &&
+                s.JenjangStudi == x.JenjangStudi && s.NamaFakultas == x.NamaFakultas && s.IsActive == x.IsActive && s.ID < x.ID));
+                
                 mListCPL.TotalCount = result.Count();
+                
                 var gridfilter = result.AsQueryable().Where(y => y.Kode.Contains(SearchParam) || y.Kelompok.Contains(SearchParam) ||
                 y.Capaian.Contains(SearchParam))
                     .Select(z => new VMMasterCPL
@@ -108,7 +113,10 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                         Capaian = z.Capaian,
                         FakultasID = z.FakultasID,
                         NamaProdi = z.NamaProdi,
-                        JenjangStudi = z.JenjangStudi
+                        JenjangStudi = z.JenjangStudi,
+                        NamaFakultas = z.NamaFakultas,
+                        Status = z.IsActive
+                        
                     })
                     .OrderBy(SortBy, SortDir);
                 mListCPL.gridDatas = gridfilter.Skip(Skip).Take(Length).Distinct().GroupBy(s => new
@@ -118,7 +126,9 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                     s.FakultasID,
                     s.Kelompok,
                     s.Capaian,
-                    s.NamaProdi//,
+                    s.NamaProdi,
+                    s.NamaFakultas,
+                    s.Status
                     //s.CreatedBy
                 }).Select(n => new GridDataCPL
                 {
