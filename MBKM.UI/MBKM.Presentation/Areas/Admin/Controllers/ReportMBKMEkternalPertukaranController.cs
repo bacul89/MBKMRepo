@@ -106,7 +106,12 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     d.JadwalKuliahs.TglAkhirKuliah.ToString(),
                     d.JadwalKuliahs.NamaDosen,                    
                     d.JadwalKuliahs.NamaProdi,
-                    d.JadwalKuliahs.DosenID.ToString()
+                    d.JadwalKuliahs.DosenID.ToString(),
+                    d.mahasiswas.ID.ToString(),
+                    d.mahasiswas.NIM,
+                    d.mahasiswas.NIMAsal,
+                    d.JadwalKuliahs.ID.ToString(),
+                    d.JadwalKuliahID.ToString(),
                 });
             }
 
