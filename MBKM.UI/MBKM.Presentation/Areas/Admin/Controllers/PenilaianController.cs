@@ -376,9 +376,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
         public bool isAbsent(long idMahasiswa, long idJadwalKuliah)
         {
-            var present = _absensiService.Find(_=>_.MahasiswaID == idMahasiswa && _.JadwalKuliahID == idJadwalKuliah && _.CheckDosen).ToList().Count;
-            var total = _absensiService.Find(_=>_.MahasiswaID == idMahasiswa && _.JadwalKuliahID == idJadwalKuliah).ToList().Count;
-            return present / total >= 0.75;
+            float present = _absensiService.Find(_=>_.MahasiswaID == idMahasiswa && _.JadwalKuliahID == idJadwalKuliah && _.CheckDosen).ToList().Count;
+            float total = _absensiService.Find(_=>_.MahasiswaID == idMahasiswa && _.JadwalKuliahID == idJadwalKuliah).ToList().Count;
+            var result = present / total;
+            return result >= 0.75;
         }
     }
 }

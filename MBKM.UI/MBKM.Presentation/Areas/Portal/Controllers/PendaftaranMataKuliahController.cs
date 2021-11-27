@@ -75,6 +75,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var model = _pmkService.getOngoingSemester(mahasiswa.JenjangStudi);
             return View(model);
         }
+        public ActionResult GetSemesterAll2()
+        {
+            var result = _jkService.GetSemesterAll2();
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
+        }
         public ActionResult Eksternal()
         {
             var mahasiswa = GetMahasiswaById(long.Parse(Session["idMahasiswa"] as string));

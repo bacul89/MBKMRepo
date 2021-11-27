@@ -187,7 +187,7 @@
                     },
                     processResults: function (data, params) {
                         return {
-                            results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.KodeMataKuliah + ' - ' + item.NamaMataKuliah, idMatkul: item.IDMataKUliah } })
+                            results: $.map(data, function (item) { return { id: item.IDMataKUliah, value: item.IDMataKUliah, text: item.KodeMataKuliah + ' - ' + item.NamaMataKuliah, idMatkul: item.IDMataKUliah } })
                         };
                     },
                 }
