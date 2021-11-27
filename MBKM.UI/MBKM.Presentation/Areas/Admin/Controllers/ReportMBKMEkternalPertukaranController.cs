@@ -81,7 +81,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
         public ActionResult DataTable(int strm)
         {
-            var dataMahasiswa = _pendaftaranMataKuliahService.GetListPendaftaranEksternalPertukaran(strm);
+
+            IEnumerable<VMReportMahasiswaEksternal> dataMahasiswa = _pendaftaranMataKuliahService.GetListPendaftaranEksternalPertukaran(strm);
+            //var dataMahasiswa = _pendaftaranMataKuliahService.GetListPendaftaranEksternalPertukaran(strm);
+            var dataMahasiswaWitoutNilai = _pendaftaranMataKuliahService.GetListPendaftaranEksternalPertukaranWithoutNilai(strm);
             var dataSemester = _feedbackMatkulService.GetSemesterByStrm(strm.ToString());
 
             List<String[]> final = new List<String[]>();
@@ -115,7 +118,64 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 });
             }
 
+           
+            foreach (var e in dataMahasiswaWitoutNilai)
+            {
+
+                bool check = isAvailable(dataMahasiswa, e.MahasiswaID);
+
+                    if (check == false)
+                    {
+                        final.Add(new String[]{
+                            dataSemester.Nama,
+                             e.JadwalKuliahs.JenjangStudi,
+                            e.mahasiswas.NamaUniversitas,
+                            e.mahasiswas.NIM,
+                            e.mahasiswas.Nama,
+
+                            e.JadwalKuliahs.KodeMataKuliah,
+                            e.JadwalKuliahs.NamaMataKuliah,
+                            e.JadwalKuliahs.ClassSection,
+                            "-",
+                            "-",
+                            e.JadwalKuliahs.Hari.ToString(),
+                            e.JadwalKuliahs.JamMasuk,
+                            e.JadwalKuliahs.JamSelesai,
+                            e.JadwalKuliahs.TglAwalKuliah.ToString(),
+                            e.JadwalKuliahs.TglAkhirKuliah.ToString(),
+                            e.JadwalKuliahs.NamaDosen,
+                            e.JadwalKuliahs.NamaProdi,
+                            e.JadwalKuliahs.DosenID.ToString(),
+                            e.mahasiswas.ID.ToString(),
+                            e.mahasiswas.NIM,
+                            e.mahasiswas.NIMAsal,
+                            e.JadwalKuliahs.ID.ToString(),
+                            e.JadwalKuliahID.ToString(),
+                        });
+                    }
+
+
+
+
+            }
+
+
             return Json(final);
+        }
+
+        private bool isAvailable(IEnumerable<VMReportMahasiswaEksternal> data, long MhsID) {
+
+            //var data = _pendaftaranMataKuliahService.GetListPendaftaranEksternalPertukaran(strm);
+            foreach (var d in data)
+            {
+
+                if (d.MahasiswaID == MhsID)
+                {
+                    return true;
+                }
+            }
+            return false;
+
         }
 
 
@@ -190,6 +250,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     }*//*
                 }
         */
+
 
 
         public ActionResult ExportExcel(int strm)
