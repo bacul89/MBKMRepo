@@ -385,8 +385,11 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             using (var context = new MBKMContext())
             {
                 context.Configuration.LazyLoadingEnabled = false;
+
+
+
                 var result = context.PendaftaranMataKuliahs.Where(x => x.JadwalKuliahs.STRM == strm && x.StatusPendaftaran.ToLower().Contains("accepted"))
-                    .Join(context.informasiPertukarans,
+                    /*.Join(context.informasiPertukarans,
                         pendaftaran => pendaftaran.MahasiswaID,
                         informasi => informasi.MahasiswaID,
                         (pendaftaran, informasi) => new VMPendaftaranWithInformasipertukaran
@@ -399,7 +402,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                             mahasiswas = pendaftaran.mahasiswas,
                             InformasiPertukaran = informasi
                         }
-                        )
+                     )*/
                     .Join(context.NilaiKuliahs,
                         pendaf => pendaf.mahasiswas.ID,
                         nilai => nilai.MahasiswaID,
@@ -411,10 +414,62 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                             JadwalKuliahID = pendaf.JadwalKuliahID,
                             JadwalKuliahs = pendaf.JadwalKuliahs,
                             mahasiswas = pendaf.mahasiswas,
-                            InformasiPertukaran = pendaf.InformasiPertukaran,
+                            /*InformasiPertukaran = pendaf.InformasiPertukaran,*/
                             NilaiKuliah = nilai
                         })
-                    .Where(z => z.mahasiswas.NIM != z.mahasiswas.NIMAsal  && z.JadwalKuliahs.ID == z.NilaiKuliah.JadwalKuliahID).ToList();
+                    .ToList();
+                //.Where(z => z.mahasiswas.NIM != z.mahasiswas.NIMAsal && z.JadwalKuliahs.ID == z.NilaiKuliah.JadwalKuliahID).ToList();
+
+
+
+
+                return result;
+            }
+        }
+
+        public IEnumerable<VMReportMahasiswaEksternal> GetListPendaftaranEksternalPertukaranWithoutNilai(long strm)
+        {
+            using (var context = new MBKMContext())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+
+
+
+                var result = context.PendaftaranMataKuliahs
+                    //.Where(x => x.JadwalKuliahs.STRM == strm).Select(
+                    /*context.NilaiKuliahs,
+                        pendaf => pendaf.mahasiswas.ID,
+                        nilai => nilai.MahasiswaID,
+                        (pendaf, nilai) => new VMReportMahasiswaEksternal
+                        {
+                            MatkulKodeAsal = pendaf.MatkulKodeAsal,
+                            MatkulAsal = pendaf.MatkulAsal,
+                            MatkulIDAsal = pendaf.MatkulIDAsal,
+                            JadwalKuliahID = pendaf.JadwalKuliahID,
+                            JadwalKuliahs = pendaf.JadwalKuliahs,
+                            mahasiswas = pendaf.mahasiswas,
+                            *//*InformasiPertukaran = pendaf.InformasiPertukaran,*//*
+                            NilaiKuliah = nilai
+                        })*/
+                    
+                    //.ToList();
+                    .Where(z => z.JadwalKuliahs.STRM == strm && z.mahasiswas.NIM != z.mahasiswas.NIMAsal && z.JadwalKuliahs.ID == z.JadwalKuliahID && z.StatusPendaftaran.ToLower().Contains("accepted")).
+                    Select(
+                        x => new VMReportMahasiswaEksternal
+                        {
+                            MatkulKodeAsal = x.MatkulKodeAsal,
+                            MatkulAsal = x.MatkulAsal,
+                            MatkulIDAsal = x.MatkulIDAsal,
+                            JadwalKuliahID = x.JadwalKuliahID,
+                            JadwalKuliahs = x.JadwalKuliahs,
+                            mahasiswas = x.mahasiswas
+                            //NilaiKuliah = nilai
+                        }
+                    )
+                    .ToList();
+
+
+
 
                 return result;
             }
