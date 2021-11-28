@@ -59,6 +59,21 @@ var table = $('#TableList').DataTable({
                 return moment(data).format('DD/MM/YYYY');
             }
         },
+
+        {
+            //"title": "Jenis Pertukaran",
+            "data": "JenisPertukaran",
+            "render": function (data, type, row, meta) {
+                return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
+            }
+        },
+        {
+            //"title": "Jenis Kerjasama",
+            "data": "JenisKerjasama",
+            "render": function (data, type, row, meta) {
+                return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
+            }
+        },
         {
             //"title": "Instansi",
             "data": "Instansi",
@@ -76,20 +91,6 @@ var table = $('#TableList').DataTable({
         {
             //"title": "Nama Instansi",
             "data": "NamaInstansi",
-            "render": function (data, type, row, meta) {
-                return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
-            }
-        },
-        {
-            //"title": "Jenis Pertukaran",
-            "data": "JenisPertukaran",
-            "render": function (data, type, row, meta) {
-                return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
-            }
-        },
-        {
-            //"title": "Jenis Kerjasama",
-            "data": "JenisKerjasama",
             "render": function (data, type, row, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
