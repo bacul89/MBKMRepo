@@ -94,7 +94,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
         public ActionResult SearchList(int strm, string jenjangStudi, string fakultas, string prodi, string lokasi, string matkul, string seksi)
         {
-            var result = _jkService.Find(_ => _.STRM == strm && _.JenjangStudi == jenjangStudi && _.NamaFakultas == fakultas && _.NamaProdi == prodi && _.Lokasi == lokasi && _.KodeMataKuliah + " - " + _.NamaMataKuliah == matkul && _.ClassSection == seksi).ToList();
+            var result = _jkService.Find(_ => _.STRM == strm && _.JenjangStudi == jenjangStudi && _.NamaFakultas == fakultas && _.NamaProdi == prodi && _.Lokasi == lokasi && _.KodeMataKuliah + " - " + _.NamaMataKuliah == matkul && _.ClassSection == seksi && _.FlagOpen == true).ToList();
             return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
         public ActionResult GetMatkulByLokasi(string search, int strm, string jenjangStudi, string prodi, string lokasi)
