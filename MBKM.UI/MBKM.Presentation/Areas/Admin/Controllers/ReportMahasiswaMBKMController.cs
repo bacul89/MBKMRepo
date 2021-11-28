@@ -63,9 +63,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 if (datapertama != null)
                 {
                     var countEksternal = dataMahasiswa.Where(x => x.JadwalKuliahs.ProdiID == int.Parse(d.IDProdi) && x.mahasiswas.NIM != x.mahasiswas.NIMAsal).Count();
-                    var internalLintasProdi = dataMahasiswa.Where(x => x.JadwalKuliahs.ProdiID == int.Parse(d.IDProdi) && x.InformasiPertukaran.JenisKerjasama.ToLower() == "internal" && !x.InformasiPertukaran.JenisPertukaran.ToLower().Contains("non")).Count();
-                    var internalKeLuar = dataMahasiswa.Where(x => x.JadwalKuliahs.ProdiID == int.Parse(d.IDProdi) && x.InformasiPertukaran.JenisKerjasama.ToLower().Contains("luar") && !x.InformasiPertukaran.JenisPertukaran.ToLower().Contains("non")).Count();
-                    var internalNonPertukaran = dataMahasiswa.Where(x => x.JadwalKuliahs.ProdiID == int.Parse(d.IDProdi) && x.InformasiPertukaran.JenisPertukaran.ToLower().Contains("non")).Count();
+                    var internalLintasProdi = dataMahasiswa.Where(x => x.JadwalKuliahs.ProdiID == int.Parse(d.IDProdi) && ( x.InformasiPertukaran != null && x.InformasiPertukaran.JenisKerjasama.ToLower() == "internal" && !x.InformasiPertukaran.JenisPertukaran.ToLower().Contains("non"))).Count();
+                    var internalKeLuar = dataMahasiswa.Where(x => x.JadwalKuliahs.ProdiID == int.Parse(d.IDProdi) && (x.InformasiPertukaran != null && x.InformasiPertukaran.JenisKerjasama.ToLower().Contains("ke luar") && !x.InformasiPertukaran.JenisPertukaran.ToLower().Contains("non"))).Count();
+                    var internalNonPertukaran = dataMahasiswa.Where(x => x.JadwalKuliahs.ProdiID == int.Parse(d.IDProdi) && (x.InformasiPertukaran != null && x.InformasiPertukaran.JenisPertukaran.ToLower().Contains("non"))).Count();
                     
                     final.Add(new String[]{
                         dataSemester.Nama,

@@ -244,7 +244,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             {
                 context.Configuration.LazyLoadingEnabled = false;
                 var result = context.PendaftaranMataKuliahs.Where(x => x.JadwalKuliahs.STRM == strm && x.StatusPendaftaran.ToLower().Contains("accepted"))
-                    .Join(context.informasiPertukarans, 
+                    .GroupJoin(context.informasiPertukarans, 
                         pendaftaran => pendaftaran.MahasiswaID, 
                         informasi => informasi.MahasiswaID, 
                         (pendaftaran,informasi) => new VMPendaftaranWithInformasipertukaran
@@ -252,7 +252,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                             JadwalKuliahID = pendaftaran.JadwalKuliahID,
                             JadwalKuliahs = pendaftaran.JadwalKuliahs,
                             mahasiswas = pendaftaran.mahasiswas,
-                            InformasiPertukaran = informasi
+                            InformasiPertukaran = informasi.FirstOrDefault()
                         }
                         ).ToList();
                 
@@ -266,7 +266,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             {
                 context.Configuration.LazyLoadingEnabled = false;
                 var result = context.PendaftaranMataKuliahs.Where(x => x.JadwalKuliahs.STRM == strm && x.StatusPendaftaran.ToLower().Contains("accepted"))
-                    .Join(context.informasiPertukarans,
+                    .GroupJoin(context.informasiPertukarans,
                         pendaftaran => pendaftaran.MahasiswaID,
                         informasi => informasi.MahasiswaID,
                         (pendaftaran, informasi) => new VMReportMahasiswaInternal
@@ -274,7 +274,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                             JadwalKuliahID = pendaftaran.JadwalKuliahID,
                             JadwalKuliahs = pendaftaran.JadwalKuliahs,
                             mahasiswas = pendaftaran.mahasiswas,
-                            InformasiPertukaran = informasi
+                            InformasiPertukaran = informasi.FirstOrDefault()
                         }
                         )
                    /* .GroupJoin(context.NilaiKuliahs,
