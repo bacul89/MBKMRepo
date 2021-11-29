@@ -1,17 +1,26 @@
 ﻿var dataVerifikasi = {}
 
 $(document).ready(function () {
+    var biayaAwal = $('input[name=inp_biaya]').val();
     $('#inp_statusKerjaSama').change(function () {
         if ($('select[name="inp_statusKerjaSama"] option').filter(':selected').val().includes("TIDAK")) {
-            console.log("asdasd");
             $('input[name=inp_biaya]').val(0).prop('disabled', true);
             $('select[name="inp_noKerjaSama"]').prop('disabled', true);
-        } else {
-            $('input[name=inp_biaya]').val(0).prop('disabled', false);;
-            $('select[name="inp_noKerjaSama"]').prop('disabled', false);
+        } else if ($('select[name="inp_statusKerjaSama"] option').filter(':selected').val().includes("ADA KERJASAMA")) {
+            if ($('#editVerifikasiButton').hasClass("hidden")) {
+                $('input[name=inp_biaya]').val(0).prop('disabled', false);
+                $('select[name="inp_noKerjaSama"]').prop('disabled', false);
+            }
+            $('input[name=inp_biaya]').val(biayaAwal);
+        }
+        else {
+            if ($('#editVerifikasiButton').hasClass("hidden")) {
+                $('input[name=inp_biaya]').val(0).prop('disabled', false);
+                $('select[name="inp_noKerjaSama"]').prop('disabled', false);
+            }
+            $('input[name=inp_biaya]').val(0);
         }
     })
-
     
     $('#inp_noKerjaSama').change(function () {
             $.ajax({
@@ -23,6 +32,7 @@ $(document).ready(function () {
                 type: 'post',
                 success: function (w) {
                     $('input[name=inp_biaya]').val(w.BiayaKuliah);
+                    biayaAwal = w.BiayaKuliah;
                     $('#inp_biaya').focus();
                 }
             })
