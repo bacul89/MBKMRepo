@@ -43,19 +43,72 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetPendaftaranMakul(DataTableAjaxPostModel model)
+        public JsonResult GetPendaftaranMakul(/*DataTableAjaxPostModel model*/)
         {
             string emailMahasiswa = Session["emailMahasiswa"] as string;
-            var data = _pendaftaranMataKuliahService.GetPendaftaranMahasiswaDataTableByMahasiswa(model,emailMahasiswa);
+            /*var data = _pendaftaranMataKuliahService.GetPendaftaranMahasiswaDataTableByMahasiswa(model,emailMahasiswa);*/
+            var dataPendaftaran = _pendaftaranMataKuliahService.Find(c => c.mahasiswas.Email == emailMahasiswa).ToList();
+            var checkInformasiPertukaran = _informasiPertukaranService.Find(z => z.Mahasiswas.Email == emailMahasiswa).FirstOrDefault();
+            List<String[]> final = new List<String[]>();
 
-            return Json(new
+            if(checkInformasiPertukaran != null)
+            {
+                if(checkInformasiPertukaran.JenisKerjasama.ToLower().Contains("ke luar"))
+                {
+                    foreach (var d in dataPendaftaran)
+                    {
+                        final.Add(new String[]{
+                            d.ID.ToString(),
+                            "-",
+                            "-",
+                            "-",
+                            d.MatkulAsal,
+                            "-",
+                            d.StatusPendaftaran,
+                        });
+                    }
+                }
+                else
+                {
+                    foreach (var d in dataPendaftaran)
+                    {
+                        final.Add(new String[]{
+                            d.ID.ToString(),
+                            d.JadwalKuliahs.NamaFakultas,
+                            d.JadwalKuliahs.NamaProdi,
+                            d.JadwalKuliahs.KodeMataKuliah,
+                            d.JadwalKuliahs.NamaMataKuliah,
+                            d.JadwalKuliahs.NamaDosen,
+                            d.StatusPendaftaran,
+                        });
+                    }
+                }
+            }
+            else
+            {
+                foreach (var d in dataPendaftaran)
+                {
+                    final.Add(new String[]{
+                            d.ID.ToString(),
+                            d.JadwalKuliahs.NamaFakultas,
+                            d.JadwalKuliahs.NamaProdi,
+                            d.JadwalKuliahs.KodeMataKuliah,
+                            d.JadwalKuliahs.NamaMataKuliah,
+                            d.JadwalKuliahs.NamaDosen,
+                            d.StatusPendaftaran,
+                        });
+                }
+            }
+
+            return Json(final);
+            /*return Json(new
                 {
                     draw = model.draw,
                     recordsTotal = data.TotalCount,
                     recordsFiltered = data.TotalFilterCount,
                     data = data.gridDatas
                 }
-            );
+            );*/
         }
 
         [HttpPost]
