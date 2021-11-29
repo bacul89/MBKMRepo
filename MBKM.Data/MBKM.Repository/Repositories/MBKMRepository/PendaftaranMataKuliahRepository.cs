@@ -408,6 +408,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                         nilai => nilai.MahasiswaID,
                         (pendaf, nilai) => new VMReportMahasiswaEksternal
                         {
+                            ID = pendaf.ID,
                             MatkulKodeAsal = pendaf.MatkulKodeAsal,
                             MatkulAsal = pendaf.MatkulAsal,
                             MatkulIDAsal = pendaf.MatkulIDAsal,
@@ -417,8 +418,8 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                             /*InformasiPertukaran = pendaf.InformasiPertukaran,*/
                             NilaiKuliah = nilai
                         })
-                    .ToList();
-                //.Where(z => z.mahasiswas.NIM != z.mahasiswas.NIMAsal && z.JadwalKuliahs.ID == z.NilaiKuliah.JadwalKuliahID).ToList();
+                    //.ToList();
+                    .Where(z => z.mahasiswas.NIM != z.mahasiswas.NIMAsal && z.JadwalKuliahs.ID == z.NilaiKuliah.JadwalKuliahID).ToList();
 
 
 
@@ -457,6 +458,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                     Select(
                         x => new VMReportMahasiswaEksternal
                         {
+                            ID = x.ID,
                             MatkulKodeAsal = x.MatkulKodeAsal,
                             MatkulAsal = x.MatkulAsal,
                             MatkulIDAsal = x.MatkulIDAsal,
