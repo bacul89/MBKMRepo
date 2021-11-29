@@ -63,7 +63,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 var nilaiDiakui = " ";
                 var nilaiBobotDiakui = new VMNilaiGrade();
                
-                checkNilaiDiakui = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.JadwalKuliahs.MataKuliahID, d.JadwalKuliahs.KodeMataKuliah, d.mahasiswas.ID.ToString());
+                checkNilaiDiakui = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.JadwalKuliahs.MataKuliahID, d.JadwalKuliahs.KodeMataKuliah, d.mahasiswas.NIM.ToString());
                 if (checkNilaiDiakui == null)
                 {
                     nilaiDiakui = "-";
@@ -108,7 +108,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 var nilaiDiakui = " ";
                 var nilaiBobotDiakui = new VMNilaiGrade();
                 
-                checkNilaiDiakui = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.JadwalKuliahs.MataKuliahID, d.JadwalKuliahs.KodeMataKuliah, d.mahasiswas.ID.ToString());
+                checkNilaiDiakui = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.JadwalKuliahs.MataKuliahID, d.JadwalKuliahs.KodeMataKuliah, d.mahasiswas.NIM.ToString());
                 if (checkNilaiDiakui == null)
                 {
                     nilaiDiakui = "-";
@@ -253,7 +253,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 var nilaiDiakui = " ";
                 var nilaiBobotDiakui = new VMNilaiGrade();
                 
-                checkNilai2 = _nilaiKuliahService.GetNilaiDiakui(tmp.JadwalKuliahs.JenjangStudi, tmp.JadwalKuliahs.STRM.ToString(), tmp.JadwalKuliahs.MataKuliahID, tmp.JadwalKuliahs.KodeMataKuliah, tmp.mahasiswas.ID.ToString());
+                checkNilai2 = _nilaiKuliahService.GetNilaiDiakui(tmp.JadwalKuliahs.JenjangStudi, tmp.JadwalKuliahs.STRM.ToString(), tmp.JadwalKuliahs.MataKuliahID, tmp.JadwalKuliahs.KodeMataKuliah, tmp.mahasiswas.NIM.ToString());
                 if (checkNilai2 == null)
                 {
                     nilaiDiakui = "-";

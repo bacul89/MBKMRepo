@@ -170,7 +170,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                         MatkulAsal = pendaftaran.MatkulAsal,
                         StatusPendaftaran = pendaftaran.StatusPendaftaran,
                         InformasiPertukaran = informasi.FirstOrDefault()
-                    }).OrderBy(SortBy, SortDir).ToList()
+                    }).OrderBy(SortBy, SortDir)
                     ;
                 mListPendaftaranMataKuliah.gridDatas = gridfilter.Skip(Skip).Take(Length)
                     .Select(z => new GridListPendaftaranMataKuliah
@@ -185,7 +185,8 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                         MatkulKodeAsal = z.MatkulKodeAsal,
                         MatkulAsal = z.MatkulAsal,
                         StatusPendaftaran = z.StatusPendaftaran,
-                        noKerjasama = (z.InformasiPertukaran == null ? "-" : (z.InformasiPertukaran.NoKerjasama == null ? "-" : z.InformasiPertukaran.NoKerjasama))
+                        noKerjasama = (z.InformasiPertukaran == null ? "-" : (z.InformasiPertukaran.NoKerjasama == null ? "-" : z.InformasiPertukaran.NoKerjasama)),
+                        JenisKerjasama = (z.InformasiPertukaran == null ? "-" : (z.InformasiPertukaran.JenisKerjasama == null ? "-" : z.InformasiPertukaran.JenisKerjasama)),
                     }).ToList();
                 mListPendaftaranMataKuliah.TotalFilterCount = gridfilter.Count();
                 return mListPendaftaranMataKuliah;
