@@ -450,76 +450,78 @@ function printSertifikat() {
         confirmButtonText: "Ok",
         //closeOnConfirm: false
     }).then((result) => {
-        $.LoadingOverlay("show");
-        $.ajax({
-            url: '/Portal/SertifikatMbkm/GetFile',
-            type: 'POST',
-            datatype: 'JSON',
-            success: function (e) {
+        if (result.isConfirmed) {
+            $.LoadingOverlay("show");
+            $.ajax({
+                url: '/Portal/SertifikatMbkm/GetFile',
+                type: 'POST',
+                datatype: 'JSON',
+                success: function (e) {
 
-                //console.log("try " + e.data);
-                var base_url = window.location.origin;
-                console.log("base_url " + base_url);
-                if (e.data != true) {
+                    //console.log("try " + e.data);
+                    var base_url = window.location.origin;
+                    console.log("base_url " + base_url);
+                    if (e.data != true) {
 
-                    var mywindow = window.open('', '_blank');
-                    mywindow.location = base_url + '/Portal/SertifikatMbkm/GetFile';
-                    setTimeout(function () {
-                        $.ajax({
-                            url: '/Portal/TranskripMahasiswa/UpdateStatusSertifikat',
-                            type: 'POST',
-                            datatype: 'JSON',
-                            success: function (e) {
-                                //console.log(e);
-                                //console.log(e.data);
-                                if (e.status == 500) {
+                        var mywindow = window.open('', '_blank');
+                        mywindow.location = base_url + '/Portal/SertifikatMbkm/GetFile';
+                        setTimeout(function () {
+                            $.ajax({
+                                url: '/Portal/TranskripMahasiswa/UpdateStatusSertifikat',
+                                type: 'POST',
+                                datatype: 'JSON',
+                                success: function (e) {
+                                    //console.log(e);
+                                    //console.log(e.data);
+                                    if (e.status == 500) {
+                                        $("#sertifikatCetak").prop("disabled", true);
+                                    } else if (e.status == 200) {
+                                        $("#sertifikatCetak").prop("disabled", true);
+                                        Swal.fire({
+                                            title: 'success',
+                                            icon: 'success',
+                                            html: 'Cetak Berhasil',
+                                            showCloseButton: true,
+                                            showCancelButton: false,
+                                            focusConfirm: false,
+                                            confirmButtonText: 'OK'
+                                        })
+                                        //$("#sertifikatCetak").prop("disabled", false);
+                                    }
+                                    $.LoadingOverlay("hide");
+                                }, error: function (e) {
                                     $("#sertifikatCetak").prop("disabled", true);
-                                } else if (e.status == 200) {
-                                    $("#sertifikatCetak").prop("disabled", true);
-                                    Swal.fire({
-                                        title: 'success',
-                                        icon: 'success',
-                                        html: 'Cetak Berhasil',
-                                        showCloseButton: true,
-                                        showCancelButton: false,
-                                        focusConfirm: false,
-                                        confirmButtonText: 'OK'
-                                    })
-                                    //$("#sertifikatCetak").prop("disabled", false);
+                                    $.LoadingOverlay("hide");
                                 }
-                                $.LoadingOverlay("hide");
-                            }, error: function (e) {
-                                $("#sertifikatCetak").prop("disabled", true);
-                                $.LoadingOverlay("hide");
+                            })
+
+                        }, 500);
+
+
+                    } else {
+                        //var location = 
+                        //window.location = base_url + '/Portal/TranskripMahasiswa';
+                        $.LoadingOverlay("hide");
+                        $("#sertifikatCetak").prop("disabled", true);
+                        swal.fire({
+                            title: "Cetak Sertifikat Gagal, Silahkan Hubungi Pihak BAA!!!",
+                            type: "warning",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#06a956",
+                            confirmButtonText: "Ok",
+                            //closeOnConfirm: false
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+
                             }
                         })
-                       
-                    }, 500);
-
-
-                } else {
-                    //var location = 
-                    //window.location = base_url + '/Portal/TranskripMahasiswa';
-                    $.LoadingOverlay("hide");
+                    }
+                }, error: function (e) {
                     $("#sertifikatCetak").prop("disabled", true);
-                    swal.fire({
-                        title: "Cetak Sertifikat Gagal, Silahkan Hubungi Pihak BAA!!!",
-                        type: "warning",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#06a956",
-                        confirmButtonText: "Ok",
-                        //closeOnConfirm: false
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            
-                        }
-                    })
                 }
-            }, error: function (e) {
-                $("#sertifikatCetak").prop("disabled", true);
-            }
-        })
+            })
+        }
     })
 
 
