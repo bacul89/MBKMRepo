@@ -45,13 +45,18 @@ var mydate = new Date(parts[2], parts[1] - 1, parts[0]);
 var result = mydate.toShortFormat();*/
 
 
-function convertBirthday() {
-    var getBirtDay = $('#birthday').text();
+function convertBirthday(value) {
+/*    var getBirtDay = $('#birthday').text();
     var date = getBirtDay.split(" ")[0];
     var parts = date.split('/');
-    var mydate = new Date(parts[2], parts[1] - 1, parts[0]);
-
+    var mydate = new Date(parts[2], parts[1] - 1, parts[0]);*/
+    console.log(value);
+    var date = value.split("T")[0];
+    var parts = date.split('-');
+    var mydate = new Date(parts[0], parts[1] - 1, parts[2]);
     var result = mydate.toShortFormat();
+
+    //var result = mydate.toShortFormat();
 
     $('#birthday').text(result);
     $('#birthdayView').text(result);
@@ -64,7 +69,7 @@ $(document).ready(function () {
     var date = new Date();
     $("#currentDate").text(date.toShortFormat());
     $("#currentDatePrint").text(date.toShortFormat());
-    convertBirthday();
+    //convertBirthday();
     getNilai();
     isZooming();
     getLookupBAA('KepalaBiroAdministrasiAkademik');
@@ -115,6 +120,10 @@ function getNilai() {
         type: 'POST',
         datatype: 'json',
         success: function (resultTranskip) {
+
+            
+
+            convertBirthday(resultTranskip.mahasiswaBirthday);
 
             if (resultTranskip.pertukaran == true) {
                 CheckStatusFeedback(true, 'internal');                
