@@ -111,10 +111,11 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     d.JadwalKuliahs.NamaProdi,
                     d.JadwalKuliahs.DosenID.ToString(),
                     d.mahasiswas.ID.ToString(),
-                    d.mahasiswas.NIM,
-                    d.mahasiswas.NIMAsal,
-                    d.JadwalKuliahs.ID.ToString(),
-                    d.JadwalKuliahID.ToString(),
+                    //d.mahasiswas.NIM,
+                    //d.mahasiswas.NIMAsal,
+                    //d.JadwalKuliahs.ID.ToString(),
+                    //d.JadwalKuliahID.ToString(),
+                    d.ID.ToString()
                 });
             }
 
@@ -146,11 +147,12 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                             e.JadwalKuliahs.NamaDosen,
                             e.JadwalKuliahs.NamaProdi,
                             e.JadwalKuliahs.DosenID.ToString(),
-                            e.mahasiswas.ID.ToString(),
-                            e.mahasiswas.NIM,
-                            e.mahasiswas.NIMAsal,
-                            e.JadwalKuliahs.ID.ToString(),
-                            e.JadwalKuliahID.ToString(),
+                            //e.mahasiswas.ID.ToString(),
+                            //e.mahasiswas.NIM,
+                            //e.mahasiswas.NIMAsal,
+                            //e.JadwalKuliahs.ID.ToString(),
+                            //e.JadwalKuliahID.ToString(),
+                            e.ID.ToString()
                         });
                     }
 
