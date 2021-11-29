@@ -89,50 +89,82 @@ $(document).ready(function () {
                 "title": "Kode Mata Kuliah Asal",
                 "data": "MatkulKodeAsal",
                 "render": function (data, type, row, meta) {
-                    if (data == null) {
-                        return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                    if (row.JenisKerjasama == "Internal ke Luar Atma Jaya") {
+                        if (row.JadwalKuliahs.KodeMataKuliah == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                        }
+                        return '<div class="center vertical-center" style="font-size: 0.8vw">' + row.JadwalKuliahs.KodeMataKuliah + '</div>';
+                    } else {
+                        if (data == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                        }
+                        return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
                     }
-                    return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
                 }
             },
             {
                 "title": "Nama Mata Kuliah Asal",
                 "data": "MatkulAsal",
                 "render": function (data, type, row, meta) {
-                    if (data == null) {
-                        return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                    if (row.JenisKerjasama == "Internal ke Luar Atma Jaya") {
+                        if (row.JadwalKuliahs.NamaMataKuliah == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                        }
+                        return '<div class="center vertical-center" style="font-size: 0.8vw">' + row.JadwalKuliahs.NamaMataKuliah + '</div>';
+                    } else {
+                        if (data == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                        }
+                        return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
                     }
-                    return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
                 }
             },
             {
                 "title": "Program Studi Tujuan",
                 "data": "JadwalKuliahs.NamaProdi",
                 "render": function (data, type, row, meta) {
-                    if (data == null) {
+                    if (row.JenisKerjasama == "Internal ke Luar Atma Jaya") {
                         return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                    } else {
+                        if (data == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                        }
+                        return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
                     }
-                    return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
                 }
             },
             {
                 "title": "Kode Mata Kuliah Dituju",
                 "data": "JadwalKuliahs.KodeMataKuliah",
                 "render": function (data, type, row, meta) {
-                    if (data == null) {
-                        return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                    if (row.JenisKerjasama == "Internal ke Luar Atma Jaya") {
+                        if (row.MatkulKodeAsal == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                        }
+                        return '<div class="center vertical-center" style="font-size: 0.8vw">' + row.MatkulKodeAsal + '</div>';
+                    } else {
+                        if (data == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                        }
+                        return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
                     }
-                    return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
                 }
             },
             {
                 "title": "Nama Mata Kuliah Dituju",
                 "data": "JadwalKuliahs.NamaMataKuliah",
                 "render": function (data, type, row, meta) {
-                    if (data == null) {
-                        return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                    if (row.JenisKerjasama == "Internal ke Luar Atma Jaya") {
+                        if (row.MatkulAsal == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                        }
+                        return '<div class="center vertical-center" style="font-size: 0.8vw">' + row.MatkulAsal + '</div>';
+                    } else {
+                        if (data == null) {
+                            return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                        }
+                        return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
                     }
-                    return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
                 }
             },
             {
