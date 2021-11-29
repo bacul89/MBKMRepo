@@ -457,9 +457,9 @@ function printSertifikat() {
             datatype: 'JSON',
             success: function (e) {
 
-                console.log("try " + e.data);
+                //console.log("try " + e.data);
                 var base_url = window.location.origin;
-
+                console.log("base_url " + base_url);
                 if (e.data != true) {
 
                     var mywindow = window.open('', '_blank');
