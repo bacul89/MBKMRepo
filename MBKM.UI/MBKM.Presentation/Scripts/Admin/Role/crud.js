@@ -114,23 +114,14 @@ function PostUpdate() {
         type: 'post',
         datatype: 'json',
         data: JSON.stringify(dRole),
+        cache: false,
+        contentType: false,
+        processData: false,
         contentType: 'application/json',
-        success: function (e) {
+    }).then(function (response) {
+        if (response.status == 500) {
             Swal.fire({
-                title: 'Berhasil',
-                icon: 'success',
-                html: 'Data Role Berhasil Diubah',
-                showCloseButton: true,
-                showCancelButton: false,
-                focusConfirm: false,
-                confirmButtonText: 'OK'
-            })
-            tableMenuRole.ajax.reload(null, false);
-            $('.modal').modal('hide');
-        },
-        error: function (e) {
-            Swal.fire({
-                title: 'Gagal',
+                title: 'Gagal!',
                 icon: 'error',
                 html: 'Data Role Gagal Diubah',
                 showCloseButton: true,
@@ -138,10 +129,68 @@ function PostUpdate() {
                 focusConfirm: false,
                 confirmButtonText: 'OK'
             })
-            tableMenuRole.ajax.reload(null, false);
-            $('.modal').modal('hide');
-        }
-    })
+            table.ajax.reload(null, false);
+            // $('.modal').modal('hide');
+        } else
+            if (response.status == 200) {
+                Swal.fire({
+
+                    title: 'Berhasil',
+                    icon: 'success',
+                    html: 'Data Role Berhasil Diupdate',
+                    showCloseButton: true,
+                    showCancelButton: false,
+                    focusConfirm: false,
+                    confirmButtonText: 'OK'
+                })
+                //table.ajax.reload(null, false),
+                tableMenuRole.ajax.reload(null, false);
+                    $('.modal').modal('hide');
+        //    $('.modal').modal('hide');
+                //clearValueOnForm();
+                //location.reload();
+            }
+            else {
+                if (response.status == 400) {
+                    Swal.fire({
+                        title: 'Oppss',
+                        icon: 'warning',
+                        html: 'Mohon Upload Dokumen Pendukung!',
+                        showCloseButton: true,
+                        showCancelButton: false,
+                        focusConfirm: false,
+                        confirmButtonText: 'OK'
+                    })
+                }
+            }
+    });
+        //success: function (e) {
+        //    Swal.fire({
+        //        title: 'Berhasil',
+        //        icon: 'success',
+        //        html: 'Data Role Berhasil Diubah',
+        //        showCloseButton: true,
+        //        showCancelButton: false,
+        //        focusConfirm: false,
+        //        confirmButtonText: 'OK'
+        //    })
+        //    tableMenuRole.ajax.reload(null, false);
+        //    $('.modal').modal('hide');
+        //},
+        //error: function (e) {
+        //    Swal.fire({
+        //        title: 'Gagal',
+        //        icon: 'error',
+        //        html: 'Data Role Gagal Diubah',
+        //        showCloseButton: true,
+        //        showCancelButton: false,
+        //        focusConfirm: false,
+        //        confirmButtonText: 'OK'
+        //    })
+        //    tableMenuRole.ajax.reload(null, false);
+        //    $('.modal').modal('hide');
+        //}
+    //})
 
 
 
