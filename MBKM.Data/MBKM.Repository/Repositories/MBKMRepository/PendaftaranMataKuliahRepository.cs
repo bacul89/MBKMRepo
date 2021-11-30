@@ -170,7 +170,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                         MatkulAsal = pendaftaran.MatkulAsal,
                         StatusPendaftaran = pendaftaran.StatusPendaftaran,
                         InformasiPertukaran = informasi.FirstOrDefault()
-                    }).OrderBy(SortBy, SortDir).ToList()
+                    }).OrderBy(SortBy, SortDir)
                     ;
                 mListPendaftaranMataKuliah.gridDatas = gridfilter.Skip(Skip).Take(Length)
                     .Select(z => new GridListPendaftaranMataKuliah
@@ -185,7 +185,8 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                         MatkulKodeAsal = z.MatkulKodeAsal,
                         MatkulAsal = z.MatkulAsal,
                         StatusPendaftaran = z.StatusPendaftaran,
-                        noKerjasama = (z.InformasiPertukaran == null ? "-" : (z.InformasiPertukaran.NoKerjasama == null ? "-" : z.InformasiPertukaran.NoKerjasama))
+                        noKerjasama = (z.InformasiPertukaran == null ? "-" : (z.InformasiPertukaran.NoKerjasama == null ? "-" : z.InformasiPertukaran.NoKerjasama)),
+                        JenisKerjasama = (z.InformasiPertukaran == null ? "-" : (z.InformasiPertukaran.JenisKerjasama == null ? "-" : z.InformasiPertukaran.JenisKerjasama)),
                     }).ToList();
                 mListPendaftaranMataKuliah.TotalFilterCount = gridfilter.Count();
                 return mListPendaftaranMataKuliah;
@@ -244,7 +245,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             {
                 context.Configuration.LazyLoadingEnabled = false;
                 var result = context.PendaftaranMataKuliahs.Where(x => x.JadwalKuliahs.STRM == strm && x.StatusPendaftaran.ToLower().Contains("accepted"))
-                    .Join(context.informasiPertukarans, 
+                    .GroupJoin(context.informasiPertukarans, 
                         pendaftaran => pendaftaran.MahasiswaID, 
                         informasi => informasi.MahasiswaID, 
                         (pendaftaran,informasi) => new VMPendaftaranWithInformasipertukaran
@@ -252,7 +253,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                             JadwalKuliahID = pendaftaran.JadwalKuliahID,
                             JadwalKuliahs = pendaftaran.JadwalKuliahs,
                             mahasiswas = pendaftaran.mahasiswas,
-                            InformasiPertukaran = informasi
+                            InformasiPertukaran = informasi.FirstOrDefault()
                         }
                         ).ToList();
                 
@@ -266,7 +267,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             {
                 context.Configuration.LazyLoadingEnabled = false;
                 var result = context.PendaftaranMataKuliahs.Where(x => x.JadwalKuliahs.STRM == strm && x.StatusPendaftaran.ToLower().Contains("accepted"))
-                    .Join(context.informasiPertukarans,
+                    .GroupJoin(context.informasiPertukarans,
                         pendaftaran => pendaftaran.MahasiswaID,
                         informasi => informasi.MahasiswaID,
                         (pendaftaran, informasi) => new VMReportMahasiswaInternal
@@ -274,7 +275,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                             JadwalKuliahID = pendaftaran.JadwalKuliahID,
                             JadwalKuliahs = pendaftaran.JadwalKuliahs,
                             mahasiswas = pendaftaran.mahasiswas,
-                            InformasiPertukaran = informasi
+                            InformasiPertukaran = informasi.FirstOrDefault()
                         }
                         )
                    /* .GroupJoin(context.NilaiKuliahs,
@@ -385,8 +386,11 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             using (var context = new MBKMContext())
             {
                 context.Configuration.LazyLoadingEnabled = false;
+
+
+
                 var result = context.PendaftaranMataKuliahs.Where(x => x.JadwalKuliahs.STRM == strm && x.StatusPendaftaran.ToLower().Contains("accepted"))
-                    .Join(context.informasiPertukarans,
+                    /*.Join(context.informasiPertukarans,
                         pendaftaran => pendaftaran.MahasiswaID,
                         informasi => informasi.MahasiswaID,
                         (pendaftaran, informasi) => new VMPendaftaranWithInformasipertukaran
@@ -399,8 +403,43 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                             mahasiswas = pendaftaran.mahasiswas,
                             InformasiPertukaran = informasi
                         }
-                        )
+                     )*/
                     .Join(context.NilaiKuliahs,
+                        pendaf => pendaf.mahasiswas.ID,
+                        nilai => nilai.MahasiswaID,
+                        (pendaf, nilai) => new VMReportMahasiswaEksternal
+                        {
+                            ID = pendaf.ID,
+                            MatkulKodeAsal = pendaf.MatkulKodeAsal,
+                            MatkulAsal = pendaf.MatkulAsal,
+                            MatkulIDAsal = pendaf.MatkulIDAsal,
+                            JadwalKuliahID = pendaf.JadwalKuliahID,
+                            JadwalKuliahs = pendaf.JadwalKuliahs,
+                            mahasiswas = pendaf.mahasiswas,
+                            /*InformasiPertukaran = pendaf.InformasiPertukaran,*/
+                            NilaiKuliah = nilai
+                        })
+                    //.ToList();
+                    .Where(z => z.mahasiswas.NIM != z.mahasiswas.NIMAsal && z.JadwalKuliahs.ID == z.NilaiKuliah.JadwalKuliahID).ToList();
+
+
+
+
+                return result;
+            }
+        }
+
+        public IEnumerable<VMReportMahasiswaEksternal> GetListPendaftaranEksternalPertukaranWithoutNilai(long strm)
+        {
+            using (var context = new MBKMContext())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+
+
+
+                var result = context.PendaftaranMataKuliahs
+                    //.Where(x => x.JadwalKuliahs.STRM == strm).Select(
+                    /*context.NilaiKuliahs,
                         pendaf => pendaf.mahasiswas.ID,
                         nilai => nilai.MahasiswaID,
                         (pendaf, nilai) => new VMReportMahasiswaEksternal
@@ -411,10 +450,29 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                             JadwalKuliahID = pendaf.JadwalKuliahID,
                             JadwalKuliahs = pendaf.JadwalKuliahs,
                             mahasiswas = pendaf.mahasiswas,
-                            InformasiPertukaran = pendaf.InformasiPertukaran,
+                            *//*InformasiPertukaran = pendaf.InformasiPertukaran,*//*
                             NilaiKuliah = nilai
-                        })
-                    .Where(z => z.mahasiswas.NIM != z.mahasiswas.NIMAsal  && z.JadwalKuliahs.ID == z.NilaiKuliah.JadwalKuliahID).ToList();
+                        })*/
+                    
+                    //.ToList();
+                    .Where(z => z.JadwalKuliahs.STRM == strm && z.mahasiswas.NIM != z.mahasiswas.NIMAsal && z.JadwalKuliahs.ID == z.JadwalKuliahID && z.StatusPendaftaran.ToLower().Contains("accepted")).
+                    Select(
+                        x => new VMReportMahasiswaEksternal
+                        {
+                            ID = x.ID,
+                            MatkulKodeAsal = x.MatkulKodeAsal,
+                            MatkulAsal = x.MatkulAsal,
+                            MatkulIDAsal = x.MatkulIDAsal,
+                            JadwalKuliahID = x.JadwalKuliahID,
+                            JadwalKuliahs = x.JadwalKuliahs,
+                            mahasiswas = x.mahasiswas
+                            //NilaiKuliah = nilai
+                        }
+                    )
+                    .ToList();
+
+
+
 
                 return result;
             }

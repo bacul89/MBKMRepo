@@ -99,7 +99,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
         public ActionResult GetMatkulByLokasi(string search, int strm, string jenjangStudi, string prodi, string lokasi)
         {
-            var cek = _jkService.Find(_ => _.STRM == strm && _.JenjangStudi == jenjangStudi && _.NamaProdi == prodi && _.Lokasi == lokasi).ToList();
+            var cek = _jkService.Find(_ => _.STRM == strm && _.JenjangStudi == jenjangStudi && _.NamaProdi == prodi && _.Lokasi == lokasi).GroupBy(x => x.KodeMataKuliah)
+                .Select(x => x.First()).ToList();
             var result = new List<VMLookup>();
             foreach (var item in cek)
             {

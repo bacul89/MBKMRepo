@@ -113,10 +113,10 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             }
 
             var result = new
-            {
-
+            {                
                 pertukaran = cry,
-                transkrip = data
+                transkrip = data,
+                mahasiswaBirthday = mahasiswa.TanggalLahir,
 
             };
 
