@@ -264,7 +264,10 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                     x.JenjangStudi == jenjangStudi &&
                     x.Lokasi == lokasi &&
                     x.STRM == strmInt &&
-                    x.FlagOpen == true
+                    x.FlagOpen == true &&
+                    x.NamaMataKuliah.Contains(searchBy)
+                    
+
                 ).OrderBy("ID", true).Skip(skip).Take(take).ToList();
                 return result;
             }
