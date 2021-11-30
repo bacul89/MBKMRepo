@@ -248,46 +248,5 @@
                 });
             }).draw();
         }
-        function submitRegistrasi() {
-            $.ajax({
-                type: "POST",
-                url: "@Url.Action("registerExternal", "Home")",
-                data: mahasiswa
-            }).then(function (response) {
-                alert(response.message);
-                if (response.status == 200) {
-                    location.reload();
-                }
-            });
-        }
-        function loadNamaUniversitas() {
-            $("#namaUniversitas").select2({
-                placeholder: "-- Pilih Universitas --",
-                width: "100%",
-                ajax: {
-                    url: "@Url.Action("GetNamaInstansi", "Home")",
-                    dataType: 'json',
-                    method: "POST",
-                    delay: 250,
-                    cache: false,
-                    data: function (params) {
-                        return {
-                            Length: "10",
-                            Search: params.term || "",
-                            Skip: (params.page - 1) * 10 || 0,
-                        };
-                    },
-                    processResults: function (data, params) {
-                        var page = params.page - 1 || 1;
-                        return {
-                            results: $.map(data, function (item) { return { id: item.NoKerjasama, value: item.NoKerjasama, nama: item.NamaInstansi, text: item.NamaInstansi } }),
-                            pagination: {
-                                more: (page * 10) <= data.length
-                            }
-                        };
-                    },
-                }
-            });
-        }
     </script>
 }

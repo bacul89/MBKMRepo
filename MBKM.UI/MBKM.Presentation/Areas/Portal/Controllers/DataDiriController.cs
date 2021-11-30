@@ -36,6 +36,10 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             ViewData["status"] = mahasiswa.StatusVerifikasi;
             return View();
         }
+        public ActionResult getLookupByTipe(string tipe)
+        {
+            return new ContentResult { Content = JsonConvert.SerializeObject(_lookupService.getLookupByTipe(tipe)), ContentType = "application/json" };
+        }
         public ActionResult GetDataMahasiswa()
         {
             var result = GetMahasiswaById(long.Parse(Session["idMahasiswa"] as string));

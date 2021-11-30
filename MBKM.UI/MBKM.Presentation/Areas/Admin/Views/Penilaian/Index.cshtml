@@ -121,7 +121,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="text-align: right">Seksi</td>
+                    <td style="text-align: right">Seksi (Optional)</td>
                     <td style="width: 400px;">
                         <select name="seksi" id="seksi" class="form-control input-md"></select>
                     </td>
@@ -184,14 +184,18 @@
         });
 
         $('#cari').click(function () {
-            if (!$('#jenjangStudi').val() || !$('#fakultas').val() || !$('#mataKuliah').val() || !$('#seksi').val() || !$('#prodi').val() || !$('#lokasi').val()) {
+            if (!$('#jenjangStudi').val() || !$('#fakultas').val() || !$('#mataKuliah').val() || !$('#prodi').val() || !$('#lokasi').val()) {
                 alert('Tolong lengkapi data pencarian!');
                 return;
             }
             datatable.destroy();
+            var seksi = $('#seksi').val();
+            if (!$('#seksi').val()) {
+                seksi = '';
+            }
             datatable = $('#hasilPencarian').DataTable({
                 ajax: {
-                    url: '@Url.Action("GetKelas", "Penilaian")?jenjangStudi=' + $('#jenjangStudi').val() + '&fakultas=' + $('#fakultas').val() + '&lokasi=' + $('#lokasi').val() + '&prodi=' + $('#prodi').val() + '&matkul=' + $('#mataKuliah').val() + '&seksi=' + $('#seksi').val() + '&strm=' + $('#tahunSemester').val(),
+                    url: '@Url.Action("GetKelas", "Penilaian")?jenjangStudi=' + $('#jenjangStudi').val() + '&fakultas=' + $('#fakultas').val() + '&lokasi=' + $('#lokasi').val() + '&prodi=' + $('#prodi').val() + '&matkul=' + $('#mataKuliah').val() + '&seksi=' + seksi + '&strm=' + $('#tahunSemester').val(),
                     dataSrc: ''
                 },
                 "columnDefs": [{
