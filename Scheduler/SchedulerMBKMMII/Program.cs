@@ -74,9 +74,9 @@ namespace SchedulerMBKMMII
                     else if (Jabatan.Contains("Warek"))
                         roleid = "5";
                     else if (Jabatan.Contains("Admin Fakultas"))
-                        roleid = "14";
-                    else if (Jabatan.Contains("BAA"))
                         roleid = "2";
+                    else if (Jabatan.Contains("BAA"))
+                        roleid = "14";
                     else
                         roleid = "15";
 
