@@ -1,9 +1,9 @@
 ﻿var table = $('#table-data-tracking-pendaftaran-makul').DataTable({
-    "processing": true,
-    "serverSide": true,
+    
     "ajax": {
         url: '/Portal/TrackingStatusPendaftaran/GetPendaftaranMakul/',
-        type: 'POST'
+        type: 'POST',
+        dataSrc : ""
     },
     "language": {
         "emptyTable": "No record found.",
@@ -14,7 +14,7 @@
     "columns": [
         {
             "title": "Action",
-            "data": "ID",
+            "data": 0 /*"ID"*/,
             "render": function (data, type, row, meta) {
                 return `<div class="center vertical-center" style="text-align:center; align-items:center">
                             <a href="javascript:void()">
@@ -31,42 +31,42 @@
         },
         {
             "title": "Fakultas",
-            "data": "JadwalKuliahs.NamaFakultas",
+            "data": 1 /*"JadwalKuliahs.NamaFakultas"*/,
             "render": function (data, type, row, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
             "title": "Program Studi",
-            "data": "JadwalKuliahs.NamaProdi",
+            "data": 2 /*"JadwalKuliahs.NamaProdi"*/,
             "render": function (data, type, row, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
             "title": "Kode Mata Kuliah",
-            "data": "JadwalKuliahs.KodeMataKuliah",
+            "data": 3 /*"JadwalKuliahs.KodeMataKuliah"*/,
             "render": function (data, type, row, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
             "title": "Nama Mata Kuliah Dituju",
-            "data": "JadwalKuliahs.NamaMataKuliah",
+            "data": 4 /*"JadwalKuliahs.NamaMataKuliah"*/,
             "render": function (data, type, row, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
             "title": "Nama Dosen",
-            "data": "JadwalKuliahs.NamaDosen",
+            "data": 5 /*"JadwalKuliahs.NamaDosen"*/,
             "render": function (data, type, row, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }
         },
         {
             "title": "Status Pendaftaran",
-            "data": "StatusPendaftaran",
+            "data": 6 /*"StatusPendaftaran"*/,
             "render": function (data, type, row, meta) {
                 return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
             }

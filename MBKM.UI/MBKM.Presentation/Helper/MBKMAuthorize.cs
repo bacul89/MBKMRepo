@@ -46,6 +46,10 @@ namespace MBKM.Presentation.Helper
                     filterContext.HttpContext.Session["MenuListSub"] = menuRoleList.Select(x => x.Menus).Where(y => y.MenuParent != null && y.IsActive == true && y.IsDeleted == false).OrderBy(x => x.MenuOrder).ToList();
                     isauthorize = menuRoleList.Any(x => x.IsView == true && x.Menus.MenuUrl.ToLower() == url.ToLower());
                     filterContext.HttpContext.Session["MenuRole"] = menuRoleList;
+                    var accessMenu = menuRoleList.Where(x => x.Menus.MenuUrl.ToLower() == url.ToLower()).FirstOrDefault();
+                    filterContext.HttpContext.Session["isCreate"] = accessMenu.IsCreate;
+                    filterContext.HttpContext.Session["isUpdate"] = accessMenu.IsUpdate;
+                    filterContext.HttpContext.Session["isDelete"] = accessMenu.IsDelete;
                     if (!isauthorize)
                     {
                         filterContext.Result = new RedirectResult("~/UnAuthorized");
@@ -57,6 +61,10 @@ namespace MBKM.Presentation.Helper
                 {
                     var ListMenuRole = (List<MenuRole>)filterContext.HttpContext.Session["MenuRole"];
                     isauthorize = ListMenuRole.Any(x => x.IsView == true && x.Menus.MenuUrl.ToLower() == url.ToLower());
+                    var accessMenu = ListMenuRole.Where(x => x.Menus.MenuUrl.ToLower() == url.ToLower()).FirstOrDefault();
+                    filterContext.HttpContext.Session["isCreate"] = accessMenu.IsCreate;
+                    filterContext.HttpContext.Session["isUpdate"] = accessMenu.IsUpdate;
+                    filterContext.HttpContext.Session["isDelete"] = accessMenu.IsDelete;
                     if (!isauthorize)
                     {
                         filterContext.Result = new RedirectResult("~/UnAuthorized");

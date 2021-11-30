@@ -45,13 +45,18 @@ var mydate = new Date(parts[2], parts[1] - 1, parts[0]);
 var result = mydate.toShortFormat();*/
 
 
-function convertBirthday() {
-    var getBirtDay = $('#birthday').text();
+function convertBirthday(value) {
+/*    var getBirtDay = $('#birthday').text();
     var date = getBirtDay.split(" ")[0];
     var parts = date.split('/');
-    var mydate = new Date(parts[2], parts[1] - 1, parts[0]);
-
+    var mydate = new Date(parts[2], parts[1] - 1, parts[0]);*/
+    console.log(value);
+    var date = value.split("T")[0];
+    var parts = date.split('-');
+    var mydate = new Date(parts[0], parts[1] - 1, parts[2]);
     var result = mydate.toShortFormat();
+
+    //var result = mydate.toShortFormat();
 
     $('#birthday').text(result);
     $('#birthdayView').text(result);
@@ -64,7 +69,7 @@ $(document).ready(function () {
     var date = new Date();
     $("#currentDate").text(date.toShortFormat());
     $("#currentDatePrint").text(date.toShortFormat());
-    convertBirthday();
+    //convertBirthday();
     getNilai();
     isZooming();
     getLookupBAA('KepalaBiroAdministrasiAkademik');
@@ -115,6 +120,10 @@ function getNilai() {
         type: 'POST',
         datatype: 'json',
         success: function (resultTranskip) {
+
+            
+
+            convertBirthday(resultTranskip.mahasiswaBirthday);
 
             if (resultTranskip.pertukaran == true) {
                 CheckStatusFeedback(true, 'internal');                
@@ -211,119 +220,123 @@ function showValue(result) {
     var rowNilaiSks = 0;
     var sksTotal = 0;
 
+    if (result.length > 0) {
+        for (var i = 0; i < result.length; i++) {
+            if (i == 0) {
+                //console.log(result[i].FlagCetak);
+                //$("#btnCetak").prop("disabled", false);
+                CheckStatusFeedback(result[i].FlagCetak, result.length);
+            }
 
-    for (var i = 0; i < result.length; i++) {
-        if (i == 0) {
-            //console.log(result[i].FlagCetak);
-            //$("#btnCetak").prop("disabled", false);
-            CheckStatusFeedback(result[i].FlagCetak, result.length);
+            var kodematakuliah = "<td>" + result[i].KodeMataKuliah + "</td>";
+
+            var mkEn = "<i style='text-align:left;' class='en'>" + result[i].NamaMataKuliahEN + "</i>";
+            var matakuliah = "<td>" + result[i].NamaMataKuliah + mkEn + "</td>";
+
+            var sksInt = parseInt(result[i].SKS);
+            var sks = "<td style='text-align:right;'>" + sksInt + "</td>";
+
+            var grade = result[i].Grade;
+            var gradeHtml = "<td style='float:right;'><div style='width: 14px;text-align: left; position:relative;'>" + grade + "</div></td>";
+
+            var bobot = parseFloat(result[i].Nilai);
+
+            //console.log(result[i].Nilai);
+            //console.log(bobot);
+
+            //bobotTotal = bobotTotal + bobot;
+            //var nilai = result[i].Nilai;
+
+
+
+            sksTotal = sksTotal + sksInt;
+
+            row = "<tr>" + kodematakuliah + matakuliah + sks + gradeHtml + "</tr>";
+            rowNilaiSks = sksInt * bobot;
+
+            //console.log("sks : " + sksInt);
+            //console.log("grade : " + grade);
+            /*if (grade == gA) {
+                rowNilaiSks = sksInt * A;
+            } else if (grade == gAmin) {
+                rowNilaiSks = sksInt * Amin;
+            } else if (grade == gBplus) {
+                rowNilaiSks = sksInt * Bplus;
+            } else if (grade == gB) {
+                rowNilaiSks = sksInt * B;
+            } else if (grade == gBmin) {
+                rowNilaiSks = sksInt * Bmin;
+            } else if (grade == gCplus) {
+                rowNilaiSks = sksInt * Cplus;
+            } else if (grade == gC) {
+                rowNilaiSks = sksInt * C;
+            } else if (grade == gD) {
+                rowNilaiSks = sksInt * D;
+            } else if (grade == gE) {
+                rowNilaiSks = sksInt * E;
+            }*/
+            //console.log("sks k:"+rowNilaiSks);
+            nilaiTotal = nilaiTotal + rowNilaiSks;
+            //console.log(rowNilaiSks);
+            //console.log(nilaiTotal);
+
+            html = html + row;
+        }
+        //console.log(html);
+
+        gradeTotal = nilaiTotal / sksTotal;
+
+        if (isNaN(parseFloat(gradeTotal))) {
+            gradeTotal = 0;
         }
 
-        var kodematakuliah = "<td>" + result[i].KodeMataKuliah + "</td>";
 
-        var mkEn = "<i style='text-align:left;' class='en'>" + result[i].NamaMataKuliahEN + "</i>";
-        var matakuliah = "<td>" + result[i].NamaMataKuliah + mkEn + "</td>";
+        /*    var A = 4.00;
+            var Amin = 3.70;
+            var Bplus = 3.30;
+            var B = 3.00;
+            var Bmin = 2.70;
+            var Cplus = 2.30;
+            var C = 2.00;
+            var D = 1.00;
+            var E = 0;
+        
+            if (gradeTotal == A) {
+                gradeFinal = gA;
+            } else if (gradeTotal >= Amin && gradeTotal <= A) {
+                gradeFinal = gAmin;
+            } else if (gradeTotal >= Bplus && gradeTotal <= Amin) {
+                gradeFinal = gBplus;
+            } else if (gradeTotal >= B && gradeTotal <= Bplus) {
+                gradeFinal = gB;
+            } else if (gradeTotal >= Bmin && gradeTotal <= B) {
+                gradeFinal = gBmin;
+            } else if (gradeTotal >= Cplus && gradeTotal <= Bmin) {
+                gradeFinal = gCplus;
+            } else if (gradeTotal >= C && gradeTotal <= Cplus) {
+                gradeFinal = gC;
+            } else if (gradeTotal >= D && gradeTotal <= C) {
+                gradeFinal = gD;
+            } else if (gradeTotal >= E && gradeTotal <= D) {
+                gradeFinal = gE;
+            }*/
 
-        var sksInt = parseInt(result[i].SKS);
-        var sks = "<td style='text-align:right;'>" + sksInt + "</td>";
+        //console.log(gradeTotal);
+        //console.log(gradeTotal.toFixed(2));
 
-        var grade = result[i].Grade;
-        var gradeHtml = "<td style='float:right;'><div style='width: 14px;text-align: left; position:relative;'>" + grade + "</div></td>";
-
-        var bobot = parseFloat(result[i].Nilai);
-
-        //console.log(result[i].Nilai);
-        //console.log(bobot);
-
-        //bobotTotal = bobotTotal + bobot;
-        //var nilai = result[i].Nilai;
+        $("#data").html(html);
+        $("#totalSks").html(sksTotal);
+        $("#totalGrade").html(gradeTotal.toFixed(2));
 
 
-
-        sksTotal = sksTotal + sksInt;
-
-        row = "<tr>" + kodematakuliah + matakuliah + sks + gradeHtml + "</tr>";
-        rowNilaiSks = sksInt * bobot;
-
-        //console.log("sks : " + sksInt);
-        //console.log("grade : " + grade);
-        /*if (grade == gA) {
-            rowNilaiSks = sksInt * A;
-        } else if (grade == gAmin) {
-            rowNilaiSks = sksInt * Amin;
-        } else if (grade == gBplus) {
-            rowNilaiSks = sksInt * Bplus;
-        } else if (grade == gB) {
-            rowNilaiSks = sksInt * B;
-        } else if (grade == gBmin) {
-            rowNilaiSks = sksInt * Bmin;
-        } else if (grade == gCplus) {
-            rowNilaiSks = sksInt * Cplus;
-        } else if (grade == gC) {
-            rowNilaiSks = sksInt * C;
-        } else if (grade == gD) {
-            rowNilaiSks = sksInt * D;
-        } else if (grade == gE) {
-            rowNilaiSks = sksInt * E;
-        }*/
-        //console.log("sks k:"+rowNilaiSks);
-        nilaiTotal = nilaiTotal + rowNilaiSks;
-        //console.log(rowNilaiSks);
-        //console.log(nilaiTotal);
-
-        html = html + row;
-    }
-    //console.log(html);
-
-    gradeTotal = nilaiTotal / sksTotal;
-
-    if (isNaN(parseFloat(gradeTotal))) {
-        gradeTotal = 0;
+        //intToFloat(gradeTotal, 2)
+        $("#dataPrint").html(html);
+        $("#totalSksPrint").html(sksTotal);
+        $("#totalGradePrint").html(gradeTotal.toFixed(2));
+    } else {
+        CheckStatusFeedback(false, 'eksternal');
     }
 
-
-    /*    var A = 4.00;
-        var Amin = 3.70;
-        var Bplus = 3.30;
-        var B = 3.00;
-        var Bmin = 2.70;
-        var Cplus = 2.30;
-        var C = 2.00;
-        var D = 1.00;
-        var E = 0;
-    
-        if (gradeTotal == A) {
-            gradeFinal = gA;
-        } else if (gradeTotal >= Amin && gradeTotal <= A) {
-            gradeFinal = gAmin;
-        } else if (gradeTotal >= Bplus && gradeTotal <= Amin) {
-            gradeFinal = gBplus;
-        } else if (gradeTotal >= B && gradeTotal <= Bplus) {
-            gradeFinal = gB;
-        } else if (gradeTotal >= Bmin && gradeTotal <= B) {
-            gradeFinal = gBmin;
-        } else if (gradeTotal >= Cplus && gradeTotal <= Bmin) {
-            gradeFinal = gCplus;
-        } else if (gradeTotal >= C && gradeTotal <= Cplus) {
-            gradeFinal = gC;
-        } else if (gradeTotal >= D && gradeTotal <= C) {
-            gradeFinal = gD;
-        } else if (gradeTotal >= E && gradeTotal <= D) {
-            gradeFinal = gE;
-        }*/
-
-    //console.log(gradeTotal);
-    //console.log(gradeTotal.toFixed(2));
-    
-    $("#data").html(html);
-    $("#totalSks").html(sksTotal);
-    $("#totalGrade").html(gradeTotal.toFixed(2));
-
-
-    //intToFloat(gradeTotal, 2)
-    $("#dataPrint").html(html);
-    $("#totalSksPrint").html(sksTotal);
-    $("#totalGradePrint").html(gradeTotal.toFixed(2));
 }
 
 
@@ -446,76 +459,78 @@ function printSertifikat() {
         confirmButtonText: "Ok",
         //closeOnConfirm: false
     }).then((result) => {
-        $.LoadingOverlay("show");
-        $.ajax({
-            url: '/Portal/SertifikatMbkm/GetFile',
-            type: 'POST',
-            datatype: 'JSON',
-            success: function (e) {
+        if (result.isConfirmed) {
+            $.LoadingOverlay("show");
+            $.ajax({
+                url: '/Portal/SertifikatMbkm/GetFile',
+                type: 'POST',
+                datatype: 'JSON',
+                success: function (e) {
 
-                console.log("try " + e.data);
-                var base_url = window.location.origin;
+                    //console.log("try " + e.data);
+                    var base_url = window.location.origin;
+                    console.log("base_url " + base_url);
+                    if (e.data != true) {
 
-                if (e.data != true) {
-
-                    var mywindow = window.open('', '_blank');
-                    mywindow.location = base_url + '/Portal/SertifikatMbkm/GetFile';
-                    setTimeout(function () {
-                        $.ajax({
-                            url: '/Portal/TranskripMahasiswa/UpdateStatusSertifikat',
-                            type: 'POST',
-                            datatype: 'JSON',
-                            success: function (e) {
-                                //console.log(e);
-                                //console.log(e.data);
-                                if (e.status == 500) {
+                        var mywindow = window.open('', '_blank');
+                        mywindow.location = base_url + '/Portal/SertifikatMbkm/GetFile';
+                        setTimeout(function () {
+                            $.ajax({
+                                url: '/Portal/TranskripMahasiswa/UpdateStatusSertifikat',
+                                type: 'POST',
+                                datatype: 'JSON',
+                                success: function (e) {
+                                    //console.log(e);
+                                    //console.log(e.data);
+                                    if (e.status == 500) {
+                                        $("#sertifikatCetak").prop("disabled", true);
+                                    } else if (e.status == 200) {
+                                        $("#sertifikatCetak").prop("disabled", true);
+                                        Swal.fire({
+                                            title: 'success',
+                                            icon: 'success',
+                                            html: 'Cetak Berhasil',
+                                            showCloseButton: true,
+                                            showCancelButton: false,
+                                            focusConfirm: false,
+                                            confirmButtonText: 'OK'
+                                        })
+                                        //$("#sertifikatCetak").prop("disabled", false);
+                                    }
+                                    $.LoadingOverlay("hide");
+                                }, error: function (e) {
                                     $("#sertifikatCetak").prop("disabled", true);
-                                } else if (e.status == 200) {
-                                    $("#sertifikatCetak").prop("disabled", true);
-                                    Swal.fire({
-                                        title: 'success',
-                                        icon: 'success',
-                                        html: 'Cetak Berhasil',
-                                        showCloseButton: true,
-                                        showCancelButton: false,
-                                        focusConfirm: false,
-                                        confirmButtonText: 'OK'
-                                    })
-                                    //$("#sertifikatCetak").prop("disabled", false);
+                                    $.LoadingOverlay("hide");
                                 }
-                                $.LoadingOverlay("hide");
-                            }, error: function (e) {
-                                $("#sertifikatCetak").prop("disabled", true);
-                                $.LoadingOverlay("hide");
+                            })
+
+                        }, 500);
+
+
+                    } else {
+                        //var location = 
+                        //window.location = base_url + '/Portal/TranskripMahasiswa';
+                        $.LoadingOverlay("hide");
+                        $("#sertifikatCetak").prop("disabled", true);
+                        swal.fire({
+                            title: "Cetak Sertifikat Gagal, Silahkan Hubungi Pihak BAA!!!",
+                            type: "warning",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#06a956",
+                            confirmButtonText: "Ok",
+                            //closeOnConfirm: false
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+
                             }
                         })
-                       
-                    }, 500);
-
-
-                } else {
-                    //var location = 
-                    //window.location = base_url + '/Portal/TranskripMahasiswa';
-                    $.LoadingOverlay("hide");
+                    }
+                }, error: function (e) {
                     $("#sertifikatCetak").prop("disabled", true);
-                    swal.fire({
-                        title: "Cetak Sertifikat Gagal, Silahkan Hubungi Pihak BAA!!!",
-                        type: "warning",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#06a956",
-                        confirmButtonText: "Ok",
-                        //closeOnConfirm: false
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            
-                        }
-                    })
                 }
-            }, error: function (e) {
-                $("#sertifikatCetak").prop("disabled", true);
-            }
-        })
+            })
+        }
     })
 
 
@@ -591,6 +606,23 @@ function CheckStatusFeedback(FlagTranscript, row) {
                 $("#totalGrade").html("-");
                 $("#btnCetak").hide();
                 $("#PageTitle").text("SERTIFIKAT MBKM");
+
+            } else if (row == 'eksternal') {
+                var html = "";
+                for (var i = 0; i < result.length; i++) {
+                    var mkEn = "<i style='text-align:left;' class='en'>" + result[i][7] + "</i>";
+                    var matakuliah = result[i][1] + mkEn;
+                    html = html + "<tr><td>" + result[i][2] + "</td><td>" + matakuliah + "</td><td style='text-align:right'>-</td><td style='text-align:right'>-</td></tr>";
+                }
+
+
+
+                $("#data").html(html);
+                $("#totalSks").html("-");
+                $("#totalGrade").html("-");
+                //$("#btnCetak").hide();
+                $("#PageTitle").text("TRANSKRIP NILAI & SERTIFIKAT MBKM");
+
             } else {
                 $("#PageTitle").text("TRANSKRIP NILAI & SERTIFIKAT MBKM");
 

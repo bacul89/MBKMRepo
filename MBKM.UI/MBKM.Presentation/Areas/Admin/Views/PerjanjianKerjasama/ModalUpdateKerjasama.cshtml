@@ -35,39 +35,6 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label for="Instansi" class="col-md-4 col-form-label">Instansi</label>
-                <div class="col-md-8">
-                    <select name="Instansi" id="instansi" class="form-control" value="@Model.Instansi" required>
-                        @{
-                            if (@Model.Instansi == "Perusahaan")
-                            {
-                                <option value="Perusahaan" selected>Perusahaan</option>
-                                <option value="Universitas">Universitas</option>
-                            }
-                            else
-                            {
-                                <option value="Perusahaan">Perusahaan</option>
-                                <option value="Universitas" selected>Universitas</option>
-                            }
-                        }
-
-
-                    </select>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="Namainstansi" class="col-md-4 col-form-label">Nama</label>
-                <div class="col-md-8">
-                    <input id="NamaUniversitas" type="text" name="NamaInstansi" class="form-control" value="@Model.NamaInstansi" required>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="Namaunit" class="col-md-4 col-form-label">Nama Unit/Program Studi</label>
-                <div class="col-md-8">
-                    <input id="Namaunit" type="text" name="NamaUnit" class="form-control" value="@Model.NamaUnit" required>
-                </div>
-            </div>
-            <div class="form-group row">
                 <label for="pertukaran" class="col-md-4 col-form-label">
                     Jenis Program MBKM
                 </label>
@@ -104,6 +71,39 @@
                             }
                         }
                     </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="Instansi" class="col-md-4 col-form-label">Instansi</label>
+                <div class="col-md-8">
+                    <select name="Instansi" id="instansi" class="form-control" value="@Model.Instansi" required>
+                        @{
+                            if (@Model.Instansi == "Nonuniversitas")
+                            {
+                                <option value="Nonuniversitas" selected>Non Universitas</option>
+                                <option value="Universitas">Universitas</option>
+                            }
+                            else
+                            {
+                                <option value="Nonuniversitas">Non Universitas</option>
+                                <option value="Universitas" selected>Universitas</option>
+                            }
+                        }
+
+
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="Namainstansi" class="col-md-4 col-form-label">Nama</label>
+                <div class="col-md-8">
+                    <input id="NamaUniversitas" type="text" name="NamaInstansi" class="form-control" value="@Model.NamaInstansi" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="Namaunit" class="col-md-4 col-form-label">Nama Unit/Program Studi</label>
+                <div class="col-md-8">
+                    <input id="Namaunit" type="text" name="NamaUnit" class="form-control" value="@Model.NamaUnit" required>
                 </div>
             </div>
             <div class="form-group row">

@@ -157,6 +157,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     Session["prodiIDAsal"] = a.ProdiIDAsal;
                     PopulateSession(true, mahasiswa.Email, mahasiswa.ID + "", mahasiswa.Semester + "", mahasiswa.Nama);
                 }
+                Session["isInternal"] = true;
                 return RedirectToAction("Index", "DataDiri");
             }
         }
@@ -174,6 +175,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 return RedirectToAction("Index", "Home");
             } 
             PopulateSession(true, res.Email, res.ID + "", res.Semester + "", res.Nama);
+            Session["isInternal"] = false;
             return RedirectToAction("Index", "DataDiri");
         }
         public ActionResult Logout()

@@ -43,19 +43,72 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetPendaftaranMakul(DataTableAjaxPostModel model)
+        public JsonResult GetPendaftaranMakul(/*DataTableAjaxPostModel model*/)
         {
             string emailMahasiswa = Session["emailMahasiswa"] as string;
-            var data = _pendaftaranMataKuliahService.GetPendaftaranMahasiswaDataTableByMahasiswa(model,emailMahasiswa);
+            /*var data = _pendaftaranMataKuliahService.GetPendaftaranMahasiswaDataTableByMahasiswa(model,emailMahasiswa);*/
+            var dataPendaftaran = _pendaftaranMataKuliahService.Find(c => c.mahasiswas.Email == emailMahasiswa).ToList();
+            var checkInformasiPertukaran = _informasiPertukaranService.Find(z => z.Mahasiswas.Email == emailMahasiswa).FirstOrDefault();
+            List<String[]> final = new List<String[]>();
 
-            return Json(new
+            if(checkInformasiPertukaran != null)
+            {
+                if(checkInformasiPertukaran.JenisKerjasama.ToLower().Contains("ke luar"))
+                {
+                    foreach (var d in dataPendaftaran)
+                    {
+                        final.Add(new String[]{
+                            d.ID.ToString(),
+                            "-",
+                            "-",
+                            "-",
+                            d.MatkulAsal,
+                            "-",
+                            d.StatusPendaftaran,
+                        });
+                    }
+                }
+                else
+                {
+                    foreach (var d in dataPendaftaran)
+                    {
+                        final.Add(new String[]{
+                            d.ID.ToString(),
+                            d.JadwalKuliahs.NamaFakultas,
+                            d.JadwalKuliahs.NamaProdi,
+                            d.JadwalKuliahs.KodeMataKuliah,
+                            d.JadwalKuliahs.NamaMataKuliah,
+                            d.JadwalKuliahs.NamaDosen,
+                            d.StatusPendaftaran,
+                        });
+                    }
+                }
+            }
+            else
+            {
+                foreach (var d in dataPendaftaran)
+                {
+                    final.Add(new String[]{
+                            d.ID.ToString(),
+                            d.JadwalKuliahs.NamaFakultas,
+                            d.JadwalKuliahs.NamaProdi,
+                            d.JadwalKuliahs.KodeMataKuliah,
+                            d.JadwalKuliahs.NamaMataKuliah,
+                            d.JadwalKuliahs.NamaDosen,
+                            d.StatusPendaftaran,
+                        });
+                }
+            }
+
+            return Json(final);
+            /*return Json(new
                 {
                     draw = model.draw,
                     recordsTotal = data.TotalCount,
                     recordsFiltered = data.TotalFilterCount,
                     data = data.gridDatas
                 }
-            );
+            );*/
         }
 
         [HttpPost]
@@ -108,7 +161,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             var data = _cPLMKPendaftaranService.Find(x => x.IsDeleted == false && x.PendaftaranMataKuliahID == id).First();
             IList<CPLMatakuliah> tempId = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.PendaftaranMataKuliahs.JadwalKuliahs.MataKuliahID).ToList();
-            IList<CPLMatakuliah> capaianTujuan = tempId.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == data.PendaftaranMataKuliahs.JadwalKuliahs.ProdiID).ToList();
+            /*IList<CPLMatakuliah> capaianTujuan = tempId.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == data.PendaftaranMataKuliahs.JadwalKuliahs.ProdiID).ToList();*/
+            IList<CPLMatakuliah> capaianTujuan = tempId;
             var tmpInformasiPertukaran1 = _informasiPertukaranService.Find(x => x.MahasiswaID == data.PendaftaranMataKuliahs.MahasiswaID).Count();
 
             if (tmpInformasiPertukaran1 == 0)
@@ -148,7 +202,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 if (data.CPLMatakuliahID != null && !tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("internal ke luar"))
                 {
                     IList<CPLMatakuliah> tempIDAsal = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.CPLMatakuliahs.IDMataKUliah).ToList();
-                    IList<CPLMatakuliah> capaianAsal = tempIDAsal.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == data.PendaftaranMataKuliahs.JadwalKuliahs.ProdiID).ToList();
+                    /*IList<CPLMatakuliah> capaianAsal = tempIDAsal.Where(x => x.MasterCapaianPembelajarans.ProdiID == data.CPLMatakuliahs.MasterCapaianPembelajarans.ProdiID).ToList();*/
+                    IList<CPLMatakuliah> capaianAsal = tempIDAsal;
                     ViewData["capaianAsal"] = capaianAsal;
                     ViewData["countCPAsal"] = capaianAsal.Count();
 

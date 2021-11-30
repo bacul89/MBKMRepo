@@ -35,5 +35,7 @@ namespace MBKM.Entities.ViewModel
         public string StatusPendaftaran { get; set; }
 
         public string noKerjasama { get; set; }
+        public string JenisKerjasama { get; set; }
+
     }
 }

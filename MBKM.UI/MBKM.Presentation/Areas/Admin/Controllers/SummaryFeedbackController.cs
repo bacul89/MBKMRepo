@@ -40,6 +40,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult Index()
         {
             ViewData["role"] = HttpContext.Session["RoleName"].ToString();
+            var data1 = HttpContext.Session["isCreate"].ToString();
+            var data2 = HttpContext.Session["isUpdate"].ToString();
+            var data3 = HttpContext.Session["IsDelete"].ToString();
             IEnumerable<VMLookup> tempJenjang = _lookupService.getLookupByTipe("JenjangStudi");
             ViewData["Jenjang"] = tempJenjang;
             IEnumerable<VMSemester> data = _jadwalUjianMBKMService.getAllSemester();
