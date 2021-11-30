@@ -130,7 +130,7 @@ function PostUpdate() {
         },
         error: function (e) {
             Swal.fire({
-                title: 'Berhasil',
+                title: 'Gagal',
                 icon: 'error',
                 html: 'Data Role Gagal Diubah',
                 showCloseButton: true,
