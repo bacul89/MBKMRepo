@@ -2,6 +2,7 @@
 using MBKM.Entities.Models;
 using MBKM.Entities.ViewModel;
 using MBKM.Presentation.Helper;
+using MBKM.Presentation.models;
 using MBKM.Services;
 using System;
 using System.Collections.Generic;
@@ -80,18 +81,26 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult PostUpdateRole(Role role)
         {
+            try
+            {
+                Role data = _roleService.Get(role.ID);
+                data.Code = role.Code;
+                data.RoleName = role.RoleName;
+                data.IsActive = role.IsActive;
+                data.UpdatedBy = Session["username"] as string;
 
-            Role data = _roleService.Get(role.ID);
-            data.Code = role.Code;
-            data.RoleName = role.RoleName;
-            data.IsActive = role.IsActive;
-            data.UpdatedBy = Session["username"] as string;
 
 
+                _roleService.Save(data);
+                return Json(new ServiceResponse { status = 200, message = "Pendaftaran Role Berhasil!" });
+            }
+            catch (Exception e)
+            {
+                return Json(new ServiceResponse { status = 500, message = e.Message });
+            }
+            
 
-            _roleService.Save(data);
-
-            return Json(data);
+            //return Json(data);
         }
     }
 }
