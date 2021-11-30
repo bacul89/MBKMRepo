@@ -309,7 +309,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ws.Cells["B2:I2"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;*/
             ws.Cells["A3:I4"].Style.Font.Bold = true;
 
-            ws.Cells["A3"].Value = "FORMULIR \nMATRIKS MATAKULIAH PROGRAM MBKM NON PERTUKARAN";
+            ws.Cells["A3"].Value = "FORMULIR \nMATRIKS MATAKULIAH PROGRAM MBKM PERTUKARAN EKSTERNAL";
             /*ws.Cells["B1"].Value = "UNIVERSITAS KATOLIK INDONESIA";
             ws.Cells["B2"].Value = "ATMA JAYA";*/
 
