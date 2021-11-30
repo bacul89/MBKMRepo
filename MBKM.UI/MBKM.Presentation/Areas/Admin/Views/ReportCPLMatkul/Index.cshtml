@@ -71,10 +71,6 @@
     }
 </style>
 
-<form action="@Url.Action("DetailPenilaian","Penilaian")" method="post" id="detailPenilaian">
-    <input type="hidden" id="idMatkul" name="idMatkul" />
-</form>
-
 <div class="card center-block" style="background-color: white; margin: 15px;">
     <div class="card-body" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); ">
         <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; padding-left: 15px; font-weight: bold; font-size: 20px; color: black; ">
@@ -290,7 +286,7 @@
                 placeholder: "-- Pilih Jenjang Studi --",
                 width: "100%",
                 ajax: {
-                    url: "@Url.Action("getLookupByTipe", "PresensiKelas")",
+                    url: "@Url.Action("getLookupByTipe", "ReportCPLMatkul")",
                     dataType: 'json',
                     method: "POST",
                     delay: 250,
@@ -322,7 +318,7 @@
                     placeholder: "-- Pilih Fakultas --",
                     width: "100%",
                     ajax: {
-                        url: "@Url.Action("GetFakultasByJenjangStudi", "PresensiKelas")",
+                        url: "@Url.Action("GetFakultasByJenjangStudi", "ReportCPLMatkul")",
                         dataType: 'json',
                         method: "POST",
                         delay: 250,
@@ -352,7 +348,7 @@
                         placeholder: "-- Pilih Program Studi --",
                         width: "100%",
                         ajax: {
-                            url: "@Url.Action("GetProdiByFakultas", "PresensiKelas")",
+                            url: "@Url.Action("GetProdiByFakultas", "ReportCPLMatkul")",
                             dataType: 'json',
                             method: "POST",
                             delay: 250,

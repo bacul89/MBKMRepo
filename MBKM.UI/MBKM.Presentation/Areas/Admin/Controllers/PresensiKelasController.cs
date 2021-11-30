@@ -111,5 +111,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 return Json(new ServiceResponse { status = 500, message = e.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+        public ActionResult GetSemesterAll2()
+        {
+            var result = _jadwalKuliahService.GetSemesterAll2();
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
+        }
     }
 }

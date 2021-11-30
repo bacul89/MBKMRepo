@@ -29,12 +29,14 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private IJadwalKuliahService _jadwalKuliahService;
         private ILookupService _lookupService;
         private IMasterCapaianPembelajaranService _mcpService;
+        private IAbsensiService _absensiService;
 
-        public DaftarMatkulController(IJadwalKuliahService jadwalKuliahService, ILookupService lookupService, IMasterCapaianPembelajaranService mcpService)
+        public DaftarMatkulController(IAbsensiService absensiService, IJadwalKuliahService jadwalKuliahService, ILookupService lookupService, IMasterCapaianPembelajaranService mcpService)
         {
             _jadwalKuliahService = jadwalKuliahService;
             _lookupService = lookupService;            
             _mcpService = mcpService;
+            _absensiService = absensiService;
         }
         public ActionResult Index()
         {
@@ -148,6 +150,22 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             fsr.FileDownloadName = fileDownloadName;
 
             return fsr;
+        }
+        public ActionResult getLookupByTipe(string tipe)
+        {
+            return new ContentResult { Content = JsonConvert.SerializeObject(_lookupService.getLookupByTipe(tipe)), ContentType = "application/json" };
+        }
+        public ActionResult GetFakultasByJenjangStudi(string search, string jenjangStudi)
+        {
+            return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.GetFakultasByJenjangStudi(search, jenjangStudi)), ContentType = "application/json" };
+        }
+        public ActionResult GetProdiByFakultas(string search, string jenjangStudi, string fakultas)
+        {
+            return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.GetProdiByFakultas(search, jenjangStudi, fakultas)), ContentType = "application/json" };
+        }
+        public ActionResult GetLokasiByProdi(string search, string jenjangStudi, string prodi)
+        {
+            return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.GetLokasiByProdi(search, jenjangStudi, prodi)), ContentType = "application/json" };
         }
     }
 }

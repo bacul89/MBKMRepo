@@ -28,15 +28,27 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
     {
         private IJadwalKuliahService _jadwalKuliahService;
         private ICPLMatakuliahService _cplMatakuliahService;
+        private ILookupService _lookupService;
+        private IAbsensiService _absensiService;
 
-        public ReportCPLMatkulController(ICPLMatakuliahService cplMatakuliahService, IJadwalKuliahService jkService, ILookupService lookupService, IMasterCapaianPembelajaranService mcpService)
+        public ReportCPLMatkulController(IAbsensiService absensiService, ICPLMatakuliahService cplMatakuliahService, IJadwalKuliahService jkService, ILookupService lookupService)
         {
             _jadwalKuliahService = jkService;
             _cplMatakuliahService = cplMatakuliahService;
+            _lookupService = lookupService;
+            _absensiService = absensiService;
         }
         public ActionResult Index()
         {
             return View();
+        }
+        public ActionResult GetFakultasByJenjangStudi(string search, string jenjangStudi)
+        {
+            return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.GetFakultasByJenjangStudi(search, jenjangStudi)), ContentType = "application/json" };
+        }
+        public ActionResult GetProdiByFakultas(string search, string jenjangStudi, string fakultas)
+        {
+            return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.GetProdiByFakultas(search, jenjangStudi, fakultas)), ContentType = "application/json" };
         }
         public ActionResult GetMatkulByProdi(string jenjangStudi, string prodi, string search)
         {
@@ -149,6 +161,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             fsr.FileDownloadName = fileDownloadName;
 
             return fsr;
+        }
+        public ActionResult getLookupByTipe(string tipe)
+        {
+            return new ContentResult { Content = JsonConvert.SerializeObject(_lookupService.getLookupByTipe(tipe)), ContentType = "application/json" };
         }
     }
 }
