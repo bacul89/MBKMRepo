@@ -148,30 +148,6 @@
                     alert(response2.message);
                 }
             });
-            //data.JenisPertukaran = $('#jenisProgramMBKM').html();
-            //data.JenisKerjasama = $('#jenisKegiatanMBKM').html();
-            //data.NoKerjasama = '@Model.NoKerjasama';
-            @*$.ajax({
-                type: "POST",
-                url: "@Url.Action("InsertInformasiPertukaran", "PendaftaranMataKuliah")",
-                data: data
-            }).then(function (response) {
-                if (response.status != 500) {
-                    $.ajax({
-                        type: "POST",
-                        url: "@Url.Action("InsertPendaftaranMK", "PendaftaranMataKuliah")",
-                        data: data
-                    }).then(function (response2) {
-                        if (response2.status == 200) {
-                            window.history.back();
-                        } else {
-                            alert(response2.message);
-                        }
-                    });
-                } else {
-                    alert(response.message);
-                }
-            });*@
         });
         function getJenisKerjasama() {
             $.ajax({
