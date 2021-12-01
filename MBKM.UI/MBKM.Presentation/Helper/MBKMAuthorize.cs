@@ -30,7 +30,8 @@ namespace MBKM.Presentation.Helper
                 string actionname = filterContext.RequestContext.RouteData.Values["action"].ToString();
                 bool isauthorize = true;
                 string url = "/" + area + "/" + controllername;
-                if(controllername.ToLower() == "jadwalkuliah")
+                filterContext.HttpContext.Session["urlActive"] = url;
+                if (controllername.ToLower() == "jadwalkuliah")
                 {
                     if (actionname.ToLower() == "manage")
                         url = url + "/" + actionname;
