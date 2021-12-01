@@ -2,7 +2,7 @@
 var jsData = {};
 $(document).ready(function () {
     table = $('#table-data-report-internal-keluar-mahasiswa').DataTable({
-        "ajax": {
+       /* "ajax": {
             url: '/Admin/ReportInternalKeluar/DataTable',
             dataSrc: '',
             data: {
@@ -18,91 +18,91 @@ $(document).ready(function () {
                 }
             },
             {
-                /*Semester*/
+                *//*Semester*//*
                 "data": 0,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
             {
-                /*jenjang*/
+                *//*jenjang*//*
                 "data": 1,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
             {
-                /*nim*/
+                *//*nim*//*
                 "data": 2,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
             {
-                /*nama*/
+                *//*nama*//*
                 "data": 3,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
             {
-                /*prodi*/
+                *//*prodi*//*
                 "data": 4,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
             {
-                /*Kampus tempat MBKM*/
+                *//*Kampus tempat MBKM*//*
                 "data": 5,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
             {
-                /*Nama MK*/
+                *//*Nama MK*//*
                 "data": 6,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
             {
-                /*SKS */
+                *//*SKS *//*
                 "data": 7,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
             {
-                /*Nilai asal*/
+                *//*Nilai asal*//*
                 "data": 8,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
             {
-                /*Nilai kode makul*/
+                *//*Nilai kode makul*//*
                 "data": 9,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
             {
-                /*kjode Makul diakui */
+                *//*kjode Makul diakui *//*
                 "data": 10,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
             {
-                /*nama mk diakui mk*/
+                *//*nama mk diakui mk*//*
                 "data": 11,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
             {
-                /*huruf*/
+                *//*huruf*//*
                 "data": 12,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
@@ -116,7 +116,7 @@ $(document).ready(function () {
                 'border-collapse': 'collapse',
                 'vertical-align': 'center',
             });
-        }
+        }*/
     });
     $('#inp_semester').change(function () {
         jsData.semester = $('#inp_semester :selected').val();
