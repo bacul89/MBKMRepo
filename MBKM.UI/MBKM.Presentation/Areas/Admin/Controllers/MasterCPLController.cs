@@ -149,8 +149,30 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 }
             }
 
+            //simpan tanpa edit
+            else if (data.NamaProdi == cpl.NamaProdi && data.Kelompok == cpl.Kelompok && data.Kode == cpl.Kode && GetMasterCPLByCapaian(cpl.Capaian) != null)
+            {
+                foreach (var d in LoopSemuaDatabyLokasi)
+                {
+                    MasterCapaianPembelajaran newDAta = new MasterCapaianPembelajaran();
+                    newDAta = d;
+                    newDAta.Kelompok = cpl.Kelompok;
+                    newDAta.Kode = cpl.Kode;
+                    newDAta.Capaian = cpl.Capaian;
+                    newDAta.IsActive = cpl.IsActive;
+                    newDAta.UpdatedBy = Session["username"] as string;
 
-
+                    try
+                    {
+                        _mcpService.Save(data);
+                    }
+                    catch (Exception e)
+                    {
+                        return Json(new ServiceResponse { status = 500, message = "Error saving" });
+                    }
+                }
+                //return Json(new ServiceResponse { status = 500, message = "Update CPL Berhasil!" });
+            }
             else { return Json(new ServiceResponse { status = 400, message = "Gagal! CPL Ini Sudah Tersedia!" }); }
             
 

@@ -130,7 +130,7 @@ function validationCustom2() {
     var namaRole = document.getElementById("idRole");
     var selectedRole = namaRole.options[namaRole.selectedIndex].text;
     //if bukan role spesial (Kaprodi)
-    if (selectedRole == "Kepala Program Studi") {
+    if (selectedRole == "Kepala Program Studi" || selectedRole == "Dosen") {
         $(".input-data").each(function () {
             var element = $(this);
             if (element.val() == "") {
@@ -158,7 +158,7 @@ function validationCustomEditUser() {
     var isValid;
     var namaRole = document.getElementById("idRole");
     var selectedRole = namaRole.options[namaRole.selectedIndex].text;
-    if (selectedRole == "Kepala Program Studi") {
+    if (selectedRole == "Kepala Program Studi" || selectedRole == "Dosen") {
         $(".asd").each(function () {
             var element = $(this);
             if (element.val() == "") {
