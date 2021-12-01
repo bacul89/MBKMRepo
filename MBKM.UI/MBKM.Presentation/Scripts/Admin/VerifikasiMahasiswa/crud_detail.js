@@ -31,8 +31,8 @@ $(document).ready(function () {
                 dataType: 'json',
                 type: 'post',
                 success: function (w) {
-                    $('input[name=inp_biaya]').val(w.BiayaKuliah);
-                    biayaAwal = w.BiayaKuliah;
+                    $('input[name=inp_biaya]').val(w);
+                    biayaAwal = w;
                     $('#inp_biaya').focus();
                 }
             })

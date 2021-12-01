@@ -256,7 +256,7 @@
                                         @{
                                             foreach (var data in ViewData["StatusKerjasama"] as IEnumerable<MBKM.Entities.ViewModel.VMLookup>)
                                             {
-                                                <option value="@data.Nilai" @{ if (Model.StatusKerjasama == data.Nilai) { <text> selected</text> } }>@data.Nama</option>
+                                                <option value="@data.Nilai" @{ if (Model.StatusKerjasama == data.Nilai || (Model.NoKerjasama != null && data.Nilai == "ADA KERJASAMA")) { <text> selected</text> } }>@data.Nama</option>
                                             }
                                         }
                                     </select>
