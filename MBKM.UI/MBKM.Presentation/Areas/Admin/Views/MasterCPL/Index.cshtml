@@ -324,6 +324,7 @@
                             <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Kode</th>
                             <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Kelompok</th>
                             <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Capaian Pembelajaran</th>
+                            <th class="zero-padding no-border vertical-center sorting" style="text-align:center">Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -679,6 +680,9 @@
                     type: 'post',
                     datatype: 'json',
                     data: JSON.stringify(formEdit),
+                    cache: false,
+                    //contentType: false,
+                    processData: false,
 
                     //contentType: 'application/json'
                     contentType: 'application/json',
@@ -689,7 +693,7 @@
                             Swal.fire({
                                 title: 'Berhasil',
                                 icon: 'success',
-                                html: 'CPL Berhasil DiUpdate',
+                                html: 'CPL Berhasil Diupdate',
                                 showCloseButton: true,
                                 showCancelButton: false,
                                 focusConfirm: false,
@@ -943,6 +947,18 @@
                             "name": "Capaian",
                             "render": function (data, type, row, meta) {
                                 return '<div class="center">' + data + '</div>';
+                            }
+                        },
+                        {
+                            //"title": "Nama",
+                            "data": "Status",
+                            "name": "Status",
+                            "render": function (data, type, row, meta) {
+                                if (data === true) {
+                                    return '<div class="center">Aktif</div>';
+                                } else {
+                                    return '<div class="center">Tidak Aktif</div>';
+                                }
                             }
                         },
                     ],

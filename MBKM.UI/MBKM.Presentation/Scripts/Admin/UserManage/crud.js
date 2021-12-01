@@ -18,13 +18,18 @@ function AddUserTemplate() {
                 $('#idRole').change(function () {
                     var namaRole = document.getElementById("idRole");
                     var selectedRole = namaRole.options[namaRole.selectedIndex].text;
-                    if (selectedRole != "Kepala Program Studi") {
+                    if (selectedRole != "Kepala Program Studi" && selectedRole != "Dosen") {
                         //$('#specialRole').html('<input type="text" value="BAA" class="form-control input-pendaftaran input-data" disabled="disabled" id="specialRole" name="specialRole">')
                         $("#divProdi").prop('hidden', true);
                         //$("#specialRole").text("asd-BAA");
                         $("#specialRole").val(selectedRole);
                         console.log($("#specialRole").val());
                     }
+                    //else if (selectedRole != "Dosen") {
+                    //    //$('#specialRole').html('<input type="text" value="BAA" class="form-control input-pendaftaran input-data" disabled="disabled" id="specialRole" name="specialRole">')
+                    //    $("#divProdi").prop('hidden', true);
+                    //    //$("#specialRole").text("asd-BAA");
+                    //    $("#specialRole").val(selectedRole);}
                     else {
                         $("#divProdi").prop('hidden', false);
 
@@ -52,7 +57,7 @@ function EditUserTemplate(id) {
             $('.modal').modal('show');
             var namaRole = document.getElementById("idRole");
             var selectedRole = namaRole.options[namaRole.selectedIndex].text;
-            if (selectedRole != "Kepala Program Studi") {
+            if (selectedRole != "Kepala Program Studi" && selectedRole != "Dosen") {
                 //$('#specialRole').html('<input type="text" value="BAA" class="form-control input-pendaftaran input-data" disabled="disabled" id="specialRole" name="specialRole">')
                 $("#divProdi").prop('hidden', true);
                 //$("#specialRole").text("asd-BAA");
@@ -66,7 +71,7 @@ function EditUserTemplate(id) {
             $('#idRole').change(function () {
                 var namaRole = document.getElementById("idRole");
                 var selectedRole = namaRole.options[namaRole.selectedIndex].text;
-                if (selectedRole != "Kepala Program Studi") {
+                if (selectedRole != "Kepala Program Studi" && selectedRole != "Dosen") {
                     //$('#specialRole').html('<input type="text" value="BAA" class="form-control input-pendaftaran input-data" disabled="disabled" id="specialRole" name="specialRole">')
                     $("#divProdi").prop('hidden', true);
                     //$("#specialRole").text("asd-BAA");
@@ -98,7 +103,7 @@ function DetailUserTemplate(id) {
             var namaRole = document.getElementById("idRole");
             var selectedRole = $('#idRole').val();
             console.log(selectedRole);
-            if (selectedRole != "Kepala Program Studi") {
+            if (selectedRole != "Kepala Program Studi" && selectedRole != "Dosen") {
                 //$('#specialRole').html('<input type="text" value="BAA" class="form-control input-pendaftaran input-data" disabled="disabled" id="specialRole" name="specialRole">')
                 $("#divProdi").prop('hidden', true);
                 //$("#specialRole").text("asd-BAA");
@@ -120,7 +125,7 @@ function PostCreate2() {
     var namaRole = document.getElementById("idRole");
     var selectedRole = namaRole.options[namaRole.selectedIndex].text;
     //if bukan role spesial (Kaprodi)
-    if (selectedRole == "Kepala Program Studi") {
+    if (selectedRole == "Kepala Program Studi" || selectedRole == "Dosen") {
         var namaProdi = document.getElementById("idProdi");
         var selectedProdi = namaProdi.options[namaProdi.selectedIndex].text;
         var namaProdi = selectedProdi.substring(selectedProdi.indexOf('-') + 1);
@@ -251,7 +256,7 @@ function PostUpdateUser() {
     var namaRole = document.getElementById("idRole");
     var selectedRole = namaRole.options[namaRole.selectedIndex].text;
     //if bukan role spesial (Kaprodi)
-    if (selectedRole == "Kepala Program Studi") {
+    if (selectedRole == "Kepala Program Studi" || selectedRole == "Dosen") {
         var namaProdi = document.getElementById("idProdi");
         var selectedProdi = namaProdi.options[namaProdi.selectedIndex].text;
         var namaProdis = selectedProdi.substring(selectedProdi.indexOf('-') + 1);
