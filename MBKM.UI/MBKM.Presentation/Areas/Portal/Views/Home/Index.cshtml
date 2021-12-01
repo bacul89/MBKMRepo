@@ -70,9 +70,9 @@
                             <input type="text" name="nimAsal" id="nimAsal" placeholder="NIM" class="form-control input-lg" />
                         </div>
                         <div class='form-group'>
-                            <label>Tahun Semester</label>
-                            <select name='tahunSemester' id='tahunSemester' class='form-control input-lg' required>
-                                <option>-- Pilih Tahun Semester --</option>
+                            <label>Jenjang Studi</label>
+                            <select name='jenjangStudi' id='jenjangStudi' class='form-control input-lg' required>
+                                <option>-- Pilih Jenjang Studi --</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -195,7 +195,7 @@
                     $("#username").attr("placeholder", "Email");
                 }
             });
-            loadFromLookup("TahunSemester", "tahunSemester", "Tahun Semester");
+            loadFromLookup("JenjangStudi", "jenjangStudi", "Jenjang Studi");
             loadFromLookup("Agama", "agama", "Agama");
             loadFromLookup("Gender", "gender", "Gender");
         });
@@ -240,7 +240,7 @@
             }
             mahasiswa.ProdiAsal = $("#prodiAsal").val();
             mahasiswa.NIMAsal = $("#nimAsal").val();
-            mahasiswa.Semester = $("#tahunSemester").val();
+            mahasiswa.JenjangStudi = $("#jenjangStudi").val();
             mahasiswa.NoHp = $("#noHp").val();
             mahasiswa.Email = $("#emailRegistrasi").val();
             mahasiswa.Password = $("#passwordRegistrasi").val();
