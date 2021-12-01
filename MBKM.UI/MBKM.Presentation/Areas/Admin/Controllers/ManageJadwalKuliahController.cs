@@ -43,7 +43,20 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
 
             //Session["username"] = "Smitty Werben Jeger Man Jensen";
+           
+            var ses = Session["NamaProdi"];
+
+            for (int i = 0; i < Session.Contents.Count; i++)
+            {
+
+                //var str
+                var key = Session.Keys[i];
+                var value = Session[i];
+            }
+
             VMSemester model = _jkMhsService.getOngoingSemester("S1");
+
+            Console.WriteLine(ses);
             return View(model);
             //Session["username"] = "Smitty Werben Jeger Man Jensen";
             //return View();
