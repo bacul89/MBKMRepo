@@ -83,23 +83,38 @@
                 @{
                     var menuParent = (List<MBKM.Entities.Models.Menu>)Session["MenuList"];
                     var menuSub = (List<MBKM.Entities.Models.Menu>)Session["MenuListSub"];
+                    var menuParentActive = (string)Session["MenuParentID"];
                     if (menuParent != null)
                     {
                         int i = 0;
                         foreach (var parent in menuParent)
                         {
                             i++;
-                            string namsub = "submenu" +i.ToString();
-                            <li>
-                                <a href="@parent.MenuUrl" id="btn-1" data-toggle="collapse" data-target="#@namsub" aria-expanded="false"><i class="@parent.MenuIcon"></i> @parent.MenuName</a>
-                                <ul class="nav collapse" id="@namsub" role="menu" aria-labelledby="btn-1">
-                                    @foreach (var subMenu in (menuSub).Where(x => x.MenuParent == parent.ID.ToString()))
+                            string namsub = "submenu" + i.ToString();
+                                <li>
+                                    @if(menuParentActive == parent.ID.ToString())
                                     {
+                                    <a href="@parent.MenuUrl" id="btn-1" data-toggle="collapse" data-target="#@namsub" aria-expanded="true"><i class="@parent.MenuIcon"></i> @parent.MenuName</a>
+                                    <ul class="nav collapse in" id="@namsub" role="menu" aria-labelledby="btn-1" aria-expanded="true">
+                                        @foreach (var subMenu in (menuSub).Where(x => x.MenuParent == parent.ID.ToString()))
+                                        {
 
-                                        <li><a href="@subMenu.MenuUrl"> @subMenu.MenuName</a></li>
+                                            <li><a href="@subMenu.MenuUrl"> @subMenu.MenuName</a></li>
+                                        }
+                                    </ul>
                                     }
-                                </ul>
-                            </li>
+                                    else
+                                    {
+                                    <a href="@parent.MenuUrl" id="btn-1" data-toggle="collapse" data-target="#@namsub" aria-expanded="false"><i class="@parent.MenuIcon"></i> @parent.MenuName</a>
+                                    <ul class="nav collapse" id="@namsub" role="menu" aria-labelledby="btn-1">
+                                        @foreach (var subMenu in (menuSub).Where(x => x.MenuParent == parent.ID.ToString()))
+                                        {
+
+                                            <li><a href="@subMenu.MenuUrl"> @subMenu.MenuName</a></li>
+                                        }
+                                    </ul>
+                                    }
+                                </li>
                         }
 
                     }

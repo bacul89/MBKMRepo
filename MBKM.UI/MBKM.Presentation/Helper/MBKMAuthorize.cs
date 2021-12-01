@@ -50,6 +50,7 @@ namespace MBKM.Presentation.Helper
                     filterContext.HttpContext.Session["isCreate"] = accessMenu.IsCreate;
                     filterContext.HttpContext.Session["isUpdate"] = accessMenu.IsUpdate;
                     filterContext.HttpContext.Session["isDelete"] = accessMenu.IsDelete;
+                    filterContext.HttpContext.Session["MenuParentID"] = (accessMenu.Menus.MenuParent == null) ? "0" : accessMenu.Menus.MenuParent.ToString();
                     if (!isauthorize)
                     {
                         filterContext.Result = new RedirectResult("~/UnAuthorized");
@@ -65,6 +66,7 @@ namespace MBKM.Presentation.Helper
                     filterContext.HttpContext.Session["isCreate"] = accessMenu.IsCreate;
                     filterContext.HttpContext.Session["isUpdate"] = accessMenu.IsUpdate;
                     filterContext.HttpContext.Session["isDelete"] = accessMenu.IsDelete;
+                    filterContext.HttpContext.Session["MenuParentID"] = (accessMenu.Menus.MenuParent == null) ? "0" : accessMenu.Menus.MenuParent.ToString();
                     if (!isauthorize)
                     {
                         filterContext.Result = new RedirectResult("~/UnAuthorized");
