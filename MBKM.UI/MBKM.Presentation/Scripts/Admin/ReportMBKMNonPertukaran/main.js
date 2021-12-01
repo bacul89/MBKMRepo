@@ -2,7 +2,7 @@
 var jsData = {};
 $(document).ready(function () {
     table = $('#table-data-rekap-non-pertukaran').DataTable({
-        "ajax": {
+        /*"ajax": {
             url: '/Admin/ReportMBKMNonPertukaran/DataTable',
             dataSrc: '',
             data: {
@@ -18,105 +18,105 @@ $(document).ready(function () {
                 }
             },
             {
-                /*Semester*/
+                *//*Semester*//*
                 "data": 0,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
             {
-                /*jenjang*/
+                *//*jenjang*//*
                 "data": 1,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
             {
-                /*nim*/
+                *//*nim*//*
                 "data": 2,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
             {
-                /*nama*/
+                *//*nama*//*
                 "data": 3,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
             {
-                /*prodi*/
+                *//*prodi*//*
                 "data": 4,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
             {
-                /*jenis kegiatan*/
+                *//*jenis kegiatan*//*
                 "data": 5,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
             {
-                /*judul*/
+                *//*judul*//*
                 "data": 6,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
             {
-                /*lokasi */
+                *//*lokasi *//*
                 "data": 7,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
             {
-                /*nomor sk*/
+                *//*nomor sk*//*
                 "data": 8,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
             {
-                /*tanggal*/
+                *//*tanggal*//*
                 "data": 9,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
             {
-                /*kode mk*/
+                *//*kode mk*//*
                 "data": 10,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
             {
-                /*nama mk*/
+                *//*nama mk*//*
                 "data": 11,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
             {
-                /*sks*/
+                *//*sks*//*
                 "data": 12,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
             {
-                /*nilai*/
+                *//*nilai*//*
                 "data": 13,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
                 }
             },
             {
-                /*Huruf*/
+                *//*Huruf*//*
                 "data": 14,
                 "render": function (data, type, row, meta) {
                     return '<div class="center vertical-center" style="font-size: 0.6vw">' + data + '</div>';
@@ -130,7 +130,8 @@ $(document).ready(function () {
                 'border-collapse': 'collapse',
                 'vertical-align': 'center',
             });
-        }    });
+        }*/
+    });
     $('#inp_semester').change(function () {
         jsData.semester = $('#inp_semester :selected').val();
         table.destroy();

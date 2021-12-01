@@ -81,6 +81,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     s => s.MahasiswaID == dt.MahasiswaID 
                     && s.JadwalUjianMBKMs.IDMatkul == data.IDMatkul
                     && s.JadwalUjianMBKMs.STRM == data.STRM
+                    && s.JadwalUjianMBKMs.TipeUjian == data.TipeUjian
                 ).Count();
 
                 if(check == 0)

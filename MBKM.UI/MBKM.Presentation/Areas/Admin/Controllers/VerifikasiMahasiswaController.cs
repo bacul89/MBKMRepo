@@ -155,7 +155,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult GetDataBiaya(int id)
         {
-            var data = _perjanjianKerjasama.Get(id);
+            var data = _perjanjianKerjasama.Get(id).BiayaKuliah;
             return Json(data);
         }
 
