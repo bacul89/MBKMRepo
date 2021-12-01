@@ -84,7 +84,8 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                         KodeMataKuliah = z.KodeMataKuliah,
                         Capaian = z.MasterCapaianPembelajarans.Capaian,
                         Kelompok = z.MasterCapaianPembelajarans.Kelompok,
-                        Kode = z.MasterCapaianPembelajarans.Kode
+                        Kode = z.MasterCapaianPembelajarans.Kode,
+                        Status = z.IsActive
                     }).OrderBy(SortBy, SortDir);
                 mListCPL.gridDatas = gridfilter.Skip(Skip).Take(Length).ToList();
                 mListCPL.TotalFilterCount = gridfilter.Count();

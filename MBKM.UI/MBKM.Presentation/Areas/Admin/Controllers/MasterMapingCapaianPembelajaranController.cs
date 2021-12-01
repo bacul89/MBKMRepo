@@ -42,27 +42,27 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             return View();
         }
 
-/*        public class MyJsonObject
-        {
-            [Newtonsoft.Json.JsonProperty("ID")]
-            public string ID { get; set; }
+        /*        public class MyJsonObject
+                {
+                    [Newtonsoft.Json.JsonProperty("ID")]
+                    public string ID { get; set; }
 
-            [Newtonsoft.Json.JsonProperty("arr")]
-            public string arr { get; set; }
+                    [Newtonsoft.Json.JsonProperty("arr")]
+                    public string arr { get; set; }
 
-            [Newtonsoft.Json.JsonProperty("brr")]
-            public string brr { get; set; }
+                    [Newtonsoft.Json.JsonProperty("brr")]
+                    public string brr { get; set; }
 
-            [Newtonsoft.Json.JsonProperty("crr")]
-            public string crr { get; set; }
+                    [Newtonsoft.Json.JsonProperty("crr")]
+                    public string crr { get; set; }
 
-            [Newtonsoft.Json.JsonProperty("drr")]
-            public string drr { get; set; }
+                    [Newtonsoft.Json.JsonProperty("drr")]
+                    public string drr { get; set; }
 
-            [Newtonsoft.Json.JsonProperty("err")]
-            public string err { get; set; }
+                    [Newtonsoft.Json.JsonProperty("err")]
+                    public string err { get; set; }
 
-        }*/
+                }*/
 
 
         public JsonResult GetList(DataTableAjaxPostModel model)
@@ -80,7 +80,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
         public JsonResult SearchList(DataTableAjaxPostModel model, string idProdi, string idFakultas, string jenjangStudi, string idMatakuliah) //string lokasi,
         {
-            VMListMapingCPL vMListCPL = _cplMatakuliah.SearchListMapingCPL(model, idProdi,  idFakultas, jenjangStudi,idMatakuliah); //lokasi,
+            VMListMapingCPL vMListCPL = _cplMatakuliah.SearchListMapingCPL(model, idProdi, idFakultas, jenjangStudi, idMatakuliah); //lokasi,
             return Json(new
             {
                 // this is what datatables wants sending back
@@ -95,7 +95,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             List<CPLMatakuliah> MVCpl = new List<CPLMatakuliah>();
             List<string> mapCPL = new List<string>();
-            foreach (var item in _cplMatakuliah.Find(MapCpl => MapCpl.IDMataKUliah == idMatakuliah && MapCpl.MasterCapaianPembelajarans.Lokasi == lokasi && MapCpl.MasterCapaianPembelajarans.ProdiID == idProdi && MapCpl.MasterCapaianPembelajarans.FakultasID == idFakultas && MapCpl.MasterCapaianPembelajarans.JenjangStudi == jenjangStudi ).ToList())
+            foreach (var item in _cplMatakuliah.Find(MapCpl => MapCpl.IDMataKUliah == idMatakuliah && MapCpl.MasterCapaianPembelajarans.Lokasi == lokasi && MapCpl.MasterCapaianPembelajarans.ProdiID == idProdi && MapCpl.MasterCapaianPembelajarans.FakultasID == idFakultas && MapCpl.MasterCapaianPembelajarans.JenjangStudi == jenjangStudi).ToList())
             {
                 if (!mapCPL.Contains(item.NamaMataKuliah))
                 {
@@ -132,6 +132,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
     }*/
 
         /*Modal Created*/
+        
         public ActionResult ModalCreateMasterMapingCapaianPembelajaran()
         {
             return View("ModalCreateMasterMapingCapaianPembelajaran");
@@ -379,12 +380,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             return new ContentResult { Content = JsonConvert.SerializeObject(_jkService.Find(jk => jk.MataKuliahID == MataKuliahID).ToList()), ContentType = "application/json" };
         }
-        
+
+        [HttpPost]
         public ActionResult GetMasterCPL(string idProdi, string idFakultas, string Kelompok)
         {
 
 
-            var final = _mcpService.Find(mcp => mcp.NamaProdi == idProdi && mcp.FakultasID == idFakultas && mcp.Kelompok == Kelompok).ToList();
+            var final = _mcpService.Find(mcp => mcp.NamaProdi == idProdi && mcp.FakultasID == idFakultas && mcp.Kelompok == Kelompok && mcp.IsActive == true && mcp.IsDeleted == false).ToList();
             //var final = _cplMatakuliah.GetMatkul(skip, take, searchBy, idProdi, idFakultas);
             List<object> data = new List<object>();
             string tempKode = "";

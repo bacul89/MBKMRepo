@@ -122,6 +122,7 @@
                             <th class="zero-padding no-border vertical-center sorting">Nama Mata Kuliah</th>
                             <th class="zero-padding no-border vertical-center sorting">Kode CPL</th>
                             <th class="zero-padding no-border vertical-center sorting">Kelompok</th>
+                            <th class="zero-padding no-border vertical-center sorting">Status</th>
                             <th class="zero-padding no-border vertical-center sorting" style="width: 100%;">Capaian Pembelajaran</th>
 
                         </tr>
@@ -317,6 +318,19 @@
                         "name": "Kelompok",
                         "render": function (data, type, row, meta) {
                             return '<div class="center">' + data + '</div>';
+                        }
+                    },
+                    {
+                        //"title": "Nama",
+                        "data": "Status",
+                        "name": "Status",
+                        "render": function (data, type, row, meta) {
+                            if (data == true) {
+                                return '<div class="center"> Aktif</div>';
+                            } else {
+                                return '<div class="center"> Tidak Aktif</div>';
+                            }
+                            
                         }
                     },
                     {
