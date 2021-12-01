@@ -105,7 +105,7 @@ function loadMasterCPL() {
         $.ajax({
             url: '/Admin/MasterMapingCapaianPembelajaran/GetMasterCPLByID',
             dataType: 'json',
-            method: "GET",
+            method: "POST",
             delay: 250,
             cache: false,
             contentType: 'application/json',
