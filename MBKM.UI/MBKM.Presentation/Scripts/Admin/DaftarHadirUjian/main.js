@@ -298,7 +298,7 @@ function loadJenjangStudi(tipe, id, nama) {
                         width: "100%",
                         ajax: {
                             //url: "/Admin/DaftarHadirUjian/GetMataKuliah",
-                            url: "/Admin/JadwalKuliah/GetMataKuliahFlag",
+                            url: "/Admin/DaftarHadirUjian/GetMataKuliahFlag",
                             type: 'POST',
                             dataType: 'json',
 
