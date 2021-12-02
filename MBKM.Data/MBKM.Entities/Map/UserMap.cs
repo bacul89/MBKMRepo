@@ -25,9 +25,9 @@ namespace MBKM.Entities.Map
             Property(t => t.KodeProdi).HasMaxLength(50);
             Property(t => t.NamaProdi).HasMaxLength(150);
             //TODO
-            //Property(t => t.KodeFakultas).HasMaxLength(50);
-            //Property(t => t.NamaFakultas).HasMaxLength(150);
-            //Property(t => t.KPTSDIN).HasMaxLength(150);
+            Property(t => t.KodeFakultas).HasMaxLength(50);
+            Property(t => t.NamaFakultas).HasMaxLength(150);
+            Property(t => t.KPTSDIN).HasMaxLength(150);
 
         }
     }

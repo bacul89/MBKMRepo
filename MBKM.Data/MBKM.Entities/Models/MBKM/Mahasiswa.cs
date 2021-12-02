@@ -57,7 +57,7 @@ namespace MBKM.Entities.Models.MBKM
         public bool FlagBayar { get; set; }
         #region permintaan UAT
         //TODO
-        //public string EmailInternal { get; set; }
+        public string EmailInternal { get; set; }
         #endregion
     }
 }

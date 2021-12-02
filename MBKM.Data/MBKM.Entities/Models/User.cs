@@ -22,9 +22,9 @@ namespace MBKM.Entities.Models
 
         #region permintaan UAT
         //TODO
-        //public string KodeFakultas { get; set; }
-        //public string NamaFakultas { get; set; }
-        //public string KPTSDIN { get; set; }
+        public string KodeFakultas { get; set; }
+        public string NamaFakultas { get; set; }
+        public string KPTSDIN { get; set; }
         #endregion
     }
 }

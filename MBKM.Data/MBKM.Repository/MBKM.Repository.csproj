@@ -150,6 +150,10 @@
     <Compile Include="Migrations\202111020009183_updatekolombayarsertifikat.designer.cs">
       <DependentUpon>202111020009183_updatekolombayarsertifikat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112020816133_migrasiafteruat.cs" />
+    <Compile Include="Migrations\202112020816133_migrasiafteruat.designer.cs">
+      <DependentUpon>202112020816133_migrasiafteruat.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EmailTemplateRepository.cs" />
@@ -267,6 +271,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202111020009183_updatekolombayarsertifikat.resx">
       <DependentUpon>202111020009183_updatekolombayarsertifikat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112020816133_migrasiafteruat.resx">
+      <DependentUpon>202112020816133_migrasiafteruat.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
