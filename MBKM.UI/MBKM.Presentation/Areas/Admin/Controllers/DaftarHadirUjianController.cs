@@ -238,6 +238,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             return Json(data);
         }
 
+        [HttpPost]
+        public ActionResult GetSemesterAll2()
+        {
+            var result = _jkService.GetSemesterAll2();
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
+        }
+
 
         [HttpPost]
         public ActionResult GetSection()

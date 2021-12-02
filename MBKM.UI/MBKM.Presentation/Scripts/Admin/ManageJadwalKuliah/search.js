@@ -54,7 +54,7 @@ $(document).ready(function () {
         //multiple: true,
         width: "100%",
         ajax: {
-            url: "/Admin/ManageJadwalKuliah/GetSemesterAll",
+            url: "/Admin/ManageJadwalKuliah/GetSemesterAll2",
             type: 'POST',
             dataType: 'json',
             //quietMillis: 50,
