@@ -4,6 +4,7 @@ using MBKM.Entities.ViewModel;
 using MBKM.Presentation.Helper;
 using MBKM.Presentation.models;
 using MBKM.Services;
+using MBKM.Services.MBKMServices;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,11 +21,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private ILookupService _lookupService;
         //private IRoleService _roleService;
         private readonly IRoleService _roleService;
-        public UserManageController(ILookupService lookupService,IUserService userService, IRoleService roleService)
+        private IMasterCapaianPembelajaranService _mcpService;
+        public UserManageController(ILookupService lookupService,IUserService userService, IRoleService roleService, IMasterCapaianPembelajaranService mcpService)
         {
             _userService = userService;
             _roleService = roleService;
             _lookupService = lookupService;
+            _mcpService = mcpService;
         }
         // GET: Admin/UserManage
         public ActionResult Index()
@@ -82,6 +85,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         model.UpdatedDate = DateTime.Now;
                         model.IsDeleted = false;
                         model.IsActive = model.IsActive;
+                        model.CreatedBy = Session["username"] as string;
 
                         _userService.Save(model);
                         return Json(new ServiceResponse { status = 200, message = "Pendaftaran mahasiswa berhasil, tolong cek email dan konfirmasi akunmu!" });
@@ -123,6 +127,12 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         data.IsActive = model.IsActive;
                         data.KodeProdi = model.KodeProdi;
                         data.NamaProdi = model.NamaProdi;
+
+                        data.KPTSDIN = model.KPTSDIN;
+                        data.KodeFakultas = model.KodeFakultas;
+                        data.NamaFakultas = model.NamaFakultas;
+                        data.UpdatedBy = Session["username"] as string;
+                        data.UpdatedDate = DateTime.Now;
                         _userService.Save(data);
                         //return Json(data);
                         return Json(new ServiceResponse { status = 200, message = "Pendaftaran mahasiswa berhasil, tolong cek email dan konfirmasi akunmu!" });
@@ -144,6 +154,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                             data.IsActive = model.IsActive;
                             data.KodeProdi = model.KodeProdi;
                             data.NamaProdi = model.NamaProdi;
+
+                            data.KPTSDIN = model.KPTSDIN;
+                            data.KodeFakultas = model.KodeFakultas;
+                            data.NamaFakultas = model.NamaFakultas;
+                            data.UpdatedBy = Session["username"] as string;
+                            data.UpdatedDate = DateTime.Now;
+
                             _userService.Save(data);
                             return Json(new ServiceResponse { status = 200, message = "Pendaftaran mahasiswa berhasil, tolong cek email dan konfirmasi akunmu!" }); ;
                         }
@@ -169,6 +186,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         data.IsActive = model.IsActive;
                         data.KodeProdi = model.KodeProdi;
                         data.NamaProdi = model.NamaProdi;
+
+                        data.KPTSDIN = model.KPTSDIN;
+                        data.KodeFakultas = model.KodeFakultas;
+                        data.NamaFakultas = model.NamaFakultas;
+                        data.UpdatedBy = Session["username"] as string;
+                        data.UpdatedDate = DateTime.Now;
+
                         _userService.Save(data);
                         return Json(new ServiceResponse { status = 200, message = "Pendaftaran mahasiswa berhasil, tolong cek email dan konfirmasi akunmu!" });
 
@@ -187,6 +211,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         data.IsActive = model.IsActive;
                         data.KodeProdi = model.KodeProdi;
                         data.NamaProdi = model.NamaProdi;
+
+                        data.KPTSDIN = model.KPTSDIN;
+                        data.KodeFakultas = model.KodeFakultas;
+                        data.NamaFakultas = model.NamaFakultas;
+                        data.UpdatedBy = Session["username"] as string;
+                        data.UpdatedDate = DateTime.Now;
+
                         _userService.Save(data);
                         return Json(new ServiceResponse { status = 200, message = "Pendaftaran mahasiswa berhasil, tolong cek email dan konfirmasi akunmu!" });
 
@@ -225,6 +256,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ////data.NamaProdi = data.NamaProdi;
 
             data.IsDeleted = true;
+            data.UpdatedBy = Session["username"] as string;
+            data.UpdatedDate = DateTime.Now;
 
             //var model = _userService.Get(id);
             _userService.Save(data);
@@ -253,6 +286,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public User GetUserByNip(string nip)
         {
             return _userService.Find(m => m.NoPegawai == nip && m.IsDeleted == false).FirstOrDefault();
+        }
+        public ActionResult GetFakultas(string search, string jenjang)
+        {
+            return Json(_mcpService.GetFakultas("S1", search), JsonRequestBehavior.AllowGet);
         }
 
     }
