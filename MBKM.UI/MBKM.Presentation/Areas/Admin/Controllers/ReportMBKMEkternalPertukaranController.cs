@@ -203,6 +203,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             return Json(data);
         }
 
+        [HttpPost]
+        public ActionResult GetSemesterAll2()
+        {
+            var result = _jadwalKuliahService.GetSemesterAll2();
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
+        }
+
 
 
         /*        public ActionResult ExportExcel()
