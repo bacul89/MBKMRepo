@@ -15,14 +15,14 @@
             dataType: 'json',
             data: function (params) {
                 return {
-                    search: params.term,
-                    length: params.length || 10,
-                    skip: params.skip || 0
+                    search: params.term || "",
+                    length: params.length || "10",
+                    skip: (params.page - 1) * 10 || 0
                 };
             },
             processResults: function (data, page) {
                 return {
-                    results: data
+                    results: data,
                 }
             }
         }
