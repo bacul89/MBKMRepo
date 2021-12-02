@@ -160,7 +160,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public ActionResult IndexDetailPendaftaran(int id)
         {
             var data = _cPLMKPendaftaranService.Find(x => x.IsDeleted == false && x.PendaftaranMataKuliahID == id).First();
-            IList<CPLMatakuliah> tempId = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.PendaftaranMataKuliahs.JadwalKuliahs.MataKuliahID && x.IsActive == true).ToList();
+            IList<CPLMatakuliah> tempId = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.PendaftaranMataKuliahs.JadwalKuliahs.MataKuliahID && x.IsActive == true && x.IsDeleted == false).ToList();
             /*IList<CPLMatakuliah> capaianTujuan = tempId.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == data.PendaftaranMataKuliahs.JadwalKuliahs.ProdiID).ToList();*/
             IList<CPLMatakuliah> capaianTujuan = tempId;
             var tmpInformasiPertukaran1 = _informasiPertukaranService.Find(x => x.MahasiswaID == data.PendaftaranMataKuliahs.MahasiswaID).Count();
@@ -201,7 +201,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
 
                 if (data.CPLMatakuliahID != null && !tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("internal ke luar"))
                 {
-                    IList<CPLMatakuliah> tempIDAsal = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.CPLMatakuliahs.IDMataKUliah && x.IsActive == true).ToList();
+                    IList<CPLMatakuliah> tempIDAsal = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.CPLMatakuliahs.IDMataKUliah && x.IsActive == true && x.IsDeleted == false).ToList();
                     /*IList<CPLMatakuliah> capaianAsal = tempIDAsal.Where(x => x.MasterCapaianPembelajarans.ProdiID == data.CPLMatakuliahs.MasterCapaianPembelajarans.ProdiID).ToList();*/
                     IList<CPLMatakuliah> capaianAsal = tempIDAsal;
                     ViewData["capaianAsal"] = capaianAsal;
