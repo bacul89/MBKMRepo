@@ -47,6 +47,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         Session["RoleName"] = modeldata.Roles.RoleName;
                         Session["RoleID"] = modeldata.RoleID.ToString();
                         Session["NamaProdi"] = modeldata.NamaProdi.ToString();
+                        Session["NamaFakultas"] = (modeldata.NamaFakultas == null) ? "" : modeldata.NamaFakultas.ToString();
+                        Session["KodeFakultas"] = (modeldata.KodeFakultas == null) ? "" : modeldata.KodeFakultas.ToString();
                         return RedirectToAction("Index", "Home");
                     }
                     else
