@@ -265,7 +265,19 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             return Json(data);
         }
 
+
+        [HttpPost]
+        public ActionResult GetMataKuliahFlag(int skip, int take, string searchBy, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm)
+        {
+            List<JadwalKuliah> final = _jkService.GetMatkulFlag(skip, take, searchBy, idProdi, lokasi, idFakultas, jenjangStudi, strm).ToList();
+            return new ContentResult { Content = JsonConvert.SerializeObject(final), ContentType = "application/json" };
+        }
+
     }
+
+
+
+
 
 
     //[HttpGet]
