@@ -344,12 +344,25 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             List<object> data = new List<object>();
             foreach (var p in final)
             {
-                var q = new
+                var kptsnid = p.KPTSDIN;
+                if(kptsnid != null)
                 {
-                    id = p.ID,
-                    text = p.UserName
-                };
-                data.Add(q);
+                    var q = new
+                    {
+                        id = p.ID,
+                        text = p.UserName + " - " + kptsnid
+                    };
+                    data.Add(q);
+                }
+                else
+                {
+                    var q = new
+                    {
+                        id = p.ID,
+                        text = p.UserName + " -  -"
+                    };
+                    data.Add(q);
+                }
             }
 
             return Json(data);
