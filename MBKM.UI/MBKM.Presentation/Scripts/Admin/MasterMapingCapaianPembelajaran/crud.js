@@ -89,19 +89,23 @@ function loadMasterCPL() {
             },
             processResults: function (data, params) {
                 return {
-                    results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Kode} })
+                    results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Kode, Capaian:item.Capaian} })
                 };
             },
         }
     });
     $("#inp_kode_capaian_pembelajaran").change(function () {
         /*dataParam = {};*/
-        ID = $('#inp_kode_capaian_pembelajaran').val();
+        //ID = $('#inp_kode_capaian_pembelajaran').val();
+
+        var Capaian = $('#inp_kode_capaian_pembelajaran').select2('data')[0].Capaian;
+
+        $('#inp_capaian').val(Capaian);
 /*        dataParam.IDProdi       = "0101";
         dataParam.IDFakultas    = "0001";
         dataParam.Kelompok      = "SIKAP";*/
 
-        $.ajax({
+/*        $.ajax({
             url: '/Admin/MasterMapingCapaianPembelajaran/GetMasterCPLByID',
             dataType: 'json',
             method: "POST",
@@ -116,7 +120,7 @@ function loadMasterCPL() {
             error: function (e) {
                 console.log("matakuliah not found...");
             }
-        })
+        })*/
     });
 
 }
