@@ -204,10 +204,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     x.MasterCapaianPembelajaranID == cplMatakuliah.MasterCapaianPembelajaranID
                 );
 
-                if (check.Count() == 0)
+                if (check.Count() == 1)
                 {
                     CPLMatakuliah data = _cplMatakuliah.Get(cplMatakuliah.ID);
-
                     data.KodeMataKuliah = cplMatakuliah.KodeMataKuliah;
                     data.IDMataKUliah = cplMatakuliah.IDMataKUliah;
                     data.NamaMataKuliah = cplMatakuliah.NamaMataKuliah;
