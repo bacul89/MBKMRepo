@@ -19,5 +19,12 @@ namespace MBKM.Entities.Models
         public virtual Role Roles { get; set; }
         public string KodeProdi { get; set; }
         public string NamaProdi { get; set; }
+
+        #region permintaan UAT
+        //TODO
+        //public string KodeFakultas { get; set; }
+        //public string NamaFakultas { get; set; }
+        //public string KPTSDIN { get; set; }
+        #endregion
     }
 }

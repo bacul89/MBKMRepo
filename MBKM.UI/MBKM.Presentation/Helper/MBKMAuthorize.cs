@@ -48,10 +48,14 @@ namespace MBKM.Presentation.Helper
                     isauthorize = menuRoleList.Any(x => x.IsView == true && x.Menus.MenuUrl.ToLower() == url.ToLower());
                     filterContext.HttpContext.Session["MenuRole"] = menuRoleList;
                     var accessMenu = menuRoleList.Where(x => x.Menus.MenuUrl.ToLower() == url.ToLower()).FirstOrDefault();
-                    filterContext.HttpContext.Session["isCreate"] = accessMenu.IsCreate;
-                    filterContext.HttpContext.Session["isUpdate"] = accessMenu.IsUpdate;
-                    filterContext.HttpContext.Session["isDelete"] = accessMenu.IsDelete;
-                    filterContext.HttpContext.Session["MenuParentID"] = (accessMenu.Menus.MenuParent == null) ? "0" : accessMenu.Menus.MenuParent.ToString();
+                    if (accessMenu != null)
+                    {
+                        filterContext.HttpContext.Session["isCreate"] = accessMenu.IsCreate;
+                        filterContext.HttpContext.Session["isUpdate"] = accessMenu.IsUpdate;
+                        filterContext.HttpContext.Session["isDelete"] = accessMenu.IsDelete;
+                        filterContext.HttpContext.Session["MenuParentID"] = (accessMenu.Menus.MenuParent == null) ? "0" : accessMenu.Menus.MenuParent.ToString();
+
+                    }
                     if (!isauthorize)
                     {
                         filterContext.Result = new RedirectResult("~/UnAuthorized");
@@ -64,10 +68,14 @@ namespace MBKM.Presentation.Helper
                     var ListMenuRole = (List<MenuRole>)filterContext.HttpContext.Session["MenuRole"];
                     isauthorize = ListMenuRole.Any(x => x.IsView == true && x.Menus.MenuUrl.ToLower() == url.ToLower());
                     var accessMenu = ListMenuRole.Where(x => x.Menus.MenuUrl.ToLower() == url.ToLower()).FirstOrDefault();
-                    filterContext.HttpContext.Session["isCreate"] = accessMenu.IsCreate;
-                    filterContext.HttpContext.Session["isUpdate"] = accessMenu.IsUpdate;
-                    filterContext.HttpContext.Session["isDelete"] = accessMenu.IsDelete;
-                    filterContext.HttpContext.Session["MenuParentID"] = (accessMenu.Menus.MenuParent == null) ? "0" : accessMenu.Menus.MenuParent.ToString();
+                    if (accessMenu != null)
+                    {
+                        filterContext.HttpContext.Session["isCreate"] = accessMenu.IsCreate;
+                        filterContext.HttpContext.Session["isUpdate"] = accessMenu.IsUpdate;
+                        filterContext.HttpContext.Session["isDelete"] = accessMenu.IsDelete;
+                        filterContext.HttpContext.Session["MenuParentID"] = (accessMenu.Menus.MenuParent == null) ? "0" : accessMenu.Menus.MenuParent.ToString();
+
+                    }
                     if (!isauthorize)
                     {
                         filterContext.Result = new RedirectResult("~/UnAuthorized");

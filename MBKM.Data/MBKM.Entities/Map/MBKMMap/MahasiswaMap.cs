@@ -44,6 +44,8 @@ namespace MBKM.Entities.Map.MBKMMap
             Property(t => t.StatusVerifikasi).HasMaxLength(50);
             Property(t => t.Approval).HasMaxLength(10);
             Property(t => t.ProdiAsalID).HasMaxLength(30);
+            //TODO
+            //Property(t => t.EmailInternal).HasMaxLength(350);
         }
     }
 }

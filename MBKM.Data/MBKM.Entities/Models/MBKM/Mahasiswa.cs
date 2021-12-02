@@ -55,5 +55,9 @@ namespace MBKM.Entities.Models.MBKM
         public virtual ICollection<PendaftaranMataKuliah> PendaftaranMataKuliahs { get; set; }
         public string ProdiAsalID { get; set; }
         public bool FlagBayar { get; set; }
+        #region permintaan UAT
+        //TODO
+        //public string EmailInternal { get; set; }
+        #endregion
     }
 }

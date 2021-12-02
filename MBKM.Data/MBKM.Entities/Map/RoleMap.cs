@@ -17,6 +17,8 @@ namespace MBKM.Entities.Map
             HasKey(t => t.ID).Property(t => t.ID).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(t => t.Code).HasMaxLength(20).IsRequired();
             Property(t => t.RoleName).HasMaxLength(20).IsRequired();
+            //TODO
+            //Property(t => t.RoleName).HasMaxLength(150).IsRequired();
         }
     }
 }
