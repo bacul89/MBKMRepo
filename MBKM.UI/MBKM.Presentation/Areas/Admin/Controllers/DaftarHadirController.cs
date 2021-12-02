@@ -125,14 +125,14 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             return Json(_cplMatakuliah.GetProdiLocByFakultas(JenjangStudi, idFakultas, search), JsonRequestBehavior.AllowGet);
         }
-        public ActionResult GetProdiByFakultas(string JenjangStudi, string idFakultas, string search)
-        {
-            return Json(_mcpService.GetProdiByFakultas(JenjangStudi, idFakultas, search), JsonRequestBehavior.AllowGet);
-        }
-        public ActionResult GetLokasiByProdi(string JenjangStudi, string namaProdi, string search)
-        {
-            return Json(_mcpService.GetLokasiByProdi(JenjangStudi, namaProdi, search), JsonRequestBehavior.AllowGet);
-        }
+        //public ActionResult GetProdiByFakultas(string JenjangStudi, string idFakultas, string search)
+        //{
+        //    return Json(_mcpService.GetProdiByFakultas(JenjangStudi, idFakultas, search), JsonRequestBehavior.AllowGet);
+        //}
+        //public ActionResult GetLokasiByProdi(string JenjangStudi, string namaProdi, string search)
+        //{
+        //    return Json(_mcpService.GetLokasiByProdi(JenjangStudi, namaProdi, search), JsonRequestBehavior.AllowGet);
+        //}
 
         public ActionResult GetMataKuliahByProdi(string namaProdi, string lokasi)
         {
@@ -237,6 +237,47 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             }
 
             return Json(data);
+        }
+        //consume controller sendiri
+        public ActionResult GetSemesterAll2()
+        {
+            var result = _jkService.GetSemesterAll2();
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
+        }
+        public ActionResult GetProdiByFakultas(string search, string jenjangStudi, string fakultas)
+        {
+            return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.GetProdiByFakultas(search, jenjangStudi, fakultas)), ContentType = "application/json" };
+        }
+        [HttpPost]
+        public ActionResult GetMataKuliahFlag(int skip, int take, string searchBy, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm)
+        {
+
+
+            /*List<JadwalKuliah> MVJadwal = new List<JadwalKuliah>();
+            List<string> mapJadwal = new List<string>();*/
+
+            /*int idProdiInt = Int32.Parse(idProdi);
+            int idFakultasInt = Int32.Parse(idFakultas);
+            int strmInt = Int32.Parse(strm);*/
+
+            List<JadwalKuliah> final = _jkService.GetMatkulFlag(skip, take, searchBy, idProdi, lokasi, idFakultas, jenjangStudi, strm).ToList();
+
+            /*foreach (var item in final)
+            {
+                if (!mapJadwal.Contains(item.NamaMataKuliah))
+                {
+                    MVJadwal.Add(item);
+                }
+            }*/
+            return new ContentResult { Content = JsonConvert.SerializeObject(final), ContentType = "application/json" };
+        }
+        public ActionResult GetLokasiByProdi(string JenjangStudi, string namaProdi, string search)
+        {
+            return Json(_mcpService.GetLokasiByProdi(JenjangStudi, namaProdi, search), JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult GetSeksiByMatkul(string search, string jenjangStudi, string matkul, string lokasi)
+        {
+            return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.GetSeksiByMatkul(search, jenjangStudi, matkul, lokasi)), ContentType = "application/json" };
         }
     }
 }

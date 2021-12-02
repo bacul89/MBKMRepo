@@ -343,7 +343,7 @@
                 placeholder: "-- Pilih Tahun Semester --",
                 width: "100%",
                 ajax: {
-                    url: "@Url.Action("GetSemesterAll2", "DaftarMatkul")",
+                    url: "@Url.Action("GetSemesterAll2", "DaftarHadir")",
                     dataType: 'json',
                     method: "POST",
                     delay: 250,
@@ -375,7 +375,7 @@
                     placeholder: "-- Pilih Jenjang Studi --",
                     width: "100%",
                     ajax: {
-                        url: "@Url.Action("getLookupByTipe", "PresensiKelas")",
+                        url: "@Url.Action("getLookupByTipe", "DaftarHadir")",
                         dataType: 'json',
                         method: "POST",
                         delay: 250,
@@ -412,7 +412,7 @@
                         width: "100%",
                         ajax: {
                             @*url: "@Url.Action("GetFakultasByJenjangStudi", "PresensiKelas")",*@
-                            url: "/Admin/DaftarHadirUjian/GetFakultas",
+                            url: "/Admin/DaftarHadir/GetFakultas",
                             dataType: 'json',
                             method: "POST",
                             delay: 250,
@@ -447,7 +447,7 @@
                             placeholder: "-- Pilih Program Studi --",
                             width: "100%",
                             ajax: {
-                                url: "@Url.Action("GetProdiByFakultas", "PresensiKelas")",
+                                url: "@Url.Action("GetProdiByFakultas", "DaftarHadir")",
                                 dataType: 'json',
                                 method: "POST",
                                 delay: 250,
@@ -483,7 +483,7 @@
                                 width: "100%",
                                 ajax: {
                                     @*url: "@Url.Action("GetLokasiByProdi", "PresensiKelas")",*@
-                                    url: "/Admin/DaftarHadirUjian/GetLokasiByProdi",
+                                    url: "/Admin/DaftarHadir/GetLokasiByProdi",
                                     dataType: 'json',
                                     method: "POST",
                                     delay: 250,
@@ -526,7 +526,7 @@
                                     width: "100%",
                                     ajax: {
                                         //url: "/Admin/DaftarHadirUjian/GetMataKuliah",
-                                        url: "/Admin/JadwalKuliah/GetMataKuliahFlag",
+                                        url: "/Admin/daftarHadir/GetMataKuliahFlag",
                                         type: 'POST',
                                         dataType: 'json',
 
@@ -663,7 +663,7 @@
                                         placeholder: "-- Pilih Seksi --",
                                         width: "100%",
                                         ajax: {
-                                            url: "@Url.Action("GetSeksiByMatkul", "PresensiKelas")",
+                                            url: "@Url.Action("GetSeksiByMatkul", "DaftarHadir")",
                                             dataType: 'json',
                                             method: "POST",
                                             delay: 250,
