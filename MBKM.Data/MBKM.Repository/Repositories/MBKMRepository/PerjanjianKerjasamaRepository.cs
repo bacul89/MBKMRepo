@@ -94,9 +94,9 @@ namespace MBKM.Repository.Repositories.MBKMRepository
         {
             using (var context = new MBKMContext())
             {
-                var today = DateTime.Now;
+                var today = DateTime.Now.Date;
                 var getJenis = context.JenisKerjasamaModels.Where(x => x.JenisKerjasama.ToLower().Contains("eksternal")).Select(y => y.ID).FirstOrDefault();
-                var result = context.PerjanjianKerjasamas.Where(x => x.NoPerjanjian.Contains(Search) && x.NamaInstansi == NamaInstansi && x.JenisKerjasama ==getJenis.ToString() &&  (x.TanggalAkhir >= today || x.TanggalMulai <=today))
+                var result = context.PerjanjianKerjasamas.Where(x => x.NoPerjanjian.Contains(Search) && x.NamaInstansi == NamaInstansi && x.JenisKerjasama ==getJenis.ToString() &&  (x.TanggalAkhir >= today && x.TanggalMulai <=today))
                     .OrderBy("NoPerjanjian").Skip(Skip).Take(Length).Select(x => new VMLookupNoKerjasama
                     {
                         ID = x.ID,
