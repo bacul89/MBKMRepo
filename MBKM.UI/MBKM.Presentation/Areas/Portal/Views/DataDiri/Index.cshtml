@@ -334,6 +334,22 @@
                                 </div>
                             </td>
                         </tr>
+                        <tr>
+                            <td style="width: 20%;">Status</td>
+                            <td>
+                                <div class="form-group">
+                                    <input type="text" name="status" id="status" class="form-control input-md" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%;">Catatan Verifikasi BAA</td>
+                            <td>
+                                <div class="form-group">
+                                    <textarea id="catatanVerifikasi" class="form-control" style="width: 100%;" rows="5"></textarea>
+                                </div>
+                            </td>
+                        </tr>
                     </table>
                 </div>
             </div>
@@ -391,6 +407,8 @@
             $("#upload").show();
             $("#edit").hide();
             $("#universitasAsal").attr("disabled", true);
+            $("#status").attr("disabled", true);
+            $("#catatanVerifikasi").attr("disabled", true);
             if ($("#universitasAsal").val() == 'UNIKA Atma Jaya') {
                 $("#programStudi").attr("disabled", true);
             }
@@ -608,6 +626,8 @@
                 }
                 $("#programStudi").val(response.ProdiAsal);
                 $("#nimAsal").val(response.NIMAsal);
+                $("#status").val(response.StatusVerifikasi);
+                $("#catatanVerifikasi").val(response.Catatan);
             });
         }
         function loadFromLookup(tipe, id, nama) {
