@@ -46,7 +46,16 @@
                                     <h4>Jenis Ujian &nbsp:</h4>
                                 </div>
                                 <div class="col-sm-8">
-                                    <h4>@Model.TipeUjian</h4>
+                                    @{
+                                        if (Model.TipeUjian.ToLower() == "semester")
+                                        {
+                                            <h4>FINAL SEMESTER</h4>
+                                        }
+                                        else
+                                        {
+                                            <h4>@Model.TipeUjian</h4>
+                                        }
+                                    }
                                 </div>
                             </div>
                         </div>
