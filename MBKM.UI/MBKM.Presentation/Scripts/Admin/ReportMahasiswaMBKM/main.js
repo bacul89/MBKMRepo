@@ -155,7 +155,7 @@ $(document).ready(function () {
                 'border-collapse': 'collapse',
                 'vertical-align': 'center',
             });*/
-        }
+       /* }*/
     });
     $('#inp_semester').change(function () {
         jsData.semester = $('#inp_semester :selected').val();
