@@ -21,6 +21,9 @@ namespace MBKM.Entities.ViewModel
         public string Password { get; set; }
         public double RoleID { get; set; }
         public string RoleName { get; set; }
+        public string NamaFakultas { get; set; }
+        public string KodeFakultas { get; set; }
+        public string KPTSDIN { get; set; }
         public string KodeProdi { get; set; }
         public string NamaProdi { get; set; }
         public bool Status { get; set; }
