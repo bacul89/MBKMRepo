@@ -12,5 +12,6 @@ namespace MBKM.Entities.ViewModel
         public string UserName { get; set; }
         public string KodeProdi { get; set; }
         public string NamaProdi { get; set; }
+        public string KPTSDIN { get; set; }
     }
 }

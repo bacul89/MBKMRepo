@@ -76,8 +76,8 @@ $(document).ready(function () {
                 }
             },
             {
-                "title": "Tahun Semester",
-                "data": "mahasiswas.Semester",
+                "title": "Jenjang Studi",
+                "data": "mahasiswas.JenjangStudi",
                 "render": function (data, type, row, meta) {
                     if (data == null) {
                         return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
@@ -266,8 +266,8 @@ $(document).ready(function () {
                     }
                 },
                 {
-                    "title": "Tahun Semester",
-                    "data": "mahasiswas.Semester",
+                    "title": "Jenjang Studi",
+                    "data": "mahasiswas.JenjangStudi",
                     "render": function (data, type, row, meta) {
                         if (data == null) {
                             return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';

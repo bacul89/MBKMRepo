@@ -137,7 +137,8 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                     FakultasID = n.Key.FakultasID,
                     Kelompok = n.Key.Kelompok,
                     Capaian = n.Key.Capaian,
-                    NamaProdi = n.Key.NamaProdi
+                    NamaProdi = n.Key.NamaProdi,
+                    Status = n.Key.Status
                 }).ToList();
                 mListCPL.TotalFilterCount = gridfilter.Count();
                 return mListCPL;

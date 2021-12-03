@@ -2,7 +2,7 @@
 var jsData = {};
 $(document).ready(function () {
     table = $('#table-data-report-internal-mahasiswa').DataTable({
-        "ajax": {
+      /*  "ajax": {
             url: '/Admin/ReportMBKMInternalPertukaran/DataTable',
             dataSrc: '',
             data: {
@@ -18,7 +18,7 @@ $(document).ready(function () {
                 }
             },
             {
-                /*Semester*/
+                *//*Semester*//*
                 "data": 0,
                 "render": function (data, type, row, meta) {
                     if (data == null) {
@@ -28,7 +28,7 @@ $(document).ready(function () {
                 }
             },
             {
-                /*jenjang*/
+                *//*jenjang*//*
                 "data": 1,
                 "render": function (data, type, row, meta) {
                     if (data == null) {
@@ -38,7 +38,7 @@ $(document).ready(function () {
                 }
             },
             {
-                /*nim*/
+                *//*nim*//*
                 "data": 2,
                 "render": function (data, type, row, meta) {
                     if (data == null) {
@@ -48,7 +48,7 @@ $(document).ready(function () {
                 }
             },
             {
-                /*nama*/
+                *//*nama*//*
                 "data": 3,
                 "render": function (data, type, row, meta) {
                     if (data == null) {
@@ -58,7 +58,7 @@ $(document).ready(function () {
                 }
             },
             {
-                /*prodi*/
+                *//*prodi*//*
                 "data": 4,
                 "render": function (data, type, row, meta) {
                     if (data == null) {
@@ -68,7 +68,7 @@ $(document).ready(function () {
                 }
             },
             {
-                /*Kode Makul*/
+                *//*Kode Makul*//*
                 "data": 5,
                 "render": function (data, type, row, meta) {
                     if (data == null) {
@@ -78,7 +78,7 @@ $(document).ready(function () {
                 }
             },
             {
-                /*Nama MK*/
+                *//*Nama MK*//*
                 "data": 6,
                 "render": function (data, type, row, meta) {
                     if (data == null) {
@@ -88,7 +88,7 @@ $(document).ready(function () {
                 }
             },
             {
-                /*SKS */
+                *//*SKS *//*
                 "data": 7,
                 "render": function (data, type, row, meta) {
                     if (data == null) {
@@ -98,7 +98,7 @@ $(document).ready(function () {
                 }
             },
             {
-                /*Nilai asal*/
+                *//*Nilai asal*//*
                 "data": 8,
                 "render": function (data, type, row, meta) {
                     if (data == null) {
@@ -108,7 +108,7 @@ $(document).ready(function () {
                 }
             },
             {
-                /*Nilai kode makul*/
+                *//*Nilai kode makul*//*
                 "data": 9,
                 "render": function (data, type, row, meta) {
                     if (data == null) {
@@ -118,7 +118,7 @@ $(document).ready(function () {
                 }
             },
             {
-                /*kjode Makul diakui */
+                *//*kjode Makul diakui *//*
                 "data": 10,
                 "render": function (data, type, row, meta) {
                     if (data == null) {
@@ -128,7 +128,7 @@ $(document).ready(function () {
                 }
             },
             {
-                /*nama mk diakui mk*/
+                *//*nama mk diakui mk*//*
                 "data": 11,
                 "render": function (data, type, row, meta) {
                     if (data == null) {
@@ -138,7 +138,7 @@ $(document).ready(function () {
                 }
             },
             {
-                /*huruf*/
+                *//*huruf*//*
                 "data": 12,
                 "render": function (data, type, row, meta) {
                     if (data == null) {
@@ -155,7 +155,7 @@ $(document).ready(function () {
                 'border-collapse': 'collapse',
                 'vertical-align': 'center',
             });
-        }
+        }*/
 
     });
     $('#inp_semester').change(function () {

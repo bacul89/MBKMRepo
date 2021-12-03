@@ -42,6 +42,9 @@ namespace MBKM.Repository.Repositories
                         Nama = z.UserName,
                         Password = z.Password,
                         //KodeProdi = Convert.ToDouble(z.KodeProdi),
+                        KodeFakultas = z.KodeFakultas,
+                        NamaFakultas = z.NamaFakultas,
+                        KPTSDIN = z.KPTSDIN,
                         KodeProdi = z.KodeProdi,
                         NamaProdi = z.NamaProdi,
                         RoleID = z.RoleID,
@@ -59,13 +62,14 @@ namespace MBKM.Repository.Repositories
         {
             using (var context = new MBKMContext())
             {
-                var result = context.Users.Where(x => x.UserName.Contains(Search) && x.IsActive == true && x.IsDeleted == false )
+                var result = context.Users.Where(x => (x.UserName.Contains(Search) || x.KPTSDIN.Contains(Search)) && x.IsActive == true && x.IsDeleted == false )
                     .OrderBy("Username").Skip(Skip).Take(Length).Select(x => new VMLookUpUser
                     {
                         ID = x.ID,
                         UserName = x.UserName,
                         KodeProdi = x.KodeProdi,
-                        NamaProdi = x.NamaProdi
+                        NamaProdi = x.NamaProdi,
+                        KPTSDIN = x.KPTSDIN
                     }).ToList();
                 return result;
             }

@@ -51,7 +51,7 @@ $('#tahunAjaranCari').select2({
     //multiple: true,
     width: "100%",
     ajax: {
-        url: "/Admin/DaftarHadirUjian/GetSemesterAll",
+        url: "/Admin/DaftarHadirUjian/GetSemesterAll2",
         type: 'POST',
         dataType: 'json',
         //quietMillis: 50,
@@ -298,7 +298,7 @@ function loadJenjangStudi(tipe, id, nama) {
                         width: "100%",
                         ajax: {
                             //url: "/Admin/DaftarHadirUjian/GetMataKuliah",
-                            url: "/Admin/JadwalKuliah/GetMataKuliahFlag",
+                            url: "/Admin/DaftarHadirUjian/GetMataKuliahFlag",
                             type: 'POST',
                             dataType: 'json',
 

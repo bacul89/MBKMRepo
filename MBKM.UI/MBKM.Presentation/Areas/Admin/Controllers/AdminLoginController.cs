@@ -47,6 +47,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         Session["RoleName"] = modeldata.Roles.RoleName;
                         Session["RoleID"] = modeldata.RoleID.ToString();
                         Session["NamaProdi"] = modeldata.NamaProdi.ToString();
+                        Session["KodeProdi"] = modeldata.KodeProdi.ToString();
+                        Session["NamaFakultas"] = (modeldata.NamaFakultas == null) ? "" : modeldata.NamaFakultas.ToString();
+                        Session["KodeFakultas"] = (modeldata.KodeFakultas == null) ? "" : modeldata.KodeFakultas.ToString();
                         return RedirectToAction("Index", "Home");
                     }
                     else
@@ -69,6 +72,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             Session["email"] = null;
             Session["MenuList"] = null;
             Session["NamaProdi"] = null;
+            Session["KodeProdi"] = null;
+            Session["NamaFakultas"] = null;
+            Session["KodeFakultas"] = null;
             return RedirectToAction("Login", "AdminLogin");
         }
     }

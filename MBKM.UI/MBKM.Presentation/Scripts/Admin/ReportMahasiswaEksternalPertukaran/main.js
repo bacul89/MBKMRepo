@@ -80,7 +80,7 @@ $(document).ready(function () {
         "serverSide": true,
         width: "100%",
         ajax: {
-            url: "/Admin/ReportMBKMEkternalPertukaran/GetSemesterAll",
+            url: "/Admin/ReportMBKMEkternalPertukaran/GetSemesterAll2",
             type: 'POST',
             dataType: 'json',
             data: function (params) {

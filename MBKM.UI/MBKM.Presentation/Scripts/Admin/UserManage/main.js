@@ -6,7 +6,7 @@ var tableUser = $('#TableList').DataTable({
         "orderable": false,
         "paging": false,
         "targets": 0,
-         "visible": false, 'targets': [5,7] 
+         "visible": false, 'targets': [5,7,8] 
     }],
     //"order": [[1, 'asc']],
     "proccessing": true,
@@ -101,12 +101,59 @@ var tableUser = $('#TableList').DataTable({
             
         },
         {
+            //"title": "Jabatan",
+            "data": "KodeFakultas",
+            "name": "KodeFakultas",
+            "render": function (data, type, row, meta) {
+                if (data != null) {
+                    return '<div class="center">' + data + '</div>';
+                }
+                else {
+                    return '<div class="center"> - </div>';
+                }
+            }
+
+
+        },
+        {
+            //"title": "Jabatan",
+            "data": "NamaFakultas",
+            "name": "NamaFakultas",
+            "render": function (data, type, row, meta) {
+                //return '<div class="center">' + data + '</div>';
+                if (data != null) {
+                    return '<div class="center">' + data + '</div>';
+                }
+                else {
+                    return '<div class="center"> - </div>';
+                }
+            }
+
+
+        },
+        {
             //"title": "Program Studi/Unit",
             "data": "NamaProdi",
             "name": "NamaProdi",
             "render": function (data, type, row, meta) {
                 return '<div class="center">' + row.NamaProdi + '(' + row.KodeProdi + ')' + '</div>';
             }
+        },
+        {
+            //"title": "Jabatan",
+            "data": "KPTSDIN",
+            "name": "KPTSDIN",
+            "render": function (data, type, row, meta) {
+                //return '<div class="center">' + data + '</div>';
+                if (data != null) {
+                    return '<div class="center">' + data + '</div>';
+                }
+                else {
+                    return '<div class="center"> - </div>';
+                }
+            }
+
+
         },
 
         
@@ -130,7 +177,7 @@ function validationCustom2() {
     var namaRole = document.getElementById("idRole");
     var selectedRole = namaRole.options[namaRole.selectedIndex].text;
     //if bukan role spesial (Kaprodi)
-    if (selectedRole == "Kepala Program Studi") {
+    if (selectedRole == "Kepala Program Studi" || selectedRole == "Dosen") {
         $(".input-data").each(function () {
             var element = $(this);
             if (element.val() == "") {
@@ -158,7 +205,7 @@ function validationCustomEditUser() {
     var isValid;
     var namaRole = document.getElementById("idRole");
     var selectedRole = namaRole.options[namaRole.selectedIndex].text;
-    if (selectedRole == "Kepala Program Studi") {
+    if (selectedRole == "Kepala Program Studi" || selectedRole == "Dosen") {
         $(".asd").each(function () {
             var element = $(this);
             if (element.val() == "") {

@@ -14,19 +14,53 @@ function AddUserTemplate() {
                 }
                 $('#modal-inner').append(e);
                 $('.modal').modal('show');
-                
+
+                $("#fakultasCari").select2({
+                    placeholder: "-- Pilih Fakultas --",
+                    width: "100%",
+                    ajax: {
+                        url: "/Admin/UserManage/GetFakultas",
+                        dataType: 'json',
+                        method: "POST",
+                        delay: 250,
+                        cache: false,
+                        data: function (params) {
+                            return {
+                                Search: params.term || "",
+                                JenjangStudi: "S1",
+                            };
+                        },
+                        processResults: function (data, params) {
+                            return {
+                                results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+                            };
+                        },
+                    }
+                });
+
                 $('#idRole').change(function () {
                     var namaRole = document.getElementById("idRole");
                     var selectedRole = namaRole.options[namaRole.selectedIndex].text;
-                    if (selectedRole != "Kepala Program Studi") {
+                    if (selectedRole != "Kepala Program Studi" && selectedRole != "Dosen") {
                         //$('#specialRole').html('<input type="text" value="BAA" class="form-control input-pendaftaran input-data" disabled="disabled" id="specialRole" name="specialRole">')
                         $("#divProdi").prop('hidden', true);
                         //$("#specialRole").text("asd-BAA");
                         $("#specialRole").val(selectedRole);
                         console.log($("#specialRole").val());
+                        console.log($("#txtKPTSDIN").val());
+                        console.log($("#fakultasCari").val());
+                        console.log($("#fakultasCari").text());
                     }
+                    //else if (selectedRole != "Dosen") {
+                    //    //$('#specialRole').html('<input type="text" value="BAA" class="form-control input-pendaftaran input-data" disabled="disabled" id="specialRole" name="specialRole">')
+                    //    $("#divProdi").prop('hidden', true);
+                    //    //$("#specialRole").text("asd-BAA");
+                    //    $("#specialRole").val(selectedRole);}
                     else {
                         $("#divProdi").prop('hidden', false);
+                        console.log($("#txtKPTSDIN").val());
+                        console.log($("#fakultasCari").val());
+                        console.log($("#fakultasCari").text());
 
                     }
                     //console.log(selectedRole);
@@ -37,6 +71,7 @@ function AddUserTemplate() {
         })
     }
 }
+
 
 function EditUserTemplate(id) {
     $.ajax({
@@ -50,28 +85,64 @@ function EditUserTemplate(id) {
             }
             $('#modal-inner').append(e);
             $('.modal').modal('show');
+            var f = document.getElementById("inp_fakultas");
+            var fs = f.options[f.selectedIndex].text;
+            //console.log($("option:selected:first", "#inp_fakultas").val());
+           // console.log($("#inp_fakultas").val());
+            
+
+            var getKelompok = $('#get_kelompok').val();
+            //console.log(getKelompok);
+            //$('#inp_fakultas').select2('data', { id: getKelompok, value: getKelompok, text: getKelompok });
+            $("#inp_fakultas").select2({
+                placeholder: "-- Pilih Fakultas --",
+                width: "100%",
+                ajax: {
+                    url: "/Admin/UserManage/GetFakultas",
+                    dataType: 'json',
+                    method: "POST",
+                    delay: 250,
+                    cache: false,
+                    data: function (params) {
+                        return {
+                            Search: params.term || "",
+                            JenjangStudi: "S1",
+                        };
+                    },
+                    processResults: function (data, params) {
+                        return {
+                            results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+                        };
+                    },
+                }
+            });
+            
             var namaRole = document.getElementById("idRole");
             var selectedRole = namaRole.options[namaRole.selectedIndex].text;
-            if (selectedRole != "Kepala Program Studi") {
+            if (selectedRole != "Kepala Program Studi" && selectedRole != "Dosen") {
                 //$('#specialRole').html('<input type="text" value="BAA" class="form-control input-pendaftaran input-data" disabled="disabled" id="specialRole" name="specialRole">')
                 $("#divProdi").prop('hidden', true);
                 //$("#specialRole").text("asd-BAA");
                 $("#specialRole").val(selectedRole);
-                console.log($("#specialRole").val());
+                //console.log($("#specialRole").val());
             }
             else {
                 $("#divProdi").prop('hidden', false);
 
             }
             $('#idRole').change(function () {
+                //console.log($("option:selected:first", "#inp_fakultas").val());
+                //console.log($("#inp_fakultas").val());
+                //console.log($('#inp_fakultas').select2('data')[0].value);
                 var namaRole = document.getElementById("idRole");
                 var selectedRole = namaRole.options[namaRole.selectedIndex].text;
-                if (selectedRole != "Kepala Program Studi") {
+                if (selectedRole != "Kepala Program Studi" && selectedRole != "Dosen") {
                     //$('#specialRole').html('<input type="text" value="BAA" class="form-control input-pendaftaran input-data" disabled="disabled" id="specialRole" name="specialRole">')
                     $("#divProdi").prop('hidden', true);
                     //$("#specialRole").text("asd-BAA");
                     $("#specialRole").val(selectedRole);
-                    console.log($("#specialRole").val());
+                    //console.log($("#specialRole").val());
+                    //console.log($("#txtKPTSDIN").val());
                 }
                 else {
                     $("#divProdi").prop('hidden', false);
@@ -98,7 +169,7 @@ function DetailUserTemplate(id) {
             var namaRole = document.getElementById("idRole");
             var selectedRole = $('#idRole').val();
             console.log(selectedRole);
-            if (selectedRole != "Kepala Program Studi") {
+            if (selectedRole != "Kepala Program Studi" && selectedRole != "Dosen") {
                 //$('#specialRole').html('<input type="text" value="BAA" class="form-control input-pendaftaran input-data" disabled="disabled" id="specialRole" name="specialRole">')
                 $("#divProdi").prop('hidden', true);
                 //$("#specialRole").text("asd-BAA");
@@ -120,7 +191,7 @@ function PostCreate2() {
     var namaRole = document.getElementById("idRole");
     var selectedRole = namaRole.options[namaRole.selectedIndex].text;
     //if bukan role spesial (Kaprodi)
-    if (selectedRole == "Kepala Program Studi") {
+    if (selectedRole == "Kepala Program Studi" || selectedRole == "Dosen") {
         var namaProdi = document.getElementById("idProdi");
         var selectedProdi = namaProdi.options[namaProdi.selectedIndex].text;
         var namaProdi = selectedProdi.substring(selectedProdi.indexOf('-') + 1);
@@ -129,6 +200,9 @@ function PostCreate2() {
         formInputUser.Email = $('input[id=txtemail]').val();
         formInputUser.Password = $('input[id=txtpassword]').val();
         formInputUser.RoleID = $('#idRole').val();
+        formInputUser.KodeFakultas = $('#fakultasCari').val();
+        formInputUser.NamaFakultas = $("option:selected:first", "#fakultasCari").text();
+        formInputUser.KPTSDIN = $('#txtKPTSDIN').val();
         formInputUser.KodeProdi = $('#idProdi').val();
         //formInputUser.NamaProdi = $('#idProdi').val();
         formInputUser.NamaProdi = namaProdi;
@@ -148,6 +222,9 @@ function PostCreate2() {
         formInputUser.Password = $('input[id=txtpassword]').val();
         formInputUser.RoleID = $('#idRole').val();
         formInputUser.KodeProdi = $('#specialRole').val();
+        formInputUser.KodeFakultas = $('#fakultasCari').val();
+        formInputUser.NamaFakultas = $("option:selected:first", "#fakultasCari").text();
+        formInputUser.KPTSDIN = $('#txtKPTSDIN').val();
         //formInputUser.NamaProdi = $('#idProdi').val();
         formInputUser.NamaProdi = $('#specialRole').val();
         var cekAktif = $('input[id=inp_status]:checked').val();
@@ -159,7 +236,7 @@ function PostCreate2() {
     
     //formInputUser.IsActive = $('input[id=inp_status]:checked').val();
 
-    if (validationCustom2()) {
+    if (validationCustom2() && formInputUser.KodeFakultas != null) {
         var base_url = window.location.origin;
         $.ajax({
             url: base_url + '/Admin/UserManage/PostDataUser',
@@ -251,7 +328,7 @@ function PostUpdateUser() {
     var namaRole = document.getElementById("idRole");
     var selectedRole = namaRole.options[namaRole.selectedIndex].text;
     //if bukan role spesial (Kaprodi)
-    if (selectedRole == "Kepala Program Studi") {
+    if (selectedRole == "Kepala Program Studi" || selectedRole == "Dosen") {
         var namaProdi = document.getElementById("idProdi");
         var selectedProdi = namaProdi.options[namaProdi.selectedIndex].text;
         var namaProdis = selectedProdi.substring(selectedProdi.indexOf('-') + 1);
@@ -263,6 +340,12 @@ function PostUpdateUser() {
         formInputUser.KodeProdi = $('#idProdi').val();
         //formInputUser.NamaProdi = $('#idProdi').val();
         formInputUser.NamaProdi = namaProdis;
+
+        formInputUser.KodeFakultas = $('#inp_fakultas').select2('data')[0].value;
+        //$('#inp_fakultas').select2('data')[0].value
+        formInputUser.NamaFakultas = $("option:selected:first", "#inp_fakultas").text();
+        formInputUser.KPTSDIN = $('#txtKPTSDIN').val();
+
         var cekAktif = $('input[id=inp_status]:checked').val();
         if (cekAktif == 1) {
             formInputUser.IsActive = "true";
@@ -282,6 +365,11 @@ function PostUpdateUser() {
         formInputUser.KodeProdi = $('#specialRole').val();
         //formInputUser.NamaProdi = $('#idProdi').val();
         formInputUser.NamaProdi = $('#specialRole').val();
+
+        formInputUser.KodeFakultas = $('#inp_fakultas').select2('data')[0].value;
+        formInputUser.NamaFakultas = $("option:selected:first", "#inp_fakultas").text();
+        formInputUser.KPTSDIN = $('#txtKPTSDIN').val();
+
         var cekAktif = $('input[id=inp_status]:checked').val();
         if (cekAktif == 1) {
             formInputUser.IsActive = "true";
@@ -291,7 +379,7 @@ function PostUpdateUser() {
     }
     
     //console.log(formInputUser);
-    if (validationCustomEditUser()) {
+    if (validationCustomEditUser() && formInputUser.NamaFakultas != null) {
     var base_url = window.location.origin;
     $.ajax({
         url: base_url + '/Admin/UserManage/PostUpdateDataUser',

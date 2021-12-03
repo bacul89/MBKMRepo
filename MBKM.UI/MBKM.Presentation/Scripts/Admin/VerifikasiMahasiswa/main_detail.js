@@ -9,10 +9,10 @@
             dataType: 'json',
             data: function (params) {
                 return {
-                    search: params.term,
+                    search: params.term || "",
                     instansi: $('#namaUniversitas').val(),
-                    length: params.length || 0,
-                    skip: params.skip || 10
+                    length: "10",
+                    skip: (params.page - 1) * 10 || 0
                 };
             },
             processResults: function (data, page) {

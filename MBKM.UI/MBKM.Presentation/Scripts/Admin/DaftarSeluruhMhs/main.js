@@ -116,7 +116,13 @@
             "data": "Gender",
             "name": "Gender",
             "render": function (data, type, row, meta) {
-                return '<div class="center">' + data + '</div>';
+                //return '<div class="center">' + data + '</div>';
+                if (data != null) {
+                    return '<div class="center">' + data + '</div>';
+                }
+                else {
+                    return '<div class="center"> - </div>';
+                }
             }
 
 

@@ -133,16 +133,18 @@ namespace MBKM.Presentation.Areas.Admin.Controllers.PerjanjianKerjasama
                         }
 
                     }
-
+                    return Json(new ServiceResponse { status = 200, message = "Save Berhasil!" });
                 }
                 else
                 {
-                    perjanjianKerjasama.CreatedBy = Session["username"] as string;
-                    perjanjianKerjasama.UpdatedBy = Session["username"] as string;
-                    perjanjianKerjasama.IsActive = true;
-                    _perjanjianKerjasamaService.Save(perjanjianKerjasama);
+                    //perjanjianKerjasama.CreatedBy = Session["username"] as string;
+                    //perjanjianKerjasama.UpdatedBy = Session["username"] as string;
+                    //perjanjianKerjasama.IsActive = true;
+                    //_perjanjianKerjasamaService.Save(perjanjianKerjasama);\
+                    // ini mandatory file upload
+                    return Json(new ServiceResponse { status = 400, message = "Save Gagal!" });
                 }
-                return Json(new ServiceResponse { status = 200, message = "Save Berhasil!" });
+                
             }
             else
             {

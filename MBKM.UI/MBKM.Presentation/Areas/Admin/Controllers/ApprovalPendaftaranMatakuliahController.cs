@@ -54,7 +54,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             var data = _cPLMKPendaftaranService.Find(x => x.IsDeleted == false && x.PendaftaranMataKuliahID == id).FirstOrDefault();
             var data222 = _cPLMKPendaftaranService.Find(x => x.IsDeleted == false && x.PendaftaranMataKuliahID == id).ToList();
-            IList<CPLMatakuliah> tempId = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.PendaftaranMataKuliahs.JadwalKuliahs.MataKuliahID).ToList();
+            IList<CPLMatakuliah> tempId = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.PendaftaranMataKuliahs.JadwalKuliahs.MataKuliahID && x.IsActive == true && x.IsDeleted == false).ToList();
             /*IList<CPLMatakuliah> capaianTujuan = tempId.Where(x => int.Parse(x.MasterCapaianPembelajarans.NamaProdi) == data.PendaftaranMataKuliahs.JadwalKuliahs.ProdiID).ToList();*/
             IList<CPLMatakuliah> capaianTujuan = tempId;
             var tmpInformasiPertukaran1 = _informasiPertukaranService.Find(x => x.MahasiswaID == data.PendaftaranMataKuliahs.MahasiswaID).Count();
@@ -95,7 +95,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
                 if (data.CPLMatakuliahID != null && !tmpInformasiPertukaran.JenisKerjasama.ToLower().Contains("internal ke luar"))
                 {
-                    IList<CPLMatakuliah> tempIDAsal = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.CPLMatakuliahs.IDMataKUliah).ToList();
+                    IList<CPLMatakuliah> tempIDAsal = _cPLMatakuliahService.Find(x => x.IDMataKUliah == data.CPLMatakuliahs.IDMataKUliah && x.IsActive == true && x.IsDeleted == false).ToList();
                     /*IList<CPLMatakuliah> capaianAsal = tempIDAsal.Where(x => x.MasterCapaianPembelajarans.ProdiID == data.CPLMatakuliahs.MasterCapaianPembelajarans.ProdiID).ToList();*/
                     IList<CPLMatakuliah> capaianAsal = tempIDAsal;
                     ViewData["capaianAsal"] = capaianAsal;
@@ -344,12 +344,25 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             List<object> data = new List<object>();
             foreach (var p in final)
             {
-                var q = new
+                var kptsnid = p.KPTSDIN;
+                if(kptsnid != null)
                 {
-                    id = p.ID,
-                    text = p.UserName
-                };
-                data.Add(q);
+                    var q = new
+                    {
+                        id = p.ID,
+                        text = p.UserName + " - " + kptsnid
+                    };
+                    data.Add(q);
+                }
+                else
+                {
+                    var q = new
+                    {
+                        id = p.ID,
+                        text = p.UserName + " -  -"
+                    };
+                    data.Add(q);
+                }
             }
 
             return Json(data);

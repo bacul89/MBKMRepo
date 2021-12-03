@@ -11,6 +11,19 @@ function getValueOnForm() {
     input.CreatedBy = $("#inputer").val();
     input.BiayaKuliah = $("#biaya").val();
 }
+function clearValueOnForm() {
+    $("#NoPerjanjian").val("");
+  $("#TanggalMulai").val("");
+     $("#TanggalAkhir").val("");
+    $("#instansi").val("");
+    $("#NamaUniversitas").val("");
+     $("#Namaunit").val("");
+     $("#JenisPertukaran").val("");
+     $("#JenisKerjasama").val("");
+    //$("#inputer").val(""); ini jangan karena admin login
+    $("#biaya").val("");
+    $("#file").val("");
+}
 function IndexCreateKerjasama() {
     if ($('#created-Kerjasama').length) {
         $('#TambahKerjasama').modal('show');
@@ -134,6 +147,8 @@ function SubmitPerjanjian() {
     }
     var data = new FormData($('#createPerjanjian')[0]);
     var fileInput = document.getElementById('file');
+    //if (fileInput == null) { alert("filenull"); }
+    //else {
     for (i = 0; i < fileInput.files.length; i++) {
         var sfilename = fileInput.files[i].name;
         var filesize = fileInput.files[i].size / 1024 / 1024;
@@ -153,7 +168,8 @@ function SubmitPerjanjian() {
             })
             return;
         }
-    }
+        }
+   // }
     $.ajax({
         type: "POST",
         url: "/Admin/PerjanjianKerjasama/SavePerjanjian",
@@ -161,38 +177,95 @@ function SubmitPerjanjian() {
         contentType: false,
         processData: false,
         data: data,
-        success: function (response) {
+    }).then(function (response) {
+        if (response.status == 500) {
             Swal.fire({
-                
-                title: 'Berhasil',
-                icon: 'success',
-                html: 'Data Berhasil Ditambahkan',
-                showCloseButton: true,
-                showCancelButton: false,
-                focusConfirm: false,
-                confirmButtonText: 'OK'
-            })
-            table.ajax.reload(null, false),
-                $('.modal').modal('hide');
-            location.reload();
-        },
-        error: function (response) {
-            Swal.fire({
-                title: 'Oppss',
+                title: 'Gagal!',
                 icon: 'error',
-                html: 'Data Gagal Ditambahkan, Periksa Field dan Ukuran File atau inputan lain',
+                html: 'Data Gagal Ditambahkan, Mohon Diperiksa  Kembali!',
                 showCloseButton: true,
                 showCancelButton: false,
                 focusConfirm: false,
                 confirmButtonText: 'OK'
             })
-            //table.ajax.reload(null, false),
-            //    $('.modal').modal('hide');
-            //location.reload();
-        }
+            table.ajax.reload(null, false);
+           // $('.modal').modal('hide');
+        } else
+            if (response.status == 200) {
+                Swal.fire({
 
-    })
-}
+                    title: 'Berhasil',
+                    icon: 'success',
+                    html: 'Data Berhasil Ditambahkan',
+                    showCloseButton: true,
+                    showCancelButton: false,
+                    focusConfirm: false,
+                    confirmButtonText: 'OK'
+                })
+                table.ajax.reload(null, false),
+                    $('.modal').modal('hide');
+                clearValueOnForm();
+                //location.reload();
+            }
+            else {
+                if (response.status == 400) {
+                    Swal.fire({
+                        title: 'Oppss',
+                        icon: 'warning',
+                        html: 'Mohon Upload Dokumen Pendukung!',
+                        showCloseButton: true,
+                        showCancelButton: false,
+                        focusConfirm: false,
+                        confirmButtonText: 'OK'
+                    })
+                }
+            }
+        });
+} 
+//else {
+//        Swal.fire({
+//            title: 'Oppss',
+//            icon: 'warning',
+//            html: 'Ada beberapa field yang belum kamu isikan',
+//            showCloseButton: true,
+//            showCancelButton: false,
+//            focusConfirm: false,
+//            confirmButtonText: 'OK'
+//        })
+//    }
+//        success: function (response) {
+//            Swal.fire({
+                
+//                title: 'Berhasil',
+//                icon: 'success',
+//                html: 'Data Berhasil Ditambahkan',
+//                showCloseButton: true,
+//                showCancelButton: false,
+//                focusConfirm: false,
+//                confirmButtonText: 'OK'
+//            })
+//            table.ajax.reload(null, false),
+//                $('.modal').modal('hide');
+//            location.reload();
+//        },
+//        error: function (response) {
+//            Swal.fire({
+//                title: 'Oppss',
+//                icon: 'error',
+//                html: 'Data Gagal Ditambahkan, Periksa Field dan Ukuran File atau inputan lain',
+//                showCloseButton: true,
+//                showCancelButton: false,
+//                focusConfirm: false,
+//                confirmButtonText: 'OK'
+//            })
+//            table.ajax.reload(null, false),
+//                $('.modal').modal('hide');
+//            location.reload();
+//        }
+
+//    })
+//}
+//batas
 //function SubmitPerjanjian() {
 //    var data = new FormData($('#createPerjanjian')[0]);
 //    var fileInput = document.getElementById('file');

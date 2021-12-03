@@ -67,6 +67,13 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             return Json(data);
         }
 
+        [HttpPost]
+        public ActionResult GetSemesterAll2()
+        {
+            var result = _jkService.GetSemesterAll2();
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
+        }
+
 
         public JsonResult SearchMataKuliah(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm)
         {

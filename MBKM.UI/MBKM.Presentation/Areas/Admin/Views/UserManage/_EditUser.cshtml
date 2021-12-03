@@ -49,6 +49,15 @@
                     </div>
                 }
             </div>
+            <div class="form-group">
+                <label for="inp_email" class="col-sm-3 control-label">Fakultas</label>
+                <div class="col-sm-9">
+                    <select class="form-control input-md asd" name="inp_fakukltas" id="inp_fakultas" placeholder="Pilih Kelompok">
+                        <option value="@Model.NamaFakultas" selected>@Model.NamaFakultas</option>
+                    </select>
+                    <!--<input type="text" >-->
+                </div>
+            </div>
             <div id="divSpecialRole" class="form-group row" hidden>
                 <label class="col-sm-3 control-label">HiddenIfNotKaprodi</label>
                 <div class="col-sm-9">
@@ -65,6 +74,12 @@
                         @Html.DropDownListFor(model => model.KodeProdi, ViewBag.listProdi as SelectList, "--Pilih Prodi/unit--", new { @class = "form-control input-pendaftaran asd", @id = "idProdi", @name = "idProdi" })
                     </div>
                 }
+            </div>
+            <div class="form-group">
+                <label for="inp_email" class="col-sm-3 control-label">KPTSDIN</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control input-pendaftaran asd" value="@Model.KPTSDIN" id="txtKPTSDIN" placeholder="Input KPTSDIN">
+                </div>
             </div>
             <div class="form-group">
                 <label for="inp_status" class="col-sm-3 control-label">Status</label>
