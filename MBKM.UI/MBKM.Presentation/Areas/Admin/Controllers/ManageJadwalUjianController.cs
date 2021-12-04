@@ -47,6 +47,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ViewData["semester"] = data;
             ViewData["Jenjang"] = tempJenjang;
             ViewData["JenisUjian"] = tempJenisUjian;
+            ViewData["Fakultas"] = HttpContext.Session["KodeFakultas"].ToString();
             return View();
         }
 
@@ -184,7 +185,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult GetDataTable(DataTableAjaxPostModel model, string jenjangStudi, string fakultas, string jenisUjian, string tahunSemester)
         {
-            VMListJadwalUjian data = _jadwalUjianMBKMService.GetListManageUjian(model, jenjangStudi, fakultas, jenisUjian, tahunSemester);
+            var dataFakultas = (fakultas != null) ? fakultas : HttpContext.Session["KodeFakultas"].ToString();
+
+            VMListJadwalUjian data = _jadwalUjianMBKMService.GetListManageUjian(model, jenjangStudi, dataFakultas, jenisUjian, tahunSemester);
             return Json(
                 new
                 {
