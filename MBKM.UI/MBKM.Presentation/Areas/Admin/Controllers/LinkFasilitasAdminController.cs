@@ -216,17 +216,31 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             return new ContentResult { Content = JsonConvert.SerializeObject(_jkService.Find(jk => jk.MataKuliahID == MataKuliahID).ToList()), ContentType = "application/json" };
         }
-        public JsonResult SearchList(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string idMatakuliah,string seksi,int strm)
+        public ActionResult SearchList( long idProdi, string lokasi, long idFakultas, string jenjangStudi, string idMatakuliah,string seksi,int strm)
         {
-            VMLinkFasilitas vMLinkFasilitas = _linkFasilitasService.SearchListJadwalKuliah(model, idProdi, lokasi, idFakultas, jenjangStudi, idMatakuliah,seksi,strm);
-            return Json(new
+            //VMLinkFasilitas vMLinkFasilitas = _linkFasilitasService.SearchListJadwalKuliah(model, idProdi, lokasi, idFakultas, jenjangStudi, idMatakuliah,seksi,strm);
+            //return Json(new
+            //{
+            //    // this is what datatables wants sending back
+            //    draw = model.draw,
+            //    recordsTotal = vMLinkFasilitas.TotalCount,
+            //    recordsFiltered = vMLinkFasilitas.TotalFilterCount,
+            //    data = vMLinkFasilitas.gridDatas
+            //});
+            var result = new List<JadwalKuliah>();
+            if (seksi != null && seksi.Length != 0)
             {
-                // this is what datatables wants sending back
-                draw = model.draw,
-                recordsTotal = vMLinkFasilitas.TotalCount,
-                recordsFiltered = vMLinkFasilitas.TotalFilterCount,
-                data = vMLinkFasilitas.gridDatas
-            });
+                result = _jkService
+                .Find(_ => _.JenjangStudi == jenjangStudi && _.ProdiID == idProdi && _.FakultasID == idFakultas && _.Lokasi == lokasi && _.MataKuliahID == idMatakuliah && _.STRM == strm && _.ClassSection == seksi && _.FlagOpen == true).ToList();
+            }
+            else
+            {
+                result = _jkService
+                .Find(_ => _.JenjangStudi == jenjangStudi && _.ProdiID == idProdi && _.FakultasID == idFakultas && _.Lokasi == lokasi && _.MataKuliahID == idMatakuliah && _.STRM == strm && _.FlagOpen == true).ToList();
+                
+            }
+            result = result.OrderBy(_ => _.KodeMataKuliah).ToList();
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
 
         public ActionResult ModalUpdateLinkFasilitas(int id)

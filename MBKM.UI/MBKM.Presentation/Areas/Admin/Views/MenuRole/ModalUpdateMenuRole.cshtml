@@ -20,7 +20,7 @@
             <div class="form-group" id="frmAddUser">
                 <label for="MenuRole" class="col-sm-3 control-label">Menu Role</label>
                 <div class="col-sm-9">
-                    <select name="MenuID" id="MenuID" class="form-control input-data" required>
+                    <select name="MenuID" id="MenuID" class="form-control input-data" required >
                         <option value="@Model.MenuID" selected>@Model.Menus.MenuName</option>
                         @{
                             foreach (var data in ViewData["listMenu"] as IEnumerable<MBKM.Entities.ViewModel.VMMenu>)
@@ -34,7 +34,7 @@
             <div class="form-group">
                 <label for="MenuRole" class="col-sm-3 control-label">Role</label>
                 <div class="col-sm-9">
-                    <select name="RoleID" id="RoleID" class="form-control input-data" required>
+                    <select name="RoleID" id="RoleID" class="form-control input-data" required >
                         <option value="@Model.RoleID" selected>@Model.Roles.RoleName</option>
                         @{
                             foreach (var data in ViewData["listRole"] as IEnumerable<MBKM.Entities.ViewModel.VMLookup>)
