@@ -47,6 +47,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ViewData["Jenjang"] = tempJenjang;
             IEnumerable<VMSemester> data = _jadwalUjianMBKMService.getAllSemester();
             ViewData["semester"] = data;
+            ViewData["Fakultas"] = (HttpContext.Session["RoleName"].ToString().ToLower().Contains("fakultas")) ? HttpContext.Session["KodeFakultas"].ToString() : "";
             return View();
         }
 
@@ -59,6 +60,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult GetDataTableAdmin(int tahunSemester, string jenjangStudi, int fakultas)
         {
+
             var data1 = _feedbackMatkulService.Find(x => x.JadwalKuliahs.STRM == tahunSemester 
                 && x.JadwalKuliahs.JenjangStudi == jenjangStudi 
                 && x.JadwalKuliahs.FakultasID == fakultas)
