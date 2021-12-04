@@ -75,7 +75,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 //    .GroupBy(x => x.NamaInstansi).Select(x => x.FirstOrDefault());
                 var getJenis = context.JenisKerjasamaModels.Where(x => x.JenisKerjasama.ToLower().Contains("eksternal")).Select(y=>y.ID).FirstOrDefault();
                // getJenis.
-                var result = context.PerjanjianKerjasamas.Where(x => x.JenisKerjasama == getJenis.ToString() && x.NamaInstansi.Contains(Search))
+                var result = context.PerjanjianKerjasamas.Where(x => x.JenisKerjasama == getJenis.ToString() && x.NamaInstansi.Contains(Search) && x.TanggalAkhir.Date >= DateTime.Now.Date)
                     .Select(x => x.NamaInstansi).Distinct();
                 //var result2 = new List<VMLookupNoKerjasama>();
                 var result2 = result.Select(y => new VMLookupNoKerjasama
