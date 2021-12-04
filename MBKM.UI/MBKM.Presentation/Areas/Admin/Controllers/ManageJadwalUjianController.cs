@@ -47,7 +47,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ViewData["semester"] = data;
             ViewData["Jenjang"] = tempJenjang;
             ViewData["JenisUjian"] = tempJenisUjian;
-            ViewData["Fakultas"] = HttpContext.Session["KodeFakultas"].ToString();
+            ViewData["Fakultas"] = (HttpContext.Session["RoleName"].ToString().ToLower().Contains("fakultas")) ? HttpContext.Session["KodeFakultas"].ToString() : "" ;
             return View();
         }
 
