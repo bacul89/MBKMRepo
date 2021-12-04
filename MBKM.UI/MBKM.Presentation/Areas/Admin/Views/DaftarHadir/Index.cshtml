@@ -133,7 +133,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="text-align: right">Seksi</td>
+                        <td style="text-align: right">Seksi (Optional)</td>
                         <td style="width: 400px;">
                             <select name="seksi" id="seksi" class="form-control input-md"></select>
                         </td>
@@ -229,6 +229,10 @@
         }
 
         function reloadDatatable() {
+            var seksi = $('#seksi').val();
+            if (!$('#seksi').val()) {
+                seksi = '';
+            }
             var param =
                 'strm=' + $('#tahunSemester').val() +
                 '&jenjangStudi=' + $('#jenjangStudi').val() +
@@ -239,7 +243,7 @@
                 //'&lokasi=' + $('#lokasi').val() +
                 //'&matkul=' + $('#mataKuliah').val() +
                 '&matkul=' + $('#mataKuliah').select2('data')[0].text +
-                '&seksi=' + $('#seksi').val();
+                '&seksi=' + seksi;
 
             datatable.destroy();
 
@@ -647,7 +651,8 @@
                                     }
                                 });*@
                                 $("#mataKuliah").change(function () {
-                                    buttonHandler("close");
+                                    //buttonHandler("close");
+                                    buttonHandler("open");
 
                                     $("#seksi").empty();
 
