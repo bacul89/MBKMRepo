@@ -22,7 +22,7 @@
 <div class="container-fluid" style="padding: 0px">
     <div class="card center-block" style="background-color: white; width: 98%; padding: 0px">
         @{ 
-            if (!ViewData["role"].ToString().ToLower().Contains("dosen"))
+            if (ViewData["role"].ToString().ToLower().Contains("baa"))
             {
                 <div class="card-body responsive-content" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); border: 3px solid coral; padding: 0px">
                     <h6 class="card-title" style="padding-top: 30px; padding-right: 20px; padding-left: 30px; font-weight: bold; font-size: 25px; color: black;">
@@ -145,6 +145,10 @@
                                     </div>
                                 </div>
                             </form>
+                            <br />
+                            <br />
+                            <br />
+                            <br />
                         </div>
                         <!--table-responsive-->
                         <table id="table-data-summary-feedback-dosen" class="table row-border hover dt-responsive responsive" style="border-spacing: 0 15px; border:0">
