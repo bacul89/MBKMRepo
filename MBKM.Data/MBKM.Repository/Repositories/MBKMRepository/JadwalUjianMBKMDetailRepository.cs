@@ -198,9 +198,15 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 sortDir = true;
                 searchBy = "";
             }
+
+            if (String.IsNullOrEmpty(seksi))
+            {
+                seksi = "";
+            }
+
+
             using (var context = new MBKMContext())
             {
-
 
                 var idFakultas2nd = idFakultas.Substring(idFakultas.Length - 2);
                 //var idFakultas2nd = Int64.Parse(idFakultas);
@@ -209,28 +215,13 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 var JenjangStudiParam = new SqlParameter("@JenjangStudi", jenjangStudi);
                 var strmParam = new SqlParameter("@STRM", strm);
                 var idFakultasParam = new SqlParameter("@FakultasID", idFakultas2nd);
-                var idProdiParam = new SqlParameter("@ProdiID", idProdi);                
+                var idProdiParam = new SqlParameter("@ProdiID", idProdi);
                 var idMatkulParam = new SqlParameter("@MatkulID", idMatakuliah);
                 var seksiParam = new SqlParameter("@Seksi", seksi);
 
-                //context.Configuration.LazyLoadingEnabled = false;
-                var result = context.Database
-                    .SqlQuery<VMJadwalUjian>("GetDHU @JenjangStudi, @STRM, @FakultasID, @ProdiID, @MatkulID, @Seksi", JenjangStudiParam, strmParam, idFakultasParam, idProdiParam, idMatkulParam, seksiParam).ToList();
 
-
-
-
-                /* var result = context.jadwalUjians.Where(
-                                   x =>
-                                   x.IsDeleted == false &&
-                                   x.ProdiID == idProdi &&
-                                   x.FakultasID == idFakultas2nd &&
-                                   x.JenjangStudi == jenjangStudi &&
-                                   x.Lokasi == lokasi &&
-                                   x.IDMatkul == idMatakuliah &&
-                                   x.ClassSection == seksi &&
-                                   x.STRM == strm
-                    );*/
+                
+                var result = context.Database.SqlQuery<VMJadwalUjian>("GetDHU @JenjangStudi, @STRM, @FakultasID, @ProdiID, @MatkulID, @Seksi", JenjangStudiParam, strmParam, idFakultasParam, idProdiParam, idMatkulParam, seksiParam).ToList();
 
                 mListJadwalUjian.TotalCount = result.Count();
                 var gridfilter = result.AsQueryable().Where(
@@ -267,12 +258,6 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                         Tersedia = z.Tersedia,
                         ClassSection = z.ClassSection,
                         SKS = z.SKS
-                        /*CreatedBy = z.CreatedBy,
-                        CreatedDate = z.CreatedDate,
-                        UpdatedBy = z.UpdatedBy,
-                        UpdatedDate = z.UpdatedDate,
-                        IsActive = z.IsActive,
-                        IsDeleted = z.IsDeleted,*/
                     }).OrderBy(sortBy, sortDir);
                 mListJadwalUjian.gridDatas = gridfilter.Skip(skip).Take(take).ToList();
                 mListJadwalUjian.TotalFilterCount = gridfilter.Count();

@@ -43,21 +43,50 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
 
             //Session["username"] = "Smitty Werben Jeger Man Jensen";
-           
-            var ses = Session["NamaProdi"];
+            //var sesss = Session["KodeProdi"];
+            //var ses = Session["NamaProdi"];
+            
 
-            for (int i = 0; i < Session.Contents.Count; i++)
+            //Console.WriteLine(sesss);
+
+                       VMSemester semester = _jkMhsService.getOngoingSemester("S1");
+                        //VMFakultas fakultas = new VMFakultas();
+                        //fakultas.ID = Session["KodeFakultas"].ToString();
+                        //fakultas.Nama = Session["NamaFakultas"].ToString();
+
+                        //VMProdi prodi = new VMProdi();
+                        //prodi.ID = ;
+                        //prodi.Nama = ;
+
+
+
+                        ViewData["KodeSemester"] = semester.ID;
+                        ViewData["NamaSemester"] = semester.Nama;
+
+                if(Session["KodeFakultas"].ToString() != "")
+                {
+                    ViewData["KodeFakultas"] = Session["KodeFakultas"].ToString();
+                    ViewData["NamaFakultas"] = Session["NamaFakultas"].ToString();
+                }
+                if (Session["KodeProdi"].ToString() != "")
+                {
+                    ViewData["KodeProdi"] = Session["KodeProdi"].ToString();
+                    ViewData["NamaProdi"] = Session["NamaProdi"].ToString();
+                }
+            //return View(ViewData);
+
+            /*for (int i = 0; i < Session.Contents.Count; i++)
             {
 
                 //var str
                 var key = Session.Keys[i];
                 var value = Session[i];
-            }
+            }*/
 
-            VMSemester model = _jkMhsService.getOngoingSemester("S1");
+            //VMSemester model = _jkMhsService.getOngoingSemester("S1");
 
-            Console.WriteLine(ses);
-            return View(model);
+            //Console.WriteLine(ses);
+            return View();
             //Session["username"] = "Smitty Werben Jeger Man Jensen";
             //return View();
         }
