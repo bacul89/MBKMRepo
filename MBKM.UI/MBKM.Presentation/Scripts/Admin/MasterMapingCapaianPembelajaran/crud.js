@@ -296,7 +296,7 @@ function PostCreate() {
         Swal.fire({
             title: 'Oppss',
             icon: 'warning',
-            html: 'Input data boleh kosong!',
+            html: 'Data kurang lengkap, silahkan isi kembali!',
             showCloseButton: true,
             showCancelButton: false,
             focusConfirm: false,

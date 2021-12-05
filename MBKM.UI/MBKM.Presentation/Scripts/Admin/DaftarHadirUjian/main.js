@@ -390,6 +390,8 @@ function loadJenjangStudi(tipe, id, nama) {
 
 
                     $("#matakuliahCari").change(function () {
+                        buttonHandler("open");
+
                         $("#seksiCari").prop("disabled", false);
                         /*
                             dataParam.NamaProdi = $('#prodiCari').val();

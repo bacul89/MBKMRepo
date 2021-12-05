@@ -33,54 +33,64 @@ function printDHU(Id) {
             var pageTotal = getTotalPage(defaultRow, mahasiswa.length);
 
             // new mhs
-            for (var i = 0; i < mahasiswa.length; i++) {
-                //console.log(1);
-                for (var j = 0; j < presensi.length; j++) {
-                    //console.log(mahasiswa[i].StudentID );
-                    //console.log(presensi[j].MahasiswaID);
-                    if (mahasiswa[i].MahasiswaID == presensi[j].MahasiswaID) {
-                        //console.log(3);
-                        if (presensi[j].Present == true) {
-                            mahasiswa[i].Present = mahasiswa[i].Present + 1;
-                        }
 
-                        if (presensi[j].CheckDosen == true) {
-                            mahasiswa[i].Checked = mahasiswa[i].Checked + 1;
-                        }
+            if (0 < mahasiswa.length) {
+                for (var i = 0; i < mahasiswa.length; i++) {
+                    //console.log(1);
+                    for (var j = 0; j < presensi.length; j++) {
+                        //console.log(mahasiswa[i].StudentID );
+                        //console.log(presensi[j].MahasiswaID);
+                        if (mahasiswa[i].MahasiswaID == presensi[j].MahasiswaID) {
+                            //console.log(3);
+                            if (presensi[j].Present == true) {
+                                mahasiswa[i].Present = mahasiswa[i].Present + 1;
+                            }
 
-                        if (presensi[j].LockedAbsen == true) {
-                            mahasiswa[i].Lock = mahasiswa[i].Lock + 1;
+                            if (presensi[j].CheckDosen == true) {
+                                mahasiswa[i].Checked = mahasiswa[i].Checked + 1;
+                            }
+
+                            if (presensi[j].LockedAbsen == true) {
+                                mahasiswa[i].Lock = mahasiswa[i].Lock + 1;
+                            }
                         }
                     }
+
+                    if (jadwal == 'MID') {
+                        mahasiswa[i].Persentage = parseInt((mahasiswa[i].Present / 8) * 100);
+                    } else if (jadwal == 'SEM') {
+                        mahasiswa[i].Persentage = parseInt((mahasiswa[i].Present / 16) * 100);
+                    }
+
                 }
 
-                if (jadwal == 'MID') {
-                    mahasiswa[i].Persentage = parseInt((mahasiswa[i].Present / 8) * 100);
-                }else if (jadwal == 'SEM') {
-                    mahasiswa[i].Persentage = parseInt((mahasiswa[i].Present / 16) * 100);
-                }
 
+
+                /*console.log(mahasiswa);
+                console.log(jadwal);
+                console.log(jadwal.KodeTipeUjian);*/
+
+
+
+
+                for (var i = 0; i < mahasiswa.length; i++) {
+                    if (i % 20 == 0) {
+                        page++;
+                        header = generateHeader(ujian, semester, page, pageTotal);
+                        sidebar = generateSidebar(mahasiswa.length);
+                        content = generateContent(mahasiswa, page, pageTotal, defaultRow);
+                        footer = generateFooter();
+                        HTML = HTML + generatePage(header, content, footer, sidebar);
+                    }
+                }
+            } else {
+                header = generateHeader(ujian, semester, 0, pageTotal);
+                sidebar = generateSidebar(mahasiswa.length);
+                content = generateContent(mahasiswa, page, pageTotal, defaultRow);
+                footer = generateFooter();
+                HTML = HTML + generatePage(header, content, footer, sidebar);
             }
 
-            
-
-            /*console.log(mahasiswa);
-            console.log(jadwal);
-            console.log(jadwal.KodeTipeUjian);*/
-
-
-
-
-            for (var i = 0; i < mahasiswa.length; i++) {
-                if (i % 20 == 0) {
-                    page++;
-                    header = generateHeader(ujian, semester, page, pageTotal);
-                    sidebar = generateSidebar(mahasiswa.length);
-                    content = generateContent(mahasiswa, page, pageTotal, defaultRow);
-                    footer = generateFooter();
-                    HTML = HTML + generatePage(header, content, footer, sidebar);
-                }
-            }
 
 
 
@@ -156,35 +166,42 @@ function generateContent(mahasiswa, page, pageTotal, limit) {
     var cekal = 0;
     //console.log(data);
 
+    if (data.length > 0) {
+        if (data.length < numEnd) {
+            for (var i = numStart; i < data.length; i++) {
+                var num = i + 1;
+                var nama = data[i].Nama;
+                var nim = data[i].StudentID;
 
+                //var idCampus = mahasiswa[i].NoKerjasama;
+                if (data[i].Persentage < 75) { asterisk = "*"; cekal++ }
+                tablemhs = tablemhs + '<tr><td class="mhsList start padding0"><center>' + num + '<center></td><td class="mhsList">' + nim + '</td><td class="mhsList">' + nama + '</td><td class="mhsList" style="text-align:center;">' + asterisk + '</td></tr>'
+            }
 
-    if (data.length < numEnd) {
-        for (var i = numStart; i < data.length; i++) {
-            var num = i + 1;
-            var nama = data[i].Nama;
-            var nim = data[i].StudentID;
-            
-            //var idCampus = mahasiswa[i].NoKerjasama;
-            if (data[i].Persentage < 75) { asterisk = "*"; cekal++ }
-            tablemhs = tablemhs + '<tr><td class="mhsList start padding0"><center>' + num + '<center></td><td class="mhsList">' + nim + '</td><td class="mhsList">' + nama + '</td><td class="mhsList" style="text-align:center;">'+ asterisk+'</td></tr>'
+            for (var i = 0; i < numEnd - data.length; i++) {
+                //var idCampus = mahasiswa[i].NoKerjasama;
+                tablemhs = tablemhs + '<tr><td class="mhsList start heightDefault"><center><center></td><td class="mhsList heightDefault"></td><td class="mhsList heightDefault"></td><td class="mhsList heightDefault"></td></tr>'
+            }
+
+        } else {
+
+            for (var i = numStart; i < numEnd; i++) {
+                var num = i + 1;
+                var nama = data[i].Nama;
+                var nim = data[i].StudentID;
+                //var idCampus = mahasiswa[i].NoKerjasama;
+                if (data[i].Persentage < 75) { asterisk = "*"; cekal++ }
+                tablemhs = tablemhs + '<tr><td class="mhsList start"><center>' + num + '<center></td><td class="mhsList">' + nim + '</td><td class="mhsList">' + nama + '</td><td class="mhsList" style="text-align:center;">' + asterisk + '</td></tr>'
+            }
         }
-
-        for (var i = 0; i < numEnd - data.length; i++) {
+    } else {
+        for (var i = 0; i < 20; i++) {
             //var idCampus = mahasiswa[i].NoKerjasama;
             tablemhs = tablemhs + '<tr><td class="mhsList start heightDefault"><center><center></td><td class="mhsList heightDefault"></td><td class="mhsList heightDefault"></td><td class="mhsList heightDefault"></td></tr>'
         }
-
-    } else {
-
-        for (var i = numStart; i < numEnd; i++) {
-            var num = i + 1;
-            var nama = data[i].Nama;
-            var nim = data[i].StudentID;
-            //var idCampus = mahasiswa[i].NoKerjasama;
-            if (data[i].Persentage < 75) { asterisk = "*"; cekal++ }
-            tablemhs = tablemhs + '<tr><td class="mhsList start"><center>' + num + '<center></td><td class="mhsList">' + nim + '</td><td class="mhsList">' + nama + '</td><td class="mhsList" style="text-align:center;">' + asterisk +'</td></tr>'
-        }
     }
+
+
 
 
     var content = `<div id="content" class="col-md-8 col-lg-8 col-sm-8 col-xs-8 p-l15" style="padding-left:0px">
