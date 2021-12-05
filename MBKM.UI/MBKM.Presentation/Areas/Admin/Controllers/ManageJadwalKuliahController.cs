@@ -75,13 +75,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 }
             //return View(ViewData);
 
-            for (int i = 0; i < Session.Contents.Count; i++)
+            /*for (int i = 0; i < Session.Contents.Count; i++)
             {
 
                 //var str
                 var key = Session.Keys[i];
                 var value = Session[i];
-            }
+            }*/
 
             //VMSemester model = _jkMhsService.getOngoingSemester("S1");
 
