@@ -372,8 +372,6 @@ function loadJenjangStudi(tipe, id, nama) {
                                     var page = params.page - 1 || 1;
                                     pageLength = pageLength + data.length;
 
-
-
                                     return {
                                         results: $.map(data, function (item) { return { id: item.MataKuliahID, value: item.MataKuliahID, text: item.KodeMataKuliah + ' - ' + item.NamaMataKuliah, name: item.NamaMataKuliah, kode: item.KodeMataKuliah } }),
                                         pagination: {
@@ -438,13 +436,8 @@ function loadJenjangStudi(tipe, id, nama) {
 
                         $("#matakuliahCari").change(function () {
                             buttonHandler("open");
-
+                            $("#seksiCari").empty();
                             $("#seksiCari").prop("disabled", false);
-                            /*
-                                dataParam.NamaProdi = $('#prodiCari').val();
-                                dataParam.lokasi = $('#lokasiCari').val();
-                                dataParam.MataKuliahID = $('#matakuliahCari').val();
-                            */
 
                             $("#matakuliahNamaCari").removeAttr('value');
                             var matakuliah = $(this).select2('data')[0].name;
@@ -769,7 +762,6 @@ function buttonHandler(param) {
         $('#cari, #add').removeAttr("title");
     } else if (param == "close") {
         $('#cari, #add').attr("disabled", "disabled");
-        //$().attr("disabled", "disabled");
         $('#cari').attr("title", "Mohon untuk melengkapi form pencarian terlebih dahulu!");
         $('#add').attr("title", "Mohon untuk melengkapi form pencarian terlebih dahulu!");
     } else {
@@ -780,24 +772,23 @@ function buttonHandler(param) {
 
 //---<> datatable
 $('#cari').click(function () {
-
-    //console.log('halloo');
     reloadDatatable();
 });
 
 function reloadDatatable() {
-    /*console.log($('#lokasiCari').select2('data')[0].id);
-    console.log($('#lokasiCari').select2('data')[0].Kampus);
-    console.log($('#lokasiCari').select2('data')[0].kampus);
-    console.log($('#lokasiCari').val());*/
     var base_url = window.location.origin;
+
+    var seksi = $('#seksiCari').val();
+    if (seksi== null) {
+        seksi = "";
+    }
     var variable =
         'idProdi=' + $('#lokasiCari').select2('data')[0].id +
         '&lokasi=' + $('#lokasiCari').select2('data')[0].value +
         '&idFakultas=' + $('#fakultasCari').val() +
         '&jenjangStudi=' + $('#jenjangCari').val() +
         '&idMatakuliah=' + $('#matakuliahCari').val() +
-        '&seksi=' + $('#seksiCari').val() +
+        '&seksi=' + seksi +
         '&strm=' + $('#tahunAjaranCari').val();
 
     datatable.destroy();
@@ -807,16 +798,12 @@ function reloadDatatable() {
             "orderable": false,
             "paging": false,
             "targets": 0,
-            //"visible": false, 'targets': [4, 6]
         }],
-        //"order": [[1, 'asc']],
         "proccessing": true,
         "serverSide": true,
         "order": [[1, 'asc']],
-        //"aaSorting": [[0, "asc"]],
         "ajax": {
             url: '/Admin/DaftarHadirUjian/SearchList?' + variable,
-            //dataSrc: ''
             type: 'POST'
         },
         "language": {
@@ -843,14 +830,12 @@ function reloadDatatable() {
                 }//javascript:void(0) // onclick="printDHU()" /* <a href="${base_url}/Admin/DaftarHadirUjian/PrintDHU/${data}"  style="color:black" target="_blank"> <i class="fas fa-print coral" ></i></a>*/
             },
             {
-                //"title": "No",
                 "data": null,
                 "render": function (data, type, full, meta) {
                     return meta.row + 1;
                 }
             },
             {
-                //"title": "Nomor Induk Pegawai",
                 "data": "STRM",
                 "name": "STRM",
                 "render": function (data, type, row, meta) {
@@ -858,16 +843,13 @@ function reloadDatatable() {
                 }
             },
             {
-                //"title": "Nama",
                 "data": "JenjangStudi",
                 "name": "JenjangStudi",
                 "render": function (data, type, row, meta) {
                     return '<div class="center">' + $('#jenjangCari').select2('data')[0].text + '</div>';
                 }
             },
-
             {
-                //"title": "Email",
                 "data": "NamaProdi",
                 "name": "NamaProdi",
                 "render": function (data, type, row, meta) {
@@ -875,25 +857,20 @@ function reloadDatatable() {
                 }
             },
             {
-                //"title": "Nomor Induk Pegawai",
                 "data": "KodeMatkul",
                 "name": "KodeMatkul",
                 "render": function (data, type, row, meta) {
                     return '<div class="center">' + data + '</div>';
                 }
             },
-
             {
-                //"title": "Email",
                 "data": "NamaMatkul",
                 "name": "NamaMatkul",
                 "render": function (data, type, row, meta) {
                     return '<div class="center">' + data + '</div>';
                 }
             },
-
             {
-                //"title": "Email",
                 "data": "SKS",
                 "name": "SKS",
                 "render": function (data, type, row, meta) {

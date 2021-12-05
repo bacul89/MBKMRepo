@@ -199,6 +199,11 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 searchBy = "";
             }
 
+            if (String.IsNullOrEmpty(seksi))
+            {
+                seksi = "";
+            }
+
 
             using (var context = new MBKMContext())
             {
@@ -212,105 +217,51 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 var idFakultasParam = new SqlParameter("@FakultasID", idFakultas2nd);
                 var idProdiParam = new SqlParameter("@ProdiID", idProdi);
                 var idMatkulParam = new SqlParameter("@MatkulID", idMatakuliah);
-
-                if (String.IsNullOrEmpty(seksi))
-                {
+                var seksiParam = new SqlParameter("@Seksi", seksi);
 
 
-                  var  result = context.Database
-                    .SqlQuery<VMJadwalUjian>("GetDHU @JenjangStudi, @STRM, @FakultasID, @ProdiID, @MatkulID", JenjangStudiParam, strmParam, idFakultasParam, idProdiParam, idMatkulParam).ToList();
+                
+                var result = context.Database.SqlQuery<VMJadwalUjian>("GetDHU @JenjangStudi, @STRM, @FakultasID, @ProdiID, @MatkulID, @Seksi", JenjangStudiParam, strmParam, idFakultasParam, idProdiParam, idMatkulParam, seksiParam).ToList();
 
-                   mListJadwalUjian.TotalCount = result.Count();
-                   var gridfilter = result.AsQueryable().Where(
-                        y => y.NamaMatkul.Contains(searchBy)
-                        /*|| 
-                        y.KodeMataKuliah.Contains(searchBy) ||
-                        y.Lokasi.Contains(searchBy) ||
-                        y.JenjangStudi.Contains(searchBy) ||
-                        y.NamaFakultas.Contains(searchBy) ||
-                        y.NamaProdi.Contains(searchBy) ||
-                        y.NamaDosen.Contains(searchBy) */
-                        )
-                        .Select(z => new GridDataJadwalUjian
-                        {
-                            ID = z.ID,
-                            JenjangStudi = z.JenjangStudi,
-                            STRM = z.STRM,
-                            KodeTipeUjian = z.KodeTipeUjian,
-                            TipeUjian = z.TipeUjian,
-                            FakultasID = z.FakultasID,
-                            NamaFakultas = z.NamaFakultas,
-                            Lokasi = z.Lokasi,
-                            IDMatkul = z.IDMatkul,
-                            KodeMatkul = z.KodeMatkul,
-                            NamaMatkul = z.NamaMatkul,
-                            ProdiID = z.ProdiID,
-                            NamaProdi = z.NamaProdi,
-                            TanggalUjian = z.TanggalUjian,
-                            JamMulai = z.JamMulai,
-                            JamAkhir = z.JamAkhir,
-                            KodeRuangUjian = z.KodeRuangUjian,
-                            RuangUjian = z.RuangUjian,
-                            KapasitasRuangan = z.KapasitasRuangan,
-                            Tersedia = z.Tersedia,
-                            ClassSection = z.ClassSection,
-                            SKS = z.SKS
-                        }).OrderBy(sortBy, sortDir);
-                    mListJadwalUjian.gridDatas = gridfilter.Skip(skip).Take(take).ToList();
-                    mListJadwalUjian.TotalFilterCount = gridfilter.Count();
-                    return mListJadwalUjian;
-
-
-
-                }
-                else
-                {
-                    var seksiParam = new SqlParameter("@Seksi", seksi);
-                    var result = context.Database.SqlQuery<VMJadwalUjian>("GetDHU @JenjangStudi, @STRM, @FakultasID, @ProdiID, @MatkulID, @Seksi", JenjangStudiParam, strmParam, idFakultasParam, idProdiParam, idMatkulParam, seksiParam).ToList();
-
-                    mListJadwalUjian.TotalCount = result.Count();
-                    var gridfilter = result.AsQueryable().Where(
-                        y => y.NamaMatkul.Contains(searchBy)
-                        /*|| 
-                        y.KodeMataKuliah.Contains(searchBy) ||
-                        y.Lokasi.Contains(searchBy) ||
-                        y.JenjangStudi.Contains(searchBy) ||
-                        y.NamaFakultas.Contains(searchBy) ||
-                        y.NamaProdi.Contains(searchBy) ||
-                        y.NamaDosen.Contains(searchBy) */
-                        )
-                        .Select(z => new GridDataJadwalUjian
-                        {
-                            ID = z.ID,
-                            JenjangStudi = z.JenjangStudi,
-                            STRM = z.STRM,
-                            KodeTipeUjian = z.KodeTipeUjian,
-                            TipeUjian = z.TipeUjian,
-                            FakultasID = z.FakultasID,
-                            NamaFakultas = z.NamaFakultas,
-                            Lokasi = z.Lokasi,
-                            IDMatkul = z.IDMatkul,
-                            KodeMatkul = z.KodeMatkul,
-                            NamaMatkul = z.NamaMatkul,
-                            ProdiID = z.ProdiID,
-                            NamaProdi = z.NamaProdi,
-                            TanggalUjian = z.TanggalUjian,
-                            JamMulai = z.JamMulai,
-                            JamAkhir = z.JamAkhir,
-                            KodeRuangUjian = z.KodeRuangUjian,
-                            RuangUjian = z.RuangUjian,
-                            KapasitasRuangan = z.KapasitasRuangan,
-                            Tersedia = z.Tersedia,
-                            ClassSection = z.ClassSection,
-                            SKS = z.SKS
-                        }).OrderBy(sortBy, sortDir);
-                    mListJadwalUjian.gridDatas = gridfilter.Skip(skip).Take(take).ToList();
-                    mListJadwalUjian.TotalFilterCount = gridfilter.Count();
-                    return mListJadwalUjian;
-
-
-
-                }
+                mListJadwalUjian.TotalCount = result.Count();
+                var gridfilter = result.AsQueryable().Where(
+                    y => y.NamaMatkul.Contains(searchBy)
+                    /*|| 
+                    y.KodeMataKuliah.Contains(searchBy) ||
+                    y.Lokasi.Contains(searchBy) ||
+                    y.JenjangStudi.Contains(searchBy) ||
+                    y.NamaFakultas.Contains(searchBy) ||
+                    y.NamaProdi.Contains(searchBy) ||
+                    y.NamaDosen.Contains(searchBy) */
+                    )
+                    .Select(z => new GridDataJadwalUjian
+                    {
+                        ID = z.ID,
+                        JenjangStudi = z.JenjangStudi,
+                        STRM = z.STRM,
+                        KodeTipeUjian = z.KodeTipeUjian,
+                        TipeUjian = z.TipeUjian,
+                        FakultasID = z.FakultasID,
+                        NamaFakultas = z.NamaFakultas,
+                        Lokasi = z.Lokasi,
+                        IDMatkul = z.IDMatkul,
+                        KodeMatkul = z.KodeMatkul,
+                        NamaMatkul = z.NamaMatkul,
+                        ProdiID = z.ProdiID,
+                        NamaProdi = z.NamaProdi,
+                        TanggalUjian = z.TanggalUjian,
+                        JamMulai = z.JamMulai,
+                        JamAkhir = z.JamAkhir,
+                        KodeRuangUjian = z.KodeRuangUjian,
+                        RuangUjian = z.RuangUjian,
+                        KapasitasRuangan = z.KapasitasRuangan,
+                        Tersedia = z.Tersedia,
+                        ClassSection = z.ClassSection,
+                        SKS = z.SKS
+                    }).OrderBy(sortBy, sortDir);
+                mListJadwalUjian.gridDatas = gridfilter.Skip(skip).Take(take).ToList();
+                mListJadwalUjian.TotalFilterCount = gridfilter.Count();
+                return mListJadwalUjian;
             }
         }
 
