@@ -985,11 +985,16 @@
                 $('#divDataNilai').show();
                 $(".inputNilai").attr("disabled", true);
                 if (!mahasiswa) return;
-                if ('@Model.IsActive'.toLowerCase() == 'false') return;
+                if ('@Model.IsActive'.toLowerCase() == 'false' || parseInt($('#' + this.value).html()) == 0) return;
                 for (var i = 0; i < mahasiswa.length; i++) {
                     $('#' + this.value + mahasiswa[i].MahasiswaID).attr("disabled", false);
                 }
             } else {
+                if (parseInt($('#' + this.value).html()) == 0) {
+                    $('#divDataNilai').show();
+                    $(".inputNilai").attr("disabled", true);
+                    return;
+                }
                 if ('@Model.IsActive'.toLowerCase() == 'false') $(".inputNilai2").attr("disabled", true);
                 $('#div' + this.value).show();
             }
