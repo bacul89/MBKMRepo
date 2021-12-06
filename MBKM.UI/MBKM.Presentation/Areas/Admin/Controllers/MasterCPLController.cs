@@ -33,6 +33,11 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             IEnumerable<VMLookup> tempJenjang = _lookupService.getLookupByTipe("JenjangStudi");
             ViewData["Jenjang"] = tempJenjang;
+            if (Session["KodeFakultas"].ToString() != "")
+            {
+                ViewData["KodeFakultas"] = Session["KodeFakultas"].ToString();
+                ViewData["NamaFakultas"] = Session["NamaFakultas"].ToString();
+            }
             return View();
         }
 
