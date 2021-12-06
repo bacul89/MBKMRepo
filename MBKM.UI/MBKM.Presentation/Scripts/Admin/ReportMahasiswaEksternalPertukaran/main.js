@@ -98,7 +98,7 @@ $(document).ready(function () {
                 var page = params.page - 1 || 1;
 
                 return {
-                    results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } }),
+                    results: $.map(data, function (item) { return { id: item.Nilai, value: item.Nilai, text: item.Nama } }),
                     pagination: {
                         more: (page * 10) <= data.length
                     }
@@ -117,12 +117,14 @@ $(document).ready(function () {
     });
 
     datatable = $('#table-data-external').DataTable();
-    reloadDatatable();
-    createDownload();
+    //reloadDatatable();
+    //createDownload();
 });
 
 
 function createDownload() {
+
+    console.log($('#tahunAjaranCari').val());
     var base_url = window.location.origin;
     var strm = $('#tahunAjaranCari').val();
     var urlPDF = base_url + "/Admin/ReportMBKMEkternalPertukaran/ExportPdf?strm=" + strm;
@@ -133,8 +135,8 @@ function createDownload() {
 }
 
 function reloadDatatable() {
-
-    console.log($('#tahunAjaranCari').select2('data')[0].text);
+    console.log($('#tahunAjaranCari').val());
+    //console.log($('#tahunAjaranCari').select2('data')[0].text);
     var variable =
         /*'idProdi=' + $('#prodiIdCari').val() +
         '&lokasi=' + $('#kampusCari').val() +

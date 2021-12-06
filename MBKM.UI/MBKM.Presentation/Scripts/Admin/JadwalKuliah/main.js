@@ -69,7 +69,9 @@ function reloadDatatable() {
                 //"title": "No",
                 "data": null,
                 "render": function (data, type, full, meta) {
-                    return meta.row + 1;
+                    //return ;
+                    var num = meta.row + 1
+                    return '<div class="center">' + num+ '</div>';
                 }
             },
             {
@@ -85,7 +87,7 @@ function reloadDatatable() {
                 "data": "NamaMataKuliah",
                 "name": "NamaMataKuliah",
                 "render": function (data, type, row, meta) {
-                    return '<div class="center">' + data + '</div>';
+                    return '<div class="">' + data + '</div>';
                 }
             },
 
@@ -143,7 +145,7 @@ function reloadDatatable() {
                 "data": "NamaDosen",
                 "name": "NamaDosen",
                 "render": function (data, type, row, meta) {
-                    return '<div class="center">' + data + '</div>';
+                    return '<div class="">' + data + '</div>';
                 }
             },
 
