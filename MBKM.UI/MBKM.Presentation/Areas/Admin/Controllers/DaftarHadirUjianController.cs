@@ -52,8 +52,24 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult Index()
         {
             //Session["username"] = "Smitty Werben Jeger Man Jensen";
-            VMSemester model = _jkMhsService.getOngoingSemester("S1");
-            return View(model);
+            VMSemester semester = _jkMhsService.getOngoingSemester("S1");
+
+            ViewData["KodeSemester"] = semester.ID;
+            ViewData["NamaSemester"] = semester.Nama;
+
+            if (Session["KodeFakultas"].ToString() != "")
+            {
+                ViewData["KodeFakultas"] = Session["KodeFakultas"].ToString();
+                ViewData["NamaFakultas"] = Session["NamaFakultas"].ToString();
+            }
+            if (Session["KodeProdi"].ToString() != "")
+            {
+                ViewData["KodeProdi"] = Session["KodeProdi"].ToString();
+                ViewData["NamaProdi"] = Session["NamaProdi"].ToString();
+            }
+
+            //return View(model);
+            return View();
         }
 
 

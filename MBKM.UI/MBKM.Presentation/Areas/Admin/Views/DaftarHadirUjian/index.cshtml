@@ -24,113 +24,127 @@
             <hr />
             <div class="container" style="width: 100%;">
 
-                <div class="col-md-12">
-                    <form class="form-horizontal col-md-7">
-                        <div class="form-group">
-                            <label for="inp_tahunAjaran" class="col-sm-3 control-label">Tahun Semester</label>
-                            <div class="col-sm-9">
-                                <select name="tahunAjaranCari" id="tahunAjaranCari" class="form-control input-md">
-                                    <option value="@Model.ID" selected>@Model.Nama</option>
-                                </select>
+                    <div class="col-md-12">
+                        <form class="form-horizontal col-md-7">
+                            <div class="form-group">
+                                <label for="inp_tahunAjaran" class="col-sm-3 control-label">Tahun Semester</label>
+                                <div class="col-sm-9">
+                                    <select name="tahunAjaranCari" id="tahunAjaranCari" class="form-control input-md">
+                                        <option value="@ViewData["KodeSemester"]" selected>@ViewData["NamaSemester"]</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label for="inp_jenjang" class="col-sm-3 control-label">Jenjang Studi</label>
-                            <div class="col-sm-9">
-                                <select name="jenjangCari" id="jenjangCari" class="form-control input-md">
-                                </select>
+                            <div class="form-group">
+                                <label for="inp_jenjang" class="col-sm-3 control-label">Jenjang Studi</label>
+                                <div class="col-sm-9">
+                                    <select name="jenjangCari" id="jenjangCari" class="form-control input-md">
+                                    </select>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label for="inp_fakultas" class="col-sm-3 control-label">Fakultas</label>
-                            <div class="col-sm-9">
-                                <select name="fakultasCari" id="fakultasCari" class="form-control input-md"></select>
+                            <div class="form-group">
+                                <label for="inp_fakultas" class="col-sm-3 control-label">Fakultas</label>
+                                <div class="col-sm-9">
+                                    <select name="fakultasCari" id="fakultasCari" class="form-control input-md">
+                                        @{
+                                            if (ViewData["KodeFakultas"] != "")
+                                            {
+                                                <option value="@ViewData["KodeFakultas"]" selected>@ViewData["NamaFakultas"]</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inp_prodi" class="col-sm-3 control-label">Program Studi</label>
-                            <div class="col-sm-9">
-                                <select name="prodiCari" id="prodiCari" class="form-control input-md"></select>
+                            <div class="form-group">
+                                <label for="inp_prodi" class="col-sm-3 control-label">Program Studi</label>
+                                <div class="col-sm-9">
+                                    <select name="prodiCari" id="prodiCari" class="form-control input-md">
+                                        @{
+                                            if (ViewData["KodeProdi"] != "")
+                                            {
+                                                <option id="@ViewData["KodeProdi"]" value="@ViewData["NamaProdi"]" selected>@ViewData["NamaProdi"]</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inp_lokasi" class="col-sm-3 control-label">Lokasi</label>
-                            <div class="col-sm-9">
-                                <select name="lokasiCari" id="lokasiCari" class="form-control input-md"></select>
+                            <div class="form-group">
+                                <label for="inp_lokasi" class="col-sm-3 control-label">Lokasi</label>
+                                <div class="col-sm-9">
+                                    <select name="lokasiCari" id="lokasiCari" class="form-control input-md"></select>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            <label for="inp_matakuliah" class="col-sm-3 control-label">Mata Kuliah</label>
-                            <div class="col-sm-9">
-                                <select name="matakuliahCari" id="matakuliahCari" class="form-control input-md">
-                                </select>
+                            <div class="form-group">
+                                <label for="inp_matakuliah" class="col-sm-3 control-label">Mata Kuliah</label>
+                                <div class="col-sm-9">
+                                    <select name="matakuliahCari" id="matakuliahCari" class="form-control input-md">
+                                    </select>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group" hidden>
-                            <label for="inp_matakuliahId" class="col-sm-3 control-label">Nama Mata Kuliah</label>
-                            <div class="col-sm-9">
-                                <input name="matakuliahNamaCari" id="matakuliahNamaCari" class="form-control input-md">
+                            <div class="form-group" hidden>
+                                <label for="inp_matakuliahId" class="col-sm-3 control-label">Nama Mata Kuliah</label>
+                                <div class="col-sm-9">
+                                    <input name="matakuliahNamaCari" id="matakuliahNamaCari" class="form-control input-md">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group" hidden>
-                            <label for="inp_matakuliahKode" class="col-sm-3 control-label">Kode Mata Kuliah</label>
-                            <div class="col-sm-9">
-                                <input name="matakuliahKodeCari" id="matakuliahKodeCari" class="form-control input-md">
+                            <div class="form-group" hidden>
+                                <label for="inp_matakuliahKode" class="col-sm-3 control-label">Kode Mata Kuliah</label>
+                                <div class="col-sm-9">
+                                    <input name="matakuliahKodeCari" id="matakuliahKodeCari" class="form-control input-md">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group" hidden>
-                            <label for="inp_matakuliahId" class="col-sm-3 control-label">Id Mata Kuliah</label>
-                            <div class="col-sm-9">
-                                <input name="matakuliahIdCari" id="matakuliahIdCari" class="form-control input-md">
+                            <div class="form-group" hidden>
+                                <label for="inp_matakuliahId" class="col-sm-3 control-label">Id Mata Kuliah</label>
+                                <div class="col-sm-9">
+                                    <input name="matakuliahIdCari" id="matakuliahIdCari" class="form-control input-md">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inp_matakuliah" class="col-sm-3 control-label">Seksi</label>
-                            <div class="col-sm-9">
-                                <select name="seksiCari" id="seksiCari" class="form-control input-md">
-                                </select>
+                            <div class="form-group">
+                                <label for="inp_matakuliah" class="col-sm-3 control-label">Seksi</label>
+                                <div class="col-sm-9">
+                                    <select name="seksiCari" id="seksiCari" class="form-control input-md">
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-2 col-md-offset-10">
-                                <button type="button" id="cari" class="btn btn-warning" style="float: right;" title="Mohon untuk melengkapi form pencarian terlebih dahulu!" disabled><span class="fa fa-search"></span> Cari</button>
+                            <div class="form-group">
+                                <div class="col-sm-2 col-md-offset-10">
+                                    <button type="button" id="cari" class="btn btn-warning" style="float: right;" title="Mohon untuk melengkapi form pencarian terlebih dahulu!" disabled><span class="fa fa-search"></span> Cari</button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
-                </div>
+                        </form>
+                    </div>
 
-                <br />
-                <br />
-                <!--table-responsive-->
-                <!--<div id="table-data-master-mapping-cpl-overflow">-->
-                <table id="table-data-daftar-hadir-ujian" class="table table-bordered table-spacing js-basic-example dataTable display nowrap no-footer">
-                    <thead>
-                        <tr>
-                            <th class="zero-padding no-border vertical-center sorting">Cetak DHU</th>
-                            <th class="zero-padding no-border vertical-center sorting">No.</th>
-                            <th class="zero-padding no-border vertical-center sorting">Tahun Semester</th>
-                            <th class="zero-padding no-border vertical-center sorting">Jenjang Studi</th>
-                            <th class="zero-padding no-border vertical-center sorting">Program Studi</th>
-                            <th class="zero-padding no-border vertical-center sorting">Kode Mata Kuliah</th>
-                            <th class="zero-padding no-border vertical-center sorting">Nama Mata Kuliah</th>
-                            @*<th class="zero-padding no-border vertical-center sorting">Tipe Ujian</th>
+                    <br />
+                    <br />
+                    <!--table-responsive-->
+                    <!--<div id="table-data-master-mapping-cpl-overflow">-->
+                    <table id="table-data-daftar-hadir-ujian" class="table table-bordered table-spacing js-basic-example dataTable display nowrap no-footer">
+                        <thead>
+                            <tr>
+                                <th class="zero-padding no-border vertical-center sorting">Cetak DHU</th>
+                                <th class="zero-padding no-border vertical-center sorting">No.</th>
+                                <th class="zero-padding no-border vertical-center sorting">Tahun Semester</th>
+                                <th class="zero-padding no-border vertical-center sorting">Jenjang Studi</th>
+                                <th class="zero-padding no-border vertical-center sorting">Program Studi</th>
+                                <th class="zero-padding no-border vertical-center sorting">Kode Mata Kuliah</th>
+                                <th class="zero-padding no-border vertical-center sorting">Nama Mata Kuliah</th>
+                                @*<th class="zero-padding no-border vertical-center sorting">Tipe Ujian</th>
                                 <th class="zero-padding no-border vertical-center sorting">Tanggal</th>
                                 <th class="zero-padding no-border vertical-center sorting">Jam</th>
                                 <th class="zero-padding no-border vertical-center sorting">Ruangan</th>*@
-                            <th class="zero-padding no-border vertical-center sorting">SKS</th>
-                            <th class="zero-padding no-border vertical-center sorting">Seksi</th>
+                                <th class="zero-padding no-border vertical-center sorting">SKS</th>
+                                <th class="zero-padding no-border vertical-center sorting">Seksi</th>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
 
-                <!--</div>-->
+                    <!--</div>-->
             </div>
         </div>
     </div>

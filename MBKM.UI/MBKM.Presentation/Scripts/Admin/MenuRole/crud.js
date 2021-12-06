@@ -25,6 +25,8 @@ function AddMenuRole() {
                 }
                 $('#modal-inner').append(e);
                 $('.modal').modal('show');
+                var selElem = document.getElementById('MenuID');
+                sortSelect(selElem);
             }
         })
     }
@@ -82,6 +84,24 @@ function AddMenuRole() {
 //        })
 //    }
 //}
+
+function sortSelect(selElem) {
+    var tmpAry = new Array();
+    for (var i = 0; i < selElem.options.length; i++) {
+        tmpAry[i] = new Array();
+        tmpAry[i][0] = selElem.options[i].text;
+        tmpAry[i][1] = selElem.options[i].value;
+    }
+    tmpAry.sort();
+    while (selElem.options.length > 0) {
+        selElem.options[0] = null;
+    }
+    for (var i = 0; i < tmpAry.length; i++) {
+        var op = new Option(tmpAry[i][0], tmpAry[i][1]);
+        selElem.options[i] = op;
+    }
+    return;
+}
 function PostCreate2() {
     var dMenuRole = new Object();
     dMenuRole.MenuID = $('#MenuID').val();
@@ -127,34 +147,80 @@ function PostCreate2() {
             datatype: 'json',
             data: JSON.stringify(dMenuRole),
             contentType: 'application/json',
-            success: function (e) {
+        }).then(function (response) {
+            if (response.status == 400) {
                 Swal.fire({
-                    title: 'Berhasil',
-                    icon: 'success',
-                    html: 'Menu Berhasil Ditambahkan',
+                    title: 'Gagal!',
+                    icon: 'error',
+                    html: 'Menu Role Tersebut Telah Tersedia!',
                     showCloseButton: true,
                     showCancelButton: false,
                     focusConfirm: false,
                     confirmButtonText: 'OK'
                 })
-                location.reload();
-                tableMenuRole.ajax.reload(null, false);
+
                 $('.modal').modal('hide');
 
-            },
-            error: function (e) {
-                Swal.fire({
-                    title: 'Oppss',
-                    icon: 'error',
-                    html: 'Coba Reload Page',
-                    showCloseButton: true,
-                    showCancelButton: false,
-                    focusConfirm: false,
-                    confirmButtonText: 'OK'
-                })
-                $('.modal').modal('hide');
+                //$('#TambahUser')[0].reset();
             }
-        })
+            else
+                if (response.status == 200) {
+
+                    Swal.fire({
+                        title: 'Berhasil',
+                        icon: 'success',
+                        html: 'Menu Role Berhasil Ditambahkan!',
+                        showCloseButton: true,
+                        showCancelButton: false,
+                        focusConfirm: false,
+                        confirmButtonText: 'OK'
+                    })
+
+                    $('.modal').modal('hide');
+                    //$("#fakultas").empty();
+                    //$("#fakultas").prop("disabled", true);
+                    //$("#prodi").empty();
+                    //$("#prodi2").empty();
+                    //$("#prodi").prop("disabled", true);
+                    //$("#prodi2").prop("disabled", true);
+                    //$("#jenjang").empty();
+                    //$("#lokasi").empty();
+                    //$("#lokasi").prop("disabled", true);
+                    //$("#kelompok").empty();
+                    //$("#kode").val("");
+                    //$('textarea[name=txtCPL]').val("");
+                    tableMenuRole.ajax.reload(null, false);
+                }
+
+        });
+            //success: function (e) {
+            //    Swal.fire({
+            //        title: 'Berhasil',
+            //        icon: 'success',
+            //        html: 'Menu Berhasil Ditambahkan',
+            //        showCloseButton: true,
+            //        showCancelButton: false,
+            //        focusConfirm: false,
+            //        confirmButtonText: 'OK'
+            //    })
+            //    location.reload();
+            //    tableMenuRole.ajax.reload(null, false);
+            //    $('.modal').modal('hide');
+
+            //},
+            //error: function (e) {
+            //    Swal.fire({
+            //        title: 'Oppss',
+            //        icon: 'error',
+            //        html: 'Coba Reload Page',
+            //        showCloseButton: true,
+            //        showCancelButton: false,
+            //        focusConfirm: false,
+            //        confirmButtonText: 'OK'
+            //    })
+            //    $('.modal').modal('hide');
+            //}
+       // })
     } else {
         Swal.fire({
             title: 'Oppss',
@@ -180,6 +246,7 @@ function DetailMenuRole(id) {
             }
             $('#modal-inner').append(e);
             $('.modal').modal('show');
+            
         }
     })
 
@@ -231,6 +298,34 @@ function DeletedMenuRole(id) {
     })
 
 }
+function sortlist() {
+    var lb = document.getElementById('mylist');
+    arrTexts = new Array();
+
+    for (i = 0; i < lb.length; i++) {
+        arrTexts[i] = lb.options[i].text;
+    }
+
+    arrTexts.sort();
+
+    for (i = 0; i < lb.length; i++) {
+        lb.options[i].text = arrTexts[i];
+        lb.options[i].value = arrTexts[i];
+    }
+}
+function alphabetizeList() {
+    var sel = $('#MenuID');
+    var selected = sel.val(); // cache selected value, before reordering
+    var opts_list = sel.find('option:not(:selected)');
+    opts_list.sort(function (a, b) {
+        return $(a).text() > $(b).text() ? 1 : -1;
+    });
+    sel.html('').append(opts_list);
+    sel.val(selected); // set cached selected value
+    
+}
+
+
 function UpdateMenuRole(id) {
 /*    $.LoadingOverlay("show");*/
     $.ajax({
@@ -243,8 +338,15 @@ function UpdateMenuRole(id) {
             if ($('.data-content-modal').length) {
                 $('.data-content-modal').remove();
             }
+            
             $('#modal-inner').append(e);
             $('.modal').modal('show');
+            alphabetizeList('#MenuID');
+            //$(".select option").each(function () {
+            //    $(this).siblings('[value="' + this.value + '"]').remove();
+            //});
+            //var selElem1 = document.getElementById('MenuID2');
+            //sortSelect(selElem1);
         }, error: function (e) {
             $.LoadingOverlay("hide");
             Swal.fire({
@@ -306,35 +408,38 @@ function PostUpdateMenuRole() {
             datatype: 'json',
             data: JSON.stringify(dMenuRole),
             contentType: 'application/json',
-            success: function (e) {
+        }).then(function (response) {
+            if (response.status == 400) {
                 Swal.fire({
-                    title: 'Berhasil',
-                    icon: 'success',
-                    html: 'Menu Berhasil Diupdate',
+                    title: 'Gagal!',
+                    icon: 'error',
+                    html: 'Menu Role Tersebut Telah Tersedia!',
                     showCloseButton: true,
                     showCancelButton: false,
                     focusConfirm: false,
                     confirmButtonText: 'OK'
                 })
-                location.reload();
-                tableMenuRole.ajax.reload(null, false);
-                $('.modal').modal('hide');
-
-            },
-            error: function (e) {
-                Swal.fire({
-                    title: 'Berhasil',
-                    icon: 'success',
-                    html: 'Menu Berhasil Diupdate',
-                    showCloseButton: true,
-                    showCancelButton: false,
-                    focusConfirm: false,
-                    confirmButtonText: 'OK'
-                })
-                tableMenuRole.ajax.reload(null, false);
                 $('.modal').modal('hide');
             }
-        })
+            else
+                if (response.status == 200) {
+
+                    Swal.fire({
+                        title: 'Berhasil',
+                        icon: 'success',
+                        html: 'Menu Role Berhasil Diubah!',
+                        showCloseButton: true,
+                        showCancelButton: false,
+                        focusConfirm: false,
+                        confirmButtonText: 'OK'
+                    })
+
+                    $('.modal').modal('hide');
+                    
+                    tableMenuRole.ajax.reload(null, false);
+                }
+
+        });
     } else {
         Swal.fire({
             title: 'Oppss',
@@ -346,5 +451,6 @@ function PostUpdateMenuRole() {
             confirmButtonText: 'OK'
         })
     }
+        
 
 }

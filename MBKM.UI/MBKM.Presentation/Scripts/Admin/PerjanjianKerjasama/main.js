@@ -111,14 +111,21 @@ var table = $('#TableList').DataTable({
         });
         var d = new Date();
         var d2 = new Date();
-        d.setDate(d.getDate() + 30);
-        var tglakhir = moment(data.TanggalAkhir).format('YYYY-MM-DD');
-        tglakhir = new Date(tglakhir);
         
-        if (tglakhir > d2 && tglakhir < d) {
+        d.setDate(d.getDate() + 30);
+        
+        var tglakhir = moment(data.TanggalAkhir).format('YYYY-MM-DD');
+        var tglakhir2 = moment(data.TanggalAkhir).format('YYYY-MM-DD');
+        //var today = Date.now();
+        tglakhir = new Date(tglakhir).toISOString().slice(0, 10);
+        tglakhir2 = new Date(tglakhir2);
+        var today = new Date().toISOString().slice(0, 10);
+        //console.log(today) // 2021-01-16
+        
+        if (tglakhir == today || (tglakhir2 >= d2 && tglakhir2 <= d)) { //tglakhir >= d2 && tglakhir <= d ||
             $(row).css("background-color", "#ee2400");
         }
-        if (tglakhir < d2) {
+         else if (tglakhir2 < d2) {
             $(row).css("background-color", "grey");
         }
     },

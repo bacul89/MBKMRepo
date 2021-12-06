@@ -296,7 +296,7 @@ function PostCreate() {
         Swal.fire({
             title: 'Oppss',
             icon: 'warning',
-            html: 'Input data boleh kosong!',
+            html: 'Data kurang lengkap, silahkan isi kembali!',
             showCloseButton: true,
             showCancelButton: false,
             focusConfirm: false,
@@ -328,7 +328,7 @@ function PostCreate() {
                     Swal.fire({
                         title: 'Berhasil',
                         icon: 'success',
-                        html: 'Data Berhasil Dihapus',
+                        html: 'Data Berhasil Ditambahkan',
                         showCloseButton: true,
                         showCancelButton: false,
                         focusConfirm: false,
@@ -371,7 +371,7 @@ function PostUpdate() {
         Swal.fire({
             title: 'Oppss',
             icon: 'warning',
-            html: 'Input data tidak boleh kosong!',
+            html: 'Data kurang lengkap, silahkan isi kembali!',
             showCloseButton: true,
             showCancelButton: false,
             focusConfirm: false,

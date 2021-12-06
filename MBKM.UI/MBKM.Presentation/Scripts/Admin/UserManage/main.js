@@ -142,7 +142,7 @@ var tableUser = $('#TableList').DataTable({
         {
             //"title": "Jabatan",
             "data": "KPTSDIN",
-            "name": "KPTSDIN",
+            "name": "KPTSNIDN",
             "render": function (data, type, row, meta) {
                 //return '<div class="center">' + data + '</div>';
                 if (data != null) {

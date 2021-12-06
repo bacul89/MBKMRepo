@@ -143,10 +143,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var result = new List<JadwalKuliah>();
             if (matkul != null && matkul.Length > 0)
             {
-                result = _jkService.Find(jk => jk.NamaFakultas == fakultas && jk.NamaProdi == prodi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen && (jk.KodeMataKuliah + " - " + jk.NamaMataKuliah).Contains(matkul) && jk.FakultasID != 99 && jk.FakultasID != 00 && jk.FakultasID != 88).ToList();
+                result = _jkService.Find(jk => jk.NamaFakultas == fakultas && jk.NamaProdi == prodi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen && jk.KodeMataKuliah + " - " + jk.NamaMataKuliah == matkul && jk.FakultasID != 99 && jk.FakultasID != 00 && jk.FakultasID != 88).ToList();
             } else
             {
                 result = _jkService.Find(jk => jk.NamaFakultas == fakultas && jk.NamaProdi == prodi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen && jk.FakultasID != 99 && jk.FakultasID != 00 && jk.FakultasID != 88).ToList();
+                return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
             }
 
             foreach (var item in result)
@@ -193,10 +194,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             List<string> instansis = new List<string>();
             List<VMLookup> pks = new List<VMLookup>();
-            var now = DateTime.Now;
-            TimeSpan ts = new TimeSpan(0, 0, 0);
-            now = now + ts;
-            var result = _perjanjianKerjasamaService.Find(pk => pk.JenisKerjasama == idKerjasama && pk.NamaInstansi.Contains(search) && pk.TanggalMulai <= now && pk.TanggalAkhir >= now).ToList();
+            var today = DateTime.Now.Date;
+            var result = _perjanjianKerjasamaService.Find(pk => pk.JenisKerjasama == idKerjasama && pk.NamaInstansi.Contains(search) && pk.NoPerjanjian.Contains(search) && pk.TanggalMulai <= today && pk.TanggalAkhir >= today).ToList();
             foreach (var item in result)
             {
                 if (!instansis.Contains(item.NamaInstansi))
@@ -216,11 +215,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult GetNoKerjasamaByInstansi(string instansi, string idKerjasama, string search)
         {
-            var now = DateTime.Now;
-            TimeSpan ts = new TimeSpan(0,0,0);
-            now = now + ts;
+            var today = DateTime.Now.Date;
             return new ContentResult { Content = JsonConvert.SerializeObject(_perjanjianKerjasamaService.Find(pk => pk.NamaInstansi == instansi && pk.JenisKerjasama == idKerjasama 
-            && pk.NoPerjanjian.Contains(search) && pk.TanggalMulai <= now && pk.TanggalAkhir >= now).ToList()), ContentType = "application/json" };
+            && pk.NoPerjanjian.Contains(search) && pk.TanggalMulai <= today && pk.TanggalAkhir >= today).ToList()), ContentType = "application/json" };
         }
         public ActionResult GetInformasiPertukaran(int strm)
         {

@@ -115,7 +115,7 @@
                                 </div>
                             </div>*@
                         <div class="form-group">
-                            <label for="inp_matakuliah" class="col-sm-3 control-label">Seksi</label>
+                            <label for="inp_matakuliah" class="col-sm-3 control-label">Seksi (Optional)</label>
                             <div class="col-sm-9">
                                 <select name="seksiCari" id="seksiCari" class="form-control input-md">
                                 </select>
@@ -237,13 +237,17 @@
         }
 
         function reloadDatatable() {
+            var seksi = $('#seksiCari').val();
+            if (!$('#seksiCari').val()) {
+                seksi = '';
+            }
             var variable =
                 'idProdi=' + $('#lokasiCari').select2('data')[0].id +
                 '&lokasi=' + $('#lokasiCari').select2('data')[0].value +
                 '&idFakultas=' + $('#fakultasCari').val() +
                 '&jenjangStudi=' + $('#jenjangCari').val() +
                 '&idMatakuliah=' + $('#matakuliahCari').val() +
-                '&seksi=' + $('#seksiCari').val() +
+                '&seksi=' + seksi +
                 '&strm=' + $('#tahunAjaranCari').val();
             console.log(variable);
             //var variable =
@@ -265,14 +269,14 @@
                     //"visible": false, 'targets': [4, 6]
                 }],
                 //"order": [[1, 'asc']],
-                "proccessing": true,
-                "serverSide": true,
+                //"proccessing": true,
+                //"serverSide": true,
                 "order": [[1, 'asc']],
                 //"aaSorting": [[0, "asc"]],
                 "ajax": {
                     url: '/Admin/LinkFasilitasAdmin/SearchList?' + variable,
-                    //dataSrc: ''
-                    type: 'POST'
+                    dataSrc: ''
+                    //type: 'POST'
                 },
                 "language": {
                     "emptyTable": "No record found.",
@@ -761,7 +765,7 @@ function loadJenjangStudi(tipe, id, nama) {
                         $("#matakuliahIdCari").val($(this).val());
 
 
-
+                        buttonHandler("open");
 
                         $('#seksiCari').select2({
 

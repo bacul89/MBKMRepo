@@ -23,14 +23,14 @@
             </h4>
             <hr />
             <div class="container" style="width: 100%;">
-
+                
                 <div class="col-md-12">
                     <form class="form-horizontal col-md-7">
                         <div class="form-group">
                             <label for="inp_tahunAjaran" class="col-sm-3 control-label">Tahun Semester</label>
                             <div class="col-sm-9">
                                 <select name="tahunAjaranCari" id="tahunAjaranCari" class="form-control input-md">
-                                    <option value="@Model.ID" selected>@Model.Nama</option>
+                                    <option value="@ViewData["KodeSemester"]" selected>@ViewData["NamaSemester"]</option>
                                 </select>
                             </div>
                         </div>
@@ -46,13 +46,28 @@
                         <div class="form-group">
                             <label for="inp_fakultas" class="col-sm-3 control-label">Fakultas</label>
                             <div class="col-sm-9">
-                                <select name="fakultasCari" id="fakultasCari" class="form-control input-md"></select>
+                                <select name="fakultasCari" id="fakultasCari" class="form-control input-md">
+                                    @{
+                                        if (ViewData["KodeFakultas"] != "")
+                                        {
+                                              <option value="@ViewData["KodeFakultas"]" selected>@ViewData["NamaFakultas"]</option>
+                                        }
+                                    }
+                                    
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inp_prodi" class="col-sm-3 control-label">Program Studi</label>
                             <div class="col-sm-9">
-                                <select name="prodiCari" id="prodiCari" class="form-control input-md"></select>
+                                <select name="prodiCari" id="prodiCari" class="form-control input-md">
+                                    @{
+                                        if (ViewData["KodeProdi"] != "")
+                                        {
+                                             <option id="@ViewData["KodeProdi"]" value="@ViewData["NamaProdi"]" selected>@ViewData["NamaProdi"]</option>
+                                        }
+                                    }                                    
+                                </select>
                             </div>
                         </div>
                         <div class="form-group">
@@ -89,17 +104,17 @@
 
 
                 <!--
-                    No
-                    Kode Mata Kuliah
-                    Nama Mata Kuliah
-                    SKS
-                    Seksi
-                    Hari
-                    Waktu
-                    Ruang Kelas
-                    Lokasi
-                    Nama Dosen
-                -->
+        No
+        Kode Mata Kuliah
+        Nama Mata Kuliah
+        SKS
+        Seksi
+        Hari
+        Waktu
+        Ruang Kelas
+        Lokasi
+        Nama Dosen
+    -->
                 <!--table-responsive-->
                 <h3><b>JADWAL MATA KULIAH</b></h3>
                 <table id="table-data-jadwal-kuliah" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">

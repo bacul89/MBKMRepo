@@ -2,6 +2,7 @@
 using MBKM.Entities.Models;
 using MBKM.Entities.ViewModel;
 using MBKM.Presentation.Helper;
+using MBKM.Presentation.models;
 using MBKM.Repository.BaseRepository;
 using MBKM.Services;
 using System;
@@ -61,11 +62,25 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             /*            Console.WriteLine("Test");
                         Console.WriteLine(lookup);*/
-            menuRole.CreatedBy = Session["username"] as string;
-            menuRole.UpdatedBy = Session["username"] as string;
-            _menuRoleService.Save(menuRole);
-            return Json(menuRole);
+            try {
+                if (GetMenuByMenuIDandRoleID( menuRole.MenuID,menuRole.RoleID) == null)
+                {
+                    menuRole.CreatedBy = Session["username"] as string;
+                    menuRole.UpdatedBy = Session["username"] as string;
+                    _menuRoleService.Save(menuRole);
+                    return Json(new ServiceResponse { status = 200, message = "Pendaftaran Menu Role Berhasil!" });
+                }
+                else { return Json(new ServiceResponse { status = 400, message = "Gagal! Menu Role Ini Telah Tersedia!" }); }
+                //return Json(menuRole);
+                
+            }
+            catch (Exception e)
+            {
+                return Json(new ServiceResponse { status = 500, message = e.Message });
+            }
+            
         }
+        
         public ActionResult ModalDetailMenuRole(int id)
         {
             var model = _menuRoleService.Get(id);
@@ -98,22 +113,58 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult PostUpdateMenuRole(MenuRole menuRole)
         {
-
             MenuRole data = _menuRoleService.Get(menuRole.ID);
-            data.MenuID = menuRole.MenuID;
-            data.RoleID = menuRole.RoleID;
-            data.IsActive = menuRole.IsActive;
-            data.IsCreate = menuRole.IsCreate;
-            data.IsView = menuRole.IsView;
-            data.IsUpdate = menuRole.IsUpdate;
-            data.IsDelete = menuRole.IsDelete;
-            data.UpdatedBy = Session["username"] as string;
+            try
+            {
+                if (GetMenuByMenuIDandRoleID(menuRole.MenuID, menuRole.RoleID) == null) //if editing menu dan role seluruhnya berbeda
+                {
+
+                    data.MenuID = menuRole.MenuID;
+                    data.RoleID = menuRole.RoleID;
+                    data.IsActive = menuRole.IsActive;
+                    data.IsCreate = menuRole.IsCreate;
+                    data.IsView = menuRole.IsView;
+                    data.IsUpdate = menuRole.IsUpdate;
+                    data.IsDelete = menuRole.IsDelete;
+                    data.UpdatedBy = Session["username"] as string;
 
 
 
-            _menuRoleService.Save(data);
+                    _menuRoleService.Save(data);
 
-            return Json(data);
+                    return Json(new ServiceResponse { status = 200, message = "Update Menu Role Berhasil!" });
+                }
+                else if (menuRole.MenuID == data.MenuID && menuRole.RoleID == data.RoleID) {
+                    data.MenuID = menuRole.MenuID;
+                    data.RoleID = menuRole.RoleID;
+                    data.IsActive = menuRole.IsActive;
+                    data.IsCreate = menuRole.IsCreate;
+                    data.IsView = menuRole.IsView;
+                    data.IsUpdate = menuRole.IsUpdate;
+                    data.IsDelete = menuRole.IsDelete;
+                    data.UpdatedBy = Session["username"] as string;
+
+
+
+                    _menuRoleService.Save(data);
+
+                    return Json(new ServiceResponse { status = 200, message = "Update Menu Role Berhasil!" });
+                }
+                else { return Json(new ServiceResponse { status = 400, message = "Gagal! Menu Role Ini Telah Tersedia!" }); }
+
+
+            }
+            catch (Exception e)
+            {
+                return Json(new ServiceResponse { status = 500, message = e.Message });
+            }
+
+           
+        }
+        public MenuRole GetMenuByMenuIDandRoleID(long menuID, long roleID)
+        {
+            //ini untuk add
+            return _menuRoleService.Find(m => m.RoleID == roleID && m.MenuID == menuID && m.IsDeleted == false).FirstOrDefault();
         }
 
     }

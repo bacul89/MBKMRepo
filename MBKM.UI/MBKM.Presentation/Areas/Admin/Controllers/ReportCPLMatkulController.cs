@@ -30,13 +30,15 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private ICPLMatakuliahService _cplMatakuliahService;
         private ILookupService _lookupService;
         private IAbsensiService _absensiService;
+        private IPendaftaranMataKuliahService _pendaftaranMataKuliahService;
 
-        public ReportCPLMatkulController(IAbsensiService absensiService, ICPLMatakuliahService cplMatakuliahService, IJadwalKuliahService jkService, ILookupService lookupService)
+        public ReportCPLMatkulController(IPendaftaranMataKuliahService pendaftaranMataKuliahService, IAbsensiService absensiService, ICPLMatakuliahService cplMatakuliahService, IJadwalKuliahService jkService, ILookupService lookupService)
         {
             _jadwalKuliahService = jkService;
             _cplMatakuliahService = cplMatakuliahService;
             _lookupService = lookupService;
             _absensiService = absensiService;
+            _pendaftaranMataKuliahService = pendaftaranMataKuliahService;
         }
         public ActionResult Index()
         {
@@ -165,6 +167,18 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult getLookupByTipe(string tipe)
         {
             return new ContentResult { Content = JsonConvert.SerializeObject(_lookupService.getLookupByTipe(tipe)), ContentType = "application/json" };
+        }
+        public ActionResult GetInformasiKampusByProdi()
+        {
+            var kodeProdi = Session["KodeProdi"] as string;
+            var result = _pendaftaranMataKuliahService.GetInformasiKampusByIdProdi(kodeProdi);
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
+        }
+        public ActionResult GetInformasiKampusByFakultas()
+        {
+            var kodeFakultas = Session["KodeFakultas"] as string;
+            var result = _pendaftaranMataKuliahService.GetInformasiKampusByIdFakultas(kodeFakultas);
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
     }
 }

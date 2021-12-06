@@ -154,13 +154,14 @@ function GenerateDataTable() {
         })
     } else {
         tableAdmin.destroy();
+        console.log($('#inp_fakultas :selected').val())
         tableAdmin = $('#table-data-summary-feedback-admin').DataTable({
             "ajax": {
                 url: '/Admin/SummaryFeedback/GetDataTableAdmin',
                 dataSrc: '',
                 data: {
                     jenjangStudi: $('#inp_jenjang :selected').val(),
-                    fakultas: $('#inp_fakultas :selected').val(),
+                    fakultas: $('#inp_fakultas :selected').val() || 0,
                     tahunSemester: $('#inp_semester :selected').val(),
                 },
                 type: 'post',
