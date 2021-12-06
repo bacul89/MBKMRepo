@@ -27,8 +27,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private IMahasiswaService _mahasiswaService;
         private IFeedbackMatkulService _feedbackMatkulService;
         private IPendaftaranMataKuliahService _pendaftaranMKService;
+        private IJadwalKuliahMahasiswaService _jkMhsService;
 
-        public DaftarHadirController(IFeedbackMatkulService feedbackMatkulService, IPendaftaranMataKuliahService pendaftaranMKService,IMahasiswaService mahasiswaService ,IAbsensiService absensiService,ILinkFasilitasService linkFasilitasService,ICPLMatakuliahService cplMatakuliah, ILookupService lookupService, IJadwalKuliahService jkService, IJadwalUjianMBKMDetailService juService, IMasterCapaianPembelajaranService mcpService)
+        public DaftarHadirController(IFeedbackMatkulService feedbackMatkulService, IPendaftaranMataKuliahService pendaftaranMKService,IMahasiswaService mahasiswaService, IJadwalKuliahMahasiswaService jkMahasiswaService, IAbsensiService absensiService,ILinkFasilitasService linkFasilitasService,ICPLMatakuliahService cplMatakuliah, ILookupService lookupService, IJadwalKuliahService jkService, IJadwalUjianMBKMDetailService juService, IMasterCapaianPembelajaranService mcpService)
         {
             _cplMatakuliah = cplMatakuliah;
             _lookupService = lookupService;
@@ -40,6 +41,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             _mahasiswaService = mahasiswaService;
             _pendaftaranMKService = pendaftaranMKService;
             _feedbackMatkulService = feedbackMatkulService;
+            _jkMhsService = jkMahasiswaService;
         }
 
         public ActionResult Index()
@@ -48,6 +50,23 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             //ViewData["semester"] = data;
             var listSection = _linkFasilitasService.getSection();
             ViewData["listSection"] = listSection;
+
+            //VMSemester semester = _jkMhsService.getOngoingSemester("S1");
+
+            //ViewData["KodeSemester"] = semester.ID;
+            //ViewData["NamaSemester"] = semester.Nama;
+
+            if (Session["KodeFakultas"].ToString() != "")
+            {
+                ViewData["KodeFakultas"] = Session["KodeFakultas"].ToString();
+                ViewData["NamaFakultas"] = Session["NamaFakultas"].ToString();
+            }
+            //if (Session["KodeProdi"].ToString() != "")
+            //{
+            //    ViewData["KodeProdi"] = Session["KodeProdi"].ToString();
+            //    ViewData["NamaProdi"] = Session["NamaProdi"].ToString();
+            //}
+
             return View();
         }
         public ActionResult DHK(int id)
