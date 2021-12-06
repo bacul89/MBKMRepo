@@ -222,8 +222,11 @@
                     $("#trLokasi").show();
 
                     $("#noSKTugas").html(response.NoSK);
-                    var date = new Date(response.TanggalSK)
-                    $("#tanggalSKTugas").html(appendZero(date.getDate(), 2) + "-" + months[date.getMonth()] + "-" + date.getFullYear());
+
+                    if (response.TanggalSK) {
+                        var date = new Date(response.TanggalSK)
+                        $("#tanggalSKTugas").html(appendZero(date.getDate(), 2) + "-" + months[date.getMonth()] + "-" + date.getFullYear());
+                    }
                     $("#judulAktivitas").html(response.JudulAktivitas);
                     $("#lokasiTugas").html(response.LokasiTugas);
                 } else {
