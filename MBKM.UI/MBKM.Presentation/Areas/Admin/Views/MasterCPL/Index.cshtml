@@ -292,7 +292,17 @@
                             <label for="inp_fakultas" class="col-sm-3 control-label">Fakultas</label>
                             <div class="col-sm-7">
                                 <select name="inp_fakultas" id="inp_fakultas" class="form-control input-md input-data">
-                                    <option value="" selected disabled>-- Pilih Fakultas --</option>
+                                    @*<option value="" selected disabled>-- Pilih Fakultas --</option>*@
+                                    @{
+                                        if (ViewData["KodeFakultas"] != "")
+                                        {
+                                            <option value="@ViewData["KodeFakultas"]" selected>@ViewData["NamaFakultas"]</option>
+                                        }
+            else
+            {
+                                <option value="" selected disabled>-- Pilih Fakultas --</option>
+            }
+                                    }
                                 </select>
                             </div>
                         </div> 
@@ -350,84 +360,156 @@
         $(document).ready(function () {
             //loadFakultas();
             //loadFakultasEdit();
-            loadFromLookup("JenjangStudi", "jenjang", "JenjangStudi");
-            //loadFromLookup("JenjangStudi", "jenjangEdit", "JenjangStudi");
-            loadFromLookup("Kelompok", "kelompok", "Kelompok");
-            /*loadFromLookup("Kelompok", "abc", "Kelompok");*/
-            tableUser = $('#TableList').DataTable({});
-            
-            $("#prodi").select2({
-                //dropdownParent: $("#TambahCPL"),
-                placeholder: "-- Pilih Program Studi --"
-            });
-            $("#lokasi").select2({
-                //dropdownParent: $("#TambahCPL"),
-                placeholder: "-- Pilih Lokasi --"
-            });
-
-
-            $('#inp_jenjang').change(function () {
+            var getFakultas = $("#inp_fakultas").val();
+            if (getFakultas === "") {
                 $("#inp_fakultas").prop('selectedIndex', 0);
-                //$("#inp_prodi").prop('selectedIndex', 0);
-                $("#inp_prodi").empty();
-            })
+                loadFromLookup("JenjangStudi", "jenjang", "JenjangStudi");
+                //loadFromLookup("JenjangStudi", "jenjangEdit", "JenjangStudi");
+                loadFromLookup("Kelompok", "kelompok", "Kelompok");
+                /*loadFromLookup("Kelompok", "abc", "Kelompok");*/
+                tableUser = $('#TableList').DataTable({});
 
-            $('#inp_jenjang').change(function () {
-                buttonHandler("close")
                 $("#inp_fakultas").select2({
-                    placeholder: "-- Pilih Fakultas --",
-                    width: "100%",
-                    ajax: {
-                        url: "/Admin/MasterCPL/GetFakultas",
-                        dataType: 'json',
-                        method: "POST",
-                        delay: 250,
-                        cache: false,
-                        data: function (params) {
-                            return {
-                                search: params.term || "",
-                                jenjang: $('#inp_jenjang :selected').val(),
-                            };
-                        },
-                        processResults: function (data, params) {
-                            return {
-                                results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
-                            };
-                        },
-                    }
+                    //dropdownParent: $("#TambahCPL"),
+                    placeholder: "-- Pilih Fakultas --"
                 });
-            })
-            $('#inp_prodi').change(function () {
-                buttonHandler("openCari")
-                buttonHandler("closeTambah")
-            })
-            $('#inp_fakultas').change(function () {
-                buttonHandler("close")
-                $("#inp_prodi").empty();
-                $("#inp_prodi").select2({
-                    placeholder: "-- Pilih Prodi --",
-                    width: "100%",
-                    ajax: {
-                        url: "/Admin/MasterCPL/GetProdiByFakultas",
-                        dataType: 'json',
-                        method: "POST",
-                        delay: 250,
-                        cache: false,
-                        data: function (params) {
-                            return {
-                                search: params.term || "",
-                                idFakultas: $('#inp_fakultas :selected').val(),
-                                jenjang: $('#inp_jenjang :selected').val(),
-                            };
-                        },
-                        processResults: function (data, params) {
-                            return {
-                                results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
-                            };
-                        },
-                    }
+                $("#lokasi").select2({
+                    //dropdownParent: $("#TambahCPL"),
+                    placeholder: "-- Pilih Lokasi --"
                 });
-            })
+
+
+                $('#inp_jenjang').change(function () {
+                    $("#inp_fakultas").prop('selectedIndex', 0);
+                    //$("#inp_fakultas").prop('disabled', false);
+                    $("#inp_prodi").empty();
+                    $("#inp_prodi").prop('selectedIndex', 0);
+                    $("#inp_prodi").select2({
+                        //dropdownParent: $("#TambahCPL"),
+                        placeholder: "-- Pilih Prodi --"
+                    });
+                })
+
+                $('#inp_jenjang').change(function () {
+                    buttonHandler("close")
+                    console.log(getFakultas+" inilo");
+                    $("#inp_fakultas").select2({
+                        placeholder: "-- Pilih Fakultas --",
+                        width: "100%",
+                        ajax: {
+                            url: "/Admin/MasterCPL/GetFakultas",
+                            dataType: 'json',
+                            method: "POST",
+                            delay: 250,
+                            cache: false,
+                            data: function (params) {
+                                return {
+                                    search: params.term || "",
+                                    jenjang: $('#inp_jenjang :selected').val(),
+                                };
+                            },
+                            processResults: function (data, params) {
+                                return {
+                                    results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+                                };
+                            },
+                        }
+                    });
+                })
+                $('#inp_prodi').change(function () {
+                    buttonHandler("openCari")
+                    buttonHandler("closeTambah")
+                })
+                $('#inp_fakultas').change(function () {
+                    buttonHandler("close")
+                    $("#inp_prodi").empty();
+                    $("#inp_prodi").select2({
+                        placeholder: "-- Pilih Prodi --",
+                        width: "100%",
+                        ajax: {
+                            url: "/Admin/MasterCPL/GetProdiByFakultas",
+                            dataType: 'json',
+                            method: "POST",
+                            delay: 250,
+                            cache: false,
+                            data: function (params) {
+                                return {
+                                    search: params.term || "",
+                                    idFakultas: $('#inp_fakultas :selected').val(),
+                                    jenjang: $('#inp_jenjang :selected').val(),
+                                };
+                            },
+                            processResults: function (data, params) {
+                                return {
+                                    results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
+                                };
+                            },
+                        }
+                    });
+                })
+            }
+            else {
+                $("#inp_fakultas").prop("disabled", true);
+                loadFromLookup("JenjangStudi", "jenjang", "JenjangStudi");
+                //loadFromLookup("JenjangStudi", "jenjangEdit", "JenjangStudi");
+                loadFromLookup("Kelompok", "kelompok", "Kelompok");
+                /*loadFromLookup("Kelompok", "abc", "Kelompok");*/
+                tableUser = $('#TableList').DataTable({});
+
+                $("#prodi").select2({
+                    //dropdownParent: $("#TambahCPL"),
+                    placeholder: "-- Pilih Program Studi --"
+                });
+                $("#lokasi").select2({
+                    //dropdownParent: $("#TambahCPL"),
+                    placeholder: "-- Pilih Lokasi --"
+                });
+
+
+                $('#inp_jenjang').change(function () {
+                    //$("#inp_fakultas").prop('selectedIndex', 0);
+                    //$("#inp_prodi").prop('selectedIndex', 0);
+                    $("#inp_prodi").empty();
+                    
+                })
+
+                $('#inp_jenjang').change(function () {
+                    buttonHandler("close")
+                    buttonHandler("close")
+                    $("#inp_prodi").empty();
+                    $("#inp_prodi").select2({
+                        placeholder: "-- Pilih Prodi --",
+                        width: "100%",
+                        ajax: {
+                            url: "/Admin/MasterCPL/GetProdiByFakultas",
+                            dataType: 'json',
+                            method: "POST",
+                            delay: 250,
+                            cache: false,
+                            data: function (params) {
+                                return {
+                                    search: params.term || "",
+                                    idFakultas: $('#inp_fakultas :selected').val(),
+                                    jenjang: $('#inp_jenjang :selected').val(),
+                                };
+                            },
+                            processResults: function (data, params) {
+                                return {
+                                    results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
+                                };
+                            },
+                        }
+                    });
+                    
+                })
+                $('#inp_prodi').change(function () {
+                    buttonHandler("openCari")
+                    buttonHandler("closeTambah")
+                })
+                
+            }
+
+            
             
 
         });

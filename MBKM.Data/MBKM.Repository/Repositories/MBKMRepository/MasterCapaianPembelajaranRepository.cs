@@ -95,53 +95,106 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             }
             using (var context = new MBKMContext())
             {
-                //Any() sebagai where exist => ambil duplicate item lalu ambil yg id nya paling kecil saja untuk griddata nya ^_^
-                //sorting di javascript menggunakan kelompok sebagai default, karena ID tidak dapat ditampilkan, jika ditampilkan duplikat redundant lagi ~_~
-                var result = context.MasterCPLS.Where(x => x.IsDeleted == false && x.NamaProdi.Contains(prodi)  && x.JenjangStudi == jenjang && x.FakultasID.Contains(fakultas) && 
-                context.MasterCPLS.Any(s=> s.Kelompok == x.Kelompok && s.Capaian == x.Capaian && s.Kode == x.Kode && s.FakultasID == x.FakultasID && s.NamaProdi == x.NamaProdi &&
-                s.JenjangStudi == x.JenjangStudi && s.NamaFakultas == x.NamaFakultas && s.IsActive == x.IsActive && s.ID < x.ID));
-                
-                mListCPL.TotalCount = result.Count();
-                
-                var gridfilter = result.AsQueryable().Where(y => y.Kode.Contains(SearchParam) || y.Kelompok.Contains(SearchParam) ||
-                y.Capaian.Contains(SearchParam))
-                    .Select(z => new VMMasterCPL
+                var loopIdProdi = context.MasterCPLS.Where(x =>x.IsDeleted==false && x.NamaProdi.Contains(prodi)&& x.FakultasID.Contains(fakultas)).Distinct().GroupBy(s=>s.ProdiID).ToList();
+               
+
+                if (loopIdProdi.Count > 1) //if lokasi lebih dari 1
+                {
+                    //Any() sebagai where exist => ambil duplicate item lalu ambil yg id nya paling kecil saja untuk griddata nya ^_^
+                    //sorting di javascript menggunakan kelompok sebagai default, karena ID tidak dapat ditampilkan, jika ditampilkan duplikat redundant lagi ~_~
+                    var result = context.MasterCPLS.Where(x => x.IsDeleted == false && x.NamaProdi.Contains(prodi) && x.JenjangStudi == jenjang && x.FakultasID.Contains(fakultas) &&
+                   context.MasterCPLS.Any(s => s.Kelompok == x.Kelompok && s.Capaian == x.Capaian && s.Kode == x.Kode && s.FakultasID == x.FakultasID && s.NamaProdi == x.NamaProdi &&
+                   s.JenjangStudi == x.JenjangStudi && s.NamaFakultas == x.NamaFakultas && s.IsActive == x.IsActive && s.ID < x.ID));
+
+                    mListCPL.TotalCount = result.Count();
+
+                    var gridfilter = result.AsQueryable().Where(y => y.Kode.Contains(SearchParam) || y.Kelompok.Contains(SearchParam) ||
+                    y.Capaian.Contains(SearchParam))
+                        .Select(z => new VMMasterCPL
+                        {
+                            ID = z.ID,
+                            Kode = z.Kode,
+                            Kelompok = z.Kelompok,
+                            Capaian = z.Capaian,
+                            FakultasID = z.FakultasID,
+                            NamaProdi = z.NamaProdi,
+                            JenjangStudi = z.JenjangStudi,
+                            NamaFakultas = z.NamaFakultas,
+                            Status = z.IsActive
+
+                        })
+                        .OrderBy(SortBy, SortDir);
+                    mListCPL.gridDatas = gridfilter.Skip(Skip).Take(Length).Distinct().GroupBy(s => new
                     {
-                        ID = z.ID,
-                        Kode = z.Kode,
-                        Kelompok = z.Kelompok,
-                        Capaian = z.Capaian,
-                        FakultasID = z.FakultasID,
-                        NamaProdi = z.NamaProdi,
-                        JenjangStudi = z.JenjangStudi,
-                        NamaFakultas = z.NamaFakultas,
-                        Status = z.IsActive
-                        
-                    })
-                    .OrderBy(SortBy, SortDir);
-                mListCPL.gridDatas = gridfilter.Skip(Skip).Take(Length).Distinct().GroupBy(s => new
-                {
-                    s.JenjangStudi,
-                    s.Kode,
-                    s.FakultasID,
-                    s.Kelompok,
-                    s.Capaian,
-                    s.NamaProdi,
-                    s.NamaFakultas,
-                    s.Status
-                    //s.CreatedBy
-                }).Select(n => new GridDataCPL
-                {
-                    JenjangStudi = n.Key.JenjangStudi,
-                    Kode = n.Key.Kode,
-                    FakultasID = n.Key.FakultasID,
-                    Kelompok = n.Key.Kelompok,
-                    Capaian = n.Key.Capaian,
-                    NamaProdi = n.Key.NamaProdi,
-                    Status = n.Key.Status
-                }).ToList();
-                mListCPL.TotalFilterCount = gridfilter.Count();
-                return mListCPL;
+                        s.JenjangStudi,
+                        s.Kode,
+                        s.FakultasID,
+                        s.Kelompok,
+                        s.Capaian,
+                        s.NamaProdi,
+                        s.NamaFakultas,
+                        s.Status
+                        //s.CreatedBy
+                    }).Select(n => new GridDataCPL
+                    {
+                        JenjangStudi = n.Key.JenjangStudi,
+                        Kode = n.Key.Kode,
+                        FakultasID = n.Key.FakultasID,
+                        Kelompok = n.Key.Kelompok,
+                        Capaian = n.Key.Capaian,
+                        NamaProdi = n.Key.NamaProdi,
+                        Status = n.Key.Status
+                    }).ToList();
+                    mListCPL.TotalFilterCount = gridfilter.Count();
+                    return mListCPL;
+                }
+                else {
+                    var result = context.MasterCPLS.Where(x => x.IsDeleted == false && x.NamaProdi.Contains(prodi) && x.JenjangStudi == jenjang && x.FakultasID.Contains(fakultas));
+                      
+
+                    mListCPL.TotalCount = result.Count();
+
+                    var gridfilter = result.AsQueryable().Where(y => y.Kode.Contains(SearchParam) || y.Kelompok.Contains(SearchParam) ||
+                    y.Capaian.Contains(SearchParam))
+                        .Select(z => new VMMasterCPL
+                        {
+                            ID = z.ID,
+                            Kode = z.Kode,
+                            Kelompok = z.Kelompok,
+                            Capaian = z.Capaian,
+                            FakultasID = z.FakultasID,
+                            NamaProdi = z.NamaProdi,
+                            JenjangStudi = z.JenjangStudi,
+                            NamaFakultas = z.NamaFakultas,
+                            Status = z.IsActive
+
+                        })
+                        .OrderBy(SortBy, SortDir);
+                    mListCPL.gridDatas = gridfilter.Skip(Skip).Take(Length).Distinct().GroupBy(s => new
+                    {
+                        s.JenjangStudi,
+                        s.Kode,
+                        s.FakultasID,
+                        s.Kelompok,
+                        s.Capaian,
+                        s.NamaProdi,
+                        s.NamaFakultas,
+                        s.Status
+                        //s.CreatedBy
+                    }).Select(n => new GridDataCPL
+                    {
+                        JenjangStudi = n.Key.JenjangStudi,
+                        Kode = n.Key.Kode,
+                        FakultasID = n.Key.FakultasID,
+                        Kelompok = n.Key.Kelompok,
+                        Capaian = n.Key.Capaian,
+                        NamaProdi = n.Key.NamaProdi,
+                        Status = n.Key.Status
+                    }).ToList();
+                    mListCPL.TotalFilterCount = gridfilter.Count();
+                    return mListCPL;
+                }
+                
             }
         }
     }
