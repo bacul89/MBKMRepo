@@ -194,7 +194,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             List<string> instansis = new List<string>();
             List<VMLookup> pks = new List<VMLookup>();
-            var result = _perjanjianKerjasamaService.Find(pk => pk.JenisKerjasama == idKerjasama && pk.NamaInstansi.Contains(search)).ToList();
+            var result = _perjanjianKerjasamaService.Find(pk => pk.JenisKerjasama == idKerjasama && pk.NamaInstansi.Contains(search) && pk.TanggalMulai <= DateTime.Now && pk.TanggalAkhir >= DateTime.Now).ToList();
             foreach (var item in result)
             {
                 if (!instansis.Contains(item.NamaInstansi))
@@ -214,9 +214,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult GetNoKerjasamaByInstansi(string instansi, string idKerjasama, string search)
         {
-            var today = DateTime.Now.Date;
             return new ContentResult { Content = JsonConvert.SerializeObject(_perjanjianKerjasamaService.Find(pk => pk.NamaInstansi == instansi && pk.JenisKerjasama == idKerjasama 
-            && pk.NoPerjanjian.Contains(search) && pk.TanggalAkhir >= today).ToList()), ContentType = "application/json" };
+            && pk.NoPerjanjian.Contains(search) && pk.TanggalMulai <= DateTime.Now && pk.TanggalAkhir >= DateTime.Now).ToList()), ContentType = "application/json" };
         }
         public ActionResult GetInformasiPertukaran(int strm)
         {
