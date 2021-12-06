@@ -38,6 +38,19 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         // GET: Admin/MasterMapingCapaianPembelajaran
         public ActionResult Index()
         {
+            if (Session["RoleName"].ToString() == "Admin Fakultas")
+            {
+                ViewData["KodeFakultas"] = Session["KodeFakultas"].ToString();
+                ViewData["NamaFakultas"] = Session["NamaFakultas"].ToString();
+            }
+            else if (Session["RoleName"].ToString() == "Kepala Program Studi")
+            {
+                ViewData["KodeFakultas"] = Session["KodeFakultas"].ToString();
+                ViewData["NamaFakultas"] = Session["NamaFakultas"].ToString();
+                ViewData["KodeProdi"] = Session["KodeProdi"].ToString();
+                ViewData["NamaProdi"] = Session["NamaProdi"].ToString();
+            }
+
             //Session["username"] = "Smitty Werben Jeger Man Jensen";
             return View();
         }
