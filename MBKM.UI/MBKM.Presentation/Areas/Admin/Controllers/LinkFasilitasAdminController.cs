@@ -41,7 +41,22 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             var listSection = _linkFasilitasService.getSection();
             ViewData["listSection"] = listSection;
-            
+
+            var RoleLogin = Session["RoleName"].ToString();
+            ViewData["role"] = RoleLogin;
+            if (RoleLogin == "Kepala Program Studi" || RoleLogin == "Dosen")
+            {
+                var prodiID = Session["KodeProdi"].ToString();
+                var tempProdiID = Convert.ToInt64(prodiID);
+                var getJenjang = _jkService.Find(x => x.ProdiID == tempProdiID).FirstOrDefault();
+                var jenjangs = getJenjang.JenjangStudi;
+                ViewData["jenjangs"] = jenjangs;
+                ViewData["KodeFakultas"] = Session["KodeFakultas"].ToString();
+                ViewData["NamaFakultas"] = Session["NamaFakultas"].ToString();
+                ViewData["KodeProdi"] = prodiID;
+                ViewData["NamaProdi"] = Session["NamaProdi"].ToString();
+            }
+
             return View(_absensiService.GetTahunSemester());
         }
         //batas ambil dari daftarhadirujain
