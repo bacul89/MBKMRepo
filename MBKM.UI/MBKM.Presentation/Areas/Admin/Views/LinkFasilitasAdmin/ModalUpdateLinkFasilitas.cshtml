@@ -20,6 +20,12 @@
                     <input type="text" class="form-control input-md" name="inp_id_mapping_capaian_pembelajaran" id="inp_id_jadwal_kuliah" value="@Model.ID" placeholder="Pilih Mata Kuliah" disabled>
                 </div>
             </div>
+            <div class="form-group" hidden>
+                <label for="inp_MapingCPLID" class="col-sm-3 control-label">ROLENAME</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control input-md" name="inp_id_mapping_capaian_pembelajaran" id="txtRole" value="@{@ViewData["role"]}" placeholder="Pilih Mata Kuliah" disabled>
+                </div>
+            </div>
 
 
 
@@ -100,11 +106,11 @@
 
             <div class="form-group">
                 <div class="col-sm-2 col-md-offset-10">
-                    <button type="button"id="edit-button" onclick="" class="btn btn-warning">Edit</button>
-                    <button type="button"id="update-button" onclick="" class="btn btn-success">Update</button>
+                    <button type="button" id="edit-button" onclick="" class="btn btn-warning">Edit</button>
+                    <button type="button" id="update-button" onclick="" class="btn btn-success">Update</button>
                 </div>
             </div>
-            
+
         </form>
     </div>
 </div>

@@ -107,6 +107,10 @@ function DetailMhs(id) {
             $("#Update").hide();
             //alert($("#noKJs").val());
             loadBiaya($("#noKJs").val());
+            var getRole = $("#txtRole").val();
+            if (getRole == "wakil rektor") {
+                $("#Edit").hide();
+            }
             $("#Edit").click(function () {
                 //$("input").removeAttr("disabled");
                 $("#statusBayarDiv").removeAttr("disabled");
