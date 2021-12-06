@@ -21,11 +21,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private ILookupService _lookupService;
         private IMasterCapaianPembelajaranService _mcpService;
         private ICPLMatakuliahService _cplMatakuliah;
-        public MasterCPLController(ICPLMatakuliahService cplMatakuliah, ILookupService lookupService, IMasterCapaianPembelajaranService mcpService)
+        private IJadwalKuliahService _jkService;
+        public MasterCPLController(ICPLMatakuliahService cplMatakuliah, IJadwalKuliahService jkService, ILookupService lookupService, IMasterCapaianPembelajaranService mcpService)
         {
             _cplMatakuliah = cplMatakuliah;
             _lookupService = lookupService;
             _mcpService = mcpService;
+            _jkService = jkService;
         }
 
         // GET: Admin/MasterCPL
@@ -33,10 +35,24 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             IEnumerable<VMLookup> tempJenjang = _lookupService.getLookupByTipe("JenjangStudi");
             ViewData["Jenjang"] = tempJenjang;
-            if (Session["KodeFakultas"].ToString() != "")
+            var RoleLogin = Session["RoleName"].ToString();
+            ViewData["role"] = RoleLogin;
+            if (RoleLogin == "Admin Fakultas")
             {
                 ViewData["KodeFakultas"] = Session["KodeFakultas"].ToString();
                 ViewData["NamaFakultas"] = Session["NamaFakultas"].ToString();
+            }
+            else if (RoleLogin == "Kepala Program Studi")
+            {
+                var prodiID = Session["KodeProdi"].ToString();
+                var tempProdiID = Convert.ToInt64(prodiID);
+                var getJenjang = _jkService.Find(x => x.ProdiID == tempProdiID).FirstOrDefault();
+                var jenjangs = getJenjang.JenjangStudi;
+                ViewData["jenjangs"] = jenjangs;
+                ViewData["KodeFakultas"] = Session["KodeFakultas"].ToString();
+                ViewData["NamaFakultas"] = Session["NamaFakultas"].ToString();
+                ViewData["KodeProdi"] = prodiID;
+                ViewData["NamaProdi"] = Session["NamaProdi"].ToString();
             }
             return View();
         }
