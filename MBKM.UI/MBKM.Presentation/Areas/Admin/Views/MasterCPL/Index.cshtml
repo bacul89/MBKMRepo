@@ -280,10 +280,18 @@
                                 <select name="inp_jenjang" id="inp_jenjang" class="form-control input-md input-data">
                                     <option value="" selected disabled>-- Pilih Jenjang Studi --</option>
                                     @{
-                                        foreach (var d in ViewData["Jenjang"] as IEnumerable<MBKM.Entities.ViewModel.VMLookup>)
+                                        if (ViewData["role"].ToString() == "Kepala Program Studi")
                                         {
-                                            <option value="@d.Nilai">@d.Nama</option>
+                                            <option value="@ViewData["jenjangs"]" selected >@ViewData["jenjangs"]</option>
                                         }
+                                        else
+                                        {
+                                            foreach (var d in ViewData["Jenjang"] as IEnumerable<MBKM.Entities.ViewModel.VMLookup>)
+                                            {
+                                                <option value="@d.Nilai">@d.Nama</option>
+                                            }
+                                        }
+
                                     }
                                 </select>
                             </div>
@@ -294,9 +302,9 @@
                                 <select name="inp_fakultas" id="inp_fakultas" class="form-control input-md input-data">
                                     @*<option value="" selected disabled>-- Pilih Fakultas --</option>*@
                                     @{
-                                        if (ViewData["KodeFakultas"] != "")
+                                        if (ViewData["role"].ToString() == "Kepala Program Studi" || ViewData["role"].ToString() == "Admin Fakultas")
                                         {
-                                            <option value="@ViewData["KodeFakultas"]" selected>@ViewData["NamaFakultas"]</option>
+                                            <option value="@ViewData["KodeFakultas"]" selected >@ViewData["NamaFakultas"]</option>
                                         }
             else
             {
@@ -310,7 +318,16 @@
                             <label for="inp_prodi" class="col-sm-3 control-label">Prodi</label>
                             <div class="col-sm-7">
                                 <select name="inp_prodi" id="inp_prodi" class="form-control input-md input-data">
-                                    <option value="" selected disabled>-- Pilih Prodi --</option>
+                                    @{
+                                        if (ViewData["role"].ToString() == "Kepala Program Studi")
+                                        {
+                                            <option value="@ViewData["NamaProdi"]" selected >@ViewData["NamaProdi"]</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="" selected disabled>-- Pilih Prodi --</option>
+                                        }
+                                    }
                                 </select>
                             </div>
                         </div>
@@ -360,8 +377,11 @@
         $(document).ready(function () {
             //loadFakultas();
             //loadFakultasEdit();
+            var roleNames = @Html.Raw(Json.Encode(ViewData["role"]));
             var getFakultas = $("#inp_fakultas").val();
-            if (getFakultas === "") {
+            console.log(roleNames);
+            //if (getFakultas === "") {
+            if (roleNames != "Kepala Program Studi" && roleNames != "Admin Fakultas") {
                 $("#inp_fakultas").prop('selectedIndex', 0);
                 loadFromLookup("JenjangStudi", "jenjang", "JenjangStudi");
                 //loadFromLookup("JenjangStudi", "jenjangEdit", "JenjangStudi");
@@ -392,7 +412,7 @@
 
                 $('#inp_jenjang').change(function () {
                     buttonHandler("close")
-                    console.log(getFakultas+" inilo");
+                    //console.log(getFakultas+" inilo");
                     $("#inp_fakultas").select2({
                         placeholder: "-- Pilih Fakultas --",
                         width: "100%",
@@ -448,7 +468,7 @@
                     });
                 })
             }
-            else {
+            else  if(roleNames == "Admin Fakultas"){
                 $("#inp_fakultas").prop("disabled", true);
                 loadFromLookup("JenjangStudi", "jenjang", "JenjangStudi");
                 //loadFromLookup("JenjangStudi", "jenjangEdit", "JenjangStudi");
@@ -470,7 +490,7 @@
                     //$("#inp_fakultas").prop('selectedIndex', 0);
                     //$("#inp_prodi").prop('selectedIndex', 0);
                     $("#inp_prodi").empty();
-                    
+
                 })
 
                 $('#inp_jenjang').change(function () {
@@ -500,20 +520,82 @@
                             },
                         }
                     });
-                    
+
                 })
                 $('#inp_prodi').change(function () {
                     buttonHandler("openCari")
                     buttonHandler("closeTambah")
                 })
-                
+
+            }
+            else  {//kaprodi
+                $("#inp_fakultas").prop("disabled", true);
+                $("#inp_jenjang").prop("disabled", true);
+                $("#inp_prodi").prop("disabled", true);
+                loadFromLookup("JenjangStudi", "jenjang", "JenjangStudi");
+                //loadFromLookup("JenjangStudi", "jenjangEdit", "JenjangStudi");
+                loadFromLookup("Kelompok", "kelompok", "Kelompok");
+                /*loadFromLookup("Kelompok", "abc", "Kelompok");*/
+                tableUser = $('#TableList').DataTable({});
+
+                $("#prodi").select2({
+                    //dropdownParent: $("#TambahCPL"),
+                    placeholder: "-- Pilih Program Studi --"
+                });
+                $("#lokasi").select2({
+                    //dropdownParent: $("#TambahCPL"),
+                    placeholder: "-- Pilih Lokasi --"
+                });
+
+
+                $('#inp_jenjang').change(function () {
+                    //$("#inp_fakultas").prop('selectedIndex', 0);
+                    //$("#inp_prodi").prop('selectedIndex', 0);
+                    $("#inp_prodi").empty();
+
+                })
+
+                $('#inp_jenjang').change(function () {
+                    buttonHandler("close")
+                    buttonHandler("close")
+                    $("#inp_prodi").empty();
+                    $("#inp_prodi").select2({
+                        placeholder: "-- Pilih Prodi --",
+                        width: "100%",
+                        ajax: {
+                            url: "/Admin/MasterCPL/GetProdiByFakultas",
+                            dataType: 'json',
+                            method: "POST",
+                            delay: 250,
+                            cache: false,
+                            data: function (params) {
+                                return {
+                                    search: params.term || "",
+                                    idFakultas: $('#inp_fakultas :selected').val(),
+                                    jenjang: $('#inp_jenjang :selected').val(),
+                                };
+                            },
+                            processResults: function (data, params) {
+                                return {
+                                    results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
+                                };
+                            },
+                        }
+                    });
+
+                })
+                $('#inp_prodi').change(function () {
+                    buttonHandler("openCari")
+                    buttonHandler("closeTambah")
+                })
+
             }
 
-            
-            
+
+
 
         });
-        
+
 
         //batas crud detail
         function DetailMasterCPL(fakultasId, prodiNama, jenjangID, capaiandd, kodedd, kelompokdd) {
@@ -629,7 +711,7 @@
                             focusConfirm: false,
                             confirmButtonText: 'OK'
                         })
-                        
+
                         $('.modal').modal('hide');
 
                         //$('#TambahUser')[0].reset();
@@ -646,7 +728,7 @@
                                 focusConfirm: false,
                                 confirmButtonText: 'OK'
                             })
-                            
+
                             $('.modal').modal('hide');
                             $("#fakultas").empty();
                             $("#fakultas").prop("disabled",true);
@@ -666,7 +748,7 @@
                 });
             }
             else { alert("Lengkapi Data!");}
-            
+
 
 
         }
@@ -702,25 +784,25 @@
                     $('#kodeEdit').val(data.Kode);
                     $('#id_cpl').val(data.ID);
                     if (data.IsActive == true) {
-                        
+
                         $('input[id=inp_statusEdit1]').prop('checked',true);
 
                     }
                     else {
-                      
+
                         $('input[id=inp_statusEdit0]').prop('checked', true);
                     }
-                    
+
                     $('#cplEdit').val(data.Capaian);
-                    
+
                     $('#EditCPL').modal('show');
                     $('#EditCPL').on('hide.bs.modal', function () {
                         document.getElementsByName('kelompokEdit')[0].options[0].selected = true.innerHTML = data.Kelompok;
                         var latest_valueKelompok = $("option:selected:first", "#kelompokEdit").text();
                         $(this).off('hide.bs.modal');
                     })
-                    
-                   
+
+
                 }, error: function (e) {
                     $.LoadingOverlay("hide");
                     Swal.fire({
@@ -769,7 +851,7 @@
                     //contentType: 'application/json'
                     contentType: 'application/json',
                 }).then(function (response) {
-                    
+
                         if (response.status == 200) {
 
                             Swal.fire({
@@ -803,7 +885,7 @@
                 });
             }
             else { alert("mohon lengkapi data!") }
-            
+
 
 
         }
@@ -868,7 +950,7 @@
         }
         //button handler tambah cpl
         function buttonHandler(param) {
-          
+
 
             if (param == "open") {
                 $('#tambahCPLButton').removeAttr("disabled");
@@ -946,7 +1028,7 @@
                 console.log(s_prodi);
                 $('#c_prodi').val(s_prodi);
 
-                
+
                 //batas
                 var dataFilter = {};
                 dataFilter.jenjangStudi = $('#inp_jenjang :selected').val();
