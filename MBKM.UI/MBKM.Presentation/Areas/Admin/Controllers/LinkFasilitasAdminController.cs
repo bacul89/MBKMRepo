@@ -41,6 +41,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             var listSection = _linkFasilitasService.getSection();
             ViewData["listSection"] = listSection;
+            
             return View(_absensiService.GetTahunSemester());
         }
         //batas ambil dari daftarhadirujain
@@ -247,6 +248,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
            
             var data = _linkFasilitasService.Get(id);
+            var d = HttpContext.Session["RoleName"].ToString().ToLower();
+            ViewData["role"] = HttpContext.Session["RoleName"].ToString().ToLower();
             return View(data);
         }
         [HttpPost]

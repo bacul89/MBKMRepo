@@ -83,6 +83,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ViewData["infoPertukaran"] = ip.JenisPertukaran;
 
             }
+            ViewData["role"] = HttpContext.Session["RoleName"].ToString().ToLower();
 
             return View("ModalDetailMhs", model);
         }
