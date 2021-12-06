@@ -59,7 +59,7 @@
                             </div>
                         </div>
                         @{
-                            if (ViewData["Fakultas"].ToString() == "")
+                            if (!ViewData["role"].ToString().Contains("fakultas") && !ViewData["role"].ToString().Contains("program studi"))
                             {
                                 <div class="form-group">
                                     <label for="inp_fakultas" class="col-sm-3 control-label">Fakultas</label>
