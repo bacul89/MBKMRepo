@@ -25,8 +25,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private IJadwalUjianMBKMService _jadwalUjianMBKMService;
         private IPendaftaranMataKuliahService _pendaftaranMataKuliahService;
         private IJadwalUjianMBKMDetailService _jadwalUjianMBKMDetailService;
+        private IJadwalKuliahService _jadwalKuliahService;
 
-        public ManageJadwalUjianController(ILookupService lookupService, IMasterCapaianPembelajaranService masterCapaianPembelajaranService, IMahasiswaService mahasiswaService, IJadwalUjianMBKMService jadwalUjianMBKMService, IPendaftaranMataKuliahService pendaftaranMataKuliahService, IJadwalUjianMBKMDetailService jadwalUjianMBKMDetailService)
+        public ManageJadwalUjianController(ILookupService lookupService, IMasterCapaianPembelajaranService masterCapaianPembelajaranService, IMahasiswaService mahasiswaService, IJadwalUjianMBKMService jadwalUjianMBKMService, IPendaftaranMataKuliahService pendaftaranMataKuliahService, IJadwalUjianMBKMDetailService jadwalUjianMBKMDetailService, IJadwalKuliahService jadwalKuliahService)
         {
             _lookupService = lookupService;
             _masterCapaianPembelajaranService = masterCapaianPembelajaranService;
@@ -34,7 +35,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             _jadwalUjianMBKMService = jadwalUjianMBKMService;
             _pendaftaranMataKuliahService = pendaftaranMataKuliahService;
             _jadwalUjianMBKMDetailService = jadwalUjianMBKMDetailService;
+            _jadwalKuliahService = jadwalKuliahService;
         }
+
+
 
 
 
@@ -47,7 +51,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ViewData["semester"] = data;
             ViewData["Jenjang"] = tempJenjang;
             ViewData["JenisUjian"] = tempJenisUjian;
-            ViewData["Fakultas"] = (HttpContext.Session["RoleName"].ToString().ToLower().Contains("fakultas")) ? HttpContext.Session["KodeFakultas"].ToString() : "" ;
+            var d = HttpContext.Session["RoleName"].ToString().ToLower();
+            ViewData["role"] = HttpContext.Session["RoleName"].ToString().ToLower();
             return View();
         }
 
@@ -185,7 +190,18 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult GetDataTable(DataTableAjaxPostModel model, string jenjangStudi, string fakultas, string jenisUjian, string tahunSemester)
         {
-            var dataFakultas = (fakultas != null) ? fakultas : HttpContext.Session["KodeFakultas"].ToString();
+            var roleData = HttpContext.Session["RoleName"].ToString().ToLower();
+            var namaProdi = HttpContext.Session["NamaProdi"].ToString();
+            var dataFakultas = "";
+            if (roleData.Contains("program studi"))
+            {
+                var dataTemp = _jadwalKuliahService.Find(x => x.NamaProdi == namaProdi).FirstOrDefault().FakultasID;
+                dataFakultas = dataTemp.ToString();
+            }
+            else
+            {
+                dataFakultas = (fakultas != null) ? fakultas : HttpContext.Session["KodeFakultas"].ToString();
+            }
 
             VMListJadwalUjian data = _jadwalUjianMBKMService.GetListManageUjian(model, jenjangStudi, dataFakultas, jenisUjian, tahunSemester);
             return Json(
