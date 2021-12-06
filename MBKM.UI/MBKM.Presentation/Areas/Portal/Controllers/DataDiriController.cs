@@ -98,7 +98,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 res.JenjangStudi = mahasiswa.JenjangStudi;
                 res.ProdiAsal = mahasiswa.ProdiAsal;
                 res.NIMAsal = mahasiswa.NIMAsal;
-                if (!res.NamaUniversitas.Equals("UNIKA Atma Jaya"))
+                if (!res.NamaUniversitas.Equals("UNIKA Atma Jaya") && res.StatusVerifikasi != "AKTIF")
                 {
                     res.StatusVerifikasi = "MENUNGGU VERIFIKASI";
                 }   
