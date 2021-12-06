@@ -42,24 +42,24 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         // GET: Admin/JadwalKuliah
         public ActionResult Index()
         {
-
-
             VMSemester semester = _jkMhsService.getOngoingSemester("S1");
 
             ViewData["KodeSemester"] = semester.ID;
             ViewData["NamaSemester"] = semester.Nama;
 
-            if (Session["KodeFakultas"].ToString() != "")
+            if (Session["RoleName"].ToString() == "Admin Fakultas")
             {
                 ViewData["KodeFakultas"] = Session["KodeFakultas"].ToString();
                 ViewData["NamaFakultas"] = Session["NamaFakultas"].ToString();
-
+            }
+            else if (Session["RoleName"].ToString() == "Kepala Program Studi" || Session["RoleName"].ToString() == "Dosen")
+            {
+                ViewData["KodeFakultas"] = Session["KodeFakultas"].ToString();
+                ViewData["NamaFakultas"] = Session["NamaFakultas"].ToString();
                 ViewData["KodeProdi"] = Session["KodeProdi"].ToString();
                 ViewData["NamaProdi"] = Session["NamaProdi"].ToString();
             }
             return View();
-            //Session["username"] = "Smitty Werben Jeger Man Jensen";
-            //return View();
         }
 
         public ActionResult Manage()

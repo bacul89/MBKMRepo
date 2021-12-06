@@ -51,7 +51,7 @@
                         <div class="col-sm-9">
                             <select name="fakultasCari" id="fakultasCari" class="form-control input-md">
                                 @{
-                                    if (ViewData["KodeFakultas"] != "")
+                                    if (ViewData["KodeFakultas"] != null)
                                     {
                                         <option value="@ViewData["KodeFakultas"]" selected>@ViewData["NamaFakultas"]</option>
                                     }
@@ -64,7 +64,7 @@
                         <div class="col-sm-9">
                             <select name="prodiCari" id="prodiCari" class="form-control input-md">
                                 @{
-                                    if (ViewData["KodeProdi"] != "")
+                                    if (ViewData["KodeProdi"] != null)
                                     {
                                         <option id="@ViewData["KodeProdi"]" value="@ViewData["NamaProdi"]" selected>@ViewData["NamaProdi"]</option>
                                     }

@@ -44,36 +44,45 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
             //Session["username"] = "Smitty Werben Jeger Man Jensen";
             //var sesss = Session["KodeProdi"];
-            //var ses = Session["NamaProdi"];
-            
-
-            //Console.WriteLine(sesss);
-
-                       VMSemester semester = _jkMhsService.getOngoingSemester("S1");
-                        //VMFakultas fakultas = new VMFakultas();
-                        //fakultas.ID = Session["KodeFakultas"].ToString();
-                        //fakultas.Nama = Session["NamaFakultas"].ToString();
-
-                        //VMProdi prodi = new VMProdi();
-                        //prodi.ID = ;
-                        //prodi.Nama = ;
+            var ses = Session["RoleName"];
 
 
+            Console.WriteLine(ses);
 
-                        ViewData["KodeSemester"] = semester.ID;
-                        ViewData["NamaSemester"] = semester.Nama;
+            VMSemester semester = _jkMhsService.getOngoingSemester("S1");
+            //VMFakultas fakultas = new VMFakultas();
+            //fakultas.ID = Session["KodeFakultas"].ToString();
+            //fakultas.Nama = Session["NamaFakultas"].ToString();
 
-                if(Session["KodeFakultas"].ToString() != "")
+            //VMProdi prodi = new VMProdi();
+            //prodi.ID = ;
+            //prodi.Nama = ;
+
+
+
+            ViewData["KodeSemester"] = semester.ID;
+            ViewData["NamaSemester"] = semester.Nama;
+
+            if (Session["RoleName"].ToString() == "Admin Fakultas")
+            {
+                ViewData["KodeFakultas"] = Session["KodeFakultas"].ToString();
+                ViewData["NamaFakultas"] = Session["NamaFakultas"].ToString();
+            } else if (Session["RoleName"].ToString() == "Kepala Program Studi" || Session["RoleName"].ToString() == "Dosen")
+            {
+                ViewData["KodeFakultas"] = Session["KodeFakultas"].ToString();
+                ViewData["NamaFakultas"] = Session["NamaFakultas"].ToString();
+                ViewData["KodeProdi"] = Session["KodeProdi"].ToString();
+                ViewData["NamaProdi"] = Session["NamaProdi"].ToString();
+            }
+            /*if (Session["KodeFakultas"].ToString() != "")
                 {
-                    ViewData["KodeFakultas"] = Session["KodeFakultas"].ToString();
-                    ViewData["NamaFakultas"] = Session["NamaFakultas"].ToString();
+
                 }
                 if (Session["KodeProdi"].ToString() != "")
                 {
                     ViewData["KodeProdi"] = Session["KodeProdi"].ToString();
                     ViewData["NamaProdi"] = Session["NamaProdi"].ToString();
-                }
-            //return View(ViewData);
+                }*/
 
             /*for (int i = 0; i < Session.Contents.Count; i++)
             {
@@ -81,14 +90,14 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 //var str
                 var key = Session.Keys[i];
                 var value = Session[i];
+                var two = key + ":  " + value;
+                Console.WriteLine(two);
+
             }*/
 
             //VMSemester model = _jkMhsService.getOngoingSemester("S1");
 
-            //Console.WriteLine(ses);
             return View();
-            //Session["username"] = "Smitty Werben Jeger Man Jensen";
-            //return View();
         }
 
 

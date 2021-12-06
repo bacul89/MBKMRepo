@@ -57,13 +57,15 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ViewData["KodeSemester"] = semester.ID;
             ViewData["NamaSemester"] = semester.Nama;
 
-            if (Session["KodeFakultas"].ToString() != "")
+            if (Session["RoleName"].ToString() == "Admin Fakultas")
             {
                 ViewData["KodeFakultas"] = Session["KodeFakultas"].ToString();
                 ViewData["NamaFakultas"] = Session["NamaFakultas"].ToString();
             }
-            if (Session["KodeProdi"].ToString() != "")
+            else if (Session["RoleName"].ToString() == "Kepala Program Studi" || Session["RoleName"].ToString() == "Dosen")
             {
+                ViewData["KodeFakultas"] = Session["KodeFakultas"].ToString();
+                ViewData["NamaFakultas"] = Session["NamaFakultas"].ToString();
                 ViewData["KodeProdi"] = Session["KodeProdi"].ToString();
                 ViewData["NamaProdi"] = Session["NamaProdi"].ToString();
             }
