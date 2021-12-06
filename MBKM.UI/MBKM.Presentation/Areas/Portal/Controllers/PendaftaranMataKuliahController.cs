@@ -143,11 +143,10 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var result = new List<JadwalKuliah>();
             if (matkul != null && matkul.Length > 0)
             {
-                result = _jkService.Find(jk => jk.NamaFakultas == fakultas && jk.NamaProdi == prodi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen && jk.KodeMataKuliah + " - " + jk.NamaMataKuliah == matkul && jk.FakultasID != 99 && jk.FakultasID != 00 && jk.FakultasID != 88).ToList();
+                result = _jkService.Find(jk => jk.NamaFakultas == fakultas && jk.NamaProdi == prodi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen && (jk.KodeMataKuliah + " - " + jk.NamaMataKuliah).Contains(matkul) && jk.FakultasID != 99 && jk.FakultasID != 00 && jk.FakultasID != 88).ToList();
             } else
             {
                 result = _jkService.Find(jk => jk.NamaFakultas == fakultas && jk.NamaProdi == prodi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen && jk.FakultasID != 99 && jk.FakultasID != 00 && jk.FakultasID != 88).ToList();
-                return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
             }
 
             foreach (var item in result)
