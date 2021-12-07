@@ -180,6 +180,7 @@ function EditUserTemplate(id) {
                 //console.log($("option:selected:first", "#inp_fakultas").val());
                 //console.log($("#inp_fakultas").val());
                 //console.log($('#inp_fakultas').select2('data')[0].value);
+                $("#inp_fakultas").empty();
                 var namaRole = document.getElementById("idRole");
                 var selectedRole = namaRole.options[namaRole.selectedIndex].text;
                 if (selectedRole != "Kepala Program Studi" && selectedRole != "Dosen" && selectedRole != "Admin Fakultas") {//hide fakultas
@@ -436,7 +437,9 @@ function PostUpdateUser() {
         //formInputUser.NamaProdi = $('#idProdi').val();
         formInputUser.NamaProdi = "Admin Fakultas";
 
-        formInputUser.KodeFakultas = $('#inp_fakultas').select2('data')[0].value;
+        //formInputUser.KodeFakultas = $('#inp_fakultas').select2('data')[0].value;
+        formInputUser.KodeFakultas = $("option:selected:first", "#inp_fakultas").val();
+        //formInputUser.KodeFakultas = $('#inp_fakultas').val();
         //$('#inp_fakultas').select2('data')[0].value
         formInputUser.NamaFakultas = $("option:selected:first", "#inp_fakultas").text();
         formInputUser.KPTSDIN = $('#txtKPTSDIN').val();
@@ -451,7 +454,9 @@ function PostUpdateUser() {
     
     else if (selectedRole == "Kepala Program Studi" || selectedRole == "Dosen") {
         var namaProdi = document.getElementById("idProdi");
+        //var kodeFakultas = document.getElementById("inp_fakultas");
         var selectedProdi = namaProdi.options[namaProdi.selectedIndex].text;
+        //var selecetedKodeFakultas = $("option:selected:first", "#inp_fakultas").val();
         var namaProdis = selectedProdi.substring(selectedProdi.indexOf('-') + 1);
         formInputUser.NoPegawai = $('input[id=txtnomorindukpegawai]').val();
         formInputUser.UserName = $('input[id=txtnama]').val();
@@ -462,7 +467,9 @@ function PostUpdateUser() {
         //formInputUser.NamaProdi = $('#idProdi').val();
         formInputUser.NamaProdi = namaProdis;
 
-        formInputUser.KodeFakultas = $('#inp_fakultas').select2('data')[0].value;
+        //formInputUser.KodeFakultas = $('#inp_fakultas').select2('data')[0].value;
+        formInputUser.KodeFakultas = $("option:selected:first", "#inp_fakultas").val();
+        //formInputUser.KodeFakultas = $('#inp_fakultas').select2('data')[0].value;
         //$('#inp_fakultas').select2('data')[0].value
         formInputUser.NamaFakultas = $("option:selected:first", "#inp_fakultas").text();
         formInputUser.KPTSDIN = $('#txtKPTSDIN').val();
