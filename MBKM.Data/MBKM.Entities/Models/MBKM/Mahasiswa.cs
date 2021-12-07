@@ -58,6 +58,7 @@ namespace MBKM.Entities.Models.MBKM
         #region permintaan UAT
         //TODO
         public string EmailInternal { get; set; }
+        public string TahunSemester { get; set; }
         #endregion
     }
 }

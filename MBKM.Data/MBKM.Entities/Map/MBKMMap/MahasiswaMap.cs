@@ -46,6 +46,7 @@ namespace MBKM.Entities.Map.MBKMMap
             Property(t => t.ProdiAsalID).HasMaxLength(30);
             //TODO
             Property(t => t.EmailInternal).HasMaxLength(350);
+            Property(t => t.TahunSemester).HasMaxLength(100);
         }
     }
 }
