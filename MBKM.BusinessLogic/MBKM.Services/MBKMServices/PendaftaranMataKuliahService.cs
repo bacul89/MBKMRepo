@@ -29,6 +29,7 @@ namespace MBKM.Services.MBKMServices
         VMKampus GetInformasiKampusByIdProdi(string idProdi);
         VMKampus GetInformasiKampusByIdFakultas(string idFakultas);
         IEnumerable<VMReportMahasiswaEksternal> GetListPendaftaranEksternalPertukaranWithoutNilai(long strm);
+        IEnumerable<VMSemester> GetSemesterAll3(string jenjangStudi, string search);
     }
     public class PendaftaranMataKuliahService : EntityService<PendaftaranMataKuliah>, IPendaftaranMataKuliahService
     {
@@ -59,7 +60,10 @@ namespace MBKM.Services.MBKMServices
             return _pmkRepository.GetLokasiByProdi(jenjangStudi, namaProdi, search);
         }
 
-        public VMSemester getOngoingSemester(string jenjangStudi)
+        public IEnumerable<VMSemester> GetSemesterAll3(string jenjangStudi, string search)
+        {
+            return _pmkRepository.GetSemesterAll3(jenjangStudi, search);
+        }public VMSemester getOngoingSemester(string jenjangStudi)
         {
             return _pmkRepository.getOngoingSemester(jenjangStudi);
         }

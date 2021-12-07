@@ -19,10 +19,14 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         private IMahasiswaService _mahasiswaService;
         private IPerjanjianKerjasamaService _perjanjianKerjasamaService;
         private ILookupService _lookupService;
-        public HomeController(IMahasiswaService mahasiswaService, IPerjanjianKerjasamaService perjanjianKerjasamaService, ILookupService lookupService)
+        private IJadwalKuliahService _jadwalKuliahService;
+        private IPendaftaranMataKuliahService _pendaftaranMataKuliahService;
+        public HomeController(IPendaftaranMataKuliahService pendaftaranMataKuliahService, IJadwalKuliahService jadwalKuliahService, IMahasiswaService mahasiswaService, IPerjanjianKerjasamaService perjanjianKerjasamaService, ILookupService lookupService)
         {
             _mahasiswaService = mahasiswaService;
             _perjanjianKerjasamaService = perjanjianKerjasamaService;
+            _jadwalKuliahService = jadwalKuliahService;
+            _pendaftaranMataKuliahService = pendaftaranMataKuliahService;
             _lookupService = lookupService;
         }
         // GET: Portal/Home 
@@ -93,6 +97,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             TempData["alertMessage"] = "Verify";
             return RedirectToAction("Index", "Home");
+        }
+        public ActionResult GetSemesterAll3(string jenjangStudi, string search)
+        {
+            var result = _pendaftaranMataKuliahService.GetSemesterAll3(jenjangStudi, search);
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
         public ActionResult VerifyAccount(string token)
         {

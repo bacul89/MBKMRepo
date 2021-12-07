@@ -85,6 +85,17 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return result;
             }
         }
+        public IEnumerable<VMSemester> GetSemesterAll3(string jenjangStudi, string search)
+        {
+            using (var context = new MBKMContext())
+            {
+                var jenjangStudiParam = new SqlParameter("@JenjangStudi", jenjangStudi);
+                var searchParam = new SqlParameter("@Search", search);
+                var result = context.Database
+                    .SqlQuery<VMSemester>("GetSemesterAll3 @JenjangStudi, @Search", jenjangStudiParam, searchParam).ToList();
+                return result;
+            }
+        }
         public VMSemester getOngoingSemester(string jenjangStudi)
         {
             using (var context = new MBKMContext())

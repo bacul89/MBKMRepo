@@ -25,5 +25,6 @@ namespace MBKM.Common.Interfaces.RepoInterfaces.MBKMRepoInterfaces
         IEnumerable<VMReportMahasiswaEksternal> GetListPendaftaranEksternalPertukaran(long strm);
         IEnumerable<VMReportMahasiswaInternalKeluar> GetListPendaftaranInternalPertukaranKeluar(long strm);
         IEnumerable<VMReportMahasiswaEksternal> GetListPendaftaranEksternalPertukaranWithoutNilai(long strm);
+        IEnumerable<VMSemester> GetSemesterAll3(string jenjangStudi, string search);
     }
 }
