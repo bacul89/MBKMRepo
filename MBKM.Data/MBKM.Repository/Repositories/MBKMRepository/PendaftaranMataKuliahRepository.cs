@@ -428,10 +428,6 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                         })
                     //.ToList();
                     .Where(z => z.mahasiswas.NIM != z.mahasiswas.NIMAsal && z.JadwalKuliahs.ID == z.NilaiKuliah.JadwalKuliahID).ToList();
-
-
-
-
                 return result;
             }
         }
@@ -460,7 +456,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                             *//*InformasiPertukaran = pendaf.InformasiPertukaran,*//*
                             NilaiKuliah = nilai
                         })*/
-                    
+
                     //.ToList();
                     .Where(z => z.JadwalKuliahs.STRM == strm && z.mahasiswas.NIM != z.mahasiswas.NIMAsal && z.JadwalKuliahs.ID == z.JadwalKuliahID && z.StatusPendaftaran.ToLower().Contains("accepted")).
                     Select(

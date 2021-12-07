@@ -345,6 +345,36 @@ function reloadDatatable() {
                     return '<div class="center">' + data + '</div>';
                 }
             },
+
+            //---debug
+            {
+                "data": "18",
+                "name": "18",
+                "render": function (data, type, row, meta) {
+                    return '<div class="center">' + data + '</div>';
+                }
+            },
+            {
+                "data": "22",
+                "name": "22",
+                "render": function (data, type, row, meta) {
+                    return '<div class="center">' + data + '</div>';
+                }
+            },
+            {
+                "data": "23",
+                "name": "23",
+                "render": function (data, type, row, meta) {
+                    return '<div class="center">' + data + '</div>';
+                }
+            },
+            {
+                "data": "23",
+                "name": "23",
+                "render": function (data, type, row, meta) {
+                    return '<div class="center">' + row[18] + row[22] + row[23]+ '</div>';
+                }
+            },
         ],
 
         "footerCallback": function (row, data, start, end, display) {
