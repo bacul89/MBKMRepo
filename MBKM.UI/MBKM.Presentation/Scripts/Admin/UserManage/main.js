@@ -181,7 +181,7 @@ function validationCustom2() {
         $('.input-data').not($('#idProdi')).each(function () {
             var element = $(this).not($('#idProdi'));
             //var element2 = $(this).not($('#fakultasCari'));
-            if (element.val() == "") {
+            if (element.val() == "" ||element.val() == null) {
                 return isValid = false;
             } else {
                 return isValid = true;
@@ -192,7 +192,7 @@ function validationCustom2() {
     else if (selectedRole == "Kepala Program Studi" || selectedRole == "Dosen") {
         $(".input-data").each(function () {
             var element = $(this);
-            if (element.val() == "") {
+            if (element.val() == "" || element.val() == null) {
                 return isValid = false;
             } else {
                 return isValid = true;
@@ -222,7 +222,7 @@ function validationCustomEditUser() {
         $('.asd').not($('#idProdi')).each(function () {
             var element = $(this).not($('#idProdi'));
             //var element2 = $(this).not($('#fakultasCari'));
-            if (element.val() == "") {
+            if (element.val() == "" || element.val() == null) {
                 return isValid = false;
             } else {
                 return isValid = true;
@@ -233,7 +233,7 @@ function validationCustomEditUser() {
     else if (selectedRole == "Kepala Program Studi" || selectedRole == "Dosen") {
         $(".asd").each(function () {
             var element = $(this);
-            if (element.val() == "") {
+            if (element.val() == "" || element.val() == null) {
                 return isValid = false;
             } else {
                 return isValid = true;
