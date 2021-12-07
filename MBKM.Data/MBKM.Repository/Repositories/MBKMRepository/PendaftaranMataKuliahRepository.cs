@@ -75,6 +75,16 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return result;
             }
         }
+        public VMKampus GetInformasiKampusByIdFakultas(string idFakultas)
+        {
+            using (var context = new MBKMContext())
+            {
+                var idFakultasParam = new SqlParameter("@IDFakultas", idFakultas);
+                var result = context.Database
+                    .SqlQuery<VMKampus>("GetInformasiKampusByIdFakultas @IDFakultas", idFakultasParam).FirstOrDefault();
+                return result;
+            }
+        }
         public VMSemester getOngoingSemester(string jenjangStudi)
         {
             using (var context = new MBKMContext())
@@ -237,8 +247,6 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return mListPendaftaranMataKuliah;
             }
         }
-
-
         public IEnumerable<VMPendaftaranWithInformasipertukaran> GetListPendaftaranAndInformasiPertukaran(long strm)
         {
             using (var context = new MBKMContext())
@@ -260,7 +268,6 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 return result;
             }
         }
-
         public IEnumerable<VMReportMahasiswaInternal> GetListPendaftaranNonPertukaran(long strm)
         {
             using (var context = new MBKMContext())

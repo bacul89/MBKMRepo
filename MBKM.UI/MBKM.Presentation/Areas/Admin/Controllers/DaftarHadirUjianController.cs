@@ -78,6 +78,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public JsonResult SearchList(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm, string idMatakuliah, string seksi)
         {
             VMListJadwalUjian vmList = _juDetailService.GetDHU(model, idProdi, lokasi, idFakultas, jenjangStudi, strm, idMatakuliah, seksi);
+            TempData["jenjangStudi"] = jenjangStudi;
             return Json(new
             {                
                 draw = model.draw,

@@ -144,6 +144,7 @@
 @section scripts{
     <script>
         var datatable;
+        var role = 0;
         $(document).ready(function () {
             loadJenjangStudi();
             $("#fakultas").select2({
@@ -399,6 +400,7 @@
                     });
                 });
             });
+            cekRole();
         }
         function appendZero(string, length) {
             string += "";
@@ -406,6 +408,43 @@
                 string = "0" + string;
             }
             return string;
+        }
+        function cekRole() {
+            if ('@HttpContext.Current.Session["RoleName"].ToString()' == 'Admin Fakultas') {
+                role = 1;
+                $.ajax({
+                    type: "GET",
+                    url: "@Url.Action("GetInformasiKampusByFakultas", "ReportCPLMatkul")"
+                }).then(function (response) {
+                    var option = $("<option selected='selected'></option>").val(response.JenjangStudi).text(response.JenjangStudi);
+                    $("#jenjangStudi").append(option).trigger('change');
+                    $("#jenjangStudi").prop("disabled", true);
+                    option = $("<option selected='selected'></option>").val(response.Fakultas).text(response.Fakultas);
+                    $("#fakultas").append(option).trigger('change');
+                    $("#fakultas").prop("disabled", true);
+                    $("#prodi").prop("disabled", false);
+                });
+            } else if (
+                '@HttpContext.Current.Session["RoleName"].ToString()' == 'Kepala Program Studi'
+                || '@HttpContext.Current.Session["RoleName"].ToString()' == 'Dosen'
+            ) {
+                role = 2;
+                $.ajax({
+                    type: "GET",
+                    url: "@Url.Action("GetInformasiKampusByProdi", "ReportCPLMatkul")"
+                }).then(function (response) {
+                    var option = $("<option selected='selected'></option>").val(response.JenjangStudi).text(response.JenjangStudi);
+                    $("#jenjangStudi").append(option).trigger('change');
+                    $("#jenjangStudi").prop("disabled", true);
+                    option = $("<option selected='selected'></option>").val(response.Fakultas).text(response.Fakultas);
+                    $("#fakultas").append(option).trigger('change');
+                    $("#fakultas").prop("disabled", true);
+                    option = $("<option selected='selected'></option>").val(response.Prodi).text(response.Prodi);
+                    $("#prodi").append(option).trigger('change');
+                    $("#prodi").prop("disabled", true);
+                    $("#matkul").prop("disabled", false);
+                });
+            }
         }
     </script>
 }

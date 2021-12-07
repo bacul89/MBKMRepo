@@ -420,5 +420,17 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.GetSeksiByMatkul(search, jenjangStudi, matkul, lokasi)), ContentType = "application/json" };
         }
+        public ActionResult GetInformasiKampusByProdi()
+        {
+            var kodeProdi = Session["KodeProdi"] as string;
+            var result = _pendaftaranMataKuliahService.GetInformasiKampusByIdProdi(kodeProdi);
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
+        }
+        public ActionResult GetInformasiKampusByFakultas()
+        {
+            var kodeFakultas = Session["KodeFakultas"] as string;
+            var result = _pendaftaranMataKuliahService.GetInformasiKampusByIdFakultas(kodeFakultas);
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
+        }
     }
 }

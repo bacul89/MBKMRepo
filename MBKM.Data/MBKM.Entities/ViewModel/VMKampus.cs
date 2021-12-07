@@ -11,5 +11,6 @@ namespace MBKM.Entities.ViewModel
         public string Prodi { get; set; }
         public string Fakultas { get; set; }
         public string Lokasi { get; set; }
+        public string JenjangStudi { get; set; }
     }
 }
