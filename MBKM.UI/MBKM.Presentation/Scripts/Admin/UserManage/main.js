@@ -177,7 +177,19 @@ function validationCustom2() {
     var namaRole = document.getElementById("idRole");
     var selectedRole = namaRole.options[namaRole.selectedIndex].text;
     //if bukan role spesial (Kaprodi)
-    if (selectedRole == "Kepala Program Studi" || selectedRole == "Dosen") {
+    if (selectedRole == "Admin Fakultas") {
+        $('.input-data').not($('#idProdi')).each(function () {
+            var element = $(this).not($('#idProdi'));
+            //var element2 = $(this).not($('#fakultasCari'));
+            if (element.val() == "") {
+                return isValid = false;
+            } else {
+                return isValid = true;
+            }
+        });
+        return isValid;
+    }
+    else if (selectedRole == "Kepala Program Studi" || selectedRole == "Dosen") {
         $(".input-data").each(function () {
             var element = $(this);
             if (element.val() == "") {
@@ -189,9 +201,10 @@ function validationCustom2() {
         return isValid;
     }
     else {
-        $('.input-data').not($('#idProdi')).each(function () {
-            var element = $(this).not($('#idProdi'));
-            if (element.val() == "") {
+        $('.input-data').not($('#idProdi')).not( $('#fakultasCari')).each(function () {
+            var element = $(this).not($('#idProdi')).not( $('#fakultasCari'));
+            //var element2 = $(this).not($('#fakultasCari'));
+            if (element.val() == "" ) {
                 return isValid = false;
             } else {
                 return isValid = true;
@@ -205,7 +218,19 @@ function validationCustomEditUser() {
     var isValid;
     var namaRole = document.getElementById("idRole");
     var selectedRole = namaRole.options[namaRole.selectedIndex].text;
-    if (selectedRole == "Kepala Program Studi" || selectedRole == "Dosen") {
+    if (selectedRole == "Admin Fakultas") {
+        $('.asd').not($('#idProdi')).each(function () {
+            var element = $(this).not($('#idProdi'));
+            //var element2 = $(this).not($('#fakultasCari'));
+            if (element.val() == "") {
+                return isValid = false;
+            } else {
+                return isValid = true;
+            }
+        });
+        return isValid;
+    }
+    else if (selectedRole == "Kepala Program Studi" || selectedRole == "Dosen") {
         $(".asd").each(function () {
             var element = $(this);
             if (element.val() == "") {
@@ -217,8 +242,9 @@ function validationCustomEditUser() {
         return isValid;
     }
     else {
-        $(".asd").not($('#idProdi')).each(function () {
-            var element = $(this).not($('#idProdi'));
+        $('.asd').not($('#idProdi')).not($('#inp_fakultas')).each(function () {
+            var element = $(this).not($('#idProdi')).not($('#inp_fakultas'));
+            //var element2 = $(this).not($('#fakultasCari'));
             if (element.val() == "") {
                 return isValid = false;
             } else {

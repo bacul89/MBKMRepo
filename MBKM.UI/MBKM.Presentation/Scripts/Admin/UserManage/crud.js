@@ -41,28 +41,57 @@ function AddUserTemplate() {
                 $('#idRole').change(function () {
                     var namaRole = document.getElementById("idRole");
                     var selectedRole = namaRole.options[namaRole.selectedIndex].text;
-                    if (selectedRole != "Kepala Program Studi" && selectedRole != "Dosen") {
-                        //$('#specialRole').html('<input type="text" value="BAA" class="form-control input-pendaftaran input-data" disabled="disabled" id="specialRole" name="specialRole">')
-                        $("#divProdi").prop('hidden', true);
-                        //$("#specialRole").text("asd-BAA");
-                        $("#specialRole").val(selectedRole);
-                        console.log($("#specialRole").val());
-                        console.log($("#txtKPTSDIN").val());
-                        console.log($("#fakultasCari").val());
-                        console.log($("#fakultasCari").text());
-                    }
-                    //else if (selectedRole != "Dosen") {
-                    //    //$('#specialRole').html('<input type="text" value="BAA" class="form-control input-pendaftaran input-data" disabled="disabled" id="specialRole" name="specialRole">')
-                    //    $("#divProdi").prop('hidden', true);
-                    //    //$("#specialRole").text("asd-BAA");
-                    //    $("#specialRole").val(selectedRole);}
-                    else {
-                        $("#divProdi").prop('hidden', false);
-                        console.log($("#txtKPTSDIN").val());
-                        console.log($("#fakultasCari").val());
-                        console.log($("#fakultasCari").text());
+                    if (selectedRole != "Kepala Program Studi" && selectedRole != "Dosen" && selectedRole != "Admin Fakultas") {//hide fakultas
+                        $("#divFakultas").prop('hidden', true);
+                        if (selectedRole != "Kepala Program Studi" && selectedRole != "Dosen") {//close prodi
+                            //$('#specialRole').html('<input type="text" value="BAA" class="form-control input-pendaftaran input-data" disabled="disabled" id="specialRole" name="specialRole">')
+                            $("#divProdi").prop('hidden', true);
+                            //$("#specialRole").text("asd-BAA");
+                            $("#specialRole").val(selectedRole);
+                            console.log($("#specialRole").val());
+                            console.log($("#txtKPTSDIN").val());
+                            console.log($("#fakultasCari").val());
+                            console.log($("#fakultasCari").text());
+                        }
+                        //else if (selectedRole != "Dosen") {
+                        //    //$('#specialRole').html('<input type="text" value="BAA" class="form-control input-pendaftaran input-data" disabled="disabled" id="specialRole" name="specialRole">')
+                        //    $("#divProdi").prop('hidden', true);
+                        //    //$("#specialRole").text("asd-BAA");
+                        //    $("#specialRole").val(selectedRole);}
+                        else {//open prodi
+                            $("#divProdi").prop('hidden', false);
+                            console.log($("#txtKPTSDIN").val());
+                            console.log($("#fakultasCari").val());
+                            console.log($("#fakultasCari").text());
 
+                        }
                     }
+                    else {
+                        $("#divFakultas").prop('hidden', false); //open fakultas
+                        if (selectedRole != "Kepala Program Studi" && selectedRole != "Dosen") {//close prodi
+                            //$('#specialRole').html('<input type="text" value="BAA" class="form-control input-pendaftaran input-data" disabled="disabled" id="specialRole" name="specialRole">')
+                            $("#divProdi").prop('hidden', true);
+                            //$("#specialRole").text("asd-BAA");
+                            $("#specialRole").val(selectedRole);
+                            console.log($("#specialRole").val());
+                            console.log($("#txtKPTSDIN").val());
+                            console.log($("#fakultasCari").val());
+                            console.log($("#fakultasCari").text());
+                        }
+                        //else if (selectedRole != "Dosen") {
+                        //    //$('#specialRole').html('<input type="text" value="BAA" class="form-control input-pendaftaran input-data" disabled="disabled" id="specialRole" name="specialRole">')
+                        //    $("#divProdi").prop('hidden', true);
+                        //    //$("#specialRole").text("asd-BAA");
+                        //    $("#specialRole").val(selectedRole);}
+                        else {//open prodi
+                            $("#divProdi").prop('hidden', false);
+                            console.log($("#txtKPTSDIN").val());
+                            console.log($("#fakultasCari").val());
+                            console.log($("#fakultasCari").text());
+
+                        }
+                    }
+                    
                     //console.log(selectedRole);
                 })
                 
@@ -119,35 +148,76 @@ function EditUserTemplate(id) {
             
             var namaRole = document.getElementById("idRole");
             var selectedRole = namaRole.options[namaRole.selectedIndex].text;
-            if (selectedRole != "Kepala Program Studi" && selectedRole != "Dosen") {
-                //$('#specialRole').html('<input type="text" value="BAA" class="form-control input-pendaftaran input-data" disabled="disabled" id="specialRole" name="specialRole">')
+            //$("#divProdi").prop('hidden', false);
+            //$("#divFakultas").prop('hidden', false);
+           
+            if (selectedRole != "Kepala Program Studi" && selectedRole != "Dosen" && selectedRole != "Admin Fakultas") {//hide fakultas
+                $("#divFakultas").prop('hidden', true);
+                $("#divProdi").prop('hidden', false);//tes
+                if (selectedRole != "Kepala Program Studi" && selectedRole != "Dosen") {//hide prodi
+                    $("#divProdi").prop('hidden', true);
+                    //$("#specialRole").text("asd-BAA");
+                    $("#specialRole").val(selectedRole);
+                    //console.log($("#specialRole").val());
+                }
+                else {
+                    $("#divProdi").prop('hidden', false);
+
+                }
+
+            }
+            else if (selectedRole == "Admin Fakultas") {//admin fak
                 $("#divProdi").prop('hidden', true);
-                //$("#specialRole").text("asd-BAA");
-                $("#specialRole").val(selectedRole);
-                //console.log($("#specialRole").val());
+                $("#divFakultas").prop('hidden', false);
+
             }
             else {
                 $("#divProdi").prop('hidden', false);
-
+                $("#divFakultas").prop('hidden', false);
             }
+           
             $('#idRole').change(function () {
                 //console.log($("option:selected:first", "#inp_fakultas").val());
                 //console.log($("#inp_fakultas").val());
                 //console.log($('#inp_fakultas').select2('data')[0].value);
                 var namaRole = document.getElementById("idRole");
                 var selectedRole = namaRole.options[namaRole.selectedIndex].text;
-                if (selectedRole != "Kepala Program Studi" && selectedRole != "Dosen") {
-                    //$('#specialRole').html('<input type="text" value="BAA" class="form-control input-pendaftaran input-data" disabled="disabled" id="specialRole" name="specialRole">')
+                if (selectedRole != "Kepala Program Studi" && selectedRole != "Dosen" && selectedRole != "Admin Fakultas") {//hide fakultas
+                    $("#divFakultas").prop('hidden', true);
+                    $("#divProdi").prop('hidden', false);//tes
+                    if (selectedRole != "Kepala Program Studi" && selectedRole != "Dosen") {//hide prodi
+                        $("#divProdi").prop('hidden', true);
+                        //$("#specialRole").text("asd-BAA");
+                        $("#specialRole").val(selectedRole);
+                        //console.log($("#specialRole").val());
+                    }
+                    else {
+                        $("#divProdi").prop('hidden', false);
+
+                    }
+
+                }
+                else if (selectedRole == "Admin Fakultas") {//admin fak
                     $("#divProdi").prop('hidden', true);
-                    //$("#specialRole").text("asd-BAA");
-                    $("#specialRole").val(selectedRole);
-                    //console.log($("#specialRole").val());
-                    //console.log($("#txtKPTSDIN").val());
+                    $("#divFakultas").prop('hidden', false);
+
                 }
                 else {
                     $("#divProdi").prop('hidden', false);
-
+                    $("#divFakultas").prop('hidden', false);
                 }
+                //if (selectedRole != "Kepala Program Studi" && selectedRole != "Dosen") {
+                //    //$('#specialRole').html('<input type="text" value="BAA" class="form-control input-pendaftaran input-data" disabled="disabled" id="specialRole" name="specialRole">')
+                //    $("#divProdi").prop('hidden', true);
+                //    //$("#specialRole").text("asd-BAA");
+                //    $("#specialRole").val(selectedRole);
+                //    //console.log($("#specialRole").val());
+                //    //console.log($("#txtKPTSDIN").val());
+                //}
+                //else {
+                //    $("#divProdi").prop('hidden', false);
+
+                //}
                 //console.log(selectedRole);
             })
         }
@@ -169,16 +239,22 @@ function DetailUserTemplate(id) {
             var namaRole = document.getElementById("idRole");
             var selectedRole = $('#idRole').val();
             console.log(selectedRole);
-            if (selectedRole != "Kepala Program Studi" && selectedRole != "Dosen") {
+            if (selectedRole == "Admin Fakultas") {
+                $("#divProdi").prop('hidden', true);
+            }
+            else if (selectedRole != "Kepala Program Studi" && selectedRole != "Dosen") {
+                
                 //$('#specialRole').html('<input type="text" value="BAA" class="form-control input-pendaftaran input-data" disabled="disabled" id="specialRole" name="specialRole">')
                 $("#divProdi").prop('hidden', true);
+                $("#divFakultas").prop('hidden', true);
                 //$("#specialRole").text("asd-BAA");
-                $("#specialRole").val(selectedRole);
+                //$("#specialRole").val(selectedRole);
                 //console.log($("#specialRole").val());
                
             }
             else {
                 $("#divProdi").prop('hidden', false);
+                
 
             }
         }
@@ -187,11 +263,30 @@ function DetailUserTemplate(id) {
 }
 function PostCreate2() {
     //getValueOnForm();
+    console.log($('#fakultasCari').val());
     var formInputUser = new Object();
     var namaRole = document.getElementById("idRole");
     var selectedRole = namaRole.options[namaRole.selectedIndex].text;
-    //if bukan role spesial (Kaprodi)
-    if (selectedRole == "Kepala Program Studi" || selectedRole == "Dosen") {
+    //if bukan role spesial (Kaprodi dan dosen)
+    if (selectedRole == "Admin Fakultas") {
+        formInputUser.NoPegawai = $('input[id=txtnomorindukpegawai]').val();
+        formInputUser.UserName = $('input[id=txtnama]').val();
+        formInputUser.Email = $('input[id=txtemail]').val();
+        formInputUser.Password = $('input[id=txtpassword]').val();
+        formInputUser.RoleID = $('#idRole').val();
+        formInputUser.KodeFakultas = $('#fakultasCari').val();
+        formInputUser.NamaFakultas = $("option:selected:first", "#fakultasCari").text();
+        formInputUser.KPTSDIN = $('#txtKPTSDIN').val();
+        formInputUser.KodeProdi = $("option:selected:first", "#fakultasCari").text();
+        //formInputUser.NamaProdi = $('#idProdi').val();
+        formInputUser.NamaProdi = "Admin Fakultas";//$('#specialRole').val();
+        var cekAktif = $('input[id=inp_status]:checked').val();
+        if (cekAktif == 1) {
+            formInputUser.IsActive = "true";
+        }
+        else { formInputUser.IsActive = "false"; }
+    }
+    else if (selectedRole == "Kepala Program Studi" || selectedRole == "Dosen") {
         var namaProdi = document.getElementById("idProdi");
         var selectedProdi = namaProdi.options[namaProdi.selectedIndex].text;
         var namaProdi = selectedProdi.substring(selectedProdi.indexOf('-') + 1);
@@ -222,8 +317,8 @@ function PostCreate2() {
         formInputUser.Password = $('input[id=txtpassword]').val();
         formInputUser.RoleID = $('#idRole').val();
         formInputUser.KodeProdi = $('#specialRole').val();
-        formInputUser.KodeFakultas = $('#fakultasCari').val();
-        formInputUser.NamaFakultas = $("option:selected:first", "#fakultasCari").text();
+        formInputUser.KodeFakultas = "";
+        formInputUser.NamaFakultas = "";
         formInputUser.KPTSDIN = $('#txtKPTSDIN').val();
         //formInputUser.NamaProdi = $('#idProdi').val();
         formInputUser.NamaProdi = $('#specialRole').val();
@@ -236,7 +331,7 @@ function PostCreate2() {
     
     //formInputUser.IsActive = $('input[id=inp_status]:checked').val();
 
-    if (validationCustom2() && formInputUser.KodeFakultas != null) {
+    if (validationCustom2()) {//&& formInputUser.KodeFakultas != null
         var base_url = window.location.origin;
         $.ajax({
             url: base_url + '/Admin/UserManage/PostDataUser',
@@ -328,7 +423,33 @@ function PostUpdateUser() {
     var namaRole = document.getElementById("idRole");
     var selectedRole = namaRole.options[namaRole.selectedIndex].text;
     //if bukan role spesial (Kaprodi)
-    if (selectedRole == "Kepala Program Studi" || selectedRole == "Dosen") {
+    if (selectedRole == "Admin Fakultas") {
+        var namaProdi = document.getElementById("idProdi");
+        var selectedProdi = namaProdi.options[namaProdi.selectedIndex].text;
+        var namaProdis = selectedProdi.substring(selectedProdi.indexOf('-') + 1);
+        formInputUser.NoPegawai = $('input[id=txtnomorindukpegawai]').val();
+        formInputUser.UserName = $('input[id=txtnama]').val();
+        formInputUser.Email = $('input[id=txtemail]').val();
+        formInputUser.Password = $('input[id=txtpassword]').val();
+        formInputUser.RoleID = $('#idRole').val();
+        formInputUser.KodeProdi = $("option:selected:first", "#inp_fakultas").text();
+        //formInputUser.NamaProdi = $('#idProdi').val();
+        formInputUser.NamaProdi = "Admin Fakultas";
+
+        formInputUser.KodeFakultas = $('#inp_fakultas').select2('data')[0].value;
+        //$('#inp_fakultas').select2('data')[0].value
+        formInputUser.NamaFakultas = $("option:selected:first", "#inp_fakultas").text();
+        formInputUser.KPTSDIN = $('#txtKPTSDIN').val();
+
+        var cekAktif = $('input[id=inp_status]:checked').val();
+        if (cekAktif == 1) {
+            formInputUser.IsActive = "true";
+        }
+        else { formInputUser.IsActive = "false"; }
+        formInputUser.ID = $('#id_userTemplate').val();
+    }
+    
+    else if (selectedRole == "Kepala Program Studi" || selectedRole == "Dosen") {
         var namaProdi = document.getElementById("idProdi");
         var selectedProdi = namaProdi.options[namaProdi.selectedIndex].text;
         var namaProdis = selectedProdi.substring(selectedProdi.indexOf('-') + 1);
@@ -353,7 +474,7 @@ function PostUpdateUser() {
         else { formInputUser.IsActive = "false"; }
         formInputUser.ID = $('#id_userTemplate').val();
     }
-    else {
+    else {//role tanpa fakultas dan prodi
         var namaProdi = document.getElementById("idProdi");
         var selectedProdi = namaProdi.options[namaProdi.selectedIndex].text;
         var namaProdis = selectedProdi.substring(selectedProdi.indexOf('-') + 1);
@@ -366,8 +487,8 @@ function PostUpdateUser() {
         //formInputUser.NamaProdi = $('#idProdi').val();
         formInputUser.NamaProdi = $('#specialRole').val();
 
-        formInputUser.KodeFakultas = $('#inp_fakultas').select2('data')[0].value;
-        formInputUser.NamaFakultas = $("option:selected:first", "#inp_fakultas").text();
+        formInputUser.KodeFakultas = "";
+        formInputUser.NamaFakultas = "";
         formInputUser.KPTSDIN = $('#txtKPTSDIN').val();
 
         var cekAktif = $('input[id=inp_status]:checked').val();
@@ -379,7 +500,7 @@ function PostUpdateUser() {
     }
     
     //console.log(formInputUser);
-    if (validationCustomEditUser() && formInputUser.NamaFakultas != null) {
+    if (validationCustomEditUser()) {
     var base_url = window.location.origin;
     $.ajax({
         url: base_url + '/Admin/UserManage/PostUpdateDataUser',
