@@ -341,9 +341,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     if (cplmkPendaftaran.CPLMatakuliah != null)
                     {
                         string kodeMatkul = cplmkPendaftaran.CPLMatakuliah.Split(new string[] { " - " }, StringSplitOptions.None)[0];
-                        string prodiId = Session["prodiIDAsal"] as string;
+                        string prodi = Session["prodiAsal"] as string;
                         //string prodiId = "0700";
-                        var list = _cplMatakuliahService.Find(cplmk => cplmk.MasterCapaianPembelajarans.IsActive && !cplmk.MasterCapaianPembelajarans.IsDeleted && cplmk.IsActive && !cplmk.IsDeleted && cplmk.KodeMataKuliah == kodeMatkul && cplmk.MasterCapaianPembelajarans.ProdiID == prodiId).ToList();
+                        var list = _cplMatakuliahService.Find(cplmk => cplmk.MasterCapaianPembelajarans.IsActive && !cplmk.MasterCapaianPembelajarans.IsDeleted && cplmk.IsActive && !cplmk.IsDeleted && cplmk.KodeMataKuliah == kodeMatkul && cplmk.MasterCapaianPembelajarans.NamaProdi == prodi).ToList();
                         foreach (var item in list)
                         {
                             CPLMKPendaftaran res = new CPLMKPendaftaran();
