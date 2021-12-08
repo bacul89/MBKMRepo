@@ -45,15 +45,17 @@
                         <div class="form-group">
                             <label for="inp_jenjang" class="col-sm-3 control-label">Jenjang Studi</label>
                             <div class="col-sm-7">
-                                <select name="inp_jenjang" id="inp_jenjang" class="form-control input-md input-data">
+                                <select name="inp_jenjang" id="inp_jenjang" class="form-control input-md input-data"
+                                        @{if (ViewData["role"].ToString().Contains("program studi")) { <text> disabled </text>} }>
                                     <option value="" selected disabled>-- Pilih Jenjang Studi --</option>
                                     @{
                                         foreach (var d in ViewData["Jenjang"] as IEnumerable<MBKM.Entities.ViewModel.VMLookup>)
                                         {
-                                            <option value="@d.Nilai">@d.Nama</option>
+                                            <option value="@d.Nilai" @{
+                                                if (ViewData["role"].ToString().Contains("program studi") && ViewData["jenjangStudiDefault"].ToString() == d.Nilai) 
+                                                {<text> selected</text>}}
+                                                    >@d.Nama</option>
                                         }
-
-
                                     }
                                 </select>
                             </div>

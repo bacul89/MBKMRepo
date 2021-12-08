@@ -53,6 +53,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ViewData["JenisUjian"] = tempJenisUjian;
             var d = HttpContext.Session["RoleName"].ToString().ToLower();
             ViewData["role"] = HttpContext.Session["RoleName"].ToString().ToLower();
+            var f = _jadwalUjianMBKMService.GetInformasiData(HttpContext.Session["KodeProdi"].ToString().ToLower());
+            ViewData["jenjangStudiDefault"] = (f != null ? f.JenjangStudi : "");
+            
             return View();
         }
 
