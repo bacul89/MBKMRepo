@@ -96,7 +96,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     d.mahasiswas.NamaUniversitas,
                     d.mahasiswas.NIM,
                     d.mahasiswas.Nama,
-                    
+
                     d.JadwalKuliahs.KodeMataKuliah,
                     d.JadwalKuliahs.NamaMataKuliah,
                     d.JadwalKuliahs.ClassSection,
@@ -104,36 +104,35 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     d.NilaiKuliah.Grade,
                     d.JadwalKuliahs.Hari.ToString(),
                     d.JadwalKuliahs.JamMasuk,
-                    d.JadwalKuliahs.JamSelesai,                    
+                    d.JadwalKuliahs.JamSelesai,
                     d.JadwalKuliahs.TglAwalKuliah.ToString(),
                     d.JadwalKuliahs.TglAkhirKuliah.ToString(),
-                    d.JadwalKuliahs.NamaDosen,                    
+                    d.JadwalKuliahs.NamaDosen,
                     d.JadwalKuliahs.NamaProdi,
                     d.JadwalKuliahs.DosenID.ToString(),
                     d.mahasiswas.ID.ToString(),
-                    //d.mahasiswas.NIM,
-                    //d.mahasiswas.NIMAsal,
-                    //d.JadwalKuliahs.ID.ToString(),
-                    //d.JadwalKuliahID.ToString(),
+                    d.mahasiswas.NIM,
+                    d.mahasiswas.NIMAsal,
+                    d.JadwalKuliahs.ID.ToString(),
+                    d.ID.ToString(),
                     d.ID.ToString()
                 });
             }
 
-           
+            var row = 0;
             foreach (var e in dataMahasiswaWitoutNilai)
             {
-
-                bool check = isAvailable(dataMahasiswa, e.MahasiswaID);
-
-                    if (check == false)
-                    {
-                        final.Add(new String[]{
+                row = row + 1;
+                bool check = isAvailable(dataMahasiswa, e.mahasiswas.ID, e.JadwalKuliahs.ID);
+                
+                if (check == false)
+                {
+                    final.Add(new String[]{
                             dataSemester.Nama,
                              e.JadwalKuliahs.JenjangStudi,
                             e.mahasiswas.NamaUniversitas,
                             e.mahasiswas.NIM,
                             e.mahasiswas.Nama,
-
                             e.JadwalKuliahs.KodeMataKuliah,
                             e.JadwalKuliahs.NamaMataKuliah,
                             e.JadwalKuliahs.ClassSection,
@@ -147,31 +146,30 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                             e.JadwalKuliahs.NamaDosen,
                             e.JadwalKuliahs.NamaProdi,
                             e.JadwalKuliahs.DosenID.ToString(),
-                            //e.mahasiswas.ID.ToString(),
-                            //e.mahasiswas.NIM,
-                            //e.mahasiswas.NIMAsal,
-                            //e.JadwalKuliahs.ID.ToString(),
-                            //e.JadwalKuliahID.ToString(),
+                            e.mahasiswas.ID.ToString(),
+                            e.mahasiswas.NIM,
+                            e.mahasiswas.NIMAsal,
+                            e.JadwalKuliahs.ID.ToString(),
+                            e.ID.ToString(),
                             e.ID.ToString()
                         });
-                    }
-
-
-
-
+                }
             }
 
 
             return Json(final);
         }
 
-        private bool isAvailable(IEnumerable<VMReportMahasiswaEksternal> data, long MhsID) {
+        private bool isAvailable(IEnumerable<VMReportMahasiswaEksternal> data, long MhsID, long JadwalID)
+        {
 
             //var data = _pendaftaranMataKuliahService.GetListPendaftaranEksternalPertukaran(strm);
             foreach (var d in data)
             {
+                var test = d.mahasiswas.ID + " = " + MhsID + ", " + d.JadwalKuliahs.ID + " = " + JadwalID;
 
-                if (d.MahasiswaID == MhsID)
+                Console.WriteLine(test);
+                if (d.mahasiswas.ID == MhsID && d.JadwalKuliahs.ID == JadwalID)
                 {
                     return true;
                 }
