@@ -156,6 +156,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     mahasiswa2.Semester = ((int) a.Semester) + "";
                     _mahasiswaService.Save(mahasiswa2);
                     Session["prodiIDAsal"] = a.ProdiIDAsal;
+                    Session["prodiAsal"] = a.Prodi;
                     PopulateSession(true, mahasiswa2.Email, mahasiswa2.ID + "", mahasiswa2.Semester + "", mahasiswa2.Nama);
                 } else
                 {
@@ -164,6 +165,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     mahasiswa.Password = hp(a.PasswordData);
                     _mahasiswaService.Save(mahasiswa);
                     Session["prodiIDAsal"] = a.ProdiIDAsal;
+                    Session["prodiAsal"] = a.Prodi;
                     PopulateSession(true, mahasiswa.Email, mahasiswa.ID + "", mahasiswa.Semester + "", mahasiswa.Nama);
                 }
                 Session["isInternal"] = true;
@@ -189,6 +191,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult Logout()
         {
+            Session["prodiIDAsal"] = null;
+            Session["prodiAsal"] = null;
             PopulateSession(false, null, null, null, null);
             return RedirectToAction("Index", "Home");
         }
