@@ -347,7 +347,7 @@ function reloadDatatable() {
             },
 
             //---debug
-            {
+            /*{
                 "data": "18",
                 "name": "18",
                 "render": function (data, type, row, meta) {
@@ -374,7 +374,7 @@ function reloadDatatable() {
                 "render": function (data, type, row, meta) {
                     return '<div class="center">' + row[18] + row[22] + row[23]+ '</div>';
                 }
-            },
+            },*/
         ],
 
         "footerCallback": function (row, data, start, end, display) {
