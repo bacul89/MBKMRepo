@@ -5,6 +5,7 @@ using MBKM.Repository.BaseRepository;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Text;
@@ -139,6 +140,19 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             {
                 var result = context.Database
                     .SqlQuery<VMSemester>("GetSemesterALL").ToList();
+                return result;
+            }
+        }
+        
+        
+        public VMInformasiStudi GetInformasiData(string prodi)
+        {
+            using (var context = new MBKMContext())
+            {
+                var kodeMkParam = new SqlParameter("@IDProdi", prodi);
+
+                var result = context.Database
+                    .SqlQuery<VMInformasiStudi>("GetInformasiKampusByIdProdi @IDProdi", kodeMkParam).FirstOrDefault();
                 return result;
             }
         }
