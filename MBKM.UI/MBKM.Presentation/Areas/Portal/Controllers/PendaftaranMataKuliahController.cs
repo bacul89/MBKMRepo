@@ -255,11 +255,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }public ActionResult GetMataKuliahAsal(int idMatkul)
         {
             var result = _jkService.Get(idMatkul);
-            string prodiIDAsal = Session["prodiIDAsal"] as string;
+            string prodiAsal = Session["prodiAsal"] as string;
             //string prodiIDAsal = "0700";
             List<string> kodeNama = new List<string>();
             List<CPLMatakuliah> cplmks = new List<CPLMatakuliah>();
-            var list = _cplMatakuliahService.Find(cplmk => cplmk.MasterCapaianPembelajarans.IsActive && !cplmk.MasterCapaianPembelajarans.IsDeleted && cplmk.IsActive && !cplmk.IsDeleted && cplmk.MasterCapaianPembelajarans.ProdiID == prodiIDAsal).ToList();
+            var list = _cplMatakuliahService.Find(cplmk => cplmk.MasterCapaianPembelajarans.IsActive && !cplmk.MasterCapaianPembelajarans.IsDeleted && cplmk.IsActive && !cplmk.IsDeleted && cplmk.MasterCapaianPembelajarans.NamaProdi == prodiAsal).ToList();
             foreach (var item in list)
             {
                 if (!kodeNama.Contains(item.KodeMataKuliah + " - " + item.NamaMataKuliah))
@@ -341,9 +341,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     if (cplmkPendaftaran.CPLMatakuliah != null)
                     {
                         string kodeMatkul = cplmkPendaftaran.CPLMatakuliah.Split(new string[] { " - " }, StringSplitOptions.None)[0];
-                        string prodiId = Session["prodiIDAsal"] as string;
+                        string prodi = Session["prodiAsal"] as string;
                         //string prodiId = "0700";
-                        var list = _cplMatakuliahService.Find(cplmk => cplmk.MasterCapaianPembelajarans.IsActive && !cplmk.MasterCapaianPembelajarans.IsDeleted && cplmk.IsActive && !cplmk.IsDeleted && cplmk.KodeMataKuliah == kodeMatkul && cplmk.MasterCapaianPembelajarans.ProdiID == prodiId).ToList();
+                        var list = _cplMatakuliahService.Find(cplmk => cplmk.MasterCapaianPembelajarans.IsActive && !cplmk.MasterCapaianPembelajarans.IsDeleted && cplmk.IsActive && !cplmk.IsDeleted && cplmk.KodeMataKuliah == kodeMatkul && cplmk.MasterCapaianPembelajarans.NamaProdi == prodi).ToList();
                         foreach (var item in list)
                         {
                             CPLMKPendaftaran res = new CPLMKPendaftaran();
