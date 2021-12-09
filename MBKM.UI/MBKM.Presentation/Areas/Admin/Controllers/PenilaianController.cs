@@ -52,13 +52,14 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
         public ActionResult GetKelas(string jenjangStudi, string fakultas, string lokasi, string prodi, string matkul, string seksi, int strm)
         {
+            var noPegawai = int.Parse(HttpContext.Session["nopegawai"].ToString());
             var result = new List<JadwalKuliah>();
             if (seksi == null || seksi.Length == 0)
             {
-                result = _jadwalKuliahService.Find(_ => _.JenjangStudi == jenjangStudi && _.NamaFakultas == fakultas && _.Lokasi == lokasi && _.NamaProdi == prodi && _.KodeMataKuliah + " - " + _.NamaMataKuliah == matkul && _.FlagOpen && _.STRM == strm).ToList();
+                result = _jadwalKuliahService.Find(_ => _.JenjangStudi == jenjangStudi && _.NamaFakultas == fakultas && _.Lokasi == lokasi && _.NamaProdi == prodi && _.KodeMataKuliah + " - " + _.NamaMataKuliah == matkul && _.FlagOpen && _.STRM == strm && _.DosenID == noPegawai).ToList();
             } else
             {
-                result = _jadwalKuliahService.Find(_ => _.JenjangStudi == jenjangStudi && _.NamaFakultas == fakultas && _.Lokasi == lokasi && _.NamaProdi == prodi && _.KodeMataKuliah + " - " + _.NamaMataKuliah == matkul && _.ClassSection == seksi && _.FlagOpen && _.STRM == strm).ToList();
+                result = _jadwalKuliahService.Find(_ => _.JenjangStudi == jenjangStudi && _.NamaFakultas == fakultas && _.Lokasi == lokasi && _.NamaProdi == prodi && _.KodeMataKuliah + " - " + _.NamaMataKuliah == matkul && _.ClassSection == seksi && _.FlagOpen && _.STRM == strm && _.DosenID == noPegawai).ToList();
             }
             return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
