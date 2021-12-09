@@ -266,7 +266,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
            
             var data = _linkFasilitasService.Get(id);
             var d = HttpContext.Session["RoleName"].ToString().ToLower();
-            ViewData["role"] = HttpContext.Session["RoleName"].ToString().ToLower();
+            //ViewData["role"] = HttpContext.Session["RoleName"].ToString().ToLower();
             return View(data);
         }
         [HttpPost]
