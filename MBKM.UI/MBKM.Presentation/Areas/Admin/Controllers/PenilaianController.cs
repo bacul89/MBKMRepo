@@ -53,7 +53,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult GetKelas(string jenjangStudi, string fakultas, string lokasi, string prodi, string matkul, string seksi, int strm)
         {
             var noPegawai = int.Parse(HttpContext.Session["nopegawai"].ToString());
-            var RoleUser = HttpContext.Session["nopegawai"].ToString().ToLower();
+            var RoleUser = HttpContext.Session["RoleName"].ToString().ToLower();
             var result = new List<JadwalKuliah>();
             if(RoleUser.Contains("dosen") || RoleUser.Contains("program studi"))
             {
