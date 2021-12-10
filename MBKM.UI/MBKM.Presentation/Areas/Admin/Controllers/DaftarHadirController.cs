@@ -67,9 +67,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             {
                 var prodiID = Session["KodeProdi"].ToString();
                 var tempProdiID = Convert.ToInt64(prodiID);
-                var getJenjang = _jkService.Find(x => x.ProdiID == tempProdiID).FirstOrDefault();
-                var jenjangs = getJenjang.JenjangStudi;
-                ViewData["jenjangs"] = jenjangs;
+                //var getJenjang = _jkService.Find(x => x.ProdiID == tempProdiID).FirstOrDefault();
+                //var jenjangs = getJenjang.JenjangStudi;
+                //ViewData["jenjangs"] = jenjangs;
                 ViewData["KodeFakultas"] = Session["KodeFakultas"].ToString();
                 ViewData["NamaFakultas"] = Session["NamaFakultas"].ToString();
                 ViewData["KodeProdi"] = prodiID;
@@ -82,6 +82,12 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             //}
 
             return View();
+        }
+        public ActionResult GetInformasiKampusByProdi()
+        {
+            var kodeProdi = Session["KodeProdi"] as string;
+            var result = _pendaftaranMKService.GetInformasiKampusByIdProdi(kodeProdi);
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
         public ActionResult DHK(int id)
         {

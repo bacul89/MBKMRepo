@@ -107,14 +107,14 @@
                         <td style="width: 400px;">
                             <select name="jenjangStudi" id="jenjangStudi" class="form-control input-md">
                                 <option value="" selected disabled>-- Pilih Jenjang Studi --</option>
-                                @{
+                                @*@{
                                     if (ViewData["role"].ToString() == "Kepala Program Studi")
                                     {
                                         <option value="@ViewData["jenjangs"]" selected>@ViewData["jenjangs"]</option>
                                     }
                                    
 
-                                }
+                                }*@
 
                             </select>
                         </td>
@@ -272,6 +272,23 @@
                 loadJenjangStudi();
             }
             else {//if kaprodi
+                 $.ajax({
+                    type: "GET",
+                    url: "@Url.Action("GetInformasiKampusByProdi", "DaftarHadir")"
+                }).then(function (response) {
+                    var option = $("<option selected='selected'></option>").val(response.JenjangStudi).text(response.JenjangStudi);
+                    $("#jenjangStudi").append(option).trigger('change');
+                    $("#jenjangStudi").prop("disabled", true);
+                    //option = $("<option selected='selected'></option>").val(response.Fakultas).text(response.Fakultas);
+                    //$("#fakultasCari").append(option).trigger('change');
+                    //$("#fakultasCari").prop("disabled", true);
+                    //option = $("<option selected='selected'></option>").val(response.Prodi).text(response.Prodi);
+                    //$("#prodiCari").append(option).trigger('change');
+                    //$("#prodiCari").prop("disabled", true);
+                    //option = $("<option selected='selected'></option>").val(response.Lokasi).text(response.Lokasi);
+                    //$("#lokasiCari").append(option).trigger('change');
+                    //$("#lokasiCari").prop("disabled", true);
+                });
                 $("#fakultas").prop("disabled", true);
                 $("#jenjangStudi").prop("disabled", true);
                 $("#prodi").prop("disabled", true);
@@ -1137,16 +1154,16 @@
                     $("#mataKuliah").prop("disabled", true);
                     $("#seksi").prop("disabled", true);
 
-                    
-                    
+
+
                         buttonHandler("close");
 
                         //$("#fakultas").empty();
-                       
 
-                       
-                        
-                            
+
+
+
+
 
                             $("#lokasi").select2({
                                 placeholder: "-- Pilih Lokasi --",
@@ -1284,9 +1301,9 @@
                                     });
                                 });
                             });
-                        
+
                         /* });*///fakultas change function
-                    
+
                 });
             }
 
