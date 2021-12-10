@@ -14,29 +14,29 @@
             }
             $('#modal-inner').append(e);
             $('.modal').modal('show');
-            var getRole = $("#txtRole").val();
+            //var getRole = $("#txtRole").val();
             //if (getRole != "wakil rektor") {
 
-            //    $("#update-button").hide();
-            //    //loadControl('Edit');
-            //    $("#edit-button").click(function () {
-            //        $("#inp_moodle").removeAttr("disabled");
-            //        $("#inp_zeds").removeAttr("disabled");
-            //        $("#inp_teams").removeAttr("disabled");
-            //        $("#inp_other").removeAttr("disabled");
-            //        $("#edit-button").hide();
-            //        $("#update-button").show();
-            //        $("#update-button").click(function () {
-            //            //var latest_valueKJ = $("option:selected:first", "#noKJ").text();
-            //            // $("#noKJ").val(latest_valueKJ);
-            //            //alert(latest_valueKJ);
-            //            UpdateLink(id);
-            //        });
-            //    });
+                $("#update-button").hide();
+                //loadControl('Edit');
+                $("#edit-button").click(function () {
+                    $("#inp_moodle").removeAttr("disabled");
+                    $("#inp_zeds").removeAttr("disabled");
+                    $("#inp_teams").removeAttr("disabled");
+                    $("#inp_other").removeAttr("disabled");
+                    $("#edit-button").hide();
+                    $("#update-button").show();
+                    $("#update-button").click(function () {
+                        //var latest_valueKJ = $("option:selected:first", "#noKJ").text();
+                        // $("#noKJ").val(latest_valueKJ);
+                        //alert(latest_valueKJ);
+                        UpdateLink(id);
+                    });
+                });
             //}
             //else {
-                $("#edit-button").hide();
-                $("#update-button").hide();
+                //$("#edit-button").hide();
+                //$("#update-button").hide();
             //}
             
 
