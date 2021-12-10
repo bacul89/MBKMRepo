@@ -129,7 +129,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             ViewData["semester"] = DescSemester.Nama;
             ViewData["pertanyaan"] = Pertanyaan;
             ViewData["jadwalID"] = id;
-            IEnumerable<VMJawabanFeedback> Jawaban = _feedbackMatkulService.GetJawabanFeedback(Pertanyaan.First().KodeJawaban);
+            IEnumerable<VMJawabanFeedback> Jawaban = _feedbackMatkulService.GetJawabanFeedback((Pertanyaan.Count() == 0 ? "" : Pertanyaan.First().KodeJawaban));
             ViewData["jawaban"] = Jawaban;
             var data1 = _jadwalKuliahService.Get(id);
             var listDosen = _feedbackMatkulService.GetDosenMakulPertemuans(data1.KodeMataKuliah, data1.ClassSection, data1.STRM.ToString(), data1.FakultasID.ToString());
@@ -264,7 +264,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             ViewData["semester"] = DescSemester.Nama;
             ViewData["pertanyaan"] = Pertanyaan;
             ViewData["jadwalID"] = idJadwalKuliah;
-            IEnumerable<VMJawabanFeedback> Jawaban = _feedbackMatkulService.GetJawabanFeedback(Pertanyaan.First().KodeJawaban);
+            IEnumerable<VMJawabanFeedback> Jawaban = _feedbackMatkulService.GetJawabanFeedback((Pertanyaan.Count() == 0 ? "" : Pertanyaan.First().KodeJawaban));
             ViewData["jawaban"] = Jawaban;
 
             var listDosen1 = _feedbackMatkulService.GetDosenMakulPertemuans(data1.KodeMataKuliah, data1.ClassSection, data1.STRM.ToString(), data1.FakultasID.ToString());
@@ -302,7 +302,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             ViewData["pertanyaan"] = Pertanyaan;
             ViewData["jadwalID"] = idJadwalKuliah;
 
-            IEnumerable<VMJawabanFeedback> Jawaban = _feedbackMatkulService.GetJawabanFeedback(Pertanyaan.First().KodeJawaban);
+            IEnumerable<VMJawabanFeedback> Jawaban = _feedbackMatkulService.GetJawabanFeedback((Pertanyaan.Count() == 0 ? "" : Pertanyaan.First().KodeJawaban));
             ViewData["jawaban"] = Jawaban;
 
             var listDosen1 = _feedbackMatkulService.GetDosenMakulPertemuans(data1.KodeMataKuliah, data1.ClassSection, data1.STRM.ToString(), data1.FakultasID.ToString());
