@@ -49,7 +49,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             if (RoleLogin == "Kepala Program Studi" || RoleLogin == "Dosen")
             {
                 var prodiID = Session["KodeProdi"].ToString();
-                var tempProdiID = Convert.ToInt64(prodiID);
+                //var tempProdiID = Convert.ToInt64(prodiID);
                 //var getJenjang = _jkService.Find(x => x.ProdiID == tempProdiID).FirstOrDefault();
                 //var jenjangs = getJenjang.JenjangStudi;
                 //ViewData["jenjangs"] = jenjangs;
@@ -265,7 +265,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
            
             var data = _linkFasilitasService.Get(id);
-            var d = HttpContext.Session["RoleName"].ToString().ToLower();
+            //var d = HttpContext.Session["RoleName"].ToString().ToLower();
             //ViewData["role"] = HttpContext.Session["RoleName"].ToString().ToLower();
             return View(data);
         }
