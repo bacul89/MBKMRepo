@@ -124,12 +124,12 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var email = HttpContext.Session["emailMahasiswa"].ToString();
             var jenjang = _mahasiswaService.Find(x => x.Email == email).First().JenjangStudi;
             var dataSemester = _mahasiswaService.GetDataSemester(jenjang).First().ID;
-            IEnumerable<VMPertanyaanFeedback> Pertanyaan = _feedbackMatkulService.GetPertanyaanFeedbacks(jenjang, "2010", ff);
+            IEnumerable<VMPertanyaanFeedback> Pertanyaan = _feedbackMatkulService.GetPertanyaanFeedbacks(jenjang, strm, ff);
             var DescSemester = _feedbackMatkulService.GetSemesterByStrm(strm);
             ViewData["semester"] = DescSemester.Nama;
             ViewData["pertanyaan"] = Pertanyaan;
             ViewData["jadwalID"] = id;
-            IEnumerable<VMJawabanFeedback> Jawaban = _feedbackMatkulService.GetJawabanFeedback(Pertanyaan.First().KodeJawaban);
+            IEnumerable<VMJawabanFeedback> Jawaban = _feedbackMatkulService.GetJawabanFeedback((Pertanyaan.Count() == 0 ? "" : Pertanyaan.First().KodeJawaban));
             ViewData["jawaban"] = Jawaban;
             var data1 = _jadwalKuliahService.Get(id);
             var listDosen = _feedbackMatkulService.GetDosenMakulPertemuans(data1.KodeMataKuliah, data1.ClassSection, data1.STRM.ToString(), data1.FakultasID.ToString());
@@ -258,13 +258,13 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var jenjang = _mahasiswaService.Find(x => x.Email == email).First().JenjangStudi;
             var dataSemester = _mahasiswaService.GetDataSemester(jenjang).First().ID;
 
-            IEnumerable<VMPertanyaanFeedback> Pertanyaan = _feedbackMatkulService.GetPertanyaanFeedbacks(jenjang, "2010", data1.FakultasID);
+            IEnumerable<VMPertanyaanFeedback> Pertanyaan = _feedbackMatkulService.GetPertanyaanFeedbacks(jenjang, data1.STRM.ToString(), data1.FakultasID);
 
             var DescSemester = _feedbackMatkulService.GetSemesterByStrm(data1.STRM.ToString());
             ViewData["semester"] = DescSemester.Nama;
             ViewData["pertanyaan"] = Pertanyaan;
             ViewData["jadwalID"] = idJadwalKuliah;
-            IEnumerable<VMJawabanFeedback> Jawaban = _feedbackMatkulService.GetJawabanFeedback(Pertanyaan.First().KodeJawaban);
+            IEnumerable<VMJawabanFeedback> Jawaban = _feedbackMatkulService.GetJawabanFeedback((Pertanyaan.Count() == 0 ? "" : Pertanyaan.First().KodeJawaban));
             ViewData["jawaban"] = Jawaban;
 
             var listDosen1 = _feedbackMatkulService.GetDosenMakulPertemuans(data1.KodeMataKuliah, data1.ClassSection, data1.STRM.ToString(), data1.FakultasID.ToString());
@@ -296,13 +296,13 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var jenjang = _mahasiswaService.Find(x => x.Email == email).First().JenjangStudi;
             var dataSemester = _mahasiswaService.GetDataSemester(jenjang).First().ID;
 
-            IEnumerable<VMPertanyaanFeedback> Pertanyaan = _feedbackMatkulService.GetPertanyaanFeedbacks(jenjang, "2010", data1.FakultasID);
+            IEnumerable<VMPertanyaanFeedback> Pertanyaan = _feedbackMatkulService.GetPertanyaanFeedbacks(jenjang, data1.STRM.ToString(), data1.FakultasID);
             var DescSemester = _feedbackMatkulService.GetSemesterByStrm(data1.STRM.ToString());
             ViewData["semester"] = DescSemester.Nama;
             ViewData["pertanyaan"] = Pertanyaan;
             ViewData["jadwalID"] = idJadwalKuliah;
 
-            IEnumerable<VMJawabanFeedback> Jawaban = _feedbackMatkulService.GetJawabanFeedback(Pertanyaan.First().KodeJawaban);
+            IEnumerable<VMJawabanFeedback> Jawaban = _feedbackMatkulService.GetJawabanFeedback((Pertanyaan.Count() == 0 ? "" : Pertanyaan.First().KodeJawaban));
             ViewData["jawaban"] = Jawaban;
 
             var listDosen1 = _feedbackMatkulService.GetDosenMakulPertemuans(data1.KodeMataKuliah, data1.ClassSection, data1.STRM.ToString(), data1.FakultasID.ToString());
