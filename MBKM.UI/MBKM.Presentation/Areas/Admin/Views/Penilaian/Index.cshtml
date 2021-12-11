@@ -157,6 +157,7 @@
 </div>
 
 @section scripts{
+    <script src="~/Scripts/sweetalert2.all.min.js"></script>
     <script>
         var datatable;
         var role = 0;
@@ -182,6 +183,37 @@
                 placeholder: "-- Pilih Seksi --"
             });
             datatable = $('#hasilPencarian').DataTable();
+
+
+            $("#mataKuliah").change(function () {
+                $.ajax({
+                    url: '@Url.Action("CheckMatkulDosen", "Penilaian")',
+                    data: {
+                        jenjangStudi: $('#jenjangStudi').val(),
+                        fakultas: $('#fakultas').val(),
+                        lokasi: $('#lokasi').val(),
+                        prodi: $('#prodi').val(),
+                        matkul: $('#mataKuliah').val(),
+                        strm: $('#tahunSemester').val(),
+                    },
+                    type: 'post',
+                    dataType: 'json',
+                    success: function (e) {
+                        if (e.status == 500) {
+                            Swal.fire({
+                                title: 'Oppss',
+                                icon: 'error',
+                                html: e.message,
+                                showCloseButton: true,
+                                showCancelButton: false,
+                                focusConfirm: false,
+                                confirmButtonText: 'OK'
+                            })
+                        }
+                    }
+                })
+            })
+
         });
 
         $('#cari').click(function () {
@@ -375,6 +407,7 @@
                                 }
                             });
                             $("#mataKuliah").change(function () {
+
 
                                 $("#seksi").empty();
 
