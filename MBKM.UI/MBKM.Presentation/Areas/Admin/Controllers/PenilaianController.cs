@@ -457,7 +457,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             var noPegawai = int.Parse(HttpContext.Session["nopegawai"].ToString());
             var RoleUser = HttpContext.Session["RoleName"].ToString().ToLower();
             var result = new List<JadwalKuliah>();
-            if (RoleUser.Contains("dosen") || RoleUser.Contains("program studi"))
+            if (RoleUser.Contains("dosen"))
             {
                 result = _jadwalKuliahService.Find(_ => _.JenjangStudi == jenjangStudi && _.NamaFakultas == fakultas && _.Lokasi == lokasi && _.NamaProdi == prodi && _.KodeMataKuliah + " - " + _.NamaMataKuliah == matkul && _.FlagOpen && _.STRM == strm && _.DosenID == noPegawai).ToList();
 
