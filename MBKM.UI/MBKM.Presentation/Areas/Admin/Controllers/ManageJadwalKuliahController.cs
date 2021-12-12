@@ -124,12 +124,26 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 for (int i = 0; i < list.Length; i++)
                 {
                     id = list[i];
-
                     var data = _jkService.Get(id);
-                    data.FlagOpen = true;
-                    data.UpdatedBy = Session["username"] as string;
+                        foreach (var item in _jkService.Find(dataMap =>
+                            dataMap.ProdiID == data.ProdiID &&
+                            dataMap.FakultasID == data.FakultasID &&
+                            dataMap.Lokasi == data.Lokasi &&
+                            dataMap.JenjangStudi == data.JenjangStudi &&
+                            dataMap.STRM == data.STRM &&
+                            dataMap.MataKuliahID == data.MataKuliahID &&
+                            dataMap.KodeMataKuliah == data.KodeMataKuliah
+                        //&& dataMap.FlagOpen == false
 
-                    _jkService.Save(data);
+                        ).ToList())
+                        {
+                        var updateFlag = _jkService.Get(item.ID);
+                        updateFlag.FlagOpen = true;
+                        updateFlag.UpdatedBy = Session["username"] as string;
+                        updateFlag.UpdatedDate = DateTime.Now;
+
+                        _jkService.Save(data);
+                    }
                 }
 
 
