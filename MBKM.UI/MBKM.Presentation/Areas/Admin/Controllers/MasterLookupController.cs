@@ -50,6 +50,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         Console.WriteLine(lookup);*/
             lookup.CreatedBy = Session["username"] as string;
             lookup.UpdatedBy = Session["username"] as string;
+            lookup.UpdatedDate = DateTime.Now;
             _lookupService.Save(lookup);
             return Json(lookup);
         }
@@ -71,6 +72,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             data.Nilai = lookup.Nilai;
             data.IsActive = lookup.IsActive;
             data.UpdatedBy = Session["username"] as string;
+            data.UpdatedDate = DateTime.Now;
 
 
 
