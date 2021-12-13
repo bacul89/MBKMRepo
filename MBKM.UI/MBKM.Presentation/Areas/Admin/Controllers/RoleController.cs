@@ -51,6 +51,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         Console.WriteLine(lookup);*/
             role.CreatedBy = Session["username"] as string;
             role.UpdatedBy = Session["username"] as string;
+            role.CreatedDate = DateTime.Now;
+            role.UpdatedDate = DateTime.Now;
             _roleService.Save(role);
             return Json(role);
         }
@@ -67,6 +69,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             var data = _roleService.Get(id);
             data.IsDeleted = true;
             data.UpdatedBy = Session["username"] as string;
+            data.UpdatedDate = DateTime.Now;
 
             _roleService.Save(data);
             return Json(data);
@@ -88,6 +91,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 data.RoleName = role.RoleName;
                 data.IsActive = role.IsActive;
                 data.UpdatedBy = Session["username"] as string;
+                data.UpdatedDate = DateTime.Now;
 
 
 

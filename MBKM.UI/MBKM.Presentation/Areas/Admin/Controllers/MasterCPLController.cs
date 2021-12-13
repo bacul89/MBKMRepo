@@ -141,6 +141,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     newDAta.Capaian = cpl.Capaian;
                     newDAta.IsActive = cpl.IsActive;
                     newDAta.UpdatedBy = Session["username"] as string;
+                    newDAta.UpdatedDate = DateTime.Now;
 
                     try
                     {
@@ -166,6 +167,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     newDAta.Capaian = cpl.Capaian;
                     newDAta.IsActive = cpl.IsActive;
                     newDAta.UpdatedBy = Session["username"] as string;
+                    newDAta.UpdatedDate = DateTime.Now;
 
                     try
                     {
@@ -190,6 +192,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     newDAta.Capaian = cpl.Capaian;
                     newDAta.IsActive = cpl.IsActive;
                     newDAta.UpdatedBy = Session["username"] as string;
+                    newDAta.UpdatedDate = DateTime.Now;
 
                     try
                     {
@@ -223,6 +226,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 newDAta = d;
                 newDAta.IsDeleted = true;
                 newDAta.UpdatedBy = Session["username"] as string;
+                newDAta.UpdatedDate = DateTime.Now;
 
                 _mcpService.Save(newDAta);
             }

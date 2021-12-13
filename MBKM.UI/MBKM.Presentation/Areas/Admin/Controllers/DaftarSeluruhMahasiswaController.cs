@@ -102,6 +102,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             data.UpdatedDate = DateTime.Now;
             data.FlagBayar = mhs.FlagBayar;
             data.UpdatedBy = Session["username"] as string;
+            
 
             _mahasiswaService.Save(data);
 
@@ -164,6 +165,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     ip.UpdatedDate = DateTime.Now;
                     ip.JenisPertukaran = informasiPertukaran.JenisPertukaran;
                     ip.JenisKerjasama = informasiPertukaran.JenisKerjasama;
+                    ip.UpdatedBy = Session["username"] as string;
                     try
                     {
                         _informasiPertukaranService.Save(ip);

@@ -67,6 +67,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 {
                     menuRole.CreatedBy = Session["username"] as string;
                     menuRole.UpdatedBy = Session["username"] as string;
+                    menuRole.CreatedDate = DateTime.Now;
                     _menuRoleService.Save(menuRole);
                     return Json(new ServiceResponse { status = 200, message = "Pendaftaran Menu Role Berhasil!" });
                 }
@@ -96,6 +97,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             var data = _menuRoleService.Get(id);
             data.IsDeleted = true;
             data.UpdatedBy = Session["username"] as string;
+            data.UpdatedDate = DateTime.Now;
 
             _menuRoleService.Save(data);
             return Json(data);
@@ -127,6 +129,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     data.IsUpdate = menuRole.IsUpdate;
                     data.IsDelete = menuRole.IsDelete;
                     data.UpdatedBy = Session["username"] as string;
+                    data.UpdatedDate = DateTime.Now;
 
 
 
@@ -143,6 +146,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     data.IsUpdate = menuRole.IsUpdate;
                     data.IsDelete = menuRole.IsDelete;
                     data.UpdatedBy = Session["username"] as string;
+                    data.UpdatedDate = DateTime.Now;
 
 
 

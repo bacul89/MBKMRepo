@@ -122,7 +122,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     mahasiswa.UpdatedDate = DateTime.Now;
                     mahasiswa.StatusVerifikasi = "DAFTAR";
                     mahasiswa.Password = HashPasswordService.HashPassword(mahasiswa.Password);
-                    mahasiswa.CreatedBy = "Admin";
+                    mahasiswa.CreatedBy = Session["username"] as string;
                     _mahasiswaService.Save(mahasiswa);
                     if (SendEmail(mahasiswa.Email, token))
                     {
