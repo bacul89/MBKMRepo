@@ -75,6 +75,12 @@
                                 <option>-- Pilih Jenjang Studi --</option>
                             </select>
                         </div>
+                        <div class='form-group'>
+                            <label>Tahun Semester</label>
+                            <select name='tahunSemester' id='tahunSemester' class='form-control input-lg' required>
+                                <option>-- Pilih Tahun Semester --</option>
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label>No. Handphone<h style="color: red;"> *</h></label>
                             <input type="text" name="NoHp" id="noHp" placeholder="+62xxxxxxxxxxx" class="form-control input-lg" />
@@ -183,6 +189,9 @@
             $("#kerjasama").select2({
                 width: "100%"
             });
+            $("#tahunSemester").select2({
+                width: "100%"
+            });
             $("#jenisMhs").select2({
                 width: "100%"
             });
@@ -195,7 +204,7 @@
                     $("#username").attr("placeholder", "Email");
                 }
             });
-            loadFromLookup("JenjangStudi", "jenjangStudi", "Jenjang Studi");
+            loadJenjangStudi();
             loadFromLookup("Agama", "agama", "Agama");
             loadFromLookup("Gender", "gender", "Gender");
         });
@@ -209,6 +218,36 @@
                 $("#univAsal").html("<div class= 'form-group'><label>Universitas Asal<h style='color: red;'> *</h></label><input type='text' name='NamaUniversitas' id='namaUniversitas' placeholder='Nama Universitas' class='form-control input-lg' /></div>");
             }
         });
+        function loadJenjangStudi() {
+            $("#tahunSemester").prop("disabled", true);
+            loadFromLookup("JenjangStudi", "jenjangStudi", "Jenjang Studi");
+            $('#jenjangStudi').change(function () {
+                $("#tahunSemester").empty();
+                $("#tahunSemester").prop("disabled", false);
+                $("#tahunSemester").select2({
+                    placeholder: "-- Pilih Tahun Semester --",
+                    width: "100%",
+                    ajax: {
+                        url: "@Url.Action("GetSemesterAll3", "Home")",
+                        dataType: 'json',
+                        method: "POST",
+                        delay: 250,
+                        cache: false,
+                        data: function (params) {
+                            return {
+                                Search: params.term || "",
+                                JenjangStudi: $('#jenjangStudi').val()
+                            };
+                        },
+                        processResults: function (data, params) {
+                            return {
+                                results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
+                            };
+                        }
+                    }
+                });
+            });
+        }
         function namaUnivOnChange() {
             if ($("#kerjasama").val() == "y") {
                 $("#namaUniversitas").change(function () {
@@ -241,6 +280,7 @@
             mahasiswa.ProdiAsal = $("#prodiAsal").val();
             mahasiswa.NIMAsal = $("#nimAsal").val();
             mahasiswa.JenjangStudi = $("#jenjangStudi").val();
+            mahasiswa.TahunSemester = $("#tahunSemester").val();
             mahasiswa.NoHp = $("#noHp").val();
             mahasiswa.Email = $("#emailRegistrasi").val();
             mahasiswa.Password = $("#passwordRegistrasi").val();
