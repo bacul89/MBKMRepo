@@ -143,10 +143,52 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             var result = new List<JadwalKuliah>();
             if (matkul != null && matkul.Length > 0)
             {
-                result = _jkService.Find(jk => jk.NamaFakultas == fakultas && jk.NamaProdi == prodi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen && jk.KodeMataKuliah + " - " + jk.NamaMataKuliah == matkul && jk.FakultasID != 99 && jk.FakultasID != 00 && jk.FakultasID != 88).ToList();
+                result = _jkService.Find(jk => jk.NamaFakultas == fakultas && jk.NamaProdi == prodi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen && jk.KodeMataKuliah + " - " + jk.NamaMataKuliah == matkul && jk.FakultasID != 99 && jk.FakultasID != 00 && jk.FakultasID != 88)
+                    .GroupBy(g => new { g.ClassSection, g.JamMasuk, g.JamSelesai, g.SKS, g.KodeMataKuliah, g.Hari, g.MataKuliahID, g.NamaMataKuliah, g.STRM })
+                    .Select(s => new JadwalKuliah
+                    {
+                        ClassSection = s.Key.ClassSection,
+                        JamMasuk = s.Key.JamMasuk,
+                        JamSelesai = s.Key.JamSelesai,
+                        Hari = s.Key.Hari,
+                        KodeMataKuliah = s.Key.KodeMataKuliah,
+                        MataKuliahID = s.Key.MataKuliahID,
+                        NamaMataKuliah = s.Key.NamaMataKuliah,
+                        STRM = s.Key.STRM,
+                        SKS = s.Key.SKS,
+                    })
+                    .ToList();
             } else
             {
-                result = _jkService.Find(jk => jk.NamaFakultas == fakultas && jk.NamaProdi == prodi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen && jk.FakultasID != 99 && jk.FakultasID != 00 && jk.FakultasID != 88).ToList();
+                result = _jkService.Find(jk => jk.NamaFakultas == fakultas && jk.NamaProdi == prodi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen && jk.FakultasID != 99 && jk.FakultasID != 00 && jk.FakultasID != 88)
+                    .GroupBy(g => new { g.ClassSection, g.JamMasuk, g.JamSelesai,g.SKS, g.KodeMataKuliah,g.Hari, g.MataKuliahID, g.NamaMataKuliah, g.STRM })
+                    .Select(s => new JadwalKuliah { 
+                        ClassSection = s.Key.ClassSection,
+                        JamMasuk = s.Key.JamMasuk,
+                        JamSelesai = s.Key.JamSelesai,
+                        Hari = s.Key.Hari,
+                        KodeMataKuliah = s.Key.KodeMataKuliah,
+                        MataKuliahID = s.Key.MataKuliahID,
+                        NamaMataKuliah = s.Key.NamaMataKuliah,
+                        STRM = s.Key.STRM,
+                        SKS = s.Key.SKS,
+                    }).ToList();
+                foreach(var d in result)
+                {
+                   var dataSementara = _jkService.Find(s => s.ClassSection == d.ClassSection
+                            && s.JamMasuk == d.JamMasuk
+                            && s.JamSelesai == d.JamSelesai
+                            && s.Hari == d.Hari
+                            && s.KodeMataKuliah == d.KodeMataKuliah
+                            && s.MataKuliahID == d.MataKuliahID
+                            && s.NamaMataKuliah == d.NamaMataKuliah
+                            && s.STRM == d.STRM
+                            && s.SKS == d.SKS
+                            ).FirstOrDefault();
+                    d.ID = dataSementara.ID;
+                    d.NamaDosen = dataSementara.NamaDosen;
+
+                }
                 return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
             }
 
@@ -154,6 +196,18 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             {
                 if (!jadwalKuliahs.Contains(item.NamaMataKuliah))
                 {
+                    var dataSementara = _jkService.Find(s => s.ClassSection == item.ClassSection
+                            && s.JamMasuk == item.JamMasuk
+                            && s.JamSelesai == item.JamSelesai
+                            && s.Hari == item.Hari
+                            && s.KodeMataKuliah == item.KodeMataKuliah
+                            && s.MataKuliahID == item.MataKuliahID
+                            && s.NamaMataKuliah == item.NamaMataKuliah
+                            && s.STRM == item.STRM
+                            && s.SKS == item.SKS
+                            ).FirstOrDefault();
+                    item.ID = dataSementara.ID;
+                    item.NamaDosen = dataSementara.NamaDosen;
                     jks.Add(item);
                     jadwalKuliahs.Add(item.NamaMataKuliah);
                 }
