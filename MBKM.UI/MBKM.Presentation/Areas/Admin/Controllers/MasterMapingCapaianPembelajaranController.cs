@@ -167,6 +167,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 {
                     cpl.CreatedBy = Session["username"] as string;
                     cpl.UpdatedBy = Session["username"] as string;
+                    cpl.CreatedDate = DateTime.Now;
+                    cpl.UpdatedDate = DateTime.Now;
                     _cplMatakuliah.Save(cpl);
                     return Json(cpl);
                 }
@@ -228,6 +230,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     data.Kelompok = cplMatakuliah.Kelompok;
                     data.UpdatedBy = Session["username"] as string;
                     data.CreatedDate = data.CreatedDate;
+                    data.UpdatedDate = DateTime.Now;
 
                     _cplMatakuliah.Save(data);
 
@@ -255,6 +258,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 var data = _cplMatakuliah.Get(id);
                 data.IsDeleted = true;
                 data.UpdatedBy = Session["username"] as string;
+                data.UpdatedDate = DateTime.Now;
 
                 _cplMatakuliah.Save(data);
                 return Json(new ServiceResponse { status = 200, message = "Data Berhasil dihapus.." });

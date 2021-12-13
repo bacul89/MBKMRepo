@@ -51,6 +51,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             lookup.CreatedBy = Session["username"] as string;
             lookup.UpdatedBy = Session["username"] as string;
             lookup.UpdatedDate = DateTime.Now;
+            lookup.CreatedDate = DateTime.Now;
             _lookupService.Save(lookup);
             return Json(lookup);
         }
