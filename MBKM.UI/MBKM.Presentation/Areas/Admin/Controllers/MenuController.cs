@@ -50,6 +50,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         Console.WriteLine(lookup);*/
             menu.CreatedBy = Session["username"] as string;
             menu.UpdatedBy = Session["username"] as string;
+            menu.CreatedDate = DateTime.Now;
             _menuService.Save(menu);
             return Json(menu);
         }
@@ -66,6 +67,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             var data = _menuService.Get(id);
             data.IsDeleted = true;
             data.UpdatedBy = Session["username"] as string;
+            data.UpdatedDate = DateTime.Now;
 
             _menuService.Save(data);
             return Json(data);
@@ -86,6 +88,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             data.MenuUrl = menu.MenuUrl;
             data.IsActive = menu.IsActive;
             data.UpdatedBy = Session["username"] as string;
+            data.UpdatedDate = DateTime.Now;
 
 
 

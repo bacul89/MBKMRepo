@@ -111,37 +111,45 @@
                             </div>
                         </div>
                         <div class='form-group'>
-                            <label for="tahunSemester" class="col-sm-3 control-label">Tahun Semester</label>
+                            <label class="col-sm-3 control-label">Jenjang Studi</label>
                             <div class="col-sm-9">
-                                <select name='tahunSemester' id='tahunSemester' class='form-control input-pendaftaran' required>
-                                    <option>-- Pilih Tahun Semester --</option>
+                                <select name='jenjangStudi' id='jenjangStudi' class='form-control input-pendaftaran' required>
+                                    <option>-- Pilih Jenjang Studi --</option>
                                 </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="noHp" class="col-sm-3 control-label">No Handphone<h style="color: red;"> *</h></label>
-                            <div class="col-sm-9">
-                                <input type="text" name="NoHp" id="noHp" placeholder="+62xxxxxxxxxxx" class="form-control" style="border: 1px solid #f7ba74" />
+                            <div class='form-group'>
+                                <label for="tahunSemester" class="col-sm-3 control-label">Tahun Semester</label>
+                                <div class="col-sm-9">
+                                    <select name='tahunSemester' id='tahunSemester' class='form-control input-pendaftaran' required>
+                                        <option>-- Pilih Tahun Semester --</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="noHp" class="col-sm-3 control-label">No Handphone<h style="color: red;"> *</h></label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="NoHp" id="noHp" placeholder="+62xxxxxxxxxxx" class="form-control" style="border: 1px solid #f7ba74" />
 
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="emailRegistrasi" class="col-sm-3 control-label">Email<h style="color: red;"> *</h></label>
-                            <div class="col-sm-9">
-                                <input type="Email" name="Email" id="emailRegistrasi" placeholder="someone@somewhere.com" class="form-control" style="border: 1px solid #f7ba74" />
+                            <div class="form-group">
+                                <label for="emailRegistrasi" class="col-sm-3 control-label">Email<h style="color: red;"> *</h></label>
+                                <div class="col-sm-9">
+                                    <input type="Email" name="Email" id="emailRegistrasi" placeholder="someone@somewhere.com" class="form-control" style="border: 1px solid #f7ba74" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="Password" class="col-sm-3 control-label">Password<h style="color: red;"> *</h></label>
-                            <div class="col-sm-9">
-                                <input type="password" name="Password" id="passwordRegistrasi" placeholder="●●●●●●●●" class="form-control" style="border: 1px solid #f7ba74" />
+                            <div class="form-group">
+                                <label for="Password" class="col-sm-3 control-label">Password<h style="color: red;"> *</h></label>
+                                <div class="col-sm-9">
+                                    <input type="password" name="Password" id="passwordRegistrasi" placeholder="●●●●●●●●" class="form-control" style="border: 1px solid #f7ba74" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <input onclick="submitRegistrasi()" type="button" value="Registrasi" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
-                        </div>
-                        @*<button id="edit" class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 16px;">Registrasi</button>*@
-                    </form>
+                            <div class="form-group">
+                                <input onclick="submitRegistrasi()" type="button" value="Registrasi" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
+                            </div>
+                            @*<button id="edit" class="btn" style="margin: 15px; margin-bottom: 0px; margin-right: 0px; float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 16px;">Registrasi</button>*@
+</form>
                 </div>
             </div>
         </div>
@@ -175,6 +183,9 @@
             loadNamaUniversitas();
             loadNoKerjasama();
             namaUnivOnChange();
+            $("#tahunSemester").select2({
+                width: "100%"
+            });
             $("#kerjasama").select2({
                 width: "100%"
             });
@@ -188,10 +199,41 @@
                     $("#loginForm").attr("action", "@Url.Action("LoginExternal", "Home")");
                 }
             });
-            loadFromLookup("TahunSemester", "tahunSemester", "Tahun Semester");
+            //loadFromLookup("TahunSemester", "tahunSemester", "Tahun Semester");
             loadFromLookup("Agama", "agama", "Agama");
             loadFromLookup("Gender", "gender", "Gender");
+            loadJenjangStudi();
         });
+        function loadJenjangStudi() {
+            $("#tahunSemester").prop("disabled", true);
+            loadFromLookup("JenjangStudi", "jenjangStudi", "Jenjang Studi");
+            $('#jenjangStudi').change(function () {
+                $("#tahunSemester").empty();
+                $("#tahunSemester").prop("disabled", false);
+                $("#tahunSemester").select2({
+                    placeholder: "-- Pilih Tahun Semester --",
+                    width: "100%",
+                    ajax: {
+                        url: "@Url.Action("GetSemesterAll3", "RegisMhsByAdmin")",
+                        dataType: 'json',
+                        method: "POST",
+                        delay: 250,
+                        cache: false,
+                        data: function (params) {
+                            return {
+                                Search: params.term || "",
+                                JenjangStudi: $('#jenjangStudi').val()
+                            };
+                        },
+                        processResults: function (data, params) {
+                            return {
+                                results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
+                            };
+                        }
+                    }
+                });
+            });
+        }
 
         $("#kerjasama").change(function () {
             if ($("#kerjasama").val() == "y") {
@@ -262,7 +304,8 @@
             }
             mahasiswa.ProdiAsal = $("#prodiAsal").val();
             mahasiswa.NIMAsal = $("#nimAsal").val();
-            mahasiswa.Semester = $("#tahunSemester").val();
+            mahasiswa.JenjangStudi = $("#jenjangStudi").val();
+            mahasiswa.TahunSemester = $("#tahunSemester").val();
             mahasiswa.NoHp = $("#noHp").val();
             mahasiswa.Email = $("#emailRegistrasi").val();
             mahasiswa.Password = $("#passwordRegistrasi").val();
