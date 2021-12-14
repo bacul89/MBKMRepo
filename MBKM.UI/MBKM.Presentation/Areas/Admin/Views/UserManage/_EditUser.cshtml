@@ -49,7 +49,7 @@
                     </div>
                 }
             </div>
-            <div class="form-group" id="divFakultas">
+            <div class="form-group" id="divFakultas" hidden>
                 <label for="inp_email" class="col-sm-3 control-label">Fakultas</label>
                 <div class="col-sm-9">
                     <select class="form-control input-md asd" name="inp_fakukltas" id="inp_fakultas" placeholder="Pilih Kelompok">
@@ -65,7 +65,7 @@
 
                 </div>
             </div>
-            <div id="divProdi" class="form-group row">
+            <div id="divProdi" class="form-group row" hidden>
                 @if (ViewBag.listProdi != null)
                 {
                     <label for="idProdi" class="col-sm-3 control-label">Prodi</label>

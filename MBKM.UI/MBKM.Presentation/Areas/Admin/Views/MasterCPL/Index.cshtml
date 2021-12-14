@@ -296,7 +296,7 @@
                                 <select name="inp_fakultas" id="inp_fakultas" class="form-control input-md input-data">
                                     @*<option value="" selected disabled>-- Pilih Fakultas --</option>*@
                                     @{
-                                        if (ViewData["role"].ToString() == "Kepala Program Studi" || ViewData["role"].ToString() == "Admin Fakultas")
+                                        if (ViewData["role"].ToString() == "Admin Fakultas")
                                         {
                                             <option value="@ViewData["KodeFakultas"]" selected >@ViewData["NamaFakultas"]</option>
                                         }
@@ -312,16 +312,16 @@
                             <label for="inp_prodi" class="col-sm-3 control-label">Prodi</label>
                             <div class="col-sm-7">
                                 <select name="inp_prodi" id="inp_prodi" class="form-control input-md input-data">
-                                    @{
+                                    @*@{
                                         if (ViewData["role"].ToString() == "Kepala Program Studi")
                                         {
                                             <option value="@ViewData["NamaProdi"]" selected >@ViewData["NamaProdi"]</option>
                                         }
                                         else
-                                        {
+                                        {*@
                                             <option value="" selected disabled>-- Pilih Prodi --</option>
-                                        }
-                                    }
+                                        @*}
+                                    }*@
                                 </select>
                             </div>
                         </div>
@@ -375,7 +375,7 @@
             var getFakultas = $("#inp_fakultas").val();
             console.log(roleNames);
             //if (getFakultas === "") {
-            if (roleNames != "Kepala Program Studi" && roleNames != "Admin Fakultas") {
+            if (roleNames != "Admin Fakultas") {
                 $("#inp_fakultas").prop('selectedIndex', 0);
                 loadFromLookup("JenjangStudi", "jenjang", "JenjangStudi");
                 //loadFromLookup("JenjangStudi", "jenjangEdit", "JenjangStudi");
@@ -462,7 +462,7 @@
                     });
                 })
             }
-            else  if(roleNames == "Admin Fakultas"){
+            else {// if(roleNames == "Admin Fakultas")
                 $("#inp_fakultas").prop("disabled", true);
                 loadFromLookup("JenjangStudi", "jenjang", "JenjangStudi");
                 //loadFromLookup("JenjangStudi", "jenjangEdit", "JenjangStudi");
@@ -522,7 +522,7 @@
                 })
 
             }
-            else {//kaprodi
+            @*else {//kaprodi
                  $.ajax({
                     type: "GET",
                     url: "@Url.Action("GetInformasiKampusByProdi", "MasterCPL")"
@@ -600,7 +600,7 @@
                 //    buttonHandler("closeTambah")
                 //})
 
-            }
+            }*@
 
 
 
