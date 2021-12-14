@@ -46,8 +46,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         Session["email"] = modeldata.Email;
                         Session["RoleName"] = modeldata.Roles.RoleName;
                         Session["RoleID"] = modeldata.RoleID.ToString();
-                        Session["NamaProdi"] = modeldata.NamaProdi.ToString();
-                        Session["KodeProdi"] = modeldata.KodeProdi.ToString();
+                        Session["NamaProdi"] = (modeldata.NamaProdi == null) ? "" : modeldata.NamaProdi.ToString();
+                        Session["KodeProdi"] = (modeldata.KodeProdi == null) ? "" : modeldata.KodeProdi.ToString();
                         Session["NamaFakultas"] = (modeldata.NamaFakultas == null) ? "" : modeldata.NamaFakultas.ToString();
                         Session["KodeFakultas"] = (modeldata.KodeFakultas == null) ? "" : modeldata.KodeFakultas.ToString();
                         return RedirectToAction("Index", "Home");
