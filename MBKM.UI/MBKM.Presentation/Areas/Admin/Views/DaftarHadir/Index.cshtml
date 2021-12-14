@@ -124,7 +124,7 @@
                         <td style="width: 400px;">
                             <select name="fakultas" id="fakultas" class="form-control input-md">
                                 @{
-                                    if (ViewData["role"].ToString() == "Kepala Program Studi" || ViewData["role"].ToString() == "Admin Fakultas")
+                                    if (ViewData["role"].ToString() == "Admin Fakultas")
                                     {
                                         <option value="@ViewData["KodeFakultas"]" selected>@ViewData["NamaFakultas"]</option>
                                     }
@@ -140,16 +140,16 @@
                         <td style="text-align: right">Program Studi</td>
                         <td style="width: 400px;">
                             <select name="prodi" id="prodi" class="form-control input-md">
-                                @{
+                                @*@{
                                     if (ViewData["role"].ToString() == "Kepala Program Studi")
                                     {
                                         <option value="@ViewData["NamaProdi"]" selected>@ViewData["NamaProdi"]</option>
                                     }
                                     else
-                                    {
+                                    {*@
                                         <option value="" selected disabled>-- Pilih Prodi --</option>
-                                    }
-                                }
+                                    @*}
+                                }*@
 
                             </select>
                         </td>
@@ -214,7 +214,7 @@
             var roleNames = @Html.Raw(Json.Encode(ViewData["role"]));
             //var getFakultas = $("#fakultas").val();
             /*if (getFakultas === "") {*/
-            if (roleNames != "Kepala Program Studi" && roleNames != "Admin Fakultas") {
+            if (roleNames != "Admin Fakultas") {
                 $("#jenjangStudi").select2({
                     placeholder: "-- Pilih Jenjang Studi --",
                     width: "100%"
@@ -271,7 +271,7 @@
                 datatable = $('#table-data-master-mapping-cpl').DataTable();
                 loadJenjangStudi();
             }
-            else {//if kaprodi
+            @*else {//if kaprodi
                  $.ajax({
                     type: "GET",
                     url: "@Url.Action("GetInformasiKampusByProdi", "DaftarHadir")"
@@ -320,7 +320,7 @@
                 datatable = $('#table-data-master-mapping-cpl').DataTable();
                 loadJenjangStudi();
 
-            }
+            }*@
         });
         function buttonHandler(param) {
             if (param == "open") {
@@ -459,7 +459,7 @@
              var roleNames = @Html.Raw(Json.Encode(ViewData["role"]));
             //var getFakultas = $("#fakultas").val();
             /*if (getFakultas === "") {*/
-            if (roleNames != "Kepala Program Studi" && roleNames != "Admin Fakultas") {
+            if (roleNames != "Admin Fakultas") {
 
                 // if (getFakultas == null || getFakultas =="") { //if not admin fakultas
                 $("#jenjangStudi").prop("disabled", true);
@@ -826,7 +826,7 @@
                     });
                 });
             }
-            else if (roleNames == "Admin Fakultas") {
+            else {//if (roleNames == "Admin Fakultas") 
                 $("#jenjangStudi").prop("disabled", true);
                 $("#fakultas").prop("disabled", true);
                 $("#prodi").prop("disabled", true);
@@ -1114,7 +1114,7 @@
                     });
                 });
             }
-            else {
+            @*else {//kaprodi
                 $("#jenjangStudi").prop("disabled", true);
                 $("#fakultas").prop("disabled", true);
                 $("#prodi").prop("disabled", true);
@@ -1169,7 +1169,7 @@
                                 placeholder: "-- Pilih Lokasi --",
                                 width: "100%",
                                 ajax: {
-                                    @*url: "@Url.Action("GetLokasiByProdi", "PresensiKelas")",*@
+                                    @*url: "@Url.Action("GetLokasiByProdi", "PresensiKelas")",
                                     url: "/Admin/DaftarHadir/GetLokasiByProdi",
                                     dataType: 'json',
                                     method: "POST",
@@ -1305,7 +1305,7 @@
                         /* });*///fakultas change function
 
                 });
-            }
+            }*@
 
 
         }

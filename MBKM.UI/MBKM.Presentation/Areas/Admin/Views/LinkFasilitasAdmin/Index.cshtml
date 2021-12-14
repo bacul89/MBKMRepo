@@ -59,12 +59,12 @@
                             <label for="inp_fakultas" class="col-sm-3 control-label">Fakultas</label>
                             <div class="col-sm-9">
                                 <select name="fakultasCari" id="fakultasCari" class="form-control input-md">
-                                    @{
+                                    @*@{
                                         if (ViewData["role"].ToString() == "Kepala Program Studi" || ViewData["role"].ToString() == "Dosen")
                                         {
                                             <option value="@ViewData["KodeFakultas"]" selected >@ViewData["NamaFakultas"]</option>
                                         }
-                                    }
+                                    }*@
 
                                 </select>
                             </div>
@@ -73,12 +73,12 @@
                             <label for="inp_prodi" class="col-sm-3 control-label">Program Studi</label>
                             <div class="col-sm-9">
                                 <select name="prodiCari" id="prodiCari" class="form-control input-md">
-                                    @{
+                                    @*@{
                                         if (ViewData["role"].ToString() == "Kepala Program Studi" || ViewData["role"].ToString() == "Dosen")
                                         {
                                             <option value="@ViewData["NamaProdi"]" selected>@ViewData["NamaProdi"]</option>
                                         }
-                                    }
+                                    }*@
 
                                 </select>
                             </div>
@@ -190,8 +190,8 @@
     <script>
         var datatable = null;
         $(document).ready(function () {
-             var roleNames = @Html.Raw(Json.Encode(ViewData["role"]));
-            if (roleNames != "Kepala Program Studi" && roleNames != "Dosen") {
+             @*var roleNames = @Html.Raw(Json.Encode(ViewData["role"]));
+            if (roleNames != "Kepala Program Studi" && roleNames != "Dosen") {*@
                 $("#fakultasCari").prop("disabled", true);
                 $("#prodiCari").prop("disabled", true);
                 $("#lokasiCari").prop("disabled", true);
@@ -282,8 +282,8 @@
 
                 datatable = $('#table-data-master-mapping-cpl').DataTable();
                 $("#table-data-master-mapping-cpl_filter").hide();
-            }
-            else {
+            //}penutup if diatas
+            @*else {//ini lock tadinya untuk dosen dan prodi
                 $.ajax({
                     type: "GET",
                     url: "@Url.Action("GetInformasiKampusByProdi", "LinkFasilitasAdmin")"
@@ -549,7 +549,7 @@
 
                 datatable = $('#table-data-master-mapping-cpl').DataTable();
                 $("#table-data-master-mapping-cpl_filter").hide();
-            }
+            }*@
 
 
         });

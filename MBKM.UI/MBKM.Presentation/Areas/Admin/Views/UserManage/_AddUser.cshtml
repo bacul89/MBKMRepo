@@ -59,19 +59,19 @@
 
                 </div>
             </div>
-            <div class="form-group" id="divFakultas">
+            <div class="form-group" id="divFakultas" hidden>
                 <label for="inp_fakultas" class="col-sm-3 control-label">Fakultas</label>
                 <div class="col-sm-9">
                     <select name="fakultasCari" id="fakultasCari" class="form-control input-md input-data"></select>
                 </div>
             </div>
-            <div id="divProdi" class="form-group row">
+            <div id="divProdi" class="form-group row" hidden>
                 @if (ViewBag.listProdi != null)
                 {
                     <label for="idProdi" class="col-sm-3 control-label">Prodi</label>
                     <div class="col-sm-9">
                         @* @Html.DropDownList("IDProdiAndNamaProdi", ViewBag.listProdi as SelectList, "First Option", new { name = "Name", id = "id" })*@
-                        @Html.DropDownListFor(model => model.Nama, ViewBag.listProdi as SelectList, "--Pilih Prodi/unit--", new { @class = "form-control input-pendaftaran input-data", @id = "idProdi", @name = "idProdi" })
+                        @Html.DropDownListFor(model => model.Nama, ViewBag.listProdi as SelectList, "--Pilih Prodi/unit--", new { @class = "form-control input-pendaftaran", @id = "idProdi", @name = "idProdi" })
                     </div>
                 }
             </div>
