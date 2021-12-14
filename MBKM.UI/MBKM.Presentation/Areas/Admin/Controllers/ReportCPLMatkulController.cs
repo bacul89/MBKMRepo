@@ -32,6 +32,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private IAbsensiService _absensiService;
         private IPendaftaranMataKuliahService _pendaftaranMataKuliahService;
 
+
         public ReportCPLMatkulController(IPendaftaranMataKuliahService pendaftaranMataKuliahService, IAbsensiService absensiService, ICPLMatakuliahService cplMatakuliahService, IJadwalKuliahService jkService, ILookupService lookupService)
         {
             _jadwalKuliahService = jkService;
@@ -72,6 +73,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             }
             return new ContentResult { Content = JsonConvert.SerializeObject(final), ContentType = "application/json" };
         }
+        [HttpPost]
         public ActionResult GetCPLMatkul(string jenjangStudi, string fakultas, string prodi, string matkul)
         {
             var result = new List<CPLMatakuliah>();
@@ -86,6 +88,46 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             }
             result = result.OrderBy(_ => _.KodeMataKuliah).ToList();
             return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
+        }
+        [HttpPost]
+        public ActionResult GetMataKuliah(int skip, int take, string searchBy, string idProdi, string idFakultas)
+        {
+
+            /*            string searchBy = "BAHASA INDONESIA";
+                        int skip = 1;
+                        int take = 10;
+
+
+                        string idProdi = "0101";
+                        string idFakultas = "0001";*/
+
+
+            /*            int pageNumber = skip;
+                        int pageSize = length;
+                        string search = "";*/
+            //string email = Session["email"] as string;
+            //var result = GetMa = takuliah(email);
+
+            /*"PageNumber":10,
+            "PageSize":10,
+            "Search":"",
+            "ProdiID":"0001",
+            "FakultasID":"0101"*/
+            //return Json(_cplMatakuliah.GetMatkul(skip, take, searchBy, idProdi, idFakultas), JsonRequestBehavior.AllowGet);
+            var final = _cplMatakuliahService.GetMatkul(skip, take, searchBy, idProdi, idFakultas);
+            List<object> data = new List<object>();
+            foreach (var p in final)
+            {
+                var q = new
+                {
+                    id = p.CRSE_ID,
+                    text = p.DESCR,
+                    kode = p.Expr1
+                };
+                data.Add(q);
+            }
+
+            return Json(data);
         }
         public ActionResult ExportPDF(string jenjangStudi, string fakultas, string prodi, string matkul)
         {
