@@ -200,7 +200,21 @@
             datatable.destroy();
             datatable = $('#hasilPencarian').DataTable({
                 ajax: {
-                    url: '@Url.Action("GetPresensi", "PresensiKelas")?strm=' + $('#tahunSemester').val() + '&jenjangStudi=' + $('#jenjangStudi').val() + '&fakultas=' + $('#fakultas').val() + '&lokasi=' + $('#lokasi').val() + '&prodi=' + $('#prodi').val() + '&matkul=' + $('#mataKuliah').val() + '&seksi=' + seksi,
+                    'type': 'POST',
+                    'url': '@Url.Action("GetPresensi", "PresensiKelas")',
+                    'data': {
+                        strm: $('#tahunSemester').val(),
+                        jenjangStudi: $('#jenjangStudi').val(),
+                        fakultas: $('#fakultas').val(),
+                        lokasi: $('#lokasi').val(),
+                        prodi : $('#prodi').val(),
+                        matkul : $('#mataKuliah').val(),
+                        seksi:seksi
+
+
+                        // etc..
+                    },
+                    @*url: '@Url.Action("GetPresensi", "PresensiKelas")?strm=' + $('#tahunSemester').val() + '&jenjangStudi=' + $('#jenjangStudi').val() + '&fakultas=' + $('#fakultas').val() + '&lokasi=' + $('#lokasi').val() + '&prodi=' + $('#prodi').val() + '&matkul=' + $('#mataKuliah').val() + '&seksi=' + seksi,*@
                     dataSrc: ''
                 },
                 "columnDefs": [{
