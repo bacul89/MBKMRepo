@@ -37,25 +37,32 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 MBKM.Entities.Models.User modeldata = _userService.Find(x => x.NoPegawai == model.Username && x.IsDeleted==false).FirstOrDefault();
                 if (modeldata != null)
                 {
-                    if (HashPasswordService.ValidatePassword(model.Password, modeldata.Password))
+                    if (modeldata.IsActive == false)
                     {
+                        ModelState.AddModelError("", "User Inactive!");
+                    }
+                    else {
+                        if (HashPasswordService.ValidatePassword(model.Password, modeldata.Password))
+                        {
 
-                        Session["userid"] = modeldata.ID.ToString();
-                        Session["username"] = modeldata.UserName;
-                        Session["nopegawai"] = modeldata.NoPegawai.ToString();
-                        Session["email"] = modeldata.Email;
-                        Session["RoleName"] = modeldata.Roles.RoleName;
-                        Session["RoleID"] = modeldata.RoleID.ToString();
-                        Session["NamaProdi"] = (modeldata.NamaProdi == null) ? "" : modeldata.NamaProdi.ToString();
-                        Session["KodeProdi"] = (modeldata.KodeProdi == null) ? "" : modeldata.KodeProdi.ToString();
-                        Session["NamaFakultas"] = (modeldata.NamaFakultas == null) ? "" : modeldata.NamaFakultas.ToString();
-                        Session["KodeFakultas"] = (modeldata.KodeFakultas == null) ? "" : modeldata.KodeFakultas.ToString();
-                        return RedirectToAction("Index", "Home");
+                            Session["userid"] = modeldata.ID.ToString();
+                            Session["username"] = modeldata.UserName;
+                            Session["nopegawai"] = modeldata.NoPegawai.ToString();
+                            Session["email"] = modeldata.Email;
+                            Session["RoleName"] = modeldata.Roles.RoleName;
+                            Session["RoleID"] = modeldata.RoleID.ToString();
+                            Session["NamaProdi"] = (modeldata.NamaProdi == null) ? "" : modeldata.NamaProdi.ToString();
+                            Session["KodeProdi"] = (modeldata.KodeProdi == null) ? "" : modeldata.KodeProdi.ToString();
+                            Session["NamaFakultas"] = (modeldata.NamaFakultas == null) ? "" : modeldata.NamaFakultas.ToString();
+                            Session["KodeFakultas"] = (modeldata.KodeFakultas == null) ? "" : modeldata.KodeFakultas.ToString();
+                            return RedirectToAction("Index", "Home");
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Invalid Password.");
+                        }
                     }
-                    else
-                    {
-                        ModelState.AddModelError("", "Invalid Password.");
-                    }
+                   
                 }
                 else
                 {

@@ -131,6 +131,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             }
             return days[day.ToLower()];
         }
+        [HttpPost]
         public ActionResult SearchList(int strm, string jenjangStudi, string fakultas, string prodi, string lokasi, string matkul, string seksi)
         {
             var result = new List<JadwalKuliah>();
