@@ -213,6 +213,27 @@
                     }
                 })
             })
+            $("#jenjangStudi").select2({
+                    placeholder: "-- Pilih Jenjang Studi --",
+                    width: "100%",
+                    ajax: {
+                        url: "@Url.Action("getLookupByTipe", "Penilaian")",
+                        dataType: 'json',
+                        method: "POST",
+                        delay: 250,
+                        cache: false,
+                        data: function (params) {
+                            return {
+                                Tipe: 'JenjangStudi'
+                            };
+                        },
+                        processResults: function (data, params) {
+                            return {
+                                results: $.map(data, function (item) { return { id: item.Nilai, value: item.Nilai, text: item.Nama } })
+                            };
+                        }
+                    }
+                });
             $("#fakultas").select2({
                 placeholder: "-- Pilih Fakultas --",
                 width: "100%",
@@ -373,7 +394,7 @@
         });
 
         $('#cari').click(function () {
-            if (!$('#jenjangStudi').val() || !$('#fakultas').val() || !$('#mataKuliah').val() || !$('#prodi').val() || !$('#lokasi').val()) {
+            if (!$('#tahunSemester').val() || !$('#jenjangStudi').val() || !$('#fakultas').val() || !$('#mataKuliah').val() || !$('#prodi').val() || !$('#lokasi').val()) {
                 alert('Tolong lengkapi data pencarian!');
                 return;
             }
@@ -439,7 +460,7 @@
         });
         function loadJenjangStudi() {
 
-            $("#jenjangStudi").prop("disabled", true);
+            @*$("#jenjangStudi").prop("disabled", true);*@
             $("#fakultas").prop("disabled", true);
             $("#lokasi").prop("disabled", true);
             $("#prodi").prop("disabled", true);
@@ -464,10 +485,10 @@
             });
             $("#tahunSemester").change(function () {
                 if (role == 1) {
-                    $("#prodi").empty();
+                    @*$("#prodi").empty();
                     $("#lokasi").empty();
                     $("#mataKuliah").empty();
-                    $("#seksi").empty();
+                    $("#seksi").empty();*@
 
                     @*$("#prodi").prop("disabled", false);
                     $("#lokasi").prop("disabled", false);
