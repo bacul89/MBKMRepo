@@ -278,48 +278,15 @@
             }
         });
         function loadJenjangStudi() {
-
             $("#fakultas").prop("disabled", true);
             $("#prodi").prop("disabled", true);
             $("#matkul").prop("disabled", true);
 
-            $("#jenjangStudi").select2({
-                placeholder: "-- Pilih Jenjang Studi --",
-                width: "100%",
-                ajax: {
-                    url: "@Url.Action("getLookupByTipe", "ReportCPLMatkul")",
-                    dataType: 'json',
-                    method: "POST",
-                    delay: 250,
-                    cache: false,
-                    data: function (params) {
-                        return {
-                            Search: params.term || "",
-                            Tipe: 'JenjangStudi'
-                        };
-                    },
-                    processResults: function (data, params) {
-                        return {
-                            results: $.map(data, function (item) { return { id: item.Nilai, value: item.Nilai, text: item.Nama } })
-                        };
-                    }
-                }
-            });
-            $("#jenjangStudi").change(function () {
-
-                $("#fakultas").empty();
-                $("#prodi").empty();
-                $("#matkul").empty();
-
-                $("#fakultas").prop("disabled", false);
-                $("#prodi").prop("disabled", true);
-                $("#matkul").prop("disabled", true);
-
-                $("#fakultas").select2({
-                    placeholder: "-- Pilih Fakultas --",
+                $("#jenjangStudi").select2({
+                    placeholder: "-- Pilih Jenjang Studi --",
                     width: "100%",
                     ajax: {
-                        url: "@Url.Action("GetFakultasByJenjangStudi", "ReportCPLMatkul")",
+                        url: "@Url.Action("getLookupByTipe", "ReportCPLMatkul")",
                         dataType: 'json',
                         method: "POST",
                         delay: 250,
@@ -327,58 +294,97 @@
                         data: function (params) {
                             return {
                                 Search: params.term || "",
-                                JenjangStudi: $('#jenjangStudi').val()
+                                Tipe: 'JenjangStudi'
                             };
                         },
                         processResults: function (data, params) {
                             return {
-                                results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
+                                results: $.map(data, function (item) { return { id: item.Nilai, value: item.Nilai, text: item.Nama } })
                             };
-                        },
+                        }
                     }
                 });
-                $("#fakultas").change(function () {
+                $("#jenjangStudi").change(function () {
+                    if (role == 1) {
 
-                    $("#prodi").empty();
-                    $("#matkul").empty();
-
-                    $("#prodi").prop("disabled", false);
-                    $("#matkul").prop("disabled", true);
-
-                    $("#prodi").select2({
-                        placeholder: "-- Pilih Program Studi --",
-                        width: "100%",
-                        ajax: {
-                            url: "@Url.Action("GetProdiByFakultas", "ReportCPLMatkul")",
-                            dataType: 'json',
-                            method: "POST",
-                            delay: 250,
-                            cache: false,
-                            data: function (params) {
-                                return {
-                                    Search: params.term || "",
-                                    Fakultas: $('#fakultas').val(),
-                                    JenjangStudi: $('#jenjangStudi').val()
-                                };
-                            },
-                            processResults: function (data, params) {
-                                return {
-                                    results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
-                                };
-                            },
-                        }
-                    });
-                    $("#prodi").change(function () {
-
+                        
+                        $("#prodi").empty();
                         $("#matkul").empty();
 
-                        $("#matkul").prop("disabled", false);
+                        $("#fakultas").prop("disabled", true);
 
-                        $("#matkul").select2({
-                            placeholder: "-- Pilih Mata Kuliah --",
+                        $("#prodi").prop("disabled", false);
+                        $("#matkul").prop("disabled", true);
+
+                            $("#prodi").select2({
+                                placeholder: "-- Pilih Program Studi --",
+                                width: "100%",
+                                ajax: {
+                                    url: "@Url.Action("GetProdiByFakultas", "ReportCPLMatkul")",
+                                    dataType: 'json',
+                                    method: "POST",
+                                    delay: 250,
+                                    cache: false,
+                                    data: function (params) {
+                                        return {
+                                            Search: params.term || "",
+                                            Fakultas: $('#fakultas').val(),
+                                            JenjangStudi: $('#jenjangStudi').val()
+                                        };
+                                    },
+                                    processResults: function (data, params) {
+                                        return {
+                                            results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
+                                        };
+                                    },
+                                }
+                            });
+                            $("#prodi").change(function () {
+
+                                $("#matkul").empty();
+
+                                $("#matkul").prop("disabled", false);
+
+                                $("#matkul").select2({
+                                    placeholder: "-- Pilih Mata Kuliah --",
+                                    width: "100%",
+                                    ajax: {
+                                        url: "@Url.Action("GetMatkulByProdi", "ReportCPLMatkul")",
+                                        dataType: 'json',
+                                        method: "POST",
+                                        delay: 250,
+                                        cache: false,
+                                        data: function (params) {
+                                            return {
+                                                Search: params.term || "",
+                                                Prodi: $('#prodi').val(),
+                                                JenjangStudi: $('#jenjangStudi').val()
+                                            };
+                                        },
+                                        processResults: function (data, params) {
+                                            return {
+                                                results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
+                                            };
+                                        },
+                                    }
+                                });
+                            });
+
+                    } else {
+
+                        $("#fakultas").empty();
+                        $("#prodi").empty();
+                        $("#matkul").empty();
+
+                        $("#fakultas").prop("disabled", false);
+                        $("#prodi").prop("disabled", true);
+                        $("#matkul").prop("disabled", true);
+
+                        $("#fakultas").select2({
+                            placeholder: "-- Pilih Fakultas --",
                             width: "100%",
                             ajax: {
-                                url: "@Url.Action("GetMatkulByProdi", "ReportCPLMatkul")",
+                                url: "@Url.Action("GetFakultasByJenjangStudi", "ReportCPLMatkul")",
                                 dataType: 'json',
                                 method: "POST",
                                 delay: 250,
@@ -386,7 +392,6 @@
                                 data: function (params) {
                                     return {
                                         Search: params.term || "",
-                                        Prodi: $('#prodi').val(),
                                         JenjangStudi: $('#jenjangStudi').val()
                                     };
                                 },
@@ -397,9 +402,73 @@
                                 },
                             }
                         });
-                    });
+                        $("#fakultas").change(function () {
+
+                            $("#prodi").empty();
+                            $("#matkul").empty();
+
+                            $("#prodi").prop("disabled", false);
+                            $("#matkul").prop("disabled", true);
+
+                            $("#prodi").select2({
+                                placeholder: "-- Pilih Program Studi --",
+                                width: "100%",
+                                ajax: {
+                                    url: "@Url.Action("GetProdiByFakultas", "ReportCPLMatkul")",
+                                    dataType: 'json',
+                                    method: "POST",
+                                    delay: 250,
+                                    cache: false,
+                                    data: function (params) {
+                                        return {
+                                            Search: params.term || "",
+                                            Fakultas: $('#fakultas').val(),
+                                            JenjangStudi: $('#jenjangStudi').val()
+                                        };
+                                    },
+                                    processResults: function (data, params) {
+                                        return {
+                                            results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
+                                        };
+                                    },
+                                }
+                            });
+                            $("#prodi").change(function () {
+
+                                $("#matkul").empty();
+
+                                $("#matkul").prop("disabled", false);
+
+                                $("#matkul").select2({
+                                    placeholder: "-- Pilih Mata Kuliah --",
+                                    width: "100%",
+                                    ajax: {
+                                        url: "@Url.Action("GetMatkulByProdi", "ReportCPLMatkul")",
+                                        dataType: 'json',
+                                        method: "POST",
+                                        delay: 250,
+                                        cache: false,
+                                        data: function (params) {
+                                            return {
+                                                Search: params.term || "",
+                                                Prodi: $('#prodi').val(),
+                                                JenjangStudi: $('#jenjangStudi').val()
+                                            };
+                                        },
+                                        processResults: function (data, params) {
+                                            return {
+                                                results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
+                                            };
+                                        },
+                                    }
+                                });
+                            });
+                        });
+
+                    }
+
                 });
-            });
+
             cekRole();
         }
         function appendZero(string, length) {
@@ -416,13 +485,13 @@
                     type: "GET",
                     url: "@Url.Action("GetInformasiKampusByFakultas", "ReportCPLMatkul")"
                 }).then(function (response) {
-                    var option = $("<option selected='selected'></option>").val(response.JenjangStudi).text(response.JenjangStudi);
+                    @*var option = $("<option selected='selected'></option>").val(response.JenjangStudi).text(response.JenjangStudi);
                     $("#jenjangStudi").append(option).trigger('change');
-                    $("#jenjangStudi").prop("disabled", true);
-                    option = $("<option selected='selected'></option>").val(response.Fakultas).text(response.Fakultas);
+                    $("#jenjangStudi").prop("disabled", true);*@
+                    var option = $("<option selected='selected'></option>").val(response.Fakultas).text(response.Fakultas);
                     $("#fakultas").append(option).trigger('change');
                     $("#fakultas").prop("disabled", true);
-                    $("#prodi").prop("disabled", false);
+                    //$("#prodi").prop("disabled", false);
                 });
             } else if (
                 '@HttpContext.Current.Session["RoleName"].ToString()' == 'Kepala Program Studi'
@@ -433,16 +502,16 @@
                     type: "GET",
                     url: "@Url.Action("GetInformasiKampusByProdi", "ReportCPLMatkul")"
                 }).then(function (response) {
-                    var option = $("<option selected='selected'></option>").val(response.JenjangStudi).text(response.JenjangStudi);
+                    @*var option = $("<option selected='selected'></option>").val(response.JenjangStudi).text(response.JenjangStudi);
                     $("#jenjangStudi").append(option).trigger('change');
-                    $("#jenjangStudi").prop("disabled", true);
-                    option = $("<option selected='selected'></option>").val(response.Fakultas).text(response.Fakultas);
+                    $("#jenjangStudi").prop("disabled", true);*@
+                    var option = $("<option selected='selected'></option>").val(response.Fakultas).text(response.Fakultas);
                     $("#fakultas").append(option).trigger('change');
                     $("#fakultas").prop("disabled", true);
                     option = $("<option selected='selected'></option>").val(response.Prodi).text(response.Prodi);
                     $("#prodi").append(option).trigger('change');
                     $("#prodi").prop("disabled", true);
-                    $("#matkul").prop("disabled", false);
+                    //$("#matkul").prop("disabled", false);
                 });
             }
         }

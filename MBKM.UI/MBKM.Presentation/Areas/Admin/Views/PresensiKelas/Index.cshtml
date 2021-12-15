@@ -317,55 +317,61 @@
                 }
             });
             $("#tahunSemester").change(function () {
+                $("#jenjangStudi").prop("disabled", false);
+                console.log(role);
                 if (role == 1) {
-                    $("#prodi").empty();
-                    $("#lokasi").empty();
-                    $("#mataKuliah").empty();
-                    $("#seksi").empty();
-
-                    $("#prodi").prop("disabled", false);
-                    $("#lokasi").prop("disabled", true);
-                    $("#mataKuliah").prop("disabled", true);
-                    $("#seksi").prop("disabled", true);
-
-                    $("#prodi").select2({
-                        placeholder: "-- Pilih Program Studi --",
+                    $("#jenjangStudi").select2({
+                        placeholder: "-- Pilih Jenjang Studi --",
                         width: "100%",
                         ajax: {
-                            url: "@Url.Action("GetProdiByFakultas", "Penilaian")",
+                            url: "@Url.Action("getLookupByTipe", "PresensiKelas")",
                             dataType: 'json',
                             method: "POST",
                             delay: 250,
                             cache: false,
                             data: function (params) {
                                 return {
-                                    Search: params.term || "",
-                                    Fakultas: $('#fakultas').val(),
-                                    JenjangStudi: $('#jenjangStudi').val()
+                                    Tipe: 'JenjangStudi'
                                 };
                             },
                             processResults: function (data, params) {
                                 return {
-                                    results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
+                                    results: $.map(data, function (item) { return { id: item.Nilai, value: item.Nilai, text: item.Nama } })
                                 };
-                            },
+                            }
                         }
                     });
-                    $("#prodi").change(function () {
-
+                    $("#jenjangStudi").change(function () {
+                        
+                        //$("#fakultas").empty();
+                        $("#prodi").empty();
                         $("#lokasi").empty();
                         $("#mataKuliah").empty();
                         $("#seksi").empty();
 
-                        $("#lokasi").prop("disabled", false);
+                        
+                        //$("#fakultas").prop("disabled", false);
+                        //$("#prodi").prop("disabled", true);
+                        $("#lokasi").prop("disabled", true);
                         $("#mataKuliah").prop("disabled", true);
                         $("#seksi").prop("disabled", true);
 
-                        $("#lokasi").select2({
-                            placeholder: "-- Pilih Lokasi --",
+
+                        $("#prodi").empty();
+                        $("#lokasi").empty();
+                        $("#mataKuliah").empty();
+                        $("#seksi").empty();
+
+                        $("#prodi").prop("disabled", false);
+                        $("#lokasi").prop("disabled", true);
+                        $("#mataKuliah").prop("disabled", true);
+                        $("#seksi").prop("disabled", true);
+
+                        $("#prodi").select2({
+                            placeholder: "-- Pilih Program Studi --",
                             width: "100%",
                             ajax: {
-                                url: "@Url.Action("GetLokasiByProdi", "Penilaian")",
+                                url: "@Url.Action("GetProdiByFakultas", "Penilaian")",
                                 dataType: 'json',
                                 method: "POST",
                                 delay: 250,
@@ -373,7 +379,7 @@
                                 data: function (params) {
                                     return {
                                         Search: params.term || "",
-                                        Prodi: $('#prodi').val(),
+                                        Fakultas: $('#fakultas').val(),
                                         JenjangStudi: $('#jenjangStudi').val()
                                     };
                                 },
@@ -384,19 +390,21 @@
                                 },
                             }
                         });
-                        $("#lokasi").change(function () {
+                        $("#prodi").change(function () {
 
+                            $("#lokasi").empty();
                             $("#mataKuliah").empty();
                             $("#seksi").empty();
 
-                            $("#mataKuliah").prop("disabled", false);
+                            $("#lokasi").prop("disabled", false);
+                            $("#mataKuliah").prop("disabled", true);
                             $("#seksi").prop("disabled", true);
 
-                            $("#mataKuliah").select2({
-                                placeholder: "-- Pilih Mata Kuliah --",
+                            $("#lokasi").select2({
+                                placeholder: "-- Pilih Lokasi --",
                                 width: "100%",
                                 ajax: {
-                                    url: "@Url.Action("GetMatkulByLokasi", "Penilaian")",
+                                    url: "@Url.Action("GetLokasiByProdi", "Penilaian")",
                                     dataType: 'json',
                                     method: "POST",
                                     delay: 250,
@@ -405,7 +413,6 @@
                                         return {
                                             Search: params.term || "",
                                             Prodi: $('#prodi').val(),
-                                            Lokasi: $('#lokasi').val(),
                                             JenjangStudi: $('#jenjangStudi').val()
                                         };
                                     },
@@ -416,17 +423,19 @@
                                     },
                                 }
                             });
-                            $("#mataKuliah").change(function () {
+                            $("#lokasi").change(function () {
 
+                                $("#mataKuliah").empty();
                                 $("#seksi").empty();
 
-                                $("#seksi").prop("disabled", false);
+                                $("#mataKuliah").prop("disabled", false);
+                                $("#seksi").prop("disabled", true);
 
-                                $("#seksi").select2({
-                                    placeholder: "-- Pilih Seksi --",
+                                $("#mataKuliah").select2({
+                                    placeholder: "-- Pilih Mata Kuliah --",
                                     width: "100%",
                                     ajax: {
-                                        url: "@Url.Action("GetSeksiByMatkul", "Penilaian")",
+                                        url: "@Url.Action("GetMatkulByLokasi", "Penilaian")",
                                         dataType: 'json',
                                         method: "POST",
                                         delay: 250,
@@ -434,9 +443,8 @@
                                         data: function (params) {
                                             return {
                                                 Search: params.term || "",
-                                                Matkul: $('#mataKuliah').val(),
-                                                Lokasi: $('#lokasi').val(),
                                                 Prodi: $('#prodi').val(),
+                                                Lokasi: $('#lokasi').val(),
                                                 JenjangStudi: $('#jenjangStudi').val()
                                             };
                                         },
@@ -447,12 +455,44 @@
                                         },
                                     }
                                 });
+                                $("#mataKuliah").change(function () {
+
+                                    $("#seksi").empty();
+
+                                    $("#seksi").prop("disabled", false);
+
+                                    $("#seksi").select2({
+                                        placeholder: "-- Pilih Seksi --",
+                                        width: "100%",
+                                        ajax: {
+                                            url: "@Url.Action("GetSeksiByMatkul", "Penilaian")",
+                                            dataType: 'json',
+                                            method: "POST",
+                                            delay: 250,
+                                            cache: false,
+                                            data: function (params) {
+                                                return {
+                                                    Search: params.term || "",
+                                                    Matkul: $('#mataKuliah').val(),
+                                                    Lokasi: $('#lokasi').val(),
+                                                    Prodi: $('#prodi').val(),
+                                                    JenjangStudi: $('#jenjangStudi').val()
+                                                };
+                                            },
+                                            processResults: function (data, params) {
+                                                return {
+                                                    results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
+                                                };
+                                            },
+                                        }
+                                    });
+                                });
                             });
                         });
+                        return;
                     });
-                    return;
                 }
-                if (role == 2) {
+                @*if (role == 2) {
                     $("#mataKuliah").empty();
                     $("#seksi").empty();
 
@@ -516,7 +556,8 @@
                         });
                     });
                     return;
-                }
+                }*@
+                else {
                 $("#jenjangStudi").empty();
                 $("#fakultas").empty();
                 $("#prodi").empty();
@@ -724,6 +765,8 @@
                         });
                     });
                 });
+                }
+
             });
             cekRole();
         }
@@ -741,10 +784,10 @@
                     type: "GET",
                     url: "@Url.Action("GetInformasiKampusByFakultas", "Penilaian")"
                 }).then(function (response) {
-                    var option = $("<option selected='selected'></option>").val(response.JenjangStudi).text(response.JenjangStudi);
-                    $("#jenjangStudi").append(option).trigger('change');
-                    $("#jenjangStudi").prop("disabled", true);
-                    option = $("<option selected='selected'></option>").val(response.Fakultas).text(response.Fakultas);
+                    //option = $("<option selected='selected'></option>").val(response.JenjangStudi).text(response.JenjangStudi);
+                    //$("#jenjangStudi").append(option).trigger('change');
+                    //$("#jenjangStudi").prop("disabled", true);
+                    var option = $("<option selected='selected'></option>").val(response.Fakultas).text(response.Fakultas);
                     $("#fakultas").append(option).trigger('change');
                     $("#fakultas").prop("disabled", true);
                 });
@@ -754,10 +797,10 @@
                     type: "GET",
                     url: "@Url.Action("GetInformasiKampusByProdi", "Penilaian")"
                 }).then(function (response) {
-                    var option = $("<option selected='selected'></option>").val(response.JenjangStudi).text(response.JenjangStudi);
+                    @*option = $("<option selected='selected'></option>").val(response.JenjangStudi).text(response.JenjangStudi);
                     $("#jenjangStudi").append(option).trigger('change');
-                    $("#jenjangStudi").prop("disabled", true);
-                    option = $("<option selected='selected'></option>").val(response.Fakultas).text(response.Fakultas);
+                    $("#jenjangStudi").prop("disabled", true);*@
+                    @*var option = $("<option selected='selected'></option>").val(response.Fakultas).text(response.Fakultas);
                     $("#fakultas").append(option).trigger('change');
                     $("#fakultas").prop("disabled", true);
                     option = $("<option selected='selected'></option>").val(response.Prodi).text(response.Prodi);
@@ -765,7 +808,7 @@
                     $("#prodi").prop("disabled", true);
                     option = $("<option selected='selected'></option>").val(response.Lokasi).text(response.Lokasi);
                     $("#lokasi").append(option).trigger('change');
-                    $("#lokasi").prop("disabled", true);
+                    $("#lokasi").prop("disabled", true);*@
                 });
             }
         }

@@ -41,24 +41,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         // GET: Admin/JadwalKuliah
         public ActionResult Index()
         {
-
-            //Session["username"] = "Smitty Werben Jeger Man Jensen";
-            //var sesss = Session["KodeProdi"];
-            var ses = Session["RoleName"];
-
-
-            Console.WriteLine(ses);
-
             VMSemester semester = _jkMhsService.getOngoingSemester("S1");
-            //VMFakultas fakultas = new VMFakultas();
-            //fakultas.ID = Session["KodeFakultas"].ToString();
-            //fakultas.Nama = Session["NamaFakultas"].ToString();
-
-            //VMProdi prodi = new VMProdi();
-            //prodi.ID = ;
-            //prodi.Nama = ;
-
-
 
             ViewData["KodeSemester"] = semester.ID;
             ViewData["NamaSemester"] = semester.Nama;
@@ -67,35 +50,14 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             {
                 ViewData["KodeFakultas"] = Session["KodeFakultas"].ToString();
                 ViewData["NamaFakultas"] = Session["NamaFakultas"].ToString();
-            } else if (Session["RoleName"].ToString() == "Kepala Program Studi" || Session["RoleName"].ToString() == "Dosen")
+            } 
+            /*else if (Session["RoleName"].ToString() == "Kepala Program Studi" || Session["RoleName"].ToString() == "Dosen")
             {
                 ViewData["KodeFakultas"] = Session["KodeFakultas"].ToString();
                 ViewData["NamaFakultas"] = Session["NamaFakultas"].ToString();
                 ViewData["KodeProdi"] = Session["KodeProdi"].ToString();
                 ViewData["NamaProdi"] = Session["NamaProdi"].ToString();
-            }
-            /*if (Session["KodeFakultas"].ToString() != "")
-                {
-
-                }
-                if (Session["KodeProdi"].ToString() != "")
-                {
-                    ViewData["KodeProdi"] = Session["KodeProdi"].ToString();
-                    ViewData["NamaProdi"] = Session["NamaProdi"].ToString();
-                }*/
-
-            /*for (int i = 0; i < Session.Contents.Count; i++)
-            {
-
-                //var str
-                var key = Session.Keys[i];
-                var value = Session[i];
-                var two = key + ":  " + value;
-                Console.WriteLine(two);
-
             }*/
-
-            //VMSemester model = _jkMhsService.getOngoingSemester("S1");
 
             return View();
         }
