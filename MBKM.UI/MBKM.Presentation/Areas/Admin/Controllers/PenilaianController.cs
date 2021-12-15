@@ -62,13 +62,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 if (seksi == null || seksi.Length == 0)
                 {
                     result = _jadwalKuliahService.Find(_ => _.JenjangStudi == jenjangStudi && _.NamaFakultas == fakultas && _.Lokasi == lokasi && _.NamaProdi == prodi && _.KodeMataKuliah == KodeMatkul && _.FlagOpen && _.STRM == strm && _.DosenID == noPegawai)
-                        .GroupBy(g => new{ g.ClassSection, g.JamMasuk, g.JamSelesai, g.SKS, g.KodeMataKuliah, g.Hari, g.MataKuliahID, g.NamaMataKuliah, g.STRM })
+                        .GroupBy(g => new{ g.ClassSection, g.SKS, g.KodeMataKuliah, g.MataKuliahID, g.NamaMataKuliah, g.STRM })
                         .Select(s => new JadwalKuliah
                         {
                             ClassSection = s.Key.ClassSection,
-                            JamMasuk = s.Key.JamMasuk,
+                            /*JamMasuk = s.Key.JamMasuk,
                             JamSelesai = s.Key.JamSelesai,
-                            Hari = s.Key.Hari,
+                            Hari = s.Key.Hari,*/
                             KodeMataKuliah = s.Key.KodeMataKuliah,
                             MataKuliahID = s.Key.MataKuliahID,
                             NamaMataKuliah = s.Key.NamaMataKuliah,
@@ -81,13 +81,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 else
                 {
                     result = _jadwalKuliahService.Find(_ => _.JenjangStudi == jenjangStudi && _.NamaFakultas == fakultas && _.Lokasi == lokasi && _.NamaProdi == prodi && _.KodeMataKuliah == KodeMatkul && _.ClassSection == seksi && _.FlagOpen && _.STRM == strm && _.DosenID == noPegawai)
-                        .GroupBy(g => new { g.ClassSection, g.JamMasuk, g.JamSelesai, g.SKS, g.KodeMataKuliah, g.Hari, g.MataKuliahID, g.NamaMataKuliah, g.STRM })
+                        .GroupBy(g => new { g.ClassSection, g.SKS, g.KodeMataKuliah, g.MataKuliahID, g.NamaMataKuliah, g.STRM })
                         .Select(s => new JadwalKuliah
                         {
                             ClassSection = s.Key.ClassSection,
-                            JamMasuk = s.Key.JamMasuk,
+                            /*JamMasuk = s.Key.JamMasuk,
                             JamSelesai = s.Key.JamSelesai,
-                            Hari = s.Key.Hari,
+                            Hari = s.Key.Hari,*/
                             KodeMataKuliah = s.Key.KodeMataKuliah,
                             MataKuliahID = s.Key.MataKuliahID,
                             NamaMataKuliah = s.Key.NamaMataKuliah,
@@ -99,12 +99,12 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 foreach (var d in result)
                 {
                     var dataSementara = _jadwalKuliahService.Find(s => s.ClassSection == d.ClassSection
-                             && s.JamMasuk == d.JamMasuk
+                             /*&& s.JamMasuk == d.JamMasuk
                              && s.JamSelesai == d.JamSelesai
-                             && s.Hari == d.Hari
+                             && s.Hari == d.Hari*/
                              && s.KodeMataKuliah == d.KodeMataKuliah
                              && s.MataKuliahID == d.MataKuliahID
-                             && s.NamaMataKuliah == d.NamaMataKuliah
+                             /*&& s.NamaMataKuliah == d.NamaMataKuliah*/
                              && s.STRM == d.STRM
                              && s.SKS == d.SKS
                              ).FirstOrDefault();
@@ -117,13 +117,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 if (seksi == null || seksi.Length == 0)
                 {
                     result = _jadwalKuliahService.Find(_ => _.JenjangStudi == jenjangStudi && _.NamaFakultas == fakultas && _.Lokasi == lokasi && _.NamaProdi == prodi && _.KodeMataKuliah == KodeMatkul && _.FlagOpen && _.STRM == strm)
-                        .GroupBy(g => new { g.ClassSection, g.JamMasuk, g.JamSelesai, g.SKS, g.KodeMataKuliah, g.Hari, g.MataKuliahID, g.NamaMataKuliah, g.STRM })
+                        .GroupBy(g => new { g.ClassSection, g.SKS, g.KodeMataKuliah, g.MataKuliahID, g.NamaMataKuliah, g.STRM })
                         .Select(s => new JadwalKuliah
                         {
                             ClassSection = s.Key.ClassSection,
-                            JamMasuk = s.Key.JamMasuk,
+                            /*JamMasuk = s.Key.JamMasuk,
                             JamSelesai = s.Key.JamSelesai,
-                            Hari = s.Key.Hari,
+                            Hari = s.Key.Hari,*/
                             KodeMataKuliah = s.Key.KodeMataKuliah,
                             MataKuliahID = s.Key.MataKuliahID,
                             NamaMataKuliah = s.Key.NamaMataKuliah,
@@ -134,13 +134,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 else
                 {
                     result = _jadwalKuliahService.Find(_ => _.JenjangStudi == jenjangStudi && _.NamaFakultas == fakultas && _.Lokasi == lokasi && _.NamaProdi == prodi && _.KodeMataKuliah == KodeMatkul && _.ClassSection == seksi && _.FlagOpen && _.STRM == strm)
-                        .GroupBy(g => new { g.ClassSection, g.JamMasuk, g.JamSelesai, g.SKS, g.KodeMataKuliah, g.Hari, g.MataKuliahID, g.NamaMataKuliah, g.STRM })
+                        .GroupBy(g => new { g.ClassSection, g.SKS, g.KodeMataKuliah, g.MataKuliahID, g.NamaMataKuliah, g.STRM })
                         .Select(s => new JadwalKuliah
                         {
                             ClassSection = s.Key.ClassSection,
-                            JamMasuk = s.Key.JamMasuk,
+                            /*JamMasuk = s.Key.JamMasuk,
                             JamSelesai = s.Key.JamSelesai,
-                            Hari = s.Key.Hari,
+                            Hari = s.Key.Hari,*/
                             KodeMataKuliah = s.Key.KodeMataKuliah,
                             MataKuliahID = s.Key.MataKuliahID,
                             NamaMataKuliah = s.Key.NamaMataKuliah,
@@ -151,12 +151,12 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 foreach (var d in result)
                 {
                     var dataSementara = _jadwalKuliahService.Find(s => s.ClassSection == d.ClassSection
-                             && s.JamMasuk == d.JamMasuk
+                             /*&& s.JamMasuk == d.JamMasuk
                              && s.JamSelesai == d.JamSelesai
-                             && s.Hari == d.Hari
+                             && s.Hari == d.Hari*/
                              && s.KodeMataKuliah == d.KodeMataKuliah
                              && s.MataKuliahID == d.MataKuliahID
-                             && s.NamaMataKuliah == d.NamaMataKuliah
+                             /*&& s.NamaMataKuliah == d.NamaMataKuliah*/
                              && s.STRM == d.STRM
                              && s.SKS == d.SKS
                              ).FirstOrDefault();
@@ -208,12 +208,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             var dataJadwal = _jadwalKuliahService.Get(idJadwalKuliah);
             var list = _pendaftaranMataKuliahService.Find(_ =>
-                    _.JadwalKuliahs.JamMasuk == dataJadwal.JamMasuk
-                &&  _.JadwalKuliahs.JamSelesai == dataJadwal.JamSelesai
-                &&  _.JadwalKuliahs.Hari == dataJadwal.Hari
-                &&  _.JadwalKuliahs.KodeMataKuliah == dataJadwal.KodeMataKuliah
+                    _.JadwalKuliahs.KodeMataKuliah == dataJadwal.KodeMataKuliah
                 &&  _.JadwalKuliahs.MataKuliahID == dataJadwal.MataKuliahID 
-                /*&&  _.JadwalKuliahs.NamaMataKuliah == dataJadwal.NamaMataKuliah*/
                 &&  _.JadwalKuliahs.STRM == dataJadwal.STRM
                 &&  _.JadwalKuliahs.SKS == dataJadwal.SKS 
                 && _.StatusPendaftaran == "ACCEPTED BY MAHASISWA" 
