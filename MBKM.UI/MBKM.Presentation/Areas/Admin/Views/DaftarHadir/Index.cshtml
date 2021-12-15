@@ -366,6 +366,21 @@
             datatable.destroy();
 
             datatable = $('#table-data-master-mapping-cpl').DataTable({
+                @*ajax: {
+                     'type': 'POST',
+                    'url': '@Url.Action("GetPresensi", "PresensiKelas")',
+                    'data': {
+                        strm: $('#tahunSemester').val(),
+                        jenjangStudi: $('#jenjangStudi').val(),
+                        fakultas: $('#fakultas').val(),
+                        lokasi: $('#lokasi').val(),
+                        prodi : $('#prodi').val(),
+                        matkul : $('#mataKuliah').val(),
+                        seksi:seksi
+
+
+                        // etc..
+                    },*@
                 "columnDefs": [{
                     "searchable": false,
                     "orderable": false,
@@ -374,8 +389,22 @@
                 }],
                 "order": [[1, 'asc']],
                 "ajax": {
-                    url: '/Admin/daftarhadir/SearchList?' + param,
-                    type: 'POST',
+                    //url: '/Admin/daftarhadir/SearchList?' + param,
+                    //type: 'POST',
+                     'type': 'POST',
+                    'url': '@Url.Action("Searchlist", "daftarhadir")',
+                    'data': {
+                        strm: $('#tahunSemester').val(),
+                        jenjangStudi: $('#jenjangStudi').val(),
+                        fakultas: $('#fakultas').select2('data')[0].text,
+                        lokasi: $('#lokasi').select2('data')[0].value,
+                        prodi : $('#prodi').val(),
+                        matkul: $('#mataKuliah').select2('data')[0].text,
+                        seksi:seksi
+
+
+                        // etc..
+                    },
                     dataSrc: ''
                 },
                 "columns": [
@@ -826,7 +855,7 @@
                     });
                 });
             }
-            else {//if (roleNames == "Admin Fakultas") 
+            else {//if (roleNames == "Admin Fakultas")
                 $("#jenjangStudi").prop("disabled", true);
                 $("#fakultas").prop("disabled", true);
                 $("#prodi").prop("disabled", true);
