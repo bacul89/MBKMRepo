@@ -323,7 +323,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     dataMap.JenjangStudi == jenjangStudi &&
                     dataMap.STRM == strmInt &&
                     dataMap.FlagOpen == true &&
-                    dataMap.NamaMataKuliah.Contains(searchBy) &&
+                    dataMap.NamaMataKuliah.Contains(searchBy) ||
                     dataMap.KodeMataKuliah.Contains(searchBy)
 
                 ).ToList())
