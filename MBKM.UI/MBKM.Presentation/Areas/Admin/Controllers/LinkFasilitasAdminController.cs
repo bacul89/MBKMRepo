@@ -101,7 +101,59 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult GetMataKuliahFlag(int skip, int take, string searchBy, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm)
         {
+            List<JadwalKuliah> MVJadwal = new List<JadwalKuliah>();
+            List<string> mapJadwal = new List<string>();
 
+            int idProdiInt = Int32.Parse(idProdi);
+            int idFakultasInt = Int32.Parse(idFakultas);
+            int strmInt = Int32.Parse(strm);
+
+            if (String.IsNullOrEmpty(searchBy))
+            {
+                foreach (var item in _jkService.Find(dataMap =>
+                    dataMap.ProdiID == idProdiInt &&
+                    dataMap.FakultasID == idFakultasInt &&
+                    dataMap.Lokasi == lokasi &&
+                    dataMap.JenjangStudi == jenjangStudi &&
+                    dataMap.STRM == strmInt &&
+                    dataMap.FlagOpen == true
+
+                ).ToList())
+                {
+                    if (!mapJadwal.Contains(item.NamaMataKuliah) && !mapJadwal.Contains(item.KodeMataKuliah))
+                    {
+                        MVJadwal.Add(item);
+                        mapJadwal.Add(item.NamaMataKuliah);
+                    }
+                }
+            }
+            else
+            {
+                foreach (var item in _jkService.Find(dataMap =>
+                    dataMap.ProdiID == idProdiInt &&
+                    dataMap.FakultasID == idFakultasInt &&
+                    dataMap.Lokasi == lokasi &&
+                    dataMap.JenjangStudi == jenjangStudi &&
+                    dataMap.STRM == strmInt &&
+                    dataMap.FlagOpen == true &&
+                    dataMap.NamaMataKuliah.Contains(searchBy) &&
+                    dataMap.NamaMataKuliah.Contains(searchBy) ||
+                    dataMap.KodeMataKuliah.Contains(searchBy)
+
+                ).ToList())
+                {
+                    if (!mapJadwal.Contains(item.NamaMataKuliah) && !mapJadwal.Contains(item.KodeMataKuliah))
+                    {
+                        MVJadwal.Add(item);
+                        mapJadwal.Add(item.NamaMataKuliah);
+                    }
+                }
+            }
+
+
+
+
+            return new ContentResult { Content = JsonConvert.SerializeObject(MVJadwal), ContentType = "application/json" };
 
             /*List<JadwalKuliah> MVJadwal = new List<JadwalKuliah>();
             List<string> mapJadwal = new List<string>();*/
@@ -110,16 +162,16 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             int idFakultasInt = Int32.Parse(idFakultas);
             int strmInt = Int32.Parse(strm);*/
 
-            List<JadwalKuliah> final = _jkService.GetMatkulFlag(skip, take, searchBy, idProdi, lokasi, idFakultas, jenjangStudi, strm).ToList();
+            //List<JadwalKuliah> final = _jkService.GetMatkulFlag(skip, take, searchBy, idProdi, lokasi, idFakultas, jenjangStudi, strm).ToList();
 
-            /*foreach (var item in final)
-            {
-                if (!mapJadwal.Contains(item.NamaMataKuliah))
-                {
-                    MVJadwal.Add(item);
-                }
-            }*/
-            return new ContentResult { Content = JsonConvert.SerializeObject(final), ContentType = "application/json" };
+            ///*foreach (var item in final)
+            //{
+            //    if (!mapJadwal.Contains(item.NamaMataKuliah))
+            //    {
+            //        MVJadwal.Add(item);
+            //    }
+            //}*/
+            //return new ContentResult { Content = JsonConvert.SerializeObject(final), ContentType = "application/json" };
         }
         [HttpPost]
         public ActionResult GetSection()
