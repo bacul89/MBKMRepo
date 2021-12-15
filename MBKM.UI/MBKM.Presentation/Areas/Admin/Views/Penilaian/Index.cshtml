@@ -890,7 +890,7 @@
                 }).then(function (response) {
                     var option = $("<option selected='selected'></option>").val(response.JenjangStudi).text(response.JenjangStudi);
                     $("#jenjangStudi").append(option).trigger('change');
-                    $("#jenjangStudi").prop("disabled", true);
+                    @*$("#jenjangStudi").prop("disabled", true);*@
                     option = $("<option selected='selected'></option>").val(response.Fakultas).text(response.Fakultas);
                     $("#fakultas").append(option).trigger('change');
                     $("#fakultas").prop("disabled", true);
