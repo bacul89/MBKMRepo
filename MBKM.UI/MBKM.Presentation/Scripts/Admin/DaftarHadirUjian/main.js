@@ -344,8 +344,8 @@ function loadJenjangStudi(tipe, id, nama) {
                         var pageLength = 0;
                         $('#matakuliahCari').select2({
                             placeholder: "-- Pilih Mata Kuliah --",
-                            "proccessing": true,
-                            "serverSide": true,
+                            //"proccessing": true,
+                            //"serverSide": true,
                             //multiple: true,
                             width: "100%",
                             ajax: {
@@ -355,14 +355,10 @@ function loadJenjangStudi(tipe, id, nama) {
                                 dataType: 'json',
 
                                 data: function (params) {
-                                    // console.log('page : ' + params.page);
-                                    // console.log('p number : ' + (params.page - 1) * 10);
+                                    
 
                                     return {
-                                        take: 10,
                                         searchBy: params.term || "",
-                                        skip: params.page || 0,
-                                        //idProdi: $('#lokasiCari').select2('data')[0].id,
                                         idProdi: $('#prodiCari').val(),
                                         idProdi: $('#lokasiCari').select2('data')[0].id,
                                         idFakultas: $('#fakultasCari').val(),
@@ -371,10 +367,9 @@ function loadJenjangStudi(tipe, id, nama) {
                                         lokasi: $('#lokasiCari').select2('data')[0].value
                                     };
                                 },
-
                                 processResults: function (data, params) {
 
-                                    var page = params.page - 1 || 1;
+                                    /*var page = params.page - 1 || 1;
                                     pageLength = pageLength + data.length;
 
                                     return {
@@ -382,7 +377,16 @@ function loadJenjangStudi(tipe, id, nama) {
                                         pagination: {
                                             more: data.length > 0 && data.length == 10
                                         }
-                                    }
+                                    }*/
+                                    
+
+                                        return {
+                                            results: $.map(data, function (item) { return { id: item.MataKuliahID, value: item.MataKuliahID, text: item.KodeMataKuliah + ' - ' + item.NamaMataKuliah, name: item.NamaMataKuliah, kode: item.KodeMataKuliah } })
+                                        };
+
+                             
+
+
                                 },
 
 
@@ -547,8 +551,8 @@ function loadJenjangStudi(tipe, id, nama) {
                 var pageLength = 0;
                 $('#matakuliahCari').select2({
                     placeholder: "-- Pilih Mata Kuliah --",
-                    "proccessing": true,
-                    "serverSide": true,
+                    //"proccessing": true,
+                    //"serverSide": true,
                     //multiple: true,
                     width: "100%",
                     ajax: {
@@ -562,9 +566,9 @@ function loadJenjangStudi(tipe, id, nama) {
                             // console.log('p number : ' + (params.page - 1) * 10);
 
                             return {
-                                take: 10,
+                                //take: 10,
                                 searchBy: params.term || "",
-                                skip: params.page || 0,
+                                //skip: params.page || 0,
                                 //idProdi: $('#lokasiCari').select2('data')[0].id,
                                 idProdi: $('#prodiCari').val(),
                                 idProdi: $('#lokasiCari').select2('data')[0].id,
@@ -577,17 +581,19 @@ function loadJenjangStudi(tipe, id, nama) {
 
                         processResults: function (data, params) {
 
-                            var page = params.page - 1 || 1;
-                            pageLength = pageLength + data.length;
-
-
-
+                            //var page = params.page - 1 || 1;
+                            //pageLength = pageLength + data.length;
                             return {
+                                results: $.map(data, function (item) { return { id: item.MataKuliahID, value: item.MataKuliahID, text: item.KodeMataKuliah + ' - ' + item.NamaMataKuliah, name: item.NamaMataKuliah, kode: item.KodeMataKuliah } })
+                            };
+
+
+                            /*return {
                                 results: $.map(data, function (item) { return { id: item.MataKuliahID, value: item.MataKuliahID, text: item.KodeMataKuliah + ' - ' + item.NamaMataKuliah, name: item.NamaMataKuliah, kode: item.KodeMataKuliah } }),
                                 pagination: {
                                     more: data.length > 0 && data.length == 10
                                 }
-                            }
+                            }*/
                         },
 
                         
@@ -851,9 +857,9 @@ function loadJenjangStudi(tipe, id, nama) {
                                     // console.log('p number : ' + (params.page - 1) * 10);
 
                                     return {
-                                        take: 10,
+                                        //take: 10,
                                         searchBy: params.term || "",
-                                        skip: params.page || 0,
+                                        //skip: params.page || 0,
                                         //idProdi: $('#lokasiCari').select2('data')[0].id,
                                         idProdi: $('#prodiCari').val(),
                                         idProdi: $('#lokasiCari').select2('data')[0].id,
@@ -865,8 +871,12 @@ function loadJenjangStudi(tipe, id, nama) {
                                 },
 
                                 processResults: function (data, params) {
+                                    return {
+                                        results: $.map(data, function (item) { return { id: item.MataKuliahID, value: item.MataKuliahID, text: item.KodeMataKuliah + ' - ' + item.NamaMataKuliah, name: item.NamaMataKuliah, kode: item.KodeMataKuliah } })
+                                    };
 
-                                    var page = params.page - 1 || 1;
+
+                                    /*var page = params.page - 1 || 1;
                                     pageLength = pageLength + data.length;
 
                                     return {
@@ -874,7 +884,7 @@ function loadJenjangStudi(tipe, id, nama) {
                                         pagination: {
                                             more: data.length > 0 && data.length == 10
                                         }
-                                    }
+                                    }*/
                                 },
 
                                 /*
