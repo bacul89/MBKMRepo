@@ -19,6 +19,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
     {
         // GET: Admin/LinkFasilitasAdmin
         private ILinkFasilitasService _linkFasilitasService;
+        private IPendaftaranMataKuliahService _pendaftaranMataKuliahService;
         private ICPLMatakuliahService _cplMatakuliah;
         private ILookupService _lookupService;
         private IJadwalKuliahService _jkService;
@@ -27,8 +28,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private IJadwalUjianMBKMDetailService _juDetailService;
         public LinkFasilitasAdminController(ICPLMatakuliahService cplMatakuliah, ILookupService lookupService, 
             IJadwalKuliahService jkService, IMasterCapaianPembelajaranService mcpService,
-            ILinkFasilitasService linkFasilitasService, IAbsensiService absensiService, IJadwalUjianMBKMDetailService juDetailService)
+            ILinkFasilitasService linkFasilitasService, IAbsensiService absensiService, IJadwalUjianMBKMDetailService juDetailService, IPendaftaranMataKuliahService pendaftaranMataKuliahService)
         {
+            _pendaftaranMataKuliahService = pendaftaranMataKuliahService;
             _cplMatakuliah = cplMatakuliah;
             _jkService = jkService;
             _lookupService = lookupService;
@@ -47,10 +49,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             if (RoleLogin == "Kepala Program Studi" || RoleLogin == "Dosen")
             {
                 var prodiID = Session["KodeProdi"].ToString();
-                var tempProdiID = Convert.ToInt64(prodiID);
-                var getJenjang = _jkService.Find(x => x.ProdiID == tempProdiID).FirstOrDefault();
-                var jenjangs = getJenjang.JenjangStudi;
-                ViewData["jenjangs"] = jenjangs;
+                //var tempProdiID = Convert.ToInt64(prodiID);
+                //var getJenjang = _jkService.Find(x => x.ProdiID == tempProdiID).FirstOrDefault();
+                //var jenjangs = getJenjang.JenjangStudi;
+                //ViewData["jenjangs"] = jenjangs;
                 ViewData["KodeFakultas"] = Session["KodeFakultas"].ToString();
                 ViewData["NamaFakultas"] = Session["NamaFakultas"].ToString();
                 ViewData["KodeProdi"] = prodiID;
@@ -263,8 +265,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
            
             var data = _linkFasilitasService.Get(id);
-            var d = HttpContext.Session["RoleName"].ToString().ToLower();
-            ViewData["role"] = HttpContext.Session["RoleName"].ToString().ToLower();
+            //var d = HttpContext.Session["RoleName"].ToString().ToLower();
+            //ViewData["role"] = HttpContext.Session["RoleName"].ToString().ToLower();
             return View(data);
         }
         [HttpPost]
@@ -285,6 +287,12 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
             //return Json(data);
             return Json(new ServiceResponse { status = 200, message = "Link Berhasil Di Update" });
+        }
+        public ActionResult GetInformasiKampusByProdi()
+        {
+            var kodeProdi = Session["KodeProdi"] as string;
+            var result = _pendaftaranMataKuliahService.GetInformasiKampusByIdProdi(kodeProdi);
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
     }
 }

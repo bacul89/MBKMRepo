@@ -14,8 +14,8 @@
             }
             $('#modal-inner').append(e);
             $('.modal').modal('show');
-            var getRole = $("#txtRole").val();
-            if (getRole != "wakil rektor") {
+            //var getRole = $("#txtRole").val();
+            //if (getRole != "wakil rektor") {
 
                 $("#update-button").hide();
                 //loadControl('Edit');
@@ -33,11 +33,11 @@
                         UpdateLink(id);
                     });
                 });
-            }
-            else {
-                $("#edit-button").hide();
-                $("#update-button").hide();
-            }
+            //}
+            //else {
+                //$("#edit-button").hide();
+                //$("#update-button").hide();
+            //}
             
 
 

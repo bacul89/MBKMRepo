@@ -22,12 +22,14 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private IMahasiswaService _mahasiswaService;
         private IPerjanjianKerjasamaService _perjanjianKerjasamaService;
         private ILookupService _lookupService;
+        private IPendaftaranMataKuliahService _pendaftaranMataKuliahService;
 
-        public RegisMhsByAdminController(IMahasiswaService mahasiswaService, IPerjanjianKerjasamaService perjanjianKerjasamaService, ILookupService lookupService)
+        public RegisMhsByAdminController(IPendaftaranMataKuliahService pendaftaranMataKuliahService, IMahasiswaService mahasiswaService, IPerjanjianKerjasamaService perjanjianKerjasamaService, ILookupService lookupService)
         {
             _perjanjianKerjasamaService = perjanjianKerjasamaService;
             _mahasiswaService = mahasiswaService;
             _lookupService = lookupService;
+            _pendaftaranMataKuliahService = pendaftaranMataKuliahService;
         }
 
         public ActionResult Index()
@@ -102,6 +104,11 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             tos.Add(email);
             return emailHelper.SendMail(subject, body, ConfigurationManager.AppSettings["EmailFrom"], tos, null, null, true);
         }
+        public ActionResult GetSemesterAll3(string jenjangStudi, string search)
+        {
+            var result = _pendaftaranMataKuliahService.GetSemesterAll3(jenjangStudi, search);
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
+        }
         public JsonResult RegisterExternal(Mahasiswa mahasiswa)
         {
             try
@@ -122,10 +129,11 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     mahasiswa.UpdatedDate = DateTime.Now;
                     mahasiswa.StatusVerifikasi = "DAFTAR";
                     mahasiswa.Password = HashPasswordService.HashPassword(mahasiswa.Password);
-                    mahasiswa.CreatedBy = "Admin";
-                    _mahasiswaService.Save(mahasiswa);
+                    mahasiswa.CreatedBy = Session["username"] as string;
+                    
                     if (SendEmail(mahasiswa.Email, token))
                     {
+                        _mahasiswaService.Save(mahasiswa);
                         return Json(new ServiceResponse { status = 200, message = "Pendaftaran mahasiswa berhasil, tolong cek email dan konfirmasi akunmu!" });
                     }
                     return Json(new ServiceResponse { status = 500, message = "Email tidak terkirim!" });

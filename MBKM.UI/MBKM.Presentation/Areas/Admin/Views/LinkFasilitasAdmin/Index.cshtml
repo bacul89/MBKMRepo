@@ -45,12 +45,12 @@
                             <div class="col-sm-9">
                                 <select name="jenjangCari" id="jenjangCari" class="form-control input-md">
                                     @*<option value="" selected disabled>-- Pilih Authority Approval --</option>*@
-                                    @{
+                                    @*@{
                                         if (ViewData["role"].ToString() == "Kepala Program Studi" || ViewData["role"].ToString() == "Dosen")
                                         {
                                             <option value="@ViewData["jenjangs"]" selected>@ViewData["jenjangs"]</option>
                                         }
-                                    }
+                                    }*@
                                 </select>
                             </div>
                         </div>
@@ -181,7 +181,7 @@
 </div>
 
 @section scripts{
-    <script src="~/Scripts/Admin/MasterMapingCapaianPembelajaran/main.js"></script>
+    @*<script src="~/Scripts/Admin/MasterMapingCapaianPembelajaran/main.js"></script>*@
     <script src="~/Scripts/Admin/LinkFasilitasAdmin/crud.js"></script>
     <script src="~/Scripts/loading/loadingoverlay.min.js"></script>
 
@@ -284,6 +284,23 @@
                 $("#table-data-master-mapping-cpl_filter").hide();
             }
             else {
+                $.ajax({
+                    type: "GET",
+                    url: "@Url.Action("GetInformasiKampusByProdi", "LinkFasilitasAdmin")"
+                }).then(function (response) {
+                    var option = $("<option selected='selected'></option>").val(response.JenjangStudi).text(response.JenjangStudi);
+                    $("#jenjangCari").append(option).trigger('change');
+                    $("#jenjangCari").prop("disabled", true);
+                    //option = $("<option selected='selected'></option>").val(response.Fakultas).text(response.Fakultas);
+                    //$("#fakultasCari").append(option).trigger('change');
+                    //$("#fakultasCari").prop("disabled", true);
+                    //option = $("<option selected='selected'></option>").val(response.Prodi).text(response.Prodi);
+                    //$("#prodiCari").append(option).trigger('change');
+                    //$("#prodiCari").prop("disabled", true);
+                    //option = $("<option selected='selected'></option>").val(response.Lokasi).text(response.Lokasi);
+                    //$("#lokasiCari").append(option).trigger('change');
+                    //$("#lokasiCari").prop("disabled", true);
+                });
                 $("#jenjangCari").prop("disabled", true);
                 $("#fakultasCari").prop("disabled", true);
                 $("#prodiCari").prop("disabled", true);
@@ -334,8 +351,8 @@
                     }
                 });
                 $("#tahunAjaranCari").change(function () {
-                    $("#jenjangCari").prop("disabled", false);
-                    loadJenjangStudi("JenjangStudi", "jenjang", "Jenjang Studi");
+                   // $("#jenjangCari").prop("disabled", false);
+                    //loadJenjangStudi("JenjangStudi", "jenjang", "Jenjang Studi");
 
                     ///*$("#fakultasCari").prop("disabled", true);*/
                     //$("#fakultasCari").prop("disabled", true);
@@ -463,7 +480,7 @@
                                 }
                             },
 
-                          
+
                         }
                     });
 
@@ -533,7 +550,7 @@
                 datatable = $('#table-data-master-mapping-cpl').DataTable();
                 $("#table-data-master-mapping-cpl_filter").hide();
             }
-            
+
 
         });
         function buttonHandler(param) {
@@ -713,7 +730,7 @@
 
 
         @* search *@
-       
+
 
 
 

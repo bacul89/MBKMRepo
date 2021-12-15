@@ -22,12 +22,14 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private IMasterCapaianPembelajaranService _mcpService;
         private ICPLMatakuliahService _cplMatakuliah;
         private IJadwalKuliahService _jkService;
-        public MasterCPLController(ICPLMatakuliahService cplMatakuliah, IJadwalKuliahService jkService, ILookupService lookupService, IMasterCapaianPembelajaranService mcpService)
+        private IPendaftaranMataKuliahService _pendaftaranMataKuliahService;
+        public MasterCPLController(ICPLMatakuliahService cplMatakuliah, IJadwalKuliahService jkService, ILookupService lookupService, IMasterCapaianPembelajaranService mcpService, IPendaftaranMataKuliahService pendaftaranMataKuliahService)
         {
             _cplMatakuliah = cplMatakuliah;
             _lookupService = lookupService;
             _mcpService = mcpService;
             _jkService = jkService;
+            _pendaftaranMataKuliahService = pendaftaranMataKuliahService;
         }
 
         // GET: Admin/MasterCPL
@@ -46,15 +48,21 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             {
                 var prodiID = Session["KodeProdi"].ToString();
                 var tempProdiID = Convert.ToInt64(prodiID);
-                var getJenjang = _jkService.Find(x => x.ProdiID == tempProdiID).FirstOrDefault();
-                var jenjangs = getJenjang.JenjangStudi;
-                ViewData["jenjangs"] = jenjangs;
+                //var getJenjang = _jkService.Find(x => x.ProdiID == tempProdiID).FirstOrDefault();
+                //var jenjangs = getJenjang.JenjangStudi;
+                //ViewData["jenjangs"] = jenjangs;
                 ViewData["KodeFakultas"] = Session["KodeFakultas"].ToString();
                 ViewData["NamaFakultas"] = Session["NamaFakultas"].ToString();
                 ViewData["KodeProdi"] = prodiID;
                 ViewData["NamaProdi"] = Session["NamaProdi"].ToString();
             }
             return View();
+        }
+        public ActionResult GetInformasiKampusByProdi()
+        {
+            var kodeProdi = Session["KodeProdi"] as string;
+            var result = _pendaftaranMataKuliahService.GetInformasiKampusByIdProdi(kodeProdi);
+            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
 
         [HttpPost]
@@ -133,6 +141,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     newDAta.Capaian = cpl.Capaian;
                     newDAta.IsActive = cpl.IsActive;
                     newDAta.UpdatedBy = Session["username"] as string;
+                    newDAta.UpdatedDate = DateTime.Now;
 
                     try
                     {
@@ -158,6 +167,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     newDAta.Capaian = cpl.Capaian;
                     newDAta.IsActive = cpl.IsActive;
                     newDAta.UpdatedBy = Session["username"] as string;
+                    newDAta.UpdatedDate = DateTime.Now;
 
                     try
                     {
@@ -182,6 +192,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     newDAta.Capaian = cpl.Capaian;
                     newDAta.IsActive = cpl.IsActive;
                     newDAta.UpdatedBy = Session["username"] as string;
+                    newDAta.UpdatedDate = DateTime.Now;
 
                     try
                     {
@@ -215,6 +226,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 newDAta = d;
                 newDAta.IsDeleted = true;
                 newDAta.UpdatedBy = Session["username"] as string;
+                newDAta.UpdatedDate = DateTime.Now;
 
                 _mcpService.Save(newDAta);
             }

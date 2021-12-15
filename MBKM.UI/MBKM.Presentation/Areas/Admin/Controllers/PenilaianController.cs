@@ -52,14 +52,117 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
         public ActionResult GetKelas(string jenjangStudi, string fakultas, string lokasi, string prodi, string matkul, string seksi, int strm)
         {
+            var noPegawai = int.Parse(HttpContext.Session["nopegawai"].ToString());
+            var RoleUser = HttpContext.Session["RoleName"].ToString().ToLower();
             var result = new List<JadwalKuliah>();
-            if (seksi == null || seksi.Length == 0)
+            if(RoleUser.Contains("dosen"))
             {
-                result = _jadwalKuliahService.Find(_ => _.JenjangStudi == jenjangStudi && _.NamaFakultas == fakultas && _.Lokasi == lokasi && _.NamaProdi == prodi && _.KodeMataKuliah + " - " + _.NamaMataKuliah == matkul && _.FlagOpen && _.STRM == strm).ToList();
-            } else
-            {
-                result = _jadwalKuliahService.Find(_ => _.JenjangStudi == jenjangStudi && _.NamaFakultas == fakultas && _.Lokasi == lokasi && _.NamaProdi == prodi && _.KodeMataKuliah + " - " + _.NamaMataKuliah == matkul && _.ClassSection == seksi && _.FlagOpen && _.STRM == strm).ToList();
+                if (seksi == null || seksi.Length == 0)
+                {
+                    result = _jadwalKuliahService.Find(_ => _.JenjangStudi == jenjangStudi && _.NamaFakultas == fakultas && _.Lokasi == lokasi && _.NamaProdi == prodi && _.KodeMataKuliah + " - " + _.NamaMataKuliah == matkul && _.FlagOpen && _.STRM == strm && _.DosenID == noPegawai)
+                        .GroupBy(g => new{ g.ClassSection, g.JamMasuk, g.JamSelesai, g.SKS, g.KodeMataKuliah, g.Hari, g.MataKuliahID, g.NamaMataKuliah, g.STRM })
+                        .Select(s => new JadwalKuliah
+                        {
+                            ClassSection = s.Key.ClassSection,
+                            JamMasuk = s.Key.JamMasuk,
+                            JamSelesai = s.Key.JamSelesai,
+                            Hari = s.Key.Hari,
+                            KodeMataKuliah = s.Key.KodeMataKuliah,
+                            MataKuliahID = s.Key.MataKuliahID,
+                            NamaMataKuliah = s.Key.NamaMataKuliah,
+                            STRM = s.Key.STRM,
+                            SKS = s.Key.SKS,
+                        })
+                        .ToList();
+                    
+                }
+                else
+                {
+                    result = _jadwalKuliahService.Find(_ => _.JenjangStudi == jenjangStudi && _.NamaFakultas == fakultas && _.Lokasi == lokasi && _.NamaProdi == prodi && _.KodeMataKuliah + " - " + _.NamaMataKuliah == matkul && _.ClassSection == seksi && _.FlagOpen && _.STRM == strm && _.DosenID == noPegawai)
+                        .GroupBy(g => new { g.ClassSection, g.JamMasuk, g.JamSelesai, g.SKS, g.KodeMataKuliah, g.Hari, g.MataKuliahID, g.NamaMataKuliah, g.STRM })
+                        .Select(s => new JadwalKuliah
+                        {
+                            ClassSection = s.Key.ClassSection,
+                            JamMasuk = s.Key.JamMasuk,
+                            JamSelesai = s.Key.JamSelesai,
+                            Hari = s.Key.Hari,
+                            KodeMataKuliah = s.Key.KodeMataKuliah,
+                            MataKuliahID = s.Key.MataKuliahID,
+                            NamaMataKuliah = s.Key.NamaMataKuliah,
+                            STRM = s.Key.STRM,
+                            SKS = s.Key.SKS,
+                        }).ToList();
+                }
+
+                foreach (var d in result)
+                {
+                    var dataSementara = _jadwalKuliahService.Find(s => s.ClassSection == d.ClassSection
+                             && s.JamMasuk == d.JamMasuk
+                             && s.JamSelesai == d.JamSelesai
+                             && s.Hari == d.Hari
+                             && s.KodeMataKuliah == d.KodeMataKuliah
+                             && s.MataKuliahID == d.MataKuliahID
+                             && s.NamaMataKuliah == d.NamaMataKuliah
+                             && s.STRM == d.STRM
+                             && s.SKS == d.SKS
+                             ).FirstOrDefault();
+                    d.ID = dataSementara.ID;
+                }
+
             }
+            else
+            {
+                if (seksi == null || seksi.Length == 0)
+                {
+                    result = _jadwalKuliahService.Find(_ => _.JenjangStudi == jenjangStudi && _.NamaFakultas == fakultas && _.Lokasi == lokasi && _.NamaProdi == prodi && _.KodeMataKuliah + " - " + _.NamaMataKuliah == matkul && _.FlagOpen && _.STRM == strm)
+                        .GroupBy(g => new { g.ClassSection, g.JamMasuk, g.JamSelesai, g.SKS, g.KodeMataKuliah, g.Hari, g.MataKuliahID, g.NamaMataKuliah, g.STRM })
+                        .Select(s => new JadwalKuliah
+                        {
+                            ClassSection = s.Key.ClassSection,
+                            JamMasuk = s.Key.JamMasuk,
+                            JamSelesai = s.Key.JamSelesai,
+                            Hari = s.Key.Hari,
+                            KodeMataKuliah = s.Key.KodeMataKuliah,
+                            MataKuliahID = s.Key.MataKuliahID,
+                            NamaMataKuliah = s.Key.NamaMataKuliah,
+                            STRM = s.Key.STRM,
+                            SKS = s.Key.SKS,
+                        }).ToList();
+                }
+                else
+                {
+                    result = _jadwalKuliahService.Find(_ => _.JenjangStudi == jenjangStudi && _.NamaFakultas == fakultas && _.Lokasi == lokasi && _.NamaProdi == prodi && _.KodeMataKuliah + " - " + _.NamaMataKuliah == matkul && _.ClassSection == seksi && _.FlagOpen && _.STRM == strm)
+                        .GroupBy(g => new { g.ClassSection, g.JamMasuk, g.JamSelesai, g.SKS, g.KodeMataKuliah, g.Hari, g.MataKuliahID, g.NamaMataKuliah, g.STRM })
+                        .Select(s => new JadwalKuliah
+                        {
+                            ClassSection = s.Key.ClassSection,
+                            JamMasuk = s.Key.JamMasuk,
+                            JamSelesai = s.Key.JamSelesai,
+                            Hari = s.Key.Hari,
+                            KodeMataKuliah = s.Key.KodeMataKuliah,
+                            MataKuliahID = s.Key.MataKuliahID,
+                            NamaMataKuliah = s.Key.NamaMataKuliah,
+                            STRM = s.Key.STRM,
+                            SKS = s.Key.SKS,
+                        }).ToList();
+                }
+                foreach (var d in result)
+                {
+                    var dataSementara = _jadwalKuliahService.Find(s => s.ClassSection == d.ClassSection
+                             && s.JamMasuk == d.JamMasuk
+                             && s.JamSelesai == d.JamSelesai
+                             && s.Hari == d.Hari
+                             && s.KodeMataKuliah == d.KodeMataKuliah
+                             && s.MataKuliahID == d.MataKuliahID
+                             && s.NamaMataKuliah == d.NamaMataKuliah
+                             && s.STRM == d.STRM
+                             && s.SKS == d.SKS
+                             ).FirstOrDefault();
+                    d.ID = dataSementara.ID;
+                }
+
+            }
+           
             return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
         }
         public ActionResult GetBobot(string idMatkul)
@@ -101,7 +204,18 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
         public ActionResult GetMahasiswa(int idJadwalKuliah)
         {
-            var list = _pendaftaranMataKuliahService.Find(_ => _.JadwalKuliahID == idJadwalKuliah && _.StatusPendaftaran == "ACCEPTED BY MAHASISWA" && (_.mahasiswas.NIM != _.mahasiswas.NIMAsal && _.mahasiswas.NIM != null && _.mahasiswas.NIMAsal != null));
+            var dataJadwal = _jadwalKuliahService.Get(idJadwalKuliah);
+            var list = _pendaftaranMataKuliahService.Find(_ =>
+                    _.JadwalKuliahs.JamMasuk == dataJadwal.JamMasuk
+                &&  _.JadwalKuliahs.JamSelesai == dataJadwal.JamSelesai
+                &&  _.JadwalKuliahs.Hari == dataJadwal.Hari
+                &&  _.JadwalKuliahs.KodeMataKuliah == dataJadwal.KodeMataKuliah
+                &&  _.JadwalKuliahs.MataKuliahID == dataJadwal.MataKuliahID
+                &&  _.JadwalKuliahs.NamaMataKuliah == dataJadwal.NamaMataKuliah
+                &&  _.JadwalKuliahs.STRM == dataJadwal.STRM
+                &&  _.JadwalKuliahs.SKS == dataJadwal.SKS 
+                && _.StatusPendaftaran == "ACCEPTED BY MAHASISWA" 
+                && (_.mahasiswas.NIM != _.mahasiswas.NIMAsal && _.mahasiswas.NIM != null && _.mahasiswas.NIMAsal != null));
             var result = new List<VMPenilaian>();
             foreach (var item in list)
             {
@@ -431,6 +545,32 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             var kodeFakultas = Session["KodeFakultas"] as string;
             var result = _pendaftaranMataKuliahService.GetInformasiKampusByIdFakultas(kodeFakultas);
             return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
+        }
+
+        [HttpPost]
+        public ActionResult CheckMatkulDosen(string jenjangStudi, string fakultas, string lokasi, string prodi, string matkul, int strm)
+        {
+            var noPegawai = int.Parse(HttpContext.Session["nopegawai"].ToString());
+            var RoleUser = HttpContext.Session["RoleName"].ToString().ToLower();
+            var result = new List<JadwalKuliah>();
+            if (RoleUser.Contains("dosen"))
+            {
+                result = _jadwalKuliahService.Find(_ => _.JenjangStudi == jenjangStudi && _.NamaFakultas == fakultas && _.Lokasi == lokasi && _.NamaProdi == prodi && _.KodeMataKuliah + " - " + _.NamaMataKuliah == matkul && _.FlagOpen && _.STRM == strm && _.DosenID == noPegawai).ToList();
+
+                if(result.Count() != 0)
+                {
+                    return Json(new ServiceResponse { status = 200, message = "Done" });
+                }
+                else
+                {
+                    return Json(new ServiceResponse { status = 500, message = "Maaf Anda Tidak Mengajar Mata Kuliah Ini" });
+                }
+            }
+            else
+            {
+                return Json(new ServiceResponse { status = 200, message = "Done" });
+            }
+
         }
     }
 }
