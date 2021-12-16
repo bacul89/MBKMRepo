@@ -132,47 +132,188 @@
 
 
             <div id="internal">
-                <div hidden>
-                    @* persiapan nempel data *@
-                    <table>
-                        <tr>
-                            <td style="font-weight:bold;">SEMESTER</td>
-                            <td style="padding:5px"> : </td>
-                            <td style="padding-right: 30px;">asd</td>
+               
 
-                            <td style="font-weight:bold">SEKSI</td>
-                            <td style="padding:5px"> : </td>
-                            @{if (@ViewData.ContainsKey("infoPertukaran"))
-                                {
-                                    <td id="seksi">@ViewData["infoPertukaran"].ToString()</td>
-                                }
-                                else
-                                {
-                                    <td id="seksi">asd</td>
-
-                                }
-
-
-                            }
-                        </tr>
-                    </table>
-                </div> @* batas tes tempel data internal *@
-
-
-
-                <div class='form-group'>
+                <div class='form-group' hidden>
                     <label class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Status Kerjasama: </label>
                     <div class="col-sm-8">
                         <select name="statusKerjasamaInternal" id="statusKerjasamaInternal" disabled="disabled" class="form-control input-md" required></select>
                     </div>
                 </div>
-                <div class='form-group'>
+
+
+                <div>
+                    @* persiapan nempel data *@
+                    <div class='form-group'>
+                        <label class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Jenis Program:</label>
+                        <div class="col-sm-8">
+                            @{if (@ViewData.ContainsKey("infoPertukaran"))
+                                {
+                                    <label disabled style="border: none; font-weight: normal" class="form-control input-md" id="jenisPertukaranText">@ViewData["infoPertukaran"].ToString()</label>
+                                }
+                                else
+                                {
+                                    <label disabled style="border: none; font-weight: normal" class="form-control input-md" id="jenisPertukaranText">-</label>
+
+                                }
+
+
+                            }
+                        </div>
+
+                    </div>
+
+                    <div class='form-group'>
+                        <label class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Jenis Kegiatan:</label>
+                        <div class="col-sm-8">
+                            @{if (@ViewData.ContainsKey("infoKegiatan"))
+                                {
+                                    <label disabled style="border: none; font-weight: normal" class="form-control input-md" id="jenisKegiatanText">@ViewData["infoKegiatan"].ToString()</label>
+                                }
+                                else
+                                {
+                                    <label disabled style="border: none; font-weight: normal" class="form-control input-md" id="jenisKegiatanText">-</label>
+
+                                }
+
+
+                            }
+                        </div>
+
+                    </div>
+                    <div id="divNonPertukaran">
+
+                        <div class='form-group'>
+                            <label class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Nama Instansi:</label>
+                            <div class="col-sm-8">
+                                @{if (@ViewData.ContainsKey("infoInstansi"))
+                                    {
+                                        <label disabled style="border: none; font-weight: normal" class="form-control input-md" id="instansiText">@ViewData["infoInstansi"].ToString()</label>
+                                    }
+                                    else
+                                    {
+                                        <label disabled style="border: none; font-weight: normal" class="form-control input-md" id="instansiText">-</label>
+
+                                    }
+
+
+                                }
+                            </div>
+
+                        </div>
+
+                        <div class='form-group'>
+                            <label class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Nomor Kerjasama:</label>
+                            <div class="col-sm-8">
+                                @{if (@ViewData.ContainsKey("infoNoKJ"))
+                                    {
+                                        <label disabled style="border: none; font-weight: normal" class="form-control input-md" id="noKJInternal">@ViewData["infoNoKJ"].ToString()</label>
+                                    }
+                                    else
+                                    {
+                                        <label disabled style="border: none; font-weight: normal" class="form-control input-md" id="noKJInternal">-</label>
+
+                                    }
+
+
+                                }
+                            </div>
+
+                        </div>
+                        <div id="divPenugasan">
+                            <div class='form-group'>
+                                <label class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">No. SK Tugas:</label>
+                                <div class="col-sm-8">
+                                    @{if (@ViewData.ContainsKey("infoNoSK"))
+                                        {
+                                            <label disabled style="border: none; font-weight: normal" class="form-control input-md" id="noSK">@ViewData["infoNoSK"].ToString()</label>
+                                        }
+                                        else
+                                        {
+                                            <label disabled style="border: none; font-weight: normal" class="form-control input-md" id="noSK">-</label>
+
+                                        }
+
+
+                                    }
+                                </div>
+
+                            </div>
+
+                            <div class='form-group'>
+                                <label class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Tanggal SK Tugas:</label>
+                                <div class="col-sm-8">
+                                    @{if (@ViewData.ContainsKey("infoTanggalSK"))
+                                        {
+                                            <label disabled style="border: none; font-weight: normal" class="form-control input-md" id="tanggalSK">@ViewData["infoTanggalSK"].ToString()</label>
+                                        }
+                                        else
+                                        {
+                                            <label disabled style="border: none; font-weight: normal" class="form-control input-md" id="tanggalSK">-</label>
+
+                                        }
+
+
+                                    }
+                                </div>
+
+                            </div>
+
+                            <div class='form-group'>
+                                <label class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Judul Aktivitas:</label>
+                                <div class="col-sm-8">
+                                    @{if (@ViewData.ContainsKey("infoJudulAct"))
+                                        {
+                                            @*<label disabled style="border: none; font-weight: normal" class="form-control input-md" id="judulAct">@ViewData["infoJudulAct"].ToString()</label>*@
+                                            <textarea class="form-control input-pendaftaran summernote" name="inp_bodyEmail" rows="5" id="judulAct" placeholder="Catatan Verifikasi BAA" disabled>@ViewData["infoJudulAct"].ToString()</textarea>
+                                        }
+                                        else
+                                        {
+                                            <label disabled style="border: none; font-weight: normal" class="form-control input-md" id="judulAct">-</label>
+
+                                        }
+
+
+                                    }
+                                </div>
+
+                            </div>
+
+                            <div class='form-group'>
+                                <label class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Lokasi:</label>
+                                <div class="col-sm-8">
+                                    @{if (@ViewData.ContainsKey("infoLokasi"))
+                                        {
+                                            <label disabled style="border: none; font-weight: normal" class="form-control input-md" id="infoLokasi">@ViewData["infoLokasi"].ToString()</label>
+                                        }
+                                        else
+                                        {
+                                            <label disabled style="border: none; font-weight: normal" class="form-control input-md" id="infoLokasi">-</label>
+
+                                        }
+
+
+                                    }
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div> @* batas tes tempel data internal *@
+
+
+
+
+                <div class='form-group' hidden>
                     <label class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Jenis Program MBKM: </label>
                     <div class="col-sm-8">
                         <select name="jenisProgramMBKM" id="jenisProgramMBKM" class="form-control input-md" disabled></select>
+                        @*<input type="text" name="jenisProgramMBKMText" id="jenisProgramMBKMText" class="form-control input-md" value="asd" />*@
+                        @*@Html.Editor(@ViewData["infoPertukaran"].ToString(), new { htmlAttributes = new { @class = "form-control input-md", maxlength = 100, disabled = "disabled", @id = "noKJs", @style = "border: none" } })*@
                     </div>
                 </div>
-                <div class='form-group'>
+                <div class='form-group' hidden>
                     <label class="col-sm-4 control-label" style="font-size: 14px; font-weight: normal">Jenis Kegiatan MBKM: </label>
                     <div class="col-sm-8">
                         <select name="jenisKegiatanMBKM" id="jenisKegiatanMBKM" class="form-control input-md"></select>

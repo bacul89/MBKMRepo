@@ -77,10 +77,42 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             var model = _mahasiswaService.Get(id);
             //batas edit internal(menempelkan data) semoga bisa
-            var ip = _informasiPertukaranService.Find(_ => _.MahasiswaID == id).FirstOrDefault();
+            var onGoingSTRM = _pendaftaranMataKuliahService.getOngoingSemester(model.JenjangStudi);
+            var ip = _informasiPertukaranService.Find(_ => _.MahasiswaID == id && _.STRM == onGoingSTRM.ID).FirstOrDefault();
+           
             if (ip != null)
             {
             ViewData["infoPertukaran"] = ip.JenisPertukaran;
+            ViewData["infoKegiatan"] = ip.JenisKerjasama;
+            //ViewData["infoKegiatan"] = ip.JenisKerjasama;
+            
+            var NoKJIP = ip.NoKerjasama; //non pertukaran dan pertukaran internal keluar
+                if (NoKJIP != null)
+                {
+                    var noKJ = _perjanjianKerjasamaService.Find(_ => _.NoPerjanjian == NoKJIP).FirstOrDefault();
+                    ViewData["infoNoKJ"] = NoKJIP;
+                    ViewData["infoInstansi"] = noKJ.NamaInstansi;
+                    if (ip.JenisKerjasama != "Internal ke Luar Atma Jaya") {
+                        ViewData["infoNoSK"] = ip.NoSK;
+
+                        var dateOnly = ip.TanggalSK.ToString().Replace("00:00:00", "");
+                        ViewData["infoTanggalSK"] = dateOnly;
+                        ViewData["infoJudulAct"] = ip.JudulAktivitas;
+                        ViewData["infoLokasi"] = ip.LokasiTugas;
+                    }
+                    //else
+                    //{
+                    //    ViewData["infoNoSK"] = "";
+
+                    //    //var dateOnly = ip.TanggalSK.ToString().Replace("00:00:00", "");
+                    //    ViewData["infoTanggalSK"] = "";
+                    //    ViewData["infoJudulAct"] = "";
+                    //    ViewData["infoLokasi"] = "";
+                    //}
+                    
+                }
+                //else { ViewData["infoNoKJ"] = "-"; }
+            
 
             }
             ViewData["role"] = HttpContext.Session["RoleName"].ToString().ToLower();
