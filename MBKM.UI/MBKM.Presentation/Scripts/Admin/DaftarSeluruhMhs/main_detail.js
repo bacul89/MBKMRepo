@@ -315,7 +315,7 @@ function UpdateKJ(id) {
             Swal.fire({
                 title: 'Berhasil',
                 icon: 'success',
-                html: 'Kerjasama Berhasil Diedit',
+                html: 'Data Mahasiswa Berhasil Diupdate',
                 showCloseButton: true,
                 showCancelButton: false,
                 focusConfirm: false,
