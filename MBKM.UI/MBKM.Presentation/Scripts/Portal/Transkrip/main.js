@@ -635,11 +635,7 @@ function CheckStatusFeedback(FlagTranscript, row) {
 
             
             if (FLAGBAYAR == 'True') {
-                if (row == 'internal') {
-                    checkStatusSertifikat();
-                    $("#btnCetak").prop("disabled", true);
 
-                } else {
                     if (checker == true) {
                         if (row != 'internal' && row == result.length) {
                             checkStatusSertifikat();
@@ -675,7 +671,6 @@ function CheckStatusFeedback(FlagTranscript, row) {
                         $('#notif').text(alert);
                         $('#notif').show();
                     }
-                }
             } else {
                 alert = "Belum Bayar!";
                 $('#notif').text(alert);
