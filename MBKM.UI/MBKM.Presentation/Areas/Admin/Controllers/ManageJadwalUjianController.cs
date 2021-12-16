@@ -196,15 +196,15 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             var roleData = HttpContext.Session["RoleName"].ToString().ToLower();
             var namaProdi = HttpContext.Session["NamaProdi"].ToString();
             var dataFakultas = "";
-            if (roleData.Contains("program studi"))
+            /*if (roleData.Contains("program studi"))
             {
                 var dataTemp = _jadwalKuliahService.Find(x => x.NamaProdi == namaProdi).FirstOrDefault().FakultasID;
                 dataFakultas = dataTemp.ToString();
             }
             else
-            {
+            {*/
                 dataFakultas = (fakultas != null) ? fakultas : HttpContext.Session["KodeFakultas"].ToString();
-            }
+            /*}*/
 
             VMListJadwalUjian data = _jadwalUjianMBKMService.GetListManageUjian(model, jenjangStudi, dataFakultas, jenisUjian, tahunSemester);
             return Json(
