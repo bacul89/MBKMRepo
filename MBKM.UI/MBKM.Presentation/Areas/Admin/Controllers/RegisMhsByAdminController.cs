@@ -99,7 +99,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             //mailer.IsHtml = true;
             //mailer.Send();
             string subject = "Verify your email";
-            string body = "Thanks for Registering your account.<br> please verify your email by clicking the link <br> <a href='" + domain + url + "?token=" + token + "'>verify</a>";
+            //string body = "Thanks for Registering your account.<br> please verify your email by clicking the link <br> <a href='" + domain + url + "?token=" + token + "'>verify</a>";
+            string body = "Thanks for Registering your account.<br> Here is your token <br><br> " + token + " <br><br>Please verify your email by entering your token in the link <br> <a href='" + domain + url + "'>here</a><br>";
             List<string> tos = new List<string>();
             tos.Add(email);
             return emailHelper.SendMail(subject, body, ConfigurationManager.AppSettings["EmailFrom"], tos, null, null, true);
