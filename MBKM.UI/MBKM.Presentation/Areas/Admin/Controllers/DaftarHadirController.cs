@@ -51,10 +51,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             var listSection = _linkFasilitasService.getSection();
             ViewData["listSection"] = listSection;
 
-            //VMSemester semester = _jkMhsService.getOngoingSemester("S1");
+            VMSemester semester = _jkMhsService.getOngoingSemester("S1");
 
-            //ViewData["KodeSemester"] = semester.ID;
-            //ViewData["NamaSemester"] = semester.Nama;
+            ViewData["KodeSemester"] = semester.ID;
+            ViewData["NamaSemester"] = semester.Nama;
 
             var RoleLogin = Session["RoleName"].ToString();
             ViewData["role"] = RoleLogin;
