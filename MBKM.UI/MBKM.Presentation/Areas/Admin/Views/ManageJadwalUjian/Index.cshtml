@@ -36,7 +36,7 @@
                                     @{
                                         foreach (var dt in ViewData["semester"] as IEnumerable<MBKM.Entities.ViewModel.VMSemester>)
                                         {
-                                            <option value="@dt.Nilai">@dt.Nama</option>
+                                            <option value="@dt.Nilai" @{ if (ViewData["firstSemester"].ToString() == dt.Nilai.ToString()) { <text> selected</text> } }>@dt.Nama</option>
                                         }
                                     }
                                 </select>

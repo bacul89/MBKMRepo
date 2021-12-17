@@ -49,6 +49,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             IEnumerable<VMLookup> tempJenisUjian =   _lookupService.getLookupByTipe("JenisUjian");
             IEnumerable<VMSemester> data = _jadwalUjianMBKMService.getAllSemester();
             ViewData["semester"] = data;
+            ViewData["firstSemester"] = _mahasiswaService.GetDataSemester(null).First().Nilai;
             ViewData["Jenjang"] = tempJenjang;
             ViewData["JenisUjian"] = tempJenisUjian;
             var d = HttpContext.Session["RoleName"].ToString().ToLower();
