@@ -10,7 +10,24 @@ function prep(id) {
         });
         if (response.NIM == response.NIMAsal && response.NIM && response.NIMAsal) {
         //if (1==1) {
+            
             isInternal = true;
+            if ($("#jenisPertukaranText").text() == "Program Pertukaran") {
+                if ($("#jenisKegiatanText").text() == "Internal") {
+                    $("#divNonPertukaran").prop("hidden", true);
+                    $("#statusBayarDiv").prop("hidden", true);
+                    $("#Edit").hide();
+                }
+                else if ($("#jenisKegiatanText").text() == "Internal ke Luar Atma Jaya") {
+                    $("#divPenugasan").prop("hidden", true);
+                }
+                
+            }
+            else if ($("#jenisPertukaranText").text() == "-") {
+                $("#divNonPertukaran").prop("hidden", true);
+                $("#statusBayarDiv").prop("hidden", true);
+                $("#Edit").hide();
+            }
 
             $('#eksternal').hide();
             setLookupValue("StatusKerjasama", "ADA KERJASAMA", "statusKerjasamaInternal");
@@ -236,34 +253,56 @@ function loadNoKerjasama() {
 }
 function UpdateKJ(id) {
     if (isInternal) {
-        UpdateInternal(id);
+        //UpdateInternal(id);
+        console.log($("#noKJInternal").text());
+        dMasterMhs = {}
+
+        var latest_valueKJ = $("#noKJInternal").text();
+
+        loadBiaya(latest_valueKJ);
+        var by = $('input[name=biaya]').val();
+
+        console.log(($('input[name=biaya]').val()));
+        if ($("#noKJInternal").text() != "-") {
+            dMasterMhs.StatusKerjasama = "ADA KERJA SAMA";
+        }
+        else { dMasterMhs.StatusKerjasama = "TIDAK ADA KERJA SAMA";}
+        //var latest_valueskj = $("option:selected:first", "#skj").val();
+        //console.log(latest_valueskj);
+        dMasterMhs.BiayaKuliah = by;
+        dMasterMhs.ID = id;
+        dMasterMhs.NoKerjasama = latest_valueKJ;
+        
+        
+        var cekAktif = $('input[id=inp_status]:checked').val();
+        if (cekAktif == 1) {
+            dMasterMhs.FlagBayar = "true";
+        }
+        else { dMasterMhs.FlagBayar = "false"; }
     }
-    dMasterMhs = {}
-    //getValueOnForm();
-    //var b = $('#namaUniversitas').select2('data')[0].biaya;
-    //dMasterMhs.BiayaKuliah = $('#namaUniversitas').select2('data')[0].biaya;
-    var latest_valueKJ = $("option:selected:first", "#noKJ").text();
-    //var nmrkj = $('#noKJ').select2('data')[0].value;
-    //var c = loadBiaya(nmrkj);
-    loadBiaya(latest_valueKJ);
-    var by = $('input[name=biaya]').val();
-    //window.setTimeout(loadBiaya(nmrkj), 1);
-    console.log(($('input[name=biaya]').val()));
-    var latest_valueskj = $("option:selected:first", "#skj").val();
-    console.log(latest_valueskj);
-    dMasterMhs.BiayaKuliah = by;
-    dMasterMhs.ID = id;
-    dMasterMhs.NoKerjasama = latest_valueKJ;
-    dMasterMhs.StatusKerjasama = latest_valueskj;
-    var cekAktif = $('input[id=inp_status]:checked').val();
-    if (cekAktif == 1) {
-        dMasterMhs.FlagBayar = "true";
+    else {
+        dMasterMhs = {}
+
+        var latest_valueKJ = $("option:selected:first", "#noKJ").text();
+
+        loadBiaya(latest_valueKJ);
+        var by = $('input[name=biaya]').val();
+
+        console.log(($('input[name=biaya]').val()));
+        var latest_valueskj = $("option:selected:first", "#skj").val();
+        console.log(latest_valueskj);
+        dMasterMhs.BiayaKuliah = by;
+        dMasterMhs.ID = id;
+        dMasterMhs.NoKerjasama = latest_valueKJ;
+        dMasterMhs.StatusKerjasama = latest_valueskj;
+        var cekAktif = $('input[id=inp_status]:checked').val();
+        if (cekAktif == 1) {
+            dMasterMhs.FlagBayar = "true";
+        }
+        else { dMasterMhs.FlagBayar = "false"; }
     }
-    else { dMasterMhs.FlagBayar = "false"; }
-    //alert(latest_valueKJ);
-    //alert(id);
-    //alert(by);
-    /* console.log(dMasterLookup);*/
+    
+   
     var base_url = window.location.origin;
     $.ajax({
         url: base_url + '/Admin/DaftarseluruhMahasiswa/UpdateKJ',
@@ -276,7 +315,7 @@ function UpdateKJ(id) {
             Swal.fire({
                 title: 'Berhasil',
                 icon: 'success',
-                html: 'Kerjasama Berhasil Diedit',
+                html: 'Data Mahasiswa Berhasil Diupdate',
                 showCloseButton: true,
                 showCancelButton: false,
                 focusConfirm: false,
@@ -291,24 +330,24 @@ function UpdateKJ(id) {
         
     
 }
-function UpdateInternal(id) {
-    var data = new Object();
-    data.id = id;
-    data.JenisPertukaran = $('#jenisProgramMBKM').select2('data')[0].text;
-    data.JenisKerjasama = $('#jenisKegiatanMBKM').select2('data')[0].text;
-    console.log(id);
-    if ($("#jenisProgramMBKM").val().includes('Non Pertukaran')) {
-        data.JudulAktivitas = $('#judulAktivitas').val();
-        data.LokasiTugas = $('#lokasiTugas').val();
-        data.TanggalSK = $('#tanggalSKTugas').val();
-        data.NoSK = $('#noSKTugas').val();
-    }
-    $.ajax({
-        type: "POST",
-        url: "/Admin/DaftarseluruhMahasiswa/InsertInformasiPertukaran",
-        data: data
-    });
-}
+//function UpdateInternal(id) {
+//    var data = new Object();
+//    data.id = id;
+//    data.JenisPertukaran = $('#jenisProgramMBKM').select2('data')[0].text;
+//    data.JenisKerjasama = $('#jenisKegiatanMBKM').select2('data')[0].text;
+//    console.log(id);
+//    if ($("#jenisProgramMBKM").val().includes('Non Pertukaran')) {
+//        data.JudulAktivitas = $('#judulAktivitas').val();
+//        data.LokasiTugas = $('#lokasiTugas').val();
+//        data.TanggalSK = $('#tanggalSKTugas').val();
+//        data.NoSK = $('#noSKTugas').val();
+//    }
+//    $.ajax({
+//        type: "POST",
+//        url: "/Admin/DaftarseluruhMahasiswa/InsertInformasiPertukaran",
+//        data: data
+//    });
+//}
 function loadFromLookup(tipe, id, nama) {
 
     $("#" + id).select2({
