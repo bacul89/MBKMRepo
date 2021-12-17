@@ -119,7 +119,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             var jadwalUjian = _juService.Get(ID);
             List<JadwalUjianMBKMDetail> mahasiswa = _juDetailService.Find(x => x.JadwalUjianMBKMID == ID && x.Mahasiswas.IsActive && !x.Mahasiswas.IsDeleted && x.Mahasiswas.NIM != x.Mahasiswas.NIMAsal).ToList();
             var dataSemester = _feedbackMatkulService.GetSemesterByStrm(jadwalUjian.STRM);
-            var ujian = _juDetailService.GetAttrubuteDHU(jadwalUjian.ProdiID, jadwalUjian.Lokasi, jadwalUjian.FakultasID, jadwalUjian.JenjangStudi, jadwalUjian.STRM, jadwalUjian.IDMatkul, jadwalUjian.ClassSection).Where(x => x.ID == ID).First();
+            //var ujian = _juDetailService.GetAttrubuteDHU(jadwalUjian.ProdiID, jadwalUjian.Lokasi, jadwalUjian.FakultasID, jadwalUjian.JenjangStudi, jadwalUjian.STRM, jadwalUjian.IDMatkul, jadwalUjian.ClassSection).Where(x => x.ID == ID).First();
+            var ujian = _juDetailService.GetDHUByID(ID).First();
 
             int strmInt = Int32.Parse(jadwalUjian.STRM);
             long fkaultasInt = Int64.Parse(jadwalUjian.FakultasID);
@@ -163,6 +164,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ViewData["mahasiswas"] = list;
             ViewData["presensi"] = presensi;
             ViewData["jadwal"] = jadwalUjian.KodeTipeUjian;
+            ViewData["dosen"] = jadwalKuliah.NamaDosen;
             return Json(ViewData, JsonRequestBehavior.AllowGet);
         }
 

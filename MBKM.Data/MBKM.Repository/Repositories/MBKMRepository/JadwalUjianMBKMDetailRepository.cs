@@ -295,5 +295,29 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             }
         }
 
+        public List<VMJadwalUjian> GetDHUbyID(int ID)
+        {
+
+            using (var context = new MBKMContext())
+            {
+
+
+                //var idFakultas2nd = idFakultas.Substring(idFakultas.Length - 2);
+                //var idFakultas2nd = Int64.Parse(idFakultas);
+                //int strmInt = Int32.Parse(strm);
+
+                var id = new SqlParameter("@ID", ID);
+
+                //context.Configuration.LazyLoadingEnabled = false;
+                var result = context.Database
+                    .SqlQuery<VMJadwalUjian>("GetDHUByID @ID", id).ToList();
+
+
+
+                return result;
+
+            }
+        }
+
     }
 }
