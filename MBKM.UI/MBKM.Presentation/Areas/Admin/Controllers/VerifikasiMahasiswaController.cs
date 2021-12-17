@@ -65,7 +65,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             var ApproverRole = _lookupService.getLookupByTipe("ApproverRole");
             var StatusKerjasama = _lookupService.getLookupByTipe("StatusKerjasama");
-
+              
             ViewData["Approver"] = ApproverRole;
             ViewData["StatusKerjasama"] = StatusKerjasama;
             ViewBag.terima = StatusVerifikasi.Terima;
@@ -73,6 +73,17 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ViewBag.lunas = true;
             ViewBag.belum = false;
             var data = _mahasiswaService.Get(id);
+
+
+            if(data.NoKerjasama == null)
+            {
+                ViewData["biayaAwal"] = 0;
+            }
+            else
+            {
+                var tempBiaya = _perjanjianKerjasama.Find(x => x.NoPerjanjian == data.NoKerjasama).FirstOrDefault();
+                ViewData["biayaAwal"] = tempBiaya.BiayaKuliah;
+            }
             return View(data);
         }
 
