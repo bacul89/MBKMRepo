@@ -60,7 +60,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             ViewData["nim"] = tmpMahasiswa.NIM;
 
             var dataMahasiswa = _pendaftaranMataKuliahService.Find(z => z.MahasiswaID == id).First();
-            if (dataMahasiswa.FlagSertifikat == false && tmpMahasiswa.FlagBayar == true)
+            if ((tmpMahasiswa.NIM == tmpMahasiswa.NIMAsal ||
+                tmpMahasiswa.NIM != tmpMahasiswa.NIMAsal) && dataMahasiswa.FlagSertifikat == false)
+
             {
 
                 /* new */

@@ -18,6 +18,7 @@ namespace MBKM.Services.MBKMServices
         VMListJadwalUjian GetDHU(DataTableAjaxPostModel model, string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm, string idMatakuliah, string seksi);
         VMDosenMakulPertemuan GetDosen(string seksi, string kodeMataKuliah, string strm, string fakultasId);
         List<VMJadwalUjian> GetAttrubuteDHU(string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm, string idMatakuliah, string seksi);
+        List<VMJadwalUjian> GetDHUByID(int iD);
     }
     public class JadwalUjianMBKMDetailService : EntityService<JadwalUjianMBKMDetail>, IJadwalUjianMBKMDetailService
     {
@@ -65,6 +66,11 @@ namespace MBKM.Services.MBKMServices
         public List<VMJadwalUjian> GetAttrubuteDHU(string idProdi, string lokasi, string idFakultas, string jenjangStudi, string strm, string idMatakuliah, string seksi)
         {
             return _jadwalRepository.GetDHUTest(idProdi, lokasi, idFakultas, jenjangStudi, strm, idMatakuliah, seksi);
+        }
+
+        public List<VMJadwalUjian> GetDHUByID(int iD)
+        {
+            return _jadwalRepository.GetDHUbyID(iD);
         }
     }
 }

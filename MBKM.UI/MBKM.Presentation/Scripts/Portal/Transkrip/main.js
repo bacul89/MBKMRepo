@@ -432,7 +432,7 @@ function checkStatusSertifikat() {
         datatype: 'JSON',
         success: function (e) {
 
-            //console.log("fhsaksfj : "+e.data);
+            console.log("fhsaksfj : "+e.data);
 
             if (e.data == false) {
                 $("#sertifikatCetak").prop("disabled", false);
@@ -467,7 +467,7 @@ function printSertifikat() {
                 datatype: 'JSON',
                 success: function (e) {
 
-                    //console.log("try " + e.data);
+                    console.log("try " + e.data);
                     var base_url = window.location.origin;
                     console.log("base_url " + base_url);
                     if (e.data != true) {
@@ -634,21 +634,33 @@ function CheckStatusFeedback(FlagTranscript, row) {
             //console.log(FLAGBAYAR);
 
             
-            if (FLAGBAYAR == 'True') {
 
+                if (row == 'internal') {
+                    checkStatusSertifikat();
+                    $("#btnCetak").prop("disabled", true);
+
+                } else {
                     if (checker == true) {
                         if (row != 'internal' && row == result.length) {
-                            checkStatusSertifikat();
-                            if (FlagTranscript == true) {
-                                alert = "Cetak Transkrip telah dilakukan, silahkan hubungi BAA untuk mengaktifkan kembali tombol cetak!";
+                            if (FLAGBAYAR == 'True') {
+
+                                checkStatusSertifikat();
+                                if (FlagTranscript == true) {
+                                    alert = "Cetak Transkrip telah dilakukan, silahkan hubungi BAA untuk mengaktifkan kembali tombol cetak!";
 
 
-                                $("#btnCetak").prop("disabled", true);
+                                    $("#btnCetak").prop("disabled", true);
+                                    $('#notif').text(alert);
+                                    $('#notif').show();
+                                } else if (FlagTranscript == false) {
+                                    $("#btnCetak").prop("disabled", false);
+
+                                }
+
+                            } else {
+                                alert = "Belum Bayar!";
                                 $('#notif').text(alert);
                                 $('#notif').show();
-                            } else if (FlagTranscript == false) {
-                                $("#btnCetak").prop("disabled", false);
-
                             }
                         } else if (row == 'internal') {
                             checkStatusSertifikat();
@@ -671,11 +683,8 @@ function CheckStatusFeedback(FlagTranscript, row) {
                         $('#notif').text(alert);
                         $('#notif').show();
                     }
-            } else {
-                alert = "Belum Bayar!";
-                $('#notif').text(alert);
-                $('#notif').show();
-            }
+                }
+
 
             
 

@@ -315,7 +315,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             string email = Session["emailMahasiswa"] as string;
             Mahasiswa mahasiswa = GetMahasiswaByEmail(email);
             VMSemester semester = _jkMhsService.getOngoingSemester(mahasiswa.JenjangStudi);
-            
+
+
+
             var strmString = semester.ID;
             int strm = Int32.Parse(strmString.ToString());
 
@@ -334,12 +336,15 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             List<String[]> final = new List<String[]>();
             /*foreach (var d in pendaftaran)
             {*/
-                //var dataCheck = data.Where(x => x.MahasiswaID == d.MahasiswaID && x.Status == false).Count();
-                //var MatkulPendaftaranCheck = pendaftaran.Where(x => x.MahasiswaID == d.MahasiswaID).Count();
-                //var matkulFeedbackCheck = data3.Where(x => x.MahasiswaID == d.MahasiswaID).Count();
+            //var dataCheck = data.Where(x => x.MahasiswaID == d.MahasiswaID && x.Status == false).Count();
+            //var MatkulPendaftaranCheck = pendaftaran.Where(x => x.MahasiswaID == d.MahasiswaID).Count();
+            //var matkulFeedbackCheck = data3.Where(x => x.MahasiswaID == d.MahasiswaID).Count();
+
+            if (mahasiswa.NIM != mahasiswa.NIMAsal)
+            {
                 foreach (var p in pendaftaran)
                 {
-                    
+
                     int index = 0;
                     long temp = 0;
                     foreach (var e in data)
@@ -347,13 +352,13 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                         index++;
                         if (e.JadwalID == p.JadwalKuliahID)
                         {
-                        
+
                             final.Add(new String[]{
                                 p.MahasiswaID.ToString(),
                                 p.JadwalKuliahs.NamaMataKuliah,
                                 p.JadwalKuliahs.KodeMataKuliah,
                                 p.JadwalKuliahs.MataKuliahID,
-                                "Sudah Feedback",                                
+                                "Sudah Feedback",
                                 mahasiswa.FlagBayar.ToString(),
                                 p.JadwalKuliahID.ToString(),
                                 GetMatkulEn(p.JadwalKuliahs.KodeMataKuliah, Int32.Parse(p.JadwalKuliahs.MataKuliahID), strm)
@@ -391,8 +396,47 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                                 mahasiswa.FlagBayar.ToString(),
                             });
                         }*/
+                        Console.WriteLine(final);
+                        Console.WriteLine(final);
                     }
                 }
+            }
+            else
+            {
+                foreach (var p in pendaftaran)
+                {
+
+
+                            final.Add(new String[]{
+                                    p.MahasiswaID.ToString(),
+                                    p.JadwalKuliahs.NamaMataKuliah,
+                                    p.JadwalKuliahs.KodeMataKuliah,
+                                    p.JadwalKuliahs.MataKuliahID,
+                                    "Belum Feedback",
+                                    mahasiswa.FlagBayar.ToString(),
+                                    p.JadwalKuliahID.ToString(),
+                                    GetMatkulEn(p.JadwalKuliahs.KodeMataKuliah, Int32.Parse(p.JadwalKuliahs.MataKuliahID), strm)
+                                    //e.Status.ToString(),
+                                });
+
+
+                        /*else
+                        {
+                            final.Add(new String[]{
+                                p.MahasiswaID.ToString(),
+                                p.JadwalKuliahs.NamaMataKuliah,
+                                p.JadwalKuliahs.KodeMataKuliah,
+                                p.JadwalKuliahs.MataKuliahID,
+                                "Belum Feedback",
+                                mahasiswa.FlagBayar.ToString(),
+                            });
+                        }*/
+                        Console.WriteLine(final);
+                        Console.WriteLine(final);
+                    
+                }
+            }
+
             /*}*/
             return Json(final);
         }
