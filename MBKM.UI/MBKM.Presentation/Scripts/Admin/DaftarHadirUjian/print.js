@@ -292,7 +292,7 @@ function generateHeader(ujian, semester, page, pageTotal) {
                                 <tr>
                                     <td class="p-tb10"><b>DOSEN</b></td>
                                     <td class="p-tb10lr5">:</td>
-                                    <td class="p-tb10" id="dosen">${ujian.DosenID} - ${ujian.NamaDosen}</td>
+                                    <td class="p-tb10" id="dosen">${ujian.NamaDosen}</td>
                                     <td class="space"></td>
                                     <td class="p-tb8"><b>HALAMAN</b></td>
                                     <td class="p-tb10lr5">:</td>
