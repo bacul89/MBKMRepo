@@ -1193,12 +1193,263 @@
                 });
             }
             else {//if (roleNames == "Admin Fakultas")
-                $("#jenjangStudi").prop("disabled", true);
+                $("#jenjangStudi").prop("disabled", false);
                 $("#fakultas").prop("disabled", true);
                 $("#prodi").prop("disabled", true);
                 $("#lokasi").prop("disabled", true);
                 $("#mataKuliah").prop("disabled", true);
                 $("#seksi").prop("disabled", true);
+
+                //----------------------------------------------
+
+                $("#jenjangStudi").select2({
+                        placeholder: "-- Pilih Jenjang Studi --",
+                        width: "100%",
+                        ajax: {
+                            url: "@Url.Action("getLookupByTipe", "DaftarHadir")",
+                            dataType: 'json',
+                            method: "POST",
+                            delay: 250,
+                            cache: false,
+                            data: function (params) {
+                                return {
+                                    Tipe: 'JenjangStudi'
+                                };
+                            },
+                            processResults: function (data, params) {
+                                return {
+                                    results: $.map(data, function (item) { return { id: item.Nilai, value: item.Nilai, text: item.Nama } })
+                                };
+                            }
+                        }
+                    });
+                    $("#jenjangStudi").change(function () {
+                        buttonHandler("close");
+
+                        //$("#fakultas").empty();
+                        $("#prodi").empty();
+                        $("#lokasi").empty();
+                        $("#mataKuliah").empty();
+                        $("#seksi").empty();
+
+                        //$("#fakultas").prop("disabled", false);
+                        $("#prodi").prop("disabled", true);
+                        $("#lokasi").prop("disabled", true);
+                        $("#mataKuliah").prop("disabled", true);
+                        $("#seksi").prop("disabled", true);
+
+                        $("#fakultas").select2({
+                            placeholder: "-- Pilih Fakultas --",
+                            width: "100%",
+                            ajax: {
+                            @*url: "@Url.Action("GetFakultasByJenjangStudi", "PresensiKelas")",*@
+                                url: "/Admin/DaftarHadir/GetFakultas",
+                                dataType: 'json',
+                                method: "POST",
+                                delay: 250,
+                                cache: false,
+                                data: function (params) {
+                                    return {
+                                        Search: params.term || "",
+                                        JenjangStudi: $('#jenjangStudi').val()
+                                    };
+                                },
+                                processResults: function (data, params) {
+                                    return {
+                                        results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } })
+                                    };
+                                },
+                            }
+                        });
+                        // $("#fakultas").change(function () {
+                        buttonHandler("close");
+
+                        $("#prodi").empty();
+                        $("#lokasi").empty();
+                        $("#mataKuliah").empty();
+                        $("#seksi").empty();
+
+                        $("#prodi").prop("disabled", false);
+                        $("#lokasi").prop("disabled", true);
+                        $("#mataKuliah").prop("disabled", true);
+                        $("#seksi").prop("disabled", true);
+
+                        $("#prodi").select2({
+                            placeholder: "-- Pilih Program Studi --",
+                            width: "100%",
+                            ajax: {
+                                url: "@Url.Action("GetProdiByFakultas", "DaftarHadir")",
+                                dataType: 'json',
+                                method: "POST",
+                                delay: 250,
+                                cache: false,
+                                data: function (params) {
+                                    return {
+                                        Search: params.term || "",
+                                        //Fakultas: $('#fakultas').val(),
+                                        Fakultas: $('#fakultas').select2('data')[0].text,
+                                        JenjangStudi: $('#jenjangStudi').val()
+                                    };
+                                },
+                                processResults: function (data, params) {
+                                    return {
+                                        results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
+                                    };
+                                },
+                            }
+                        });
+                        $("#prodi").change(function () {
+                            buttonHandler("close");
+
+                            $("#lokasi").empty();
+                            $("#mataKuliah").empty();
+                            $("#seksi").empty();
+
+                            $("#lokasi").prop("disabled", false);
+                            $("#mataKuliah").prop("disabled", true);
+                            $("#seksi").prop("disabled", true);
+
+                            $("#lokasi").select2({
+                                placeholder: "-- Pilih Lokasi --",
+                                width: "100%",
+                                ajax: {
+                                    @*url: "@Url.Action("GetLokasiByProdi", "PresensiKelas")",*@
+                                    url: "/Admin/DaftarHadir/GetLokasiByProdi",
+                                    dataType: 'json',
+                                    method: "POST",
+                                    delay: 250,
+                                    cache: false,
+                                    data: function (params) {
+                                        return {
+                                            Search: params.term || "",
+                                            NamaProdi: $('#prodi').val(),
+                                            JenjangStudi: $('#jenjangStudi').val()
+                                        };
+                                    },
+                                    processResults: function (data, params) {
+                                        return {
+                                            results: $.map(data, function (item) { return { id: item.ID, value: item.Kampus, text: item.Kampus } })
+                                        };
+                                    },
+                                }
+                            });
+                            $("#lokasi").change(function () {
+                                buttonHandler("close");
+
+                                $("#mataKuliah").empty();
+                                $("#seksi").empty();
+
+                                $("#mataKuliah").prop("disabled", false);
+                                $("#seksi").prop("disabled", true);
+
+                                //console.log($('#prodi').val());
+                                //    console.log($('#lokasi').val());
+                                console.log($('#fakultas').select2('data')[0].text);
+                                //        console.log($('#jenjangStudi').val());
+                                //                console.log(    $('#tahunSemester').select2('data')[0].id);
+                                //        console.log($('#lokasi').select2('data')[0].value);
+                                var pageLength = 0;
+                                $("#mataKuliah").select2({
+                                    placeholder: "-- Pilih Mata Kuliah --",
+                                    "proccessing": true,
+                                    "serverSide": true,
+                                    //multiple: true,
+                                    width: "100%",
+                                    ajax: {
+                                        //url: "/Admin/DaftarHadirUjian/GetMataKuliah",
+                                        url: "/Admin/daftarHadir/GetMataKuliahFlag",
+                                        type: 'POST',
+                                        dataType: 'json',
+
+                                        data: function (params) {
+                                            // console.log('page : ' + params.page);
+                                            // console.log('p number : ' + (params.page - 1) * 10);
+
+                                            return {
+                                                take: 10,
+                                                searchBy: params.term || "",
+                                                skip: params.page || 0,
+                                                //idProdi: $('#lokasiCari').select2('data')[0].id,
+                                                idProdi: $('#prodi').val(),
+                                                idProdi: $('#lokasi').val(),
+                                                idFakultas: $('#fakultas').val(),
+                                                jenjangStudi: $('#jenjangStudi').val(),
+                                                strm: $('#tahunSemester').select2('data')[0].id,
+                                                lokasi: $('#lokasi').select2('data')[0].value
+
+
+                                            };
+                                        },
+
+                                        processResults: function (data, params) {
+
+                                            var page = params.page - 1 || 1;
+                                            pageLength = pageLength + data.length;
+
+
+
+                                            return {
+                                                results: $.map(data, function (item) { return { id: item.MataKuliahID, value: item.MataKuliahID, text: item.KodeMataKuliah + ' - ' + item.NamaMataKuliah, name: item.NamaMataKuliah, kode: item.KodeMataKuliah } }),
+                                                pagination: {
+                                                    more: data.length > 0 && data.length == 10
+                                                }
+                                            }
+                                        },
+
+
+                                    }
+                                });
+
+                                $("#mataKuliah").change(function () {
+                                    //buttonHandler("close");
+                                    buttonHandler("open");
+
+                                    $("#seksi").empty();
+
+                                    $("#seksi").prop("disabled", false);
+                                    var mk = $('#mataKuliah').select2('data')[0].text;
+                                    var potongMK = mk.substring(mk.indexOf('-') + 2);
+                                    //console.log(potongMK);
+                                    //console.log($('#prodi').val());
+                                    //console.log(mk);
+                                    //console.log($('#lokasi').select2('data')[0].value);
+                                    $("#seksi").select2({
+
+                                        placeholder: "-- Pilih Seksi --",
+                                        width: "100%",
+                                        ajax: {
+                                            url: "@Url.Action("GetSeksiByMatkul", "DaftarHadir")",
+                                            dataType: 'json',
+                                            method: "POST",
+                                            delay: 250,
+                                            cache: false,
+                                            data: function (params) {
+                                                return {
+                                                    Search: params.term || "",
+                                                    Matkul: mk,
+                                                    // Lokasi: $('#lokasi').val(),
+                                                    Lokasi: $('#lokasi').select2('data')[0].value,
+                                                    Prodi: $('#prodi').val(),
+                                                    JenjangStudi: $('#jenjangStudi').val()
+                                                };
+                                            },
+                                            processResults: function (data, params) {
+                                                return {
+                                                    results: $.map(data, function (item) { return { id: item.Nama, value: item.Nama, text: item.Nama } })
+                                                };
+                                            },
+                                        }
+                                    });
+                                    $("#seksi").change(function () {
+                                        buttonHandler("open");
+                                    });
+                                    });
+                                    });
+                                    });
+                                    });
+
+                //----------------------------------------------
+
 
                 $("#tahunSemester").select2({
                     placeholder: "-- Pilih Tahun Semester --",
@@ -1231,6 +1482,12 @@
                     $("#lokasi").prop("disabled", true);
                     $("#mataKuliah").prop("disabled", true);
                     $("#seksi").prop("disabled", true);
+
+                    //-----------------------------------------
+
+
+
+                    //-----------------------------------------
 
                     $("#jenjangStudi").select2({
                         placeholder: "-- Pilih Jenjang Studi --",

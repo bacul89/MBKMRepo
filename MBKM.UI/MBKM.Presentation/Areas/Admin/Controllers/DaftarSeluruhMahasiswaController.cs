@@ -93,12 +93,12 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     ViewData["infoNoKJ"] = NoKJIP;
                     ViewData["infoInstansi"] = noKJ.NamaInstansi;
                     if (ip.JenisKerjasama != "Internal ke Luar Atma Jaya") {
-                        ViewData["infoNoSK"] = ip.NoSK;
+                        ViewData["infoNoSK"] = (ip.NoSK == null)? "-" : ip.NoSK;
 
                         var dateOnly = ip.TanggalSK.ToString().Replace("00:00:00", "");
-                        ViewData["infoTanggalSK"] = dateOnly;
-                        ViewData["infoJudulAct"] = ip.JudulAktivitas;
-                        ViewData["infoLokasi"] = ip.LokasiTugas;
+                        ViewData["infoTanggalSK"] = (dateOnly == null) ? "-" : dateOnly;
+                        ViewData["infoJudulAct"] = (ip.JudulAktivitas == null) ? "-" : ip.JudulAktivitas;
+                        ViewData["infoLokasi"] = (ip.LokasiTugas == null) ? "-" : ip.LokasiTugas;
                     }
                     //else
                     //{
