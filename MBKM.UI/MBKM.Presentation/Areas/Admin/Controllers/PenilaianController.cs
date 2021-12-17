@@ -25,7 +25,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private INilaiKuliahService _nilaiKuliahService;
         private INilaiSubCWService _nilaiSubCWService;
         private ILookupService _lookupService;
-        public PenilaianController(ILookupService lookupService, INilaiSubCWService nilaiSubCWService, INilaiKuliahService nilaiKuliahService, IAbsensiService absensiService, IJadwalKuliahService jadwalKuliahService, IPendaftaranMataKuliahService pendaftaranMataKuliahService)
+        private IMahasiswaService _mahasiswaService;
+
+        public PenilaianController(IPendaftaranMataKuliahService pendaftaranMataKuliahService, IJadwalKuliahService jadwalKuliahService, IAbsensiService absensiService, INilaiKuliahService nilaiKuliahService, INilaiSubCWService nilaiSubCWService, ILookupService lookupService, IMahasiswaService mahasiswaService)
         {
             _pendaftaranMataKuliahService = pendaftaranMataKuliahService;
             _jadwalKuliahService = jadwalKuliahService;
@@ -33,7 +35,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             _nilaiKuliahService = nilaiKuliahService;
             _nilaiSubCWService = nilaiSubCWService;
             _lookupService = lookupService;
+            _mahasiswaService = mahasiswaService;
         }
+
+
         // GET: Admin/UserManage
         public ActionResult Index()
         {
@@ -569,6 +574,14 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 return Json(new ServiceResponse { status = 200, message = "Done" });
             }
 
+        }
+
+        [HttpPost]
+        public ActionResult GetSemesterBerjalan()
+        {
+            VMSemester firstSemester = _mahasiswaService.GetDataSemester(null).First();
+
+            return Json(firstSemester);
         }
     }
 }
