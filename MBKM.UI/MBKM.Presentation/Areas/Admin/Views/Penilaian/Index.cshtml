@@ -483,6 +483,16 @@
                     }
                 }
             });
+
+            $.ajax({
+                    type: "post",
+                    url: "@Url.Action("GetSemesterBerjalan", "Penilaian")"
+                }).then(function (response) {
+                    var option = $("<option selected='selected'></option>").val(response.Nilai).text(response.Nama);
+                    $("#tahunSemester").append(option).trigger('change');
+               });
+
+
             $("#tahunSemester").change(function () {
                 if (role == 1) {
                     @*$("#prodi").empty();
