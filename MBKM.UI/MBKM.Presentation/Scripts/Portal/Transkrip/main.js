@@ -50,7 +50,7 @@ function convertBirthday(value) {
     var date = getBirtDay.split(" ")[0];
     var parts = date.split('/');
     var mydate = new Date(parts[2], parts[1] - 1, parts[0]);*/
-    console.log(value);
+    //console.log(value);
     var date = value.split("T")[0];
     var parts = date.split('-');
     var mydate = new Date(parts[0], parts[1] - 1, parts[2]);
@@ -432,7 +432,6 @@ function checkStatusSertifikat() {
         datatype: 'JSON',
         success: function (e) {
 
-            console.log("fhsaksfj : "+e.data);
 
             if (e.data == false) {
                 $("#sertifikatCetak").prop("disabled", false);
@@ -467,9 +466,8 @@ function printSertifikat() {
                 datatype: 'JSON',
                 success: function (e) {
 
-                    console.log("try " + e.data);
+                    //console.log("try " + e.data);
                     var base_url = window.location.origin;
-                    console.log("base_url " + base_url);
                     if (e.data != true) {
 
                         var mywindow = window.open('', '_blank');
@@ -633,16 +631,14 @@ function CheckStatusFeedback(FlagTranscript, row) {
             //console.log(checker);
             //console.log(FLAGBAYAR);
 
-            
-
                 if (row == 'internal') {
                     checkStatusSertifikat();
                     $("#btnCetak").prop("disabled", true);
 
                 } else {
-                    if (checker == true) {
-                        if (row != 'internal' && row == result.length) {
-                            if (FLAGBAYAR == 'True') {
+                    if (FLAGBAYAR == 'True') {
+                        if (checker == true) {
+                            if (row != 'internal' && row == result.length) {
 
                                 checkStatusSertifikat();
                                 if (FlagTranscript == true) {
@@ -657,36 +653,33 @@ function CheckStatusFeedback(FlagTranscript, row) {
 
                                 }
 
+
+                            } else if (row == 'internal') {
+                                checkStatusSertifikat();
+                                $("#btnCetak").prop("disabled", true);
                             } else {
-                                alert = "Belum Bayar!";
+                                alert = "Nilai Transkrip Belum Lengkap, Menunggu Penilaian dari Dosen!";
+
+                                $("#btnCetak").prop("disabled", true);
+                                $("#sertifikatCetak").prop("disabled", true);
                                 $('#notif').text(alert);
                                 $('#notif').show();
                             }
-                        } else if (row == 'internal') {
-                            checkStatusSertifikat();
-                            $("#btnCetak").prop("disabled", true);
                         } else {
-                            alert = "Nilai Transkrip Belum Lengkap, Menunggu Penilaian dari Dosen!";
-
+                            alert = "Silahkan Melengkapi Feedback terlebih dahulu, untuk mengaktifkan tombol cetak!"
 
                             $("#btnCetak").prop("disabled", true);
                             $("#sertifikatCetak").prop("disabled", true);
                             $('#notif').text(alert);
                             $('#notif').show();
                         }
+
                     } else {
-                        alert = "Silahkan Melengkapi Feedback terlebih dahulu, untuk mengaktifkan tombol cetak!"
-
-
-                        $("#btnCetak").prop("disabled", true);
-                        $("#sertifikatCetak").prop("disabled", true);
+                        alert = "Belum Bayar!";
                         $('#notif').text(alert);
                         $('#notif').show();
                     }
                 }
-
-
-            
 
 
         }
