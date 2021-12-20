@@ -74,7 +74,10 @@ $(document).ready(function () {
                 /*No Kerjasama*/
                 "data": 6,
                 "render": function (data, type, row, meta) {
-                    return '<div class="center vertical-center" style="font-size: 0.8vw">' + row[4] + ' - ' + row[5] + '</div>';
+                    if (data == null) {
+                        return '<div class="center vertical-center" style="font-size: 0.8vw"> - </div>';
+                    }
+                    return '<div class="center vertical-center" style="font-size: 0.8vw">' + data + '</div>';
                 }
             },
             {
