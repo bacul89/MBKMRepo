@@ -201,7 +201,7 @@ function loadJenjangStudi(tipe, id, nama) {
     var getFakultas = $("#fakultasCari").val();
     var getProdi = $("#prodiCari").val();
 
-    console.log(getFakultas);
+    //console.log(getFakultas);
 
     if (getFakultas != null  && getProdi == null) {
         $("#" + id + "Cari").select2({
@@ -663,7 +663,6 @@ function loadJenjangStudi(tipe, id, nama) {
 
         });
     } else {
-        console.log("test");
 
         $("#" + id + "Cari").select2({
             placeholder: "-- Pilih " + nama + " --",
