@@ -95,7 +95,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             }
             using (var context = new MBKMContext())
             {
-                var loopIdProdi = context.MasterCPLS.Where(x =>x.IsDeleted==false && x.NamaProdi.Contains(prodi)&& x.FakultasID.Contains(fakultas)).Distinct().GroupBy(s=>s.ProdiID).ToList();
+                var loopIdProdi = context.MasterCPLS.Where(x =>x.IsDeleted==false && x.JenjangStudi == jenjang && x.NamaProdi.Contains(prodi)&& x.FakultasID.Contains(fakultas)).Distinct().GroupBy(s=>s.ProdiID).ToList();
                
 
                 if (loopIdProdi.Count > 1) //if lokasi lebih dari 1

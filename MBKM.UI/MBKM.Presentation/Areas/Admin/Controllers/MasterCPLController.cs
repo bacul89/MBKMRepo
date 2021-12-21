@@ -84,7 +84,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             try
             {
-                if(GetMasterCPLByProdiKelompokDanKode(model.NamaProdi,model.Kelompok,model.Kode) == null)
+                if(GetMasterCPLByProdiKelompokDanKode(model.NamaProdi,model.Kelompok,model.Kode , model.JenjangStudi) == null)
                 {
                     var LoopLokasi = _cplMatakuliah.GetProdiLocByFakultas(model.JenjangStudi, model.FakultasID, "");
                     var prodiTerpilih = LoopLokasi.Where(x => x.NamProdi == model.NamaProdi).ToList();
@@ -129,7 +129,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 && x.Capaian == data.Capaian
                 && x.Kode == data.Kode
                 && x.Kelompok == data.Kelompok).ToList();
-            if (GetMasterCPLByProdiKelompokDanKode(cpl.NamaProdi, cpl.Kelompok, cpl.Kode) == null)
+            if (GetMasterCPLByProdiKelompokDanKode(cpl.NamaProdi, cpl.Kelompok, cpl.Kode , cpl.JenjangStudi) == null)
             {
 
                 foreach (var d in LoopSemuaDatabyLokasi)
@@ -300,10 +300,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             }
             return Json(final, JsonRequestBehavior.AllowGet);
         }
-        public MasterCapaianPembelajaran GetMasterCPLByProdiKelompokDanKode(string namaProdi,string kelompok, string kode)
+        public MasterCapaianPembelajaran GetMasterCPLByProdiKelompokDanKode(string namaProdi,string kelompok, string kode , string jenjang)
         {
             //ini untuk add
-            return _mcpService.Find(m => m.NamaProdi == namaProdi && m.Kelompok == kelompok && m.Kode == kode && m.IsDeleted == false).FirstOrDefault();
+            return _mcpService.Find(m => m.NamaProdi == namaProdi && m.Kelompok == kelompok && m.Kode == kode && m.JenjangStudi == jenjang && m.IsDeleted == false).FirstOrDefault();
         }
         public MasterCapaianPembelajaran GetMasterCPLByProdiKelompokDanKodeUPDATE(string namaProdi, string kelompok, string kode, string capaian)
         {
