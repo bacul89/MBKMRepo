@@ -94,8 +94,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                             dataMap.JenjangStudi == data.JenjangStudi &&
                             dataMap.STRM == data.STRM &&
                             dataMap.MataKuliahID == data.MataKuliahID &&
-                            dataMap.KodeMataKuliah == data.KodeMataKuliah
-                        //&& dataMap.FlagOpen == false
+                            dataMap.KodeMataKuliah == data.KodeMataKuliah 
+                            //&& dataMap.ClassSection.Contains(data.ClassSection)
+                            //&& dataMap.FlagOpen == false
 
                         ).ToList())
                         {

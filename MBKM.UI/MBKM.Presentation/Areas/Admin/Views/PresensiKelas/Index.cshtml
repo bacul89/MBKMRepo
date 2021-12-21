@@ -70,11 +70,17 @@
         padding-left: 0px !important;
     }
 </style>
-
-
 <form action="@Url.Action("DetailPresensi","PresensiKelas")" method="post" id="detailPresensi">
     <input type="hidden" id="idJadwal" name="idJadwal" />
     <input type="hidden" id="tanggalAbsen" name="tanggalAbsen" />
+    <input type="hidden" id="dateString" name="dateString" type="date" />
+    <input type="hidden" id="strm" name="strm" />
+    <input type="hidden" id="kodeMatkul" name="kodeMatkul" />
+    <input type="hidden" id="ruangKelas" name="ruangKelas" />
+    <input type="hidden" id="section" name="section" />
+    @*<input type="hidden" id="jamMasuk" name="jamMasuk" />
+    <input type="hidden" id="jamKeluar" name="jamKeluar" />*@
+    <input type="hidden" id="detailPresensi" name="detailPresensi" />
 </form>
 
 <div class="card center-block" style="background-color: white; margin: 15px;">
@@ -188,6 +194,23 @@
             datatable = $('#hasilPencarian').DataTable();
         });
 
+
+        //--<> Helper
+@*        function convertDate(getDate) {
+
+
+
+            var date = getDate.split("T")[0];
+
+            console.log(date);
+            var parts = date.split('-');
+            var createdate = new Date(parts[0], parts[1] - 1, parts[2]);
+
+            var result = weekday[createdate.getFullYear() + '-' + month[createdate.getMonth()] + '-' + createdate.getDate();
+
+            return result;
+        }
+*@
         $('#cari').click(function () {
             if (!$('#tahunSemester').val() || !$('#jenjangStudi').val() || !$('#fakultas').val() || !$('#mataKuliah').val() || !$('#prodi').val() || !$('#lokasi').val()) {
                 alert('Tolong lengkapi data pencarian!');
@@ -232,10 +255,17 @@
                             var date = new Date(row.TanggalAbsen);
                             //var now = new Date();
                             //if (date.getDate() == now.getDate() && date.getMonth() == now.getMonth() && date.getFullYear() == now.getFullYear()) {
-                                var tanggal = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
-                                return '<div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick="javascript:$(\'#idJadwal\').val(\'' + data + '\'); $(\'#tanggalAbsen\').val(\'' + tanggal + '\'); $(\'#detailPresensi\').submit();"><i class="fas fa-edit"></i></a></div>';
+
+                            console.log(row.TanggalAbsen);
+
+                            var tanggal = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+                            //var dateString = convertDate(row.TanggalAbsen);
+                            //var newdate = new Date(dateString);
+                                //return '<div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick="javascript:$(\'#idJadwal\').val(\'' + data + '\'); $(\'#tanggalAbsen\').val(\'' + tanggal + '\'); $(\'#detailPresensi\').submit();"><i class="fas fa-edit"></i></a></div>';
                             //}
                             //return `<div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick="javascript:alert('DATA ABSEN HANYA BISA DIAKSES PADA TANGGAL ABSEN!');"><i class="fas fa-edit"></i></a></div>`;
+                            // $(\'#jamMasuk\').val(\''+row.JamMasuk+'\');$(\'#jamKeluar\').val(\''+row.JamKeluar+'\');
+                            return '<div class="col" style="text-align:center"><a href = "javascript:void(0)" style = "color:black" onclick="javascript:$(\'#tanggalAbsen\').val(\'' + tanggal + '\'); $(\'#dateString\').val(\'' + row.TanggalAbsen + '\');$(\'#strm\').val(\''+$('#tahunSemester').val()+'\');$(\'#kodeMatkul\').val(\''+row.KodeMataKuliah+'\');$(\'#ruangKelas\').val(\''+row.RuangKelas+'\');$(\'#section\').val(\''+row.Seksi+'\');$(\'#detailPresensi\').submit();" > <i class="fas fa-edit"></i></a ></div>';
                         }
                     },
                     {
@@ -342,14 +372,14 @@
                         }
                     });
                     $("#jenjangStudi").change(function () {
-                        
+
                         //$("#fakultas").empty();
                         $("#prodi").empty();
                         $("#lokasi").empty();
                         $("#mataKuliah").empty();
                         $("#seksi").empty();
 
-                        
+
                         //$("#fakultas").prop("disabled", false);
                         //$("#prodi").prop("disabled", true);
                         $("#lokasi").prop("disabled", true);
