@@ -6,6 +6,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="~/Content/Admin/AdminCostumeBS4.css">
     <link href="~/Content/select2.min.css" rel="stylesheet" />
+    <link rel="icon" href="~/Asset/Atma-Logo.png" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.1/css/jquery.dataTables.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <meta charset="utf-8" />
@@ -77,6 +78,9 @@
     textarea {
         max-width: 100%;
     }
+    .bg-silver-active {
+        background-color: #eeeeee
+    }
 </style>
 <body>
     @RenderSection("modal", required: false)
@@ -89,29 +93,29 @@
                         <li>
                             <a href="#" id="btn" data-toggle="collapse" data-target="#submenu1" aria-expanded="false">Pendaftaran MBKM</a>
                             <ul class="nav collapse" id="submenu1" role="menu" aria-labelledby="btn-1">
-                                <li><a href="@Url.Action("Index", "DataDiri")">Data Diri & Pendukung</a></li>
-                                <li><a href="@Url.Action("Index", "PendaftaranMataKuliah")">Pendaftaran Mata Kuliah</a></li>
-                                <li><a href="@Url.Action("Index", "TrackingStatusPendaftaran")">Tracking Pendaftaran</a></li>
-                                <li><a href="@Url.Action("Index", "NimDigital")">Nomor Induk Mahasiswa</a></li>
+                                <li class="deletedMenu" id="DataDiriMenu"><a href="@Url.Action("Index", "DataDiri")">Data Diri & Pendukung</a></li>
+                                <li class="deletedMenu" id="PendaftaranMataKuliahMenu"><a href="@Url.Action("Index", "PendaftaranMataKuliah")">Pendaftaran Mata Kuliah</a></li>
+                                <li class="deletedMenu" id="TrackingStatusPendaftaranMenu"><a href="@Url.Action("Index", "TrackingStatusPendaftaran")">Tracking Pendaftaran</a></li>
+                                <li class="deletedMenu" id="NimDigitalMenu"><a href="@Url.Action("Index", "NimDigital")">Nomor Induk Mahasiswa</a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="#" id="btn" data-toggle="collapse" data-target="#submenu2" aria-expanded="false">Perkuliahan MBKM</a>
                             <ul class="nav collapse" id="submenu2" role="menu" aria-labelledby="btn-1">
-                                <li><a href="@Url.Action("Index", "JadwalKuliahMahasiswa")">Jadwal Perkuliahan</a></li>
-                                <li><a href="@Url.Action("Index", "JadwalUjian")">Jadwal Ujian</a></li>
-                                <li><a href="@Url.Action("Index", "PresensiKelas")">Presensi Kelas</a></li>
-                                <li><a href="@Url.Action("Index", "PresensiUjian")">Presensi Ujian</a></li>
-                                <li><a href="@Url.Action("Index", "LinkFasilitasMahasiswa")">Link Fasilitas Perkuliahan</a></li>
-                                <li><a href="@Url.Action("Index", "SummaryPresensi")">Summary Presensi</a></li>
+                                <li class="deletedMenu" id="JadwalKuliahMahasiswaMenu"><a href="@Url.Action("Index", "JadwalKuliahMahasiswa")">Jadwal Perkuliahan</a></li>
+                                <li class="deletedMenu" id="JadwalUjianMenu"><a href="@Url.Action("Index", "JadwalUjian")">Jadwal Ujian</a></li>
+                                <li class="deletedMenu" id="PresensiKelasMenu"><a href="@Url.Action("Index", "PresensiKelas")">Presensi Kelas</a></li>
+                                <li class="deletedMenu" id="PresensiUjianMenu"><a href="@Url.Action("Index", "PresensiUjian")">Presensi Ujian</a></li>
+                                <li class="deletedMenu" id="LinkFasilitasMahasiswaMenu"><a href="@Url.Action("Index", "LinkFasilitasMahasiswa")">Link Fasilitas Perkuliahan</a></li>
+                                <li class="deletedMenu" id="SummaryPresensiMenu"><a href="@Url.Action("Index", "SummaryPresensi")">Summary Presensi</a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="#" id="btn" data-toggle="collapse" data-target="#submenu3" aria-expanded="false">Output MBKM</a>
                             <ul class="nav collapse" id="submenu3" role="menu" aria-labelledby="btn-1">
-                                <li><a href="@Url.Action("Index", "FeedBackMatakuliah")">Feedback Perkuliahan</a></li>
-                                <li><a href="@Url.Action("Index", "KHS")">Kartu Hasil Studi MBKM</a></li>
-                                <li><a href="@Url.Action("Index", "TranskripMahasiswa")">Transkrip & Sertifikat MBKM</a></li>
+                                <li class="deletedMenu" id="FeedBackMatakuliahMenu"><a href="@Url.Action("Index", "FeedBackMatakuliah")">Feedback Perkuliahan</a></li>
+                                <li class="deletedMenu" id="KHSMenu"><a href="@Url.Action("Index", "KHS")">Kartu Hasil Studi MBKM</a></li>
+                                <li class="deletedMenu" id="TranskripMahasiswaMenu"><a href="@Url.Action("Index", "TranskripMahasiswa")">Transkrip & Sertifikat MBKM</a></li>
                             </ul>
                         </li>
                     }
@@ -120,16 +124,16 @@
                         <li>
                             <a href="#" id="btn" data-toggle="collapse" data-target="#submenu1" aria-expanded="false">Pendaftaran MBKM</a>
                             <ul class="nav collapse" id="submenu1" role="menu" aria-labelledby="btn-1">
-                                <li><a href="@Url.Action("Index", "DataDiri")">Data Diri & Pendukung</a></li>
-                                <li><a href="@Url.Action("Index", "PendaftaranMataKuliah")">Pendaftaran Mata Kuliah</a></li>
-                                <li><a href="@Url.Action("Index", "TrackingStatusPendaftaran")">Tracking Pendaftaran</a></li>
-                                <li><a href="@Url.Action("Index", "NimDigital")">Nomor Induk Mahasiswa</a></li>
+                                <li class="deletedMenu" id="DataDiriMenu"><a href="@Url.Action("Index", "DataDiri")">Data Diri & Pendukung</a></li>
+                                <li class="deletedMenu" id="PendaftaranMataKuliahMenu"><a href="@Url.Action("Index", "PendaftaranMataKuliah")">Pendaftaran Mata Kuliah</a></li>
+                                <li class="deletedMenu" id="TrackingStatusPendaftaranMenu"><a href="@Url.Action("Index", "TrackingStatusPendaftaran")">Tracking Pendaftaran</a></li>
+                                <li class="deletedMenu" id="NimDigitalMenu"><a href="@Url.Action("Index", "NimDigital")">Nomor Induk Mahasiswa</a></li>
                             </ul>
                         </li>
                         <li>
-                            <a href="#" id="btn" data-toggle="collapse" data-target="#submenu2" aria-expanded="false">Output MBKM</a>
-                            <ul class="nav collapse" id="submenu2" role="menu" aria-labelledby="btn-1">
-                                <li><a href="@Url.Action("Index", "TranskripMahasiswa")">Sertifikat MBKM</a></li>
+                            <a href="#" id="btn" data-toggle="collapse" data-target="#submenu3" aria-expanded="false">Output MBKM</a>
+                            <ul class="nav collapse" id="submenu3" role="menu" aria-labelledby="btn-1">
+                                <li class="deletedMenu" id="TranskripMahasiswaMenu"><a href="@Url.Action("Index", "TranskripMahasiswa")">Sertifikat MBKM</a></li>
                             </ul>
                         </li>
                     }
@@ -159,7 +163,7 @@
         @Scripts.Render("~/bundles/bootstrap")
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.js"></script>
         <script src="~/Scripts/select2.min.js"></script>
-        <script>
+        <script src="~/Scripts/Portal/MenuSideBar.js">
         </script>
         @RenderSection("scripts", required: false)
     </div>
