@@ -40,9 +40,6 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
 
 
-
-
-
         // GET: Admin/SertifikatMBKM
         public ActionResult Index()
         {
@@ -121,7 +118,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         f.mahasiswas.Nama,
                         f.mahasiswas.NoKerjasama,
                         "Sudah Feedback",
-                        f.mahasiswas.FlagBayar.ToString()
+                        "Sudah Bayar"
                     });
             }
             return Json(final);
