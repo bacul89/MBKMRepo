@@ -216,6 +216,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Asset\Atma-Logo.png" />
     <Content Include="Asset\atma-sertifikat.png" />
     <Content Include="Asset\atmajayapoto.jpg" />
     <Content Include="Asset\BG_SERTIFIKAT.png" />
