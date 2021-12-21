@@ -621,6 +621,7 @@
     <Content Include="Scripts\Portal\LinkFasilitasMahasiswa\main.js" />
     <Content Include="Scripts\Portal\JadwalUjian\main.js" />
     <Content Include="Scripts\Portal\JadwalKuliahMahasiswa\main.js" />
+    <Content Include="Scripts\Portal\MenuSideBar.js" />
     <Content Include="Scripts\Portal\NimDigital\main.js" />
     <Content Include="Scripts\Portal\TrackingStatus\main.js" />
     <Content Include="Scripts\Portal\TrackingStatus\trackingDetail.js" />
