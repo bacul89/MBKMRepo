@@ -33,7 +33,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         {
             return View(_absensiService.GetTahunSemester());
         }
-        public ActionResult DetailPresensi(Int64 idJadwal, string tanggalAbsen)
+        /*public ActionResult DetailPresensi(Int64 idJadwal, string tanggalAbsen)
         {
             var result = _jadwalKuliahService.Get(idJadwal);
             var model = new VMPresensi();
@@ -47,7 +47,48 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             model.RuangKelas = result.RuangKelas;
             model.NamaDosen = result.NamaDosen;
             return View(model);
+        }*/
+        public ActionResult DetailPresensi(string tanggalAbsen, DateTime dateString, string kodeMatkul, string ruangKelas, string section, int strm)
+        {
+
+            var getJadwal = _jadwalKuliahService.Find(x =>
+                x.KodeMataKuliah == kodeMatkul &&
+                x.RuangKelas == ruangKelas &&
+                x.ClassSection == section &&
+                x.STRM == strm /*&&
+                x.JamMasuk == jamMasuk &&
+                x.JamSelesai == jamKeluar*/
+            ).FirstOrDefault();
+
+            DateTime date = DateTime.Parse(tanggalAbsen);
+
+            /*var getJadwal = _absensiService.Find(x =>
+                x.JadwalKuliahs.KodeMataKuliah == kodeMatkul &&
+                x.JadwalKuliahs.RuangKelas == ruangKelas &&
+                x.JadwalKuliahs.ClassSection == section &&
+                x.JadwalKuliahs.STRM == strm &&
+                x.TanggalAbsen == date
+
+            *//*
+            x.JamMasuk == jamMasuk &&
+            x.JamSelesai == jamKeluar*//*
+            ).FirstOrDefault();*/
+
+            var model = new VMPresensi();
+            var result = _jadwalKuliahService.Get(getJadwal.ID);
+
+            model.TanggalAbsen2 = tanggalAbsen;
+            model.JamMasuk2 = result.JamMasuk;
+            model.JamKeluar2 = result.JamSelesai;
+            model.KodeMataKuliah = result.KodeMataKuliah;
+            model.NamaMataKuliah = result.NamaMataKuliah;
+            model.Seksi = result.ClassSection;
+            model.IDJadwalKuliah = result.ID;
+            model.RuangKelas = result.RuangKelas;
+            model.NamaDosen = result.NamaDosen;
+            return View(model);
         }
+
         public ActionResult GetTahunSemester()
         {   
             return new ContentResult { Content = JsonConvert.SerializeObject(_absensiService.GetTahunSemester()), ContentType = "application/json" };
