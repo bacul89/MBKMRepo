@@ -297,20 +297,72 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             //    recordsFiltered = vMLinkFasilitas.TotalFilterCount,
             //    data = vMLinkFasilitas.gridDatas
             //});
-            var result = new List<JadwalKuliah>();
+            // RESULT SUDAH TIDAK DIPAKAI KARNA PAKAI TOP 1 emang oli nomer 1
+           // var result = new List<JadwalKuliah>();
+            
+
+            List<JadwalKuliah> MVJadwal = new List<JadwalKuliah>();
+            List<string> mapJadwal = new List<string>();
+            //long idmk = Convert.ToInt64(idMatakuliah.ToString());
+            //long projID = Convert.ToInt64(ProjectFileID.ToString());
+
             if (seksi != null && seksi.Length != 0)
             {
-                result = _jkService
-                .Find(_ => _.JenjangStudi == jenjangStudi && _.ProdiID == idProdi && _.FakultasID == idFakultas && _.Lokasi == lokasi && _.MataKuliahID == idMatakuliah && _.STRM == strm && _.ClassSection == seksi && _.FlagOpen == true).ToList();
+                foreach (var item in _jkService.Find(dataMap =>
+               dataMap.ProdiID == idProdi &&
+               dataMap.FakultasID == idFakultas &&
+               dataMap.Lokasi == lokasi &&
+               dataMap.JenjangStudi == jenjangStudi &&
+               dataMap.STRM == strm &&
+               dataMap.KodeMataKuliah == idMatakuliah &&
+               dataMap.ClassSection == seksi
+           && dataMap.FlagOpen == true
+
+           ).ToList())
+                {
+                    if (!mapJadwal.Contains(item.NamaMataKuliah))
+                    {
+                        MVJadwal.Add(item);
+                        mapJadwal.Add(item.NamaMataKuliah);
+                    }
+                }
+                //result = _jkService
+                //.Find(_ => _.JenjangStudi == jenjangStudi && _.ProdiID == idProdi && _.FakultasID == idFakultas && _.Lokasi == lokasi && _.MataKuliahID == idMatakuliah && _.STRM == strm && _.ClassSection == seksi && _.FlagOpen == true).ToList();
+                return new ContentResult { Content = JsonConvert.SerializeObject(MVJadwal), ContentType = "application/json" };
             }
-            else
+            else //jika seksi kosong maka input semua yg berbeda seksi nya lalu top 1 untuk grid nya
             {
-                result = _jkService
-                .Find(_ => _.JenjangStudi == jenjangStudi && _.ProdiID == idProdi && _.FakultasID == idFakultas && _.Lokasi == lokasi && _.MataKuliahID == idMatakuliah && _.STRM == strm && _.FlagOpen == true).ToList();
-                
+
+                foreach (var item in _jkService.Find(dataMap =>
+              dataMap.ProdiID == idProdi &&
+              dataMap.FakultasID == idFakultas &&
+              dataMap.Lokasi == lokasi &&
+              dataMap.JenjangStudi == jenjangStudi &&
+              dataMap.STRM == strm &&
+              dataMap.KodeMataKuliah == idMatakuliah// &&
+              //dataMap.ClassSection == seksi
+          && dataMap.FlagOpen == true
+
+          ).ToList())
+                {
+                    if ( !mapJadwal.Contains(item.ClassSection))
+                    {
+                        MVJadwal.Add(item);
+                        mapJadwal.Add(item.ClassSection);
+                    }
+                }
+               // result = _jkService
+                //.Find(_ => _.JenjangStudi == jenjangStudi && _.ProdiID == idProdi && _.FakultasID == idFakultas && _.Lokasi == lokasi && _.MataKuliahID == idMatakuliah && _.STRM == strm && _.ClassSection == seksi && _.FlagOpen == true).ToList();
+                //MVJadwal = MVJadwal.Distinct();
+                return new ContentResult { Content = JsonConvert.SerializeObject(MVJadwal), ContentType = "application/json" };
+                //result = _jkService
+                //    .Find(_ => _.JenjangStudi == jenjangStudi && _.ProdiID == idProdi && _.FakultasID == idFakultas && _.Lokasi == lokasi && _.KodeMataKuliah == idMatakuliah && _.STRM == strm && _.FlagOpen == true).ToList();
+                //result = result.OrderBy(_ => _.KodeMataKuliah).ToList();
+                //return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
             }
-            result = result.OrderBy(_ => _.KodeMataKuliah).ToList();
-            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
+            //result = result.OrderBy(_ => _.KodeMataKuliah).ToList();
+            //return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
+            
         }
 
         public ActionResult ModalUpdateLinkFasilitas(int id)
