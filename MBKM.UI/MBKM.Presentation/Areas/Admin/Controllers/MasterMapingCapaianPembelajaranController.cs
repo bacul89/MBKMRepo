@@ -169,23 +169,19 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
             try
             {
+                CPLMatakuliah data = _cplMatakuliah.Get(cplMatakuliah.ID);
                 var check = _cplMatakuliah.Find(
-                    x => x.IDMataKUliah == cplMatakuliah.IDMataKUliah &&
+                    x => x.ID == cplMatakuliah.ID &&
+                    x.IDMataKUliah == cplMatakuliah.IDMataKUliah &&
                     x.MasterCapaianPembelajaranID == cplMatakuliah.MasterCapaianPembelajaranID &&
                     x.IsDeleted == false
                 );
-
+                Console.WriteLine(check);
                 if (check.Count() == 1)
                 {
-                    var checkCPL = _cplMatakuliah.Find(
-                    x => x.KodeMataKuliah == cplMatakuliah.KodeMataKuliah &&
-                    x.MasterCapaianPembelajaranID == cplMatakuliah.MasterCapaianPembelajaranID &&
-                    x.Kelompok == cplMatakuliah.Kelompok &&
-                    x.IsDeleted == false
-                    );
-                    if (check.Count() == 0)
+                    
+                    if (cplMatakuliah.MasterCapaianPembelajaranID == data.MasterCapaianPembelajaranID)
                     {
-                        CPLMatakuliah data = _cplMatakuliah.Get(cplMatakuliah.ID);
                         data.KodeMataKuliah = cplMatakuliah.KodeMataKuliah;
                         data.IDMataKUliah = cplMatakuliah.IDMataKUliah;
                         data.NamaMataKuliah = cplMatakuliah.NamaMataKuliah;
@@ -204,11 +200,42 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     {
                         return Json(new ServiceResponse { status = 500, message = "Tidak input bisa duplikasi!!!" });
                     }
+
                     
                 }
                 else
                 {
-                    return Json(new ServiceResponse { status = 500, message = "Tidak input bisa duplikasi!!!" });
+
+                    var checkCPL = _cplMatakuliah.Find(
+                         x =>
+                         x.KodeMataKuliah == cplMatakuliah.KodeMataKuliah &&
+                         x.MasterCapaianPembelajaranID == cplMatakuliah.MasterCapaianPembelajaranID &&
+                         x.Kelompok == cplMatakuliah.Kelompok &&
+                         x.IsDeleted == false
+                     );
+                    if (checkCPL.Count() == 0)
+                    {
+                        data.KodeMataKuliah = cplMatakuliah.KodeMataKuliah;
+                        data.IDMataKUliah = cplMatakuliah.IDMataKUliah;
+                        data.NamaMataKuliah = cplMatakuliah.NamaMataKuliah;
+                        data.IsActive = cplMatakuliah.IsActive;
+                        data.MasterCapaianPembelajaranID = cplMatakuliah.MasterCapaianPembelajaranID;
+                        data.Kelompok = cplMatakuliah.Kelompok;
+                        data.UpdatedBy = Session["username"] as string;
+                        data.CreatedDate = data.CreatedDate;
+                        data.UpdatedDate = DateTime.Now;
+
+                        _cplMatakuliah.Save(data);
+
+                        return Json(new ServiceResponse { status = 200, message = "Update Data Berhasil.." });
+
+                    }
+                    else
+                    {
+                        return Json(new ServiceResponse { status = 500, message = "Tidak input bisa duplikasi!!!" });
+                    }
+
+                    //return Json(new ServiceResponse { status = 500, message = "Tidak input bisa duplikasi!!!" });
                 }
             }
             catch (Exception e)
