@@ -402,7 +402,7 @@ function PostUpdate() {
                     Swal.fire({
                         title: 'Berhasil',
                         icon: 'success',
-                        html: 'Data Berhasil Dihapus',
+                        html: 'Data Berhasil Diupdate',
                         showCloseButton: true,
                         showCancelButton: false,
                         focusConfirm: false,
