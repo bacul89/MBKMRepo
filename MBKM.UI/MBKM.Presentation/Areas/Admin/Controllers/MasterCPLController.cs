@@ -156,7 +156,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 }
             }
 
-            else if (data.NamaProdi == cpl.NamaProdi && data.Kelompok == cpl.Kelompok && data.Kode == cpl.Kode && GetMasterCPLByCapaian(cpl.Capaian) == null)
+            else if (data.NamaProdi == cpl.NamaProdi && data.Kelompok == cpl.Kelompok && data.Kode == cpl.Kode && data.JenjangStudi == cpl.JenjangStudi && GetMasterCPLByCapaian(cpl.Capaian) == null)
             {
                 foreach (var d in LoopSemuaDatabyLokasi)
                 {
@@ -181,7 +181,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             }
 
             //simpan tanpa edit
-            else if (data.NamaProdi == cpl.NamaProdi && data.Kelompok == cpl.Kelompok && data.Kode == cpl.Kode && GetMasterCPLByCapaian(cpl.Capaian) != null)
+            else if (data.NamaProdi == cpl.NamaProdi && data.JenjangStudi == cpl.JenjangStudi && data.Kelompok == cpl.Kelompok && data.Kode == cpl.Kode && GetMasterCPLByCapaian(cpl.Capaian) != null)
             {
                 foreach (var d in LoopSemuaDatabyLokasi)
                 {
