@@ -51,31 +51,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 ViewData["NamaProdi"] = Session["NamaProdi"].ToString();
             }*/
 
-            //Session["username"] = "Smitty Werben Jeger Man Jensen";
             return View();
         }
 
-        /*        public class MyJsonObject
-                {
-                    [Newtonsoft.Json.JsonProperty("ID")]
-                    public string ID { get; set; }
-
-                    [Newtonsoft.Json.JsonProperty("arr")]
-                    public string arr { get; set; }
-
-                    [Newtonsoft.Json.JsonProperty("brr")]
-                    public string brr { get; set; }
-
-                    [Newtonsoft.Json.JsonProperty("crr")]
-                    public string crr { get; set; }
-
-                    [Newtonsoft.Json.JsonProperty("drr")]
-                    public string drr { get; set; }
-
-                    [Newtonsoft.Json.JsonProperty("err")]
-                    public string err { get; set; }
-
-                }*/
 
 
         public JsonResult GetList(DataTableAjaxPostModel model)
@@ -120,30 +98,6 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
 
 
-
-        /*        public ActionResult GetDataMasterMapingCapaianPembelajaran()
-                {
-                    //var jsonString = "[{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"2\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"3\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"4\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"5\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"6\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"7\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"},{\"ID\":\"1\",\"arr\":\"john\",\"brr\":22,\"crr\":\"mca\",\"drr\":\"test\",\"err\":\"hello\"}]";
-                    //List<MyJsonObject> myJsonObjects = Newtonsoft.Json.JsonConvert.DeserializeObject<List<MyJsonObject>>(jsonString);
-
-                    var data = _cplMatakuliah.Find(x => x.IsDeleted == false).ToList();
-                    *//*return Json(data, JsonRequestBehavior.AllowGet);*/
-
-        /*            return Json(new
-                    {
-                        KodeMataKuliah = data.MataKuliah,
-                        NamaMataKuliah = data.NamaMataKuliah,
-                        MasterCapaianPembelajaranID = data.MasterCapaianPembelajaranID,
-                        Kelompok = data.Kelompok,
-                        capaian = data.MasterCapaianPembelajaranID.capaian
-                    }, JsonRequestBehavior.AllowGet);
-                    *//*
-
-        return Json(data, JsonRequestBehavior.AllowGet);
-
-
-    }*/
-
         /*Modal Created*/
         
         public ActionResult ModalCreateMasterMapingCapaianPembelajaran()
@@ -160,7 +114,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
                 var data = _cplMatakuliah.Find(
                     x => x.IDMataKUliah == cpl.IDMataKUliah &&
-                    x.MasterCapaianPembelajaranID == cpl.MasterCapaianPembelajaranID
+                    x.MasterCapaianPembelajaranID == cpl.MasterCapaianPembelajaranID &&
+                    x.IsDeleted == false
                 );
 
                 if (data.Count() == 0)
@@ -216,25 +171,40 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             {
                 var check = _cplMatakuliah.Find(
                     x => x.IDMataKUliah == cplMatakuliah.IDMataKUliah &&
-                    x.MasterCapaianPembelajaranID == cplMatakuliah.MasterCapaianPembelajaranID
+                    x.MasterCapaianPembelajaranID == cplMatakuliah.MasterCapaianPembelajaranID &&
+                    x.IsDeleted == false
                 );
 
                 if (check.Count() == 1)
                 {
-                    CPLMatakuliah data = _cplMatakuliah.Get(cplMatakuliah.ID);
-                    data.KodeMataKuliah = cplMatakuliah.KodeMataKuliah;
-                    data.IDMataKUliah = cplMatakuliah.IDMataKUliah;
-                    data.NamaMataKuliah = cplMatakuliah.NamaMataKuliah;
-                    data.IsActive = cplMatakuliah.IsActive;
-                    data.MasterCapaianPembelajaranID = cplMatakuliah.MasterCapaianPembelajaranID;
-                    data.Kelompok = cplMatakuliah.Kelompok;
-                    data.UpdatedBy = Session["username"] as string;
-                    data.CreatedDate = data.CreatedDate;
-                    data.UpdatedDate = DateTime.Now;
+                    var checkCPL = _cplMatakuliah.Find(
+                    x => x.KodeMataKuliah == cplMatakuliah.KodeMataKuliah &&
+                    x.MasterCapaianPembelajaranID == cplMatakuliah.MasterCapaianPembelajaranID &&
+                    x.Kelompok == cplMatakuliah.Kelompok &&
+                    x.IsDeleted == false
+                    );
+                    if (check.Count() == 0)
+                    {
+                        CPLMatakuliah data = _cplMatakuliah.Get(cplMatakuliah.ID);
+                        data.KodeMataKuliah = cplMatakuliah.KodeMataKuliah;
+                        data.IDMataKUliah = cplMatakuliah.IDMataKUliah;
+                        data.NamaMataKuliah = cplMatakuliah.NamaMataKuliah;
+                        data.IsActive = cplMatakuliah.IsActive;
+                        data.MasterCapaianPembelajaranID = cplMatakuliah.MasterCapaianPembelajaranID;
+                        data.Kelompok = cplMatakuliah.Kelompok;
+                        data.UpdatedBy = Session["username"] as string;
+                        data.CreatedDate = data.CreatedDate;
+                        data.UpdatedDate = DateTime.Now;
 
-                    _cplMatakuliah.Save(data);
+                        _cplMatakuliah.Save(data);
 
-                    return Json(new ServiceResponse { status = 200, message = "Update Data Berhasil.." });
+                        return Json(new ServiceResponse { status = 200, message = "Update Data Berhasil.." });
+                    }
+                    else
+                    {
+                        return Json(new ServiceResponse { status = 500, message = "Tidak input bisa duplikasi!!!" });
+                    }
+                    
                 }
                 else
                 {
@@ -398,11 +368,11 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetMasterCPL(string idProdi, string idFakultas, string Kelompok)
+        public ActionResult GetMasterCPL(string idProdi, string jenjangStudi, string idFakultas, string Kelompok)
         {
 
 
-            var final = _mcpService.Find(mcp => mcp.NamaProdi == idProdi && mcp.FakultasID == idFakultas && mcp.Kelompok == Kelompok && mcp.IsActive == true && mcp.IsDeleted == false).ToList();
+            var final = _mcpService.Find(mcp => mcp.JenjangStudi == jenjangStudi && mcp.NamaProdi == idProdi && mcp.FakultasID == idFakultas && mcp.Kelompok == Kelompok && mcp.IsActive == true && mcp.IsDeleted == false).ToList();
             //var final = _cplMatakuliah.GetMatkul(skip, take, searchBy, idProdi, idFakultas);
             List<object> data = new List<object>();
             string tempKode = "";
