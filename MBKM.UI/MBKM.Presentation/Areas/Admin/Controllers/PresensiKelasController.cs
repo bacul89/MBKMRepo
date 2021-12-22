@@ -48,7 +48,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             model.NamaDosen = result.NamaDosen;
             return View(model);
         }*/
-        public ActionResult DetailPresensi(string tanggalAbsen, DateTime dateString, string kodeMatkul, string ruangKelas, string section, int strm)
+        public ActionResult DetailPresensi(string tanggalAbsen, string kodeMatkul, string ruangKelas, string section, int strm)
         {
 
             var getJadwal = _jadwalKuliahService.Find(x =>
@@ -60,7 +60,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 x.JamSelesai == jamKeluar*/
             ).FirstOrDefault();
 
-            DateTime date = DateTime.Parse(tanggalAbsen);
+            //DateTime date = DateTime.Parse(tanggalAbsen);
 
             /*var getJadwal = _absensiService.Find(x =>
                 x.JadwalKuliahs.KodeMataKuliah == kodeMatkul &&

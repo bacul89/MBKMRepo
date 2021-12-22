@@ -71,11 +71,12 @@ function loadMasterCPL() {
         width: "100%",
         ajax: {
             url: '/Admin/MasterMapingCapaianPembelajaran/GetMasterCPL',
-            type: 'post',
+            type: 'POST',
             dataType: 'json',
             data: function (params) {
                 return {
                     //search: params.term,
+                    jenjangStudi: $('#jenjangCari').val(),
                     IDProdi: $('#prodiCari').val(),
                     IDFakultas: $('#fakultasCari').val(),
                     Kelompok: $('#inp_kelompok').val(),

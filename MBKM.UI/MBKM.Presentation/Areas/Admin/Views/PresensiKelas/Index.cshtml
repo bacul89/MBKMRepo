@@ -73,7 +73,7 @@
 <form action="@Url.Action("DetailPresensi","PresensiKelas")" method="post" id="detailPresensi">
     <input type="hidden" id="idJadwal" name="idJadwal" />
     <input type="hidden" id="tanggalAbsen" name="tanggalAbsen" />
-    <input type="hidden" id="dateString" name="dateString" type="date" />
+    @*<input type="hidden" id="dateString" name="dateString" type="date" />*@
     <input type="hidden" id="strm" name="strm" />
     <input type="hidden" id="kodeMatkul" name="kodeMatkul" />
     <input type="hidden" id="ruangKelas" name="ruangKelas" />
@@ -263,9 +263,10 @@
                             //var newdate = new Date(dateString);
                                 //return '<div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick="javascript:$(\'#idJadwal\').val(\'' + data + '\'); $(\'#tanggalAbsen\').val(\'' + tanggal + '\'); $(\'#detailPresensi\').submit();"><i class="fas fa-edit"></i></a></div>';
                             //}
+                            //$(\'#dateString\').val(\'' + row.TanggalAbsen + '\');
                             //return `<div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick="javascript:alert('DATA ABSEN HANYA BISA DIAKSES PADA TANGGAL ABSEN!');"><i class="fas fa-edit"></i></a></div>`;
                             // $(\'#jamMasuk\').val(\''+row.JamMasuk+'\');$(\'#jamKeluar\').val(\''+row.JamKeluar+'\');
-                            return '<div class="col" style="text-align:center"><a href = "javascript:void(0)" style = "color:black" onclick="javascript:$(\'#tanggalAbsen\').val(\'' + tanggal + '\'); $(\'#dateString\').val(\'' + row.TanggalAbsen + '\');$(\'#strm\').val(\''+$('#tahunSemester').val()+'\');$(\'#kodeMatkul\').val(\''+row.KodeMataKuliah+'\');$(\'#ruangKelas\').val(\''+row.RuangKelas+'\');$(\'#section\').val(\''+row.Seksi+'\');$(\'#detailPresensi\').submit();" > <i class="fas fa-edit"></i></a ></div>';
+                            return '<div class="col" style="text-align:center"><a href = "javascript:void(0)" style = "color:black" onclick="javascript:$(\'#tanggalAbsen\').val(\'' + tanggal + '\'); $(\'#strm\').val(\''+$('#tahunSemester').val()+'\');$(\'#kodeMatkul\').val(\''+row.KodeMataKuliah+'\');$(\'#ruangKelas\').val(\''+row.RuangKelas+'\');$(\'#section\').val(\''+row.Seksi+'\');$(\'#detailPresensi\').submit();" > <i class="fas fa-edit"></i></a ></div>';
                         }
                     },
                     {
@@ -348,7 +349,7 @@
             });
             $("#tahunSemester").change(function () {
                 $("#jenjangStudi").prop("disabled", false);
-                console.log(role);
+                //console.log(role);
                 if (role == 1) {
                     $("#jenjangStudi").select2({
                         placeholder: "-- Pilih Jenjang Studi --",
