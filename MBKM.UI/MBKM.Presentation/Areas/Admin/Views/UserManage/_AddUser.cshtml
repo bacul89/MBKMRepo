@@ -71,7 +71,7 @@
                     <label for="idProdi" class="col-sm-3 control-label">Prodi</label>
                     <div class="col-sm-9">
                         @* @Html.DropDownList("IDProdiAndNamaProdi", ViewBag.listProdi as SelectList, "First Option", new { name = "Name", id = "id" })*@
-                        @Html.DropDownListFor(model => model.Nama, ViewBag.listProdi as SelectList, "--Pilih Prodi/unit--", new { @class = "form-control input-pendaftaran", @id = "idProdi", @name = "idProdi" })
+                        @Html.DropDownListFor(model => model.Nama, ViewBag.listProdi as SelectList, "--Pilih Prodi/unit--", new { @class = "form-control input-pendaftaran input-data", @id = "idProdi", @name = "idProdi" })
                     </div>
                 }
             </div>
