@@ -195,17 +195,17 @@ function validationCustom2() {
         });
         return isValid;
     }
-    //else if (selectedRole == "Kepala Program Studi" || selectedRole == "Dosen") {
-    //    $(".input-data").each(function () {
-    //        var element = $(this);
-    //        if (element.val() == "" || element.val() == null) {
-    //            return isValid = false;
-    //        } else {
-    //            return isValid = true;
-    //        }
-    //    });
-    //    return isValid;
-    //}
+    else if (selectedRole == "Kepala Program Studi") {// || selectedRole == "Dosen"
+        $(".input-data").each(function () {
+            var element = $(this);
+            if (element.val() == "" || element.val() == null || element.val() == "--Pilih Prodi/unit--(null)") {
+                return isValid = false;
+            } else {
+                return isValid = true;
+            }
+        });
+        return isValid;
+    }
     else {
         $('.input-data').not($('#idProdi')).not( $('#fakultasCari')).each(function () {
             var element = $(this).not($('#idProdi')).not( $('#fakultasCari'));
@@ -236,17 +236,17 @@ function validationCustomEditUser() {
         });
         return isValid;
     }
-    //else if (selectedRole == "Kepala Program Studi" || selectedRole == "Dosen") {
-    //    $(".asd").each(function () {
-    //        var element = $(this);
-    //        if (element.val() == "" || element.val() == null) {
-    //            return isValid = false;
-    //        } else {
-    //            return isValid = true;
-    //        }
-    //    });
-    //    return isValid;
-    //}
+    else if (selectedRole == "Kepala Program Studi") {//|| selectedRole == "Dosen"
+        $(".asd").each(function () {
+            var element = $(this);
+            if (element.val() == "" || element.val() == null || element.val() == "--Pilih Prodi/unit--(null)") {
+                return isValid = false;
+            } else {
+                return isValid = true;
+            }
+        });
+        return isValid;
+    }
     else {
         $('.asd').not($('#idProdi')).not($('#inp_fakultas')).each(function () {
             var element = $(this).not($('#idProdi')).not($('#inp_fakultas'));
