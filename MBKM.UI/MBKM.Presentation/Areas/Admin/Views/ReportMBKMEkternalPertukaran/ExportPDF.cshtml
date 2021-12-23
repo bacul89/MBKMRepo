@@ -65,7 +65,6 @@
                 @*display: inline-block;*@
                 padding: 7px 10px;
             }
-
     </style>
 </head>
 <body>
@@ -108,7 +107,7 @@
 
     <table class="documentStyle">
         <thead>
-            <tr>
+            <tr style="page-break-inside: avoid;">
                 @*<th class="mhsList start">Admit Term</th>
                     <th class="mhsList">Tipe MBKM</th>
                     <th class="mhsList">Student ID</th>
@@ -161,7 +160,7 @@
             @foreach (var mhs in (IEnumerable<MBKM.Entities.ViewModel.VMReportMahasiswaEksternal>)ViewData["mahasiswas"])
             {
 
-                <tr>
+                <tr style="page-break-inside: avoid;">
                     <td class="mhsList start padding0">
                         <center>
                             @{i = i + 1;}
@@ -177,7 +176,7 @@
                     <td class="mhsList">@mhs.JadwalKuliahs.KodeMataKuliah</td>
                     <td class="mhsList">@mhs.JadwalKuliahs.ClassSection</td>
                     <td class="mhsList">@mhs.Nilai</td>
-                    <td class="mhsList">@mhs.NilaiKuliah.Grade</td>
+                    <td class="mhsList">@mhs.Grade</td>
                     <td class="mhsList">@mhs.JadwalKuliahs.Hari</td>
                     <td class="mhsList">@mhs.JadwalKuliahs.JamMasuk</td>
                     <td class="mhsList">@mhs.JadwalKuliahs.JamSelesai</td>
