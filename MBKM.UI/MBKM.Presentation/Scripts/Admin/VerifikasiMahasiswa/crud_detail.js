@@ -1,12 +1,25 @@
 ﻿var dataVerifikasi = {}
 
 $(document).ready(function () {
+    $("#inp_noKerjaSama").change(function () {
+        $('input[name=inp_biaya]').focus();
+    })
+
+
     var biayaAwal = $('input[name=inp_biaya]').val();
+    var textNoKerjasamaAwal = $('select[name="inp_noKerjaSama"] option').filter(':selected').text()
     $('#inp_statusKerjaSama').change(function () {
         if ($('select[name="inp_statusKerjaSama"] option').filter(':selected').val().includes("TIDAK")) {
+            $('#inp_noKerjaSama')
+                .find('option')
+                .remove()
+                .end();
+
             $('input[name=inp_biaya]').val(0).prop('disabled', true);
             $('select[name="inp_noKerjaSama"]').prop('disabled', true);
         } else if ($('select[name="inp_statusKerjaSama"] option').filter(':selected').val().includes("ADA KERJASAMA")) {
+            var option = $("<option selected='selected'></option>").val(textNoKerjasamaAwal).text(textNoKerjasamaAwal);
+            $("#inp_noKerjaSama").append(option).trigger('change');
             if ($('#editVerifikasiButton').hasClass("hidden")) {
                 $('input[name=inp_biaya]').val(0).prop('disabled', false);
                 $('select[name="inp_noKerjaSama"]').prop('disabled', false);
@@ -14,6 +27,8 @@ $(document).ready(function () {
             $('input[name=inp_biaya]').val(biayaAwal);
         }
         else {
+            var option = $("<option selected='selected'></option>").val(textNoKerjasamaAwal).text(textNoKerjasamaAwal);
+            $("#inp_noKerjaSama").append(option).trigger('change');
             if ($('#editVerifikasiButton').hasClass("hidden")) {
                 $('input[name=inp_biaya]').val(0).prop('disabled', false);
                 $('select[name="inp_noKerjaSama"]').prop('disabled', false);
