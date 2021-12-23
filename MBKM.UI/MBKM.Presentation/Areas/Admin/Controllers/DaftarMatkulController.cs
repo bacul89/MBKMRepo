@@ -50,6 +50,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult GetDaftarMatkul(int strm, string jenjangStudi, string fakultas, string prodi, string lokasi)
         {
             var result = new List<JadwalKuliah>();
+            List<JadwalKuliah> MVJadwal = new List<JadwalKuliah>();
+            List<string> mapJadwal = new List<string>();
             if (lokasi != null && lokasi.Length != 0)
             {
                 result = _jadwalKuliahService.Find(_ => _.STRM == strm && _.JenjangStudi == jenjangStudi && _.NamaFakultas == fakultas && _.NamaProdi == prodi &&  _.Lokasi == lokasi && _.FlagOpen).ToList();
@@ -57,7 +59,21 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             {
                 result = _jadwalKuliahService.Find(_ => _.STRM == strm && _.JenjangStudi == jenjangStudi && _.NamaFakultas == fakultas && _.NamaProdi == prodi && _.FlagOpen).ToList();
             }
-            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
+            foreach (var item in result)
+            {
+                if (!mapJadwal.Contains(item.DosenID.ToString()) || !mapJadwal.Contains(item.ClassSection) || !mapJadwal.Contains(item.NamaMataKuliah) || !mapJadwal.Contains(item.TglAkhirKuliah.ToString()) || !mapJadwal.Contains(item.TglAwalKuliah.ToString()) || !mapJadwal.Contains(item.Lokasi))
+                {
+                    MVJadwal.Add(item);
+                    mapJadwal.Add(item.TglAkhirKuliah.ToString());
+                    mapJadwal.Add(item.TglAwalKuliah.ToString());
+                    mapJadwal.Add(item.DosenID.ToString());
+                    mapJadwal.Add(item.NamaMataKuliah);
+                    mapJadwal.Add(item.ClassSection);
+                    mapJadwal.Add(item.Lokasi);
+                }
+            }
+            //return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
+            return new ContentResult { Content = JsonConvert.SerializeObject(MVJadwal), ContentType = "application/json" };
         }
         public ActionResult ExportPDF(int strm, string jenjangStudi, string fakultas, string prodi, string lokasi, string tahunSemester)
         {
