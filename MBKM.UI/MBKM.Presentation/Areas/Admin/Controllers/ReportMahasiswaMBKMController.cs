@@ -148,6 +148,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ViewData["internalKeluar"] = totalInternalKeluar;
             ViewData["nonpertukaran"] = totalInternalNonPertukaran;
             ViewData["datas"] = final;
+
+            var semesterBerjalan = _mahasiswaService.GetDataSemester(null).First().Nama;
+            Response.AppendHeader("Content-Disposition", "inline; filename=" + semesterBerjalan + " - Report Jumlah Mahasiswa MBKM.pdf");
             return /*View();*/
                  new ViewAsPdf("getDataPdf");
         }

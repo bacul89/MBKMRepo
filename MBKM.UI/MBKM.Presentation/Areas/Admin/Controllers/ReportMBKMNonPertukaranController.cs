@@ -176,7 +176,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             }
 
             ViewData["datas"] = final;
-
+            var semesterBerjalan = _mahasiswaService.GetDataSemester(null).First().Nama;
+            Response.AppendHeader("Content-Disposition", "inline; filename=" + semesterBerjalan + " - REPORT MAHASISWA NON-PERTUKARAN MBKM.pdf");
             return /*View();*/
                 new ViewAsPdf("getDataPdf")
                 {

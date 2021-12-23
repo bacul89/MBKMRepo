@@ -330,8 +330,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ViewData["dataGrid"] = final;
             
             var dataPendaftaran = _pendaftaranMataKuliahService.Find(x => x.MahasiswaID == id).ToList();
-
-
+            var semesterBerjalan = _mahasiswaService.GetDataSemester(null).First().Nama;
+            var fileDownloadName = semesterBerjalan + " - Report Nilai Mahasiswa Internal Pertukaran MBKM.xlsx";
+            Response.AppendHeader("Content-Disposition", "inline; filename="+ semesterBerjalan + " - " + tmpMahasiswa.NIM +"_"+ tmpMahasiswa.Nama + " - SERTIFIKAT MBKM.pdf");
             return
                 new ViewAsPdf("GetFile")
                 {

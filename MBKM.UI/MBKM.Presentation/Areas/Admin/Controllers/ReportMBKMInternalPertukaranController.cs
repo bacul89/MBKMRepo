@@ -153,6 +153,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             }
 
             ViewData["datas"] = final;
+            var semesterBerjalan = _mahasiswaService.GetDataSemester(null).First().Nama;
+            Response.AppendHeader("Content-Disposition", "inline; filename=" + semesterBerjalan + " - REPORT MAHASISWA INTERNAL PERTUKARAN MBKM.pdf");
+
+
             return new ViewAsPdf("GetFilePdf");
         }
 
