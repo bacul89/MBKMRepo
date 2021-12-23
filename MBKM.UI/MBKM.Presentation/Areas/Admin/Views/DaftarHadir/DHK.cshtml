@@ -219,6 +219,15 @@
 <script>
     $(document).ready(function () {
         $(".page").html('@page');
+        var semester = @Html.Raw(Json.Encode(ViewData["semester"]));
+        var KodeMK = @Html.Raw(Json.Encode(ViewData["kodeMK"]));
+        var NamaMK = @Html.Raw(Json.Encode(ViewData["namaMK"]));
+        //var dash = semester.toString();
+        //var desh = dash.replace((/_/g, "-"));
+        
+
+
+        document.title = 'DHK_' + semester + '_' + KodeMK + '_' + NamaMK;
         window.print();
     });
 
