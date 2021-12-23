@@ -117,7 +117,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 pertukaran = cry,
                 transkrip = data,
                 mahasiswaBirthday = mahasiswa.TanggalLahir,
-
+                semester = semester.Nama,
+                mahasiswaName = mahasiswa.Nama,
+                mahasiswaNIM = mahasiswa.NIM
             };
 
 

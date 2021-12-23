@@ -111,6 +111,9 @@ function isZooming() {
 var gradeFinal = "";
 var sksTotal = 0;
 var Nilais;
+var mhsName;
+var mhsNIM;
+var mhsStrm;
 
 //NilaiGrades
 function getNilai() {
@@ -132,6 +135,9 @@ function getNilai() {
                 showValue(resultTranskip.transkrip);
             }
 
+            mhsName = resultTranskip.mahasiswaName;
+            mhsNIM = resultTranskip.mahasiswaNIM;
+            mhsStrm = resultTranskip.semester;
 
             
                 /*$.ajax({
@@ -393,7 +399,7 @@ function print(id, nim) {
                         })
                         var data =  $("#print").html();
                         var mywindow = window.open('', '_blank');
-                        mywindow.document.write('<html><head><title>Transkrip</title>');
+                        mywindow.document.write('<html><head><title>' + mhsStrm + ' - Transkrip_' + mhsNIM + '_' + mhsName+'</title>');
                         /*optional stylesheet*/ mywindow.document.write('<link rel="stylesheet" href="' + base_url+'/Content/Portal/Transkrip/print.css" type="text/css" />');
                         mywindow.document.write('</head><body >');
                         mywindow.document.write(data);

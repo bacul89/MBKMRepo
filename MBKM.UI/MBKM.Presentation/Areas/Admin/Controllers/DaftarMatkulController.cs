@@ -89,7 +89,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             }
             return new ViewAsPdf("PdfDaftarMatkul", result)
             {
-                FileName = "Report Daftar Mata Kuliah.pdf",
+                FileName = tahunSemester+" - Report Daftar Mata Kuliah.pdf",
                 PageSize = Size.A4,
                 PageOrientation = Orientation.Landscape,
                 PageMargins = new Margins(10, 3, 20, 3)
@@ -112,7 +112,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         }
         public ActionResult ExportExcel(int strm, string jenjangStudi, string fakultas, string prodi, string lokasi, string tahunSemester)
         {
-            var fileDownloadName = "Daftar Mata Kuliah.xlsx";
+            TempData["tahunSemester"] = tahunSemester;
+            var fileDownloadName = tahunSemester + "- Report Daftar Mata Kuliah.xlsx";
             var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
             var result = new List<JadwalKuliah>();
