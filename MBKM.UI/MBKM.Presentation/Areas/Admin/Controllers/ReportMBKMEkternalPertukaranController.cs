@@ -166,9 +166,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             //var data = _pendaftaranMataKuliahService.GetListPendaftaranEksternalPertukaran(strm);
             foreach (var d in data)
             {
-                var test = d.mahasiswas.ID + " = " + MhsID + ", " + d.JadwalKuliahs.ID + " = " + JadwalID;
+                //var test = d.mahasiswas.ID + " = " + MhsID + ", " + d.JadwalKuliahs.ID + " = " + JadwalID;
 
-                Console.WriteLine(test);
+                //Console.WriteLine(test);
                 if (d.mahasiswas.ID == MhsID && d.JadwalKuliahs.ID == JadwalID)
                 {
                     return true;
@@ -265,10 +265,131 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             
             var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
-            var result = new List<VMReportMahasiswaEksternal>();
+            //var result = new List<VMReportMahasiswaEksternal>();
             var dataSemester = _feedbackMatkulService.GetSemesterByStrm(strm.ToString());
 
-            result = _pendaftaranMataKuliahService.GetListPendaftaranEksternalPertukaran(strm).ToList();
+            //result = _pendaftaranMataKuliahService.GetListPendaftaranEksternalPertukaran(strm).ToList();
+
+
+            IEnumerable<VMReportMahasiswaEksternal> dataMahasiswa = _pendaftaranMataKuliahService.GetListPendaftaranEksternalPertukaran(strm);
+            var dataMahasiswaWitoutNilai = _pendaftaranMataKuliahService.GetListPendaftaranEksternalPertukaranWithoutNilai(strm);
+
+            //var list = new List<String[]>();
+            List<VMReportMahasiswaEksternal> final = new List<VMReportMahasiswaEksternal>();
+            foreach (var d in dataMahasiswa)
+            {
+                final.Add(new VMReportMahasiswaEksternal()
+                {
+                    ID = d.ID,
+                    MatkulIDAsal = d.MatkulIDAsal,
+                    MatkulKodeAsal = d.MatkulKodeAsal,
+                    MatkulAsal = d.MatkulAsal,
+                    Kesenjangan = d.Kesenjangan,
+                    Nilai = d.NilaiKuliah.NilaiTotal.ToString(),
+                    Grade = d.NilaiKuliah.Grade,
+                    Konversi = d.Konversi,
+                    Hasil = d.Hasil,
+                    DosenID = d.DosenID,
+                    DosenPembimbing = d.DosenPembimbing,
+                    MahasiswaID = d.MahasiswaID,
+                    mahasiswas = d.mahasiswas,
+                    JadwalKuliahID = d.JadwalKuliahID,
+                    JadwalKuliahs = d.JadwalKuliahs,
+                    StatusPendaftaran = d.StatusPendaftaran,
+                    informasiID = d.informasiID,
+                    InformasiPertukaran = d.InformasiPertukaran,
+                    NilaiKuliah = d.NilaiKuliah
+
+
+                    /*Nama = dataSemester.Nama,
+                    d.JadwalKuliahs.JenjangStudi,
+                    d.mahasiswas.NamaUniversitas,
+                    d.mahasiswas.NIM,
+                    d.mahasiswas.Nama,*/
+
+                    /*d.JadwalKuliahs.KodeMataKuliah,
+                    d.JadwalKuliahs.NamaMataKuliah,
+                    d.JadwalKuliahs.ClassSection,
+                    d.NilaiKuliah.NilaiTotal.ToString(),
+                    d.NilaiKuliah.Grade,
+                    d.JadwalKuliahs.Hari.ToString(),
+                    d.JadwalKuliahs.JamMasuk,
+                    d.JadwalKuliahs.JamSelesai,
+                    d.JadwalKuliahs.TglAwalKuliah.ToString(),
+                    d.JadwalKuliahs.TglAkhirKuliah.ToString(),
+                    d.JadwalKuliahs.NamaDosen,
+                    d.JadwalKuliahs.NamaProdi,
+                    d.JadwalKuliahs.DosenID.ToString(),*/
+                    /*d.mahasiswas.ID.ToString(),
+                    d.mahasiswas.NIM,
+                    d.mahasiswas.NIMAsal,
+                    d.JadwalKuliahs.ID.ToString(),
+                    d.ID.ToString(),
+                    d.ID.ToString()*/
+                });
+            }
+
+            var row = 0;
+            foreach (var e in dataMahasiswaWitoutNilai)
+            {
+                row = row + 1;
+                bool check = isAvailable(dataMahasiswa, e.mahasiswas.ID, e.JadwalKuliahs.ID);
+
+                if (check == false)
+                {
+
+                    final.Add(new VMReportMahasiswaEksternal()
+                    {
+                        ID = e.ID,
+                        MatkulIDAsal = e.MatkulIDAsal,
+                        MatkulKodeAsal = e.MatkulKodeAsal,
+                        MatkulAsal = e.MatkulAsal,
+                        Kesenjangan = e.Kesenjangan,
+                        Nilai = "-",
+                        Grade = "-",
+                        Konversi = e.Konversi,
+                        Hasil = e.Hasil,
+                        DosenID = e.DosenID,
+                        DosenPembimbing = e.DosenPembimbing,
+                        MahasiswaID = e.MahasiswaID,
+                        mahasiswas = e.mahasiswas,
+                        JadwalKuliahID = e.JadwalKuliahID,
+                        JadwalKuliahs = e.JadwalKuliahs,
+                        StatusPendaftaran = e.StatusPendaftaran,
+                        informasiID = e.informasiID,
+                        InformasiPertukaran = e.InformasiPertukaran,
+                        NilaiKuliah = e.NilaiKuliah
+                        /*final.Add(new String[]{
+                                dataSemester.Nama,
+                                 e.JadwalKuliahs.JenjangStudi,
+                                e.mahasiswas.NamaUniversitas,
+                                e.mahasiswas.NIM,
+                                e.mahasiswas.Nama,
+                                e.JadwalKuliahs.KodeMataKuliah,
+                                e.JadwalKuliahs.NamaMataKuliah,
+                                e.JadwalKuliahs.ClassSection,
+                                "-",
+                                "-",
+                                e.JadwalKuliahs.Hari.ToString(),
+                                e.JadwalKuliahs.JamMasuk,
+                                e.JadwalKuliahs.JamSelesai,
+                                e.JadwalKuliahs.TglAwalKuliah.ToString(),
+                                e.JadwalKuliahs.TglAkhirKuliah.ToString(),
+                                e.JadwalKuliahs.NamaDosen,
+                                e.JadwalKuliahs.NamaProdi,
+                                e.JadwalKuliahs.DosenID.ToString(),
+                                *//*e.mahasiswas.ID.ToString(),
+                                e.mahasiswas.NIM,
+                                e.mahasiswas.NIMAsal,
+                                e.JadwalKuliahs.ID.ToString(),
+                                e.ID.ToString(),
+                                e.ID.ToString()*/
+                    });
+                }
+            }
+
+
+
             var fileDownloadName = dataSemester.Nama + " - Report Pertukaran Eksternal.xlsx";
            
             ExcelPackage package = new ExcelPackage();
@@ -371,7 +492,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ws.Column(18).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             ws.Column(19).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             int i = 0;
-            for (i = 0; i < result.Count; i++)
+            for (i = 0; i < final.Count; i++)
             {
                 
                 ws.Column(i + 7).Width = 10;
@@ -380,7 +501,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 ws.Cells["A" + (i + 7) + ":R" + (i + 7)].Style.Border.Bottom.Style = ExcelBorderStyle.Hair;
                 ws.Cells["A" + (i + 7) + ":R" + (i + 7)].Style.Border.Left.Style = ExcelBorderStyle.Hair;
                 ws.Cells["A" + (i + 7) + ":R" + (i + 7)].Style.Border.Right.Style = ExcelBorderStyle.Hair;
-                var tmp = result[i];
+                var tmp = final[i];
                 ws.Cells["A" + (i + 7)].Value = (i + 1);
                 ws.Cells["B" + (i + 7)].Value = dataSemester.Nama;
                 ws.Cells["C" + (i + 7)].Value = tmp.mahasiswas.JenjangStudi;
@@ -390,8 +511,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 ws.Cells["G" + (i + 7)].Value = tmp.JadwalKuliahs.KodeMataKuliah;
                 ws.Cells["H" + (i + 7)].Value = tmp.JadwalKuliahs.NamaMataKuliah;
                 ws.Cells["I" + (i + 7)].Value = tmp.JadwalKuliahs.ClassSection;
-                ws.Cells["J" + (i + 7)].Value = tmp.NilaiKuliah.NilaiTotal;
-                ws.Cells["K" + (i + 7)].Value = tmp.NilaiKuliah.Grade;
+                ws.Cells["J" + (i + 7)].Value = tmp.Nilai;
+                ws.Cells["K" + (i + 7)].Value = tmp.Grade;
                 ws.Cells["L" + (i + 7)].Value = tmp.JadwalKuliahs.Hari;
                 ws.Cells["M" + (i + 7)].Value = tmp.JadwalKuliahs.JamMasuk;
                 ws.Cells["N" + (i + 7)].Value = tmp.JadwalKuliahs.JamSelesai;
@@ -429,11 +550,129 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
             var dataSemester = _feedbackMatkulService.GetSemesterByStrm(strm.ToString());
 
-            VMReportMahasiswaEksternal data = new VMReportMahasiswaEksternal();
-            List<VMReportMahasiswaEksternal> external = _pendaftaranMataKuliahService.GetListPendaftaranEksternalPertukaran(strm).ToList();
+            //VMReportMahasiswaEksternal data = new VMReportMahasiswaEksternal();
+            //List<VMReportMahasiswaEksternal> external = _pendaftaranMataKuliahService.GetListPendaftaranEksternalPertukaran(strm).ToList();
+            //var dataMahasiswa = _pendaftaranMataKuliahService.GetListPendaftaranEksternalPertukaran(strm);
+            // var dataSemester = _feedbackMatkulService.GetSemesterByStrm(strm.ToString());
+
+            IEnumerable<VMReportMahasiswaEksternal> dataMahasiswa = _pendaftaranMataKuliahService.GetListPendaftaranEksternalPertukaran(strm);
+            var dataMahasiswaWitoutNilai = _pendaftaranMataKuliahService.GetListPendaftaranEksternalPertukaranWithoutNilai(strm);
+            
+            //var list = new List<String[]>();
+            List<VMReportMahasiswaEksternal> final = new List<VMReportMahasiswaEksternal>();
+            foreach (var d in dataMahasiswa)
+            {
+                final.Add(new VMReportMahasiswaEksternal(){
+                    ID = d.ID,
+                    MatkulIDAsal = d.MatkulIDAsal,
+                    MatkulKodeAsal = d.MatkulKodeAsal,
+                    MatkulAsal = d.MatkulAsal,
+                    Kesenjangan = d.Kesenjangan,
+                    Nilai = d.NilaiKuliah.NilaiTotal.ToString(),
+                    Grade = d.NilaiKuliah.Grade,
+                    Konversi = d.Konversi,
+                    Hasil = d.Hasil,
+                    DosenID = d.DosenID,
+                    DosenPembimbing = d.DosenPembimbing,
+                    MahasiswaID = d.MahasiswaID,
+                    mahasiswas = d.mahasiswas,
+                    JadwalKuliahID = d.JadwalKuliahID,
+                    JadwalKuliahs = d.JadwalKuliahs,
+                    StatusPendaftaran = d.StatusPendaftaran,
+                    informasiID = d.informasiID,
+                    InformasiPertukaran = d.InformasiPertukaran,
+                    NilaiKuliah = d.NilaiKuliah
 
 
-            var list = external.Select(x => new VMReportMahasiswaEksternal()
+                    /*Nama = dataSemester.Nama,
+                    d.JadwalKuliahs.JenjangStudi,
+                    d.mahasiswas.NamaUniversitas,
+                    d.mahasiswas.NIM,
+                    d.mahasiswas.Nama,*/
+
+                    /*d.JadwalKuliahs.KodeMataKuliah,
+                    d.JadwalKuliahs.NamaMataKuliah,
+                    d.JadwalKuliahs.ClassSection,
+                    d.NilaiKuliah.NilaiTotal.ToString(),
+                    d.NilaiKuliah.Grade,
+                    d.JadwalKuliahs.Hari.ToString(),
+                    d.JadwalKuliahs.JamMasuk,
+                    d.JadwalKuliahs.JamSelesai,
+                    d.JadwalKuliahs.TglAwalKuliah.ToString(),
+                    d.JadwalKuliahs.TglAkhirKuliah.ToString(),
+                    d.JadwalKuliahs.NamaDosen,
+                    d.JadwalKuliahs.NamaProdi,
+                    d.JadwalKuliahs.DosenID.ToString(),*/
+                    /*d.mahasiswas.ID.ToString(),
+                    d.mahasiswas.NIM,
+                    d.mahasiswas.NIMAsal,
+                    d.JadwalKuliahs.ID.ToString(),
+                    d.ID.ToString(),
+                    d.ID.ToString()*/
+                });
+            }
+
+            var row = 0;
+            foreach (var e in dataMahasiswaWitoutNilai)
+            {
+                row = row + 1;
+                bool check = isAvailable(dataMahasiswa, e.mahasiswas.ID, e.JadwalKuliahs.ID);
+
+                if (check == false)
+                {
+
+                    final.Add(new VMReportMahasiswaEksternal()
+                    {
+                        ID = e.ID,
+                        MatkulIDAsal = e.MatkulIDAsal,
+                        MatkulKodeAsal = e.MatkulKodeAsal,
+                        MatkulAsal = e.MatkulAsal,
+                        Kesenjangan = e.Kesenjangan,
+                        Nilai = "-",
+                        Grade = "-",
+                        Konversi = e.Konversi,
+                        Hasil = e.Hasil,
+                        DosenID = e.DosenID,
+                        DosenPembimbing = e.DosenPembimbing,
+                        MahasiswaID = e.MahasiswaID,
+                        mahasiswas = e.mahasiswas,
+                        JadwalKuliahID = e.JadwalKuliahID,
+                        JadwalKuliahs = e.JadwalKuliahs,
+                        StatusPendaftaran = e.StatusPendaftaran,
+                        informasiID = e.informasiID,
+                        InformasiPertukaran = e.InformasiPertukaran,
+                        NilaiKuliah = e.NilaiKuliah
+                    /*final.Add(new String[]{
+                            dataSemester.Nama,
+                             e.JadwalKuliahs.JenjangStudi,
+                            e.mahasiswas.NamaUniversitas,
+                            e.mahasiswas.NIM,
+                            e.mahasiswas.Nama,
+                            e.JadwalKuliahs.KodeMataKuliah,
+                            e.JadwalKuliahs.NamaMataKuliah,
+                            e.JadwalKuliahs.ClassSection,
+                            "-",
+                            "-",
+                            e.JadwalKuliahs.Hari.ToString(),
+                            e.JadwalKuliahs.JamMasuk,
+                            e.JadwalKuliahs.JamSelesai,
+                            e.JadwalKuliahs.TglAwalKuliah.ToString(),
+                            e.JadwalKuliahs.TglAkhirKuliah.ToString(),
+                            e.JadwalKuliahs.NamaDosen,
+                            e.JadwalKuliahs.NamaProdi,
+                            e.JadwalKuliahs.DosenID.ToString(),
+                            *//*e.mahasiswas.ID.ToString(),
+                            e.mahasiswas.NIM,
+                            e.mahasiswas.NIMAsal,
+                            e.JadwalKuliahs.ID.ToString(),
+                            e.ID.ToString(),
+                            e.ID.ToString()*/
+                        });
+                }
+            }
+
+
+            /*var list = external.Select(x => new VMReportMahasiswaEksternal()
             {
                 ID = x.ID,
                 MatkulIDAsal = x.MatkulIDAsal,
@@ -453,13 +692,11 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 informasiID = x.informasiID,
                 InformasiPertukaran = x.InformasiPertukaran,
                 NilaiKuliah = x.NilaiKuliah
-
-
-            });
+            });*/
 
 
             ViewData["semester"] = dataSemester.Nama;
-            ViewData["mahasiswas"] = list;
+            ViewData["mahasiswas"] = final;
             return new ViewAsPdf()
             {
                 FileName = dataSemester.Nama+" - ReportPertukaranExternal.pdf",

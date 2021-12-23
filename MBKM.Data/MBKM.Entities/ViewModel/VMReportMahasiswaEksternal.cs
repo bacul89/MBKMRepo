@@ -15,6 +15,7 @@ namespace MBKM.Entities.ViewModel
         public string MatkulAsal { get; set; }
         public string Kesenjangan { get; set; }
         public string Nilai { get; set; }
+        public string Grade { get; set; }
         public string Konversi { get; set; }
         public string Hasil { get; set; }
         public Int64 DosenID { get; set; }
