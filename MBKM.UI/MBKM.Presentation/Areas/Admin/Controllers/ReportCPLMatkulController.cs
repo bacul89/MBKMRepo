@@ -32,9 +32,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private IAbsensiService _absensiService;
         private IPendaftaranMataKuliahService _pendaftaranMataKuliahService;
         private IMasterCapaianPembelajaranService _mcpService;
+        private IMahasiswaService _mahasiswaService;
 
-
-        public ReportCPLMatkulController(IMasterCapaianPembelajaranService mcpService ,IPendaftaranMataKuliahService pendaftaranMataKuliahService, IAbsensiService absensiService, ICPLMatakuliahService cplMatakuliahService, IJadwalKuliahService jkService, ILookupService lookupService)
+        public ReportCPLMatkulController(IMahasiswaService mahasiswaService,IMasterCapaianPembelajaranService mcpService ,IPendaftaranMataKuliahService pendaftaranMataKuliahService, IAbsensiService absensiService, ICPLMatakuliahService cplMatakuliahService, IJadwalKuliahService jkService, ILookupService lookupService)
         {
             _jadwalKuliahService = jkService;
             _cplMatakuliahService = cplMatakuliahService;
@@ -42,6 +42,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             _absensiService = absensiService;
             _pendaftaranMataKuliahService = pendaftaranMataKuliahService;
             _mcpService = mcpService;
+            _mahasiswaService = mahasiswaService;
         }
         public ActionResult Index()
         {
@@ -134,28 +135,42 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult ExportPDF(string jenjangStudi, string fakultas, string prodi, string matkul)
         {
             var model = new List<CPLMatakuliah>();
+            var semesterBerjalan = _mahasiswaService.GetDataSemester(null).FirstOrDefault().Nama;
             if (matkul != null && matkul.Length != 0)
             {
                 model = _cplMatakuliahService
-                .Find(_ => _.MasterCapaianPembelajarans.JenjangStudi == jenjangStudi && _.MasterCapaianPembelajarans.NamaProdi == prodi && _.MasterCapaianPembelajarans.NamaFakultas == fakultas && _.KodeMataKuliah + " - " + _.NamaMataKuliah == matkul).ToList();
+                    .Find(_ => _.MasterCapaianPembelajarans.JenjangStudi == jenjangStudi && _.MasterCapaianPembelajarans.NamaProdi == prodi && _.MasterCapaianPembelajarans.NamaFakultas == fakultas && _.KodeMataKuliah + " - " + _.NamaMataKuliah == matkul).ToList();
+                return new ViewAsPdf("PdfCPLMatkul", model)
+                {
+
+                    FileName = semesterBerjalan + "-" + "Report CPL Mata Kuliah" + "-" + prodi + "-" + matkul + ".pdf",
+                    PageSize = Size.A4,
+                    PageOrientation = Orientation.Landscape,
+                    PageMargins = new Margins(10, 3, 20, 3)
+
+                };
             }
             else
             {
                 model = _cplMatakuliahService
-                .Find(_ => _.MasterCapaianPembelajarans.JenjangStudi == jenjangStudi && _.MasterCapaianPembelajarans.NamaProdi == prodi && _.MasterCapaianPembelajarans.NamaFakultas == fakultas).ToList();
-            }
-            return new ViewAsPdf("PdfCPLMatkul", model)
-            {
-                FileName = "Report CPL Mata Kuliah " + matkul + ".pdf",
-                PageSize = Size.A4,
-                PageOrientation = Orientation.Landscape,
-                PageMargins = new Margins(10, 3, 20, 3)
+                    .Find(_ => _.MasterCapaianPembelajarans.JenjangStudi == jenjangStudi && _.MasterCapaianPembelajarans.NamaProdi == prodi && _.MasterCapaianPembelajarans.NamaFakultas == fakultas).ToList();
+                return new ViewAsPdf("PdfCPLMatkul", model)
+                {
 
-            };
+                    FileName = semesterBerjalan + "-" + "Report CPL Mata Kuliah" + "-" + prodi + ".pdf",
+                    PageSize = Size.A4,
+                    PageOrientation = Orientation.Landscape,
+                    PageMargins = new Margins(10, 3, 20, 3)
+
+                };
+            }
+            
         }
         public ActionResult ExportExcel(string jenjangStudi, string fakultas, string prodi, string matkul)
         {
-            var fileDownloadName = "Capaian Pembelajaran Mata Kuliah.xlsx";
+            var semesterBerjalan = _mahasiswaService.GetDataSemester(null).FirstOrDefault().Nama;
+            
+            var fileDownloadName = semesterBerjalan + "-" + "Report CPL Mata Kuliah" + "-" + prodi+" " +matkul+ ".xlsx";
             var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
             var result = new List<CPLMatakuliah>();
