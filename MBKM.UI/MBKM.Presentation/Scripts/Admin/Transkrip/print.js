@@ -315,7 +315,8 @@ function print(id, nim) {
 
             Nilais = resultTranskip;
 
-
+            console.log(Nilais[0].Nama);
+            console.log(Nilais[0].NIM);
 
                     $.ajax({
                         url: "/Admin/Transkrip/getLookupByTipe",
@@ -327,10 +328,15 @@ function print(id, nim) {
 
                             NilaiGrades = resultLookup;
                             showValue(resultTranskip, resultLookup);
+
+                            var mhsName = Nilais[0].Nama;
+                            var mhsNim = Nilais[0].NIM;
+                            var semester = Nilais[0].semester;
                             
+
                             var data = $("#print").html();
                             var mywindow = window.open('', '_blank');
-                            mywindow.document.write('<html><head><title>Transkrip</title>');
+                            mywindow.document.write('<html><head><title>' + semester + ' - Transkrip_' + mhsNim + '_' + mhsName+'</title>');
                             mywindow.document.write('<link rel="stylesheet" href="' + base_url+'/Content/Portal/Transkrip/print.css" type="text/css" media="print" />');
                             mywindow.document.write('</head><body>');
                             mywindow.document.write(data);

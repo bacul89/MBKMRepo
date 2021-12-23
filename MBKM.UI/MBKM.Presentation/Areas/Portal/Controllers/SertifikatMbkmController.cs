@@ -281,7 +281,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 new ViewAsPdf("GetFile")
                 {
                     PageOrientation = Rotativa.Options.Orientation.Landscape,
-                    FileName = tmpMahasiswa.NIM + " - " + tmpMahasiswa.Nama + " - Sertifikat.pdf",
+                    FileName = dataSemester.Nama+ " - Sertifikat_" + tmpMahasiswa.NIM + "_" + tmpMahasiswa.Nama + ".pdf",
                 };
 
             }

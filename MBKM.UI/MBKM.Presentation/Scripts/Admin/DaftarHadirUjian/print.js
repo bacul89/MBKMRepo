@@ -97,9 +97,11 @@ function printDHU(Id) {
 
 
 
+
             //var assets = generateStyle();
             var mywindow = window.open('', '_blank');
             mywindow.document.write('<html><head>');
+            mywindow.document.write('<title>' + semester + ' - DHU_' + ujian.KodeMatkul + '_' + ujian.NamaMatkul + '_' + ujian.ClassSection+'</title>');
             //mywindow.document.write(assets);
             mywindow.document.write('<link href="'+base_url+'/Content/select2.min.css" rel="stylesheet">');
             //mywindow.document.write('<script src="../../Scripts/modernizr-2.8.3.js"></script>');
@@ -402,7 +404,6 @@ function generateStyle() {
     var assets = `
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Print Daftar Hadir Ujian (DHU) - SIMBKM</title>
         `;
 
     return assets;

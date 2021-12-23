@@ -24,6 +24,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         private INilaiKuliahService _transkripService;
         private IMahasiswaService _mahasiswaService;
         private ILookupService _lookupService;
+        private IJadwalKuliahMahasiswaService _jkMhsService;
 
         public TranskripController(INilaiKuliahService transkripService, IJadwalKuliahMahasiswaService jkMhsService, IMahasiswaService mahasiswaService, ILookupService lookupService)
         {
@@ -31,6 +32,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             _transkripService = transkripService;
             _mahasiswaService = mahasiswaService;
             _lookupService = lookupService;
+            _jkMhsService = jkMhsService;
         }
 
         // GET: Admin/Transkrip
@@ -89,6 +91,14 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult getTranskripByIdMahasiswa(int id)
         {
 
+
+            Mahasiswa mahasiswa = _mahasiswaService.Find(m => m.ID == id).FirstOrDefault();
+            VMSemester semester = _jkMhsService.getOngoingSemester(mahasiswa.JenjangStudi);
+            var strmString = semester.ID;
+
+
+
+
             List<NilaiKuliah> MVTranskrip = new List<NilaiKuliah>();
             List<string> mapTranskrip = new List<string>();           
 
@@ -113,7 +123,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     Nilai = Nilai.GRADE_POINTS,
                     Grade = Nilai.DESCR,
                     MataKuilahID = item.JadwalKuliahs.MataKuliahID,
-
+                    semester = semester.Nama,
                     //mahasiswa
                     NIM = item.Mahasiswas.NIM,
                     Nama = item.Mahasiswas.Nama,
