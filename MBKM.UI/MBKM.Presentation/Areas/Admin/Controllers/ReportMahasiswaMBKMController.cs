@@ -103,9 +103,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 if (datapertama != null)
                 {
                     var countEksternal = dataMahasiswa.Where(x => x.JadwalKuliahs.ProdiID == int.Parse(d.IDProdi) && x.mahasiswas.NIM != x.mahasiswas.NIMAsal).Count();
-                    var internalLintasProdi = dataMahasiswa.Where(x => x.JadwalKuliahs.ProdiID == int.Parse(d.IDProdi) && x.InformasiPertukaran.JenisKerjasama.ToLower() == "internal" && !x.InformasiPertukaran.JenisPertukaran.ToLower().Contains("non")).Count();
-                    var internalKeLuar = dataMahasiswa.Where(x => x.JadwalKuliahs.ProdiID == int.Parse(d.IDProdi) && x.InformasiPertukaran.JenisKerjasama.ToLower().Contains("luar") && !x.InformasiPertukaran.JenisPertukaran.ToLower().Contains("non")).Count();
-                    var internalNonPertukaran = dataMahasiswa.Where(x => x.JadwalKuliahs.ProdiID == int.Parse(d.IDProdi) && x.InformasiPertukaran.JenisPertukaran.ToLower().Contains("non")).Count();
+                    var internalLintasProdi = dataMahasiswa.Where(x => x.JadwalKuliahs.ProdiID == int.Parse(d.IDProdi) && x.InformasiPertukaran !=null && x.InformasiPertukaran.JenisKerjasama.ToLower() == "internal" && !x.InformasiPertukaran.JenisPertukaran.ToLower().Contains("non")).Count();
+                    var internalKeLuar = dataMahasiswa.Where(x => x.JadwalKuliahs.ProdiID == int.Parse(d.IDProdi) && x.InformasiPertukaran != null && x.InformasiPertukaran.JenisKerjasama.ToLower().Contains("luar") && !x.InformasiPertukaran.JenisPertukaran.ToLower().Contains("non")).Count();
+                    var internalNonPertukaran = dataMahasiswa.Where(x => x.JadwalKuliahs.ProdiID == int.Parse(d.IDProdi) && x.InformasiPertukaran != null && x.InformasiPertukaran.JenisPertukaran.ToLower().Contains("non")).Count();
 
                     final.Add(new String[]{
                         dataSemester.Nama,
@@ -156,7 +156,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
         public ActionResult GetFileExcel(int id)
         {
-            var fileDownloadName = "Report Jumlah Mahasiswa MBKM.xlsx";
+            var semesterBerjalan = _mahasiswaService.GetDataSemester(null).First().Nama;
+            var fileDownloadName = semesterBerjalan + " - Report Jumlah Mahasiswa MBKM.xlsx";
             var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
             var dataProdi = _mahasiswaService.GetAllDataProdi();
@@ -177,9 +178,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 if (datapertama != null)
                 {
                     var countEksternal = dataMahasiswa.Where(x => x.JadwalKuliahs.ProdiID == int.Parse(d.IDProdi) && x.mahasiswas.NIM != x.mahasiswas.NIMAsal).Count();
-                    var internalLintasProdi = dataMahasiswa.Where(x => x.JadwalKuliahs.ProdiID == int.Parse(d.IDProdi) && x.InformasiPertukaran.JenisKerjasama.ToLower() == "internal" && !x.InformasiPertukaran.JenisPertukaran.ToLower().Contains("non")).Count();
-                    var internalKeLuar = dataMahasiswa.Where(x => x.JadwalKuliahs.ProdiID == int.Parse(d.IDProdi) && x.InformasiPertukaran.JenisKerjasama.ToLower().Contains("luar") && !x.InformasiPertukaran.JenisPertukaran.ToLower().Contains("non")).Count();
-                    var internalNonPertukaran = dataMahasiswa.Where(x => x.JadwalKuliahs.ProdiID == int.Parse(d.IDProdi) && x.InformasiPertukaran.JenisPertukaran.ToLower().Contains("non")).Count();
+                    var internalLintasProdi = dataMahasiswa.Where(x => x.JadwalKuliahs.ProdiID == int.Parse(d.IDProdi) && x.InformasiPertukaran != null && x.InformasiPertukaran.JenisKerjasama.ToLower() == "internal" && !x.InformasiPertukaran.JenisPertukaran.ToLower().Contains("non")).Count();
+                    var internalKeLuar = dataMahasiswa.Where(x => x.JadwalKuliahs.ProdiID == int.Parse(d.IDProdi) && x.InformasiPertukaran != null && x.InformasiPertukaran.JenisKerjasama.ToLower().Contains("luar") && !x.InformasiPertukaran.JenisPertukaran.ToLower().Contains("non")).Count();
+                    var internalNonPertukaran = dataMahasiswa.Where(x => x.JadwalKuliahs.ProdiID == int.Parse(d.IDProdi) && x.InformasiPertukaran != null && x.InformasiPertukaran.JenisPertukaran.ToLower().Contains("non")).Count();
 
                     final.Add(new String[]{
                         dataSemester.Nama,
