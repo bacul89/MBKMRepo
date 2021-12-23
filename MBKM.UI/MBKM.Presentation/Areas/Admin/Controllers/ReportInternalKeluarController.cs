@@ -302,7 +302,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ws.Cells["A6:N7"].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
 
 
-            var fileDownloadName = "Report Nilai Mahasiswa MBKM Internal Pertukaran Ke Luar Atma Jaya.xlsx";
+            var semesterBerjalan = _mahasiswaService.GetDataSemester(null).First().Nama;
+            var fileDownloadName = semesterBerjalan + " - Report Nilai Mahasiswa MBKM Internal Pertukaran Ke Luar Atma Jaya.xlsx";
             var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
             var fileStream = new MemoryStream();
             package.SaveAs(fileStream);

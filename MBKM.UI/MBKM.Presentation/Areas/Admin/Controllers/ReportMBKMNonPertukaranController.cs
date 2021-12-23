@@ -337,9 +337,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ws.Cells["A6:P7"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
             ws.Cells["A6:P7"].Style.Fill.PatternType = ExcelFillStyle.Solid;
             ws.Cells["A6:P7"].Style.Fill.BackgroundColor.SetColor(Color.LightGray);
-           
 
-            var fileDownloadName = "Report Nilai Mahasiswa Internal Non Pertukaran MBKM.xlsx";
+
+            var semesterBerjalan = _mahasiswaService.GetDataSemester(null).First().Nama;
+            var fileDownloadName = semesterBerjalan + " - Report Nilai Mahasiswa Internal Non Pertukaran MBKM.xlsx";
             var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
             var fileStream = new MemoryStream();
             package.SaveAs(fileStream);

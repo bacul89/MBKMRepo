@@ -180,8 +180,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     {
                         foreach (var d in PendaftaranMatakuliah)
                         {
-                            IList<CPLMatakuliah> tempId = _cPLMatakuliahService.Find(x => x.IDMataKUliah == d.JadwalKuliahs.MataKuliahID).ToList();
-                            IList<CPLMatakuliah> capaianTujuan = tempId.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == d.JadwalKuliahs.ProdiID).ToList();
+                            IList<CPLMatakuliah> tempId = _cPLMatakuliahService.Find(x => x.IDMataKUliah == d.JadwalKuliahs.MataKuliahID && x.IsActive == true && x.IsDeleted == false).ToList();
+                            /*IList<CPLMatakuliah> capaianTujuan = tempId.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == d.JadwalKuliahs.ProdiID).ToList();*/
                             var nilaiFinal = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.JadwalKuliahs.MataKuliahID, d.JadwalKuliahs.KodeMataKuliah, d.mahasiswas.NIM.ToString(), d.JadwalKuliahs.ClassSection);
 
                             if (nilaiFinal == null)
@@ -192,7 +192,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                                     namaMatkul = d.MatkulAsal,
                                     angka = "-",
                                     huruf = "-",
-                                    kompetensi = capaianTujuan,
+                                    kompetensi = tempId,
                                     CPLAsal = _cPLMKPendaftaranService.Find(c => c.PendaftaranMataKuliahID == d.ID).FirstOrDefault().CPLAsal
                                 });
                             }
@@ -204,7 +204,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                                     namaMatkul = d.MatkulAsal,
                                     angka = nilaiFinal.NilaiAngkaFinal,
                                     huruf = nilaiFinal.NilaiDiakui,
-                                    kompetensi = capaianTujuan,
+                                    kompetensi = tempId,
                                     CPLAsal = _cPLMKPendaftaranService.Find(c => c.PendaftaranMataKuliahID == d.ID).FirstOrDefault().CPLAsal
                                 });
                             }
@@ -215,9 +215,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     {
                         foreach (var d in PendaftaranMatakuliah)
                         {
-                            IList<CPLMatakuliah> tempId = _cPLMatakuliahService.Find(x => x.IDMataKUliah == d.JadwalKuliahs.MataKuliahID).ToList();
-                            IList<CPLMatakuliah> capaianTujuan = tempId.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == d.JadwalKuliahs.ProdiID).ToList();
-                            var nilaiFinal = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.JadwalKuliahs.MataKuliahID, d.JadwalKuliahs.KodeMataKuliah, d.mahasiswas.NIM.ToString(), d.JadwalKuliahs.ClassSection);
+                            IList<CPLMatakuliah> tempId = _cPLMatakuliahService.Find(x => x.IDMataKUliah == d.JadwalKuliahs.MataKuliahID && x.IsActive == true && x.IsDeleted == false).ToList();
+/*                            IList<CPLMatakuliah> capaianTujuan = tempId.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == d.JadwalKuliahs.ProdiID).ToList();
+*/                            var nilaiFinal = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.JadwalKuliahs.MataKuliahID, d.JadwalKuliahs.KodeMataKuliah, d.mahasiswas.NIM.ToString(), d.JadwalKuliahs.ClassSection);
 
                             if (nilaiFinal == null)
                             {
@@ -227,7 +227,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                                     namaMatkul = d.JadwalKuliahs.NamaMataKuliah,
                                     angka = "-",
                                     huruf = "-",
-                                    kompetensi = capaianTujuan
+                                    kompetensi = tempId
                                 });
                             }
                             else
@@ -238,7 +238,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                                     namaMatkul = d.JadwalKuliahs.NamaMataKuliah,
                                     angka = nilaiFinal.NilaiAngkaFinal,
                                     huruf = nilaiFinal.NilaiDiakui,
-                                    kompetensi = capaianTujuan
+                                    kompetensi = tempId
                                 });
                             }
 
@@ -249,9 +249,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 {
                     foreach (var d in PendaftaranMatakuliah)
                     {
-                        IList<CPLMatakuliah> tempId = _cPLMatakuliahService.Find(x => x.IDMataKUliah == d.JadwalKuliahs.MataKuliahID).ToList();
-                        IList<CPLMatakuliah> capaianTujuan = tempId.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == d.JadwalKuliahs.ProdiID).ToList();
-                        var nilaiFinal = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.JadwalKuliahs.MataKuliahID, d.JadwalKuliahs.KodeMataKuliah, d.mahasiswas.NIM.ToString(), d.JadwalKuliahs.ClassSection);
+                        IList<CPLMatakuliah> tempId = _cPLMatakuliahService.Find(x => x.IDMataKUliah == d.JadwalKuliahs.MataKuliahID && x.IsActive == true && x.IsDeleted == false).ToList();
+/*                        IList<CPLMatakuliah> capaianTujuan = tempId.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == d.JadwalKuliahs.ProdiID).ToList();
+*/                        var nilaiFinal = _nilaiKuliahService.GetNilaiDiakui(d.JadwalKuliahs.JenjangStudi, d.JadwalKuliahs.STRM.ToString(), d.JadwalKuliahs.MataKuliahID, d.JadwalKuliahs.KodeMataKuliah, d.mahasiswas.NIM.ToString(), d.JadwalKuliahs.ClassSection);
 
                         if (nilaiFinal == null)
                         {
@@ -261,7 +261,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                                 namaMatkul = d.JadwalKuliahs.NamaMataKuliah,
                                 angka = "-",
                                 huruf = "-",
-                                kompetensi = capaianTujuan
+                                kompetensi = tempId
                             });
                         }
                         else
@@ -272,7 +272,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                                 namaMatkul = d.JadwalKuliahs.NamaMataKuliah,
                                 angka = nilaiFinal.NilaiAngkaFinal,
                                 huruf = nilaiFinal.NilaiDiakui,
-                                kompetensi = capaianTujuan
+                                kompetensi = tempId
                             });
                         }
 
@@ -284,9 +284,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 foreach (var d in PendaftaranMatakuliah)
                 {
                     
-                    IList<CPLMatakuliah> tempId = _cPLMatakuliahService.Find(x => x.IDMataKUliah == d.JadwalKuliahs.MataKuliahID).ToList();
-                    IList<CPLMatakuliah> capaianTujuan = tempId.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == d.JadwalKuliahs.ProdiID).ToList();
-                    if (NilaiMahasiswa == null)
+                    IList<CPLMatakuliah> tempId = _cPLMatakuliahService.Find(x => x.IDMataKUliah == d.JadwalKuliahs.MataKuliahID && x.IsActive == true && x.IsDeleted == false).ToList();
+/*                    IList<CPLMatakuliah> capaianTujuan = tempId.Where(x => int.Parse(x.MasterCapaianPembelajarans.ProdiID) == d.JadwalKuliahs.ProdiID).ToList();
+*/                    if (NilaiMahasiswa == null)
                     {
                         final.Add(new CapaiaMatakuliahSertifkatDTO
                         {
@@ -294,7 +294,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                             namaMatkul = d.JadwalKuliahs.NamaMataKuliah,
                             angka = "-",
                             huruf = "-",
-                            kompetensi = capaianTujuan
+                            kompetensi = tempId
                         });
                     }
                     else
@@ -308,7 +308,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                                 namaMatkul = d.JadwalKuliahs.NamaMataKuliah,
                                 angka = "-",
                                 huruf = "-",
-                                kompetensi = capaianTujuan
+                                kompetensi = tempId
                             });
                         }
                         else
@@ -319,7 +319,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                                 namaMatkul = d.JadwalKuliahs.NamaMataKuliah,
                                 angka = nilaiAngkaFinal.NilaiTotal.ToString(),
                                 huruf = nilaiAngkaFinal.Grade,
-                                kompetensi = capaianTujuan
+                                kompetensi = tempId
                             });
                         }
                     }
