@@ -144,13 +144,13 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             if (matkul != null && matkul.Length > 0)
             {
                 result = _jkService.Find(jk => jk.NamaFakultas == fakultas && jk.NamaProdi == prodi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen && jk.KodeMataKuliah + " - " + jk.NamaMataKuliah == matkul && jk.FakultasID != 99 && jk.FakultasID != 00 && jk.FakultasID != 88)
-                    .GroupBy(g => new { g.ClassSection, g.JamMasuk, g.JamSelesai, g.SKS, g.KodeMataKuliah, g.Hari, g.MataKuliahID, g.NamaMataKuliah, g.STRM })
+                    .GroupBy(g => new { g.ClassSection, g.JamMasuk, g.JamSelesai, g.SKS, g.KodeMataKuliah, g.MataKuliahID, g.NamaMataKuliah, g.STRM })
                     .Select(s => new JadwalKuliah
                     {
                         ClassSection = s.Key.ClassSection,
                         JamMasuk = s.Key.JamMasuk,
                         JamSelesai = s.Key.JamSelesai,
-                        Hari = s.Key.Hari,
+                        Hari = s.FirstOrDefault().Hari,
                         KodeMataKuliah = s.Key.KodeMataKuliah,
                         MataKuliahID = s.Key.MataKuliahID,
                         NamaMataKuliah = s.Key.NamaMataKuliah,
@@ -161,12 +161,12 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             } else
             {
                 result = _jkService.Find(jk => jk.NamaFakultas == fakultas && jk.NamaProdi == prodi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen && jk.FakultasID != 99 && jk.FakultasID != 00 && jk.FakultasID != 88)
-                    .GroupBy(g => new { g.ClassSection, g.JamMasuk, g.JamSelesai,g.SKS, g.KodeMataKuliah,g.Hari, g.MataKuliahID, g.NamaMataKuliah, g.STRM })
+                    .GroupBy(g => new { g.ClassSection, g.JamMasuk, g.JamSelesai,g.SKS, g.KodeMataKuliah, g.MataKuliahID, g.NamaMataKuliah, g.STRM })
                     .Select(s => new JadwalKuliah { 
                         ClassSection = s.Key.ClassSection,
                         JamMasuk = s.Key.JamMasuk,
                         JamSelesai = s.Key.JamSelesai,
-                        Hari = s.Key.Hari,
+                        Hari = s.FirstOrDefault().Hari,
                         KodeMataKuliah = s.Key.KodeMataKuliah,
                         MataKuliahID = s.Key.MataKuliahID,
                         NamaMataKuliah = s.Key.NamaMataKuliah,
