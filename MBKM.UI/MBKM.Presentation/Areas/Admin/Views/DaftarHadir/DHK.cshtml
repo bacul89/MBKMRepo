@@ -141,7 +141,18 @@
 
                             <td style="font-weight:bold">RUANG</td>
                             <td style="padding:5px"> : </td>
-                            <td id="ruang">@ViewData["ruang"].ToString()</td>
+                            <td id="ruang">
+
+                                @*@ViewData["ruang"].ToString()*@
+                                @foreach (var item in (IEnumerable<MBKM.Entities.ViewModel.VMListRuangan>)ViewData["ruang"])
+                                {
+                                    <div>
+                                        @item.Nama
+                                    </div>
+                                }
+
+
+                            </td>
                         </tr>
                         <tr>
                             <td style="font-weight:bold">DOSEN</td>

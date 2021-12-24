@@ -92,6 +92,23 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         public ActionResult DHK(int id)
         {
             var jks = _jkService.Find(jk => jk.ID == id).FirstOrDefault();
+            var listRuangan = _jkService.Find(jk => jk.ClassSection == jks.ClassSection && jk.KodeMataKuliah == jks.KodeMataKuliah && jk.JenjangStudi == jks.JenjangStudi && jk.STRM == jks.STRM && jk.FlagOpen == true).ToList();
+            var tempRuang = listRuangan.Select(x => x.RuangKelas).ToList();
+            List<string> listDistinctRuang = new List<string>();
+            foreach (var item in tempRuang)
+            {
+                if (!listDistinctRuang.Contains(item))
+                {
+                    listDistinctRuang.Add(item);
+                    //mapJadwal.Add(item.ClassSection);
+                }
+
+            }
+
+            var listR = listDistinctRuang.Select(x => new VMListRuangan()
+            { 
+                Nama = x
+            }).Distinct();
             var sem = _absensiService.GetSemesterBySTRM(jks.STRM).ToLower().Replace("odd semester", "SEMESTER GANJIL").Replace("even semester", "SEMESTER GENAP").Replace("short semester", "SEMESTER ANTARA");
             List<PendaftaranMataKuliah> pmk = _pendaftaranMKService.Find(x => x.JadwalKuliahID == id && x.StatusPendaftaran.ToLower().Contains("accepted") && (x.mahasiswas.NIM != x.mahasiswas.NIMAsal && x.mahasiswas.NIM != null && x.mahasiswas.NIMAsal != null)).ToList();
             var list = pmk.Select(x => new VMDHK()
@@ -110,7 +127,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             ViewData["seksi"] = jks.ClassSection;
             ViewData["hari"] = getHari(jks.Hari);
             ViewData["jam"] = jks.JamMasuk + " - " + jks.JamSelesai;
-            ViewData["ruang"] = jks.RuangKelas;
+            //ViewData["ruang"] = jks.RuangKelas;
+            ViewData["ruang"] = listR;
             ViewData["dosens"] = _feedbackMatkulService.GetDosenMakulPertemuans(jks.KodeMataKuliah, jks.ClassSection, jks.STRM.ToString(), jks.FakultasID.ToString());
             ViewData["komponen"] = _absensiService.GetKomponenDHK(id);
             return View();
