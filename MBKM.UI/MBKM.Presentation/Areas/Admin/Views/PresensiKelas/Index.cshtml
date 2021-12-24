@@ -76,7 +76,7 @@
     @*<input type="hidden" id="dateString" name="dateString" type="date" />*@
     <input type="hidden" id="strm" name="strm" />
     <input type="hidden" id="kodeMatkul" name="kodeMatkul" />
-    <input type="hidden" id="ruangKelas" name="ruangKelas" />
+    @*<input type="hidden" id="ruangKelas" name="ruangKelas" />*@
     <input type="hidden" id="section" name="section" />
     @*<input type="hidden" id="jamMasuk" name="jamMasuk" />
     <input type="hidden" id="jamKeluar" name="jamKeluar" />*@
@@ -266,7 +266,8 @@
                             //$(\'#dateString\').val(\'' + row.TanggalAbsen + '\');
                             //return `<div class="col" style="text-align:center"><a href="javascript:void(0)" style="color:black" onclick="javascript:alert('DATA ABSEN HANYA BISA DIAKSES PADA TANGGAL ABSEN!');"><i class="fas fa-edit"></i></a></div>`;
                             // $(\'#jamMasuk\').val(\''+row.JamMasuk+'\');$(\'#jamKeluar\').val(\''+row.JamKeluar+'\');
-                            return '<div class="col" style="text-align:center"><a href = "javascript:void(0)" style = "color:black" onclick="javascript:$(\'#tanggalAbsen\').val(\'' + tanggal + '\'); $(\'#strm\').val(\''+$('#tahunSemester').val()+'\');$(\'#kodeMatkul\').val(\''+row.KodeMataKuliah+'\');$(\'#ruangKelas\').val(\''+row.RuangKelas+'\');$(\'#section\').val(\''+row.Seksi+'\');$(\'#detailPresensi\').submit();" > <i class="fas fa-edit"></i></a ></div>';
+                            //;$(\'#ruangKelas\').val(\''+row.RuangKelas+'\')
+                            return '<div class="col" style="text-align:center"><a href = "javascript:void(0)" style = "color:black" onclick="javascript:$(\'#tanggalAbsen\').val(\'' + tanggal + '\'); $(\'#strm\').val(\''+$('#tahunSemester').val()+'\');$(\'#kodeMatkul\').val(\''+row.KodeMataKuliah+'\');$(\'#section\').val(\''+row.Seksi+'\');$(\'#detailPresensi\').submit();" > <i class="fas fa-edit"></i></a ></div>';
                         }
                     },
                     {
