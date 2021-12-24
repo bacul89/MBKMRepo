@@ -216,7 +216,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     _.JadwalKuliahs.KodeMataKuliah == dataJadwal.KodeMataKuliah
                 &&  _.JadwalKuliahs.MataKuliahID == dataJadwal.MataKuliahID 
                 &&  _.JadwalKuliahs.STRM == dataJadwal.STRM
-                &&  _.JadwalKuliahs.SKS == dataJadwal.SKS 
+                &&  _.JadwalKuliahs.SKS == dataJadwal.SKS
+                &&  _.JadwalKuliahs.NamaProdi == dataJadwal.NamaProdi
+                &&  _.JadwalKuliahs.ClassSection == dataJadwal.ClassSection 
                 && _.StatusPendaftaran == "ACCEPTED BY MAHASISWA" 
                 && (_.mahasiswas.NIM != _.mahasiswas.NIMAsal && _.mahasiswas.NIM != null && _.mahasiswas.NIMAsal != null));
             var result = new List<VMPenilaian>();
