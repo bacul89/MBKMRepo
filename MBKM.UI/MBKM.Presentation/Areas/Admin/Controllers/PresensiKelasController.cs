@@ -48,12 +48,12 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             model.NamaDosen = result.NamaDosen;
             return View(model);
         }*/
-        public ActionResult DetailPresensi(string tanggalAbsen, string kodeMatkul, string ruangKelas, string section, int strm)
+        public ActionResult DetailPresensi(string tanggalAbsen, string kodeMatkul, string section, int strm)
         {
-
+            //string ruangKelas,
             var getJadwal = _jadwalKuliahService.Find(x =>
                 x.KodeMataKuliah == kodeMatkul &&
-                x.RuangKelas == ruangKelas &&
+                //x.RuangKelas == ruangKelas &&
                 x.ClassSection == section &&
                 x.STRM == strm /*&&
                 x.JamMasuk == jamMasuk &&
