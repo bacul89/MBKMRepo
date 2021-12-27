@@ -41,7 +41,7 @@ $(document).ready(function () {
                 //console.log(pageLength);
 
                 return {
-                    results: $.map(data, function (item) { return { id: item.ID, value: item.ID, text: item.Nama } }),
+                    results: $.map(data, function (item) { return { id: item.Nilai, value: item.Nilai, text: item.Nama } }),
                     pagination: {
                         more: (page * 10) <= data.length
                     }
