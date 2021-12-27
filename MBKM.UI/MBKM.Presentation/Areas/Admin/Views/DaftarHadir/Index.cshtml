@@ -189,7 +189,7 @@
                                 <th class="zero-padding no-border vertical-center sorting">No.</th>
                                 <th class="zero-padding no-border vertical-center sorting">Tahun Semester</th>
                                 <th class="zero-padding no-border vertical-center sorting">Jenjang Studi</th>
-                                <th class="zero-padding no-border vertical-center sorting">Fakultas</th>
+                                @*<th class="zero-padding no-border vertical-center sorting">Fakultas</th>*@
                                 <th class="zero-padding no-border vertical-center sorting">Program Studi</th>
                                 <th class="zero-padding no-border vertical-center sorting">Kode Mata Kuliah</th>
                                 <th class="zero-padding no-border vertical-center sorting">Nama Mata Kuliah</th>
@@ -436,11 +436,11 @@
                             return '<div class="center">' + $('#jenjangStudi').val() + '</div>';
                         }
                     },
-                    {
-                        "render": function (data, type, row, meta) {
-                            return '<div class="center">' + $('#fakultas').val() + '</div>';
-                        }
-                    },
+                    //{
+                    //    "render": function (data, type, row, meta) {
+                    //        return '<div class="center">' + $('#fakultas').val() + '</div>';
+                    //    }
+                    //},
                     {
                         "render": function (data, type, row, meta) {
                             return '<div class="center">' + $('#prodi').val() + '</div>';
