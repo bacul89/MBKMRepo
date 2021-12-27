@@ -210,7 +210,7 @@
                     },
                     {
                         "render": function (data, type, row, meta) {
-                            return '<div class="center">' + $('#fakultas').val() + '</div>';
+                            return '<div class="center">' + $('#fakultas').select2('data')[0].text + '</div>';
                         }
                     },
                     {
