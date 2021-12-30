@@ -110,6 +110,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 Nama = x
             }).Distinct();
             var sem = _absensiService.GetSemesterBySTRM(jks.STRM).ToLower().Replace("odd semester", "SEMESTER GANJIL").Replace("even semester", "SEMESTER GENAP").Replace("short semester", "SEMESTER ANTARA");
+            var sem2 = _absensiService.GetSemesterBySTRM(jks.STRM);
             List<PendaftaranMataKuliah> pmk = _pendaftaranMKService.Find(x => x.JadwalKuliahID == id && x.StatusPendaftaran.ToLower().Contains("accepted") && (x.mahasiswas.NIM != x.mahasiswas.NIMAsal && x.mahasiswas.NIM != null && x.mahasiswas.NIMAsal != null)).ToList();
             var list = pmk.Select(x => new VMDHK()
             {
@@ -119,6 +120,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             
             ViewData["mahasiswas"] = list;
             ViewData["semester"] = sem;
+            ViewData["semester2"] = sem2;
             ViewData["prodi"] = jks.NamaProdi;
             ViewData["kodeMK"] = jks.KodeMataKuliah;
             ViewData["namaMK"] = jks.NamaMataKuliah;
