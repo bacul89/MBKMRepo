@@ -664,7 +664,7 @@ function CheckStatusFeedback(FlagTranscript, row) {
                                 checkStatusSertifikat();
                                 $("#btnCetak").prop("disabled", true);
                             } else {
-                                alert = "Nilai Transkrip Belum Lengkap, Menunggu Penilaian dari Dosen!";
+                                alert = "Nilai transkrip belum lengkap, menunggu penilaian dari dosen!";
 
                                 $("#btnCetak").prop("disabled", true);
                                 $("#sertifikatCetak").prop("disabled", true);
@@ -672,7 +672,7 @@ function CheckStatusFeedback(FlagTranscript, row) {
                                 $('#notif').show();
                             }
                         } else {
-                            alert = "Silahkan Melengkapi Feedback terlebih dahulu, untuk mengaktifkan tombol cetak!"
+                            alert = "Silahkan melengkapi feedback terlebih dahulu, untuk mengaktifkan tombol cetak!"
 
                             $("#btnCetak").prop("disabled", true);
                             $("#sertifikatCetak").prop("disabled", true);
@@ -681,7 +681,7 @@ function CheckStatusFeedback(FlagTranscript, row) {
                         }
 
                     } else {
-                        alert = "Silahkan melakukan pembayaran terlebih dahulu!";
+                        alert = "Harap menyelesaikan proses administrasi (pembayaran) terlebih dahulu!";
                         $('#notif').text(alert);
                         $('#notif').show();
                     }
