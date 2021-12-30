@@ -91,7 +91,7 @@ $(document).ready(function () {
                 /*Status Pembayaran*/
                 "data": 8,
                 "render": function (data, type, row, meta) {
-                    if (data == "True") {
+                    if (data == "True" || data == "Sudah Bayar" ) {
                         return '<div class="center vertical-center" style="font-size: 0.8vw">Sudah Bayar</div>';
                     } else {
                         return '<div class="center vertical-center" style="font-size: 0.8vw">Belum Bayar</div>';
