@@ -66,10 +66,11 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             {
                 if (seksi == null || seksi.Length == 0)
                 {
-                    result = _jadwalKuliahService.Find(_ => _.JenjangStudi == jenjangStudi && _.NamaFakultas == fakultas && _.Lokasi == lokasi && _.NamaProdi == prodi && _.KodeMataKuliah == KodeMatkul && _.FlagOpen && _.STRM == strm && _.DosenID == noPegawai)
+                    result = _jadwalKuliahService.Find(_ => _.JenjangStudi == jenjangStudi && _.NamaFakultas == fakultas && _.Lokasi == lokasi && _.NamaProdi == prodi && _.KodeMataKuliah == KodeMatkul && _.FlagOpen && _.STRM == strm && _.DosenID == noPegawai && _.FlagOpen)
                         .GroupBy(g => new{ g.ClassSection, g.SKS, g.KodeMataKuliah, g.MataKuliahID, g.NamaMataKuliah, g.STRM })
                         .Select(s => new JadwalKuliah
                         {
+                            ID = s.FirstOrDefault().ID,
                             ClassSection = s.Key.ClassSection,
                             /*JamMasuk = s.Key.JamMasuk,
                             JamSelesai = s.Key.JamSelesai,
@@ -85,10 +86,11 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 }
                 else
                 {
-                    result = _jadwalKuliahService.Find(_ => _.JenjangStudi == jenjangStudi && _.NamaFakultas == fakultas && _.Lokasi == lokasi && _.NamaProdi == prodi && _.KodeMataKuliah == KodeMatkul && _.ClassSection == seksi && _.FlagOpen && _.STRM == strm && _.DosenID == noPegawai)
+                    result = _jadwalKuliahService.Find(_ => _.JenjangStudi == jenjangStudi && _.NamaFakultas == fakultas && _.Lokasi == lokasi && _.NamaProdi == prodi && _.KodeMataKuliah == KodeMatkul && _.ClassSection == seksi && _.FlagOpen && _.STRM == strm && _.DosenID == noPegawai && _.FlagOpen)
                         .GroupBy(g => new { g.ClassSection, g.SKS, g.KodeMataKuliah, g.MataKuliahID, g.NamaMataKuliah, g.STRM })
                         .Select(s => new JadwalKuliah
                         {
+                            ID = s.FirstOrDefault().ID,
                             ClassSection = s.Key.ClassSection,
                             /*JamMasuk = s.Key.JamMasuk,
                             JamSelesai = s.Key.JamSelesai,
@@ -101,20 +103,20 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         }).ToList();
                 }
 
-                foreach (var d in result)
+               /* foreach (var d in result)
                 {
                     var dataSementara = _jadwalKuliahService.Find(s => s.ClassSection == d.ClassSection
-                             /*&& s.JamMasuk == d.JamMasuk
+                             *//*&& s.JamMasuk == d.JamMasuk
                              && s.JamSelesai == d.JamSelesai
-                             && s.Hari == d.Hari*/
+                             && s.Hari == d.Hari*//*
                              && s.KodeMataKuliah == d.KodeMataKuliah
                              && s.MataKuliahID == d.MataKuliahID
-                             /*&& s.NamaMataKuliah == d.NamaMataKuliah*/
+                             *//*&& s.NamaMataKuliah == d.NamaMataKuliah*//*
                              && s.STRM == d.STRM
                              && s.SKS == d.SKS
                              ).FirstOrDefault();
                     d.ID = dataSementara.ID;
-                }
+                }*/
 
             }
             else
@@ -125,6 +127,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         .GroupBy(g => new { g.ClassSection, g.SKS, g.KodeMataKuliah, g.MataKuliahID, g.NamaMataKuliah, g.STRM })
                         .Select(s => new JadwalKuliah
                         {
+                            ID = s.FirstOrDefault().ID,
                             ClassSection = s.Key.ClassSection,
                             /*JamMasuk = s.Key.JamMasuk,
                             JamSelesai = s.Key.JamSelesai,
@@ -142,6 +145,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         .GroupBy(g => new { g.ClassSection, g.SKS, g.KodeMataKuliah, g.MataKuliahID, g.NamaMataKuliah, g.STRM })
                         .Select(s => new JadwalKuliah
                         {
+                            ID = s.FirstOrDefault().ID,
                             ClassSection = s.Key.ClassSection,
                             /*JamMasuk = s.Key.JamMasuk,
                             JamSelesai = s.Key.JamSelesai,
@@ -153,20 +157,20 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                             SKS = s.Key.SKS,
                         }).ToList();
                 }
-                foreach (var d in result)
+                /*foreach (var d in result)
                 {
                     var dataSementara = _jadwalKuliahService.Find(s => s.ClassSection == d.ClassSection
-                             /*&& s.JamMasuk == d.JamMasuk
+                             *//*&& s.JamMasuk == d.JamMasuk
                              && s.JamSelesai == d.JamSelesai
-                             && s.Hari == d.Hari*/
+                             && s.Hari == d.Hari*//*
                              && s.KodeMataKuliah == d.KodeMataKuliah
                              && s.MataKuliahID == d.MataKuliahID
-                             /*&& s.NamaMataKuliah == d.NamaMataKuliah*/
+                             *//*&& s.NamaMataKuliah == d.NamaMataKuliah*//*
                              && s.STRM == d.STRM
                              && s.SKS == d.SKS
                              ).FirstOrDefault();
                     d.ID = dataSementara.ID;
-                }
+                }*/
 
             }
            

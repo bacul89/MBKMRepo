@@ -147,6 +147,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     .GroupBy(g => new { g.ClassSection, g.JamMasuk, g.JamSelesai, g.SKS, g.KodeMataKuliah, g.MataKuliahID, g.NamaMataKuliah, g.STRM })
                     .Select(s => new JadwalKuliah
                     {
+                        ID = s.FirstOrDefault().ID,
                         ClassSection = s.Key.ClassSection,
                         JamMasuk = s.Key.JamMasuk,
                         JamSelesai = s.Key.JamSelesai,
@@ -156,13 +157,14 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                         NamaMataKuliah = s.Key.NamaMataKuliah,
                         STRM = s.Key.STRM,
                         SKS = s.Key.SKS,
+                        NamaDosen = s.FirstOrDefault().NamaDosen
                     })
                     .ToList();
-            } else
-            {
+            } else{
                 result = _jkService.Find(jk => jk.NamaFakultas == fakultas && jk.NamaProdi == prodi && jk.Lokasi == lokasi && jk.STRM == strm && jk.FlagOpen && jk.FakultasID != 99 && jk.FakultasID != 00 && jk.FakultasID != 88)
                     .GroupBy(g => new { g.ClassSection, g.JamMasuk, g.JamSelesai,g.SKS, g.KodeMataKuliah, g.MataKuliahID, g.NamaMataKuliah, g.STRM })
-                    .Select(s => new JadwalKuliah { 
+                    .Select(s => new JadwalKuliah {
+                        ID = s.FirstOrDefault().ID,
                         ClassSection = s.Key.ClassSection,
                         JamMasuk = s.Key.JamMasuk,
                         JamSelesai = s.Key.JamSelesai,
@@ -172,8 +174,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                         NamaMataKuliah = s.Key.NamaMataKuliah,
                         STRM = s.Key.STRM,
                         SKS = s.Key.SKS,
+                        NamaDosen = s.FirstOrDefault().NamaDosen
                     }).ToList();
-                foreach(var d in result)
+                /*foreach(var d in result)
                 {
                    var dataSementara = _jkService.Find(s => s.ClassSection == d.ClassSection
                             && s.JamMasuk == d.JamMasuk
@@ -188,7 +191,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     d.ID = dataSementara.ID;
                     d.NamaDosen = dataSementara.NamaDosen;
 
-                }
+                }*/
                 return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
             }
 
@@ -196,7 +199,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             {
                 if (!jadwalKuliahs.Contains(item.NamaMataKuliah))
                 {
-                    var dataSementara = _jkService.Find(s => s.ClassSection == item.ClassSection
+                    /*var dataSementara = _jkService.Find(s => s.ClassSection == item.ClassSection
                             && s.JamMasuk == item.JamMasuk
                             && s.JamSelesai == item.JamSelesai
                             && s.Hari == item.Hari
@@ -207,7 +210,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                             && s.SKS == item.SKS
                             ).FirstOrDefault();
                     item.ID = dataSementara.ID;
-                    item.NamaDosen = dataSementara.NamaDosen;
+                    item.NamaDosen = dataSementara.NamaDosen;*/
                     jks.Add(item);
                     jadwalKuliahs.Add(item.NamaMataKuliah);
                 }
