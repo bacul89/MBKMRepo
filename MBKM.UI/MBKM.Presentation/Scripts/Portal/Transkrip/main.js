@@ -681,7 +681,7 @@ function CheckStatusFeedback(FlagTranscript, row) {
                         }
 
                     } else {
-                        alert = "Belum Bayar!";
+                        alert = "Silahkan melakukan pembayaran terlebih dahulu!";
                         $('#notif').text(alert);
                         $('#notif').show();
                     }
