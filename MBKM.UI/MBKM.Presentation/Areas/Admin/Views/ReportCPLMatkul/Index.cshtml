@@ -78,68 +78,112 @@
         </h5>
         <hr />
         <div class="container" style="width: 100%; padding-bottom: 15px;">
-            <table class="table" style="width: auto;">
-                <tr>
-                    <td style="text-align: right">Jenjang Studi</td>
-                    <td style="width: 400px;">
-                        <select name="jenjangStudi" id="jenjangStudi" class="form-control input-md"></select>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align: right">Fakultas</td>
-                    <td style="width: 400px;">
-                        <select name="fakultas" id="fakultas" class="form-control input-md"></select>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align: right">Program Studi</td>
-                    <td style="width: 400px;">
-                        <select name="prodi" id="prodi" class="form-control input-md"></select>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align: right">Mata Kuliah<br />(Optional)</td>
-                    <td style="width: 400px;">
-                        <select name="matkul" id="matkul" class="form-control input-md"></select>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <button id="cari" name="cari" class="btn" style="float: right; background-color: #FF8A04; color: white; padding: 2px 30px; font-weight: bold; font-size: 16px;">CARI</button>
-                    </td>
-                </tr>
-            </table>
-            <button id="cetakPDF" name="cetakPDF" class="btn" style="background-color: rgb(209,2,2); padding: 2px 30px; font-weight: bold; color: white; font-size: 16px; ">
-                <i class="fas fa-file-download"></i> CETAK PDF
-            </button>
-            <button id="cetakExcel" name="cetakExcel" class="btn" style="background-color: rgb(0,166,81); padding: 2px 30px; font-weight: bold; color: white; font-size: 16px; ">
-                <i class="fas fa-file-download"></i>  CETAK EXCEL
-            </button>
-            <hr />
-            <div style="overflow-x: auto;">
-                <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; font-weight: bold; font-size: 18px; color: black; ">
-                    DAFTAR MATA KULIAH
-                </h5>
-                <table id="hasilPencarian" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
-                    <thead>
-                        <tr>
-                            <th class="zero-padding no-border vertical-center sorting">No.</th>
-                            <th class="zero-padding no-border vertical-center sorting">Jenjang Studi</th>
-                            <th class="zero-padding no-border vertical-center sorting">Fakultas</th>
-                            <th class="zero-padding no-border vertical-center sorting">Program Studi</th>
-                            <th class="zero-padding no-border vertical-center sorting">Kode Mata Kuliah</th>
-                            <th class="zero-padding no-border vertical-center sorting">Nama Mata Kuliah</th>
-                            <th class="zero-padding no-border vertical-center sorting">Kelompok</th>
-                            <th class="zero-padding no-border vertical-center sorting">Capaian Pembelajaran</th>
-                            <th class="zero-padding no-border vertical-center sorting">Kode</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+            <div class="col-md-12">
+                <form class="form-horizontal col-md-7">
+                    @* batas filter *@
+
+                    <div class="form-group">
+                        <label for="inp_tahunAjaran" class="col-sm-3 control-label">Jenjang Studi</label>
+                        <div class="col-sm-9">
+                            <select name="jenjangStudi" id="jenjangStudi" class="form-control input-md">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fakultas" class="col-sm-3 control-label">Fakultas</label>
+                        <div class="col-sm-9">
+                            <select name="fakultas" id="fakultas" class="form-control input-md">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prodi" class="col-sm-3 control-label">Program Studi</label>
+                        <div class="col-sm-9">
+                            <select name="prodi" id="prodi" class="form-control input-md">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="matkul" class="col-sm-3 control-label">Mata Kuliah (Optional)</label>
+                        <div class="col-sm-9">
+                            <select name="matkul" id="matkul" class="form-control input-md">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-2 col-md-offset-10">
+                            <button type="button" id="cari" class="btn btn-warning" style="float: right;" title="Mohon untuk melengkapi form pencarian terlebih dahulu!"><span class="fa fa-search"></span> Cari</button>
+                        </div>
+                    </div>
+
+                    @* batas filter *@
+                </form>
+            </div>
+                @*<table class="table" style="width: auto;">
+                    <tr>
+                        <td style="text-align: right">Jenjang Studi</td>
+                        <td style="width: 400px;">
+                            <select name="jenjangStudi" id="jenjangStudi" class="form-control input-md"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right">Fakultas</td>
+                        <td style="width: 400px;">
+                            <select name="fakultas" id="fakultas" class="form-control input-md"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right">Program Studi</td>
+                        <td style="width: 400px;">
+                            <select name="prodi" id="prodi" class="form-control input-md"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right">Mata Kuliah<br />(Optional)</td>
+                        <td style="width: 400px;">
+                            <select name="matkul" id="matkul" class="form-control input-md"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button id="cari" name="cari" class="btn" style="float: right; background-color: #FF8A04; color: white; padding: 2px 30px; font-weight: bold; font-size: 16px;">CARI</button>
+                        </td>
+                    </tr>
+                </table>*@
+                <button id="cetakPDF" name="cetakPDF" class="btn" style="background-color: rgb(209,2,2); padding: 2px 30px; font-weight: bold; color: white; font-size: 16px; ">
+                    <i class="fas fa-file-download"></i> CETAK PDF
+                </button>
+                <button id="cetakExcel" name="cetakExcel" class="btn" style="background-color: rgb(0,166,81); padding: 2px 30px; font-weight: bold; color: white; font-size: 16px; ">
+                    <i class="fas fa-file-download"></i>  CETAK EXCEL
+                </button>
+                <hr />
+                <div style="overflow-x: auto;">
+                    <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; font-weight: bold; font-size: 18px; color: black; ">
+                        DAFTAR MATA KULIAH
+                    </h5>
+                    <table id="hasilPencarian" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
+                        <thead>
+                            <tr>
+                                <th class="zero-padding no-border vertical-center sorting">No.</th>
+                                <th class="zero-padding no-border vertical-center sorting">Jenjang Studi</th>
+                                <th class="zero-padding no-border vertical-center sorting">Fakultas</th>
+                                <th class="zero-padding no-border vertical-center sorting">Program Studi</th>
+                                <th class="zero-padding no-border vertical-center sorting">Kode Mata Kuliah</th>
+                                <th class="zero-padding no-border vertical-center sorting">Nama Mata Kuliah</th>
+                                <th class="zero-padding no-border vertical-center sorting">Kelompok</th>
+                                <th class="zero-padding no-border vertical-center sorting">Capaian Pembelajaran</th>
+                                <th class="zero-padding no-border vertical-center sorting">Kode</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
 </div>
 @section scripts{
     <script>
