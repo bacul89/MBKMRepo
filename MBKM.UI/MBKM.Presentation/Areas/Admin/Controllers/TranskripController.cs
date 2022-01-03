@@ -70,18 +70,17 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
                         _transkripService.Save(data);
                     }
-                    else
+                    /*else
                     {
-                        return Json(new ServiceResponse { status = 500, message = "Cetak Gagal Silakhan Hubungi BAA!!!" });
-                    }
-
+                        return Json(new ServiceResponse { status = 500, message = "Update Status Cetak Gagal!!!" });
+                    }*/
                 }
 
-                return Json(new ServiceResponse { status = 200, message = "Cetak Berhasil..." });
+                return Json(new ServiceResponse { status = 200, message = "Update Status Berhasil..." });
             }
             catch (Exception e)
             {
-                return Json(new ServiceResponse { status = 500, message = "Cetak Gagal Silakhan Hubungi BAA!!!" });
+                return Json(new ServiceResponse { status = 500, message = "Update Status Cetak Gagal!!!" });
             }
 
         }

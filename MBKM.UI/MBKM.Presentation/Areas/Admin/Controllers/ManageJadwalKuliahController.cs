@@ -88,7 +88,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     id = list[i];
                     var data = _jkService.Get(id);
                         foreach (var item in _jkService.Find(dataMap =>
-                            dataMap.ProdiID == data.ProdiID &&
+                            dataMap.NamaProdi == data.NamaProdi &&
                             dataMap.FakultasID == data.FakultasID &&
                             dataMap.Lokasi == data.Lokasi &&
                             dataMap.JenjangStudi == data.JenjangStudi &&
