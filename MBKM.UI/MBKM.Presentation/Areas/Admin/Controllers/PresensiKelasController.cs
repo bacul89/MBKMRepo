@@ -55,7 +55,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 x.KodeMataKuliah == kodeMatkul &&
                 //x.RuangKelas == ruangKelas &&
                 x.ClassSection == section &&
-                x.STRM == strm /*&&
+                x.STRM == strm &&
+                x.FlagOpen == true
+                /*&&
                 x.JamMasuk == jamMasuk &&
                 x.JamSelesai == jamKeluar*/
             ).FirstOrDefault();
