@@ -129,6 +129,89 @@
     </div>
 </div>
 
+
+<div class="modal fade" id="ResetPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #FF8A04; ">
+                <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+                    Reset Password
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </h5>
+            </div>
+            <div class="modal-body" style="padding-bottom: 50px;">
+                <div id="Aktivasi">
+                    <div class="form-group">
+                        <label>Email<h style="color: red;"> *</h></label>
+                        <input type="text" name="EmailReset" id="EmailReset_inp" class="form-control input-md" />
+                    </div>
+                    <div class="form-group">
+                        <input onclick="SubmitEmailReset()" type="button" value="Submit" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="tokenPasswordReset" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #FF8A04; ">
+                <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+                    Reset Password
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </h5>
+            </div>
+            <div class="modal-body" style="padding-bottom: 50px;">
+                <div id="Aktivasi">
+                    <div class="form-group">
+                        <label>Token<h style="color: red;"> *</h></label>
+                        <input type="text" name="tokenPassword" id="tokenPassword_inp" class="form-control input-md" />
+                    </div>
+                    <div class="form-group">
+                        <input onclick="submitTokenPasswordReset()" type="submit" value="Submit" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="EnterResetPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #FF8A04; ">
+                <h5 class="card-title" style="font-weight: bold; font-size: 30px; color: black;">
+                    Reset Password
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </h5>
+            </div>
+            <div class="modal-body" style="padding-bottom: 50px;">
+                <div id="Aktivasi">
+                    <div class="form-group">
+                        <label>New Password<h style="color: red;"> *</h></label>
+                        <input type="password" name="NewPassword" id="NewPassword_inp" placeholder="●●●●●●●●" class="form-control input-md" />
+                    </div>
+                    <div class="form-group">
+                        <input onclick="SubmitNetPassword()" type="button" value="Submit" class="btn" style="float: right; background-color: #FF8A04; color: black; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 <div style="padding: 5%;" class="row">
     <div class="col-sm-7 col-md-7 col-lg-7">
         <img style="max-width: 100%;" src="~/Asset/atmajayapoto.jpg" />
@@ -158,8 +241,11 @@
                             <input type="password" name="password" id="password" placeholder="Password" class="form-control input-md" />
                         </div>
                         <input type="submit" value="Login" class="btn" style="background-color: #FF8A04; color: white; padding: 5px 30px; font-weight: bold; font-size: 20px;" />
+                        <div id="btnResetPassword" style="font-size: 15px; padding-top: 30px; display:none">
+                            Lupa Password ?
+                            <a data-toggle="modal" data-target="#ResetPassword" style="color: #FF8A04;">Lakukan Reset Password!</a>
+                        </div>
                     </form>
-
                     <hr />
                     <div style="font-size: 20px; padding: 30px 0px;">
                         Untuk kamu yang belum melakukan registrasi dan ingin mengikuti program kampus merdeka, silahkan melakukan
@@ -172,13 +258,18 @@
     </div>
 </div>
 <a data-toggle="modal" data-target="#token" style="display: none;" id="test"></a>
+<a data-toggle="modal" data-target="#tokenPasswordReset" style="display: none;" id="modalTokenPassword"></a>
 
 @section Scripts{
+    <script src="~/Scripts/sweetalert2.all.min.js"></script>
     <script>
+
         $(document).ready(function () {
             var alertMessage = '@TempData["alertMessage"]';
             if (alertMessage == 'Verify') {
                 $('#test').click();
+            } else if (alertMessage == 'ResetPassword') {
+                $('#modalTokenPassword').click();
             }
             else if (alertMessage.length != 0) {
                 alert(alertMessage);
@@ -199,9 +290,11 @@
                 if ($("#jenisMhs").val() == "y") {
                     $("#loginForm").attr("action", "@Url.Action("LoginInternal", "Home")");
                     $("#username").attr("placeholder", "Induk Mahasiswa/Student ID");
+                    $("#btnResetPassword").css({ 'display': 'none' })
                 } else {
                     $("#loginForm").attr("action", "@Url.Action("LoginExternal", "Home")");
                     $("#username").attr("placeholder", "Email");
+                    $("#btnResetPassword").css({ 'display': 'block' })
                 }
             });
             loadJenjangStudi();
@@ -218,6 +311,139 @@
                 $("#univAsal").html("<div class= 'form-group'><label>Universitas Asal<h style='color: red;'> *</h></label><input type='text' name='NamaUniversitas' id='namaUniversitas' placeholder='Nama Universitas' class='form-control input-lg' /></div>");
             }
         });
+
+        function SubmitEmailReset() {
+            $.ajax({
+                url: '@Url.Action("CheckEmailResetPassword", "Home")',
+                type: 'post',
+                data: { email: $('#EmailReset_inp').val()},
+                datatype: 'json',
+                success: function (e) {
+                    if (e.status == 200) {
+                        Swal.fire({
+                            title: 'Berhasil',
+                            icon: 'success',
+                            html: e.message,
+                            showCloseButton: true,
+                            showCancelButton: false,
+                            focusConfirm: false,
+                            confirmButtonText: 'OK'
+                        })
+                        $('.modal').modal('hide');
+                    } else {
+                        Swal.fire({
+                            title: 'Oppss',
+                            icon: 'error',
+                            html: e.message,
+                            showCloseButton: true,
+                            showCancelButton: false,
+                            focusConfirm: false,
+                            confirmButtonText: 'OK'
+                        })
+                    }
+                }, error: function (e) {
+                    Swal.fire({
+                        title: 'Oppss',
+                        icon: 'error',
+                        html: 'Coba Reload Page',
+                        showCloseButton: true,
+                        showCancelButton: false,
+                        focusConfirm: false,
+                        confirmButtonText: 'OK'
+                    })
+                }
+            })
+        }
+
+        function submitTokenPasswordReset() {
+            $.ajax({
+                url: '@Url.Action("CheckTokenPassword", "Home")',
+                type: 'post',
+                data: { token: $('#tokenPassword_inp').val()},
+                datatype: 'json',
+                success: function (e) {
+                    if (e.status == 200) {
+                        Swal.fire({
+                            title: 'Berhasil',
+                            icon: 'success',
+                            html: e.message,
+                            showCloseButton: true,
+                            showCancelButton: false,
+                            focusConfirm: false,
+                            confirmButtonText: 'OK'
+                        })
+                        $('.modal').modal('hide');
+                        var tmpTkn = $('#tokenPassword_inp').val();
+                        $('#EnterResetPassword').modal('show');
+                    } else {
+                        Swal.fire({
+                            title: 'Oppss',
+                            icon: 'error',
+                            html: e.message,
+                            showCloseButton: true,
+                            showCancelButton: false,
+                            focusConfirm: false,
+                            confirmButtonText: 'OK'
+                        })
+                    }
+                }, error: function (e) {
+                    Swal.fire({
+                        title: 'Oppss',
+                        icon: 'error',
+                        html: 'Coba Reload Page',
+                        showCloseButton: true,
+                        showCancelButton: false,
+                        focusConfirm: false,
+                        confirmButtonText: 'OK'
+                    })
+                }
+            })
+        }
+
+        function SubmitNetPassword() {
+            $.ajax({
+                url: '@Url.Action("InputNewPassword", "Home")',
+                type: 'post',
+                data: { token: $('#tokenPassword_inp').val(), password: $('#NewPassword_inp').val()},
+                datatype: 'json',
+                success: function (e) {
+                    if (e.status == 200) {
+                        Swal.fire({
+                            title: 'Berhasil',
+                            icon: 'success',
+                            html: e.message,
+                            showCloseButton: true,
+                            showCancelButton: false,
+                            focusConfirm: false,
+                            confirmButtonText: 'OK'
+                        })
+                        $('.modal').modal('hide');
+                        var tmpTkn = $('#tokenPassword_inp').val();
+                    } else {
+                        Swal.fire({
+                            title: 'Oppss',
+                            icon: 'error',
+                            html: e.message,
+                            showCloseButton: true,
+                            showCancelButton: false,
+                            focusConfirm: false,
+                            confirmButtonText: 'OK'
+                        })
+                    }
+                }, error: function (e) {
+                    Swal.fire({
+                        title: 'Oppss',
+                        icon: 'error',
+                        html: 'Coba Reload Page',
+                        showCloseButton: true,
+                        showCancelButton: false,
+                        focusConfirm: false,
+                        confirmButtonText: 'OK'
+                    })
+                }
+            })
+        }
+
         function loadJenjangStudi() {
             $("#tahunSemester").prop("disabled", true);
             loadFromLookup("JenjangStudi", "jenjangStudi", "Jenjang Studi");
