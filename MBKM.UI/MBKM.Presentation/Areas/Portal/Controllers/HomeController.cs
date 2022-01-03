@@ -34,6 +34,86 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public ActionResult CheckEmailResetPassword(String email)
+        {
+            Mahasiswa mahasiswa = _mahasiswaService.Find(x => x.Email == email).FirstOrDefault();
+            if (mahasiswa == null)
+            {
+                return Json(new ServiceResponse { status = 500, message = "Email Tidak Terdaftar!" });
+            }
+            Random generator = new Random();
+            string token = generator.Next(0, 1000000).ToString("D6");
+            while (GetMahasiswaByToken(token) != null)
+            {
+                token = generator.Next(0, 1000000).ToString("D6");
+            }
+
+            mahasiswa.Token = token;
+            mahasiswa.UpdatedDate = DateTime.Now;
+
+            if (SendEmailReset(email, token))
+            {
+                _mahasiswaService.Save(mahasiswa);
+                return Json(new ServiceResponse { status = 200, message = "Check Email Untuk Melakukan Reset Password" });
+            }
+            return Json(new ServiceResponse { status = 500, message = "Email tidak terkirim!" });
+
+            
+        }
+
+        [HttpPost]
+        public ActionResult CheckTokenPassword(string token)
+        {
+            Mahasiswa mahasiswa = GetMahasiswaByToken(token);
+            if (mahasiswa != null)
+            {
+                return Json(new ServiceResponse { status = 200, message = "Masukkan Password!" });
+            }
+            else
+            {
+                return Json(new ServiceResponse { status = 500, message = "Token invalid!" });
+            }
+        }
+
+
+        [HttpPost]
+        public ActionResult InputNewPassword(string token, string password)
+        {
+            Mahasiswa mahasiswa = GetMahasiswaByToken(token);
+            if (mahasiswa != null)
+            {
+                mahasiswa.IsActive = true;
+                mahasiswa.Token = null;
+                mahasiswa.Password = HashPasswordService.HashPassword(password);
+                _mahasiswaService.Save(mahasiswa);
+                return Json(new ServiceResponse { status = 200, message = "Password Telah Diperbaharui, silahkan login!" });
+            }
+            else
+            {
+                return Json(new ServiceResponse { status = 500, message = "Tolong Ulangi Akses URL Email" });
+            }
+        }
+
+        public ActionResult ResetPassword()
+        {
+            TempData["alertMessage"] = "ResetPassword";
+            return RedirectToAction("Index", "Home");
+        }
+
+        public bool SendEmailReset(string email, string token)
+        {
+            MailHelper emailHelper = new MailHelper();
+            string domain = ConfigurationManager.AppSettings["Domain"];
+            string url = this.Url.Action("ResetPassword", "Home", null);
+            string subject = "Reset Password ";
+            string body = "Here is your reset code <br><br> " + token + " <br><br> Please enter link below to reset your password <br> <a href='" + domain + url + "'>here</a><br>";
+            List<string> tos = new List<string>();
+            tos.Add(email);
+            return emailHelper.SendMail(subject, body, ConfigurationManager.AppSettings["EmailFrom"], tos, null, null, true);
+        }
+
         public ActionResult RegisterExternal(Mahasiswa mahasiswa)
         {
             try
