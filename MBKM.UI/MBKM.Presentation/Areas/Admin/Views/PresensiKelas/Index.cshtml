@@ -4,6 +4,16 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout2.cshtml";
 }
 
+@section css{
+
+    <link rel="stylesheet" type="text/css" href="~/Content/Admin/inputResponsive.css">
+    @Scripts.Render("~/bundles/jquery")
+
+
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/sweetalert2.all.min.js"></script>
+}
+
 <style>
 
     .coral {
@@ -79,7 +89,7 @@
     @*<input type="hidden" id="ruangKelas" name="ruangKelas" />*@
     <input type="hidden" id="section" name="section" />
     @*<input type="hidden" id="jamMasuk" name="jamMasuk" />
-    <input type="hidden" id="jamKeluar" name="jamKeluar" />*@
+        <input type="hidden" id="jamKeluar" name="jamKeluar" />*@
     <input type="hidden" id="detailPresensi" name="detailPresensi" />
 </form>
 
@@ -91,57 +101,66 @@
         </h5>
         <hr />
         <div class="container" style="width: 100%; padding-bottom: 15px;">
-            <table class="table" style="width: auto;">
-                <tr>
-                    <td style="text-align: right">Tahun Semester</td>
-                    <td style="width: 400px;">
-                        <select name="tahunSemester" id="tahunSemester" class="form-control input-md"></select>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align: right">Jenjang Studi</td>
-                    <td style="width: 400px;">
-                        <select name="jenjangStudi" id="jenjangStudi" class="form-control input-md"></select>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align: right">Fakultas</td>
-                    <td style="width: 400px;">
-                        <select name="fakultas" id="fakultas" class="form-control input-md"></select>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align: right">Program Studi</td>
-                    <td style="width: 400px;">
-                        <select name="prodi" id="prodi" class="form-control input-md"></select>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align: right">Lokasi</td>
-                    <td style="width: 400px;">
-                        <select name="lokasi" id="lokasi" class="form-control input-md"></select>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align: right">Mata Kuliah</td>
-                    <td style="width: 400px;">
-                        <select name="mataKuliah" id="mataKuliah" class="form-control input-md"></select>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align: right">Seksi (Opsional)</td>
-                    <td style="width: 400px;">
-                        <select name="seksi" id="seksi" class="form-control input-md"></select>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <button id="cari" name="cari" class="btn" style="float: right; background-color: #FF8A04; color: white; padding: 2px 30px; font-weight: bold; font-size: 16px;">CARI</button>
-                    </td>
-                </tr>
-            </table>
-            <hr />
-            <div style="overflow-x: auto;">
+            <div class="col-md-12">
+                <form class="form-horizontal col-md-7">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Tahun Semester</label>
+                        <div class="col-sm-9">
+                            <select name="tahunSemester" id="tahunSemester" class="form-control input-md"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inp_jenjang" class="col-sm-3 control-label">Jenjang Studi</label>
+                        <div class="col-sm-9">
+                            <select name="jenjangStudi" id="jenjangStudi" class="form-control input-md"></select>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inp_fakultas" class="col-sm-3 control-label">Fakultas</label>
+                        <div class="col-sm-9">
+                            <select name="fakultas" id="fakultas" class="form-control input-md"></select>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inp_prodi" class="col-sm-3 control-label">Program Studi</label>
+
+                        <div class="col-sm-9">
+                            <select name="prodi" id="prodi" class="form-control input-md"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inp_lokasi" class="col-sm-3 control-label">Lokasi</label>
+                        <div class="col-sm-9">
+                            <select name="lokasi" id="lokasi" class="form-control input-md"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inp_matakuliah" class="col-sm-3 control-label">Mata Kuliah</label>
+                        <div class="col-sm-9">
+                            <select name="mataKuliah" id="mataKuliah" class="form-control input-md"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inp_seksi" class="col-sm-3 control-label">Seksi (Optional)</label>
+                        <div class="col-sm-9">
+                            <select name="seksi" id="seksi" class="form-control input-md"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2 col-md-offset-10">
+                            <button id="cari" name="cari" class="btn" style="float: right; background-color: #FF8A04; color: white; padding: 2px 30px; font-weight: bold; font-size: 16px;">CARI</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+            <br />
+            <br />
+
+            <div style="overflow-x: auto;" class="col-md-12">
                 <h5 class="card-title" style="padding-top: 15px; padding-right: 15px; font-weight: bold; font-size: 18px; color: black; ">
                     DAFTAR PERTEMUAN
                 </h5>
