@@ -95,92 +95,89 @@
 
             </h4>
             <hr />
-                <table class="table" style="width: auto;">
-                    <tr>
-                        <td style="text-align: right">Tahun Semester</td>
-                        <td style="width: 400px;">
-                            <select name="tahunSemester" id="tahunSemester" class="form-control input-md">
-                                <option value="@ViewData["KodeSemester"]" selected>@ViewData["NamaSemester"]</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: right">Jenjang Studi</td>
-                        <td style="width: 400px;">
-                            <select name="jenjangStudi" id="jenjangStudi" class="form-control input-md">
-                                <option value="" selected disabled>-- Pilih Jenjang Studi --</option>
-                                @*@{
-                                    if (ViewData["role"].ToString() == "Kepala Program Studi")
-                                    {
-                                        <option value="@ViewData["jenjangs"]" selected>@ViewData["jenjangs"]</option>
-                                    }
-                                   
+            <div class="container" style="width: 100%;">
+                <div class="col-md-12">
+                    <form class="form-horizontal col-md-7">
+                        @* batas atas filter *@
+                        <div class="form-group">
+                            <label for="inp_tahunAjaran" class="col-sm-3 control-label">Tahun Semester</label>
+                            <div class="col-sm-9">
+                                <select name="tahunSemester" id="tahunSemester" class="form-control input-md">
+                                    <option value="@ViewData["KodeSemester"]" selected>@ViewData["NamaSemester"]</option>
+                                </select>
+                            </div>
+                        </div>
 
-                                }*@
+                        <div class="form-group">
+                            <label for="inp_tahunAjaran" class="col-sm-3 control-label">Jenjang Studi</label>
+                            <div class="col-sm-9">
+                                <select name="jenjangStudi" id="jenjangStudi" class="form-control input-md">
+                                </select>
+                            </div>
+                        </div>
 
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: right">Fakultas</td>
-                        <td style="width: 400px;">
-                            <select name="fakultas" id="fakultas" class="form-control input-md">
-                                @{
-                                    if (ViewData["role"].ToString() == "Admin Fakultas")
-                                    {
-                                        <option value="@ViewData["KodeFakultas"]" selected>@ViewData["NamaFakultas"]</option>
+                        <div class="form-group">
+                            <label for="fakultas" class="col-sm-3 control-label">Fakultas</label>
+                            <div class="col-sm-9">
+                                <select name="fakultas" id="fakultas" class="form-control input-md">
+                                    @{
+                                        if (ViewData["role"].ToString() == "Admin Fakultas")
+                                        {
+                                            <option value="@ViewData["KodeFakultas"]" selected>@ViewData["NamaFakultas"]</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="" selected disabled>-- Pilih Fakultas --</option>
+                                        }
                                     }
-                                    else
-                                    {
-                                        <option value="" selected disabled>-- Pilih Fakultas --</option>
-                                    }
-                                }
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: right">Program Studi</td>
-                        <td style="width: 400px;">
-                            <select name="prodi" id="prodi" class="form-control input-md">
-                                @*@{
-                                    if (ViewData["role"].ToString() == "Kepala Program Studi")
-                                    {
-                                        <option value="@ViewData["NamaProdi"]" selected>@ViewData["NamaProdi"]</option>
-                                    }
-                                    else
-                                    {*@
-                                        <option value="" selected disabled>-- Pilih Prodi --</option>
-                                    @*}
-                                }*@
+                                </select>
+                            </div>
+                        </div>
 
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: right">Lokasi</td>
-                        <td style="width: 400px;">
-                            <select name="lokasi" id="lokasi" class="form-control input-md"></select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: right">Mata Kuliah</td>
-                        <td style="width: 400px;">
-                            <select name="mataKuliah" id="mataKuliah" class="form-control input-md"></select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: right">Seksi (Optional)</td>
-                        <td style="width: 400px;">
-                            <select name="seksi" id="seksi" class="form-control input-md"></select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <button type="button" id="cari" class="btn btn-warning" style="float: right;" title="Mohon untuk melengkapi form pencarian terlebih dahulu!" disabled><span class="fa fa-search"></span> Cari</button>
-                        </td>
-                    </tr>
-                </table>
-                <hr />
+                        <div class="form-group">
+                            <label for="prodi" class="col-sm-3 control-label">Program Studi</label>
+                            <div class="col-sm-9">
+                                <select name="prodi" id="prodi" class="form-control input-md">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lokasi" class="col-sm-3 control-label">Lokasi</label>
+                            <div class="col-sm-9">
+                                <select name="lokasi" id="lokasi" class="form-control input-md">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="mataKuliah" class="col-sm-3 control-label">Mata Kuliah</label>
+                            <div class="col-sm-9">
+                                <select name="mataKuliah" id="mataKuliah" class="form-control input-md">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="seksi" class="col-sm-3 control-label">Seksi (Optional)</label>
+                            <div class="col-sm-9">
+                                <select name="seksi" id="seksi" class="form-control input-md">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2 col-md-offset-10">
+                                <button type="button" id="cari" class="btn btn-warning" style="float: right;" title="Mohon untuk melengkapi form pencarian terlebih dahulu!" disabled><span class="fa fa-search"></span> Cari</button>
+                            </div>
+                        </div>
+                        @* batas bawah filter *@
+                    </form>
+
+                </div>
+            </div>
+                
+                @*<hr />*@
                 <div style="overflow-x: auto;">
                     <table id="table-data-master-mapping-cpl" class="table table-bordered table-spacing js-basic-example dataTable display nowrap">
                         <thead>
