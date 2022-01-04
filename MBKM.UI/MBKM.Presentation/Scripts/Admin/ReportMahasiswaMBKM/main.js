@@ -340,7 +340,7 @@ function GetFilePDF() {
             confirmButtonText: 'OK'
         })
     } else {
-        window.location.href = "/Admin/ReportMahasiswaMBKM/getDataPdf/" + $('#inp_semester :selected').val();
+        window.open("/Admin/ReportMahasiswaMBKM/getDataPdf/" + $('#inp_semester :selected').val(), '_blank');
     }
 }
 

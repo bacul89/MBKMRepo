@@ -259,7 +259,7 @@ function GetFilePDF() {
             confirmButtonText: 'OK'
         })
     } else {
-        window.location.href = "/Admin/ReportInternalKeluar/GetDataPDF/" + $('#inp_semester :selected').val();
+        window.open("/Admin/ReportInternalKeluar/GetDataPDF/" + $('#inp_semester :selected').val(), '_blank');
     }
 }
 

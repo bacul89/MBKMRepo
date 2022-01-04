@@ -340,7 +340,7 @@ function GetFilePDF() {
             confirmButtonText: 'OK'
         })
     } else {
-        window.location.href = "/Admin/ReportMBKMInternalPertukaran/GetFilePdf/" + $('#inp_semester :selected').val();
+        window.open("/Admin/ReportMBKMInternalPertukaran/GetFilePdf/" + $('#inp_semester :selected').val(), '_blank');
     }
 }
 
