@@ -291,7 +291,7 @@ function GetFilePDF() {
             confirmButtonText: 'OK'
         })
     } else {
-        window.location.href = "/Admin/ReportMBKMNonPertukaran/GetDataPDF/" + $('#inp_semester :selected').val();
+        window.open("/Admin/ReportMBKMNonPertukaran/GetDataPDF/" + $('#inp_semester :selected').val(), '_blank');
     }
 }
 

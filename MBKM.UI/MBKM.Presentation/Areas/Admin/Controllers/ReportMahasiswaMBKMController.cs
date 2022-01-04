@@ -59,6 +59,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             foreach (var d in dataProdi)
             {
                 int prodiId = int.Parse(d.IDProdi);
+                var NP = d.NamaProdi.Split('-');
                 var datapertama = _jadwalKuliahService.Find(x => x.ProdiID == prodiId).FirstOrDefault();
                 if (datapertama != null)
                 {
@@ -71,8 +72,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         dataSemester.Nama,
                         datapertama.JenjangStudi,
                         datapertama.NamaFakultas,
-                        datapertama.NamaProdi,
-                        datapertama.Lokasi,
+                        NP[1],
+                        d.Lokasi,
                         internalLintasProdi.ToString(),
                         internalKeLuar.ToString(),
                         countEksternal.ToString(),
