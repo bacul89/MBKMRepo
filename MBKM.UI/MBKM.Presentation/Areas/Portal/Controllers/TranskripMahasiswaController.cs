@@ -68,12 +68,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
 
 
             Mahasiswa mahasiswa = GetMahasiswaByEmail(email);
-            //VMSemester semester = _jkMhsService.getOngoingSemester(mahasiswa.JenjangStudi);
+            //
             //String strmString;
             //int semesterID;
 
            
-
             List<object> data = new List<object>();
             var transkrip = _transkripService.Find(m => m.MahasiswaID == mahasiswa.ID && m.IsActive == true && m.IsDeleted == false).ToList();
 
@@ -90,6 +89,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 {
                     strmString = item.JadwalKuliahs.STRM.ToString();
                 }
+
                 VMNilaiBobot  Nilai = _transkripService.GetBobotNilai(item.NilaiTotal);               
                 
                 //return View(model);
@@ -112,6 +112,14 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 };
                 data.Add(row);
             }
+
+
+            if (strmString == "")
+            {
+                VMSemester semester = _jkMhsService.getOngoingSemester(mahasiswa.JenjangStudi);
+                strmString = semester.ID.ToString();
+            }
+
 
             //Int32 strm  = strmString.parse();
             int strmInt = Int32.Parse(strmString);
