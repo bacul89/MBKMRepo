@@ -114,6 +114,7 @@ var Nilais;
 var mhsName;
 var mhsNIM;
 var mhsStrm;
+var mhsStrmId;
 
 //NilaiGrades
 function getNilai() {
@@ -127,17 +128,21 @@ function getNilai() {
             
 
             convertBirthday(resultTranskip.mahasiswaBirthday);
+            mhsName = resultTranskip.mahasiswaName;
+            mhsNIM = resultTranskip.mahasiswaNIM;
+            mhsStrm = resultTranskip.semester;
+            mhsStrmId = resultTranskip.strm;
+
+            console.log(mhsStrmId);
 
             if (resultTranskip.pertukaran == true) {
-                CheckStatusFeedback(true, 'internal');                
+                CheckStatusFeedback(true, 'internal', mhsStrmId);
             } else {
                 Nilais = resultTranskip.transkrip;
                 showValue(resultTranskip.transkrip);
             }
 
-            mhsName = resultTranskip.mahasiswaName;
-            mhsNIM = resultTranskip.mahasiswaNIM;
-            mhsStrm = resultTranskip.semester;
+
 
             
                 /*$.ajax({
@@ -231,7 +236,7 @@ function showValue(result) {
             if (i == 0) {
                 //console.log(result[i].FlagCetak);
                 //$("#btnCetak").prop("disabled", false);
-                CheckStatusFeedback(result[i].FlagCetak, result.length);
+                CheckStatusFeedback(result[i].FlagCetak, result.length, mhsStrmId);
             }
 
             var kodematakuliah = "<td>" + result[i].KodeMataKuliah + "</td>";
@@ -340,7 +345,7 @@ function showValue(result) {
         $("#totalSksPrint").html(sksTotal);
         $("#totalGradePrint").html(gradeTotal.toFixed(2));
     } else {
-        CheckStatusFeedback(false, 'eksternal');
+        CheckStatusFeedback(false, 'eksternal', mhsStrmId);
     }
 
 }
@@ -367,7 +372,8 @@ function print(id, nim) {
                 url: '/Portal/TranskripMahasiswa/UpdateStatus',
                 type: 'post',
                 data: {
-                    idMahasiswa: idMahasiswa
+                    idMahasiswa : idMahasiswa,
+                    strmStr : mhsStrmId
                 },
                 datatype: 'json',
                 success: function (e) {
@@ -566,11 +572,15 @@ function printSertifikat() {
 
 var feedbackStatus;
 var alert;
-function CheckStatusFeedback(FlagTranscript, row) {
+function CheckStatusFeedback(FlagTranscript, row, mhsStrmId) {
+    console.log(mhsStrmId);
     $.ajax({
         url: '/Portal/TranskripMahasiswa/CheckStatusFeedback',
         type: 'POST',
         datatype: 'json',
+        data: {
+           strmStr: mhsStrmId 
+        },
         success: function (result) {
             //console.log(result);
             //var status = result[0][5];
