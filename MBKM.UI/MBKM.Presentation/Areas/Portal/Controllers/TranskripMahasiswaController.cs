@@ -68,33 +68,34 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
 
 
             Mahasiswa mahasiswa = GetMahasiswaByEmail(email);
-            VMSemester semester = _jkMhsService.getOngoingSemester(mahasiswa.JenjangStudi);
-            var strmString = semester.ID;
-
-            var cry = false;
-            try
-            {
-                var infoPertukaran = _informasiPertukaranService.Find(m => m.MahasiswaID == mahasiswa.ID && m.STRM == strmString).First();
-                cry = true;
-            }
-            catch
-            {
-                cry = false;
-            }
+            //VMSemester semester = _jkMhsService.getOngoingSemester(mahasiswa.JenjangStudi);
+            //String strmString;
+            //int semesterID;
 
            
 
             List<object> data = new List<object>();
             var transkrip = _transkripService.Find(m => m.MahasiswaID == mahasiswa.ID && m.IsActive == true && m.IsDeleted == false).ToList();
 
+
+
+
+
+            string strmString ="";
+            int temp = 0;
             foreach (var item in transkrip)
             {
-
+                temp++;
+                if (temp == 1)
+                {
+                    strmString = item.JadwalKuliahs.STRM.ToString();
+                }
                 VMNilaiBobot  Nilai = _transkripService.GetBobotNilai(item.NilaiTotal);               
                 
                 //return View(model);
                 var row = new
                 {
+                    
                     ID = item.ID,
                     //mhs = item.Mahasiswas,
                     FlagCetak = item.FlagCetak,
@@ -112,12 +113,30 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 data.Add(row);
             }
 
+            //Int32 strm  = strmString.parse();
+            int strmInt = Int32.Parse(strmString);
+            var strmName = _feedbackMatkulService.GetSemesterByStrm(strmInt.ToString());
+
+            var cry = false;
+            try
+            {
+                var infoPertukaran = _informasiPertukaranService.Find(m => m.MahasiswaID == mahasiswa.ID && m.STRM == strmInt).First();
+                cry = true;
+            }
+            catch
+            {
+                cry = false;
+            }
+
+
+
             var result = new
             {                
                 pertukaran = cry,
                 transkrip = data,
                 mahasiswaBirthday = mahasiswa.TanggalLahir,
-                semester = semester.Nama,
+                semester = strmName.Nama,
+                strm = strmInt,
                 mahasiswaName = mahasiswa.Nama,
                 mahasiswaNIM = mahasiswa.NIM
             };
@@ -134,16 +153,16 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateStatus(int idMahasiswa)
+        public ActionResult UpdateStatus(int idMahasiswa, string strmStr)
         {
             try
             {
                 string email = Session["emailMahasiswa"] as string;
                 Mahasiswa mahasiswa = GetMahasiswaByEmail(email);
-                VMSemester semester = _jkMhsService.getOngoingSemester(mahasiswa.JenjangStudi);
+                //VMSemester semester = _jkMhsService.getOngoingSemester(mahasiswa.JenjangStudi);
 
-                var strmString = semester.ID;
-                int strm = Int32.Parse(strmString.ToString());
+                //var strmString = semester.ID;
+                int strm = Int32.Parse(strmStr.ToString());
 
                 var data = _feedbackMatkulService.Find(x => x.JadwalKuliahs.STRM == strm).Where(x => x.MahasiswaID == mahasiswa.ID)
                     .GroupBy(z => new { z.MahasiswaID, z.StatusFeedBack, z.Mahasiswas, z.JadwalKuliahID })
@@ -158,7 +177,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 var pendaftaran = _pendaftaranMataKuliahService.Find(x => x.JadwalKuliahs.STRM == strm && x.MahasiswaID == mahasiswa.ID && x.StatusPendaftaran.ToLower().Contains("accepted")).ToList();
 
                 List<String[]> final = new List<String[]>();
-                var DescSemester = _feedbackMatkulService.GetSemesterByStrm(strmString.ToString());
+                var DescSemester = _feedbackMatkulService.GetSemesterByStrm(strmStr.ToString());
                 foreach (var d in data2)
                 {
                     var dataCheck = data.Where(x => x.MahasiswaID == d.MahasiswaID && x.Status == false).Count();
@@ -312,16 +331,16 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
 
         [HttpPost]
-        public ActionResult CheckStatusFeedback()
+        public ActionResult CheckStatusFeedback(string strmStr)
         {
             string email = Session["emailMahasiswa"] as string;
             Mahasiswa mahasiswa = GetMahasiswaByEmail(email);
-            VMSemester semester = _jkMhsService.getOngoingSemester(mahasiswa.JenjangStudi);
+            //VMSemester semester = _jkMhsService.getOngoingSemester(mahasiswa.JenjangStudi);
 
 
 
-            var strmString = semester.ID;
-            int strm = Int32.Parse(strmString.ToString());
+            //var strmStr = semester.ID;
+            int strm = Int32.Parse(strmStr.ToString());
 
             var data = _feedbackMatkulService.Find(x => x.JadwalKuliahs.STRM == strm && x.MahasiswaID == mahasiswa.ID && x.IsDeleted == false)
                 .GroupBy(z => new { z.MahasiswaID, z.StatusFeedBack, z.Mahasiswas, z.JadwalKuliahID })
