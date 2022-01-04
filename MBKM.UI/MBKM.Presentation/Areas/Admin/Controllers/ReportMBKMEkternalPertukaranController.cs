@@ -697,15 +697,31 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
 
             ViewData["semester"] = dataSemester.Nama;
             ViewData["mahasiswas"] = final;
-            return new ViewAsPdf()
-            {
+
+
+
+            //return new ViewAsPdf("")
+                //ViewData["datas"] = final;
+            var semesterBerjalan = _mahasiswaService.GetDataSemester(null).First().Nama;
+            Response.AppendHeader("Content-Disposition", "inline; filename="+ dataSemester.Nama + " - ReportPertukaranExternal.pdf");
+            
+            return 
+                 new ViewAsPdf("ExportPDF")
+                 {
+                     PageOrientation = Rotativa.Options.Orientation.Landscape,
+                 };
+
+
+
+            /*{
                 FileName = dataSemester.Nama+" - ReportPertukaranExternal.pdf",
                 PageSize = Rotativa.Options.Size.A4,
                 PageOrientation = Orientation.Landscape,
                 //CustomSwitches = footer,
                 PageMargins = new Margins(5, 3, 5, 3)
 
-            };
+            }*/
+            ;
 
         }
 
