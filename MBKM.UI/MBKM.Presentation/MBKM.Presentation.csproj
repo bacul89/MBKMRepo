@@ -196,7 +196,6 @@
     <Compile Include="Areas\Portal\Controllers\TrackingStatusPendaftaranController.cs" />
     <Compile Include="Areas\Portal\Controllers\TranskripMahasiswaController.cs" />
     <Compile Include="Areas\Portal\PortalAreaRegistration.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UnAuthorizedController.cs" />
     <Compile Include="Helper\CapaiaMatakuliahSertifkatDTO.cs" />
