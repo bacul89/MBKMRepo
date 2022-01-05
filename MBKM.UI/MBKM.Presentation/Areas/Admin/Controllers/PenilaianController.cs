@@ -494,7 +494,20 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         cek.UpdatedDate = DateTime.Now;
                         _nilaiKuliahService.Save(cek);
                     }
+
+                    List<NilaiKuliah> updateStatusCetak = _nilaiKuliahService.Find(x => x.MahasiswaID == item.MahasiswaID && x.FlagCetak == true).ToList();
+                    if(updateStatusCetak.Count() != 0)
+                    {
+                        foreach(var d in updateStatusCetak)
+                        {
+                            d.FlagCetak = false;
+                            _nilaiKuliahService.Save(d);     
+                        }
+                    }
+
                 }
+                
+                
                 return Json(new ServiceResponse { status = 200, message = "Nilai berhasil disimpan!" });
             }
             catch (Exception e)
