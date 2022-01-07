@@ -374,7 +374,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             var data1 = _mahasiswaService.GetNim(2110);
             string[] data = data1.Split(new string[] { "MBKM" }, StringSplitOptions.None);
             int x = Int32.Parse(data[1]);
-            _mahasiswaService.UpdateNim(x);
+            _mahasiswaService.UpdateNim(x, 2111);
             var data2 = _mahasiswaService.GetNim(2110);
             return Json(data2);
         }

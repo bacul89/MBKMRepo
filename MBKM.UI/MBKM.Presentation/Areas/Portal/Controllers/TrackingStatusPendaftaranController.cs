@@ -277,7 +277,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                         string data = NimBaru.Substring(NimBaru.Length - 4);
                         /*string[] tempNimArray = NimBaru.Split(new string[] { "MBKM" }, StringSplitOptions.None);*/
                         int CountNim = Int32.Parse(data);
-                        _mahasiswaService.UpdateNim(CountNim);
+                        _mahasiswaService.UpdateNim(CountNim, Convert.ToInt32(datasemester));
                     }
 
                     ApprovalPendaftaran tempHistoryApproval = new ApprovalPendaftaran();

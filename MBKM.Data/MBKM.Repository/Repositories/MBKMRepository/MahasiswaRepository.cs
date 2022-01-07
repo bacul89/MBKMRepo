@@ -91,14 +91,14 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             }
         }
 
-        public void UpdateNim(int Nilai)
+        public void UpdateNim(int Nilai, int strm)
         {
             using (var context = new MBKMContext())
             {
                 try
                 {
                     var tmpNilai = new SqlParameter("@Nilai", Nilai);
-                    var tmpTahun = new SqlParameter("@Tahun", DateTime.Now.Year);
+                    var tmpTahun = new SqlParameter("@Tahun", strm);
                     context.Database.ExecuteSqlCommand("UpdateNourut @Nilai, @Tahun", tmpNilai, tmpTahun);
                 }catch(Exception e)
                 {
