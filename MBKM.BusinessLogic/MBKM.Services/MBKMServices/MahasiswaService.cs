@@ -17,7 +17,7 @@ namespace MBKM.Services.MBKMServices
         VMLogin getLoginInternal(string StudentID, string Password);
         List<Mahasiswa> getMahasiswasNotYetVer(string Universitas, string Prodi);
         VMListMahasiswa getMahasiswasNotYetVer(DataTableAjaxPostModel model);
-        string GetNim();
+        string GetNim(int strm);
         void UpdateNim(int Nilai);
         void GenerateAbsence(long jadwalKuliahId, long mahasiswaId, string kodeMk, string classSection, string strm, string fakultasId);
         IEnumerable<VMSemester> GetDataSemester(string jenjangStudi);
@@ -82,9 +82,9 @@ namespace MBKM.Services.MBKMServices
             return _mahasiswaRepository.getMahasiswasNotYetVer(skip, take, searchBy, sortBy, sortDir);
         }
 
-        public string GetNim()
+        public string GetNim(int strm)
         {
-            return _mahasiswaRepository.GetNim();
+            return _mahasiswaRepository.GetNim(strm);
         }
 
         public void UpdateNim(int Nilai)

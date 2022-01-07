@@ -80,11 +80,11 @@ namespace MBKM.Repository.Repositories.MBKMRepository
             }
         }
 
-        public string GetNim()
+        public string GetNim(int strm)
         {
             using (var context = new MBKMContext())
             {
-                var Tahun = new SqlParameter("@TAHUN", DateTime.Now.Year);
+                var Tahun = new SqlParameter("@TAHUN", strm);
                 var result = context.Database
                     .SqlQuery<string>("GetNIM @TAHUN", Tahun).Last();
                 return result;

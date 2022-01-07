@@ -371,11 +371,11 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
         [HttpPost]
         public JsonResult GetCobaCoba()
         {
-            var data1 = _mahasiswaService.GetNim();
+            var data1 = _mahasiswaService.GetNim(2110);
             string[] data = data1.Split(new string[] { "MBKM" }, StringSplitOptions.None);
             int x = Int32.Parse(data[1]);
             _mahasiswaService.UpdateNim(x);
-            var data2 = _mahasiswaService.GetNim();
+            var data2 = _mahasiswaService.GetNim(2110);
             return Json(data2);
         }
 

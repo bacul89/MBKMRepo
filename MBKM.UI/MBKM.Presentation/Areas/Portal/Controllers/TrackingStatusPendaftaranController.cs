@@ -263,10 +263,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 PendaftaranMataKuliah pendaftaran = _pendaftaranMataKuliahService.Get(TmpApproval.PendaftaranMataKuliahID);
                 pendaftaran.StatusPendaftaran = "ACCEPTED BY MAHASISWA";
                 pendaftaran.UpdatedDate = DateTime.Now;
+                var datasemester = _mahasiswaService.GetDataSemester(null).First().Nilai;
                 try
                 {
                     _pendaftaranMataKuliahService.Save(pendaftaran);
-                    var NimBaru = _mahasiswaService.GetNim();
+                    var NimBaru = _mahasiswaService.GetNim(Convert.ToInt32(datasemester));
                     
                     if (pendaftaran.mahasiswas.NIM == null /*|| (pendaftaran.mahasiswas.NIM != pendaftaran.mahasiswas.NIMAsal && !pendaftaran.mahasiswas.NIM.Contains("MBKM"))*/)
                     {
@@ -331,10 +332,11 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 PendaftaranMataKuliah pendaftaran = _pendaftaranMataKuliahService.Get(TmpApproval.PendaftaranMataKuliahID);
                 pendaftaran.StatusPendaftaran = "REJECTED BY MAHASISWA";
                 pendaftaran.UpdatedDate = DateTime.Now;
+                var datasemester = _mahasiswaService.GetDataSemester(null).First().Nilai;
                 try
                 {
                     _pendaftaranMataKuliahService.Save(pendaftaran);
-                    var NimBaru = _mahasiswaService.GetNim();
+                    var NimBaru = _mahasiswaService.GetNim(Convert.ToInt32(datasemester));
 
                     ApprovalPendaftaran tempHistoryApproval = new ApprovalPendaftaran();
                     tempHistoryApproval.Approval = "MAHASISWA";
