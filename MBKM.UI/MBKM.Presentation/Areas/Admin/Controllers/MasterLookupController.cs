@@ -88,6 +88,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             var data = _lookupService.Get(id);
             data.IsDeleted = true;
             data.UpdatedBy = Session["username"] as string;
+            data.UpdatedDate = DateTime.Now;
 
             _lookupService.Save(data);
             return Json(data);

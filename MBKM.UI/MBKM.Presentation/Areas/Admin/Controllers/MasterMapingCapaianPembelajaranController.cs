@@ -188,9 +188,10 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         data.IsActive = cplMatakuliah.IsActive;
                         data.MasterCapaianPembelajaranID = cplMatakuliah.MasterCapaianPembelajaranID;
                         data.Kelompok = cplMatakuliah.Kelompok;
+                        data.CreatedBy = data.CreatedBy;
                         data.UpdatedBy = Session["username"] as string;
                         data.CreatedDate = data.CreatedDate;
-                        data.UpdatedDate = DateTime.Now;
+                        data.UpdatedDate = DateTime.Now;                        
 
                         _cplMatakuliah.Save(data);
 
@@ -221,6 +222,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         data.IsActive = cplMatakuliah.IsActive;
                         data.MasterCapaianPembelajaranID = cplMatakuliah.MasterCapaianPembelajaranID;
                         data.Kelompok = cplMatakuliah.Kelompok;
+                        data.CreatedBy = data.CreatedBy;
                         data.UpdatedBy = Session["username"] as string;
                         data.CreatedDate = data.CreatedDate;
                         data.UpdatedDate = DateTime.Now;
