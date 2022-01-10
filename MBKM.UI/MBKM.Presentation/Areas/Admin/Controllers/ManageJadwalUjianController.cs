@@ -153,7 +153,9 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     dataBaru.JadwalUjianMBKMID = idData;
                     dataBaru.MahasiswaID = int.Parse(dt);
                     dataBaru.CreatedBy = HttpContext.Session["username"].ToString();
+                    dataBaru.UpdatedBy = HttpContext.Session["username"].ToString();
                     dataBaru.CreatedDate = DateTime.Now;
+                    dataBaru.UpdatedDate = DateTime.Now;
                     dataBaru.IsActive = true;
                     dataBaru.IsDeleted = false;
                 

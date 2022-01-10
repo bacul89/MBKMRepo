@@ -165,7 +165,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             dBaru.DosenID = answer.First().dosenID;
             dBaru.NamaDosen = answer.First().namaDosen;
             dBaru.StatusFeedBack = false;
-            dBaru.CreatedBy = "MAHASISWA";
+            dBaru.CreatedBy = HttpContext.Session["nama"].ToString();
             dBaru.CreatedDate = DateTime.Now;
             dBaru.IsActive = true;
             dBaru.IsDeleted = false;

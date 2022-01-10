@@ -323,6 +323,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         tmp.CreatedDate = DateTime.Now;
                         tmp.IsActive = true;
                         tmp.IsDeleted = false;
+                        tmp.UpdatedBy = HttpContext.Session["username"].ToString();
                         tmp.UpdatedDate = DateTime.Now;
                     }
                     if (isSub)
@@ -342,15 +343,18 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                             cek2.CWSub9 = tmpCW.CWSub9;
                             cek2.CWSub10 = tmpCW.CWSub10;
                             cek2.NilaiTotal = tmpCW.NilaiTotal;
+                            cek2.UpdatedBy = HttpContext.Session["username"].ToString();
                             cek2.UpdatedDate = DateTime.Now;
                             _nilaiSubCWService.Save(cek2);
                         }
                         else
                         {
                             tmp.NilaiSubCWs = new List<NilaiSubCW>();
+                            tmpCW.CreatedBy = HttpContext.Session["username"].ToString();
                             tmpCW.CreatedDate = DateTime.Now;
                             tmpCW.IsActive = true;
                             tmpCW.IsDeleted = false;
+                            tmpCW.UpdatedBy = HttpContext.Session["username"].ToString();
                             tmpCW.UpdatedDate = DateTime.Now;
                             tmp.NilaiSubCWs.Add(tmpCW);
                         }
@@ -373,14 +377,17 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                             cek2.CWSub9 = tmpCW.CWSub9;
                             cek2.CWSub10 = tmpCW.CWSub10;
                             cek2.NilaiTotal = tmpCW.NilaiTotal;
+                            cek2.UpdatedBy = HttpContext.Session["username"].ToString();
                             cek2.UpdatedDate = DateTime.Now;
                             _nilaiSubCWService.Save(cek2);
                         }
                         else
                         {
                             tmpCW.CreatedDate = DateTime.Now;
+                            tmpCW.CreatedBy = HttpContext.Session["username"].ToString();
                             tmpCW.IsActive = true;
                             tmpCW.IsDeleted = false;
+                            tmpCW.UpdatedBy = HttpContext.Session["username"].ToString();
                             tmpCW.UpdatedDate = DateTime.Now;
                             tmp.NilaiSubCWs.Add(tmpCW);
                         }
@@ -403,14 +410,17 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                             cek2.CWSub9 = tmpCW.CWSub9;
                             cek2.CWSub10 = tmpCW.CWSub10;
                             cek2.NilaiTotal = tmpCW.NilaiTotal;
+                            cek2.UpdatedBy = HttpContext.Session["username"].ToString();
                             cek2.UpdatedDate = DateTime.Now;
                             _nilaiSubCWService.Save(cek2);
                         }
                         else
                         {
+                            tmpCW.CreatedBy = HttpContext.Session["username"].ToString();
                             tmpCW.CreatedDate = DateTime.Now;
                             tmpCW.IsActive = true;
                             tmpCW.IsDeleted = false;
+                            tmpCW.UpdatedBy = HttpContext.Session["username"].ToString();
                             tmpCW.UpdatedDate = DateTime.Now;
                             tmp.NilaiSubCWs.Add(tmpCW);
                         }
@@ -433,15 +443,18 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                             cek2.CWSub9 = tmpCW.CWSub9;
                             cek2.CWSub10 = tmpCW.CWSub10;
                             cek2.NilaiTotal = tmpCW.NilaiTotal;
+                            cek2.UpdatedBy = HttpContext.Session["username"].ToString();
                             cek2.UpdatedDate = DateTime.Now;
                             _nilaiSubCWService.Save(cek2);
                         }
                         else
                         {
+                            tmpCW.CreatedBy = HttpContext.Session["username"].ToString();
                             tmpCW.CreatedDate = DateTime.Now;
                             tmpCW.IsActive = true;
                             tmpCW.IsDeleted = false;
                             tmpCW.UpdatedDate = DateTime.Now;
+                            tmpCW.UpdatedBy = HttpContext.Session["username"].ToString();
                             tmp.NilaiSubCWs.Add(tmpCW);
                         }
 
@@ -463,14 +476,17 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                             cek2.CWSub9 = tmpCW.CWSub9;
                             cek2.CWSub10 = tmpCW.CWSub10;
                             cek2.NilaiTotal = tmpCW.NilaiTotal;
+                            cek2.UpdatedBy = HttpContext.Session["username"].ToString();
                             cek2.UpdatedDate = DateTime.Now;
                             _nilaiSubCWService.Save(cek2);
                         }
                         else
                         {
+                            tmpCW.CreatedBy = HttpContext.Session["username"].ToString();
                             tmpCW.CreatedDate = DateTime.Now;
                             tmpCW.IsActive = true;
                             tmpCW.IsDeleted = false;
+                            tmpCW.UpdatedBy = HttpContext.Session["username"].ToString();
                             tmpCW.UpdatedDate = DateTime.Now;
                             tmp.NilaiSubCWs.Add(tmpCW);
                         }
@@ -491,6 +507,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         cek.Final = tmp.Final;
                         cek.NilaiTotal = tmp.NilaiTotal;
                         cek.Grade = tmp.Grade;
+                        cek.UpdatedBy = HttpContext.Session["username"].ToString();
                         cek.UpdatedDate = DateTime.Now;
                         _nilaiKuliahService.Save(cek);
                     }
