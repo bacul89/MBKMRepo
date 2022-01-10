@@ -35,8 +35,10 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                 x.KodeTipeUjian == jenisUjian &&
                 x.STRM == tahunSemester);
 
+                var flagOpen = context.jadwalKuliahs.Where(x => x.FlagOpen == true).Select(c => c.MataKuliahID).ToList();
+
                 var result = result1.AsEnumerable()
-                 .Where(p => int.Parse(p.FakultasID) == int.Parse(fakultas));
+                 .Where(p => int.Parse(p.FakultasID) == int.Parse(fakultas) && flagOpen.Contains(p.IDMatkul));
 
 
                 mListJadwalUjian.TotalCount = result.Count();
@@ -67,6 +69,7 @@ namespace MBKM.Repository.Repositories.MBKMRepository
                     .Select(z => new GridDataJadwalUjian
                     {
                         /*ID = z.ID,*/
+                        
                         KodeMatkul = z.KodeMatkul,
                         NamaMatkul = z.NamaMatkul,
                         ClassSection = z.ClassSection,
