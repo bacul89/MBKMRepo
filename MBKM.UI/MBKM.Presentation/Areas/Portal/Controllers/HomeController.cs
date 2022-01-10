@@ -21,14 +21,18 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         private ILookupService _lookupService;
         private IJadwalKuliahService _jadwalKuliahService;
         private IPendaftaranMataKuliahService _pendaftaranMataKuliahService;
-        public HomeController(IPendaftaranMataKuliahService pendaftaranMataKuliahService, IJadwalKuliahService jadwalKuliahService, IMahasiswaService mahasiswaService, IPerjanjianKerjasamaService perjanjianKerjasamaService, ILookupService lookupService)
+        private IAttachmentService _attachmentService;
+
+        public HomeController(IMahasiswaService mahasiswaService, IPerjanjianKerjasamaService perjanjianKerjasamaService, ILookupService lookupService, IJadwalKuliahService jadwalKuliahService, IPendaftaranMataKuliahService pendaftaranMataKuliahService, IAttachmentService attachmentService)
         {
             _mahasiswaService = mahasiswaService;
             _perjanjianKerjasamaService = perjanjianKerjasamaService;
+            _lookupService = lookupService;
             _jadwalKuliahService = jadwalKuliahService;
             _pendaftaranMataKuliahService = pendaftaranMataKuliahService;
-            _lookupService = lookupService;
+            _attachmentService = attachmentService;
         }
+
         // GET: Portal/Home 
         public ActionResult Index()
         {
@@ -310,6 +314,38 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         public string hp(string password)
         {
             return HashPasswordService.HashPassword(password);
+        }
+
+        public ActionResult DownloadFileUserGuide(string id)
+        { 
+
+            string path = ConfigurationManager.AppSettings["PathAttachmentMahasiswa"].ToString();
+            if(id == "y")
+            {
+                string fullName = Server.MapPath(path + "/UG-Internal.pdf");
+                byte[] fileBytes = GetFile(fullName);
+                return File(
+                fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, "User Guide Mahasiswa Internal.pdf");
+            }
+            else
+            {
+                string fullName = Server.MapPath(path + "/UG-Eksternal.pdf");
+                byte[] fileBytes = GetFile(fullName);
+                return File(
+                fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, "User Guide Mahasiswa Eksternal.pdf");
+
+            }
+            
+        }
+
+        byte[] GetFile(string s)
+        {
+            System.IO.FileStream fs = System.IO.File.OpenRead(s);
+            byte[] data = new byte[fs.Length];
+            int br = fs.Read(data, 0, data.Length);
+            if (br != fs.Length)
+                throw new System.IO.IOException(s);
+            return data;
         }
     }
 }

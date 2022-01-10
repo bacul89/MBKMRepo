@@ -657,6 +657,8 @@
     <Content Include="Views\UnAuthorized\Index.cshtml" />
     <Content Include="Upload\Karyawan %28menggantikan data Dosen%29.xlsx.xlsx" />
     <Content Include="Upload\32\coba.pdf" />
+    <Content Include="Upload\UG-Internal.pdf" />
+    <Content Include="Upload\UG-Eksternal.pdf" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

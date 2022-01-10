@@ -252,6 +252,9 @@
                         <a data-toggle="modal" data-target="#registrasi" style="color: #FF8A04;">Registrasi</a>
                         terlebih dahulu
                     </div>
+                    <div style="font-size: 20px; padding: 30px 0px;">
+                        Klik <a onclick="DownloadUserGuide()" style="color: #FF8A04;"> Disini </a> Untuk Informasi Penggunaan
+                    </div>
                 </div>
             </div>
         </div>
@@ -311,6 +314,11 @@
                 $("#univAsal").html("<div class= 'form-group'><label>Universitas Asal<h style='color: red;'> *</h></label><input type='text' name='NamaUniversitas' id='namaUniversitas' placeholder='Nama Universitas' class='form-control input-lg' /></div>");
             }
         });
+
+
+        function DownloadUserGuide() {
+            window.open("/Portal/Home/DownloadFileUserGuide/" + $("#jenisMhs").val(), '_blank');
+        }
 
         function SubmitEmailReset() {
             $.ajax({
