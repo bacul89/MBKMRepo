@@ -339,7 +339,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     informasiPertukaran.MahasiswaID = id;
                     informasiPertukaran.IsActive = true;
                     informasiPertukaran.IsDeleted = false;
+                    informasiPertukaran.CreatedBy = HttpContext.Session["name"].ToString();
                     informasiPertukaran.CreatedDate = DateTime.Now;
+                    informasiPertukaran.UpdatedBy = HttpContext.Session["name"].ToString();
                     informasiPertukaran.UpdatedDate = DateTime.Now;
                     try
                     {
@@ -358,6 +360,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     ip.LokasiTugas = informasiPertukaran.LokasiTugas;
                     ip.TanggalSK = informasiPertukaran.TanggalSK;
                     ip.NoSK = informasiPertukaran.NoSK;
+                    ip.UpdatedBy = HttpContext.Session["name"].ToString();
                     ip.UpdatedDate = DateTime.Now;
                     try
                     {
@@ -388,7 +391,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     pendaftaranMataKuliah.MahasiswaID = id;
                     pendaftaranMataKuliah.IsActive = true;
                     pendaftaranMataKuliah.IsDeleted = false;
+                    pendaftaranMataKuliah.CreatedBy = HttpContext.Session["name"].ToString();
                     pendaftaranMataKuliah.CreatedDate = DateTime.Now;
+                    pendaftaranMataKuliah.UpdatedBy = HttpContext.Session["name"].ToString();
                     pendaftaranMataKuliah.UpdatedDate = DateTime.Now;
                     pendaftaranMataKuliah.StatusPendaftaran = "MENUNGGU APPROVAL KAPRODI/WR BIDANG AKADEMIK";
                     //pendaftaranMataKuliah.Hasil += "a";
@@ -430,7 +435,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     approvalPendaftaran.Catatan = "-";
                     approvalPendaftaran.IsActive = true;
                     approvalPendaftaran.IsDeleted = false;
+                    approvalPendaftaran.CreatedBy = HttpContext.Session["name"].ToString();
                     approvalPendaftaran.CreatedDate = DateTime.Now;
+                    approvalPendaftaran.UpdatedBy = HttpContext.Session["name"].ToString();
                     approvalPendaftaran.UpdatedDate = DateTime.Now;
                     _approvalPendaftaranService.Save(approvalPendaftaran);
                     return Json(new ServiceResponse { status = 200, message = "Anda berhasil terdaftar, silahkan cek tracking pendaftaran untuk melihat status pendaftaran!" });
