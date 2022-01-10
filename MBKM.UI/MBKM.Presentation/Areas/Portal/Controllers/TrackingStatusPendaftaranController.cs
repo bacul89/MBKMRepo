@@ -287,8 +287,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     tempHistoryApproval.IsActive = true;
                     tempHistoryApproval.IsDeleted = false;
                     tempHistoryApproval.PendaftaranMataKuliahID = TmpApproval.PendaftaranMataKuliahID;
-                    tempHistoryApproval.CreatedBy = HttpContext.Session["name"].ToString();
-                    tempHistoryApproval.UpdatedBy = HttpContext.Session["name"].ToString();
+                    tempHistoryApproval.CreatedBy = HttpContext.Session["nama"].ToString();
+                    tempHistoryApproval.UpdatedBy = HttpContext.Session["nama"].ToString();
                     tempHistoryApproval.UpdatedDate = DateTime.Now;
                     tempHistoryApproval.CreatedDate = DateTime.Now;
 
@@ -345,8 +345,8 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                     tempHistoryApproval.IsActive = true;
                     tempHistoryApproval.IsDeleted = false;
                     tempHistoryApproval.PendaftaranMataKuliahID = TmpApproval.PendaftaranMataKuliahID;
-                    tempHistoryApproval.CreatedBy = HttpContext.Session["name"].ToString();
-                    tempHistoryApproval.UpdatedBy = HttpContext.Session["name"].ToString();
+                    tempHistoryApproval.CreatedBy = HttpContext.Session["nama"].ToString();
+                    tempHistoryApproval.UpdatedBy = HttpContext.Session["nama"].ToString();
                     tempHistoryApproval.UpdatedDate = DateTime.Now;
                     tempHistoryApproval.CreatedDate = DateTime.Now;
                     try
