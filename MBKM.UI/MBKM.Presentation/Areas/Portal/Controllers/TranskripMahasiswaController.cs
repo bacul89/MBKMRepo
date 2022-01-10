@@ -204,6 +204,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                                 var dataSave = _transkripService.Get(id);
                                 dataSave.FlagCetak = true;
                                 dataSave.UpdatedBy = Session["nama"] as string;
+                                dataSave.UpdatedDate = DateTime.Now;
 
                                 _transkripService.Save(dataSave);
                             }
@@ -264,6 +265,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                         var data = _pendaftaranMataKuliahService.Get(id);
                         data.FlagSertifikat = true;
                         data.UpdatedBy = Session["nama"] as string;
+                        data.UpdatedDate = DateTime.Now;
 
                         _pendaftaranMataKuliahService.Save(data);
                         
