@@ -309,7 +309,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             if (seksi != null && seksi.Length != 0)
             {
                 foreach (var item in _jkService.Find(dataMap =>
-               dataMap.ProdiID == idProdi &&
+               //dataMap.ProdiID == idProdi &&
                dataMap.FakultasID == idFakultas &&
                dataMap.Lokasi == lokasi &&
                dataMap.JenjangStudi == jenjangStudi &&
@@ -334,7 +334,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             {
 
                 foreach (var item in _jkService.Find(dataMap =>
-              dataMap.ProdiID == idProdi &&
+              //dataMap.ProdiID == idProdi &&
               dataMap.FakultasID == idFakultas &&
               dataMap.Lokasi == lokasi &&
               dataMap.JenjangStudi == jenjangStudi &&
