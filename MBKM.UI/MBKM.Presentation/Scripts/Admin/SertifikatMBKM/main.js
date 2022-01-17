@@ -14,7 +14,7 @@ $(document).ready(function () {
             {
                 "title": "Action",
                 "render": function (data, type, row, meta) {
-                    if (row[7] == "Sudah Feedback" && row[8] == "True") {
+                    if (row[7] == "Sudah Feedback" && (row[8] == "True" || row[8] == "Sudah Bayar")) {
                         return `<div class="row justify-content-center">
                                         <div class="col" style="text-align:center">
                                             <a href="javascript:void(0)" style="color:black" onclick="GetSertificate('${row[0]}')"> <i class="fas fa-file-search coral"></i></a>
