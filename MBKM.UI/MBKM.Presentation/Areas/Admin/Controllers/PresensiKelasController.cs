@@ -147,6 +147,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     var absensi = _absensiService.Get(id);
                     absensi.CheckDosen = true;
                     absensi.UpdatedDate = DateTime.Now;
+                    absensi.UpdatedBy = Session["username"] as string;
                     _absensiService.Save(absensi);
                 }
                 return Json(new ServiceResponse { status = 200, message = "DATA BERHASIL TERSIMPAN!" }, JsonRequestBehavior.AllowGet);
