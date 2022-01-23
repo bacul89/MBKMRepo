@@ -184,8 +184,9 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
         }
         public ActionResult GetSemesterAll3(string jenjangStudi, string search)
         {
+            var dataSemesterByLookUp = _lookupService.Find(x => x.Tipe.ToLower().Contains("TahunSemester") && x.IsActive && !x.IsDeleted).ToList();
             var result = _pendaftaranMataKuliahService.GetSemesterAll3(jenjangStudi, search);
-            return new ContentResult { Content = JsonConvert.SerializeObject(result), ContentType = "application/json" };
+            return new ContentResult { Content = JsonConvert.SerializeObject(dataSemesterByLookUp), ContentType = "application/json" };
         }
         public ActionResult VerifyAccount(string token)
         {
