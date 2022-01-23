@@ -59,6 +59,29 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             ViewData["namaMahasiswa"] = tmpMahasiswa.Nama;
             ViewData["nim"] = tmpMahasiswa.NIM;
 
+            var dataInformasiPertukaran = _informasiPertukaranService.Find(x => x.MahasiswaID == id).FirstOrDefault();
+            if (dataInformasiPertukaran != null)
+            {
+                ViewData["jenisMahasiswa"] = "in";
+                if (dataInformasiPertukaran.JenisPertukaran.ToLower().Contains("non"))
+                {
+                    ViewData["jenisPertukaran"] = "non pertukaran";
+                    ViewData["JenisKegiatan"] = dataInformasiPertukaran.JenisKerjasama.ToLower();
+                }
+                else
+                {
+                    ViewData["jenisPertukaran"] = "pertukaran";
+                    ViewData["JenisKegiatan"] = "mahasiswa";
+                }
+
+            }
+            else
+            {
+                ViewData["jenisMahasiswa"] = "ek";
+                ViewData["jenisPertukaran"] = "pertukaran";
+                ViewData["JenisKegiatan"] = "mahasiswa";
+            }
+
             var dataMahasiswa = _pendaftaranMataKuliahService.Find(z => z.MahasiswaID == id).First();
             if ((tmpMahasiswa.NIM == tmpMahasiswa.NIMAsal ||
                 tmpMahasiswa.NIM != tmpMahasiswa.NIMAsal) && dataMahasiswa.FlagSertifikat == false)
