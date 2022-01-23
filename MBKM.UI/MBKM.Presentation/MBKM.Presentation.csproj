@@ -603,6 +603,7 @@
     <Content Include="Areas\Admin\Views\MenuRole\Index.cshtml" />
     <Content Include="Areas\Portal\Views\TrackingStatusPendaftaran\Index.cshtml" />
     <Content Include="Scripts\dataCheckBox\dataTables.checkboxes.min.js.map" />
+    <None Include="Properties\PublishProfiles\WebAtmaJaya - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
