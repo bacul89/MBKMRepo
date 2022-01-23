@@ -217,8 +217,10 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
                 newAnswer.Nilai = int.Parse(d.nilai);
                 newAnswer.IsActive = true;
                 newAnswer.IsDeleted = false;
-                newAnswer.CreatedBy = "MAHASISWA";
+                newAnswer.CreatedBy = HttpContext.Session["nama"].ToString(); 
+                newAnswer.UpdatedBy = HttpContext.Session["nama"].ToString(); 
                 newAnswer.CreatedDate = DateTime.Now;
+                newAnswer.UpdatedDate = DateTime.Now;
                 try
                 {
                     _feedbackMatkulDetailService.Save(newAnswer);
