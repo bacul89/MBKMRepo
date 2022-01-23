@@ -51,6 +51,7 @@ namespace MBKM.Presentation.Areas.Portal.Controllers
             {
                 var absensis = _absensiService.Get(idAbsensi);
                 absensis.Present = true;
+                absensis.UpdatedBy = Session["nama"] as string;
                 absensis.UpdatedDate = DateTime.Now;
                 _absensiService.Save(absensis);
                 return Json(new ServiceResponse { status = 200, message = "TERIMA KASIH SUDAH MENGISI DAFTAR HADIR!" }, JsonRequestBehavior.AllowGet);
