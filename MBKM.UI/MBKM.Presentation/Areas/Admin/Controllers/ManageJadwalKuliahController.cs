@@ -87,7 +87,13 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                 {
                     id = list[i];
                     var data = _jkService.Get(id);
-                        foreach (var item in _jkService.Find(dataMap =>
+                    
+                    data.FlagOpen = true;
+                    data.UpdatedBy = Session["username"] as string;
+                    data.UpdatedDate = DateTime.Now;
+                    _jkService.Save(data);
+
+                    /*foreach (var item in _jkService.Find(dataMap =>
                             dataMap.NamaProdi == data.NamaProdi &&
                             dataMap.FakultasID == data.FakultasID &&
                             dataMap.Lokasi == data.Lokasi &&
@@ -106,7 +112,7 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                         updateFlag.UpdatedDate = DateTime.Now;
 
                         _jkService.Save(data);
-                    }
+                    }*/
                 }
 
 
@@ -129,7 +135,16 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
             int idFakultasInt = Int32.Parse(idFakultas);
             int strmInt = Int32.Parse(strm);
 
-            foreach (var item in _jkService.Find(dataMap =>
+            var dataJadwalKuliah = _jkService.Find(dataMap =>
+               dataMap.ProdiID == idProdiInt &&
+               dataMap.FakultasID == idFakultasInt &&
+               dataMap.Lokasi == lokasi &&
+               dataMap.JenjangStudi == jenjangStudi &&
+               dataMap.STRM == strmInt
+            ).ToList();
+            
+            
+           /* foreach (var item in _jkService.Find(dataMap =>
                 dataMap.ProdiID == idProdiInt &&
                 dataMap.FakultasID == idFakultasInt &&
                 dataMap.Lokasi == lokasi &&
@@ -144,8 +159,8 @@ namespace MBKM.Presentation.Areas.Admin.Controllers
                     MVJadwal.Add(item);
                     mapJadwal.Add(item.NamaMataKuliah);
                 }
-            }
-            return new ContentResult { Content = JsonConvert.SerializeObject(MVJadwal), ContentType = "application/json" };
+            }*/
+            return new ContentResult { Content = JsonConvert.SerializeObject(dataJadwalKuliah), ContentType = "application/json" };
         }
 
 
